@@ -1,2 +1,2 @@
-# community-a4e-c
+# Community A-4E-C
 The Community Repo for A-4E-C and its Official Submods
