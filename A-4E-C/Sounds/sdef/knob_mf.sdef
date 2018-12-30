@@ -1,0 +1,10 @@
+wave = {"Effects/knob1.wav", "Effects/knob2.wav", "Effects/knob3.wav", "Effects/knob4.wav", "Effects/knob5.wav", "Effects/knob6.wav", "Effects/knob7.wav", "Effects/knob8.wav"}
+
+inner_radius = 1
+outer_radius = 4
+
+position = {0.5,-0.1,0}
+
+detached = true
+
+listmode = RANDOM

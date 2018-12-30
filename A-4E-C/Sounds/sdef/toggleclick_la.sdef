@@ -1,0 +1,10 @@
+wave = {"Effects/click1.wav", "Effects/click2.wav", "Effects/click3.wav", "Effects/click4.wav", "Effects/click5.wav", "Effects/click6.wav", "Effects/click7.wav", "Effects/click8.wav", "Effects/click9.wav", "Effects/click10.wav", "Effects/click11.wav", "Effects/click12.wav", "Effects/click13.wav", "Effects/click14.wav", "Effects/click15.wav", "Effects/click16.wav", "Effects/click17.wav"}
+
+inner_radius = 1
+outer_radius = 4
+
+position = {-0.5,-0.2,-0.5}
+
+detached = true
+
+listmode = RANDOM
