@@ -937,7 +937,7 @@ InstLightsPrimary                   = CreateGauge("parameter")
 InstLightsPrimary.arg_number        = 117
 InstLightsPrimary.input             = {0.0, 1.0}
 InstLightsPrimary.output            = {0.0, 1.0}
-InstLightsPrimary.parameter_name    = "LIGHTS-INSTRUMENTS"
+InstLightsPrimary.parameter_name    = "LIGHTS-INST"
 
 ConsoleLights                       = CreateGauge("parameter")
 ConsoleLights.arg_number            = 119
