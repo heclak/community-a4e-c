@@ -1,5 +1,6 @@
 # Community A-4E-C
 The Community Repo for A-4E-C and its Official Submods
-## Version 1.02
+## Version 1.03 Changelog
 
-Please do not redistrubte the contents of this repo.
+* Fixed mainpanel_init.lua that stopped lighting from being linked
+* The joystick now reads 'AP' instead of 'AF' for the  Automatic Flight Control System
