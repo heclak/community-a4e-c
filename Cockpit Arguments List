@@ -1,0 +1,676 @@
+==========================================================================
+
+Cockpit Animation List
+
+NOTE: We are no longer using 20*panel as our base offsets for new
+  switches.  Please pack switch ID numbers.  Please keep available
+  ranges relatively up-to-date at the bottom of this document.
+
+==========================================================================
+
+Format:
+X. PANEL NUMBER & NAME
+#yy: argument number for animation and description of animated object
+** prefix indicates not yet animated (may indicate not yet present in model too)
+= prefix indicates anim arg has been tied to code to make it work in-game too (does not imply fully functional)
+
+==========================================================================
+
+
+==========================================================================
+BASE OBJECTS
+==========================================================================
+
+=#26 Canopy (DCS defaut is #1)
+=#2 Stick Bank
+=#3 Stick Pitch
+=#4 Rudder Pedals
+=#80 Throttle (DCS defaut is #5)
+=#8 Landing Gear Handle
+=#10 Hook Handle
+=#16 Mirrors
+
+=#28 Trim pitch stick (-1 nose up, 1 nose dn)
+=#29 Trim yaw stick (-1 nose left, 1 nose right)
+#30 Stick Autopilot Overide button
+#31 Stick Weapon Release Button
+#32 Stick Trigger
+#33 Stick Nosewheel steering
+
+=#153 Hide/unhide stick (1 = hidden)
+
+==========================================================================
+PRIMARY COCKPIT INSTRUMENT PANELS
+==========================================================================
+
+1. WHEELS AND FLAPS PANEL
+=#20: Nose Gear Light (wheel/striped/UP text) Section 1 part 2 page 1-30
+=#21: Left Main Gear Light (wheel/striped/UP text) Section 1 part 2 page 1-30
+=#22: Right Main Gear Light (wheel/striped/UP text) Section 1 part 2 page 1-30
+=#23: Flap position gauge (output - dial)
+#27: Gear Handle Light (0 OFF, 1 ON)
+
+
+0. EJECTION SEAT
+**#24 Primary handle
+#25 Secondary handle
+
+2. BLANK PANELS (NOT REWORKED PER A-4 AFC 376)
+WEAPON CONTROL PANEL (REWORKED PER A-4 AFC 376)
+
+?
+
+3. LABS CONTROL PANEL (NOT REWORKED PER A-4 AFC 376)
+BLANK PANEL (REWORKED PER A-4 AFC 376)
+
+#60: Timer switch (input, 2 position toggle up/down)
+#61: LABS mode switch (input, 3 position toggle left/right)
+
+
+4. THROTTLE PANEL
+=#80: Throttle Position (0 to 1) / default DCS cockpit arg is 5
+#80: Throttle cutoff (-1 to 0)
+#81: Trim slider (input - forward/back slider)
+=#82: Rudder trim (input - dial) (-1 left, 1 right)
+=#83: Master Exterior Lights Switch (3 position) on outside of throttle handle (1 ON, 0 OFF, -1 momentary ON)
+=#84: spoiler switch
+=#85: Speedbrake switch (2 position slider) inside bottom of handle, p1-14
+#86: Radio Microphone switch (momentary pushbutton) inside top of handle
+#87: catapult handgrip
+
+
+5. ENGINE CONTROL PANEL (page 1-14 through 1-17)
+=#100: Engine Starter switch (press to start, stays pressed until 50% RPM,  pull to abort/stop airflow)
+#101: Drop Tank Pressurization and Flight Refuel switch (input - 2 position PRESS/OFF)
+#102: Air Refueling Fuselage Only switch (input - 2 position FUS ONLY/OFF)
+#103: Emergency Transfer and Wing Fuel Dump switch (input - 2 position OFF/FUEL TRANS BYPASS)
+#104: Fuel Control switch (input: 2 position toggle: PRIM / MANUAL)
+#105: Manual Fuel Control warning light (indicator - lit below 10% RPM, lit in manual mode)
+
+
+6. RADAR CONTROL PANEL (NOT REWORKED PER A-4 AFC 256 OR REWORKED PER A-4 AFC 387)
+=#120: Radar Mode Selector Switch (rotary, 5 position: OFF, STB, SRCH, TC, A/G) 0 to .4, in .1 incr
+=#121: Radar AoA Compensation Switch (input, 2 position toggle: ON, OFF) 0 to 1, 0 OFF
+=#122: Radar Antenna Elevation Control Knob (input, analog dial, +10 to -15), 0 to 1
+=#123: Radar Volume: (input, analog dial, OBST TONE) 0 to 1, full 360°
+
+
+7. ARN-77 CONTROL SELECTOR (REWORKED PER A-4 AFC 256)
+** #124: Bullpup Control Joystick (2 axis joystick)
+
+
+8. AFCS PANEL
+=#160: AFCS Standby Switch (input, 2 position toggle: OFF, STANDBY)
+=#161: AFCS Engage Switch (input, 2 position toggle: OFF, ENGAGE
+=#162: AFCS Heading Select Switch (input, 2 position toggle: OFF, HDG SEL)
+=#163: AFCS Altitude Switch (input, 2 position toggle: OFF, ALT)
+=#164: AFCS Heading Set Knob (input, rotary, unlimited twist)
+=#165: AFCS Stability Augmentation Switch (input, 2 position toggle: OFF, STAB AUG)
+=#166: AFCS Aileron Trim Switch (input, 2 position toggle: NORM, EMER)
+=#167: AFCS Heading Gauge100s (output, 1 digit recessed wheel, 100s position)
+=#168: AFCS Heading Gauge10s (output, 1 digit recessed wheel, 10s position)
+=#169: AFCS Heading Gauge1s (output, 1 digit recessed wheel, 1s position)
+
+#250
+
+9. GCBS PANEL - Ground Control Bombing System
+Won't implement without additional documentation.
+
+
+10. OXYGEN, ANTI-G, AND ANTIEXPOSURE SUIT CONTROL
+PANE L (REWORKED PER A-4 AFC 387)
+GG 1-25009-J 
+#125: Oxygen On/Off Switch (input, 2 position toggle)
+** #126: Oxygen Dial (input, rotary dial, clockwise = high, 360 degree rotation)
+
+
+11. ANTlEXPOSURE SUIT CONTROL PANEL
+** #127: Exposure Suit Vent Switch (input, 2 position toggle: OFF, SUIT VENT)
+
+
+12. EMERGENCY SPEEDBRAKE CONTROL
+=#128: Emergency Speedbrake Control (input, push/pull knob with centering spring... pull to open brake, push to close)  p1-32
+
+
+13. CANOPY CONTROL HANDLE
+=#129: Canopy Control lever (input, lever arm, back slides canopy backwards slightly, unlocking it.  forward slides canopy forward into roller locks) p1-33.
+
+
+14. MANUAL FUEL SHUTOFF' CONTROL LEVER
+#130: Manual Fuel Shutoff lever (input, lift latching cover and slide lever backward to shutoff fuel)
+
+
+15. SMOKE ABATEMENT SWITCH
+** #131: Smoke Abatement switch (input, 2 position toggle: OFF, FUEL ADD)
+
+
+16. FLAP HANDLE
+=#132: Flap handle (lever, 3 position spring loaded to center, up raises flaps, down lowers flaps)
+
+
+16A SPOILER ARM SWITCH
+=#84: Spoiler switch (input, 2 position toggle: OFF, ARM)
+
+
+17. JATO CONTROL PANEL
+#133: JATO ARM switch (input, 2 position toggle: OFF, ARM)
+#134: JATO Jettison switch (input, 2 position toggle: SAFE, JETTISON)
+**#87: JATO Press to test
+#88: JATO Light
+
+
+17A APPROACH POWER COMPENSATOR CONTROL PANEL
+=#135: APC Engage switch (input, 3 position toggle: OFF, STBY, ENGAGE)
+=#136: APC Environment switch (input, 3 position toggle: COLD, STD, HOT)
+=#147: APC Light
+
+
+17B ANGLE OF ATTACK INDEXER LIGHTS
+=#850: Green light
+=#851: Amber light
+=#852: Red Light
+
+18. ACCELEROMETER
+=#360 Vertical Acceleration needle (p1-45)
+=#137: Maximum Positive Acceleration needle (animated exactly like the main needle, on the same range, for code simplification)
+=#138: Maximum Negative Acceleration needle (animated exactly like the main needle, on the same range, for code simplification)
+=#139: Accelerometer Push-to-Reset knob (input, pushbutton, momentary)
+
+
+19. ALL-ATTITUDE INDICATOR
+=#381 ILS Glide Slope
+=#382 ILS Loc
+=#383 Ball pitch
+=#384 Ball roll
+=#385 Ball yaw
+#386 Knob
+=#387 OFF flag
+#388 bank inclinometer (part of turn and slip indicator)
+#389 rate-of-turn pointer (part of turn and slip indicator)
+
+20. RADAR SCOPE
+=#400 storage
+=#401 brilliance
+=#402 detail
+=#403 gain
+=#404 reticle
+=#405 radar cover
+=#406 Profile dial (0=blank, .10=10, .20=20)
+=#407 Plan dial (0=blank, .10=10, .20=20, .40=40)
+
+
+21. LABS TIMER
+** #140: LABS Adjust (input, outer surface rotates to set digital value)
+** #142: LABS 10s position (output, digit 0-9 wheel, jump)
+** #142: LABS 1s position (output, digit 0-9 wheel, jump)
+** #143: LABS decimal position (ouput, digit 0-9 wheel, jump)
+
+
+22. 8-DAY CLOCK
+=#440: Hour hand (output, needle, 360 degrees)
+=#441: Minute hand (output, needle, 360 degrees)
+=#442: Second hand (output, needle, 360 degrees)
+#443: knob (rotate)
+
+
+23. OIL QUANTITY INDICATOR SWITCH (LATE A-4E)
+#149: Oil Quantity Indicator switch (input+output, momentary pushbutton)
+=#150: Light for switch #149.  On when oil < 20%, on when pushed and oil < 80%, otherwise off.
+
+
+24. PRESSURE RATIO INDICATOR
+=#151: Pressure Ratio needle (output, dial)
+#231: index
+#232: dial 1, jump
+#233: dial 2, jump
+#234: dial 3, jump
+#235: Knob
+
+
+25. OIL PRESSURE INDICATOR
+=#152: Oil Pressure needle (output, dial)
+
+
+26. TACHOMETER
+=#520 Engine RPM needle
+=#521 Small embedded engine RPM needle inside RPM gauge (shows 'ones' position, e.g. 76.532% RPM will show 6.532 on this needle) 
+
+
+27. EXHAUST GAS TEMPERATURE INDICATOR
+=#540 Engine temperature indicator needle
+
+
+28. FUEL FLOW INDICATOR
+=#560 Fuel flow indicator needle
+
+
+29. FUEL QUANTITY INDICATOR
+=#580 Fuel quantity guage (total fuel weight) needle, 6800 to 0 lbs, last major marking 6000, last hash at 6600.
+
+
+30. RADAR ALTIMETER
+=#600 Radar altitude indicator, the indicator dial face is marked in 10-foot increments up to 200 feet, 50-foot increments from 200 to 600 feet, 100-foot increments from 600 to 2000 feet, and 500-foot increments from 2000 to 5000 feet
+=#601: Low limit indexer arrow on circumference of altitude indicator face
+=#602: knob is used for setting the low-limit indexer (turn) (should use the same vals than the needle)
+=#603: Knob controls power to the indicator (push) and test; -1 is off, 0 is on, 1 is test (spring loaded?)
+=#604: OFF flag (when system is turned off, has no power, or can't receive radar echo)
+=#605: Radar alt low limit WNG Light. 0 is OFF, 1 is ON
+
+
+31. DEAD RECKONING INDICATOR (EARLY A-4E)
+#Remove this gauge all together
+
+
+32. RADAR ALTIMETER LOW-LIMIT WARNING LIGHT
+=#156: LAWS Low Altitude Warning Light (output, light) 0 is OFF, 1 is ON
+
+
+33. STANDBY ATTITUDE INDICATOR
+=#660 Pitch
+=#661 Roll
+=#662 Knob turn
+=#663 knob push
+=#664 Flag
+=#665 Aircraft symbol
+
+
+34. SIDS CONT-NORM MODE SWITCH
+(this switch is on panel #36 below as switch #727)
+
+
+35. ARMAMENT PANEL
+=#700 Emergency selector switch (3 position input: ALL,CTR,WING), or alternately with  A-4 AFC 344: 7 way knob (WING,1,2,3,4,5,ALL)
+=#701 Guns (2 position input: READY, SAFE)
+=#702 Bomb arm (3 position input: NOSE&TAIL,OFF,TAIL)
+=#703-707 Station select switches (3 position inputs: READY,OFF,SALVO)
+=#708 Function selector switch (6 pos knob: OFF, ROCKETS, GM UNARM, SPRAY TANK, LABS, BOMBS & GM ARM)
+=#709 Master arm switch (2 pos input: ON,OFF)
+=#710 Cabin pressure altitude indicator (output, dial)
+
+
+36. MISCELLANEOUS SWITCHES PANEL
+=#720 FUEL/EXT switch (2 position toggle)
+=#721 RADAR PROFILE/PLAN switch (2 position toggle)
+=#722 RADAR LONG/SHORT switch (2 position toggle)
+=#723 MASTER TEST (pushbutton, spring loaded, triggers master test of various systems)
+=#724 NAV COMPUTER MODE SWITCH (3 position toggle: NAV-PAC, TACAN, NAV CMPTR)
+**#725 VOLUME? (inner dial, 340 degree rotation from 190 degrees off to 170 degrees on)
+#726 WALLEYE/SHRIKE dial (5 position outer dial - red/clear/off/shrike1/shrike2)
+#727 SIDS CONT/NORM switch (2 position toggle: NORM, CONT)
+
+
+37. AIRCRAFT WEAPONS RELEASE SYSTEM PANEL (LATE A-4E)
+=#740 QTY SEL Knob (12 position input: OFF,2,3,4,5,6,8,12,16,20,30,40) (+.05 increment)
+=#741  indicator (PWR ON) (0 OFF, 1 ON)
+=#742 Drop interval knob (continuous input knob, from 20 to 200) (+.05 increment)
+=#743 MULT switch (2 position input: x1,x10)
+=#744 Mode select knob (multi position knob: STEP SALVO?, STEP PAIRS?, STEP SINGL, RIPPLE SINGL, RIPPLE PAIRS, RIPPLE SALVO)
+
+
+38. OXYGEN QUANTITY INDICATOR
+=#760 Liquid Oxygen needle (continuous output dial) val: 0-1 -> Ol-10l
+=#761 Liquid Oxygen low warning light (red light, on when O2 < 1 litre)
+=#762 Liquid Oxygen OFF flag ("flag" indicator.  OFF when electrical power is lost, otherwise blank)
+
+
+39. BEARING-DISTANCE-HEADING INDICATOR (BDHI)
+=#780 Outer ring compass heading
+=#781 NDB bearing needle (thin)
+=#782 TACAN bearing needle (thick)
+=#783 (583) rotating dial in nautical miles, distance to TACAN signal %10
+=#784 (584) dial in nautical miles, distance to TACAN signal %100, discrete with rollover
+=#785 (585) dial in nautical miles x100, distance to TACAN signal, discrete with rollover
+=#786 (586) "OFF" flag, covers first 2 digits of DME distance when no signal
+
+
+40. VERTICAL SPEED INDICATOR
+=#800 Vertical velocity needle (-6000 FPM to +6000 FPM)
+
+
+41. ALTIMETER
+=#820 Altimeter needle continuous dial, feet 0 to 1000, modulo 1k of altitude
+=#821 Altimeter 10K foot dial (left-most), jump
+=#822 Altimeter 1K foot dial (middle), jump
+=#823 Altimeter 100 foot dial, continuous
+=#824 Altimeter Adjustment dual digits (0 is 29, 1 is 30... XX.nn), jump
+=#825 Altimeter Adjustment mid digit (nn.Xn), jump
+=#826 Altimeter Adjustment last digit (nn.nX), jump
+=#827 Altimeter Adjustment knob (0 to 1), jump
+
+
+42. ANGLE-OF-ATTACK INDICATOR
+=#840 Angle-of-Attack (AoA) needle
+#841 AoA OFF flag
+
+
+43. CAUTION PANEL (LADDER LIGHTS)
+=#860 Fuel Boost caution light (boost pressure < 4psi, turns off when >= 6 psi) page 1-22
+=#861 Control Hyd caution light (on when primary flight control hyd pressure lost)
+=#862 Utility Hyd caution light (on when low utility hyd pressure, may be triggered temporarilly during spoilers deploying)
+=#863 Fuel Trans caution light (on when internal wing tank fuel PSI < 2 or RPM < 70%)
+=#864 Spd Brk Open caution light (on when speed brakes not closed)
+=#865 Spoiler Ext caution light (on when spoilers not closed)
+
+
+43B. PILOT ADVISORY LIGHTS
+=#866 in range light
+=#867 set range light
+=#868 dive light
+
+
+44. AIRSPEED INDICATOR
+=#880 Indicated air speed (IAS) needle, marked as per photos.  (0.05 = 80kts, 0.350 = 150kts, 0.75 = 400kts, 1.0 = 720kts)
+=#881 Mach disc, 0 to 360 degrees of rotation, marked as per photos.
+=#882 IAS index pointer (80 to 145 kt)
+=#883 Mach index pointer (val: 0-1; mach 0.5-mach 1.2)
+=#884 Knob (turn)
+=#885 Knob (push); pushed knob sets mach index. Unpushed sets IAS index
+
+
+45. GUNSIGHT PANEL
+#890 lock-on/in-range brightness rheostat
+=#891 GS night day switch
+=#892 GS elevation control
+**#893 GS control guard
+=#894 GS
+=#895 gunsight brightness rheostat
+
+
+46. TRIM POSITION INDICATOR PANEL
+=#870 Yaw trim needle
+=#871 Pitch trim needle
+
+
+
+47. EXTERIOR LIGHTS PANEL
+NOTE:  Throttle has the MASTER ON/OFF/Momentary switch, #83
+=#217: Probe Light Switch (3 position toggle: DIM, OFF, BRT)
+=#218: Taxi Light Switch (2 position toggle: OFF, TAXI)
+=#219: Anti-Collision Light Switch (2 position toggle: OFF, ANTI-COLL)
+=#220: Fuselage Light Switch (3 position toggle: DIM, OFF, BRT)
+=#221: Flash-Steady Light Switch (2 position toggle: STDY, FLSH)
+=#222: Navigation Lights Switch (3 position toggle: DIM, OFF, BRT)
+=#223: Tail Lights Switch (3 position toggle: DIM, OFF, BRT)
+
+
+48. AIR CONDITIONING PANEL
+#224: Cabin Pressure Switch (2 position toggle: RAM, NORMAL)
+#225: Windshield Defrost Switch (3 position toggle: DECREASE, HOLD, INCREASE)
+#226: Cabin Temp Switch: (input, dial, rotates from 200 degrees through 0 to 160 degrees)
+** #227: Anti Icing Switch: (3 position toggle: PITOT, OFF, ALL)
+
+
+49. RAIN REMOVAL PANEL
+** #228: Rain Removal Switch (2 position toggle: OFF, ON)
+
+
+49A FUEL TRANSFER BYPASS SWITCH
+** #229: Fuel Transfer Bypass Switch Cover (2 position toggle: COVERED, OPEN)
+** #230: Fuel Transfer Bypass Switch (2 position toggle: OFF, ON)
+
+
+50a. DOPPLER CONTROL PANEL (AN/APN-153)
+50. NAVIGATION CONTROL INDICATOR PANEL (AN/ASN-41)(LATE A-4E)
+=#170: Doppler Selector Switch (5 position dial: OFF, STBY, ON:LAND, ON:SEA, TEST)
+=#171: Doppler Memory Light (output, light, amber) (OFF = 0, ON = 1)
+=#247: Doppler Memory Press to test
+=#172: Doppler Drift Indicator (dial, continuous)
+=#173: Doppler Ground Speed Indicator Digit X__ (wheel 0 to 9, continuous), jump
+=#174: Doppler Ground Speed Indicator Digit _X_ (wheel 0 to 9, continuous), jump
+=#175: Doppler Ground Speed Indicator Digit __X (wheel 0 to 9, continuous), jump
+#243: Doppler Drift Angle Knob rotate
+#244: Doppler Drift Angle Knob push
+#245: Doppler Ground Speed knob rotate
+#246: Doppler Ground Speed knob push
+
+=#176: Navigation Selector Switch (5 position dial: OFF, STBY, D1, D2, TEST) positions 280, 320, 360, 040, 080.
+
+=#177: Present Position Northing Adjust Knob (rotary dial, continuous, clockwise = more north)
+#236: Knob push
+=#178: Present Position - Latitude Counter Digit X_.__n (wheel 0 to 9, jump)
+=#179: Present Position - Latitude Counter Digit _X.__n (wheel 0 to 9, jump)
+=#180: Present Position - Latitude Counter Digit __.X_n (wheel 0 to 9, jump)
+=#181: Present Position - Latitude Counter Digit __._Xn (wheel 0 to 9, jump)
+=#182: Present Position - Latitude Counter Digit __.__N (partial wheel, 2 position, "N" or "S")
+
+=#183: Present Position Westing Adjust Knob (rotary dial, continuous, clockwise = more west)
+#237: Knob push
+=#184: Present Position - Longitude Counter Digit X__.__e (wheel 0 to 9, jump)
+=#185: Present Position - Longitude Counter Digit _X_.__e (wheel 0 to 9, jump)
+=#186: Present Position - Longitude Counter Digit __X.__e (wheel 0 to 9, jump)
+=#187: Present Position - Longitude Counter Digit ___.X_e (wheel 0 to 9, jump)
+=#188: Present Position - Longitude Counter Digit ___._Xe (wheel 0 to 9, jump)
+=#189: Present Position - Longitude Counter Digit ___.__E (partial wheel, 2 position, "E" or "W")
+
+=#190: Destination Northing Adjust Knob (rotary dial, continuous, clockwise = more north)
+#238: Knob push
+=#191: Destination - Latitude Counter Digit X_.__n (wheel 0 to 9, jump)
+=#192: Destination - Latitude Counter Digit _X.__n (wheel 0 to 9, jump)
+=#193: Destination - Latitude Counter Digit __.X_n (wheel 0 to 9, jump)
+=#194: Destination - Latitude Counter Digit __._Xn (wheel 0 to 9, jump)
+=#195: Destination - Latitude Counter Digit __.__N (partial wheel, 2 position, discrete "N" or "S")
+
+=#196: Destination Westing Adjust Knob (rotary dial, continuous, clockwise = more west)
+#239: Knob push
+=#197: Destination - Longitude Counter Digit X__.__e (wheel 0 to 9, jump)
+=#198: Destination - Longitude Counter Digit _X_.__e (wheel 0 to 9, jump)
+=#199: Destination - Longitude Counter Digit __X.__e (wheel 0 to 9, jump)
+=#200: Destination - Longitude Counter Digit ___.X_e (wheel 0 to 9, jump)
+=#201: Destination - Longitude Counter Digit ___._Xe (wheel 0 to 9, jump)
+=#202: Destination - Longitude Counter Digit ___.__E (parital wheel, 2 position, discrete "E" or "W")
+
+=#203: Magnetic Variation Adjust Knob (rotary dial, continuous, clockwise = more east)
+#240: Knob push
+=#204: Magnetic Variation Readout Digit X__._e (wheel 0 to 9, jump)
+=#205: Magnetic Variation Readout Digit _X_._e (wheel 0 to 9, jump)
+=#206: Magnetic Variation Readout Digit __X._e (wheel 0 to 9, jump)
+=#207: Magnetic Variation Readout Digit ___.Xe (wheel 0 to 9, jump)
+=#208: Magnetic Variation Readout Digit ___._E (partial wheel, 2 position, discrete "E" or "W")
+
+=#209: Wind Speed Adjustment Dial (rotary dial, continuous, clockwise = increase, 0 to 300 kts)
+#241: Knob push
+=#210: Wind Speed Readout Digit X__ (wheel 0 to 9, jump)
+=#211: Wind Speed Readout Digit _X_ (wheel 0 to 9, jump)
+=#212: Wind Speed Readout Digit __X (wheel 0 to 9, jump)
+
+=#213: Wind Direction Adjustment Dial (rotary dial, continuous, clockwise = increasing bearing, 0 to 359)
+#242: Knob push
+=#214: Wind Direction Readout Digit X__ (wheel 0 to 9, jump)
+=#215: Wind Direction Readout Digit _X_ (wheel 0 to 9, jump)
+=#216: Wind Direction Readout Digit __X (wheel 0 to 9, jump)
+
+
+51. SPARE LAMPS CONTAINER (NOT REWORKED PERA-4 AFC 256)
+
+AFCS TEST SWITCH PANEL (REWORKED PER A-4 AFC 256)
+
+
+52. AFCS TEST SWITCH PANEL (NOT REWORKED PER AFC 256)
+#250 1-N-2 Switch, spring loaded to N, -1 is 1, 0 is N, 1 is 2
+**#251 Indicates measured DC control current to AFCS roll servo (labelled R)
+**#252 Indicates measured DC control current to AFCS yaw servo (labelled Y)
+**#253 Indicates measured DC control current to AFCS pitch servo (labelled P)
+
+COMPASS CONTROL PANEL (REWORKED PER A-4 AFC 256)
+
+53. MISCELLANEOUS SWITCHES PANEL
+#1060 Seat (3 position: UP,STOP,DOWN)
+=#1061 Emergency generator bypass (2 position: BYPASS,NORMAL)
+#1062 TACAN Antenna (3 position: Auto, Fwd, Aft)
+
+
+54. INTERIOR LIGHTS PANEL (REWORKED PER A-4 AFC 428)
+=#106: Primary instrument knob (225 to 125 degrees clockwise, 0.0 to 1.0)
+=#107: Console knob (225 to 125 degrees clockwise, 0.0 to 1.0)
+=#108: Brightness switch (3 position input, -1.0,0,1.0)
+=#110: White flood control knob
+=#111: White flood light left
+=#114: red flood lights (3 left, 3 right, 2 console)
+
+
+55. COMPASS CONTROL PANEL (NOT REWORKED PER A-4 AFC 256)
+    IFF CONTROL PANEL (REWORKED PER A-4 AFC 256)
+**#257: Master Switch (input, 5 position dial - OFF, STBY, LOW, NORM, EMER), in 0.1 arg increments
+**#258: M-1 Switch (input, 3 position toggle: up = 1.0, down = -1.0)
+**#259: M-2 Switch (input, 3 position toggle: up = 1.0, down = -1.0)
+**#260: M-3/A Switch (input, 3 position toggle: up = 1.0, down = -1.0)
+**#261: M-C Switch (input, 3 position toggle: up = 1.0, down = -1.0)
+**#262: Mode 1 Reply Selector digit 0 (animated wheel, 360 degrees) - left most
+**#263: Mode 1 Reply Selector digit 1 (animated wheel, 360 degrees) - right most
+**#264: Mode 1 Reply Indicator digit 0 (number wheel, 0-5 in 0.1 increments) - left most
+**#265: Mode 1 Reply Indicator digit 1 (number wheel, 0-5 in 0.1 increments) - right most
+**#266: Mode 3/A Reply Selector digit 0 (animated wheel, 360 degrees) - right most
+**#267: Mode 3/A Reply Selector digit 1 (animated wheel, 360 degrees)
+**#268: Mode 3/A Reply Selector digit 2 (animated wheel, 360 degrees)
+**#269: Mode 3/A Reply Selector digit 3 (animated wheel, 360 degrees) - left most
+**#270: Mode 3/A Reply Indicator digit 0 (number wheel, 0-7 in 0.1 increments) - right most
+**#271: Mode 3/A Reply Indicator digit 1 (number wheel, 0-7 in 0.1 increments)
+**#272: Mode 3/A Reply Indicator digit 2 (number wheel, 0-7 in 0.1 increments)
+**#273: Mode 3/A Reply Indicator digit 3 (number wheel, 0-7 in 0.1 increments) - left most
+**#274: IDENT-OUT-MIC Selector (input, 3 position toggle: up = 1.0, down = -1)
+**#275: RAD TEST-OUT-MON Selector (input, 3 position toggle: up = 1.0, down = -1)
+**#276: Test Indicator Light (output, light, 0 = 0ff, 1 = on)
+**#277: Test Indicator Button (input, push to test)
+**#278: Test Indicator Button (input, analog 360 degree rotation, -1 (-180 degrees) to 1 (+180 degrees))
+**#279: MODE 4 Code Switch (input, 4 position dial - ZERO, B, A, HOLD)- 0.1 increments
+**#280: MODE 4 ON-OUT Switch (input, 2 position toggle: up = 1.0, down = 0)
+**#281: MODE 4 AUDIO-OUT-LIGHT Switch (input, 3 position toggle: up = 1.0, down = -1)
+**#282: MODE 4 Reply Indicator Light (output, light, 0 = off, 1 = on)
+**#283: MODE 4 Reply Indicator Button (input, push to test button)
+**#284: MODE 4 Reply Indicator Button (input, analog 360 degree rotation, -1 (-180 degrees) to 1 (+180 degrees))
+
+56. IFF CONTROL PANEL (NOT REWORKED PER A-4 AFC 256)
+    RADAR CONTROL PANEL (REWORKED PER A-4 AFC 256)
+    AN/APR-25 (V) CONTROL PANEL (REWORKED PER A-4 AFC 394)
+	
+57. SIF CONTROL PANEL
+
+
+58. TACAN CONTROL PANEL - AN/ARN-52(V)
+=#900: TACAN Power Switch (input, 4 position dial - OFF, REC, T/R and A/A)
+=#901: TACAN Channel Selector Outer (input, outer dial, 13 positions - 0 to 12), in 0.05 arg increment
+=#902: TACAN Channel Selector Inner (input, inner dial, 10 positions - 0 to 9), 0=0, 0.9=9
+=#903: TACAN Volume Knob (input, analog)
+
+note: A-4E TACAN Antenna selector: See panel #53 switch #1062
+
+
+59. UHF CONTROL PANEL - AN/ARC-51
+#361: UHF Channel Selector knob
+#362: UHF Manual Frequency Outer (input, 18 position dial, labeled 22-39) (.05 incr)
+#363: UHF Manual Frequency Middle (input, 10 position dial, 0-9) (.1 incr)
+#364: UHF Manual Frequency Inner (input, 20 position dial, 00-95) (.05 incr)
+#365: UHF Volume Knob (input, analog)
+#366: UHF Frequency Set button (knob as 3 way switch, -1=G XMIT, 0=MAN, 1=PRESET)
+#367: Outer freq knob
+#368: Mid freq knob
+#369: Inner freq knob
+#370: SQ Disable switch
+#371: Channel preset dial (input, 20 position rotary, 1-20)
+#372: UHF Power Switch (input, 4 position dial - OFF, T/R, T/R+G, ADF) (.0-.3, in .1 incr)
+
+note: All knobs turn clockwise to increase. Markers for selected values on top.
+note: frequency range 200 - 399.90 MHz, 100kHz increments
+
+59 BIS. AUXILIARY UHF CONTROL PANEL
+#373: MAIN knob
+#374: AUX knob
+#375: VOL knob
+**#376: SENS 
+
+
+60. NAV CONTROL PANEL (ASN-19, EARLY A-4E)
+XXX We are not implementing this panel.  We are implementing #50 above instead.
+
+
+61. GUN POD PANEL
+=#390: Charging switch (3 pos, -1: clean, 0: OFF, 1: charge)
+=#391: Left ready switch
+=#392: Center ready switch
+=#393: Right ready switch
+
+62. T HANDLES
+=#1240: Emer Gear
+=#1241: Emer Bomb
+#1242: Man Flt Cont
+=#1243: Emer Gen
+
+63. CHAFF CONTROL PANEL
+=#522: Chaff dispenser select (3 pos, 1 / BOTH / 2), -1 to 1
+#523: Auto Button (what does it do?!)
+=#524: Knob disp 1
+=#525: Knob disp 2
+=#526: Counter disp 1, 10s (.1 increment)
+=#527: Counter disp 1, 1s
+=#528: Counter disp 2, 10s
+=#529: Counter disp 2, 1s
+=#530: Power switch (2 pos, OFF / PWR)
+
+
+==========================================================================
+PERIPHERAL COCKPIT INSTRUMENTS (Figure 1-5 on page 1-8)
+==========================================================================
+
+
+
+
+ELAPSED TIME CLOCK (#19 on fig. 1-5)
+=#144: Elapsed Minute hand (output, needle, 360 degrees)
+=#145: Elapsed Second hand (output, needle, 360 degrees)
+=#146: Elapsed time reset (input, momentary pushbutton) bottom left
+#254: Thick/Short Arrow - Time Hour hand (output, needle, 360 degrees)
+#255: Medium Needle - Time Minute hand (output, needle, 360 degrees)
+#256: rotating knob (input, wheel, rotates 360 degrees)
+
+
+BACKUP COMPASS (#19 on fig. 1-5)
+=#148: Compass Dial (output, sideways wheel, rotates 360 degrees)
+
+
+MISC WARNING LIGHTS
+=#154: WHEELS light (output, #38 on fig. 1-5)
+=#155: LABS light (output, #39 on fig. 1-5)
+=#156: LAWS light (output, #40 on fig. 1-5)
+=#157: OBST warning light (output, #41 on fig. 1-5)
+=#158: IFF light
+=#159: FIRE warning light (output, #42 on fig. 1-5)
+
+
+
+==========================================================================
+AVAILABLE ID RANGES
+==========================================================================
+
+Available IDs.  Please keep this up-to-date.
+
+#34-59
+#62-79
+#89-99
+--#111-119
+#285-359
+#373-379
+--#373 reserved by Nero for RWR Lamp
+#394-399
+#405-439
+#444-519
+#531-539
+#541-559
+#561-579
+#581-599
+#603-659
+#666-699
+#711-719
+#728-739
+#745-759
+#763-779
+#787-799
+#801-819
+#828-839
+#841-859
+#869-879
+#882-889
+#894-1059
+#1063-1159
+#1164-1179
+#1192-1259
+
