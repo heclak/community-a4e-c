@@ -12,7 +12,7 @@ draw_pilot					 = false
 
 external_model_canopy_arg	 = 38
 
-use_external_views = false 
+use_external_views = false
 cockpit_local_point = {3.1, 0.63, 0.0} --{3.2, 0.16, 0.0}
 
 day_texture_set_value   = 0.0
@@ -20,11 +20,11 @@ night_texture_set_value = 0.1
 
 local controllers = LoRegisterPanelControls()
 
-mirrors_data = 
+mirrors_data =
 {
     center_point 	= {0.2,0.1,0.00},
     width 		 	= 0.8, --1.2,
-    aspect 		 	= 1.5, 
+    aspect 		 	= 1.5,
 	rotation 	 	= math.rad(1);
 	animation_speed = 2.0;
 	near_clip 		= 0.1;
@@ -41,7 +41,7 @@ mirrors_draw.controller         = controllers.mirrors_draw
 Canopy    						= CreateGauge()
 Canopy.arg_number 				= 26
 Canopy.input   					= {0,1}
-Canopy.output  					= {0,0.9}
+Canopy.output  					= {0,1}
 Canopy.controller 				= controllers.base_gauge_CanopyPos
 --CockpitCanopy.controller		= controllers.CockpitCanopy
 
@@ -111,7 +111,7 @@ RollTrimKnob.parameter_name				= "ROLL_TRIM_KNOB"
 ---------------------------------------------------------------
 Engine_RPM                          = CreateGauge("parameter")
 Engine_RPM.arg_number               = 520
-Engine_RPM.input                    = {0.0, 103} 
+Engine_RPM.input                    = {0.0, 103}
 Engine_RPM.output                   = {0.0, 1.0}
 Engine_RPM.parameter_name           = "RPM"
 
@@ -192,31 +192,31 @@ GearNose                        = CreateGauge("parameter")
 GearNose.arg_number             = 20
 GearNose.parameter_name         = "GEAR_NOSE"
 GearNose.input                  = {0.0, 1.0}
-GearNose.output                 = {0.0, 1.0}  
+GearNose.output                 = {0.0, 1.0}
 
 GearLeft                        = CreateGauge("parameter")
 GearLeft.arg_number             = 21
 GearLeft.parameter_name         = "GEAR_LEFT"
 GearLeft.input                  = {0.0, 1.0}
-GearLeft.output                 = {0.0, 1.0}  
+GearLeft.output                 = {0.0, 1.0}
 
 GearRight                       = CreateGauge("parameter")
 GearRight.arg_number            = 22
 GearRight.parameter_name        = "GEAR_RIGHT"
 GearRight.input                 = {0.0, 1.0}
-GearRight.output                = {0.0, 1.0}  
+GearRight.output                = {0.0, 1.0}
 
 GearLight                       = CreateGauge("parameter")
 GearLight.arg_number            = 27
 GearLight.parameter_name        = "GEAR_LIGHT"
 GearLight.input                 = {0.0, 1.0}
-GearLight.output                = {0.0, 1.0}  
+GearLight.output                = {0.0, 1.0}
 
 HideStick                       = CreateGauge("parameter")
 HideStick.arg_number            = 153
 HideStick.parameter_name        = "HIDE_STICK"
 HideStick.input                 = {0.0, 1.0}
-HideStick.output                = {0.0, 1.0}  
+HideStick.output                = {0.0, 1.0}
 
 FuelGauge                       = CreateGauge("parameter")
 FuelGauge.arg_number            = 580
@@ -239,7 +239,7 @@ IASGauge.output		            = {0.0, 1.0}
 MachDisc						= CreateGauge("parameter")
 MachDisc.arg_number		    	= 881
 MachDisc.parameter_name         = "D_IAS_MACH_DEG"
-MachDisc.input					= {0.0, 360.0} -- rotation in degrees, calibration in avionics.lua 
+MachDisc.input					= {0.0, 360.0} -- rotation in degrees, calibration in avionics.lua
 MachDisc.output 				= {0.0, 1.0}
 
 IASIndex						= CreateGauge("parameter")
@@ -405,7 +405,7 @@ AltAdjNNxx                  = CreateGauge("parameter")
 AltAdjNNxx.parameter_name   = "ALT_ADJ_NNxx"
 AltAdjNNxx.arg_number       = 824
 AltAdjNNxx.input            = {29, 30}
-AltAdjNNxx.output           = {0, 1}        -- animates from 0.500 ("29") to 0.510 ("30") / 0.0 to 0.500 = 29, 
+AltAdjNNxx.output           = {0, 1}        -- animates from 0.500 ("29") to 0.510 ("30") / 0.0 to 0.500 = 29,
 
 AltAdjxxNx                  = CreateGauge("parameter")
 AltAdjxxNx.parameter_name   = "ALT_ADJ_xxNx"
@@ -937,7 +937,7 @@ InstLightsPrimary                   = CreateGauge("parameter")
 InstLightsPrimary.arg_number        = 117
 InstLightsPrimary.input             = {0.0, 1.0}
 InstLightsPrimary.output            = {0.0, 1.0}
-InstLightsPrimary.parameter_name    = "LIGHTS-INSTRUMENTS"
+InstLightsPrimary.parameter_name    = "LIGHTS-INST"
 
 ConsoleLights                       = CreateGauge("parameter")
 ConsoleLights.arg_number            = 119
@@ -980,10 +980,10 @@ Stopwatch_secs.parameter_name      = "STOPWATCH_SECS"
 --TEST_PARAM_GAUGE      			  = CreateGauge("parameter")
 --TEST_PARAM_GAUGE.parameter_name   = "TEST"
 --TEST_PARAM_GAUGE.arg_number    	  = 113
---TEST_PARAM_GAUGE.input    		  = {0,100} 
---TEST_PARAM_GAUGE.output    		  = {0,1} 
+--TEST_PARAM_GAUGE.input    		  = {0,100}
+--TEST_PARAM_GAUGE.output    		  = {0,1}
 
-need_to_be_closed = true -- close lua state after initialization 
+need_to_be_closed = true -- close lua state after initialization
 
 
 Z_test =
@@ -994,7 +994,7 @@ Z_test =
 
 livery = "default"
 
---[[ available functions 
+--[[ available functions
 
  --base_gauge_RadarAltitude
  --base_gauge_BarometricAltitude
