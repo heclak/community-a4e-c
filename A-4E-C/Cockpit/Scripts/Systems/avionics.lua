@@ -162,7 +162,7 @@ lights_int_instruments = get_param_handle("LIGHTS-INST")
 lights_int_console = get_param_handle("LIGHTS-CONSOLE")
 
 local lights_floodwhite_val = 0
-local lights_floodred_val = 0.2
+local lights_floodred_val = 0.5
 local lights_instruments_val = 0
 local lights_console_val = 0
 
@@ -340,11 +340,11 @@ function SetCommand(command,value)
     elseif command == device_commands.intlight_brightness then
         local x = value
         if x == 1.0 then
-            lights_floodred_val = 1.0
+            lights_floodred_val = 0.8
         elseif x == 0 then
             lights_floodred_val = 0.5
         elseif x == -1 then
-            lights_floodred_val = 0.8
+            lights_floodred_val = 0.65
         end
     elseif command == device_commands.intlight_whiteflood then
         local whiteflood = value
