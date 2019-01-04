@@ -577,6 +577,8 @@ axisCommands = {
 
     {action = device_commands.radar_angle_axis, cockpit_device_id = devices.RADAR, name = _('Radar Angle Slew')},
     {action = device_commands.radar_angle_axis_abs, cockpit_device_id = devices.RADAR, name = _('Radar Angle Absolute')},
+    {action = device_commands.intlight_instruments, cockpit_device_id = devices.AVIONICS, name = _('Instrument Lighting')},
+    {action = device_commands.intlight_console, cockpit_device_id = devices.AVIONICS, name = _('Console Lighting')},
 
     -- from base_joystick_binding.lua...
 
