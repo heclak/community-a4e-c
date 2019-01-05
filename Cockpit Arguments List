@@ -506,6 +506,8 @@ COMPASS CONTROL PANEL (REWORKED PER A-4 AFC 256)
 =#110: White flood control knob
 =#111: White flood light left
 =#114: red flood lights (3 left, 3 right, 2 console)
+=#117: Instrument Lighting
+=#119: Console Lighting
 
 
 55. COMPASS CONTROL PANEL (NOT REWORKED PER A-4 AFC 256)
