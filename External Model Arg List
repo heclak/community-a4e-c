@@ -1,0 +1,36 @@
+==============================================
+The Following are the External Model Arguments
+This is not a comprehensive list and continued documentation is in progress
+==============================================
+
+=#0 -- front gear
+=#1 -- front gear suspension
+=#2 -- front gear rotation
+=#3 -- right gear
+=#4 -- right gear suspension
+=#5 -- left gear
+=#6 -- left gear suspension
+=#7 -- Wheel Chocks
+=#9 -- right flap
+=#10 -- left flap
+=#11 -- right aileron
+=#12 -- left aileron
+=#15 -- right elevator
+=#16 -- left elevator
+=#17 -- rudder
+=#21 -- SFM air brake
+=#13 -- right slat
+=#14 -- left slat
+=#25 -- tail hook
+=#38 -- canopy
+=#120 -- right spoiler
+=#123 -- left spoiler
+=#190 -- left (red) navigation wing-tip light
+=#191 -- right (green) navigation wing-tip light
+=#192 -- tail (white) light
+=#198 -- anticollision (flashing red) top light
+=#199 -- anticollision (flashing red) bottom light
+=#208 -- taxi light (white) right main gear door
+=#402 -- huffer
+=#500 -- model air brake
+=#501 -- RAT
