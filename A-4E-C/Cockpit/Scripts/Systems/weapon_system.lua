@@ -424,7 +424,7 @@ function update()
                 if station_info.weapon.level3 == wsType_Bomb_Cluster then
                     number_of_cbu_readied = number_of_cbu_readied + 1
                 end
-                debug_print("station "..tostring(i)..": count="..tostring(station_info.count)..",state="..tostring(station_states[i])..",l2="..tostring(station_info.weapon.level2)..",l3="..tostring(station_info.weapon.level3))
+                debug_print("station "..tostring(i)..": CLSID="..tostring(station_info.CLSID)..": count="..tostring(station_info.count)..",state="..tostring(station_states[i])..",l2="..tostring(station_info.weapon.level2)..",l3="..tostring(station_info.weapon.level3))
                 if station_info.count > 0 then 
                     readied_stations_empty = false
                 end
@@ -475,6 +475,7 @@ function update()
                             
                             -- release cluster bombs
                             if (station.weapon.level3 == wsType_Bomb_Cluster) then
+                                debug_print("Cluster munition found")
                                 -- setup cbu parameters before first bomblet release
                                 if cbu_mode == false then
                                     debug_print("No. of CBU stations: "..number_of_cbu_readied)
