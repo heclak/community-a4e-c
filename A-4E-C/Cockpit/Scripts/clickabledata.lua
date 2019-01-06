@@ -157,7 +157,8 @@ function default_axis_limited(hint_,device_,command_,arg_, default_, gain_,updat
 				updatable 	= updatable, 
 				use_OBB 	= false,
 				gain		= {gain},
-				relative    = {relative},  
+				relative    = {relative},
+				cycle		= false
 			}
 end
 
@@ -466,7 +467,7 @@ elements["PNT_1061"] = default_2_position_tumb("Emergency generator bypass",devi
 -- INTERIOR LIGHTING PANEL #54
 elements["PNT_106"] = default_axis_limited( "Instrument Lighting", devices.AVIONICS, device_commands.intlight_instruments, 106, 0.0, 0.3, false, false, {0,1} )
 elements["PNT_107"] = default_axis_limited( "Console Lighting", devices.AVIONICS, device_commands.intlight_console, 107, 0.0, 0.3, false, false, {0,1} )
-elements["PNT_108"] = multiposition_switch_limited("Console Light Intensity", devices.AVIONICS, device_commands.intlight_brightness, 108, 3, 1, true, -1, TOGGLECLICK_RIGHT_AFT)
+elements["PNT_108"] = multiposition_switch_limited("Console Light Intensity", devices.AVIONICS, device_commands.intlight_brightness, 108, 3, 1, true, -1.0, TOGGLECLICK_RIGHT_AFT)
 elements["PNT_110"] = default_axis_limited( "White Floodlight Control", devices.AVIONICS, device_commands.intlight_whiteflood, 110, 0.0, 0.3, false, false, {-1,1} )
 
 -- AN/ARC-51 UHF RADIO #67
