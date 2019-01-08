@@ -1,28 +1,60 @@
 planes = {
-    { 
+-- Caucasus    
+	{ 
     name = _('Cold Start'),
-    file = 'a4e_cold_start.miz',
+    file = 'caucasus/a4e_cold_start.miz',
 	},
 	{ 
     name = _('Free Flight'),
-    file = 'a4e_free_flight.miz',
-    },
-    { 
-    name = _('Ground Attack'),
-    file = 'a4e_ground_attack.miz',
-    },
-    { 
-    name = _('Dogfight'),
-    file = 'a4e_dogfight.miz',
-    },
+    file = 'caucasus/a4e_free_flight.miz',
+	},
 	{ 
-    name = _('Takeoff'),
-    file = 'a4e_takeoff.miz',
+    name = _('Take Off'),
+    file = 'caucasus/a4e_takeoff.miz',
+	},
+	
+--	Nevada
+	{
+    name = _('Cold Start'),
+    file = 'nttr_a4e_cold_start.miz',
     },
-	{ 
-    name = _('Landing'),
-    file = 'a4e_landing.miz',
+	{
+    name = _('Free Flight'),
+    file = 'nttr_a4e_free_flight.miz',
     },
+	{
+    name = _('Take Off'),
+    file = 'nttr_a4e_takeoff.miz',
+    },
+	
+--	Normandy
+	{
+    name = _('Cold Start'),
+    file = 'norm_a4e_cold_start.miz',
+    },
+	{
+    name = _('Free Flight'),
+    file = 'norm_a4e_free_flight.miz',
+    },
+	{
+    name = _('Take Off'),
+    file = 'norm_a4e_takeoff.miz',
+    },
+	
+}
+--	Persian Gulf
+	{
+    name = _('Cold Start'),
+    file = 'gulf_a4e_cold_start.miz',
+    },
+	{
+    name = _('Free Flight'),
+    file = 'gulf_a4e_free_flight.miz',
+    },
+	{
+    name = _('Take Off'),
+    file = 'gulf_a4e_takeoff.miz',
+    },
+	
 }
 
---Zilch, please add mission examples here.
