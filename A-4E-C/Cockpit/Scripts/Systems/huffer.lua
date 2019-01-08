@@ -48,10 +48,10 @@ function update()
     end
 
     if external_power_connected then
-        local distance = math.sqrt((curx-initx)^2 + (curz-initz)^2)
+        local distance = 1
         local delta_distance = math.sqrt((curx-lastx)^2 + (curz-lastz)^2)
         lastx,lasty,lastz = curx,cury,curz
-        local speed = delta_distance/update_time_step
+        local speed = 0.2
         --if flow == 0 and tas == 0 and get_elec_retraction_release_ground() and rpm >= lastrpm then
         -- first "hey, what are you doing?" from ground crew triggers at about 0.4m/s; this should trigger a Stop event, but have not been able to figure out exactly what the string is to catch that
         -- at 5m total distance a GroundPowerOff event is also sent
