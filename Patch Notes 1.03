@@ -10,15 +10,16 @@ Contributors  (Insert your name here!)
 
 New Features
 - Chocks now hold aircraft in place, selectable via Ground Crew Interface (Tentative)
-- Added joystick mapping axis for inst light and console light
+- Added joystick mapping axis for inst light and console light,
+- RWR intergrated by Nero.
 
 Bug Fixes
-- Red Light switch no longer stuck
+- Red Light switch no longer stuck.
 - Fixed canopy visibility in cockpit when open.
 - CBU visibility has been fixed.
 
 Other Changes
-- Console and Instrument Backlighting now controlled by approporiate knobs
-- AWRS now selects appropriate ripple quantities
-- Increased Pilot Size to reflect reference imagery
-- Huffer logic been reworked (wordS?)
+- Console and Instrument Backlighting now controlled by approporiate knobs.
+- AWRS now selects appropriate ripple quantities.
+- Increased Pilot Size to reflect reference imagery.
+- Huffer logic been reworked (words?).
