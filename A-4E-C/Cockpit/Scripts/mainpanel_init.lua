@@ -322,6 +322,12 @@ Glareshield_FIRE.input                  = {0.0, 1.0}
 Glareshield_FIRE.output                 = {0.0, 1.0}
 Glareshield_FIRE.parameter_name         = "D_GLARE_FIRE"
 
+Glareshield_RWR                        = CreateGauge("parameter")
+Glareshield_RWR.arg_number             = 343
+Glareshield_RWR.input                  = {0.0, 1.0}
+Glareshield_RWR.output                 = {0.0, 1.0}
+Glareshield_RWR.parameter_name         = "D_GLARE_RWR"
+
 BDHI_Heading                        = CreateGauge("parameter")
 BDHI_Heading.parameter_name         = "BDHI_HDG"
 BDHI_Heading.arg_number             = 780

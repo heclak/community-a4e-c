@@ -37,7 +37,7 @@ devices["INTERCOM"] = counter()
 devices["OXYGEN"] = counter()
 
 devices["HUD"] = counter()
-
+devices["RWR"] = counter()
 
 -- temporary dummy devices
 devices["TEMP1"] = counter()
