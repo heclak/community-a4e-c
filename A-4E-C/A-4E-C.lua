@@ -438,9 +438,9 @@ A_4E_C =  {
     range               = 3200, -- Max range in km (for AI)
 
     thrust_sum_max      = 9300*POUNDS_TO_KG, -- thrust in kg (J52 P8A: 9300 lb)    **
-    has_afteburner      = false,
+    has_afteburner      = true,
     has_differential_stabilizer     = false,
-    thrust_sum_ab       = 9300*POUNDS_TO_KG, -- thrust in kg (kN)    **
+    thrust_sum_ab       = 19300*POUNDS_TO_KG, -- thrust in kg (kN)    **
     average_fuel_consumption = 0.86,   -- 0.86 TSFC
     is_tanker           = false,
     tanker_type         = 2, -- Tanker type if the plane is tanker
@@ -856,8 +856,8 @@ A_4E_C =  {
             Nmg    =    55.0,    -- RPM at idle
             MinRUD    =    0,    -- Min state of the throttle
             MaxRUD    =    1,    -- Max state of the throttle
-            MaksRUD    =    1,    -- Military power state of the throttle
-            ForsRUD    =    1,    -- Afterburner state of the throttle
+            MaksRUD    =    0.999,    -- Military power state of the throttle
+            ForsRUD    =    0.99999,    -- Afterburner state of the throttle
             typeng    =    0,
             --[[
                 E_TURBOJET = 0
@@ -880,8 +880,8 @@ A_4E_C =  {
             table_data =
             {
             --   M          Pmax
-                {0.0,       0.0}, -- dummy table, required for 2.0+ engine module load
-                {2.0,       0.0},
+                {0.0,       0.0,0.0}, -- dummy table, required for 2.0+ engine module load
+                {2.0,       0.0,0.0},
             }, -- end of table_data
             -- M - Mach number
             -- Pmax - Engine thrust at military power - kilo Newton
@@ -901,18 +901,19 @@ A_4E_C =  {
                                 {   0.86,  0.94,  0.976,    0.976,  0.967},--H = 12192   -- 40000'
 					}
 				},
-				-- TSFC_afterburner =  -- afterburning thrust specific fuel consumption by altitude and Mach number RPM  100%, 2d table
-				-- {
-					-- M 		 = {0,0.3,0.5,0.7,1.0},
-					-- H		 = {0,1000,3000,10000},
-					-- TSFC	 = {-- M 0  0.3 0.5  0.7  1.0
-								-- {   0,   0,  0,   0,   0},--H = 0
-								-- {   0,   0,  0,   0,   0},--H = 1000
-								-- {   0,   0,  0,   0,   0},--H = 3000
-								-- {   0,   0,  0,   0,   0},--H = 10000
-					-- }
-				-- },
-
+			
+				 TSFC_afterburner =  -- afterburning thrust specific fuel consumption by altitude and Mach number RPM  100%, 2d table
+				 {
+					 M 		 = {0,0.3,0.5,0.7,1.0},
+					 H		 = {0,1000,3000,10000},
+					 TSFC	 = {-- M 0  0.3 0.5  0.7  1.0
+								 {   1,   1,  1,   1,   1},--H = 0
+								 {   1,   1,  1,   1,   1},--H = 1000
+								 {   1,   1,  1,   1,   1},--H = 3000
+								 {   1,   1,  1,   1,   1},--H = 10000
+					 }
+				 },
+				
                 -- per ADA057325:
                 -- SFC = 0.836 (0% bleed) to 1.415 (15.44% bleed) at low throttle
                 -- SFC = 0.777 (0% bleed) to 0.964 (16.84% bleed) at MIL throttle
@@ -953,8 +954,10 @@ A_4E_C =  {
                         -- SFM BOOST BORDER -->
                                 {   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 19 (~62.3 feet)
                             -- SFM BOOST REGION ----------|
-                                {   85000,  85000,  85000,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 20 (~66.6 feet)
-                                {   85000,  85000,  85000,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 23 (~75.5 feet)
+                            --    {   85000,  85000,  85000,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 20 (~66.6 feet)		--More Cleanup?--
+                            --    {   85000,  85000,  85000,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 23 (~75.5 feet)
+								{   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 19 (~62.3 feet)
+							    {   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 19 (~62.3 feet)
                             -- END SFM BOOST REGION-------|
                                 {   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 24 (~78.7 feet)
                         -- SFM BOOST BORDER -->
@@ -970,17 +973,21 @@ A_4E_C =  {
 
 
 
-				-- thrust_afterburner = -- afterburning thrust interpolation table by altitude and mach number, 2d table
-				-- {
-					-- M 		 = {0,0.3,0.5,0.7,1.0},
-					-- H		 = {0,1000,3000,10000},
-					-- thrust	 = {-- M 0  0.3 0.5  0.7  1.0
-								-- {   1000,   1000,  1000,   1000,   1000},--H = 0
-								-- {   1000,   1000,  1000,   1000,   1000},--H = 1000
-								-- {   1000,   1000,  1000,   1000,   1000},--H = 3000
-								-- {   1000,   1000,  1000,   1000,   1000},--H = 10000
-					-- }
-				-- }
+				 thrust_afterburner = -- afterburning thrust interpolation table by altitude and mach number, 2d table
+				 {
+					 M 		 = {0,	0.20,	0.21,	1.0},
+					 H       =   {0, 19, 20, 23, 24, 250, 19812},
+					 thrust	 = {-- M 0  0.3 0.5  0.7  1.0
+								 {   1,   	1,  1,   1,},--H = 0
+								 {   1,   	1,  1,   1,},--H = 19
+								 {   250000,   	250000,  1,   1,},--H = 20
+								 {   250000,   	250000,  1,   1,},--H = 23
+								 {   1,   	1,  1,   1,}, --h=24
+								 {   1,   	1,  1,   1,},
+								 {   1,   	1,  1,   1,},
+					 }
+				 },
+
 				--rpm_acceleration_time_factor = -- time factor for engine governor  ie RPM += (desired_RPM - RPM ) * t(RPM) * dt
 				--{
 				--	RPM  = {0, 50, 100},

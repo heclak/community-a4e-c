@@ -252,6 +252,10 @@ Keys =
     SpeedHoldToggle = __custom_counter(),
     SpeedHoldInc = __custom_counter(),
     SpeedHoldDec = __custom_counter(),
+	
+	catapult_ready  = __custom_counter(),
+	catapult_shoot  = __custom_counter(),
+	catapult_abort  = __custom_counter(),
 }
 
 start_command   = 3000
@@ -385,4 +389,6 @@ device_commands =
     cm_pwr = __counter(),
 
     accel_reset = __counter(),
+	
+	throttle_axis_mod = __counter(),
 }
