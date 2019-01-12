@@ -664,7 +664,7 @@ function update_apc()
             end
             -- APC will now operate
             apc_light:set(0.0)
-            dispatch_action(nil, ThrottleAxis, apc_throttle)
+            dispatch_action(nil, ThrottleAxis, (apc_throttle*0.999))
         end
     end
 end
