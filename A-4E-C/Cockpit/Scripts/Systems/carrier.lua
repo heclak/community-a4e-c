@@ -5,7 +5,8 @@ dofile(LockOn_Options.script_path.."utils.lua")
 local update_time_step = 0.016 --update will be called 60 times per second
 make_default_activity(update_time_step)
 dev = GetSelf()
-local catapult_status = 0	-- 1 hooked  	2 fireing
+local catapult_status 	= 0	-- 1 hooked  	2 fireing
+local cat_fire_tics		= 0
 
 dev:listen_command(device_commands.throttle_axis_mod)
 dev:listen_command(Keys.catapult_ready)
@@ -39,6 +40,7 @@ function SetCommand(command,value)
 	
 	
 	if command == device_commands.throttle_axis_mod then
+--	print_message_to_user("co")
 		if  catapult_status == 3 then
 			dispatch_action(nil, 2004,-1)
 		else	
@@ -72,8 +74,11 @@ function update()
 	elseif catapult_status == 3 then
 		dispatch_action(nil, 2004,-1)
 		--if on_carrier() == false then
-		if tostring(Sensor_Data_Mod.nose_wow) == "0" then
-			catapult_status=0
+		--if tostring(Sensor_Data_Mod.nose_wow) == "0" then
+		cat_fire_tics = cat_fire_tics + 1 
+		if cat_fire_tics > 215 then
+			catapult_status	= 0
+			cat_fire_tics	= 0
 			dispatch_action(nil, 2004,-0.999)
 			print_message_to_user("Airborn!")
 		end
@@ -89,7 +94,8 @@ function update()
 	
 	if Sensor_Data_Mod.throttle_pos_l > 0.999 and catapult_status == 3 then
 		
-	elseif  Sensor_Data_Mod.throttle_pos_l > 0.999 then
+	elseif  Sensor_Data_Mod.throttle_pos_l > 0.9999 then
+	--print_message_to_user("X")
 		dispatch_action(nil, 2004,-0.999)
 	end
  
@@ -201,7 +207,4 @@ command_defs.lua
 			
 this file itself > Cockpit/Scripts/systems
 	
-	
---maybe todo: use Terrain DLL to check if over water
 ]]--
-
