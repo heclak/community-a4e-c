@@ -2,7 +2,7 @@
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 
-local update_time_step = 0.02 --update will be called 50 times per second
+local update_time_step = 0.016 --update will be called 60 times per second
 make_default_activity(update_time_step)
 dev = GetSelf()
 local catapult_status = 0	-- 1 hooked  	2 fireing
@@ -201,4 +201,7 @@ command_defs.lua
 			
 this file itself > Cockpit/Scripts/systems
 	
+	
+--maybe todo: use Terrain DLL to check if over water
 ]]--
+
