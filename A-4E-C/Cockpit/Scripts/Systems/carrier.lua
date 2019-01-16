@@ -175,7 +175,7 @@ function update()
 		--if tostring(Sensor_Data_Mod.nose_wow) == "0" then
 		cat_fire_tics = cat_fire_tics + 1 
 		--if cat_fire_tics > catapult_max_tics  then
-		if cat_fire_dist > 2 then --catapult_max_length then
+		if cat_fire_dist > catapult_max_length then
 			catapult_status=0
 			dispatch_action(nil, 2004,-0.999)
 			print_message_to_user("Airborn!")
