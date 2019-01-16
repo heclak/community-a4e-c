@@ -36,7 +36,7 @@ local carrier_tacan		= false
 local carrier_heading	= 0
 local carrier_tacan_tics= 0
 
-
+local debug_txt =""
 
 dev:listen_command(device_commands.throttle_axis_mod)
 dev:listen_command(Keys.catapult_ready)
@@ -53,13 +53,13 @@ carrier_posz_param:set(0)
 local theatre = get_terrain_related_data("name")
 local magvar = 0	--in radians!
 if theatre == "Caucasus" then
-	magvar = -math.rad(6.1)
+	magvar = math.rad(6.1)
 elseif theatre == "Persian Gulf" then
-	magvar = -math.rad(1.8)
+	magvar = math.rad(1.5)
 end
 
 function post_initialize()
-	print_message_to_user("Init - Carrier- "..theatre)
+	--print_message_to_user("Init - Carrier- "..theatre)
 	
 	
 end
@@ -150,15 +150,14 @@ function update()
 							y = Sensor_Data_Mod.self_m_y,
 							z = Sensor_Data_Mod.self_m_z,}
 							
-		local carrier_travel_dist  = math.dist(cat_start_pos.x,		cat_start_pos.z, 
-										 carrier_start_pos.x,	carrier_start_pos.z)						
-		--	print_message_to_user(carrier_travel_dist .. "\n"..cat_hook_tics)	
-			carrier_dist_per_tic=carrier_travel_dist /cat_hook_tics
-			--print_message_to_user(carrier_dist_per_tic)
-			
+		local carrier_travel_dist  = math.dist(	cat_start_pos.x,		cat_start_pos.z, 
+												carrier_start_pos.x,	carrier_start_pos.z)						
+		
+		carrier_dist_per_tic=carrier_travel_dist /cat_hook_tics
 		carrier_heading = calc_bearing( carrier_start_pos.x,	carrier_start_pos.z,cat_start_pos.x,		cat_start_pos.z  )
 		if carrier_heading < 0 then carrier_heading = carrier_heading + math.rad(360) end
-			print_message_to_user(carrier_heading.."\n"..math.deg(carrier_heading))								
+			
+	
 	elseif catapult_status == 3 then
 		dispatch_action(nil, 2004,-1)
 		cat_curr_pos =	{	x = Sensor_Data_Mod.self_m_x,
@@ -167,14 +166,11 @@ function update()
 		
 		cat_fire_dist = math.dist(	cat_start_pos.x,cat_start_pos.z, 
 									cat_curr_pos.x,	cat_curr_pos.z)
+		
 		cat_fire_dist = cat_fire_dist - (carrier_dist_per_tic * cat_fire_tics)							
-		--print_message_to_user(string.format("%.1f",cat_fire_dist))
-	--	print_message_to_user(cat_fire_dist)
-	--	print_message_to_user(carrier_heading)
-		--if on_carrier() == false then
-		--if tostring(Sensor_Data_Mod.nose_wow) == "0" then
 		cat_fire_tics = cat_fire_tics + 1 
-		--if cat_fire_tics > catapult_max_tics  then
+		
+		--if cat_fire_dist > 2 then --catapult_max_length then
 		if cat_fire_dist > catapult_max_length then
 			catapult_status=0
 			dispatch_action(nil, 2004,-0.999)
@@ -189,6 +185,9 @@ function update()
 			carrier_start_pos =	{	x = Sensor_Data_Mod.self_m_x,
 									y = Sensor_Data_Mod.self_m_y,
 									z = Sensor_Data_Mod.self_m_z,}
+									
+--DEBUG!
+--dispatch_action(nil,Keys.BrakesOn)			
 			
 		end
 	else
@@ -207,16 +206,14 @@ function update()
 	
 	
 	if Sensor_Data_Mod.throttle_pos_l > 0.999 and catapult_status == 3 then
-		
 	elseif  Sensor_Data_Mod.throttle_pos_l > 0.9999 then
-	--print_message_to_user("X")
 		dispatch_action(nil, 2004,-0.999)
 	end
  
 	if carrier_tacan == true then
 		calc_carrier_position()
 	end
-	--print_message_to_user(Sensor_Data_Mod.throttle_pos_l)
+	
 end
 
 function on_carrier()
@@ -233,39 +230,29 @@ end
 
 local dummy_tic = 0
 function calc_carrier_position()
---carrier_dist_per_tic
 	carrier_tacan_tics = carrier_tacan_tics + 1
 	
 	local act_travel_dist = carrier_tacan_tics * carrier_dist_per_tic
-	
 	local new_x,new_z =pnt_dir(carrier_start_pos.x,carrier_start_pos.z,carrier_heading,act_travel_dist)
-	
---	print_message_to_user("tacandist " ..math.dist(	carrier_start_pos.x,carrier_start_pos.z, new_x,new_z ))
-	--print_message_to_user("tacandist " ..math.dist(	Sensor_Data_Mod.self_m_x,Sensor_Data_Mod.self_m_z, new_x,new_z ))
 
---[[	
-	print_message_to_user("tacandist "..math.dist(	Sensor_Data_Mod.self_m_x,Sensor_Data_Mod.self_m_z, new_x,new_z )
-								.."\n" ..string.format("%.0f",Sensor_Data_Mod.self_m_x) .." / ".. string.format("%.0f",new_x)
-								.."\n" ..string.format("%.0f",Sensor_Data_Mod.self_m_z) .." / ".. string.format("%.0f",new_z))
-
-	]]--
-	--print_message_to_user(magvar)
 	carrier_posx_param:set(new_x)
 	carrier_posz_param:set(new_z)
 	
-	
+	--[[ --DEBUG
 	dummy_tic = dummy_tic + 1
 	if dummy_tic > 50*60 then
-		--print_message_to_user("tacandist " ..math.dist(	Sensor_Data_Mod.self_m_x,Sensor_Data_Mod.self_m_z, new_x,new_z ))
+		
 		print_message_to_user(math.deg(carrier_heading))
 		dummy_tic=0
 		
-		print_message_to_user("tacandist "..math.dist(	Sensor_Data_Mod.self_m_x,Sensor_Data_Mod.self_m_z, new_x,new_z )
+		print_message_to_user("tacandist "..string.format("%.0f",math.dist(	Sensor_Data_Mod.self_m_x,Sensor_Data_Mod.self_m_z, new_x,new_z ))
 								.."\n" ..string.format("%.0f",Sensor_Data_Mod.self_m_x) .." / ".. string.format("%.0f",new_x)
 								.."\n" ..string.format("%.0f",Sensor_Data_Mod.self_m_z) .." / ".. string.format("%.0f",new_z))
 		
+		debug_txt =debug_txt  .."\n".."tacandist "..string.format("%.0f",math.dist(	Sensor_Data_Mod.self_m_x,Sensor_Data_Mod.self_m_z, new_x,new_z ))
+		print_message_to_user(debug_txt)
 	end
-	
+	]]--
 end
 
 
@@ -344,19 +331,20 @@ end
 
 function pnt_dir(pnt_x,pnt_z,angle_rad,distance)
 	local new_x,new_z
-	--angle_rad = angle_rad - 0.0198 --+math.rad(1.5)
-	--angle_rad = angle_rad - math.rad(1.8) --+math.rad(1.5)
-	angle_rad = angle_rad + magvar 
+	--angle_rad = angle_rad + 0
+ 
 	if angle_rad < 0 then angle_rad = angle_rad + math.rad(360) end
-	
-	--new_x = pnt_x + (distance * math.sin(angle_rad))
-	--new_z = pnt_z - (distance * math.cos(angle_rad))
-	
-	new_z = pnt_z - (distance * math.sin(angle_rad))
+		
+	new_z = pnt_z + (distance * math.sin(angle_rad))
 	new_x = pnt_x + (distance * math.cos(angle_rad))
 
 	return new_x,new_z
 end
+
+
+
+
+
 --[[
 default.lua - joystick 	- axis
 	{action = device_commands.throttle_axis_mod 	,cockpit_device_id = devices.CARRIER ,name = _('Modded Throttle Axis')},
