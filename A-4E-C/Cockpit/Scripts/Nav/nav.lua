@@ -21,6 +21,11 @@ local nm2meter = 1852
 local degrees_per_radian = 57.2957795
 --local feet_per_meter_per_minute = 196.8
 
+----------------------
+local carrier_posx_param = get_param_handle("CARRIER_POSX")
+local carrier_posz_param = get_param_handle("CARRIER_POSZ")
+local cvn_tcn_id = nil
+
 
 -----------------------------------------------------------------------
 -----------------------------------------------------------------------
@@ -1356,15 +1361,20 @@ end
 -- key parameters about the matching beacon, or 'nil' if there's no tacan on the
 -- appropriate frequency
 function find_matched_tacan(chan)
+
     for i = 1,#beacon_data do
         if beacon_data[i].ntype == NAV_TYPE_VOR_TAC or beacon_data[i].ntype == NAV_TYPE_TCN then
+		
             if chan == beacon_data[i].channel or getTACANFrequency(chan, 'X') == beacon_data[i].frequency then
 
                 if beacon_data[i].position.y == nil then
                     beacon_data[i].position.y = Terrain.GetHeight(beacon_data[i].position.x, beacon_data[i].position.z)+10   -- fix caucasus height
                 end
 
+				
                 return beacon_data[i]
+				
+				
             end
         end
     end
@@ -1376,7 +1386,9 @@ function update_tacan()
 
     -- for position of the active_tacan beacon, update visibility, distance, and range
     if atcn ~= nil and (tacan_mode == "REC" or tacan_mode == "T/R") then
-        local curx,cury,curz = sensor_data.getSelfCoordinates()
+
+
+	   local curx,cury,curz = sensor_data.getSelfCoordinates()
 
         if Terrain.isVisible(curx,cury,curz,atcn.position.x,atcn.position.y+15,atcn.position.z) then
             local range = math.sqrt( (atcn.position.x - curx)^2 + (atcn.position.y - cury)^2 + (atcn.position.z - curz)^2 )/nm2meter
@@ -1508,8 +1520,8 @@ function update_bdhi()
         end
     end
 
-    bdhi_ils_gs:set(-1)
-    bdhi_ils_loc:set(-1)
+--    bdhi_ils_gs:set(-1)
+--    bdhi_ils_loc:set(-1)
 end
 
 function update_morse_playback()
@@ -1556,7 +1568,10 @@ function update()
     if not get_elec_26V_ac_ok() then
         return
     end
-      
+    
+	update_carrier_tcn()	
+	
+	  
     update_apn153() -- AN/APN-153(V) RADAR NAVIGATION SET (DOPPLER)
     update_asn41()  -- AN/ASN-41 NAVIGATION COMPUTER SYSTEM
     update_tacan()  -- AN/ARN-52(V) TACAN BEARING-DISTANCE EQUIPMENT
@@ -1565,6 +1580,44 @@ function update()
         update_morse_playback()
     end
 end
+
+function update_carrier_tcn()
+
+local cvn_x = carrier_posx_param:get()
+local cvn_z = carrier_posz_param:get()
+	
+	if cvn_x ~=	0 then
+
+		for i = 1,#beacon_data do
+			
+			if beacon_data[i].callsign == "CVN" then
+				beacon_data[i].channel 		= 99
+				beacon_data[i].position.x 	= cvn_x
+				beacon_data[i].position.z 	= cvn_z
+				beacon_data[i].position.y 	= 40
+				beacon_data[i].ntype		= NAV_TYPE_TCN
+				beacon_data[i].frequency    =1234
+				cvn_tcn_id = i
+						
+			end	
+		end	
+		
+		if not cvn_tcn_id then
+			beacon_data[#beacon_data+1] = {
+											callsign 			="CVN",
+											channel 		= 99,
+											position		= {x = cvn_x,z 	= cvn_z,y=40},
+											ntype			= NAV_TYPE_TCN,
+											frequency    	= 1234,
+											
+											}
+			--print_message_to_user(dir(beacon_data[#beacon_data]))
+		end									
+											
+	end
+
+end	
+
 
 startup_print("nav: load end")
 need_to_be_closed = false -- close lua state after initialization
