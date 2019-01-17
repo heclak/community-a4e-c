@@ -8,7 +8,7 @@ local catapult_max_length 	= 75	--stennis catapults should be 118m, but are actu
 
 -------------------------------------------------
 -------------------------------------------------
-
+Terrain   	= require('terrain')
 
 local cat_start_pos ={	x = 0,
 						y = 0,
@@ -69,12 +69,15 @@ function SetCommand(command,value)
 	
 	if command == Keys.catapult_ready then
 		if on_carrier() == true and catapult_status == 0 then
+			
+			
 			catapult_status = 1
-			print_message_to_user("Ready Catapult!")
+			print_message_to_user("Ready Catapult!\nYou are Hooked in.\nCheck flaps and trim and\nspool up engine")
 			
 			
 			cat_hook_tics = 0						
-			
+		else	
+			print_message_to_user("You are not on a Carrier!")
 		end
 	elseif command == Keys.catapult_shoot then
 		if on_carrier() == true and catapult_status == 1 then
@@ -90,7 +93,7 @@ function SetCommand(command,value)
 	
 	
 	if command == device_commands.throttle_axis_mod then
---	print_message_to_user("co")
+
 		if  catapult_status == 3 then
 			dispatch_action(nil, 2004,-1)
 		else	
@@ -110,22 +113,6 @@ end
 
 function update()
 	get_base_sensor_data()
-	
-	
-	
-	--[[
-	self_vl			= self_vel_l,
-					self_vv			= self_vel_v,
-					self_vh			= self_vel_h,
-					self_gs			= math.sqrt(self_vel_h^2 + self_vel_l^2),	--grondspeed meters/s
-					]]--
-	--print_message_to_user(Sensor_Data_Mod.true_speed)
-	--local a = Sensor_Data_Raw.getSelfVelocity
-	--print_message_to_user(Sensor_Data_Mod.self_gs)
-	
-	
-	
-	
 	
 	if catapult_status == 0 then
 	
@@ -186,8 +173,7 @@ function update()
 									y = Sensor_Data_Mod.self_m_y,
 									z = Sensor_Data_Mod.self_m_z,}
 									
---DEBUG!
---dispatch_action(nil,Keys.BrakesOn)			
+		
 			
 		end
 	else
@@ -218,8 +204,10 @@ end
 
 function on_carrier()
 	local on_carrier_bool 
---maybe one day add the Terrain function, but thats an extra DLL call...so only if absolutly nesseary!
-	if  tostring(Sensor_Data_Mod.nose_wow) == "1" and Sensor_Data_Mod.self_alt > 20 and Sensor_Data_Mod.self_alt < 23 then
+
+	if  tostring(Sensor_Data_Mod.nose_wow) == "1" and Sensor_Data_Mod.self_alt > 20 and Sensor_Data_Mod.self_alt < 23 and 
+		Terrain.GetSurfaceType(Sensor_Data_Mod.self_m_x,Sensor_Data_Mod.self_m_z) == "sea" then
+		
 		on_carrier_bool = true
 	else
 		on_carrier_bool = false
