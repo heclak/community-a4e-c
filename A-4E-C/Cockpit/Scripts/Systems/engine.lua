@@ -15,6 +15,12 @@ make_default_activity(update_rate)
 local sensor_data = get_base_data()
 
 
+sensor_data.mod_fuel_flow = function()
+	local org_fuel_flow = sensor_data.getEngineLeftFuelConsumption() 
+	if org_fuel_flow > 0.9743 then org_fuel_flow = 0.9743 end
+	return org_fuel_flow
+end
+
 local iCommandEnginesStart=309
 local iCommandEnginesStop=310
 
@@ -155,7 +161,8 @@ local egt_c_val=WMA(0.02)
 function update_egt()
     local mach = sensor_data.getMachNumber()
     local alt = sensor_data.getBarometricAltitude()
-    local thrust = sensor_data.getEngineLeftFuelConsumption()*2.20462*3600
+    --local thrust = sensor_data.getEngineLeftFuelConsumption()*2.20462*3600
+	local thrust = sensor_data.mod_fuel_flow()*2.20462*3600
 
     -- SFC is 20% higher at M0.8 compared to M0.0 at 10,000'
     -- SFC reduces by ~3.7% per 3300m delta from 10,000' at M0.8
@@ -283,7 +290,10 @@ function update_pressure_ratio()
     local prt = 1.2
 
     if get_elec_fwd_mon_ac_ok() then -- no power on emergency generator
-        prt = (sensor_data.getEngineLeftFuelConsumption()*3600/0.86) / 4137
+        --prt = (sensor_data.getEngineLeftFuelConsumption()*3600/0.86) / 4137
+		prt = (sensor_data.mod_fuel_flow()*3600/0.86) / 4137
+		
+		
         --print_message_to_user("pct max thrust: "..prt)
         prt = (prt*1.83) + 1
         --print_message_to_user("pr: "..prt)
