@@ -18,6 +18,11 @@ make_default_activity(update_time_step)
 
 local sensor_data = get_base_data()
 
+---------------------------------
+-- ANIMATION CONSTANTS
+---------------------------------
+local WHEELCHOCKS_ANIM_ARG = 499
+
 
 local Airbrake  = 73 -- This is the number of the command from command_defs
 local AirbrakeOn = 147
@@ -260,7 +265,7 @@ function update()
     local effective_airbrake = 0.333*ABRAKE_STATE + 0.667*spoil -- TODO: determine percentage split between airbrake and spoiler
     set_aircraft_draw_argument_value(21,effective_airbrake)
     set_aircraft_draw_argument_value(500,ABRAKE_STATE)
-    -- set_aircraft_draw_argument_value(402,WHEELCHOCKS_STATE) -- draw wheel chocks if state is 1. 
+    set_aircraft_draw_argument_value(WHEELCHOCKS_ANIM_ARG, WHEELCHOCKS_STATE) -- draw wheel chocks if state is 1. 
 end
 
 need_to_be_closed = false -- close lua state after initialization
