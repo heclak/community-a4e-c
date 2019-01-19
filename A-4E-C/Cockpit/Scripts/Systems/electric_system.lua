@@ -126,26 +126,26 @@ end
 function update_rat_anim()
     local cur = get_aircraft_draw_argument_value(501)
     if emergency_generator_deployed then
-        if (cur<0) then -- deploying
-            cur=cur+(update_time_step)  -- go from -1 to 0 in 1second
+        if (cur < 1) then -- deploying
+            cur = cur + update_time_step  -- go from 0 to 1 in 1 second
         else -- deployed, spinning
             -- TODO revise this when we have anim args for blades that already look like they're spinning (blurred in spin direction)
             --      This will be necessary to make it look better as well as avoid aliasing effects at certain speeds
-            local ias_knots = sensor_data.getIndicatedAirSpeed()*1.9438444924574
-            local rps=ias_knots/30.0
-            if (rps>20) then
-                rps=20
-            end
-            cur=cur+(rps*update_time_step)
-            while (cur>1.0) do
-                cur=cur-1.0
-            end
+            -- local ias_knots = sensor_data.getIndicatedAirSpeed()*1.9438444924574
+            -- local rps=ias_knots/30.0
+            -- if (rps>20) then
+            --     rps=20
+            -- end
+            -- cur=cur+(rps*update_time_step)
+            -- while (cur>1.0) do
+            --     cur=cur-1.0
+            -- end
         end
     else
-        if (cur>-1) then -- storing (after external power applied, pretend ground crew resets the emergency generator)
-            cur=cur-(update_time_step)  -- go from -1 to 0 in 1second
-            if cur<(-1) then
-                cur=-1
+        if (cur > 0) then -- storing (after external power applied, pretend ground crew resets the emergency generator)
+            cur = cur - update_time_step  -- go from 1 to 0 in 1second
+            if cur < 0 then
+                cur = 0
             end
         end
     end
