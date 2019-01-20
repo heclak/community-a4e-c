@@ -41,6 +41,9 @@ local WHEELCHOCKS_STATE = 0 -- state of wheel chocks
 local brakes_on = false
 local brake_eff = get_param_handle("BRAKE_EFF")
 
+local wheelchocks_state_param = get_param_handle("WHEEL_CHOCKS_STATE")
+wheelchocks_state_param:set(WHEELCHOCKS_STATE)
+
 
 dev:listen_command(Airbrake)
 dev:listen_command(AirbrakeOn)
@@ -63,6 +66,7 @@ function CockpitEvent(event,val)
         debug_print("WheelChocksOff")
         WHEELCHOCKS_STATE = 0
     end
+	wheelchocks_state_param:set(WHEELCHOCKS_STATE)
 end
 
 function SetCommand(command,value)			

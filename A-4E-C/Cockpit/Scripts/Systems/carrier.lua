@@ -53,6 +53,9 @@ local carrier_posz_param = get_param_handle("CARRIER_POSZ")
 carrier_posx_param:set(0)
 carrier_posz_param:set(0)
 
+local wheelchocks_state_param = get_param_handle("WHEEL_CHOCKS_STATE")
+
+
 local iCommandPlaneWheelBrakeOn = 74	--dispatch_action(nil,iCommandPlaneWheelBrakeOn)
 local iCommandPlaneWheelBrakeOff = 75	--dispatch_action(nil,iCommandPlaneWheelBrakeOff)
 
@@ -78,7 +81,8 @@ function SetCommand(command,value)
 --	print_message_to_user("carrier: command "..tostring(command).." = "..tostring(value))
 	
 	if command == Keys.catapult_ready then
-		if on_carrier() == true and catapult_status == 0 then
+		if on_carrier() == true and catapult_status == 0 and
+		wheelchocks_state_param:get() == 0 then
 					
 			if (birth_carrier_heading - Sensor_Data_Mod.self_head) > -math.rad(3) and
 			   (birth_carrier_heading - Sensor_Data_Mod.self_head) < math.rad(12) then
@@ -90,6 +94,9 @@ function SetCommand(command,value)
 			else
 				print_message_to_user("You are not correctly aligned")
 			end
+			
+		elseif wheelchocks_state_param:get() == 1 then
+				print_message_to_user("Wheel chocks are on!")	
 		else	
 			print_message_to_user("You are not on a Carrier!")
 		end
@@ -100,10 +107,13 @@ function SetCommand(command,value)
 			print_message_to_user("Fire Catapult!")
 		end
 	elseif command == Keys.catapult_abort then
-			catapult_status = 0
-			print_message_to_user("Abort Catapult!")
-			--dispatch_action(nil,Keys.BrakesOff)
-			dispatch_action(nil,iCommandPlaneWheelBrakeOff)
+			
+			if catapult_status ~= 0 then
+				catapult_status = 0
+				print_message_to_user("Abort Catapult!")
+				--dispatch_action(nil,Keys.BrakesOff)
+				dispatch_action(nil,iCommandPlaneWheelBrakeOff)
+			end
 	end
 	
 	
