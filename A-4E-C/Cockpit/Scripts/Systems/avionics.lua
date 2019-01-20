@@ -167,22 +167,22 @@ local lights_instruments_val = 0
 local lights_console_val = 0
 
 inst_lights_first_on_time = 0
-inst_lights_warmup_time = 1 -- time it takes for the incandescent light bulbs to warm up
+inst_lights_warmup_time = 1.5 -- time it takes for the incandescent light bulbs to warm up
 inst_lights_max_brightness_multiplier = 0
 inst_lights_are_cold = true
 
 console_lights_first_on_time = 0
-console_lights_warmup_time = 1.2 -- time it takes for the incandescent light bulbs to warm up
+console_lights_warmup_time = 2 -- time it takes for the incandescent light bulbs to warm up
 console_lights_max_brightness_multiplier = 0
 console_lights_are_cold = true
 
 red_floodlights_first_on_time = 0
-red_floodlights_warmup_time = 1.3 -- time it takes for the incandescent light bulbs to warm up
+red_floodlights_warmup_time = 2.8 -- time it takes for the incandescent light bulbs to warm up
 red_floodlights_max_brightness_multiplier = 0
 red_floodlights_are_cold = true
 
 white_floodlights_first_on_time = 0
-white_floodlights_warmup_time = 1.3 -- time it takes for the incandescent light bulbs to warm up
+white_floodlights_warmup_time = 2.8 -- time it takes for the incandescent light bulbs to warm up
 white_floodlights_max_brightness_multiplier = 0
 white_floodlights_are_cold = true
 -----------------------------------------------------------------------------
@@ -911,6 +911,9 @@ function update_aoa_ladder()
     update_glideslope()
 end
 
+function lighting_warmup(lights_on_duration, lights_warmup_time)
+    return (math.atan( 20 * (lights_on_duration / lights_warmup_time))) / 1.52
+end
 
 function update_int_lights()
     -- red floodlights, console, and instrument lighting are powered by the primary dc bus
@@ -929,21 +932,21 @@ function update_int_lights()
         -- lights power on effect
         local inst_lights_on_duration = get_model_time() - inst_lights_first_on_time
         if inst_lights_on_duration < inst_lights_warmup_time then
-            inst_lights_max_brightness_multiplier = math.tanh(2*(inst_lights_on_duration / inst_lights_warmup_time))
+            inst_lights_max_brightness_multiplier = lighting_warmup(inst_lights_on_duration, inst_lights_warmup_time)
         else
             -- inst_lights_max_brightness_multiplier = 1
         end
 
         local console_lights_on_duration = get_model_time() - console_lights_first_on_time
         if console_lights_on_duration < console_lights_warmup_time then
-            console_lights_max_brightness_multiplier = math.tanh(2*(console_lights_on_duration / console_lights_warmup_time))
+            console_lights_max_brightness_multiplier = lighting_warmup(console_lights_on_duration, console_lights_warmup_time)
         else
             -- console_lights_max_brightness_multiplier = 1
         end
 
         local red_floodlights_on_duration = get_model_time() - red_floodlights_first_on_time
         if red_floodlights_on_duration < red_floodlights_warmup_time then
-            red_floodlights_max_brightness_multiplier = math.tanh(2*(red_floodlights_on_duration / red_floodlights_warmup_time))
+            red_floodlights_max_brightness_multiplier = lighting_warmup(red_floodlights_on_duration, red_floodlights_warmup_time)
         else
             -- red_floodlights_max_brightness_multiplier = 1
         end
@@ -972,7 +975,7 @@ function update_int_lights()
 
         local white_floodlights_on_duration = get_model_time() - white_floodlights_first_on_time
         if white_floodlights_on_duration < white_floodlights_warmup_time then
-            white_floodlights_max_brightness_multiplier = math.tanh(2*(white_floodlights_on_duration / white_floodlights_warmup_time))
+            white_floodlights_max_brightness_multiplier = lighting_warmup(white_floodlights_on_duration, white_floodlights_warmup_time)
         else
             -- white_floodlights_max_brightness_multiplier = 1
         end
