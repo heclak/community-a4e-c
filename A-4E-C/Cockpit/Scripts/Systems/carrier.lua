@@ -53,6 +53,11 @@ local carrier_posz_param = get_param_handle("CARRIER_POSZ")
 carrier_posx_param:set(0)
 carrier_posz_param:set(0)
 
+local iCommandPlaneWheelBrakeOn = 74	--dispatch_action(nil,iCommandPlaneWheelBrakeOn)
+local iCommandPlaneWheelBrakeOff = 75	--dispatch_action(nil,iCommandPlaneWheelBrakeOff)
+
+
+
 local theatre = get_terrain_related_data("name")
 local magvar = 0	--in radians!
 if theatre == "Caucasus" then
@@ -66,6 +71,8 @@ function post_initialize()
 	
 	
 end
+
+
 
 function SetCommand(command,value)
 --	print_message_to_user("carrier: command "..tostring(command).." = "..tostring(value))
@@ -95,7 +102,8 @@ function SetCommand(command,value)
 	elseif command == Keys.catapult_abort then
 			catapult_status = 0
 			print_message_to_user("Abort Catapult!")
-			dispatch_action(nil,Keys.BrakesOff)
+			--dispatch_action(nil,Keys.BrakesOff)
+			dispatch_action(nil,iCommandPlaneWheelBrakeOff)
 	end
 	
 	
@@ -149,7 +157,8 @@ function update()
 	if catapult_status == 0 then
 	
 	elseif catapult_status == 1 then
-		dispatch_action(nil,Keys.BrakesOn)
+		--dispatch_action(nil,Keys.BrakesOn)
+		dispatch_action(nil,iCommandPlaneWheelBrakeOn)
 		
 		if cat_hook_tics == 0 then
 			carrier_start_pos =	{	x = Sensor_Data_Mod.self_m_x,
@@ -161,7 +170,8 @@ function update()
 		
 								
 	elseif catapult_status == 2 then
-		dispatch_action(nil,Keys.BrakesOff)
+		--dispatch_action(nil,Keys.BrakesOff)
+		dispatch_action(nil,iCommandPlaneWheelBrakeOff)
 		dispatch_action(nil, 2004,-1)
 		catapult_status=3
 		
