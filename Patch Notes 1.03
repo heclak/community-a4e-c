@@ -15,17 +15,18 @@ New Features:
 - Chocks now hold aircraft in place, selectable via Ground Crew Interface (Tentative). Carrier starts now possible.
 - Added joystick mapping axis for inst light and console light.
 - Lights inside cockpit reworked. Now red.
-- RWR integrated by Nero (Please see sub-mod for advanced RwR)
+- RwR now integrated. Option to have either the AN/APR-23 or AN/APR-25.
 
 Bug Fixes:
 - Red Light switch no longer stuck.
 - Fixed canopy visibility in cockpit when open.
 - CBU visibility has been fixed.
 - Huffer now works on carriers.
+- Standby compass bug fixed. UV mapping of backlight rotated 180 degrees.
 
 
 Other Changes:
-- Console and Instrument Backlighting now controlled by approporiate knobs.
+- Console and Instrument Backlighting now controlled by appropriate knobs.
 - AWRS now selects appropriate ripple quantities.
 - Increased Pilot Size to reflect reference imagery.
 - Huffer logic been reworked (words?).
