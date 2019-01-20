@@ -41,7 +41,7 @@ mirrors_draw.controller         = controllers.mirrors_draw
 Canopy    						= CreateGauge()
 Canopy.arg_number 				= 26
 Canopy.input   					= {0,1}
-Canopy.output  					= {0,1}
+Canopy.output  					= {0,0.9}
 Canopy.controller 				= controllers.base_gauge_CanopyPos
 --CockpitCanopy.controller		= controllers.CockpitCanopy
 

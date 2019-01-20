@@ -1,5 +1,15 @@
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
+dofile(LockOn_Options.script_path.."utils.lua")
+
+local debug_mode = false -- set to true for debug messages
+
+function debug_print(x)
+    if debug_mode then
+        print_message_to_user(x)
+        log.alert(x)
+    end
+end
 
 local dev = GetSelf()
 
@@ -7,6 +17,11 @@ local update_time_step = 0.02  --50 time per second
 make_default_activity(update_time_step)
 
 local sensor_data = get_base_data()
+
+---------------------------------
+-- ANIMATION CONSTANTS
+---------------------------------
+local WHEELCHOCKS_ANIM_ARG = 499
 
 
 local Airbrake  = 73 -- This is the number of the command from command_defs
@@ -21,6 +36,7 @@ local ABRAKE_COMMAND	=	0
 local ABRAKE_STATE	=	0
 local ABRAKE_TARGET = 0
 local speedbrake_emer_countdown = 0
+local WHEELCHOCKS_STATE = 0 -- state of wheel chocks
 
 local brakes_on = false
 local brake_eff = get_param_handle("BRAKE_EFF")
@@ -33,6 +49,21 @@ dev:listen_command(device_commands.speedbrake)
 dev:listen_command(device_commands.speedbrake_emer)
 dev:listen_command(Keys.BrakesOn)
 dev:listen_command(Keys.BrakesOff)
+
+dev:listen_event("WheelChocksOn")
+dev:listen_event("WheelChocksOff")
+
+function CockpitEvent(event,val)
+    -- val is mostly just empty table {}
+    debug_print("Airbrake CockpitEvent event: "..tostring(event).." = "..tostring(val))
+    if event == "WheelChocksOn" then
+        debug_print("WheelChocksOn")
+        WHEELCHOCKS_STATE = 1
+    elseif event == "WheelChocksOff" then
+        debug_print("WheelChocksOff")
+        WHEELCHOCKS_STATE = 0
+    end
+end
 
 function SetCommand(command,value)			
 	if command == Airbrake then
@@ -78,6 +109,21 @@ local current_spoiler=get_param_handle("D_SPOILERS")
 local spdbrk_caution=get_param_handle("D_SPDBRK_CAUTION")
 local master_test_param = get_param_handle("D_MASTER_TEST")
 
+function post_initialize()
+    startup_print("airbrake: postinit")
+
+    -- check starting condition. Chocks should be on cold start and on the carrier to prevent sliding
+    local birth = LockOn_Options.init_conditions.birth_place
+    debug_print("Birth condition is "..birth)
+    if birth == "GROUND_HOT" then
+        -- not able to differentiate carrier hot from ground hot (runway start). Carrier hot should have the chocks on for ramp hot start. No solution yet.
+    elseif birth == "GROUND_COLD" then
+        -- turn on chocks if cold start. Current solution is bugged as it requires to turn chocks on again before turning off.
+        -- WHEELCHOCKS_STATE = true 
+    end
+
+    startup_print("airbrake: postinit end")
+end
 
 local brk_lastx = 0
 local brk_lastz = 0
@@ -113,6 +159,13 @@ local brake_now = 0
 local brakes_on_last = brakes_on
 
 function update_brakes()
+    -- hold brakes on if wheels chocks are on.
+    if WHEELCHOCKS_STATE == 1 then
+        dispatch_action(nil,iCommandPlaneWheelBrakeOn)
+    else
+        dispatch_action(nil,iCommandPlaneWheelBrakeOff)
+    end
+
     if brakes_on then
         local x,y = get_brake_ratio(vel_xz_brakes())
 
@@ -212,6 +265,7 @@ function update()
     local effective_airbrake = 0.333*ABRAKE_STATE + 0.667*spoil -- TODO: determine percentage split between airbrake and spoiler
     set_aircraft_draw_argument_value(21,effective_airbrake)
     set_aircraft_draw_argument_value(500,ABRAKE_STATE)
+    set_aircraft_draw_argument_value(WHEELCHOCKS_ANIM_ARG, WHEELCHOCKS_STATE) -- draw wheel chocks if state is 1. 
 end
 
 need_to_be_closed = false -- close lua state after initialization

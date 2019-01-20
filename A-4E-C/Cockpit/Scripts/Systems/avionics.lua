@@ -170,10 +170,29 @@ lights_int_instruments = get_param_handle("LIGHTS-INST")
 lights_int_console = get_param_handle("LIGHTS-CONSOLE")
 
 local lights_floodwhite_val = 0
-local lights_floodred_val = 0.2
+local lights_floodred_val = 0.5
 local lights_instruments_val = 0
 local lights_console_val = 0
 
+inst_lights_first_on_time = 0
+inst_lights_warmup_time = 1.5 -- time it takes for the incandescent light bulbs to warm up
+inst_lights_max_brightness_multiplier = 0
+inst_lights_are_cold = true
+
+console_lights_first_on_time = 0
+console_lights_warmup_time = 2 -- time it takes for the incandescent light bulbs to warm up
+console_lights_max_brightness_multiplier = 0
+console_lights_are_cold = true
+
+red_floodlights_first_on_time = 0
+red_floodlights_warmup_time = 2.8 -- time it takes for the incandescent light bulbs to warm up
+red_floodlights_max_brightness_multiplier = 0
+red_floodlights_are_cold = true
+
+white_floodlights_first_on_time = 0
+white_floodlights_warmup_time = 2.8 -- time it takes for the incandescent light bulbs to warm up
+white_floodlights_max_brightness_multiplier = 0
+white_floodlights_are_cold = true
 -----------------------------------------------------------------------------
 -- Vertical Velocity Indicator
 vvi = get_param_handle("VVI")
@@ -348,11 +367,11 @@ function SetCommand(command,value)
     elseif command == device_commands.intlight_brightness then
         local x = value
         if x == 1.0 then
-            lights_floodred_val = 1.0
+            lights_floodred_val = 0.8
         elseif x == 0 then
             lights_floodred_val = 0.5
         elseif x == -1 then
-            lights_floodred_val = 0.8
+            lights_floodred_val = 0.65
         end
     elseif command == device_commands.intlight_whiteflood then
         local whiteflood = value
@@ -902,17 +921,78 @@ function update_aoa_ladder()
     update_glideslope()
 end
 
+function lighting_warmup(lights_on_duration, lights_warmup_time)
+    return (math.atan( 20 * (lights_on_duration / lights_warmup_time))) / 1.52
+end
 
 function update_int_lights()
-    lights_int_floodwhite:set(lights_floodwhite_val)
-    lights_int_instruments:set(lights_instruments_val)
-    lights_int_console:set(lights_console_val)
+    -- red floodlights, console, and instrument lighting are powered by the primary dc bus
+    if get_elec_primary_ac_ok() then
+        if inst_lights_are_cold and (lights_instruments_val > 0) then
+            inst_lights_first_on_time = get_model_time()
+            inst_lights_are_cold = false
+        end
 
-    if lights_console_val > 0 then
+        if console_lights_are_cold and (lights_console_val > 0) then
+            console_lights_first_on_time = get_model_time()
+            red_floodlights_first_on_time = get_model_time()
+            console_lights_are_cold = false
+        end
+
+        -- lights power on effect
+        local inst_lights_on_duration = get_model_time() - inst_lights_first_on_time
+        if inst_lights_on_duration < inst_lights_warmup_time then
+            inst_lights_max_brightness_multiplier = lighting_warmup(inst_lights_on_duration, inst_lights_warmup_time)
+        else
+            -- inst_lights_max_brightness_multiplier = 1
+        end
+
+        local console_lights_on_duration = get_model_time() - console_lights_first_on_time
+        if console_lights_on_duration < console_lights_warmup_time then
+            console_lights_max_brightness_multiplier = lighting_warmup(console_lights_on_duration, console_lights_warmup_time)
+        else
+            -- console_lights_max_brightness_multiplier = 1
+        end
+
+        local red_floodlights_on_duration = get_model_time() - red_floodlights_first_on_time
+        if red_floodlights_on_duration < red_floodlights_warmup_time then
+            red_floodlights_max_brightness_multiplier = lighting_warmup(red_floodlights_on_duration, red_floodlights_warmup_time)
+        else
+            -- red_floodlights_max_brightness_multiplier = 1
+        end
+
+        lights_int_instruments:set(lights_instruments_val * inst_lights_max_brightness_multiplier)
+        lights_int_console:set(lights_console_val * console_lights_max_brightness_multiplier)
+
         -- red floods are conditional upon console knob enabled
-        lights_int_floodred:set(lights_floodred_val)
+        if lights_console_val > 0 then
+            lights_int_floodred:set(lights_floodred_val * red_floodlights_max_brightness_multiplier)
+        else
+            lights_int_floodred:set(0)
+        end
     else
+        lights_int_instruments:set(0)
+        lights_int_console:set(0)
         lights_int_floodred:set(0)
+    end
+    
+    -- white floodlights are powered by the forward monitors ac bus
+    if get_elec_fwd_mon_ac_ok() then
+        if white_floodlights_are_cold and (lights_floodwhite_val > 0) then
+            white_floodlights_first_on_time = get_model_time()
+            white_floodlights_are_cold = false
+        end
+
+        local white_floodlights_on_duration = get_model_time() - white_floodlights_first_on_time
+        if white_floodlights_on_duration < white_floodlights_warmup_time then
+            white_floodlights_max_brightness_multiplier = lighting_warmup(white_floodlights_on_duration, white_floodlights_warmup_time)
+        else
+            -- white_floodlights_max_brightness_multiplier = 1
+        end
+
+        lights_int_floodwhite:set(lights_floodwhite_val * white_floodlights_max_brightness_multiplier)
+    else
+        lights_int_floodwhite:set(0)
     end
 end
 
