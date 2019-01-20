@@ -506,6 +506,8 @@ COMPASS CONTROL PANEL (REWORKED PER A-4 AFC 256)
 =#110: White flood control knob
 =#111: White flood light left
 =#114: red flood lights (3 left, 3 right, 2 console)
+=#117: Instrument Lighting
+=#119: Console Lighting
 
 
 55. COMPASS CONTROL PANEL (NOT REWORKED PER A-4 AFC 256)
@@ -606,6 +608,11 @@ XXX We are not implementing this panel.  We are implementing #50 above instead.
 =#529: Counter disp 2, 1s
 =#530: Power switch (2 pos, OFF / PWR)
 
+64. RWR
+=#343: RWR Warning Lamp
+=#344: Reserved for RWR Feature
+=#345: Reserved for RWR Feature
+
 
 ==========================================================================
 PERIPHERAL COCKPIT INSTRUMENTS (Figure 1-5 on page 1-8)
@@ -647,9 +654,9 @@ Available IDs.  Please keep this up-to-date.
 #62-79
 #89-99
 --#111-119
-#285-359
+#285-342
+#346-359
 #373-379
---#373 reserved by Nero for RWR Lamp
 #394-399
 #405-439
 #444-519

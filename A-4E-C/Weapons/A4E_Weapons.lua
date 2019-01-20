@@ -1451,15 +1451,47 @@ function make_cbu_a4e(dispenser,element,count) -- assemble a cluster dispenser
         },
     }
 
-    for i = 1,count do
-        data.Elements[#data.Elements + 1] = {DrawArgs	=	{{1,1},{2,1}},
-                                            Position	=	{0,0,0},
-                                            ShapeName	=	element,
-                                            Rotation	=   {0,0,0}}
+    local pos_bomblets = {
+        { -0.9, -0.2, 0},
+        { -0.9, -0.12, 0},
+        { -0.9, -0.28, 0},
+        { -0.9, -0.04, 0},
+        { -0.9, -0.36, 0},
+        
+        { -0.9, -0.16, 0.06},
+        { -0.9, -0.24, 0.06},
+        { -0.9, -0.08, 0.06},
+        { -0.9, -0.32, 0.06},
+
+        { -0.9, -0.12, 0.12},
+        { -0.9, -0.20, 0.12},
+        { -0.9, -0.28, 0.12},
+
+        { -0.9, -0.16, -0.06},
+        { -0.9, -0.24, -0.06},
+        { -0.9, -0.08, -0.06},
+        { -0.9, -0.32, -0.06},
+
+        { -0.9, -0.12, -0.12},
+        { -0.9, -0.20, -0.12},
+        { -0.9, -0.28, -0.12},
+    }
+
+    for i = 0,count do
+        data.Elements[#data.Elements + 1] = {
+            DrawArgs	=	{{1,1},{2,1}},
+            Position	=	pos_bomblets[(i%19)+1],
+            ShapeName	=	element,
+            Rotation	=   {0,0,0}
+        }
     end
 
     return data
 end
+
+declare_loadout(make_cbu_a4e("CBU-1/A", "BLU-4B", math.floor(509/cbu_mult))) -- {CBU-1/A}
+declare_loadout(make_cbu_a4e("CBU-2/A", "BLU-3B", math.floor(360/cbu_mult))) -- {CBU-2/A}
+declare_loadout(make_cbu_a4e("CBU-2B/A", "BLU-3B", math.floor(409/cbu_mult))) -- {CBU-2B/A}
 
 
 ----------------------------------------------------
@@ -1732,7 +1764,7 @@ function make_cbu_a4e_multi(dispenser,count,side) -- assemble a rack of cluster 
     local data = {}
 
     data.category           = CAT_PODS
-    data.CLSID              = "{"..dispenser.."_TER_2_"..sidestr[2+side].."}"
+    data.CLSID              = "{"..dispenser.."_TER_"..tostring(count).."_"..sidestr[2+side].."}"
     data.attribute          = {wsType_Weapon, wsType_Bomb, wsType_Container, WSTYPE_PLACEHOLDER}
     data.Picture            = "suu-1a.png"
     data.Count              = dispenser_variant.bomblet_count * count
@@ -1752,12 +1784,6 @@ function make_cbu_a4e_multi(dispenser,count,side) -- assemble a rack of cluster 
     local positions =  {{ 0,  -0.135,     0.135},  -- right -- 0
                         { 0,  -0.135,    -0.135},  -- left
                         { 0,  -0.357,     0}}      -- center  -- -0.18
-
-    -- pre calculate center tube exit of SUU-7 dispenser as bomblet_offset = {-1.471, -0.203, 0}
-    -- 0.7071 * 0.0203 = 0.1435 (45 degree angle, centered)
-    local pos_bomblets = {{ -1.451,  -0.2785,  0.2785},  -- right
-                          { -1.451,  -0.2785, -0.2785},  -- left
-                          { -1.451,  -0.5600,  0}}       -- center
 
     local rotations =  {{ -45, 0, 0}, -- right
                         {  45, 0, 0}, -- left
@@ -1787,30 +1813,14 @@ function make_cbu_a4e_multi(dispenser,count,side) -- assemble a rack of cluster 
         local j = order[i+offset]
         data.Elements[#data.Elements + 1] = {DrawArgs	=	{{1,1},{2,1}},
                                             Position	=	positions[j],
+                                            payload_CLSID = "{"..dispenser.."}",
                                             ShapeName	=	"suu-7",
                                             Rotation	=   rotations[j],
                                             IsAdapter   =   true}
     end
 
-    -- now mount the bomblets into each dispenser
-    for k = 1,dispenser_variant.bomblet_count do
-        -- alternate bomblet dispensing between both pods
-        data.Elements[#data.Elements + 1] = {DrawArgs	=	{{1,1},{2,1}},
-                                            Position	=	pos_bomblets[order[offset+1]],
-                                            ShapeName	=	bomb_variant.name,
-                                            Rotation	=   rotations[order[offset+1]]}
-
-        data.Elements[#data.Elements + 1] = {DrawArgs	=	{{1,1},{2,1}},
-                                            Position	=	pos_bomblets[order[offset+2]],
-                                            ShapeName	=	bomb_variant.name,
-                                            Rotation	=   rotations[order[offset+2]]}
-    end
-
     return data
 end
-
-
-
 
 
 
@@ -1893,10 +1903,6 @@ declare_loadout(rackme_a4e("Mk-20", 3, 0))          -- {Mk-20_TER_3_C}
 declare_loadout(rackme_a4e("Mk-20", 2,-1))          -- {Mk-20_TER_2_L}
 declare_loadout(rackme_a4e("Mk-20", 2, 1))          -- {Mk-20_TER_2_R}
 declare_loadout(rackme_a4e("Mk-20", 2, 0))          -- {Mk-20_TER_2_C}
-
-declare_loadout(make_cbu_a4e("CBU-1/A", "BLU-4B", math.floor(509/cbu_mult))) -- {CBU-1/A}
-declare_loadout(make_cbu_a4e("CBU-2/A", "BLU-3B", math.floor(360/cbu_mult))) -- {CBU-2/A}
-declare_loadout(make_cbu_a4e("CBU-2B/A", "BLU-3B", math.floor(409/cbu_mult))) -- {CBU-2B/A}
 
 declare_loadout(make_cbu_a4e_multi("CBU-1/A",  2, -1))     -- {CBU-1/A_TER_2_L}
 declare_loadout(make_cbu_a4e_multi("CBU-1/A",  2,  1))     -- {CBU-1/A_TER_2_R}

@@ -1,0 +1,19 @@
+========================================================
+Please list he changes you've made in this file. Thanks!
+========================================================
+
+Version 1.03
+
+Contributors  (Insert your name here!)
+- Heclak
+
+New Features
+- Chocks now hold aircraft in place, selectable via Ground Crew Interface (Tentative)
+
+Bug Fixes
+- Red Light switch no longer stuck
+
+Other Changes
+- Console and Instrument Backlighting now controlled by approporiate knobs
+- AWRS now selects appropriate ripple quantities
+- Increased Pilot Size to reflect reference imagery
