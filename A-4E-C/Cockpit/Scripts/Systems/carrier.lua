@@ -36,6 +36,9 @@ local carrier_tacan		= false
 local carrier_heading	= 0
 local carrier_tacan_tics= 0
 
+local birth_tics			= 0
+local birth_carrier_heading	= 0
+
 local debug_txt =""
 
 dev:listen_command(device_commands.throttle_axis_mod)
@@ -69,13 +72,17 @@ function SetCommand(command,value)
 	
 	if command == Keys.catapult_ready then
 		if on_carrier() == true and catapult_status == 0 then
+					
+			if (birth_carrier_heading - Sensor_Data_Mod.self_head) > -math.rad(3) and
+			   (birth_carrier_heading - Sensor_Data_Mod.self_head) < math.rad(12) then
 			
-			
-			catapult_status = 1
-			print_message_to_user("Ready Catapult!\nYou are Hooked in.\nCheck flaps and trim and\nspool up engine")
-			
-			
-			cat_hook_tics = 0						
+				catapult_status = 1
+				print_message_to_user("Ready Catapult!\nYou are Hooked in.\nCheck flaps and trim and\nspool up engine")
+				
+				cat_hook_tics = 0		
+			else
+				print_message_to_user("You are not correctly aligned")
+			end
 		else	
 			print_message_to_user("You are not on a Carrier!")
 		end
@@ -113,6 +120,31 @@ end
 
 function update()
 	get_base_sensor_data()
+	
+
+	if on_carrier() == true then
+		if birth_tics < 1 then
+			birth_tics = birth_tics	+ 1 	
+			carrier_start_pos =	{	x = Sensor_Data_Mod.self_m_x,
+										y = Sensor_Data_Mod.self_m_y,
+										z = Sensor_Data_Mod.self_m_z,}
+		elseif birth_tics < 41 then
+			birth_tics = birth_tics	+ 1 	
+		elseif birth_tics == 41 then
+			cat_start_pos =	{	x = Sensor_Data_Mod.self_m_x,
+								y = Sensor_Data_Mod.self_m_y,
+								z = Sensor_Data_Mod.self_m_z,}
+			birth_carrier_heading = calc_bearing( carrier_start_pos.x,	carrier_start_pos.z,cat_start_pos.x,		cat_start_pos.z  )
+			if birth_carrier_heading < 0 then birth_carrier_heading = birth_carrier_heading + math.rad(360) end
+			cat_start_pos 		= {}
+			carrier_start_pos 	= {}
+			birth_tics = birth_tics	+ 1 
+		--	print_message_to_user(math.deg(birth_carrier_heading))
+		else
+		end
+	end
+
+	
 	
 	if catapult_status == 0 then
 	
