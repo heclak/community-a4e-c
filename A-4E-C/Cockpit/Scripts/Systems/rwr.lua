@@ -49,15 +49,20 @@ end
 
 
 local ticker=0
+local light_ticker = 0
 local Launch_played=false
 local Lock_played=false
 
 --local glare_rwr_light=get_param_handle("D_GLARE_RWR")	-- glare_rwr_light:set(rwr_val)
 local glare_rwr_light=get_param_handle("D_GLARE_OBST")	--glare_obst_light:set(obst_val) --USED ONLY UNTIL PROPPER LIGHT IS IN
 
+local glare_iff_param=get_param_handle("D_GLARE_IFF")
+local rwr_status_light_param=get_param_handle("RWR_STATUS_LIGHT")
+rwr_status_light_param:set(0)
+
 function post_initialize()
 	
-	GetDevice(devices.RWR):set_power(true)			
+	--GetDevice(devices.RWR):set_power(true)			
 	print_message_to_user("Init - RWR")
 	
 	sndhost = create_sound_host("COCKPIT_RADAR_WARN","2D",0,0,0)
@@ -68,23 +73,29 @@ end
 
 
 function update()
-	
+
+	if get_elec_aft_mon_ac_ok() == true then
+		GetDevice(devices.RWR):set_power(true)			
+		--print_message_to_user("RWR on")
+	else
+		GetDevice(devices.RWR):set_power(false)			
+		--print_message_to_user("RWR off")
+	end
+
+	--print_message_to_user("update - RWR")
 
 	if 	(get_elec_mon_dc_ok()) then
 		GetDevice(devices.RWR):set_power(true)		
 	end
 	local tmp_rwr_signal = 0
-	glare_rwr_light:set(0)
 	for i = 1,maxcontacts do	
 		local tmp_sig = rwr[i].signal_h:get()
 		
 		if tmp_sig == 3 then			--We are launched on
 			tmp_rwr_signal = 3		
-			glare_rwr_light:set(1)			
 		elseif tmp_sig == 2 then
 			if tmp_rwr_signal < 2 then	--We are locked
 				tmp_rwr_signal = 2
-				glare_rwr_light:set(1)
 			end
 		elseif tmp_sig == 1 then		--there is a radar energie source reaching our plane, but no STT
 			if tmp_rwr_signal < 1 then
@@ -93,8 +104,24 @@ function update()
 		end
 	end	
 	
---	print_message_to_user(tmp_rwr_signal)	--Just print 1/2/3 on the screen for debugging
+--print_message_to_user(tmp_rwr_signal)	--Just print 1/2/3 on the screen for debugging
 	
+	if tmp_rwr_signal == 2 then
+		rwr_status_light_param:set(1)
+		glare_iff_param:set(1)
+	
+	elseif tmp_rwr_signal == 3 then
+		if rwr_status_light_param:get()==0 then
+			rwr_status_light_param:set(1)
+			glare_iff_param:set(1)
+		else
+			rwr_status_light_param:set(0)
+			glare_iff_param:set(0)
+		end
+	elseif tmp_rwr_signal < 2 then
+		rwr_status_light_param:set(0)
+		glare_iff_param:set(0)
+	end
 	
 	
 		
@@ -125,4 +152,12 @@ function update()
 	end
 
 end
+
+--[[
+devices.lua
+device_init.lua
+Systems/rwr.lua
+
+
+]]--
 

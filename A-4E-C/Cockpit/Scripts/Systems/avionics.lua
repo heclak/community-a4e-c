@@ -16,6 +16,14 @@ local once_per_second = once_per_second_refresh
 
 local sensor_data = get_base_data()
 
+
+sensor_data.mod_fuel_flow = function()
+	local org_fuel_flow = sensor_data.getEngineLeftFuelConsumption() 
+	if org_fuel_flow > 0.9743 then org_fuel_flow = 0.9743 end
+	return org_fuel_flow
+end
+
+
 -- Const
 
 --local degrees_per_radian = 57.2957795
@@ -395,7 +403,9 @@ local currentDisplayedFuel=WMA(0.15,initINT)
 local fuel_test=0
 function update_fuel_gauge()
     totalFuel = sensor_data.getTotalFuelWeight()*KG_TO_POUNDS -- get new total fuel
-    local flow = sensor_data.getEngineLeftFuelConsumption()
+    --local flow = sensor_data.getEngineLeftFuelConsumption()
+	local flow = sensor_data.mod_fuel_flow()
+
     if not get_elec_primary_ac_ok() then
         flow=0.0001 --avoid using 0 to avoid the "flow==0" logic below
     end
@@ -801,6 +811,8 @@ local test_advisory_inrange=get_param_handle("D_ADVISORY_INRANGE")
 local test_advisory_setrange=get_param_handle("D_ADVISORY_SETRANGE")
 local test_advisory_dive=get_param_handle("D_ADVISORY_DIVE")
 
+local rwr_status_light_param=get_param_handle("RWR_STATUS_LIGHT")
+
 function update_test()
     if master_test_param:get()==1 and get_elec_primary_ac_ok() then
         test_glare_labs:set(1)
@@ -815,7 +827,8 @@ function update_test()
         test_advisory_dive:set(1)
     else
         test_glare_labs:set(0)
-        test_glare_iff:set(0)
+       -- test_glare_iff:set(0)
+	    test_glare_iff:set(rwr_status_light_param:get())
         test_glare_fire:set(0)
         glareshield_WHEELS:set(glareshield_wheels_value)
         test_ladder_fuelboost:set(0)
