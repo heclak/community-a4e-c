@@ -78,6 +78,7 @@ creators[devices.RADIO]         = {"avLuaDevice"            ,LockOn_Options.scri
 creators[devices.INTERCOM]      = {"avIntercom"             ,LockOn_Options.script_path.."dummy_radio.lua", {devices.UHF_RADIO} }
 creators[devices.UHF_RADIO]     = {"avUHF_ARC_164"          ,LockOn_Options.script_path.."uhf_radio.lua", {devices.INTERCOM, devices.ELECTRIC_SYSTEM} }
 creators[devices.CARRIER]			= {	"avLuaDevice",	LockOn_Options.script_path.."Systems/carrier.lua",}
+creators[devices.RWR]			= {	"avSimpleRWR",	LockOn_Options.script_path.."Systems/rwr.lua",}
 
 --creators[devices.TEMP1]          = {"avBasicLightSystem"            ,LockOn_Options.script_path.."dump_device.lua", {{"ElecInterface",	devices.ELECTRIC_SYSTEM}} }
 --creators[devices.TEMP2]          = {"avBasicHearingSensitivityInterface"            ,LockOn_Options.script_path.."dump_device.lua", {{"Oxygen",	devices.TEMP3}} }
