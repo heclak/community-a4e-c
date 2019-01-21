@@ -811,6 +811,10 @@ local test_advisory_inrange=get_param_handle("D_ADVISORY_INRANGE")
 local test_advisory_setrange=get_param_handle("D_ADVISORY_SETRANGE")
 local test_advisory_dive=get_param_handle("D_ADVISORY_DIVE")
 
+local test_glare_rwr_param=get_param_handle("D_GLARE_RWR")
+
+local rwr_status_light_param=get_param_handle("RWR_STATUS_LIGHT")
+
 function update_test()
     if master_test_param:get()==1 and get_elec_primary_ac_ok() then
         test_glare_labs:set(1)
@@ -823,9 +827,13 @@ function update_test()
         test_advisory_inrange:set(1)
         test_advisory_setrange:set(1)
         test_advisory_dive:set(1)
+		test_glare_rwr_param:set(1)
+		
     else
         test_glare_labs:set(0)
-        test_glare_iff:set(0)
+       -- test_glare_iff:set(0)
+	    test_glare_iff:set(rwr_status_light_param:get())
+		test_glare_rwr_param:set(rwr_status_light_param:get())
         test_glare_fire:set(0)
         glareshield_WHEELS:set(glareshield_wheels_value)
         test_ladder_fuelboost:set(0)
