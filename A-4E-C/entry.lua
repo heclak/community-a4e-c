@@ -46,6 +46,16 @@ InputProfiles =
 	{
 		["A-4E-C"]     = current_mod_path .. '/Input',
 	},
+Options =
+    {
+        {
+            name		= _("A-4E-C"),
+            nameId		= "A-4E-C",
+            dir			= "Options",
+            CLSID		= "{A-4E-C options}"
+        },
+    },		
+	
 })---------------------------------------------------------------------------------------
 
 -- mounting 3d model paths and texture paths

@@ -56,7 +56,7 @@ local Lock_played=false
 --local glare_rwr_light=get_param_handle("D_GLARE_RWR")	-- glare_rwr_light:set(rwr_val)
 local glare_rwr_light=get_param_handle("D_GLARE_OBST")	--glare_obst_light:set(obst_val) --USED ONLY UNTIL PROPPER LIGHT IS IN
 
-local glare_iff_param=get_param_handle("D_GLARE_IFF")
+local glare_rwr_param=get_param_handle("D_GLARE_RWR")
 local rwr_status_light_param=get_param_handle("RWR_STATUS_LIGHT")
 rwr_status_light_param:set(0)
 
@@ -108,19 +108,19 @@ function update()
 	
 	if tmp_rwr_signal == 2 then
 		rwr_status_light_param:set(1)
-		glare_iff_param:set(1)
+		glare_rwr_param:set(1)
 	
 	elseif tmp_rwr_signal == 3 then
 		if rwr_status_light_param:get()==0 then
 			rwr_status_light_param:set(1)
-			glare_iff_param:set(1)
+			glare_rwr_param:set(1)
 		else
 			rwr_status_light_param:set(0)
-			glare_iff_param:set(0)
+			glare_rwr_param:set(0)
 		end
 	elseif tmp_rwr_signal < 2 then
 		rwr_status_light_param:set(0)
-		glare_iff_param:set(0)
+		glare_rwr_param:set(0)
 	end
 	
 	

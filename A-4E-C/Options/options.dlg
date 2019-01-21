@@ -1,210 +1,198 @@
-dialog = 
-{
-    ["children"] = 
-    {
-		["containerPlugin"] = 
-		{
-			["children"] = 
-			{                                                
-				["nameLabel"] = 
-				{
-					["children"] = 
-					{
-					}, -- end of ["children"]
+dialog = {
+	["children"] = {
+		["containerPlugin"] = {
+			["children"] = {
+				
+				["rwrTypeComboList"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 180,
+							["x"] = 331,
+							["y"] = 86,
+						},
+						["enabled"] = true,
+						["tabOrder"] = 0,
+						["text"] = "Item1",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "comboListSkin_options",
+						},
+					},
+					["type"] = "ComboList",
+				},
+				["rwrTypeLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 260,
+							["x"] = 57,
+							["y"] = 85,
+						},
+						["enabled"] = true,
+						["text"] = "$RWRTYPE",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsCaptionSkin",
+						},
+					},
 					["type"] = "Static",
-					["theme"] = 
-					{
-						["base"] = "newOptionsWidget4Theme",
-						["params"] = 
-						{
-						}, -- end of ["params"]
-					}, -- end of ["theme"]
-					["params"] = 
-					{
-						["enabled"] = 
-						{
-							[1] = true,
-						}, -- end of ["enabled"]
-						["vert_anchor"] = 
-						{
-							[1] = "top",
-						}, -- end of ["vert_anchor"]
-						["text"] = 
-						{
-							[1] = "Ka-50",
-						}, -- end of ["text"]
-						["hor_anchor"] = 
-						{
-							[1] = "left",
-						}, -- end of ["hor_anchor"]
-						["zindex"] = 
-						{
-							[1] = 0,
-						}, -- end of ["zindex"]
-						["visible"] = 
-						{
-							[1] = true,
-						}, -- end of ["visible"]
-						["bounds"] = 
-						{
-							[1] = 57,
-							[2] = 90,
-							[3] = 261,
-							[4] = 24,
-						}, -- end of ["bounds"]
-					}, -- end of ["params"]
-				}, -- end of ["nameLabel"]
-				["altTrimmingMethodCheckbox"] = 
-                        {
-                            ["children"] = 
-                            {
-                            }, -- end of ["children"]
-                            ["type"] = "CheckBox",
-                            ["theme"] = 
-                            {
-                                ["base"] = "newOptionsCheckBoxTheme",
-                                ["params"] = 
-                                {
-                                }, -- end of ["params"]
-                            }, -- end of ["theme"]
-                            ["params"] = 
-                            {
-                                ["enabled"] = 
-                                {
-                                    [1] = true,
-                                }, -- end of ["enabled"]
-                                ["bounds"] = 
-                                {
-                                    [1] = 54,
-                                    [2] = 151,
-                                    [3] = 400,
-                                    [4] = 24,
-                                }, -- end of ["bounds"]
-                                ["vert_anchor"] = 
-                                {
-                                    [1] = "top",
-                                }, -- end of ["vert_anchor"]
-                                ["state"] = 
-                                {
-                                    [1] = false,
-                                }, -- end of ["state"]
-                                ["zindex"] = 
-                                {
-                                    [1] = 0,
-                                }, -- end of ["zindex"]
-                                ["hor_anchor"] = 
-                                {
-                                    [1] = "left",
-                                }, -- end of ["hor_anchor"]
-                                ["text"] = 
-                                {
-                                    [1] = "CENTRAL POSITION TRIMMER MODE",
-                                }, -- end of ["text"]
-                                ["visible"] = 
-                                {
-                                    [1] = true,
-                                }, -- end of ["visible"]
-                            }, -- end of ["params"]
-                        }, -- end of ["altTrimmingMethodCheckbox"]				
-			}, -- end of ["children"]
-			["type"] = "Panel",
-			["theme"] = 
-			{
-				["base"] = "newContainerTheme",
-				["params"] = 
-				{
-				}, -- end of ["params"]
-			}, -- end of ["theme"]
-			["params"] = 
-			{
-				["enabled"] = 
-				{
-					[1] = true,
-				}, -- end of ["enabled"]
-				["vert_anchor"] = 
-				{
-					[1] = "top",
-				}, -- end of ["vert_anchor"]
-				["bounds"] = 
-				{
-					[1] = 0,
-                    [2] = 0,
-                    [3] = 974,
-                    [4] = 600,
-				}, -- end of ["bounds"]
-				["visible"] = 
-				{
-					[1] = true,
-				}, -- end of ["visible"]
-				["text"] = 
-				{
-					[1] = "",
-				}, -- end of ["text"]
-				["zindex"] = 
-				{
-					[1] = 2,
-				}, -- end of ["zindex"]
-				["hor_anchor"] = 
-				{
-					[1] = "left",
-				}, -- end of ["hor_anchor"]
-			}, -- end of ["params"]
-		}-- end of ["containerPlugin"]
-	}, -- end of ["children"]
-    ["type"] = "Window",
-    ["theme"] = 
-    {
-        ["base"] = "newWindowTheme",
-        ["params"] = 
-        {
-            ["titleHeight"] = 15,
-        }, -- end of ["params"]
-    }, -- end of ["theme"]
-    ["params"] = 
-    {
-        ["visible"] = 
-        {
-            [1] = false,
-        }, -- end of ["visible"]
-        ["vert_anchor"] = 
-        {
-            [1] = "top",
-        }, -- end of ["vert_anchor"]
-        ["modal"] = 
-        {
-            [1] = false,
-        }, -- end of ["modal"]
-        ["text"] = 
-        {
-            [1] = "New dialog",
-        }, -- end of ["text"]
-        ["resizable"] = 
-        {
-            [1] = false,
-        }, -- end of ["resizable"]
-        ["top"] = 
-        {
-            [1] = false,
-        }, -- end of ["top"]
-        ["bounds"] = 
-        {
-            [1] = 12,
-            [2] = 62,
-            [3] = 1135,
-            [4] = 851,
-        }, -- end of ["bounds"]
-        ["hor_anchor"] = 
-        {
-            [1] = "left",
-        }, -- end of ["hor_anchor"]
-        ["zindex"] = 
-        {
-            [1] = 0,
-        }, -- end of ["zindex"]
-        ["enabled"] = 
-        {
-            [1] = true,
-        }, -- end of ["enabled"]
-    }, -- end of ["params"]
-} -- end of dialog
+				},
+
+				["nameLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 18,
+							["w"] = 454,
+							["x"] = 57,
+							["y"] = 41,
+						},
+						["enabled"] = true,
+						["text"] = "$PLANENAME",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsTitleSkin",
+						},
+					},
+					["type"] = "Static",
+				},
+				
+				
+				
+				
+				
+["hideControlStickComboList"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 180,
+							["x"] = 331,
+							["y"] = 120,
+						},
+						["enabled"] = true,
+						["tabOrder"] = 0,
+						["text"] = "Item1",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "comboListSkin_options",
+						},
+					},
+					["type"] = "ComboList",
+				},
+["hideControlStickLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 260,
+							["x"] = 57,
+							["y"] = 120,
+						},
+						["enabled"] = true,
+						["text"] = "$HIDESTICK",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsCaptionSkin",
+						},
+					},
+					["type"] = "Static",
+				},				
+--------------------------------	
+--[[		
+				["hideStickCheckbox"] = {
+						["params"] = {
+							["bounds"] = {
+								["h"] = 18,
+								["w"] = 300,
+								["x"] = 57,
+								["y"] = 175,
+							},
+							["enabled"] = true,
+							["state"] = false,
+							["tabOrder"] = 0,
+							["text"] = "$HIDESTICK",
+							["tooltip"] = "",
+							["visible"] = true,
+							["zindex"] = 0,
+						},
+						["skin"] = {
+							["params"] = {
+								["name"] = "checkBoxSkin_options",
+							},
+						},
+						["type"] = "CheckBox",
+					},
+			]]--
+
 			
+--------------------------------			
+				
+				
+				
+				
+			},
+
+			["params"] = {
+				["bounds"] = {
+					["h"] = 600,
+					["w"] = 974,
+					["x"] = 0,
+					["y"] = 0,
+				},
+				["enabled"] = true,
+				["text"] = "",
+				["tooltip"] = "",
+				["visible"] = true,
+				["zindex"] = 2,
+			},
+			["skin"] = {
+				["params"] = {
+					["name"] = "panelSkin",
+				},
+			},
+			["type"] = "Panel",
+		},
+	},
+	["params"] = {
+		["bounds"] = {
+			["h"] = 851,
+			["w"] = 1135,
+			["x"] = 0,
+			["y"] = 0,
+		},
+		["draggable"] = true,
+		["enabled"] = true,
+		["hasCursor"] = true,
+		["lockFlow"] = false,
+		["modal"] = false,
+		["offscreen"] = false,
+		["resizable"] = false,
+		["text"] = "New dialog",
+		["zOrder"] = 0,
+	},
+	["skin"] = {
+		["params"] = {
+			["name"] = "windowSkin",
+		},
+	},
+	["type"] = "Window",
+}
