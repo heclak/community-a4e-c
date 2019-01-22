@@ -88,22 +88,28 @@ function update()
     local poswma=reflector_pos_wma:get_WMA(reflector_pos)
     gunsight_reflector_param:set(poswma)
     gunsight_reflector_rot_param:set(1-poswma)
-    if get_elec_primary_ac_ok() then
+
+    if get_elec_primary_ac_ok() then -- check if electric power is available
         gunsight_visible:set(1)
         if not power_on then
             power_on = true
             power_on_time = get_model_time()
         end
+
+        -- calculate hud brightness
+        local bright_modifier = 1
+
+        -- hud power on effect. hud will gradually fade in if power was only recently available.
+        local timenow = get_model_time()
+        if ((timenow - power_on_time) < 5) then
+            bright_modifier = (timenow - power_on_time)/5
+        end
+        
+        gunsight_daynight_param:set(adjusted_brightness * bright_modifier)
     else
         gunsight_visible:set(0)
         power_on = false
     end
-    local bright_modifier = 1
-    local timenow = get_model_time()
-    if ((timenow - power_on_time) < 5) then
-        bright_modifier = (timenow - power_on_time)/5
-    end
-    gunsight_daynight_param:set(adjusted_brightness * bright_modifier)
 end
 
 need_to_be_closed = false -- close lua state after initialization
