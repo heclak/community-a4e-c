@@ -82,13 +82,13 @@ function SetCommand(command,value)
 	
 	if command == Keys.catapult_ready then
 		if on_carrier() == true and catapult_status == 0 and
-		wheelchocks_state_param:get() == 0 then
-					
+			wheelchocks_state_param:get() == 0 then
+			print_message_to_user(birth_carrier_heading.."\n"..Sensor_Data_Mod.self_head)		
 			if (birth_carrier_heading - Sensor_Data_Mod.self_head) > -math.rad(3) and
 			   (birth_carrier_heading - Sensor_Data_Mod.self_head) < math.rad(12) then
 			
 				catapult_status = 1
-				print_message_to_user("Ready Catapult!\nYou are Hooked in.\nCheck flaps and trim and\nspool up engine")
+				print_message_to_user("the catapult is ready!\nYou are Hooked in.\nCheck flaps and trim and\nspool up the engine to max MIL,\nsignal FIRE CATAPULT when ready.")
 				
 				cat_hook_tics = 0		
 			else
@@ -102,15 +102,20 @@ function SetCommand(command,value)
 		end
 	elseif command == Keys.catapult_shoot then
 		if on_carrier() == true and catapult_status == 1 then
-			catapult_status = 2
-			dispatch_action(nil, 2004,-1)
-			print_message_to_user("Fire Catapult!")
+		
+			if Sensor_Data_Mod.throttle_pos_l > 0.9 then
+				catapult_status = 2
+				dispatch_action(nil, 2004,-1)
+				print_message_to_user("Fire Catapult!")
+			else
+				print_message_to_user("Engines are not at max MIL power!")
+			end
 		end
 	elseif command == Keys.catapult_abort then
 			
 			if catapult_status ~= 0 then
 				catapult_status = 0
-				print_message_to_user("Abort Catapult!")
+				print_message_to_user("Abort Catapult! unhooking the plane")
 				--dispatch_action(nil,Keys.BrakesOff)
 				dispatch_action(nil,iCommandPlaneWheelBrakeOff)
 			end
