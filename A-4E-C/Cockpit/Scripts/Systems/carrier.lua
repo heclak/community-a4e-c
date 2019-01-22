@@ -218,7 +218,7 @@ function update()
 		if cat_fire_dist > catapult_max_length then
 			catapult_status=0
 			dispatch_action(nil, 2004,-0.999)
-			print_message_to_user("Airborn!")
+			print_message_to_user("Airborne!")
 			cat_start_pos = 0
 			cat_curr_pos  = 0
 			cat_fire_tics = 0
