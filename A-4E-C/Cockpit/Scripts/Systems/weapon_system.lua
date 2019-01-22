@@ -456,6 +456,11 @@ function update()
                 next_pylon = 1
             end
 
+            -- centerline will not release weapons in PAIRS mode.
+            if ((AWRS_mode == AWRS_mode_ripple_pairs) or (AWRS_mode == AWRS_mode_step_pairs)) and ( i == 3 ) then
+                break
+            end
+
             local station = WeaponSystem:get_station_info(i-1)
 
             -- HIPEG/gunpod launcher
