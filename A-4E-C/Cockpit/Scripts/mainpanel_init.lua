@@ -310,17 +310,24 @@ Glareshield_OBST.input                  = {0.0, 1.0}
 Glareshield_OBST.output                 = {0.0, 1.0}
 Glareshield_OBST.parameter_name         = "D_GLARE_OBST"
 
+--[[ -- Replace by THREAT light
 Glareshield_IFF                         = CreateGauge("parameter")
 Glareshield_IFF.arg_number              = 158
 Glareshield_IFF.input                   = {0.0, 1.0}
 Glareshield_IFF.output                  = {0.0, 1.0}
-Glareshield_IFF.parameter_name          = "D_GLARE_IFF"
+Glareshield_IFF.parameter_name          = "D_GLARE_IFF"]]--
 
 Glareshield_FIRE                        = CreateGauge("parameter")
 Glareshield_FIRE.arg_number             = 159
 Glareshield_FIRE.input                  = {0.0, 1.0}
 Glareshield_FIRE.output                 = {0.0, 1.0}
 Glareshield_FIRE.parameter_name         = "D_GLARE_FIRE"
+
+Glareshield_RWR                         = CreateGauge("parameter")
+Glareshield_RWR.arg_number              = 373
+Glareshield_RWR.input                   = {0.0, 1.0}
+Glareshield_RWR.output                  = {0.0, 1.0}
+Glareshield_RWR.parameter_name          = "D_GLARE_RWR"
 
 BDHI_Heading                        = CreateGauge("parameter")
 BDHI_Heading.parameter_name         = "BDHI_HDG"

@@ -28,6 +28,11 @@ local HideStick = get_param_handle("HIDE_STICK")
 dev:listen_command(Canopy)
 dev:listen_command(Keys.ToggleStick)
 
+
+local optionsData_hidestick =  get_plugin_option_value("A-4E-C","hideControlStick","local")
+HIDESTICK = optionsData_hidestick
+
+
 --dev:listen_command(CanopyOpenClose) --test
 
 -- getCanopyPos
@@ -66,7 +71,8 @@ function update()
         canopy_lever_clickable_ref:update() -- ensure the connector moves too
         prev_canopy_val = cockpit_lever
     end
-
+	
+	
     HideStick:set(HIDESTICK)
 end
 

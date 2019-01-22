@@ -16,10 +16,10 @@ dofile(LockOn_Options.script_path.."materials.lua")
 --			 LockOn_Options.script_path.."mainpanel_init.lua",
 --				{{"engine_system",devices.ENGINE_SYSTEM}},
  --           }
- 
+
 
 layoutGeometry = {}
-			
+
 MainPanel = {"ccMainPanel",LockOn_Options.script_path.."mainpanel_init.lua",
 {
     --{"INTERCOM", devices.INTERCOM},
@@ -77,6 +77,8 @@ creators[devices.RADIO]         = {"avLuaDevice"            ,LockOn_Options.scri
 --creators[devices.UHF_RADIO]     = {"avUHF_ARC_164"          ,LockOn_Options.script_path.."uhf_radio.lua", {{"avIntercom", devices.INTERCOM}} }
 creators[devices.INTERCOM]      = {"avIntercom"             ,LockOn_Options.script_path.."dummy_radio.lua", {devices.UHF_RADIO} }
 creators[devices.UHF_RADIO]     = {"avUHF_ARC_164"          ,LockOn_Options.script_path.."uhf_radio.lua", {devices.INTERCOM, devices.ELECTRIC_SYSTEM} }
+creators[devices.CARRIER]			= {	"avLuaDevice",	LockOn_Options.script_path.."Systems/carrier.lua",}
+creators[devices.RWR]			= {	"avSimpleRWR",	LockOn_Options.script_path.."Systems/rwr.lua",}
 
 --creators[devices.TEMP1]          = {"avBasicLightSystem"            ,LockOn_Options.script_path.."dump_device.lua", {{"ElecInterface",	devices.ELECTRIC_SYSTEM}} }
 --creators[devices.TEMP2]          = {"avBasicHearingSensitivityInterface"            ,LockOn_Options.script_path.."dump_device.lua", {{"Oxygen",	devices.TEMP3}} }
@@ -97,14 +99,14 @@ indicators[#indicators + 1] = {"ccIndicator" ,LockOn_Options.script_path.."HUD/I
 indicators[#indicators + 1] = {"ccIndicator",LockOn_Options.script_path.."RADAR/Indicator/init.lua",nil,{{"PNT_RADAR_CENTER","PNT_RADAR_DOWN","PNT_RADAR_RIGHT"}}}
 --RADAROFF indicators[#indicators + 1] = {"ccIndicator",LockOn_Options.script_path.."RADAR/Indicator/init.lua",--init script
 --RADAROFF   nil,--id of parent device
---RADAROFF   {	
---RADAROFF 	{}, -- initial geometry anchor , triple of connector names 
+--RADAROFF   {
+--RADAROFF 	{}, -- initial geometry anchor , triple of connector names
 --RADAROFF 	{sx_l =  0,  -- center position correction in meters (forward , backward)
 --RADAROFF 	 sy_l =  0,  -- center position correction in meters (up , down)
 --RADAROFF 	 sz_l =  0.3,  -- center position correction in meters (left , right)
---RADAROFF 	 sh   =  0,  -- half height correction 
---RADAROFF 	 sw   =  0,  -- half width correction 
---RADAROFF 	 rz_l =  0,  -- rotation corrections  
+--RADAROFF 	 sh   =  0,  -- half height correction
+--RADAROFF 	 sw   =  0,  -- half width correction
+--RADAROFF 	 rz_l =  0,  -- rotation corrections
 --RADAROFF 	 rx_l =  0,
 --RADAROFF 	 ry_l =  0}
 --RADAROFF   }

@@ -1,5 +1,6 @@
 -- Aircraft Flight Control System  (a.k.a. autopilot)
 -- includes the APC (Approach Power Compensator)
+-- Line 668 changes because of new Catapult logic
 dofile(LockOn_Options.common_script_path.."devices_defs.lua")
 dofile(LockOn_Options.script_path.."devices.lua")
 dofile(LockOn_Options.script_path.."Systems/stores_config.lua")
@@ -664,7 +665,7 @@ function update_apc()
             end
             -- APC will now operate
             apc_light:set(0.0)
-            dispatch_action(nil, ThrottleAxis, apc_throttle)
+            dispatch_action(nil, ThrottleAxis, (apc_throttle * 0.999))
         end
     end
 end
