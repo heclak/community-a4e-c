@@ -383,8 +383,8 @@ function update()
         _master_arm = false
     end
 
-    -- AWRS is powered by non-zero quantity selector and enabling of the master arm switch, powered by 28V DC
-    if AWRS_quantity > 0 and _master_arm then
+    -- AWRS is powered by non-zero quantity selector, powered by 28V DC
+    if AWRS_quantity > 0 and get_elec_mon_dc_ok() then
         AWRS_power:set(1.0)
     else
         AWRS_power:set(0.0)
