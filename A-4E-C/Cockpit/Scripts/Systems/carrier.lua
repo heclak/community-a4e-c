@@ -3,8 +3,8 @@ dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 
 local catapult_max_tics 	= 215
-local catapult_max_length 	= 75	--stennis catapults should be 118m, but are actualy 100m in game?! Oriskanys should be 75m
-
+--local catapult_max_length 	= 75	--stennis catapults should be 118m, but are actualy 100m in game?! Oriskanys should be 75m
+local catapult_max_length 	= 100	--stennis catapults should be 118m, but are actualy 100m in game?! Oriskanys should be 75m
 
 -------------------------------------------------
 -------------------------------------------------
@@ -83,7 +83,7 @@ function SetCommand(command,value)
 	if command == Keys.catapult_ready then
 		if on_carrier() == true and catapult_status == 0 and
 			wheelchocks_state_param:get() == 0 then
-			print_message_to_user(birth_carrier_heading.."\n"..Sensor_Data_Mod.self_head)		
+		--	print_message_to_user(birth_carrier_heading.."\n"..Sensor_Data_Mod.self_head)		
 			if (birth_carrier_heading - Sensor_Data_Mod.self_head) > -math.rad(3) and
 			   (birth_carrier_heading - Sensor_Data_Mod.self_head) < math.rad(12) then
 			
