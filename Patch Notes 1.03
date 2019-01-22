@@ -7,18 +7,20 @@ Version 1.03
 Contributors:  (Insert your name here!)
 - Heclak
 - Nero
-- LevelPulse
 - Merker
 - Plusnine
+- LevelPulse
 
 New Features:
 - Chocks now hold aircraft in place, selectable via Ground Crew Interface (Tentative). Carrier starts now possible.
 - Added joystick mapping axis for inst light and console light.
 - Lights inside cockpit reworked. Now red.
 - RwR now integrated. Option to have either the AN/APR-23 or AN/APR-25.
+- A-4E can now be launched with the catapault. 
 
 Bug Fixes:
 - Red Light switch no longer stuck.
+- No CTD when spawning on carrier.
 - Fixed canopy visibility in cockpit when open.
 - CBU visibility has been fixed.
 - Huffer now works on carriers.
