@@ -10,6 +10,10 @@ make_default_activity(update_rate)
 
 startup_print("weapon_system: load")
 
+function debug_print(x)
+    -- print_message_to_user(x)
+    -- log.alert(x)
+end
 ------------------------------------------------
 ----------------  CONSTANTS  -------------------
 ------------------------------------------------
@@ -127,10 +131,6 @@ local MASTER_TEST_BTN = get_param_handle("D_MASTER_TEST")
 local GLARE_LABS_ANNUN = get_param_handle("D_GLARE_LABS")
 local glare_labs_annun_state = false
 
-function debug_print(x)
-    -- print_message_to_user(x)
-    -- log.alert(x)
-end
 
 ------------------------------------------------
 -----------  AIRCRAFT DEFINITION  --------------
@@ -263,13 +263,23 @@ local once = false
 local pylon_order = {1,5,2,4,3}
 local next_pylon = 1 -- 1-5
 local last_pylon_release = {0,0,0,0,0}  -- last time (see time_ticker) pylon was fired
+local last_bomblet_release = {0,0,0,0,0}  -- last time (see time_ticker) bomblet was released from dispenser
 
-local cbu_mode = false -- flag used when releasing cbu bomblets (CBU-1)
+local cbu_bomblets_to_release = { 0, 0, 0, 0, 0 }
 
 function prepare_weapon_release()
     weapon_release_count = 0
+    max_weapon_release_count = 0
     if AWRS_mode == AWRS_mode_ripple_salvo or AWRS_mode == AWRS_mode_step_salvo then
-        max_weapon_release_count = AWRS_quantity
+        -- check number of readied stations
+        for i = 1, num_stations do
+            if station_states[i] == STATION_READY then
+                local station_info = WeaponSystem:get_station_info( i - 1 )
+                if station_info.count > 0 then 
+                    max_weapon_release_count = max_weapon_release_count + 1
+                end
+            end
+        end
     elseif AWRS_mode == AWRS_mode_ripple_single or AWRS_mode == AWRS_mode_step_single then
         max_weapon_release_count = 1
     elseif AWRS_mode == AWRS_mode_ripple_pairs or AWRS_mode == AWRS_mode_step_pairs then
@@ -416,14 +426,10 @@ function update()
         -- check if readied weapon stations are empty. check for number of readied stations which are cbu
         local readied_stations_empty = true
 
-        local number_of_cbu_readied = 0
 
         for i = 1, num_stations do
             if station_states[i] == STATION_READY then
                 local station_info = WeaponSystem:get_station_info(i-1)
-                if station_info.weapon.level3 == wsType_Bomb_Cluster then
-                    number_of_cbu_readied = number_of_cbu_readied + 1
-                end
                 debug_print("station "..tostring(i)..": CLSID="..tostring(station_info.CLSID)..": count="..tostring(station_info.count)..",state="..tostring(station_states[i])..",l2="..tostring(station_info.weapon.level2)..",l3="..tostring(station_info.weapon.level3))
                 if station_info.count > 0 then 
                     readied_stations_empty = false
@@ -476,68 +482,32 @@ function update()
                             -- release cluster bombs
                             if (station.weapon.level3 == wsType_Bomb_Cluster) then
                                 debug_print("Cluster munition found")
-                                -- setup cbu parameters before first bomblet release
-                                if cbu_mode == false then
-                                    debug_print("No. of CBU stations: "..number_of_cbu_readied)
-                                    debug_print(station.CLSID)
-                                    local dispenser = dispenser_data[station.CLSID]
-                                    debug_print(tostring(dispenser))
-                                    cbu_mode = true
-                                    if (AWRS_mode == AWRS_mode_step_pairs) and (number_of_cbu_readied == 2) then
-                                        debug_print('Condition 1')
-                                        max_weapon_release_count = math.ceil( dispenser.bomblet_count / dispenser.number_of_tubes ) * dispenser.tubes_per_pulse * 2
-                                        debug_print("Max Release Count: "..max_weapon_release_count)
-                                    else
-                                        debug_print('Condition 2')
-                                        max_weapon_release_count = math.ceil( dispenser.bomblet_count / dispenser.number_of_tubes ) * dispenser.tubes_per_pulse
-                                        debug_print("Max Release Count: "..max_weapon_release_count)
-                                    end
-                                end
-                                if ((time_ticker-last_pylon_release[i]) < 0.0625) then  -- rate limit cluster bomb drop rate to 16 per second
-                                    can_fire = false
-                                elseif can_fire then
-                                    WeaponSystem:launch_station(i-1)
-                                    debug_print('Weapon Released')
-                                    released_weapon = true
-                                    weapon_release_count = weapon_release_count + 1
-                                    last_pylon_release[i] = time_ticker
-                                end
+                                debug_print("Cluster CLSID"..station.CLSID)
+                                -- get dispenser data
+                                local dispenser = dispenser_data[station.CLSID]
+                                debug_print(tostring(dispenser))
+                                -- calculate number of bomblets to release
+                                local bomblets_to_add = math.ceil( dispenser.bomblet_count / dispenser.number_of_tubes ) * dispenser.tubes_per_pulse
+                                -- add bomblets to release array
+                                cbu_bomblets_to_release[i] = bomblets_to_add + cbu_bomblets_to_release[i]
+                                -- increment weapon release count after weapon pulse fired
+                                released_weapon = true
+                                weapon_release_count = weapon_release_count + 1
+                                last_pylon_release[i] = time_ticker
+                                debug_print("CBU - Weapon Release Count: "..weapon_release_count)
+                                -- end sequence if ripple count completed
 
-                                -- reset cbu_mode if bomblet release is complete
-                                if weapon_release_count >= max_weapon_release_count then
-                                    cbu_mode = false
-                                    ripple_sequence_end()
-                                end
+                                check_ripple_mode()
 
                             -- release regular bombs
-                            elseif can_fire and not cbu_mode then
+                            elseif can_fire then
                                 WeaponSystem:launch_station(i-1)
                                 debug_print('Weapon Released')
                                 released_weapon = true
                                 weapon_release_count = weapon_release_count + 1
                                 last_pylon_release[i] = time_ticker
 
-                                -- AWRS mode is in ripple single
-                                if AWRS_mode == AWRS_mode_ripple_single then
-                                    ripple_sequence_position = ripple_sequence_position + 1 -- increment ripple sequence position
-                                    
-                                    -- stop sequence if end of sequence
-                                    if ripple_sequence_position >= AWRS_quantity then
-                                        debug_print('End of Ripple Single Sequence')
-                                        ripple_sequence_end()
-                                    end
-                                end
-
-                                -- AWRS mode is in ripple pairs and both weapons have been released.
-                                if AWRS_mode == AWRS_mode_ripple_pairs and weapon_release_count == max_weapon_release_count then
-                                    ripple_sequence_position = ripple_sequence_position + 1 -- increment ripple sequence position
-                                    
-                                    -- stop sequence if end of sequence
-                                    if ripple_sequence_position >= AWRS_quantity then
-                                        debug_print('End of Ripple Pairs Sequence')
-                                        ripple_sequence_end()
-                                    end
-                                end
+                                check_ripple_mode()
                             end
                         end
 
@@ -553,27 +523,7 @@ function update()
                             weapon_release_count = weapon_release_count + 1
                             last_pylon_release[i] = time_ticker
 
-                            -- AWRS mode is in ripple single
-                            if AWRS_mode == AWRS_mode_ripple_single then
-                                ripple_sequence_position = ripple_sequence_position + 1 -- increment ripple sequence position
-                                
-                                -- stop sequence if end of sequence
-                                if ripple_sequence_position >= AWRS_quantity then
-                                    debug_print('End of Ripple Single Sequence')
-                                    ripple_sequence_end()
-                                end
-                            end
-
-                            -- AWRS mode is in ripple pairs and both weapons have been released.
-                            if AWRS_mode == AWRS_mode_ripple_pairs and weapon_release_count == max_weapon_release_count then
-                                ripple_sequence_position = ripple_sequence_position + 1 -- increment ripple sequence position
-                                
-                                -- stop sequence if end of sequence
-                                if ripple_sequence_position >= AWRS_quantity then
-                                    debug_print('End of Ripple Pairs Sequence')
-                                    ripple_sequence_end()
-                                end
-                            end
+                            check_ripple_mode()
                         end
                         
                     -- Missile launch logic
@@ -639,8 +589,58 @@ function update()
         end
     end
 
+    release_cbu_bomblets()
+
     update_countermeasures()
     update_labs_annunciator()
+end
+
+function release_cbu_bomblets()
+    for station_index, quantity in pairs(cbu_bomblets_to_release) do
+        if ((time_ticker - last_bomblet_release[station_index]) > 0.0625) then  -- rate limit cluster bomb drop rate to 16 per second
+            -- debug_print("release_cbu_bomblets()")
+            -- check if bomblet quantity is greater than zero
+            if quantity > 0 then
+                debug_print("Station: "..station_index.." Quantity: "..quantity)
+                -- check that station is not empty, if station is empty then clear quantity for station
+                local station_info = WeaponSystem:get_station_info(station_index - 1)
+                if station_info.count == 0 then
+                    cbu_bomblets_to_release[station_index] = 0
+
+                -- release weapon if station is not empty and quantity is greater than zero
+                elseif station_info.count > 0 then
+                    WeaponSystem:launch_station(station_index - 1)
+                    debug_print('Bomblet Released')
+                    cbu_bomblets_to_release[station_index] = quantity - 1
+                    last_bomblet_release[station_index] = time_ticker
+                end
+            end
+        end 
+    end
+end
+
+function check_ripple_mode()
+    -- AWRS mode is in ripple single
+    if AWRS_mode == AWRS_mode_ripple_single then
+        ripple_sequence_position = ripple_sequence_position + 1 -- increment ripple sequence position
+        
+        -- stop sequence if end of sequence
+        if ripple_sequence_position >= AWRS_quantity then
+            debug_print('End of Ripple Single Sequence')
+            ripple_sequence_end()
+        end
+    end
+
+    -- AWRS mode is in ripple pairs or ripple salvo and both weapons have been released.
+    if ((AWRS_mode == AWRS_mode_ripple_pairs) or (AWRS_mode == AWRS_mode_ripple_salvo)) and weapon_release_count == max_weapon_release_count then
+        ripple_sequence_position = ripple_sequence_position + 1 -- increment ripple sequence position
+        
+        -- stop sequence if end of sequence
+        if ripple_sequence_position >= AWRS_quantity then
+            debug_print('End of Ripple Pairs Sequence')
+            ripple_sequence_end()
+        end
+    end
 end
 
 function check_sidewinder(_master_arm)
@@ -830,7 +830,6 @@ function SetCommand(command,value)
         bombtone:stop() -- TODO also stop after last auto-release interval bomb is dropped
         glare_labs_annun_state = false -- turn on labs light
         ripple_sequence_position = 0 -- reset ripple sequence
-        cbu_mode = false -- reset cbu mode
 
     elseif command == Keys.PlaneFireOn then
         if gun_ready and not geardown then
