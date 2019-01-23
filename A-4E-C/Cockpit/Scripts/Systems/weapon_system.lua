@@ -243,8 +243,10 @@ function post_initialize()
 
     if birth == "GROUND_HOT" or birth == "AIR_HOT" then --"GROUND_COLD","GROUND_HOT","AIR_HOT"
         -- set gun_ready when starting hot
-        dev:performClickableAction(device_commands.arm_gun,1,true) -- arg 701
-        gun_ready = true
+        dev:performClickableAction(device_commands.arm_gun,0,true) -- arg 701
+        gun_ready = false
+        dev:performClickableAction(device_commands.AWRS_quantity,0.05,true) -- arg 740, quantity = 2 to power on the AWE-1
+        AWRS_quantity = 2
     elseif birth == "GROUND_COLD" then
         dev:performClickableAction(device_commands.arm_gun,0,true) -- arg 701
         gun_ready = false
@@ -976,6 +978,7 @@ function SetCommand(command,value)
             emer_bomb_release_countdown = 0.25 -- seconds until spring pulls back lever
         end
     elseif command == device_commands.AWRS_quantity then
+        print_message_to_user(value)
         local func=math.floor(math.ceil(value*100)/5) -- 0 to 11
         func = AWRS_quantity_array[func+1]
         debug_print("quantity:"..tostring(func))
@@ -1149,3 +1152,21 @@ weapons meta["__index"]["select_station"] = function: 00000000CC5C26F0
 weapons meta["__index"]["listen_command"] = function: 0000000038088060
 weapons meta["__index"]["emergency_jettison_rack"] = function: 00000000720F15F0
 --]]
+
+
+--[[
+AWRS Quantity Animation Positions
+0   = 0
+2   = 0.05
+3   = 0.10
+4   = 0.15
+5   = 0.20
+6   = 0.25
+8   = 0.30
+12  = 0.35
+16  = 0.40
+20  = 0.45
+30  = 0.50
+40  = 0.55
+
+]]--
