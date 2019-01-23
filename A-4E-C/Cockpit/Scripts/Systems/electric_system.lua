@@ -179,9 +179,10 @@ function post_initialize()
     local birth = LockOn_Options.init_conditions.birth_place
     if birth=="GROUND_HOT" or birth=="AIR_HOT" then --"GROUND_COLD","GROUND_HOT","AIR_HOT"
         -- set master_arm when starting hot
-        dev:performClickableAction(device_commands.arm_master,1,true) -- arg 709
-        master_arm = true
-        elec_mon_arms_dc_ok:set(elec_mon_dc_ok:get())
+        dev:performClickableAction(device_commands.arm_master,0,true) -- arg 709
+        master_arm = false
+        -- elec_mon_arms_dc_ok:set(elec_mon_dc_ok:get())
+        elec_mon_arms_dc_ok:set(0)
     elseif birth=="GROUND_COLD" then
         dev:performClickableAction(device_commands.arm_master,0,true) -- arg 709
         master_arm = false
