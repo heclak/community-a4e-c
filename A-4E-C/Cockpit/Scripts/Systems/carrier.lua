@@ -88,7 +88,7 @@ function SetCommand(command,value)
 			   (birth_carrier_heading - Sensor_Data_Mod.self_head) < math.rad(12) then
 			
 				catapult_status = 1
-				print_message_to_user("the catapult is ready!\nYou are Hooked in.\nCheck flaps and trim and\nspool up the engine to max MIL,\nsignal FIRE CATAPULT when ready.")
+				print_message_to_user("The catapult is ready!\nYou are hooked in.\nCheck takeoff flaps and trim\nSpool up the engine to max MIL\nSignal FIRE CATAPULT when ready.", 10)
 				
 				cat_hook_tics = 0		
 			else
@@ -98,7 +98,7 @@ function SetCommand(command,value)
 		elseif wheelchocks_state_param:get() == 1 then
 				print_message_to_user("Wheel chocks are on!")	
 		else	
-			print_message_to_user("You are not on a Carrier!")
+			print_message_to_user("You are not on a carrier!")
 		end
 	elseif command == Keys.catapult_shoot then
 		if on_carrier() == true and catapult_status == 1 then
@@ -115,7 +115,7 @@ function SetCommand(command,value)
 			
 			if catapult_status ~= 0 then
 				catapult_status = 0
-				print_message_to_user("Abort Catapult! unhooking the plane")
+				print_message_to_user("Abort Takeoff! Unhooking the plane")
 				--dispatch_action(nil,Keys.BrakesOff)
 				dispatch_action(nil,iCommandPlaneWheelBrakeOff)
 			end
