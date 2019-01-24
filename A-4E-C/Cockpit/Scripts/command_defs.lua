@@ -255,7 +255,10 @@ Keys =
 	
 	catapult_ready  = __custom_counter(),
 	catapult_shoot  = __custom_counter(),
-	catapult_abort  = __custom_counter(),
+    catapult_abort  = __custom_counter(),
+    
+    ChangeCBU2AQuantity = __custom_counter(),
+    ChangeCBU2BAQuantity = __custom_counter(),
 }
 
 start_command   = 3000

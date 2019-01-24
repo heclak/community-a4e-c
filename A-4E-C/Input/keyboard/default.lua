@@ -592,6 +592,10 @@ keyCommands = {
 	  {combos = {{key = '1', reformers = {'LAlt'}}},  down = Keys.catapult_ready, value_down = 1.0, value_up = 0.0, name = _('Catapult Ready'), category = _('Catapult')},
 	  {combos = {{key = '2', reformers = {'LAlt'}}},  down = Keys.catapult_shoot, value_down = 1.0, value_up = 0.0, name = _('Catapult Shoot'), category = _('Catapult')},
 	  {combos = {{key = '3', reformers = {'LAlt'}}},  down = Keys.catapult_abort, value_down = 1.0, value_up = 0.0, name = _('Catapult Abort'), category = _('Catapult')},
+  
+    -- Weapon/CMDS Adjustment
+    {combos = {{key = '2', reformers = {'RShift','RAlt'}}},		down = Keys.ChangeCBU2AQuantity,		value_down = 1,	name = _('Change CBU-2/A Release Quantity - 1/2/3'),		category = _('Ground Adjustment')},
+    {combos = {{key = '3', reformers = {'RShift','RAlt'}}},		down = Keys.ChangeCBU2BAQuantity,		value_down = 1,	name = _('Change CBU-2B/A Release Quantity - 1/2/3/4/6/SALVO'),		category = _('Ground Adjustment')},
 	
 },
 }
