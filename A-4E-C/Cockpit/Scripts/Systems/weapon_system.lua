@@ -200,6 +200,9 @@ WeaponSystem:listen_command(Keys.CmBank2AdjUp)
 WeaponSystem:listen_command(Keys.CmBank2AdjDown)
 WeaponSystem:listen_command(Keys.CmPowerToggle)
 
+WeaponSystem:listen_command(Keys.ChangeCBU2AQuantity)
+WeaponSystem:listen_command(Keys.ChangeCBU2BAQuantity)
+
 
 function post_initialize()
     startup_print("weapon_system: postinit start")
@@ -268,6 +271,10 @@ local last_pylon_release = {0,0,0,0,0}  -- last time (see time_ticker) pylon was
 local last_bomblet_release = {0,0,0,0,0}  -- last time (see time_ticker) bomblet was released from dispenser
 
 local cbu_bomblets_to_release = { 0, 0, 0, 0, 0 }
+local cbu2a_quantity_array = {1,2,3,4,6,17}
+local cbu2ba_quantity_array = {2,4,6}
+local cbu2a_quantity_array_pos = 0
+local cbu2ba_quantity_array_pos = 0
 
 function prepare_weapon_release()
     weapon_release_count = 0
@@ -295,6 +302,12 @@ local ir_missile_el_param = get_param_handle("WS_IR_MISSILE_TARGET_ELEVATION")
 local ir_missile_des_az_param = get_param_handle("WS_IR_MISSILE_SEEKER_DESIRED_AZIMUTH")
 local ir_missile_des_el_param = get_param_handle("WS_IR_MISSILE_SEEKER_DESIRED_ELEVATION")
 
+local cbu1a_quantity = get_param_handle("CBU1A_QTY")
+local cbu2a_quantity = get_param_handle("CBU2A_QTY")
+local cbu2ba_quantity = get_param_handle("CBU2BA_QTY")
+cbu1a_quantity:set(2)
+cbu2a_quantity:set(1)
+cbu2ba_quantity:set(2)
 
 local cm_bank1_Xx = get_param_handle("CM_BANK1_Xx")
 local cm_bank1_xX = get_param_handle("CM_BANK1_xX")
@@ -494,7 +507,15 @@ function update()
                                 local dispenser = dispenser_data[station.CLSID]
                                 debug_print(tostring(dispenser))
                                 -- calculate number of bomblets to release
-                                local bomblets_to_add = math.ceil( dispenser.bomblet_count / dispenser.number_of_tubes ) * dispenser.tubes_per_pulse
+                                local tubes_per_pulse = 0
+                                if dispenser.variant == "CBU-1/A" then
+                                    tubes_per_pulse = cbu1a_quantity:get()
+                                elseif dispenser.variant == "CBU-2/A" then
+                                    tubes_per_pulse = cbu2a_quantity:get()
+                                elseif dispenser.variant == "CBU-2B/A" then
+                                    tubes_per_pulse = cbu2ba_quantity:get()
+                                end
+                                local bomblets_to_add = math.ceil( dispenser.bomblet_count / dispenser.number_of_tubes ) * tubes_per_pulse
                                 -- add bomblets to release array
                                 cbu_bomblets_to_release[i] = bomblets_to_add + cbu_bomblets_to_release[i]
                                 -- increment weapon release count after weapon pulse fired
@@ -1079,6 +1100,20 @@ function SetCommand(command,value)
         else
             WeaponSystem:set_ECM_status(true)
         end
+    elseif command == Keys.ChangeCBU2AQuantity then
+        -- increment position
+        cbu2a_quantity_array_pos = (cbu2a_quantity_array_pos + 1) % table.getn(cbu2a_quantity_array)
+        debug_print("CBU-2/A quantity changed to "..tostring(cbu2a_quantity_array_pos))
+        -- get quantity
+        cbu2a_quantity:set(cbu2a_quantity_array[cbu2a_quantity_array_pos+1])
+        -- set param for kneeboard
+
+    elseif command == Keys.ChangeCBU2BAQuantity then
+        -- increment position
+        cbu2ba_quantity_array_pos = (cbu2ba_quantity_array_pos + 1) % table.getn(cbu2ba_quantity_array)
+        debug_print("CBU-2B/A quantity changed to "..tostring(cbu2ba_quantity_array_pos))
+        -- get quantity
+        cbu2ba_quantity:set(cbu2ba_quantity_array[cbu2ba_quantity_array_pos+1])
     end
 
 end
