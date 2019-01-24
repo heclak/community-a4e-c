@@ -590,7 +590,8 @@ axisCommands = {
     {combos = defaultDeviceAssignmentFor("roll"),   action = iCommandPlaneRoll,         name = _('Roll')},
     {combos = defaultDeviceAssignmentFor("pitch"),  action = iCommandPlanePitch,        name = _('Pitch')},
     {                                               action = iCommandPlaneRudder,       name = _('Rudder')},
-    {                                               action = iCommandPlaneThrustCommon, name = _('Thrust')},
+    -- {                                               action = iCommandPlaneThrustCommon, name = _('Thrust')},
+    {                                               action = device_commands.throttle_axis_mod 	,cockpit_device_id = devices.CARRIER ,name = _('Throttle Axis')},
 
     --{action = iCommandPlaneThrustLeft			, name = _('Thrust Left')},
     --{action = iCommandPlaneThrustRight			, name = _('Thrust Right')},
