@@ -1,4 +1,5 @@
 dofile(LockOn_Options.script_path.."fonts.lua")
+dofile(LockOn_Options.common_script_path.."Fonts/fonts_cmn.lua")
 
 -------MATERIALS-------
 materials = {}
@@ -25,6 +26,8 @@ textures["GUNSIGHT_TEXTURE"] = {"gunsight4.dds",materials["GUNSIGHT_COLOR"]}
 -------------------------------------------------------
 -------FONTS-------
 fonts = {}
+fonts["font_kneeboard"]			= {fontdescription_cmn["font_general_loc"], 10, {0,0,0,255}}
+fonts["font_kneeboard_hint"]	= {fontdescription_cmn["font_general_loc"], 10, {255,0,0,255}}
 
 -- force preload resources to avoid freeze on start (list of texture files)
 --[[
