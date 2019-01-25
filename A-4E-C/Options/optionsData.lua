@@ -3,6 +3,7 @@ cdata =
 	PLANENAME 				= _('A-4E-C'),
 	RWRTYPE					= _('RWR-Type(WIP-Nonfunctional)'),
 	HIDESTICK				= _('Control Stick'),
+	TRIMSPEEDL				= _('Trimspeed'),
 --[[	SARPP_BEHAVIOUR			= _('SARPP MODE'),
     CPDICT                  = _('CUSTOMIZED COCKPIT (C)'),
     CPDICTZA                = _('CUSTOMIZED COCKPIT(ZA)'),

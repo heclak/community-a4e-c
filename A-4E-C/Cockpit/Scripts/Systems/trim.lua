@@ -53,6 +53,21 @@ dev:listen_command(Keys.TrimLeftRudder)
 dev:listen_command(Keys.TrimCancel)
 dev:listen_command(device_commands.rudder_trim)
 
+
+
+local optionsData_trimspeed =  get_plugin_option_value("A-4E-C","trimSpeed","local")
+local trimspeedfactor 
+
+if optionsData_trimspeed == 0 then
+	trimspeedfactor = 1
+elseif optionsData_trimspeed == 1 then
+	trimspeedfactor = 0.5
+else
+	trimspeedfactor = 1
+end
+--print_message_to_user(trimspeedfactor)
+
+
 function post_initialize()
     startup_print("trim: postinit")
 
@@ -177,7 +192,7 @@ function update()
     end
 
     if trimming_updown ~= 0 then
-        pitch_trim = pitch_trim + trimming_updown * trim_update
+        pitch_trim = pitch_trim + trimming_updown * trim_update * trimspeedfactor
         if pitch_trim>1 then
             pitch_trim=1
         elseif pitch_trim<-0.24 then
@@ -193,7 +208,7 @@ function update()
         --]]
     end
     if trimming_leftright ~= 0 then
-        roll_trim = roll_trim + trimming_leftright * trim_update
+        roll_trim = roll_trim + trimming_leftright * trim_update * trimspeedfactor
         if roll_trim>1 then
             roll_trim=1
         elseif roll_trim<-1 then
@@ -203,7 +218,7 @@ function update()
         dispatch_action(nil, iCommandPlaneTrimRollAbs, roll_trim*roll_trim_scale)
     end
     if trimming_rudder_leftright ~= 0 then
-        rudder_trim = rudder_trim + trimming_rudder_leftright * trim_update
+        rudder_trim = rudder_trim + trimming_rudder_leftright * trim_update * trimspeedfactor
         if rudder_trim>1 then
             rudder_trim=1
         elseif rudder_trim<-1 then
