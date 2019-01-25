@@ -506,16 +506,9 @@ function update()
                                 -- get dispenser data
                                 local dispenser = dispenser_data[station.CLSID]
                                 debug_print(tostring(dispenser))
-                                -- calculate number of bomblets to release
-                                local tubes_per_pulse = 0
-                                if dispenser.variant == "CBU-1/A" then
-                                    tubes_per_pulse = cbu1a_quantity:get()
-                                elseif dispenser.variant == "CBU-2/A" then
-                                    tubes_per_pulse = cbu2a_quantity:get()
-                                elseif dispenser.variant == "CBU-2B/A" then
-                                    tubes_per_pulse = cbu2ba_quantity:get()
-                                end
-                                local bomblets_to_add = math.ceil( dispenser.bomblet_count / dispenser.number_of_tubes ) * tubes_per_pulse
+                                -- calculate number of bomblets in a tube to release. 
+                                -- this does not factor into the number of tubes as that will be handled by the release code.
+                                local bomblets_to_add = math.ceil( dispenser.bomblet_count / dispenser.number_of_tubes )
                                 -- add bomblets to release array
                                 cbu_bomblets_to_release[i] = bomblets_to_add + cbu_bomblets_to_release[i]
                                 -- increment weapon release count after weapon pulse fired
@@ -637,14 +630,36 @@ function release_cbu_bomblets()
 
                 -- release weapon if station is not empty and quantity is greater than zero
                 elseif station_info.count > 0 then
-                    WeaponSystem:launch_station(station_index - 1)
-                    debug_print('Bomblet Released')
+                    debug_print("Count remaining: "..quantity)
+                    -- check number of tubes to release
+                    local tubes_to_launch = check_number_of_tubes(station_index)
+                    debug_print("Tubes to launch: "..tubes_to_launch)
+                    for i = 0, tubes_to_launch do
+                        WeaponSystem:launch_station(station_index - 1)
+                        debug_print('Bomblet Released')
+                    end
                     cbu_bomblets_to_release[station_index] = quantity - 1
                     last_bomblet_release[station_index] = time_ticker
                 end
             end
         end 
     end
+end
+
+function check_number_of_tubes(station_id) -- station id should be 1 - 5
+    local station = WeaponSystem:get_station_info(station_id - 1)
+    local dispenser = dispenser_data[station.CLSID]
+    debug_print(tostring(dispenser))
+    -- calculate number of bomblets to release
+    local tubes_per_pulse = 0
+    if dispenser.variant == "CBU-1/A" then
+        tubes_per_pulse = cbu1a_quantity:get()
+    elseif dispenser.variant == "CBU-2/A" then
+        tubes_per_pulse = cbu2a_quantity:get()
+    elseif dispenser.variant == "CBU-2B/A" then
+        tubes_per_pulse = cbu2ba_quantity:get()
+    end
+    return tubes_per_pulse
 end
 
 function check_ripple_mode()
