@@ -9,7 +9,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 180,
 							["x"] = 331,
-							["y"] = 86,
+							["y"] = 90,
 						},
 						["enabled"] = true,
 						["tabOrder"] = 0,
@@ -31,7 +31,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 260,
 							["x"] = 57,
-							["y"] = 85,
+							["y"] = 90,
 						},
 						["enabled"] = true,
 						["text"] = "$RWRTYPE",
@@ -79,7 +79,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 180,
 							["x"] = 331,
-							["y"] = 120,
+							["y"] = 130,
 						},
 						["enabled"] = true,
 						["tabOrder"] = 0,
@@ -101,7 +101,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 260,
 							["x"] = 57,
-							["y"] = 120,
+							["y"] = 130,
 						},
 						["enabled"] = true,
 						["text"] = "$HIDESTICK",
@@ -117,6 +117,52 @@ dialog = {
 					["type"] = "Static",
 				},				
 --------------------------------	
+
+["trimSpeedComboList"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 180,
+							["x"] = 331,
+							["y"] = 170,
+						},
+						["enabled"] = true,
+						["tabOrder"] = 0,
+						["text"] = "Item1",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "comboListSkin_options",
+						},
+					},
+					["type"] = "ComboList",
+				},
+["trimSpeedLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 260,
+							["x"] = 57,
+							["y"] = 170,
+						},
+						["enabled"] = true,
+						["text"] = "$TRIMSPEEDL",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsCaptionSkin",
+						},
+					},
+					["type"] = "Static",
+				},				
+--------------------------------
+
 --[[		
 				["hideStickCheckbox"] = {
 						["params"] = {
