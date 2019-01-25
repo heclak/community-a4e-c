@@ -1440,7 +1440,7 @@ function make_cbu_a4e(dispenser,element,count) -- assemble a cluster dispenser
     data.Count              = count
     data.displayName        = dispenser
     data.wsTypeOfWeapon     = bomblet.wstype
-    data.Weight             = 100 + count * bomblet.mass
+    data.Weight             = (128 * POUNDS_TO_KG) + (count * bomblet.mass)
     data.Cx_pil             = 0.001887
     data.Elements           =
     {
