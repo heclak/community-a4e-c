@@ -654,8 +654,9 @@ Available IDs.  Please keep this up-to-date.
 --#373 reserved by Nero for RWR Lamp
 #394-399
 #405-439
-#444-519
-#531-539
+#444-499
+--#500-515 Resrved for RWR
+#516-539
 #541-559
 #561-579
 #581-599
