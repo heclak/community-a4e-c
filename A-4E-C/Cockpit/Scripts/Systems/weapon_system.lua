@@ -243,7 +243,14 @@ function post_initialize()
     dev:performClickableAction(device_commands.AWRS_stepripple,0.2,true) -- arg 744, 2=>step single
     dev:performClickableAction(device_commands.AWRS_multiplier,0.0,true) -- arg 743, 0=>1x
     dev:performClickableAction(device_commands.arm_bomb,bomb_arm_switch-1,true)
-
+    
+    print(get_aircraft_property("CBU2BATPP"))
+    print(get_aircraft_property("CBU2ATPP"))
+    
+    cbu1a_quantity:set(2)
+    cbu2a_quantity:set(get_aircraft_property("CBU2ATPP"))
+    cbu2ba_quantity:set(get_aircraft_property("CBU2BATPP"))
+    
     if birth == "GROUND_HOT" or birth == "AIR_HOT" then --"GROUND_COLD","GROUND_HOT","AIR_HOT"
         -- set gun_ready when starting hot
         dev:performClickableAction(device_commands.arm_gun,0,true) -- arg 701
@@ -302,12 +309,6 @@ local ir_missile_el_param = get_param_handle("WS_IR_MISSILE_TARGET_ELEVATION")
 local ir_missile_des_az_param = get_param_handle("WS_IR_MISSILE_SEEKER_DESIRED_AZIMUTH")
 local ir_missile_des_el_param = get_param_handle("WS_IR_MISSILE_SEEKER_DESIRED_ELEVATION")
 
-local cbu1a_quantity = get_param_handle("CBU1A_QTY")
-local cbu2a_quantity = get_param_handle("CBU2A_QTY")
-local cbu2ba_quantity = get_param_handle("CBU2BA_QTY")
-cbu1a_quantity:set(2)
-cbu2a_quantity:set(1)
-cbu2ba_quantity:set(2)
 
 local cm_bank1_Xx = get_param_handle("CM_BANK1_Xx")
 local cm_bank1_xX = get_param_handle("CM_BANK1_xX")

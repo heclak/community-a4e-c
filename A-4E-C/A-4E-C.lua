@@ -656,6 +656,32 @@ A_4E_C =  {
         { id = 'hud',          label = _('HUD'),         enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
         { id = 'mfd',          label = _('MFD'),         enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
     },
+    -- Aircraft Additional Properties
+    AddPropAircraft = {
+        { id = "CBU2ATPP",			control = 'comboList', label = _('CBU-2/A Tubes Per Pulse'),
+            values = {
+                {id =  1, dispName = _("1 tube")},
+                {id =  2, dispName = _("2 tubes")},
+                {id =  3, dispName = _("3 tubes")},
+                {id =  4, dispName = _("4 tubes")},
+                {id =  6, dispName = _("6 tubes")},
+                {id =  17, dispName = _("17 tubes (salvo)")},
+            },
+            defValue  = 1,
+            wCtrl     = 150,
+            playerOnly = true
+        },
+        { id = "CBU2BATPP",			control = 'comboList', label = _('CBU-2B/A Tubes Per Pulse'),
+            values = {
+                {id =  2, dispName = _("2 tubes")},
+                {id =  4, dispName = _("4 tubes")},
+                {id =  6, dispName = _("6 tubes")},
+            },
+            defValue  = 2,
+            wCtrl     = 150,
+            playerOnly = true
+        },
+    },
 ---------------------------------------------------------------------------------------------------------------------------------------------
     Guns = {
             coltMK12({muzzle_pos_connector = "GUN_POINT_1",
