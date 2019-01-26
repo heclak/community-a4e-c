@@ -14,6 +14,8 @@ function debug_print(x)
     -- print_message_to_user(x)
     -- log.alert(x)
 end
+
+local sensor_data = get_base_data()
 ------------------------------------------------
 ----------------  CONSTANTS  -------------------
 ------------------------------------------------
@@ -203,6 +205,9 @@ WeaponSystem:listen_command(Keys.CmPowerToggle)
 WeaponSystem:listen_command(Keys.ChangeCBU2AQuantity)
 WeaponSystem:listen_command(Keys.ChangeCBU2BAQuantity)
 
+local cbu1a_quantity = get_param_handle("CBU1A_QTY")
+local cbu2a_quantity = get_param_handle("CBU2A_QTY")
+local cbu2ba_quantity = get_param_handle("CBU2BA_QTY")
 
 function post_initialize()
     startup_print("weapon_system: postinit start")
@@ -1117,19 +1122,24 @@ function SetCommand(command,value)
             WeaponSystem:set_ECM_status(true)
         end
     elseif command == Keys.ChangeCBU2AQuantity then
-        -- increment position
-        cbu2a_quantity_array_pos = (cbu2a_quantity_array_pos + 1) % table.getn(cbu2a_quantity_array)
-        debug_print("CBU-2/A quantity changed to "..tostring(cbu2a_quantity_array_pos))
-        -- get quantity
-        cbu2a_quantity:set(cbu2a_quantity_array[cbu2a_quantity_array_pos+1])
-        -- set param for kneeboard
+        -- check for weight on wheels and engine off
+        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (sensor_data.getEngineLeftRPM() == 0) then
+            -- increment position
+            cbu2a_quantity_array_pos = (cbu2a_quantity_array_pos + 1) % table.getn(cbu2a_quantity_array)
+            debug_print("CBU-2/A quantity changed to "..tostring(cbu2a_quantity_array_pos))
+            -- get quantity and set param for kneeboard
+            cbu2a_quantity:set(cbu2a_quantity_array[cbu2a_quantity_array_pos+1])
+        end
 
     elseif command == Keys.ChangeCBU2BAQuantity then
-        -- increment position
-        cbu2ba_quantity_array_pos = (cbu2ba_quantity_array_pos + 1) % table.getn(cbu2ba_quantity_array)
-        debug_print("CBU-2B/A quantity changed to "..tostring(cbu2ba_quantity_array_pos))
-        -- get quantity
-        cbu2ba_quantity:set(cbu2ba_quantity_array[cbu2ba_quantity_array_pos+1])
+        -- check for weight on wheels and engine off
+        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (sensor_data.getEngineLeftRPM() == 0) then
+            -- increment position
+            cbu2ba_quantity_array_pos = (cbu2ba_quantity_array_pos + 1) % table.getn(cbu2ba_quantity_array)
+            debug_print("CBU-2B/A quantity changed to "..tostring(cbu2ba_quantity_array_pos))
+            -- get quantity
+            cbu2ba_quantity:set(cbu2ba_quantity_array[cbu2ba_quantity_array_pos+1])
+        end
     end
 
 end
