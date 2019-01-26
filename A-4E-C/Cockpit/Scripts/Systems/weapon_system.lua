@@ -209,6 +209,12 @@ local cbu1a_quantity = get_param_handle("CBU1A_QTY")
 local cbu2a_quantity = get_param_handle("CBU2A_QTY")
 local cbu2ba_quantity = get_param_handle("CBU2BA_QTY")
 
+local cbu_bomblets_to_release = { 0, 0, 0, 0, 0 }
+local cbu2a_quantity_array = {1,2,3,4,6,17}
+local cbu2ba_quantity_array = {2,4,6}
+local cbu2a_quantity_array_pos = 0
+local cbu2ba_quantity_array_pos = 0
+
 function post_initialize()
     startup_print("weapon_system: postinit start")
 
@@ -249,13 +255,13 @@ function post_initialize()
     dev:performClickableAction(device_commands.AWRS_multiplier,0.0,true) -- arg 743, 0=>1x
     dev:performClickableAction(device_commands.arm_bomb,bomb_arm_switch-1,true)
     
-    print(get_aircraft_property("CBU2BATPP"))
-    print(get_aircraft_property("CBU2ATPP"))
-    
+    -- update cbu dispenser release behaviour from mission planner settings
     cbu1a_quantity:set(2)
-    cbu2a_quantity:set(get_aircraft_property("CBU2ATPP"))
-    cbu2ba_quantity:set(get_aircraft_property("CBU2BATPP"))
-    
+    cbu2a_quantity_array_pos = get_aircraft_property("CBU2ATPP")
+    cbu2a_quantity:set(cbu2a_quantity_array[ cbu2a_quantity_array_pos + 1 ])
+    cbu2ba_quantity_array_pos = get_aircraft_property("CBU2BATPP")
+    cbu2ba_quantity:set(cbu2ba_quantity_array[ cbu2ba_quantity_array_pos + 1 ])
+
     if birth == "GROUND_HOT" or birth == "AIR_HOT" then --"GROUND_COLD","GROUND_HOT","AIR_HOT"
         -- set gun_ready when starting hot
         dev:performClickableAction(device_commands.arm_gun,0,true) -- arg 701
@@ -282,11 +288,6 @@ local next_pylon = 1 -- 1-5
 local last_pylon_release = {0,0,0,0,0}  -- last time (see time_ticker) pylon was fired
 local last_bomblet_release = {0,0,0,0,0}  -- last time (see time_ticker) bomblet was released from dispenser
 
-local cbu_bomblets_to_release = { 0, 0, 0, 0, 0 }
-local cbu2a_quantity_array = {1,2,3,4,6,17}
-local cbu2ba_quantity_array = {2,4,6}
-local cbu2a_quantity_array_pos = 0
-local cbu2ba_quantity_array_pos = 0
 
 function prepare_weapon_release()
     weapon_release_count = 0
@@ -640,7 +641,7 @@ function release_cbu_bomblets()
                     -- check number of tubes to release
                     local tubes_to_launch = check_number_of_tubes(station_index)
                     debug_print("Tubes to launch: "..tubes_to_launch)
-                    for i = 0, tubes_to_launch do
+                    for i = 1, tubes_to_launch do
                         WeaponSystem:launch_station(station_index - 1)
                         debug_print('Bomblet Released')
                     end
