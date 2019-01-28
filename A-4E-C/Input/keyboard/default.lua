@@ -597,5 +597,8 @@ keyCommands = {
     {combos = {{key = '2', reformers = {'RShift','RAlt'}}},		down = Keys.ChangeCBU2AQuantity,		value_down = 1,	name = _('Change CBU-2/A Release Quantity - 1/2/3'),		category = _('Ground Adjustment')},
     {combos = {{key = '3', reformers = {'RShift','RAlt'}}},		down = Keys.ChangeCBU2BAQuantity,		value_down = 1,	name = _('Change CBU-2B/A Release Quantity - 1/2/3/4/6/SALVO'),		category = _('Ground Adjustment')},
 	
+		-- used for RWR
+	{down = Keys.ecm_apr25_off, value_down = 1.0,value_up = 0.0, name = _('APR/25 on/off toggle'), category = _('ECM Panel')},	
+	
 },
 }

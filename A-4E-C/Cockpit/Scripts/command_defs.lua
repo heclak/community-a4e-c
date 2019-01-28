@@ -259,6 +259,16 @@ Keys =
     
     ChangeCBU2AQuantity = __custom_counter(),
     ChangeCBU2BAQuantity = __custom_counter(),
+	
+	ecm_apr25_off	= __custom_counter(),
+	ecm_apr25_audio	= __custom_counter(),
+	ecm_apr27_off	= __custom_counter(),
+	
+	ecm_systest_upper	= __custom_counter(),
+	ecm_systest_lower	= __custom_counter(),
+		
+	ecm_selector_knob = __custom_counter(),
+	
 }
 
 start_command   = 3000
@@ -394,4 +404,16 @@ device_commands =
     accel_reset = __counter(),
 	
 	throttle_axis_mod = __counter(),
+	
+	ecm_apr25_off	= __counter(),
+	ecm_apr25_audio	= __counter(),
+	ecm_apr27_off	= __counter(),
+	
+	ecm_systest_upper	= __counter(),
+	ecm_systest_lower	= __counter(),
+	
+	ecm_msl_alert_axis_inner	= __counter(),
+	ecm_msl_alert_axis_outer	= __counter(),
+	
+	ecm_selector_knob = __counter(),
 }
