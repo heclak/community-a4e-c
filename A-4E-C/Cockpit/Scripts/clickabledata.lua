@@ -491,6 +491,20 @@ elements["PNT_1243"] = default_2_position_tumb("Emergency generator deploy",devi
 elements["PNT_1243"].animated        = {true, true}
 elements["PNT_1243"].animation_speed = {15, 15}
 
+-- ECM panel
+elements["PNT_503"] = default_2_position_tumb("Audio APR/25 - APR/27",devices.RWR,device_commands.ecm_apr25_audio,	503,TOGGLECLICK_LEFT_MID)
+elements["PNT_504"] = default_2_position_tumb("APR/25 on/off",	devices.RWR, device_commands.ecm_apr25_off,		504,TOGGLECLICK_LEFT_MID)
+elements["PNT_501"] = default_2_position_tumb("APR/27 on/off",	devices.RWR, device_commands.ecm_apr27_off,		501,TOGGLECLICK_LEFT_MID)
+
+elements["PNT_507"] = default_button("APR/27 test", devices.RWR, device_commands.ecm_systest_upper, 507)--,TOGGLECLICK_LEFT_MID)
+elements["PNT_510"] = default_button("APR/27 light", devices.RWR, device_commands.ecm_systest_lower, 510)--,TOGGLECLICK_LEFT_MID)
+
+elements["PNT_506"] = default_axis_limited( "PRF volume (inner knob)", devices.RWR, device_commands.ecm_msl_alert_axis_inner, 506, 0.0, 0.3, false, false, {-1,1} )
+elements["PNT_505"] = default_axis_limited( "MSL volume (outer knob)", devices.RWR, device_commands.ecm_msl_alert_axis_outer, 505, 0.0, 0.3, false, false, {-1,1} )
+
+elements["PNT_502"] = multiposition_switch_limited("ECM selector knob",devices.RWR, device_commands.ecm_selector_knob,502,4,0.33,false,0.0,KNOBCLICK_MID_FWD)
+
+
 
 for i,o in pairs(elements) do
 	if  o.class[1] == class_type.TUMB or 

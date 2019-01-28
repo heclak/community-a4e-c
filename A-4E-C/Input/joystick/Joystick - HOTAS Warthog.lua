@@ -567,6 +567,9 @@ keyCommands = {
 	{down = Keys.catapult_ready, value_down = 1.0,value_up = 0.0, name = _('Catapult Ready'), category = _('Catapult')},
 	{down = Keys.catapult_shoot, value_down = 1.0,value_up = 0.0, name = _('Catapult Shoot'), category = _('Catapult')},
 	{down = Keys.catapult_abort, value_down = 1.0,value_up = 0.0, name = _('Catapult Abort'), category = _('Catapult')},
+	
+		-- used for RWR
+	{down = Keys.ecm_apr25_off, value_down = 1.0,value_up = 0.0, name = _('APR/25 on/off toggle'), category = _('ECM Panel')},	
 },
 
 -- joystick axes 
@@ -593,6 +596,8 @@ axisCommands = {
     -- {                                               action = iCommandPlaneThrustCommon, name = _('Thrust')},
     {                                               action = device_commands.throttle_axis_mod 	,cockpit_device_id = devices.CARRIER ,name = _('Throttle Axis')},
 
+	{action = device_commands.ecm_msl_alert_axis_inner 	,cockpit_device_id = devices.RWR ,name = _('PRF volume (inner knob)')},
+	{action = device_commands.ecm_msl_alert_axis_outer 	,cockpit_device_id = devices.RWR ,name = _('MSL volume (outer knob)')},	
     --{action = iCommandPlaneThrustLeft			, name = _('Thrust Left')},
     --{action = iCommandPlaneThrustRight			, name = _('Thrust Right')},
     --{action = iCommandPlaneTrimPitchAbs		, name = _('Trim Pitch')},
