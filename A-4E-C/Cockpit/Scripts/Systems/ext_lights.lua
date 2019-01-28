@@ -6,6 +6,10 @@ local dev = GetSelf()
 local update_time_step = 0.05 --update will be called 20 times per second
 make_default_activity(update_time_step)
 
+function debug_print(x)
+    -- print_message_to_user(x)
+end
+
 local ExtLight_LeftNav_arg = 190
 local ExtLight_RightNav_arg = 191
 local ExtLight_Tail_arg = 192
@@ -112,7 +116,7 @@ dev:listen_command(device_commands.extlight_tail)
 local extlight_master = 0
 local extlight_probe = 0
 local extlight_taxi = 0
-local extlight_anticoll = -1
+local extlight_anticoll = 0
 local extlight_fuselage = 0
 local extlight_flashsteady = 0
 local extlight_nav = -1
@@ -203,6 +207,7 @@ function SetCommand(command,value)
 
     -- ANTI-COLLISION LIGHTING (ON/OFF)
     elseif command == device_commands.extlight_anticoll then
+        debug_print("Anti-Col: "..value)
         extlight_anticoll = value
     elseif command == Keys.ExtLightAnticollision then
         dev:performClickableAction(device_commands.extlight_anticoll, value, false)
@@ -338,12 +343,12 @@ function update()
 
         set_aircraft_draw_argument_value(ExtLight_Taxi_arg, (gear > 0) and extlight_taxi or 0)
 
-        if extlight_anticoll then
+        if extlight_anticoll == 1 then
             set_aircraft_draw_argument_value(ExtLight_TopCollision_arg, anticoll)
             set_aircraft_draw_argument_value(ExtLight_BottomCollision_arg, anticoll)
         else
-            set_aircraft_draw_argument_value(ExtLight_TopCollision_arg, -1)
-            set_aircraft_draw_argument_value(ExtLight_BottomCollision_arg, -1)
+            set_aircraft_draw_argument_value(ExtLight_TopCollision_arg, 0)
+            set_aircraft_draw_argument_value(ExtLight_BottomCollision_arg, 0)
         end
 
     else
@@ -354,8 +359,8 @@ function update()
 
         set_aircraft_draw_argument_value(ExtLight_Taxi_arg, 0)
 
-        set_aircraft_draw_argument_value(ExtLight_TopCollision_arg, -1)
-        set_aircraft_draw_argument_value(ExtLight_BottomCollision_arg, -1)
+        set_aircraft_draw_argument_value(ExtLight_TopCollision_arg, 0)
+        set_aircraft_draw_argument_value(ExtLight_BottomCollision_arg, 0)
     end
 
 end

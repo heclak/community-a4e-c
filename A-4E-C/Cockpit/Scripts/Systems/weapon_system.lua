@@ -10,6 +10,12 @@ make_default_activity(update_rate)
 
 startup_print("weapon_system: load")
 
+function debug_print(x)
+    -- print_message_to_user(x)
+    -- log.alert(x)
+end
+
+local sensor_data = get_base_data()
 ------------------------------------------------
 ----------------  CONSTANTS  -------------------
 ------------------------------------------------
@@ -97,10 +103,10 @@ local _previous_master_arm = false
 local selected_station = 1
 local smoke_state = false
 local smoke_equipped = false
-local pickle = false
+local pickle_engaged = false
 local gun_ready = false
 local gun_firing = false
-local fire_engaged = false
+local trigger_engaged = false
 local station_states = { STATION_OFF, STATION_OFF, STATION_OFF, STATION_OFF, STATION_OFF}
 local function_selector = FUNC_OFF -- FUNC_OFF,FUNC_ROCKETS,FUNC_GM_UNARM,FUNC_BOMBS_GM_ARM
 local bomb_arm_switch = BOMB_ARM_TAIL -- BOMB_ARM_TAIL, BOMB_ARM_OFF, BOMB_ARM_NOSETAIL
@@ -123,9 +129,10 @@ local smoke_actual_state = {}
 local check_sidewinder_lock = false
 local sidewinder_locked = false
 
-function debug_print(x)
-    --print_message_to_user(x)
-end
+local MASTER_TEST_BTN = get_param_handle("D_MASTER_TEST")
+local GLARE_LABS_ANNUN = get_param_handle("D_GLARE_LABS")
+local glare_labs_annun_state = false
+
 
 ------------------------------------------------
 -----------  AIRCRAFT DEFINITION  --------------
@@ -195,6 +202,18 @@ WeaponSystem:listen_command(Keys.CmBank2AdjUp)
 WeaponSystem:listen_command(Keys.CmBank2AdjDown)
 WeaponSystem:listen_command(Keys.CmPowerToggle)
 
+WeaponSystem:listen_command(Keys.ChangeCBU2AQuantity)
+WeaponSystem:listen_command(Keys.ChangeCBU2BAQuantity)
+
+local cbu1a_quantity = get_param_handle("CBU1A_QTY")
+local cbu2a_quantity = get_param_handle("CBU2A_QTY")
+local cbu2ba_quantity = get_param_handle("CBU2BA_QTY")
+
+local cbu_bomblets_to_release = { 0, 0, 0, 0, 0 }
+local cbu2a_quantity_array = {1,2,3,4,6,17}
+local cbu2ba_quantity_array = {2,4,6}
+local cbu2a_quantity_array_pos = 0
+local cbu2ba_quantity_array_pos = 0
 
 function post_initialize()
     startup_print("weapon_system: postinit start")
@@ -213,7 +232,7 @@ function post_initialize()
 	ECM_status = false
 	smoke_state = false
     smoke_equipped = false
-	pickle = false
+	pickle_engaged = false -- if pickle is held down
 	
 	for i=1, num_stations, 1 do
 		smoke_actual_state[i] = false
@@ -235,11 +254,21 @@ function post_initialize()
     dev:performClickableAction(device_commands.AWRS_stepripple,0.2,true) -- arg 744, 2=>step single
     dev:performClickableAction(device_commands.AWRS_multiplier,0.0,true) -- arg 743, 0=>1x
     dev:performClickableAction(device_commands.arm_bomb,bomb_arm_switch-1,true)
-    if birth=="GROUND_HOT" or birth=="AIR_HOT" then --"GROUND_COLD","GROUND_HOT","AIR_HOT"
+    
+    -- update cbu dispenser release behaviour from mission planner settings
+    cbu1a_quantity:set(2)
+    cbu2a_quantity_array_pos = get_aircraft_property("CBU2ATPP")
+    cbu2a_quantity:set(cbu2a_quantity_array[ cbu2a_quantity_array_pos + 1 ])
+    cbu2ba_quantity_array_pos = get_aircraft_property("CBU2BATPP")
+    cbu2ba_quantity:set(cbu2ba_quantity_array[ cbu2ba_quantity_array_pos + 1 ])
+
+    if birth == "GROUND_HOT" or birth == "AIR_HOT" then --"GROUND_COLD","GROUND_HOT","AIR_HOT"
         -- set gun_ready when starting hot
-        dev:performClickableAction(device_commands.arm_gun,1,true) -- arg 701
-        gun_ready = true
-    elseif birth=="GROUND_COLD" then
+        dev:performClickableAction(device_commands.arm_gun,0,true) -- arg 701
+        gun_ready = false
+        dev:performClickableAction(device_commands.AWRS_quantity,0.05,true) -- arg 740, quantity = 2 to power on the AWE-1
+        AWRS_quantity = 2
+    elseif birth == "GROUND_COLD" then
         dev:performClickableAction(device_commands.arm_gun,0,true) -- arg 701
         gun_ready = false
     end
@@ -248,18 +277,31 @@ function post_initialize()
 end
 
 local time_ticker = 0 -- total time passed, in seconds
-local weapon_release_ticker = 0
-local weapon_release_count = 0
-local max_weapon_release_count = 0
-local once=false
-local pylon_order={1,5,2,4,3}
-local next_pylon=1 -- 1-5
+local weapon_release_ticker = 0 -- time passed since last release
+local weapon_release_count = 0 -- number of weapons that have been released
+local max_weapon_release_count = 0  -- number of weapons to release with each pulse
+local last_weapon_released = false -- true when last weapon in sequence has been released
+local ripple_sequence_position = 0 -- number of ripples that have been released
+local once = false
+local pylon_order = {1,5,2,4,3}
+local next_pylon = 1 -- 1-5
 local last_pylon_release = {0,0,0,0,0}  -- last time (see time_ticker) pylon was fired
+local last_bomblet_release = {0,0,0,0,0}  -- last time (see time_ticker) bomblet was released from dispenser
+
 
 function prepare_weapon_release()
     weapon_release_count = 0
+    max_weapon_release_count = 0
     if AWRS_mode == AWRS_mode_ripple_salvo or AWRS_mode == AWRS_mode_step_salvo then
-        max_weapon_release_count = AWRS_quantity
+        -- check number of readied stations
+        for i = 1, num_stations do
+            if station_states[i] == STATION_READY then
+                local station_info = WeaponSystem:get_station_info( i - 1 )
+                if station_info.count > 0 then 
+                    max_weapon_release_count = max_weapon_release_count + 1
+                end
+            end
+        end
     elseif AWRS_mode == AWRS_mode_ripple_single or AWRS_mode == AWRS_mode_step_single then
         max_weapon_release_count = 1
     elseif AWRS_mode == AWRS_mode_ripple_pairs or AWRS_mode == AWRS_mode_step_pairs then
@@ -297,6 +339,24 @@ function cm_draw_bank2( count )
     cm_bank2_xX:set(ones/10)
 end
 
+-- call function at the end of a ripple sequence
+function ripple_sequence_end()
+    debug_print("Ripple Sequence Ended")
+    bombtone:stop()
+    pickle_engaged = false
+    trigger_engaged = false
+    ripple_sequence_position = 0
+    glare_labs_annun_state = false -- turn off labs light
+end
+
+-- update visual state of the LABS annunciator
+function update_labs_annunciator()
+    if MASTER_TEST_BTN:get() == 1 or glare_labs_annun_state then
+        GLARE_LABS_ANNUN:set(1)
+    else
+        GLARE_LABS_ANNUN:set(0)
+    end
+end
 
 function update_countermeasures()
     cm_draw_bank1(cm_bank1_show)
@@ -336,7 +396,7 @@ function update()
     if _previous_master_arm ~= _master_arm then
         check_sidewinder(_master_arm)
         _previous_master_arm = _master_arm
-        print_message_to_user("master arm changed")
+        debug_print("master arm changed")
     end
 
     local gear = get_aircraft_draw_argument_value(0) -- nose gear
@@ -344,68 +404,157 @@ function update()
     if (gear > 0) then
         _master_arm = false
     end
+
+    -- AWRS is powered by non-zero quantity selector, powered by 28V DC
+    if AWRS_quantity > 0 and get_elec_mon_dc_ok() then
+        AWRS_power:set(1.0)
+    else
+        AWRS_power:set(0.0)
+    end
+
     -- see NATOPS 8-3
     local released_weapon = false
-    if _master_arm and (pickle or fire_engaged) then
+
+    if _master_arm and (pickle_engaged or trigger_engaged) then
+        
         local weap_release = false
+        
+        -- AWRS mode is in ripple single, ripple pairs, or ripple salvo
         if AWRS_mode >= AWRS_mode_ripple_single then
-            weapon_release_ticker = weapon_release_ticker + update_rate
+            weapon_release_ticker = weapon_release_ticker + update_rate -- increment timer
         end
+
+        -- interval for next weapon release reached
         if weapon_release_ticker >= weapon_interval then
             weapon_release_ticker = 0
             prepare_weapon_release()
         end
+
+        -- check that number of weapons released in current sequence has not exceeded total number of weapons to be released
         if weapon_release_count < max_weapon_release_count then
             weap_release = true
         end
-        if not once then
-            once=true
-            -- for i=1, num_stations, 1 do
-            --     local station = WeaponSystem:get_station_info(i-1)
-            --     print_message_to_user("station "..tostring(i)..": count="..tostring(station.count)..",state="..tostring(station_states[i])..",l2="..tostring(station.weapon.level2)..",l3="..tostring(station.weapon.level3))
-            -- end
+
+        -- this was used to output the station info. only used for debugging.
+        -- if not once then
+        --     print_message_to_user("once")
+        --     once=true
+        --     for i=1, num_stations, 1 do
+        --         local station = WeaponSystem:get_station_info(i-1)
+        --         print_message_to_user("station "..tostring(i)..": count="..tostring(station.count)..",state="..tostring(station_states[i])..",l2="..tostring(station.weapon.level2)..",l3="..tostring(station.weapon.level3))
+        --     end
+        -- end
+
+        -- check if readied weapon stations are empty. check for number of readied stations which are cbu
+        local readied_stations_empty = true
+
+
+        for i = 1, num_stations do
+            if station_states[i] == STATION_READY then
+                local station_info = WeaponSystem:get_station_info(i-1)
+                debug_print("station "..tostring(i)..": CLSID="..tostring(station_info.CLSID)..": count="..tostring(station_info.count)..",state="..tostring(station_states[i])..",l2="..tostring(station_info.weapon.level2)..",l3="..tostring(station_info.weapon.level3))
+                if station_info.count > 0 then 
+                    readied_stations_empty = false
+                end
+            end
         end
-        for py=1, num_stations, 1 do
+
+        if readied_stations_empty == true then
+            debug_print('Stations Empty')
+            ripple_sequence_end()
+            -- break
+        end
+
+        for py = 1, num_stations, 1 do
+
             if weapon_release_count >= max_weapon_release_count and function_selector ~= FUNC_OFF then
                 break
             end
-            i=pylon_order[next_pylon]
-            next_pylon=next_pylon+1
-            if next_pylon>5 then
-                next_pylon=1
+
+            i = pylon_order[next_pylon]
+            next_pylon = next_pylon+1
+
+            if next_pylon > 5 then
+                next_pylon = 1
             end
+
+            -- centerline will not release weapons in PAIRS mode.
+            if ((AWRS_mode == AWRS_mode_ripple_pairs) or (AWRS_mode == AWRS_mode_step_pairs)) and ( i == 3 ) then
+                break
+            end
+
             local station = WeaponSystem:get_station_info(i-1)
 
             -- HIPEG/gunpod launcher
-            if gunpod_state[i] == GUNPOD_ARMED and station.count > 0 and station.weapon.level2 == wsType_Shell and fire_engaged and (gunpod_charge_state == 1 and get_elec_aft_mon_ac_ok()) then
+            if gunpod_state[i] == GUNPOD_ARMED and station.count > 0 and station.weapon.level2 == wsType_Shell and trigger_engaged and (gunpod_charge_state == 1 and get_elec_aft_mon_ac_ok()) then
                 WeaponSystem:launch_station(i-1)
                 last_pylon_release[i] = time_ticker
             end
 
             if station_states[i] == STATION_READY then
                 if station.count > 0 and (
-                (station.weapon.level2 == wsType_NURS and ((fire_engaged and function_selector == FUNC_ROCKETS) or (pickle and function_selector == FUNC_GM_UNARM)) and weap_release) or -- launch unguided rockets
+                (station.weapon.level2 == wsType_NURS and ((trigger_engaged and function_selector == FUNC_ROCKETS) or (pickle_engaged and function_selector == FUNC_GM_UNARM)) and weap_release) or -- launch unguided rockets
                 ((station.weapon.level2 == wsType_Missile) and function_selector == FUNC_BOMBS_GM_ARM and weap_release) or -- launch missiles (pickle and fire trigger)
-                ((station.weapon.level2 == wsType_Bomb) and pickle and function_selector == FUNC_BOMBS_GM_ARM and weap_release) -- launch bombs
+                ((station.weapon.level2 == wsType_Bomb) and pickle_engaged and function_selector == FUNC_BOMBS_GM_ARM and weap_release) -- launch bombs
                 ) then
+                    -- Bomb release logic
                     if (station.weapon.level2 == wsType_Bomb) then
+
                         if bomb_arm_switch == BOMB_ARM_OFF then
                             WeaponSystem:emergency_jettison(i-1)
                         else
                             -- TODO: differentiate between nose&tail and tail arming somehow
-                            local can_fire=true
+                            local can_fire = true
+                            
+                            -- release cluster bombs
                             if (station.weapon.level3 == wsType_Bomb_Cluster) then
-                                if ((time_ticker-last_pylon_release[i]) < 0.0625) then  -- rate limit cluster bomb drop rate to 16 per second
-                                    can_fire = false
-                                end
-                            end
-                            if can_fire then
-                                WeaponSystem:launch_station(i-1)
+                                debug_print("Cluster munition found")
+                                debug_print("Cluster CLSID"..station.CLSID)
+                                -- get dispenser data
+                                local dispenser = dispenser_data[station.CLSID]
+                                debug_print(tostring(dispenser))
+                                -- calculate number of bomblets in a tube to release. 
+                                -- this does not factor into the number of tubes as that will be handled by the release code.
+                                local bomblets_to_add = math.ceil( dispenser.bomblet_count / dispenser.number_of_tubes )
+                                -- add bomblets to release array
+                                cbu_bomblets_to_release[i] = bomblets_to_add + cbu_bomblets_to_release[i]
+                                -- increment weapon release count after weapon pulse fired
                                 released_weapon = true
                                 weapon_release_count = weapon_release_count + 1
                                 last_pylon_release[i] = time_ticker
+                                debug_print("CBU - Weapon Release Count: "..weapon_release_count)
+                                -- end sequence if ripple count completed
+
+                                check_ripple_mode()
+
+                            -- release regular bombs
+                            elseif can_fire then
+                                WeaponSystem:launch_station(i-1)
+                                debug_print('Weapon Released')
+                                released_weapon = true
+                                weapon_release_count = weapon_release_count + 1
+                                last_pylon_release[i] = time_ticker
+
+                                check_ripple_mode()
                             end
                         end
+
+                    -- Rockets launch logic
+                    elseif (station.weapon.level2 == wsType_NURS) then
+                        local can_fire=true
+
+                        -- release rockets
+                        if can_fire then
+                            WeaponSystem:launch_station(i-1)
+                            debug_print('Weapon Released')
+                            released_weapon = true
+                            weapon_release_count = weapon_release_count + 1
+                            last_pylon_release[i] = time_ticker
+
+                            check_ripple_mode()
+                        end
+                        
+                    -- Missile launch logic
                     else
                         WeaponSystem:launch_station(i-1)
                         released_weapon = true
@@ -413,12 +562,14 @@ function update()
                         last_pylon_release[i] = time_ticker
                     end
                 end
-                if (station.weapon.level2 == wsType_NURS and ((pickle and function_selector == FUNC_BOMBS_GM_ARM))) then -- Jettison unguided rockets
+
+                if (station.weapon.level2 == wsType_NURS and ((pickle_engaged and function_selector == FUNC_BOMBS_GM_ARM))) then -- Jettison unguided rockets
                     WeaponSystem:emergency_jettison(i-1)
                 end
             end
         end
     end
+
     if emer_bomb_release_countdown > 0 then
         emer_bomb_release_countdown = emer_bomb_release_countdown - update_rate
         if emer_bomb_release_countdown<=0 then
@@ -427,15 +578,10 @@ function update()
         end
     end
 	
-    -- AWRS is powered by non-zero quantity selector and enabling of the master arm switch, powered by 28V DC
-    if AWRS_quantity > 0 and _master_arm then
-        AWRS_power:set(1.0)
-    else
-        AWRS_power:set(0.0)
-    end
     if released_weapon then
         check_sidewinder(_master_arm) -- re-check sidewinder stores
     end
+
     if check_sidewinder_lock then
         if not sidewinder_locked then
             if ir_missile_lock_param:get() == 1 then
@@ -471,7 +617,80 @@ function update()
         end
     end
 
+    release_cbu_bomblets()
+
     update_countermeasures()
+    update_labs_annunciator()
+end
+
+function release_cbu_bomblets()
+    for station_index, quantity in pairs(cbu_bomblets_to_release) do
+        if ((time_ticker - last_bomblet_release[station_index]) > 0.0625) then  -- rate limit cluster bomb drop rate to 16 per second
+            -- debug_print("release_cbu_bomblets()")
+            -- check if bomblet quantity is greater than zero
+            if quantity > 0 then
+                debug_print("Station: "..station_index.." Quantity: "..quantity)
+                -- check that station is not empty, if station is empty then clear quantity for station
+                local station_info = WeaponSystem:get_station_info(station_index - 1)
+                if station_info.count == 0 then
+                    cbu_bomblets_to_release[station_index] = 0
+
+                -- release weapon if station is not empty and quantity is greater than zero
+                elseif station_info.count > 0 then
+                    debug_print("Count remaining: "..quantity)
+                    -- check number of tubes to release
+                    local tubes_to_launch = check_number_of_tubes(station_index)
+                    debug_print("Tubes to launch: "..tubes_to_launch)
+                    for i = 1, tubes_to_launch do
+                        WeaponSystem:launch_station(station_index - 1)
+                        debug_print('Bomblet Released')
+                    end
+                    cbu_bomblets_to_release[station_index] = quantity - 1
+                    last_bomblet_release[station_index] = time_ticker
+                end
+            end
+        end 
+    end
+end
+
+function check_number_of_tubes(station_id) -- station id should be 1 - 5
+    local station = WeaponSystem:get_station_info(station_id - 1)
+    local dispenser = dispenser_data[station.CLSID]
+    debug_print(tostring(dispenser))
+    -- calculate number of bomblets to release
+    local tubes_per_pulse = 0
+    if dispenser.variant == "CBU-1/A" then
+        tubes_per_pulse = cbu1a_quantity:get()
+    elseif dispenser.variant == "CBU-2/A" then
+        tubes_per_pulse = cbu2a_quantity:get()
+    elseif dispenser.variant == "CBU-2B/A" then
+        tubes_per_pulse = cbu2ba_quantity:get()
+    end
+    return tubes_per_pulse
+end
+
+function check_ripple_mode()
+    -- AWRS mode is in ripple single
+    if AWRS_mode == AWRS_mode_ripple_single then
+        ripple_sequence_position = ripple_sequence_position + 1 -- increment ripple sequence position
+        
+        -- stop sequence if end of sequence
+        if ripple_sequence_position >= AWRS_quantity then
+            debug_print('End of Ripple Single Sequence')
+            ripple_sequence_end()
+        end
+    end
+
+    -- AWRS mode is in ripple pairs or ripple salvo and both weapons have been released.
+    if ((AWRS_mode == AWRS_mode_ripple_pairs) or (AWRS_mode == AWRS_mode_ripple_salvo)) and weapon_release_count == max_weapon_release_count then
+        ripple_sequence_position = ripple_sequence_position + 1 -- increment ripple sequence position
+        
+        -- stop sequence if end of sequence
+        if ripple_sequence_position >= AWRS_quantity then
+            debug_print('End of Ripple Pairs Sequence')
+            ripple_sequence_end()
+        end
+    end
 end
 
 function check_sidewinder(_master_arm)
@@ -532,12 +751,15 @@ function SetCommand(command,value)
 				smoke_state = false
 			end		
 		else
-			print_message_to_user("Smoke Not Equipped")
-		end
+			debug_print("Smoke Not Equipped")
+        end
+        
 	elseif command == Keys.JettisonWeapons then
         WeaponSystem:performClickableAction(device_commands.emer_bomb_release,1,true)
+
 	elseif command == Keys.JettisonWeaponsUp then
         WeaponSystem:performClickableAction(device_commands.emer_bomb_release,0,true)
+
     elseif command == Keys.JettisonFC3 then
         -- priority order for jettison:
         -- 1: fuel tanks on pylons 2/4
@@ -549,6 +771,7 @@ function SetCommand(command,value)
         if get_elec_26V_ac_ok() then
 
             local oneJettison = false
+
             if not oneJettison then
                 -- priority 1: fuel tanks on 2/4
                 local stationA = WeaponSystem:get_station_info(1)
@@ -614,11 +837,13 @@ function SetCommand(command,value)
 
             check_sidewinder(_master_arm)  -- re-check sidewinder stores
         end
+
     elseif command == iCommandPlaneChangeWeapon then
 		selected_station = selected_station + 1
 		if selected_station > num_stations then
 			selected_station = 1
-		end
+        end
+        
 	elseif command == iCommandPlaneJettisonFuelTanks then
 		for i=1, num_stations, 1 do
 			local station = WeaponSystem:get_station_info(i-1)
@@ -626,26 +851,36 @@ function SetCommand(command,value)
 			if station.count > 0 and station.weapon.level3 == wsType_FuelTank then
 				WeaponSystem:emergency_jettison(i-1)
 			end
-		end
+        end
+        
 	elseif command == Keys.PickleOn then
         weapon_release_ticker = weapon_interval -- fire first batch immediately
         --prepare_weapon_release()
-        if AWRS_mode>=AWRS_mode_ripple_single then
+        if AWRS_mode >= AWRS_mode_ripple_single then -- AWRS is in ripple mode
             next_pylon=1
         end
-        pickle = true
-        if function_selector == FUNC_BOMBS_GM_ARM and _master_arm then
+
+        pickle_engaged = true
+        
+        -- if AWRS is setup for bombs or rockets
+        if ( function_selector == FUNC_BOMBS_GM_ARM or function_selector == FUNC_GM_UNARM ) and _master_arm then
+            debug_print("Bomb Tone Playing")
             bombtone:play_continue()
+            glare_labs_annun_state = true -- turn on labs light
         end
---[[
+        --[[
             for i=1, num_stations, 1 do
                 local station = WeaponSystem:get_station_info(i-1)
                 print_message_to_user("station "..tostring(i)..": count="..tostring(station.count)..",state="..tostring(station_states[i])..",l2="..tostring(station.weapon.level2)..",l3="..tostring(station.weapon.level3))
             end
---]]
+        --]]
+
     elseif command == Keys.PickleOff then
-        pickle = false
+        pickle_engaged = false
         bombtone:stop() -- TODO also stop after last auto-release interval bomb is dropped
+        glare_labs_annun_state = false -- turn on labs light
+        ripple_sequence_position = 0 -- reset ripple sequence
+
     elseif command == Keys.PlaneFireOn then
         if gun_ready and not geardown then
             if get_elec_aft_mon_ac_ok() then
@@ -653,35 +888,49 @@ function SetCommand(command,value)
             end
             gun_firing = true
         end
-        if AWRS_mode>=AWRS_mode_ripple_single then
-            next_pylon=1
+        if AWRS_mode >= AWRS_mode_ripple_single then -- AWRS is in ripple mode
+            next_pylon = 1
         end
-        fire_engaged = true
+        trigger_engaged = true
         weapon_release_ticker = weapon_interval -- fire first batch immediately
-        --prepare_weapon_release()
+
+        -- if AWRS is setup for rockets
+        if function_selector == FUNC_ROCKETS and _master_arm then
+            debug_print("Bomb Tone Playing")
+            bombtone:play_continue()
+            glare_labs_annun_state = true -- turn on labs light
+        end
+
     elseif command == Keys.PlaneFireOff then
         dispatch_action(nil,iCommandPlaneFireOff)
         gun_firing = false
-        fire_engaged = false
+        trigger_engaged = false
+        bombtone:stop() -- TODO also stop after last auto-release interval bomb is dropped
+        glare_labs_annun_state = false -- turn on labs light
+        ripple_sequence_position = 0 -- reset ripple sequence
+
     elseif command == device_commands.arm_gun then
         gun_ready=(value==1) and true or false
         debug_print("Guns: "..(gun_ready and "READY" or "SAFE"))
         if not gun_ready and gun_firing then
             dispatch_action(nil,iCommandPlaneFireOff)
         end
+
     elseif command == device_commands.arm_func_selector then
         local func=math.floor(math.ceil(value*100)/10)
-        debug_print("Armament Select: "..selector_debug_text[function_selector+1])
         next_pylon=1
         if function_selector ~= func then
             function_selector = func
             check_sidewinder(_master_arm)
         end
+        debug_print("Armament Select: "..selector_debug_text[function_selector+1])
+        
     elseif command >= device_commands.arm_station1 and command <= device_commands.arm_station5 then
         station_states[command-device_commands.arm_station1+1] = value
         debug_print("Station "..(command-device_commands.arm_station1+1)..": "..station_debug_text[value+2])
         check_sidewinder(_master_arm)
         next_pylon=1
+
     elseif command >= Keys.Station1 and command <= Keys.Station5 then
         local stationOffset = command - Keys.Station1   -- value of 0 to 4
         if station_states[1+stationOffset] == 0 then
@@ -690,23 +939,28 @@ function SetCommand(command,value)
             WeaponSystem:performClickableAction((device_commands.arm_station1+stationOffset), 0, false) -- currently off, so enable pylon
         end
         next_pylon=1
+
     elseif command == device_commands.gunpod_chargeclear then
         gunpod_charge_state = value
         debug_print("charge/off/clear = "..value)
+
     elseif command == Keys.GunpodCharge then
         tmp = gunpod_charge_state + 1   -- cycle from off to charge to clear back to off
         if tmp > 1 then
             tmp = -1
         end
         WeaponSystem:performClickableAction(device_commands.gunpod_chargeclear, tmp, false)
+
     elseif command == device_commands.gunpod_l then
         local gunpod_ready=(value==1) and true or false
         debug_print("GunPod L: "..(gunpod_ready and "READY" or "SAFE"))
         gunpod_state[2] = value
+
     elseif command == device_commands.gunpod_c then
         local gunpod_ready=(value==1) and true or false
         debug_print("GunPod C: "..(gunpod_ready and "READY" or "SAFE"))
         gunpod_state[3] = value
+
     elseif command == device_commands.gunpod_r then
         local gunpod_ready=(value==1) and true or false
         debug_print("GunPod R: "..(gunpod_ready and "READY" or "SAFE"))
@@ -726,6 +980,8 @@ function SetCommand(command,value)
         else
             function_selector = function_selector + 1
         end
+
+        debug_print("Function Selector Value: "..function_selector)
 
         if function_selector < FUNC_OFF then
             function_selector = FUNC_OFF
@@ -765,6 +1021,7 @@ function SetCommand(command,value)
             emer_bomb_release_countdown = 0.25 -- seconds until spring pulls back lever
         end
     elseif command == device_commands.AWRS_quantity then
+        print_message_to_user(value)
         local func=math.floor(math.ceil(value*100)/5) -- 0 to 11
         func = AWRS_quantity_array[func+1]
         debug_print("quantity:"..tostring(func))
@@ -865,6 +1122,25 @@ function SetCommand(command,value)
         else
             WeaponSystem:set_ECM_status(true)
         end
+    elseif command == Keys.ChangeCBU2AQuantity then
+        -- check for weight on wheels and engine off
+        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (sensor_data.getEngineLeftRPM() == 0) then
+            -- increment position
+            cbu2a_quantity_array_pos = (cbu2a_quantity_array_pos + 1) % table.getn(cbu2a_quantity_array)
+            debug_print("CBU-2/A quantity changed to "..tostring(cbu2a_quantity_array_pos))
+            -- get quantity and set param for kneeboard
+            cbu2a_quantity:set(cbu2a_quantity_array[cbu2a_quantity_array_pos+1])
+        end
+
+    elseif command == Keys.ChangeCBU2BAQuantity then
+        -- check for weight on wheels and engine off
+        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (sensor_data.getEngineLeftRPM() == 0) then
+            -- increment position
+            cbu2ba_quantity_array_pos = (cbu2ba_quantity_array_pos + 1) % table.getn(cbu2ba_quantity_array)
+            debug_print("CBU-2B/A quantity changed to "..tostring(cbu2ba_quantity_array_pos))
+            -- get quantity
+            cbu2ba_quantity:set(cbu2ba_quantity_array[cbu2ba_quantity_array_pos+1])
+        end
     end
 
 end
@@ -938,3 +1214,21 @@ weapons meta["__index"]["select_station"] = function: 00000000CC5C26F0
 weapons meta["__index"]["listen_command"] = function: 0000000038088060
 weapons meta["__index"]["emergency_jettison_rack"] = function: 00000000720F15F0
 --]]
+
+
+--[[
+AWRS Quantity Animation Positions
+0   = 0
+2   = 0.05
+3   = 0.10
+4   = 0.15
+5   = 0.20
+6   = 0.25
+8   = 0.30
+12  = 0.35
+16  = 0.40
+20  = 0.45
+30  = 0.50
+40  = 0.55
+
+]]--

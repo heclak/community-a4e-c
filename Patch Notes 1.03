@@ -16,7 +16,16 @@ New Features:
 - Added joystick mapping axis for inst light and console light.
 - Lights inside cockpit reworked. Now red.
 - RwR now integrated. Option to have either the AN/APR-23 or AN/APR-25.
-- A-4E can now be launched with the catapault. 
+- A-4E can now be launched with the catapault.
+- Reworked AWRS for more accurate system simulation
+- SALVO mode will now correctly only dispense one weapon from each readied station per weapon release pulse from AWRSAWRS QTY SEL will now correctly limit the number of times the weapons are released in the RIPPLE modes. 
+- AWE-1(AWRS) now powered from the monitor dc bus. Master arm switch no longer turns off the AWE-1
+- Weapons will no longer be released from centerline station when in STEP PAIRS or RIPPLE PAIRS
+- CBU bomblets are now released in tubes (CBU-1/A, CBU-2/A, CBU-2/B)
+- Added kneeboard page for CBU config to change the number of tubes of bomblets released per weapon pulse. (CBU-2/A, CBU-2B/A)
+- Added options to set CBU config from the mission planner/editor
+- Tweaked start condition of weapon system when spawning hot
+- New option to change trim speed in aircraft options menu
 
 Bug Fixes:
 - Red Light switch no longer stuck.
@@ -25,10 +34,15 @@ Bug Fixes:
 - CBU visibility has been fixed.
 - Huffer now works on carriers.
 - Standby compass bug fixed. UV mapping of backlight rotated 180 degrees.
+- Fixed RAT animation when deployed
+- Fixed CBU bomblet visual placement in SUU-7 dispenser
+- Fixed issue where turning a knob with the scroll wheel will cause it to jump back to the beginning when it reaches the end.
+- Tweaked weight of SUU-7 dispenser
+- Fixed anti-collision light switch on exterior lighting panel
 
 
 Other Changes:
 - Console and Instrument Backlighting now controlled by appropriate knobs.
 - AWRS now selects appropriate ripple quantities.
 - Increased Pilot Size to reflect reference imagery.
-- Huffer logic been reworked (words?).
+
