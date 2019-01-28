@@ -124,13 +124,11 @@ function post_initialize()
 	rwrAAASearch	= sndhost:create_sound("a4e-rwr-ai-loop")							--("a4e-rwr-aaa-lo-loop") 
 	rwrAAALock		= sndhost:create_sound("a4e-rwr-aaa-lo-loop") 
 	
---	rwrHum:play_continue()
-	--dev:performClickableAction(device_commands.ecm_selector_knob,0.25,true)
-	--WeaponSystem:performClickableAction((device_commands.arm_station1+stationOffset), 1, false) -- currently off, so enable pylon
+
 end
 ---------------------------------
 function SetCommand(command,value)
-	print_message_to_user(command .. " / " ..value)
+--	print_message_to_user(command .. " / " ..value)
 	
 --keys	
 	if command == Keys.ecm_apr25_off then
@@ -162,31 +160,25 @@ function SetCommand(command,value)
 	
 	
 	elseif command == device_commands.ecm_selector_knob then
-		--round it cause its +0.33
+
 		
 		rwr_apr27_selector = round(value, 2)
-	--	print_message_to_user(rwr_apr27_selector)
+
 	
 	
 	elseif command == device_commands.ecm_systest_upper then
 		ecm_upper_test = value
-		
-		--TestLights.UU:set(value)
-		--TestLights.ULR:set(value)
-		--TestLights.ULL:set(value)
+
 	elseif command == device_commands.ecm_systest_lower then
 		ecm_lower_test = value
-		--TestLights.LUR:set(value)
-		--TestLights.LUL:set(value)
-		--TestLights.LLR:set(value)
-		--TestLights.LLL:set(value)
+
 	end
 	
-	--print_message_to_user(rwr_master_status)
+
 end
 
 function update()
---math.randomseed(get_absolute_model_time())
+
 	if (get_elec_mon_dc_ok()) and rwr_master_status == 1 then
 --print_message_to_user("RWR on")
 		if get_elec_aft_mon_ac_ok() == true then
@@ -197,11 +189,7 @@ function update()
 			--print_message_to_user("RWR off")
 		end
 
-		--print_message_to_user("update - RWR")
-	--[[
-		if 	(get_elec_mon_dc_ok()) then
-			GetDevice(devices.RWR):set_power(true)		
-		end]]--
+
 		local tmp_rwr_signal 	= 0
 		local tmp_rwr_type		= 0
 		local tmp_rwr_power		= 0
