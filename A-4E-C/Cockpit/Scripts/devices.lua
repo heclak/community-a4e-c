@@ -39,6 +39,7 @@ devices["OXYGEN"] = counter()
 devices["HUD"] = counter()
 devices["CARRIER"] = counter()
 devices["RWR"] = counter()
+devices["COUNTERMEASURES"] 			= counter()
 
 
 -- temporary dummy devices
