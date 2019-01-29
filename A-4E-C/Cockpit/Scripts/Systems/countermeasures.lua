@@ -152,9 +152,10 @@ function missile_warning_check()
 end
 
 function post_initialize()
-    cm_bank1_show = CMS:get_chaff_count()
-    cm_bank2_show = CMS:get_flare_count()
-    flare_count = 0
+    flare_count = CMS:get_flare_count()
+    chaff_count = CMS:get_chaff_count()
+    cm_bank1_show = chaff_count
+    cm_bank2_show = flare_count
     cm_banksel = "both"
 
 end -- post_initialize()
