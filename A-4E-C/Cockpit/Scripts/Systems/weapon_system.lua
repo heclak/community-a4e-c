@@ -150,8 +150,6 @@ WeaponSystem:listen_command(iCommandPlaneJettisonFuelTanks)
 WeaponSystem:listen_command(Keys.JettisonFC3)
 WeaponSystem:listen_command(Keys.PickleOn)
 WeaponSystem:listen_command(Keys.PickleOff)
-WeaponSystem:listen_command(iCommandPlaneDropFlareOnce)
-WeaponSystem:listen_command(iCommandPlaneDropChaffOnce)
 WeaponSystem:listen_command(Keys.PlaneFireOn)
 WeaponSystem:listen_command(Keys.PlaneFireOff)
 WeaponSystem:listen_command(device_commands.arm_emer_sel)
@@ -186,22 +184,6 @@ WeaponSystem:listen_command(device_commands.AWRS_drop_interval)
 WeaponSystem:listen_command(device_commands.AWRS_multiplier)
 WeaponSystem:listen_command(device_commands.AWRS_stepripple)
 
-WeaponSystem:listen_command(device_commands.cm_pwr)
-WeaponSystem:listen_command(device_commands.cm_bank)
-WeaponSystem:listen_command(device_commands.cm_adj1)
-WeaponSystem:listen_command(device_commands.cm_adj2)
-WeaponSystem:listen_command(device_commands.cm_auto)
-WeaponSystem:listen_command(iCommandActiveJamming)
-WeaponSystem:listen_command(Keys.CmDrop)
-WeaponSystem:listen_command(Keys.CmBankSelectRotate)
-WeaponSystem:listen_command(Keys.CmBankSelect)
-WeaponSystem:listen_command(Keys.CmAutoModeToggle)
-WeaponSystem:listen_command(Keys.CmBank1AdjUp)
-WeaponSystem:listen_command(Keys.CmBank1AdjDown)
-WeaponSystem:listen_command(Keys.CmBank2AdjUp)
-WeaponSystem:listen_command(Keys.CmBank2AdjDown)
-WeaponSystem:listen_command(Keys.CmPowerToggle)
-
 WeaponSystem:listen_command(Keys.ChangeCBU2AQuantity)
 WeaponSystem:listen_command(Keys.ChangeCBU2BAQuantity)
 
@@ -226,9 +208,6 @@ function post_initialize()
     --aim9lock3 = sndhost:create_sound("Aircrafts/Cockpits/SidewinderHigh")
 
 	selected_station = 1
-	cm_bank1_show = WeaponSystem:get_chaff_count()
-    cm_bank2_show = WeaponSystem:get_flare_count()
-	flare_count = 0
 	ECM_status = false
 	smoke_state = false
     smoke_equipped = false
@@ -315,30 +294,6 @@ local ir_missile_el_param = get_param_handle("WS_IR_MISSILE_TARGET_ELEVATION")
 local ir_missile_des_az_param = get_param_handle("WS_IR_MISSILE_SEEKER_DESIRED_AZIMUTH")
 local ir_missile_des_el_param = get_param_handle("WS_IR_MISSILE_SEEKER_DESIRED_ELEVATION")
 
-
-local cm_bank1_Xx = get_param_handle("CM_BANK1_Xx")
-local cm_bank1_xX = get_param_handle("CM_BANK1_xX")
-local cm_bank2_Xx = get_param_handle("CM_BANK2_Xx")
-local cm_bank2_xX = get_param_handle("CM_BANK2_xX")
-
-function cm_draw_bank1( count )
-    local tens = math.floor(count/10 + 0.02)
-    local ones = math.floor(count%10 + 0.02)
-
-    --print_message_to_user("b1: "..tens.." "..ones)
-    cm_bank1_Xx:set(tens/10)
-    cm_bank1_xX:set(ones/10)
-end
-
-function cm_draw_bank2( count )
-    local tens = math.floor(count/10 + 0.02)
-    local ones = math.floor(count%10 + 0.02)
-
-    --print_message_to_user("b2: "..tens.." "..ones)
-    cm_bank2_Xx:set(tens/10)
-    cm_bank2_xX:set(ones/10)
-end
-
 -- call function at the end of a ripple sequence
 function ripple_sequence_end()
     debug_print("Ripple Sequence Ended")
@@ -358,10 +313,7 @@ function update_labs_annunciator()
     end
 end
 
-function update_countermeasures()
-    cm_draw_bank1(cm_bank1_show)
-    cm_draw_bank2(cm_bank2_show)
-end
+
 
 
 
@@ -618,8 +570,6 @@ function update()
     end
 
     release_cbu_bomblets()
-
-    update_countermeasures()
     update_labs_annunciator()
 end
 
@@ -1046,100 +996,6 @@ function SetCommand(command,value)
         debug_print("mode:"..AWRS_mode_debug_text[func+1])
         if AWRS_mode ~= func then
             AWRS_mode = func
-        end
-
-        -----------------------------
-        -- COUNTERMEASURES
-        -------------------------
-    elseif command == device_commands.cm_pwr then
-        cm_enabled = (value > 0) and true or false
-    elseif command == device_commands.cm_bank then
-        if value == -1 then cm_banksel = 1
-        elseif value == 1 then cm_banksel = 2
-        else cm_banksel = 3
-        end
-    elseif command == device_commands.cm_auto then
-        cm_auto = (value > 0) and true or false
-    elseif command == device_commands.cm_adj1 then
-        --print_message_to_user("value = "..value)
-        cm_bank1_show = round(cm_bank1_show + 5*value)
-        cm_bank1_show = cm_bank1_show % 100
-    elseif command == device_commands.cm_adj2 then
-        --print_message_to_user("value = "..value)
-        cm_bank2_show = round(cm_bank2_show + 5*value)
-        cm_bank2_show = cm_bank2_show % 100
-    elseif command == Keys.CmDrop then
-        if cm_enabled and get_elec_aft_mon_ac_ok() and get_elec_mon_dc_ok() then
-            if cm_banksel == 1 or cm_banksel == 3 then
-                chaff_count = WeaponSystem:get_chaff_count()
-                if chaff_count > 0 then
-                    WeaponSystem:drop_chaff(1, chaff_pos)  -- first param is count, second param is dispenser number (see chaff_flare_dispenser in aircraft definition)
-                    cm_bank1_show = (cm_bank1_show - 1) % 100
-                end
-            end
-            if cm_banksel == 2 or cm_banksel == 3 then
-                flare_count = WeaponSystem:get_flare_count()
-                if flare_count > 0 then
-                    WeaponSystem:drop_flare(1, flare_pos)  -- first param is count, second param is dispenser number (see chaff_flare_dispenser in aircraft definition)
-                    cm_bank2_show = (cm_bank2_show - 1) % 100
-                end
-            end
-        end
-    elseif command == Keys.CmBankSelect then
-        WeaponSystem:performClickableAction(device_commands.cm_bank, value, false)
-    elseif command == Keys.CmBankSelectRotate then
-        --up goes to middle (0), middle goes to down (+1), down goes to up (-1)
-        if cm_banksel == 1 then
-            WeaponSystem:performClickableAction(device_commands.cm_bank, 0, false)
-        elseif cm_banksel == 2 then
-            WeaponSystem:performClickableAction(device_commands.cm_bank, -1, false)
-        elseif cm_banksel == 3 then
-            WeaponSystem:performClickableAction(device_commands.cm_bank, 1, false)
-        end
-    elseif command == Keys.CmAutoModeToggle then
-        if cm_auto then
-            WeaponSystem:performClickableAction(device_commands.cm_auto, 0, false)
-        else
-            WeaponSystem:performClickableAction(device_commands.cm_auto, 1, false)
-        end
-    elseif command == Keys.CmBank1AdjUp then
-        WeaponSystem:performClickableAction(device_commands.cm_adj1, 0.15, false)
-    elseif command == Keys.CmBank1AdjDown then
-        WeaponSystem:performClickableAction(device_commands.cm_adj1, -0.15, false)
-    elseif command == Keys.CmBank2AdjUp then
-        WeaponSystem:performClickableAction(device_commands.cm_adj2, 0.15, false)
-    elseif command == Keys.CmBank2AdjDown then
-        WeaponSystem:performClickableAction(device_commands.cm_adj2, -0.15, false)
-    elseif command == Keys.CmPowerToggle then
-        if cm_enabled then
-            WeaponSystem:performClickableAction(device_commands.cm_pwr, 0, false)
-        else
-            WeaponSystem:performClickableAction(device_commands.cm_pwr, 1, false)
-        end
-    elseif command == iCommandActiveJamming then
-        if ECM_status then
-            WeaponSystem:set_ECM_status(false)
-        else
-            WeaponSystem:set_ECM_status(true)
-        end
-    elseif command == Keys.ChangeCBU2AQuantity then
-        -- check for weight on wheels and engine off
-        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (sensor_data.getEngineLeftRPM() == 0) then
-            -- increment position
-            cbu2a_quantity_array_pos = (cbu2a_quantity_array_pos + 1) % table.getn(cbu2a_quantity_array)
-            debug_print("CBU-2/A quantity changed to "..tostring(cbu2a_quantity_array_pos))
-            -- get quantity and set param for kneeboard
-            cbu2a_quantity:set(cbu2a_quantity_array[cbu2a_quantity_array_pos+1])
-        end
-
-    elseif command == Keys.ChangeCBU2BAQuantity then
-        -- check for weight on wheels and engine off
-        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (sensor_data.getEngineLeftRPM() == 0) then
-            -- increment position
-            cbu2ba_quantity_array_pos = (cbu2ba_quantity_array_pos + 1) % table.getn(cbu2ba_quantity_array)
-            debug_print("CBU-2B/A quantity changed to "..tostring(cbu2ba_quantity_array_pos))
-            -- get quantity
-            cbu2ba_quantity:set(cbu2ba_quantity_array[cbu2ba_quantity_array_pos+1])
         end
     end
 

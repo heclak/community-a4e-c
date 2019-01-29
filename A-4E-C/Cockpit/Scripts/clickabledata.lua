@@ -346,11 +346,11 @@ elements["PNT_392"] = default_2_position_tumb("GunPods: Center Enable", devices.
 elements["PNT_393"] = default_2_position_tumb("GunPods: Right Enable", devices.WEAPON_SYSTEM, device_commands.gunpod_r, 393, TOGGLECLICK_LEFT_FWD)
 
 
-elements["PNT_522"] = multiposition_switch_limited("Countermeasures: Bank Select", devices.WEAPON_SYSTEM, device_commands.cm_bank, 522, 3, 1, true, -1, TOGGLECLICK_LEFT_FWD)
-elements["PNT_523"] = default_2_position_tumb("Countermeasures: Auto Mode Toggle", devices.WEAPON_SYSTEM, device_commands.cm_auto, 523, TOGGLECLICK_LEFT_FWD)
-elements["PNT_524"] = default_axis("Countermeasures: Bank 1 Adjust", devices.WEAPON_SYSTEM, device_commands.cm_adj1, 524, 0.0, 1, false, true)
-elements["PNT_525"] = default_axis("Countermeasures: Bank 2 Adjust", devices.WEAPON_SYSTEM, device_commands.cm_adj2, 525, 0.0, 1, false, true)
-elements["PNT_530"] = default_2_position_tumb("Countermeasures: Power Toggle", devices.WEAPON_SYSTEM, device_commands.cm_pwr, 530, TOGGLECLICK_LEFT_FWD)
+elements["PNT_522"] = multiposition_switch_limited("Countermeasures: Bank Select", devices.COUNTERMEASURES, device_commands.cm_bank, 522, 3, 1, true, -1, TOGGLECLICK_LEFT_FWD)
+elements["PNT_523"] = default_2_position_tumb("Countermeasures: Auto Mode Toggle", devices.COUNTERMEASURES, device_commands.cm_auto, 523, TOGGLECLICK_LEFT_FWD)
+elements["PNT_524"] = default_axis("Countermeasures: Bank 1 Adjust", devices.COUNTERMEASURES, device_commands.cm_adj1, 524, 0.0, 1, false, true)
+elements["PNT_525"] = default_axis("Countermeasures: Bank 2 Adjust", devices.COUNTERMEASURES, device_commands.cm_adj2, 525, 0.0, 1, false, true)
+elements["PNT_530"] = default_2_position_tumb("Countermeasures: Power Toggle", devices.COUNTERMEASURES, device_commands.cm_pwr, 530, TOGGLECLICK_LEFT_FWD)
 
 -- RADAR ALTIMETER #30
 -- combined 2 position switch and rotatable knob. The switch turns the radar altimeter

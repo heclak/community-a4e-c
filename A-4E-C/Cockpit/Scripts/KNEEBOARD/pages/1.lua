@@ -50,14 +50,14 @@ AddElement(txt_BoardTitle)
 --                         WEAPONS CONFIG
 -----------------------------------------------------------------
 
-txt_BoardTitle				= CreateElement "ceStringPoly"
-txt_BoardTitle.name			= "txt_BoardTitle"
-txt_BoardTitle.material		= "font_kneeboard"
-txt_BoardTitle.init_pos		= {0.0, getLineY(2), 0}
-txt_BoardTitle.value		= "CBU CONFIG"
-txt_BoardTitle.alignment	= "CenterBottom"
-txt_BoardTitle.stringdefs	= predefined_font_header
-AddElement(txt_BoardTitle)
+txt_WeaponsTitle				= CreateElement "ceStringPoly"
+txt_WeaponsTitle.name			= "txt_WeaponsTitle"
+txt_WeaponsTitle.material		= "font_kneeboard"
+txt_WeaponsTitle.init_pos		= {0.0, getLineY(2), 0}
+txt_WeaponsTitle.value		= "CBU CONFIG"
+txt_WeaponsTitle.alignment	= "CenterBottom"
+txt_WeaponsTitle.stringdefs	= predefined_font_header
+AddElement(txt_WeaponsTitle)
 
 -----------------------------------------------------------------
 --                         CBU-1/A
@@ -194,3 +194,16 @@ Hints_CBU2BA.value			= _("RS+RA+[3]")
 Hints_CBU2BA.alignment		= "RightBottom"
 Hints_CBU2BA.stringdefs		= predefined_font_item
 AddElement(Hints_CBU2BA)
+
+-----------------------------------------------------------------
+--                COUNTERMEASURES CONFIG
+-----------------------------------------------------------------
+
+txt_CountermeasuresTitle				= CreateElement "ceStringPoly"
+txt_CountermeasuresTitle.name			= "txt_CountermeasuresTitle"
+txt_CountermeasuresTitle.material		= "font_kneeboard"
+txt_CountermeasuresTitle.init_pos		= {0.0, getLineY(7), 0}
+txt_CountermeasuresTitle.value		    = "COUNTERMEASURES"
+txt_CountermeasuresTitle.alignment	    = "CenterBottom"
+txt_CountermeasuresTitle.stringdefs	    = predefined_font_header
+AddElement(txt_CountermeasuresTitle)
