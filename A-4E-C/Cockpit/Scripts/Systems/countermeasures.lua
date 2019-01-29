@@ -18,17 +18,20 @@ make_default_activity(update_rate)
 startup_print("countermeasures: load")
 
 function debug_print(x)
-    -- print_message_to_user(x)
-    -- log.alert(x)
+    print_message_to_user(x)
+    log.alert(x)
 end
+
+-- constants
+local AUTO_MODE_MIN_INTERVAL = 30
 
 -- countermeasure state
 local chaff_count = 0
 local flare_count = 0
 local cm_bank1_show = 0
 local cm_bank2_show = 0
-local cm_banksel = 0
-local cm_auto = false
+local cm_banksel = "both"
+local cm_auto_mode = false
 local cm_enabled = false
 local ECM_status = false
 local flare_pos = 0
@@ -52,6 +55,12 @@ local cms_salvo_interval_setting_array = { 2, 4, 6, 8, 10, 12, 14 }
 -- timers
 local time_ticker = 0
 local last_burst_time = 0
+
+-- missile launch checks
+local missile_threat_state = false
+local previous_threat_state = false
+local rwr_missile_warning = get_param_handle("RWR_MISSILE_WARNING")
+local auto_mode_ticker = 0
 
 CMS:listen_command(device_commands.cm_pwr)
 CMS:listen_command(device_commands.cm_bank)
@@ -101,46 +110,75 @@ end
 
 function release_countermeasure()
     debug_print("releasing countermeasures")
-    if cm_banksel == 1 or cm_banksel == 3 then
+    if cm_banksel == "bank_1" or cm_banksel == "both" then
         chaff_count = CMS:get_chaff_count()
         if chaff_count > 0 then
+            debug_print("Drop Chaff")
             CMS:drop_chaff(1, chaff_pos)  -- first param is count, second param is dispenser number (see chaff_flare_dispenser in aircraft definition)
             cm_bank1_show = (cm_bank1_show - 1) % 100
         end
     end
-    if cm_banksel == 2 or cm_banksel == 3 then
+    if cm_banksel == "bank_1" or cm_banksel == "both" then
         flare_count = CMS:get_flare_count()
         if flare_count > 0 then
+            debug_print("Drop Flare")
             CMS:drop_flare(1, flare_pos)  -- first param is count, second param is dispenser number (see chaff_flare_dispenser in aircraft definition)
             cm_bank2_show = (cm_bank2_show - 1) % 100
         end
     end
 end
 
+function missile_warning_check()
+    -- check for message from rwr
+    if rwr_missile_warning:get() == 1 then
+        missile_threat_state = 1
+
+        -- if threat state is new
+        if missile_threat_state ~= previous_threat_state and cm_auto_mode then
+            cms_dispense = true
+            -- start 30 second counter between start of auto sequence
+            auto_mode_ticker = time_ticker
+        end
+
+        -- restart sequence if auto mode interval has passed and missile threat is still present
+        if (time_ticker - auto_mode_ticker) > AUTO_MODE_MIN_INTERVAL and cm_auto_mode then
+            cms_dispense = true
+            -- start 30 second counter between start of auto sequence
+            auto_mode_ticker = time_ticker
+        end
+    else
+        missile_threat_state = 0
+    end
+end
+
 function post_initialize()
     cm_bank1_show = CMS:get_chaff_count()
     cm_bank2_show = CMS:get_flare_count()
-	flare_count = 0
+    flare_count = 0
+    cm_banksel = "both"
 
 end -- post_initialize()
 
 
 function update()
 
+    -- increment the internal timer
     time_ticker = time_ticker + update_rate
+
+    -- update missile warning status
+    missile_warning_check()
 
     -- check if monitored dc bus power is available
     -- check if AN/ALE-29A panel is on
     if get_elec_mon_dc_ok() and cm_enabled then
 
-        -- check if dispense is true
+        -- check if dispense should be dispensing
         if cms_dispense then
             -- continue burst sequence if not completed
             if burst_counter < cms_bursts_setting then
                 -- debug_print("running burst sequence")
                 -- check if burst interval is reached
                 if (time_ticker - last_burst_time) > cms_burst_interval_setting then
-                    debug_print("dropping flare")
                     release_countermeasure()
                     last_burst_time = time_ticker
                     burst_counter = burst_counter + 1
@@ -150,19 +188,27 @@ function update()
                         last_salvo_time = time_ticker
                     end
                 end
+
             -- start new salvo if interval reached
             elseif salvo_counter < cms_salvos_setting then
                 -- restart burst sequence if salvo interval is met
                 if (time_ticker - last_salvo_time) > cms_salvo_interval_setting then
                     salvo_counter = salvo_counter + 1
+
+                    -- stop dispensing if salvos are completed
                     if salvo_counter == cms_salvos_setting then
                         debug_print("sequence complete: salvo")
                         cms_dispense = false
+                        salvo_counter = 0
+                        burst_counter = 0
+
+                    -- start next salvo if sequence is not completed
                     else
                         debug_print("starting next salvo "..salvo_counter)
                         burst_counter = 0
                     end
                 end
+
             -- stop dispensing if bursts and salvos completed
             elseif burst_counter == cms_bursts_setting and salvo_counter == cms_salvos_setting then
                 debug_print("sequence complete")
@@ -186,13 +232,13 @@ function SetCommand(command, value)
         cm_enabled = (value > 0) and true or false
 
     elseif command == device_commands.cm_bank then
-        if value == -1 then cm_banksel = 1 -- bank 1
-        elseif value == 1 then cm_banksel = 2 -- bank 2
-        else cm_banksel = 3 -- both
+        if value == -1 then cm_banksel = "bank_1" -- bank 1
+        elseif value == 1 then cm_banksel = "bank_2" -- bank 2
+        else cm_banksel = "both" -- both
         end
 
     elseif command == device_commands.cm_auto then
-        cm_auto = (value > 0) and true or false
+        cm_auto_mode = (value > 0) and true or false
 
     elseif command == device_commands.cm_adj1 then
         --print_message_to_user("value = "..value)
@@ -207,21 +253,8 @@ function SetCommand(command, value)
     elseif command == Keys.CmDrop then
         if cm_enabled and get_elec_mon_dc_ok() then
             debug_print("dispense set to true")
-            cms_dispense = true
-            if cm_banksel == 1 or cm_banksel == 3 then
-                chaff_count = CMS:get_chaff_count()
-                if chaff_count > 0 then
-                    -- CMS:drop_chaff(1, chaff_pos)  -- first param is count, second param is dispenser number (see chaff_flare_dispenser in aircraft definition)
-                    cm_bank1_show = (cm_bank1_show - 1) % 100
-                end
-            end
-            if cm_banksel == 2 or cm_banksel == 3 then
-                flare_count = CMS:get_flare_count()
-                if flare_count > 0 then
-                    -- CMS:drop_flare(1, flare_pos)  -- first param is count, second param is dispenser number (see chaff_flare_dispenser in aircraft definition)
-                    cm_bank2_show = (cm_bank2_show - 1) % 100
-                end
-            end
+            cms_dispense = true -- remove this before production
+            release_countermeasure()
         end
 
     elseif command == Keys.CmBankSelect then
@@ -238,7 +271,7 @@ function SetCommand(command, value)
         end
 
     elseif command == Keys.CmAutoModeToggle then
-        if cm_auto then
+        if cm_auto_mode then
             CMS:performClickableAction(device_commands.cm_auto, 0, false)
         else
             CMS:performClickableAction(device_commands.cm_auto, 1, false)
