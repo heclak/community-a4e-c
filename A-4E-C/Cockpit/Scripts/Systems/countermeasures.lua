@@ -41,7 +41,7 @@ local burst_counter = 0
 local salvo_counter = 0
 
 -- cms programmer settings
-local cms_bursts_setting = 4
+local cms_bursts_setting = 1
 local cms_burst_interval_setting = 0.2
 local cms_salvos_setting = 8
 local cms_salvo_interval_setting = 2
@@ -157,6 +157,13 @@ function post_initialize()
     cm_bank1_show = chaff_count
     cm_bank2_show = flare_count
     cm_banksel = "both"
+
+    -- init values from mission options
+    cms_bursts_setting = cms_bursts_setting_array[get_aircraft_property("CMS_BURSTS")]
+    cms_burst_interval_setting = cms_burst_interval_array[get_aircraft_property("CMS_BURST_INTERVAL")]
+    cms_salvos_setting = cms_salvos_setting_array[get_aircraft_property("CMS_SALVOS")]
+    cms_salvo_interval_setting = cms_salvo_interval_setting_array[get_aircraft_property("CMS_SALVO_INTERVAL")]
+
 
 end -- post_initialize()
 
