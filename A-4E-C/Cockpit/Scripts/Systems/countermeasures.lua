@@ -48,9 +48,14 @@ local cms_salvo_interval_setting = 2
 
 -- cms programmer settings array
 local cms_bursts_setting_array = { 1, 2, 3, 4 }
-local cms_burst_interval_array = { 0.2, 0.3, 0.4, 0.5}
+local cms_burst_interval_setting_array = { 0.2, 0.3, 0.4, 0.5}
 local cms_salvos_setting_array = { 8, 12, 16, 20, 24, 28, 32 }
 local cms_salvo_interval_setting_array = { 2, 4, 6, 8, 10, 12, 14 }
+
+local cms_bursts_setting_array_pos = 1
+local cms_burst_interval_setting_array_pos = 1
+local cms_salvos_setting_array_pos = 1
+local cms_salvo_interval_setting_array_pos = 1
 
 -- timers
 local time_ticker = 0
@@ -61,6 +66,12 @@ local missile_threat_state = false
 local previous_threat_state = false
 local rwr_missile_warning = get_param_handle("RWR_MISSILE_WARNING")
 local auto_mode_ticker = 0
+
+-- params for kneeboard
+local cms_bursts_param          = get_param_handle("CMS_BURSTS_PARAM")
+local cms_burst_interval_param  = get_param_handle("CMS_BURST_INTERVAL_PARAM")
+local cms_salvos_param          = get_param_handle("CMS_SALVOS_PARAM")
+local cms_salvo_interval_param  = get_param_handle("CMS_SALVO_INTERVAL_PARAM")
 
 CMS:listen_command(device_commands.cm_pwr)
 CMS:listen_command(device_commands.cm_bank)
@@ -118,7 +129,7 @@ function release_countermeasure()
             cm_bank1_show = (cm_bank1_show - 1) % 100
         end
     end
-    if cm_banksel == "bank_1" or cm_banksel == "both" then
+    if cm_banksel == "bank_2" or cm_banksel == "both" then
         flare_count = CMS:get_flare_count()
         if flare_count > 0 then
             debug_print("Drop Flare")
@@ -151,19 +162,32 @@ function missile_warning_check()
     end
 end
 
+function update_cms_params()
+    cms_bursts_setting          = cms_bursts_setting_array[cms_bursts_setting_array_pos]
+    cms_burst_interval_setting  = cms_burst_interval_setting_array[cms_burst_interval_setting_array_pos]
+    cms_salvos_setting          = cms_salvos_setting_array[cms_salvos_setting_array_pos]
+    cms_salvo_interval_setting  = cms_salvo_interval_setting_array[cms_salvo_interval_setting_array_pos]
+
+    cms_bursts_param:set(cms_bursts_setting)
+    cms_burst_interval_param:set(cms_burst_interval_setting)
+    cms_salvos_param:set(cms_salvos_setting)
+    cms_salvo_interval_param:set(cms_salvo_interval_setting)
+end -- update_cms_params()
+
 function post_initialize()
-    flare_count = CMS:get_flare_count()
-    chaff_count = CMS:get_chaff_count()
-    cm_bank1_show = chaff_count
-    cm_bank2_show = flare_count
-    cm_banksel = "both"
-
+    flare_count     = CMS:get_flare_count()
+    chaff_count     = CMS:get_chaff_count()
+    cm_bank1_show   = chaff_count
+    cm_bank2_show   = flare_count
+    cm_banksel      = "both"
+    
     -- init values from mission options
-    cms_bursts_setting = cms_bursts_setting_array[get_aircraft_property("CMS_BURSTS")]
-    cms_burst_interval_setting = cms_burst_interval_array[get_aircraft_property("CMS_BURST_INTERVAL")]
-    cms_salvos_setting = cms_salvos_setting_array[get_aircraft_property("CMS_SALVOS")]
-    cms_salvo_interval_setting = cms_salvo_interval_setting_array[get_aircraft_property("CMS_SALVO_INTERVAL")]
-
+    cms_bursts_setting_array_pos          = get_aircraft_property("CMS_BURSTS")
+    cms_burst_interval_setting_array_pos  = get_aircraft_property("CMS_BURST_INTERVAL")
+    cms_salvos_setting_array_pos          = get_aircraft_property("CMS_SALVOS")
+    cms_salvo_interval_setting_array_pos  = get_aircraft_property("CMS_SALVO_INTERVAL")
+    
+    update_cms_params()
 
 end -- post_initialize()
 
@@ -224,14 +248,11 @@ function update()
                 salvo_counter = 0
                 burst_counter = 0
             end
-
         end -- cms_dispense
-
-
-    end -- get_elec_mon_dc_ok() and 
-        
+    end -- get_elec_mon_dc_ok() and        
 
     update_countermeasures_display()
+
 end -- update()
 
 function SetCommand(command, value)
