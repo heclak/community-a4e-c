@@ -124,9 +124,9 @@ function release_countermeasure()
             debug_print("Drop Flare")
             CMS:drop_flare(1, flare_pos)  -- first param is count, second param is dispenser number (see chaff_flare_dispenser in aircraft definition)
             cm_bank2_show = (cm_bank2_show - 1) % 100
-        end
-    end
-end
+        end -- if flare_count
+    end -- if cm_banksel
+end -- release_countermeasure()
 
 function missile_warning_check()
     -- check for message from rwr
