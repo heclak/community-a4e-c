@@ -338,7 +338,7 @@ A_4E_C =  {
     {
         {
             file       = 'A-4E';
-            life       = 16; -- lifebar
+            life       = 8; -- lifebar
             vis        = 3;  -- visibility gain.
             desrt    = 'Alphajet-destr'; -- Name of destroyed object file name Alphajet-destr. This is a placeholder.
             fire       = {300, 3}; -- Fire on the ground after destoyed: 300sec 2m
@@ -678,6 +678,56 @@ A_4E_C =  {
                 {id =  2, dispName = _("6 tubes")},
             },
             defValue  = 0,
+            wCtrl     = 150,
+            playerOnly = true
+        },
+        { id = "CMS_BURSTS",			control = 'comboList', label = _('CMS BURSTS'),
+            values = {
+                {id =  1, dispName = _("1")},
+                {id =  2, dispName = _("2")},
+                {id =  3, dispName = _("3")},
+                {id =  4, dispName = _("4")},
+            },
+            defValue  = 1,
+            wCtrl     = 150,
+            playerOnly = true
+        },
+        { id = "CMS_BURST_INTERVAL", control = 'comboList', label = _('CMS BURST INTERVAL'),
+            values = {
+                {id =  1, dispName = _("0.2 seconds")},
+                {id =  2, dispName = _("0.3 seconds")},
+                {id =  3, dispName = _("0.4 seconds")},
+                {id =  4, dispName = _("0.5 seconds")},
+            },
+            defValue  = 1,
+            wCtrl     = 150,
+            playerOnly = true
+        },
+        { id = "CMS_SALVOS", control = 'comboList', label = _('CMS SALVOS'),
+            values = {
+                {id =  1, dispName = _("8")},
+                {id =  2, dispName = _("12")},
+                {id =  3, dispName = _("16")},
+                {id =  4, dispName = _("20")},
+                {id =  5, dispName = _("24")},
+                {id =  6, dispName = _("28")},
+                {id =  7, dispName = _("32")},
+            },
+            defValue  = 1,
+            wCtrl     = 150,
+            playerOnly = true
+        },
+        { id = "CMS_SALVO_INTERVAL", control = 'comboList', label = _('CMS SALVO INTERVAL'),
+            values = {
+                {id =  1, dispName = _("2 seconds")},
+                {id =  2, dispName = _("4 seconds")},
+                {id =  3, dispName = _("6 seconds")},
+                {id =  4, dispName = _("8 seconds")},
+                {id =  5, dispName = _("10 seconds")},
+                {id =  6, dispName = _("12 seconds")},
+                {id =  7, dispName = _("14 seconds")},
+            },
+            defValue  = 1,
             wCtrl     = 150,
             playerOnly = true
         },
