@@ -30,8 +30,8 @@ local function getLineY(line)
 end
 
 local NamePosX = -0.45
-local ValuePosX = -0.3
-local UnitsPosX = -0.27
+local ValuePosX = -0.27
+local UnitsPosX = -0.24
 local HintsPosX = 0.8
 
 local CMSValuePosX = -0.1
@@ -253,7 +253,7 @@ Hints_BURSTS				= CreateElement "ceStringPoly"
 Hints_BURSTS.name			= "Hints_BURSTS"
 Hints_BURSTS.material		= "font_kneeboard_hint"
 Hints_BURSTS.init_pos		= {CMSHintsPosX,  BURSTS_LineY, 0}
-Hints_BURSTS.value			= _("RS+RA+[3]")
+Hints_BURSTS.value			= _("RS+RA+[4]")
 Hints_BURSTS.alignment		= "RightBottom"
 Hints_BURSTS.stringdefs		= predefined_font_item
 AddElement(Hints_BURSTS)
@@ -298,7 +298,7 @@ Hints_BURST_INTERVAL				= CreateElement "ceStringPoly"
 Hints_BURST_INTERVAL.name			= "Hints_BURST_INTERVAL"
 Hints_BURST_INTERVAL.material		= "font_kneeboard_hint"
 Hints_BURST_INTERVAL.init_pos		= {CMSHintsPosX,  BURST_INTERVAL_LineY, 0}
-Hints_BURST_INTERVAL.value			= _("RS+RA+[3]")
+Hints_BURST_INTERVAL.value			= _("RS+RA+[5]")
 Hints_BURST_INTERVAL.alignment		= "RightBottom"
 Hints_BURST_INTERVAL.stringdefs		= predefined_font_item
 AddElement(Hints_BURST_INTERVAL)
@@ -343,7 +343,7 @@ Hints_SALVOS				= CreateElement "ceStringPoly"
 Hints_SALVOS.name			= "Hints_SALVOS"
 Hints_SALVOS.material		= "font_kneeboard_hint"
 Hints_SALVOS.init_pos		= {CMSHintsPosX,  SALVOS_LineY, 0}
-Hints_SALVOS.value			= _("RS+RA+[3]")
+Hints_SALVOS.value			= _("RS+RA+[6]")
 Hints_SALVOS.alignment		= "RightBottom"
 Hints_SALVOS.stringdefs		= predefined_font_item
 AddElement(Hints_SALVOS)
@@ -389,7 +389,7 @@ Hints_SALVO_INTERVAL				= CreateElement "ceStringPoly"
 Hints_SALVO_INTERVAL.name			= "Hints_SALVO_INTERVAL"
 Hints_SALVO_INTERVAL.material		= "font_kneeboard_hint"
 Hints_SALVO_INTERVAL.init_pos		= {CMSHintsPosX,  SALVO_INTERVAL_LineY, 0}
-Hints_SALVO_INTERVAL.value			= _("RS+RA+[3]")
+Hints_SALVO_INTERVAL.value			= _("RS+RA+[7]")
 Hints_SALVO_INTERVAL.alignment		= "RightBottom"
 Hints_SALVO_INTERVAL.stringdefs		= predefined_font_item
 AddElement(Hints_SALVO_INTERVAL)
