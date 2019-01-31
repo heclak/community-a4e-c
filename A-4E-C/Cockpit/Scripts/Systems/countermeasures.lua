@@ -66,7 +66,7 @@ local last_burst_time = 0
 -- missile launch checks
 local missile_threat_state = false
 local previous_threat_state = false
-local rwr_missile_warning = get_param_handle("RWR_MISSILE_WARNING")
+local rwr_status = get_param_handle("RWR_STATUS_SIGNAL")
 local auto_mode_ticker = 0
 
 -- params for kneeboard
@@ -147,7 +147,7 @@ end -- release_countermeasure()
 
 function missile_warning_check()
     -- check for message from rwr
-    if rwr_missile_warning:get() == 1 then
+    if rwr_status:get() == 3 then
         missile_threat_state = 1
 
         -- if threat state is new
