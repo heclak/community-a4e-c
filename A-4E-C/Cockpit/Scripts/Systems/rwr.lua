@@ -4,8 +4,8 @@ dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.common_script_path.."devices_defs.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 
-device_timer_dt     = 0.2  	
-local update_rate 	= 0.2
+device_timer_dt     = 0.02  	--0.2  	
+--local update_rate 	= 0.2
 MaxThreats          = 9
 EmitterLiveTime     = 7.0	
 
@@ -75,7 +75,11 @@ local glare_rwr_light=get_param_handle("D_GLARE_OBST")	--glare_obst_light:set(ob
 
 local glare_rwr_param=get_param_handle("D_GLARE_RWR")
 local rwr_status_light_param=get_param_handle("RWR_STATUS_LIGHT")
+local rwr_status_signal_param=get_param_handle("RWR_STATUS_SIGNAL")
 rwr_status_light_param:set(0)
+rwr_status_signal_param:set(0)
+
+
 
 local rwr_master_status = 0 	--1 = on
 local rwr_master_volume = 1		--0-2		--inner
@@ -141,30 +145,24 @@ function SetCommand(command,value)
 		rwr_master_status = value
 		
 	elseif command == device_commands.ecm_apr25_audio then
-	--	rwr_apr25_audio = value
 		rwr_apr25_apr27_audio = value
 		if rwr_apr25_apr27_audio == 1 then
 			rwr_apr25_audio = 0
 		elseif rwr_apr25_apr27_audio == 0 then
 			rwr_apr25_audio = 1
 		end
-		
-		
+			
 	elseif command == device_commands.ecm_apr27_off then
 		rwr_apr27_status = value
 	elseif command == device_commands.ecm_msl_alert_axis_inner then
-		rwr_master_volume = (value + 1) 
-
-	elseif command == device_commands.ecm_msl_alert_axis_outer then
-		rwr_launch_volume = (value + 1) 
+		rwr_master_volume = LinearTodB(((round(value/0.8,2))+1	)*0.5)
 	
+			
+	elseif command == device_commands.ecm_msl_alert_axis_outer then
+		rwr_launch_volume = LinearTodB(((round(value/0.8,2))+1	)*0.5)
 	
 	elseif command == device_commands.ecm_selector_knob then
-
-		
 		rwr_apr27_selector = round(value, 2)
-
-	
 	
 	elseif command == device_commands.ecm_systest_upper then
 		ecm_upper_test = value
@@ -259,13 +257,15 @@ function update()
 			
 		end
 		
+		rwr_status_signal_param:set(tmp_rwr_signal)
 
 		
 		if not rwrHum:is_playing() then
 			rwrHum:play_continue()
-			rwrHum:update(nil,rwr_master_volume * rwr_apr25_audio * 0.05,nil)
+			--rwrHum:update(nil,rwr_master_volume * rwr_apr25_audio * 0.05,nil)
+			rwrHum:update(nil,rwr_master_volume * rwr_apr25_audio * 0.5,nil)
 		else
-			rwrHum:update(nil,rwr_master_volume * rwr_apr25_audio * 0.05,nil)
+			rwrHum:update(nil,rwr_master_volume * rwr_apr25_audio * 0.5,nil)
 		end
 			
 		check_search_played(esam_search,rwrEsamSearch,tmp_rwr_signal)	
