@@ -1025,7 +1025,7 @@ ECM_Test_Lower_LL.output                    = {0.0, 1.0}
 ECM_Test_Lower_LL.parameter_name            = "ECM_TEST_LOWER_LL"
 
 ECM_Test_Lower_LR		                    = CreateGauge("parameter")
-ECM_Test_Lower_LR.arg_number                 = 520
+ECM_Test_Lower_LR.arg_number                 = 500
 ECM_Test_Lower_LR.input                      = {0.0, 1.0}
 ECM_Test_Lower_LR.output                     = {0.0, 1.0}
 ECM_Test_Lower_LR.parameter_name             = "ECM_TEST_LOWER_LR"

@@ -44,6 +44,7 @@ local brake_eff = get_param_handle("BRAKE_EFF")
 local wheelchocks_state_param = get_param_handle("WHEEL_CHOCKS_STATE")
 wheelchocks_state_param:set(WHEELCHOCKS_STATE)
 
+local birth_tics = 0
 
 dev:listen_command(Airbrake)
 dev:listen_command(AirbrakeOn)
@@ -201,7 +202,7 @@ end
 
 
 function update()
-    
+    update_birth()
     update_brakes()
     		
 	if (ABRAKE_COMMAND == 0 and ABRAKE_STATE > 0) then
@@ -270,6 +271,17 @@ function update()
     set_aircraft_draw_argument_value(21,effective_airbrake)
     set_aircraft_draw_argument_value(500,ABRAKE_STATE)
     set_aircraft_draw_argument_value(WHEELCHOCKS_ANIM_ARG, WHEELCHOCKS_STATE) -- draw wheel chocks if state is 1. 
+end
+
+function update_birth()
+
+	if birth_tics < 200 then
+		brakes_on = true
+		birth_tics = birth_tics + 1
+	elseif birth_tics < 205 then
+		brakes_on = false
+		birth_tics = birth_tics + 1
+	end
 end
 
 need_to_be_closed = false -- close lua state after initialization

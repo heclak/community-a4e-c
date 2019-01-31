@@ -35,6 +35,10 @@ function gcd(m, n)
 end
 
 
+function LinearTodB(value)
+    return math.pow(value, 3)
+end
+
 
 -- jumpwheel()
 -- 
