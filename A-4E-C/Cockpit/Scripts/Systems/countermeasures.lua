@@ -18,8 +18,8 @@ make_default_activity(update_rate)
 startup_print("countermeasures: load")
 
 function debug_print(x)
-    print_message_to_user(x)
-    log.alert(x)
+    -- print_message_to_user(x)
+    -- log.alert(x)
 end
 
 local sensor_data = get_base_data()
@@ -340,20 +340,36 @@ function SetCommand(command, value)
 
     -- bindings for kneeboard command changes
     elseif command == Keys.ChangeCmsBursts then
-        cms_bursts_setting_array_pos = next(cms_bursts_setting_array_pos, 1, table.getn(cms_bursts_setting_array))
-        update_cms_params()
+        -- check for weight on wheels and engine off
+        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (sensor_data.getEngineLeftRPM() == 0) then
+            -- cycle to next value in array
+            cms_bursts_setting_array_pos = next(cms_bursts_setting_array_pos, 1, table.getn(cms_bursts_setting_array))
+            update_cms_params()
+        end
         
     elseif command == Keys.ChangeCmsBurstInterval then
-        cms_burst_interval_setting_array_pos = next(cms_burst_interval_setting_array_pos, 1, table.getn(cms_burst_interval_setting_array))
-        update_cms_params()
+        -- check for weight on wheels and engine off
+        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (sensor_data.getEngineLeftRPM() == 0) then
+            -- cycle to next value in array
+            cms_burst_interval_setting_array_pos = next(cms_burst_interval_setting_array_pos, 1, table.getn(cms_burst_interval_setting_array))
+            update_cms_params()
+        end
 
     elseif command == Keys.ChangeCmsSalvos then
-        cms_salvos_setting_array_pos = next(cms_salvos_setting_array_pos, 1, table.getn(cms_salvos_setting_array))
-        update_cms_params()
+        -- check for weight on wheels and engine off
+        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (sensor_data.getEngineLeftRPM() == 0) then
+            -- cycle to next value in array
+            cms_salvos_setting_array_pos = next(cms_salvos_setting_array_pos, 1, table.getn(cms_salvos_setting_array))
+            update_cms_params()
+        end
 
     elseif command == Keys.ChangeSalvoInterval then
-        cms_salvo_interval_setting_array_pos = next(cms_salvo_interval_setting_array_pos, 1, table.getn(cms_salvo_interval_setting_array))
-        update_cms_params()
+        -- check for weight on wheels and engine off
+        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (sensor_data.getEngineLeftRPM() == 0) then
+            -- cycle to next value in array
+            cms_salvo_interval_setting_array_pos = next(cms_salvo_interval_setting_array_pos, 1, table.getn(cms_salvo_interval_setting_array))
+            update_cms_params()
+        end
 
     end
 end -- setCommand()
