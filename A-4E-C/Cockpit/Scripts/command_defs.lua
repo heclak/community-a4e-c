@@ -267,7 +267,12 @@ Keys =
 	ecm_systest_upper	= __custom_counter(),
 	ecm_systest_lower	= __custom_counter(),
 		
-	ecm_selector_knob = __custom_counter(),
+    ecm_selector_knob = __custom_counter(),
+    
+    ChangeCmsBursts         = __custom_counter(),
+    ChangeCmsBurstInterval  = __custom_counter(),
+    ChangeCmsSalvos         = __custom_counter(),
+    ChangeSalvoInterval     = __custom_counter(),
 	
 }
 

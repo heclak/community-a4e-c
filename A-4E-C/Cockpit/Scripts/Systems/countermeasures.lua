@@ -22,6 +22,8 @@ function debug_print(x)
     log.alert(x)
 end
 
+local sensor_data = get_base_data()
+
 -- constants
 local AUTO_MODE_MIN_INTERVAL = 30
 
@@ -90,6 +92,10 @@ CMS:listen_command(Keys.CmBank1AdjDown)
 CMS:listen_command(Keys.CmBank2AdjUp)
 CMS:listen_command(Keys.CmBank2AdjDown)
 CMS:listen_command(Keys.CmPowerToggle)
+CMS:listen_command(Keys.ChangeCmsBursts)
+CMS:listen_command(Keys.ChangeCmsBurstInterval)
+CMS:listen_command(Keys.ChangeCmsSalvos)
+CMS:listen_command(Keys.ChangeSalvoInterval)
 
 local cm_bank1_Xx = get_param_handle("CM_BANK1_Xx")
 local cm_bank1_xX = get_param_handle("CM_BANK1_xX")
@@ -331,8 +337,31 @@ function SetCommand(command, value)
         else
             CMS:set_ECM_status(true)
         end
+
+    -- bindings for kneeboard command changes
+    elseif command == Keys.ChangeCmsBursts then
+        cms_bursts_setting_array_pos = next(cms_bursts_setting_array_pos, 1, table.getn(cms_bursts_setting_array))
+        update_cms_params()
+        
+    elseif command == Keys.ChangeCmsBurstInterval then
+        cms_burst_interval_setting_array_pos = next(cms_burst_interval_setting_array_pos, 1, table.getn(cms_burst_interval_setting_array))
+        update_cms_params()
+
+    elseif command == Keys.ChangeCmsSalvos then
+        cms_salvos_setting_array_pos = next(cms_salvos_setting_array_pos, 1, table.getn(cms_salvos_setting_array))
+        update_cms_params()
+
+    elseif command == Keys.ChangeSalvoInterval then
+        cms_salvo_interval_setting_array_pos = next(cms_salvo_interval_setting_array_pos, 1, table.getn(cms_salvo_interval_setting_array))
+        update_cms_params()
+
     end
 end -- setCommand()
+
+function next(value_to_increment, increment_by, modulus)
+    return ((value_to_increment + increment_by - 1) % modulus) + 1
+end
+
 
 startup_print("countermeasures: load complete")
 

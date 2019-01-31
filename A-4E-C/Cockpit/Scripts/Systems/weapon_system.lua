@@ -997,8 +997,27 @@ function SetCommand(command,value)
         if AWRS_mode ~= func then
             AWRS_mode = func
         end
-    end
+        
+    elseif command == Keys.ChangeCBU2AQuantity then
+        -- check for weight on wheels and engine off
+        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (sensor_data.getEngineLeftRPM() == 0) then
+            -- increment position
+            cbu2a_quantity_array_pos = (cbu2a_quantity_array_pos + 1) % table.getn(cbu2a_quantity_array)
+            debug_print("CBU-2/A quantity changed to "..tostring(cbu2a_quantity_array_pos))
+            -- get quantity and set param for kneeboard
+            cbu2a_quantity:set(cbu2a_quantity_array[cbu2a_quantity_array_pos+1])
+        end
 
+    elseif command == Keys.ChangeCBU2BAQuantity then
+        -- check for weight on wheels and engine off
+        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (sensor_data.getEngineLeftRPM() == 0) then
+            -- increment position
+            cbu2ba_quantity_array_pos = (cbu2ba_quantity_array_pos + 1) % table.getn(cbu2ba_quantity_array)
+            debug_print("CBU-2B/A quantity changed to "..tostring(cbu2ba_quantity_array_pos))
+            -- get quantity
+            cbu2ba_quantity:set(cbu2ba_quantity_array[cbu2ba_quantity_array_pos+1])
+        end
+    end
 end
 
 startup_print("weapon_system: load complete")
