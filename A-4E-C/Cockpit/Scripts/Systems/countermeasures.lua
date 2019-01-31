@@ -287,8 +287,7 @@ function SetCommand(command, value)
 
     elseif command == Keys.CmDrop then
         if cm_enabled and get_elec_mon_dc_ok() then
-            debug_print("dispense set to true")
-            cms_dispense = true -- remove this before production
+            -- cms_dispense = true -- remove this before production
             release_countermeasure()
         end
 
