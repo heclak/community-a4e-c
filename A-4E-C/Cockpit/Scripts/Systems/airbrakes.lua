@@ -63,11 +63,13 @@ function CockpitEvent(event,val)
     if event == "WheelChocksOn" then
         debug_print("WheelChocksOn")
         WHEELCHOCKS_STATE = 1
+        wheelchocks_state_param:set(WHEELCHOCKS_STATE)
     elseif event == "WheelChocksOff" then
         debug_print("WheelChocksOff")
+        dispatch_action(nil,iCommandPlaneWheelBrakeOff)
         WHEELCHOCKS_STATE = 0
+        wheelchocks_state_param:set(WHEELCHOCKS_STATE)
     end
-	wheelchocks_state_param:set(WHEELCHOCKS_STATE)
 end
 
 function SetCommand(command,value)			
@@ -167,8 +169,6 @@ function update_brakes()
     -- hold brakes on if wheels chocks are on.
     if WHEELCHOCKS_STATE == 1 then
         dispatch_action(nil,iCommandPlaneWheelBrakeOn)
-    else
-        dispatch_action(nil,iCommandPlaneWheelBrakeOff)
     end
 
     if brakes_on then
