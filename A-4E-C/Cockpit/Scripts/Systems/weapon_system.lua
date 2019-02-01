@@ -971,7 +971,7 @@ function SetCommand(command,value)
             emer_bomb_release_countdown = 0.25 -- seconds until spring pulls back lever
         end
     elseif command == device_commands.AWRS_quantity then
-        print_message_to_user(value)
+        -- print_message_to_user(value)
         local func=math.floor(math.ceil(value*100)/5) -- 0 to 11
         func = AWRS_quantity_array[func+1]
         debug_print("quantity:"..tostring(func))
