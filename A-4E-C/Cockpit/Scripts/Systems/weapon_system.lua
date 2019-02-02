@@ -266,6 +266,7 @@ local pylon_order = {1,5,2,4,3}
 local next_pylon = 1 -- 1-5
 local last_pylon_release = {0,0,0,0,0}  -- last time (see time_ticker) pylon was fired
 local last_bomblet_release = {0,0,0,0,0}  -- last time (see time_ticker) bomblet was released from dispenser
+local priority_pairs = { 5, 4, 3, 2, 1 }
 
 
 function prepare_weapon_release()
@@ -314,7 +315,17 @@ function update_labs_annunciator()
 end
 
 
-
+function check_priority_pair_station(station_id) -- station id is 1 - 5
+    -- get priority pair id number
+    local pair_station_id = priority_pairs[station_id]
+    -- check if priority pair station is readied
+    -- return true if station is readied
+    if station_states[pair_station_id] == STATION_READY then
+        return true
+    else
+        return false
+    end -- station_states
+end -- check_priority_pair_station
 
 
 
@@ -430,19 +441,28 @@ function update()
                 next_pylon = 1
             end
 
-            -- centerline will not release weapons in PAIRS mode.
-            if ((AWRS_mode == AWRS_mode_ripple_pairs) or (AWRS_mode == AWRS_mode_step_pairs)) and ( i == 3 ) then
-                break
-            end
-
+            
             local station = WeaponSystem:get_station_info(i-1)
-
+            
             -- HIPEG/gunpod launcher
             if gunpod_state[i] == GUNPOD_ARMED and station.count > 0 and station.weapon.level2 == wsType_Shell and trigger_engaged and (gunpod_charge_state == 1 and get_elec_aft_mon_ac_ok()) then
                 WeaponSystem:launch_station(i-1)
                 last_pylon_release[i] = time_ticker
             end
+            
+            -- conditional checks for RIPPLE PAIRS and STEP PAIRS
+            if ((AWRS_mode == AWRS_mode_ripple_pairs) or (AWRS_mode == AWRS_mode_step_pairs)) then
+                -- centerline will not release weapons in PAIRS mode.
+                if  i == 3 then
+                    break
 
+                -- check if priorty pair station is ready else break weapon loop
+                -- If no weapons on pairs of equal priority stations, tone will not be heard, no weapons will be dropped.
+                elseif check_priority_pair_station(i) == false then
+                    break
+                end
+            end
+            
             if station_states[i] == STATION_READY then
                 if station.count > 0 and (
                 (station.weapon.level2 == wsType_NURS and ((trigger_engaged and function_selector == FUNC_ROCKETS) or (pickle_engaged and function_selector == FUNC_GM_UNARM)) and weap_release) or -- launch unguided rockets
@@ -855,7 +875,7 @@ function SetCommand(command,value)
         dispatch_action(nil,iCommandPlaneFireOff)
         gun_firing = false
         trigger_engaged = false
-        bombtone:stop() -- TODO also stop after last auto-release interval bomb is dropped
+        bombtone:stop()
         glare_labs_annun_state = false -- turn on labs light
         ripple_sequence_position = 0 -- reset ripple sequence
 
@@ -971,7 +991,7 @@ function SetCommand(command,value)
             emer_bomb_release_countdown = 0.25 -- seconds until spring pulls back lever
         end
     elseif command == device_commands.AWRS_quantity then
-        -- print_message_to_user(value)
+        -- debug_print("AWRS Quantity: "..value)
         local func=math.floor(math.ceil(value*100)/5) -- 0 to 11
         func = AWRS_quantity_array[func+1]
         debug_print("quantity:"..tostring(func))
