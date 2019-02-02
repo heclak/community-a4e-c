@@ -201,7 +201,7 @@ function post_initialize()
     startup_print("weapon_system: postinit start")
 
     sndhost = create_sound_host("COCKPIT_ARMS","2D",0,0,0)
-    bombtone = sndhost:create_sound("bombtone") -- refers to sdef file, and sdef file content refers to sound file, see DCSWorld/Sounds/sdef/_example.sdef
+    labs_tone = sndhost:create_sound("bombtone") -- refers to sdef file, and sdef file content refers to sound file, see DCSWorld/Sounds/sdef/_example.sdef
     aim9seek = sndhost:create_sound("Aircrafts/Cockpits/AIM9")
     aim9lock = sndhost:create_sound("Aircrafts/Cockpits/SidewinderLow")
     --aim9lock2 = sndhost:create_sound("Aircrafts/Cockpits/SidewinderLowQuiet")
@@ -298,7 +298,7 @@ local ir_missile_des_el_param = get_param_handle("WS_IR_MISSILE_SEEKER_DESIRED_E
 -- call function at the end of a ripple sequence
 function ripple_sequence_end()
     debug_print("Ripple Sequence Ended")
-    bombtone:stop()
+    labs_tone:stop()
     pickle_engaged = false
     trigger_engaged = false
     ripple_sequence_position = 0
@@ -327,6 +327,22 @@ function check_priority_pair_station(station_id) -- station id is 1 - 5
     end -- station_states
 end -- check_priority_pair_station
 
+function check_all_stations_for_pairs_mode()
+    local equal_priority_found = false
+
+    -- cycle through stations to find a readied pair of stations with equal priority
+    for i = 1, 2 do
+        if station_states[i] == STATION_READY then
+            local equal_priority_station = priority_pairs[i]
+            if station_states[ equal_priority_station ] == STATION_READY then
+                -- equal priority pair found
+                equal_priority_found = true
+            end
+        end
+    end
+
+    return equal_priority_found
+end
 
 
 function update()
@@ -834,20 +850,26 @@ function SetCommand(command,value)
         
         -- if AWRS is setup for bombs or rockets
         if ( function_selector == FUNC_BOMBS_GM_ARM or function_selector == FUNC_GM_UNARM ) and _master_arm then
-            debug_print("Bomb Tone Playing")
-            bombtone:play_continue()
-            glare_labs_annun_state = true -- turn on labs light
-        end
-        --[[
-            for i=1, num_stations, 1 do
-                local station = WeaponSystem:get_station_info(i-1)
-                print_message_to_user("station "..tostring(i)..": count="..tostring(station.count)..",state="..tostring(station_states[i])..",l2="..tostring(station.weapon.level2)..",l3="..tostring(station.weapon.level3))
+
+            -- PAIRS mode conditional logic checks
+            if (AWRS_mode == AWRS_mode_ripple_pairs or AWRS_mode == AWRS_mode_step_pairs) then
+                
+                -- In PAIRS mode, an equal priority pair must exist for LABS tone and light to turn on
+                if check_all_stations_for_pairs_mode() then
+                    labs_tone:play_continue()
+                    glare_labs_annun_state = true -- turn on labs light    
+                end
+
+            -- All other AWRS modes
+            else
+                labs_tone:play_continue()
+                glare_labs_annun_state = true -- turn on labs light
             end
-        --]]
+        end
 
     elseif command == Keys.PickleOff then
         pickle_engaged = false
-        bombtone:stop() -- TODO also stop after last auto-release interval bomb is dropped
+        labs_tone:stop() -- TODO also stop after last auto-release interval bomb is dropped
         glare_labs_annun_state = false -- turn on labs light
         ripple_sequence_position = 0 -- reset ripple sequence
 
@@ -866,16 +888,28 @@ function SetCommand(command,value)
 
         -- if AWRS is setup for rockets
         if function_selector == FUNC_ROCKETS and _master_arm then
-            debug_print("Bomb Tone Playing")
-            bombtone:play_continue()
-            glare_labs_annun_state = true -- turn on labs light
+
+            -- PAIRS mode conditional logic checks
+            if (AWRS_mode == AWRS_mode_ripple_pairs or AWRS_mode == AWRS_mode_step_pairs) then
+                
+                -- In PAIRS mode, an equal priority pair must exist for LABS tone and light to turn on
+                if check_all_stations_for_pairs_mode() then
+                    labs_tone:play_continue()
+                    glare_labs_annun_state = true -- turn on labs light    
+                end
+
+            -- All other AWRS modes    
+            else
+                labs_tone:play_continue()
+                glare_labs_annun_state = true -- turn on labs light
+            end
         end
 
     elseif command == Keys.PlaneFireOff then
         dispatch_action(nil,iCommandPlaneFireOff)
         gun_firing = false
         trigger_engaged = false
-        bombtone:stop()
+        labs_tone:stop()
         glare_labs_annun_state = false -- turn on labs light
         ripple_sequence_position = 0 -- reset ripple sequence
 
