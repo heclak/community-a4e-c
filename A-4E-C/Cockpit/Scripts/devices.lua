@@ -40,6 +40,7 @@ devices["HUD"] = counter()
 devices["CARRIER"] = counter()
 devices["RWR"] = counter()
 devices["COUNTERMEASURES"] 			= counter()
+devices["SFMEXTENDER"] = counter()
 
 
 -- temporary dummy devices
