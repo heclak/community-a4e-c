@@ -440,7 +440,7 @@ A_4E_C =  {
     thrust_sum_max      = 9300*POUNDS_TO_KG, -- thrust in kg (J52 P8A: 9300 lb)    **
     has_afteburner      = true,
     has_differential_stabilizer     = false,
-    thrust_sum_ab       = 19300*POUNDS_TO_KG, -- thrust in kg (kN)    **
+    thrust_sum_ab       = 9300*POUNDS_TO_KG, -- thrust in kg (kN)    **
     average_fuel_consumption = 0.86,   -- 0.86 TSFC
     is_tanker           = false,
     tanker_type         = 2, -- Tanker type if the plane is tanker
@@ -476,8 +476,8 @@ A_4E_C =  {
         {
             pos =     {-5.9,    0.163,    0}, -- nozzle coords
             elevation    =    0.0, -- AFB cone elevation
-            diameter    =    0.6, -- AFB cone diameter
-            exhaust_length_ab    =    4, -- lenght in m
+            diameter    =    0.0, -- AFB cone diameter
+            exhaust_length_ab    =    0, -- lenght in m
             exhaust_length_ab_K    =    0.707, -- AB animation
             smokiness_level     =     0.15,
         }, -- end of [1]
@@ -1049,18 +1049,18 @@ A_4E_C =  {
 
 
 
-				 thrust_afterburner = -- afterburning thrust interpolation table by altitude and mach number, 2d table
+				  thrust_afterburner = -- afterburning thrust interpolation table by altitude and mach number, 2d table
 				 {
 					 M 		 = {0,	0.20,	0.21,	1.0},
 					 H       =   {0, 19, 20, 23, 24, 250, 19812},
 					 thrust	 = {-- M 0  0.3 0.5  0.7  1.0
-								 {   1,   	1,  1,   1,},--H = 0
-								 {   1,   	1,  1,   1,},--H = 19
-								 {   250000,   	250000,  1,   1,},--H = 20
-								 {   250000,   	250000,  1,   1,},--H = 23
-								 {   1,   	1,  1,   1,}, --h=24
-								 {   1,   	1,  1,   1,},
-								 {   1,   	1,  1,   1,},
+								 {   41370,   	41370,  41370,   41370,},--H = 0
+								 {   41370,   	41370,  41370,   41370,},--H = 19
+								 {   250000,   	250000,  41370,   41370,},--H = 20	<-----------250000
+								 {   250000,   	250000,  41370,   41370,},--H = 23	<-----------250000
+								 {   41370,   	38060,  38060,   36813,}, --h=24
+								 {   41370,   	38060,  38060,   36813,},
+								 {   1904,   	2296,  2296,   3639,},
 					 }
 				 },
 
