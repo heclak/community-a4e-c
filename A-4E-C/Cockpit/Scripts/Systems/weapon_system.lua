@@ -495,7 +495,9 @@ function update()
                             local can_fire = true
                             
                             -- release cluster bombs
-                            if (station.weapon.level3 == wsType_Bomb_Cluster) then
+                            -- need to account for SUU-7 and other cluser bombs
+                            if (station.weapon.level3 == wsType_Bomb_Cluster) and 
+                            (station.weapon.level4 ~= ROCKEYE) then
                                 debug_print("Cluster munition found")
                                 debug_print("Cluster CLSID"..station.CLSID)
                                 -- get dispenser data
