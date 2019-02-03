@@ -476,8 +476,8 @@ A_4E_C =  {
         {
             pos =     {-5.9,    0.163,    0}, -- nozzle coords
             elevation    =    0.0, -- AFB cone elevation
-            diameter    =    0.6, -- AFB cone diameter
-            exhaust_length_ab    =    4, -- lenght in m
+            diameter    =    0.0, -- AFB cone diameter
+            exhaust_length_ab    =    0, -- lenght in m
             exhaust_length_ab_K    =    0.707, -- AB animation
             smokiness_level     =     0.15,
         }, -- end of [1]
