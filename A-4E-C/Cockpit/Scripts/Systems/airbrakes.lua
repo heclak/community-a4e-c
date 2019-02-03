@@ -57,6 +57,9 @@ dev:listen_command(Keys.BrakesOff)
 dev:listen_event("WheelChocksOn")
 dev:listen_event("WheelChocksOff")
 
+dev:listen_command(device_commands.brake_axis_mod)
+local brake_axis_value = -1
+
 function CockpitEvent(event,val)
     -- val is mostly just empty table {}
     debug_print("Airbrake CockpitEvent event: "..tostring(event).." = "..tostring(val))
@@ -103,8 +106,19 @@ function SetCommand(command,value)
         end
     elseif command == Keys.BrakesOn then
         brakes_on = true
+		brake_axis_value = 1
     elseif command == Keys.BrakesOff then
         brakes_on = false
+		brake_axis_value = -1
+	elseif command == device_commands.brake_axis_mod then
+		brake_axis_value = value
+	
+		if brake_axis_value > -0.95 then
+			brakes_on = true
+		else
+			brakes_on = false
+		end
+	
     end
 end
 
@@ -147,11 +161,17 @@ local function vel_xz_brakes()
 end
 
 -- "below velocity v, use brake ratio x"
+--[[
 local brake_table = {
     {5,10, 14, 20, 30,  45, 999},     -- velocity in m/s
     {1, 4,  3,  3,  2,   1,   1},     -- numerator of brake power ratio
     {1, 5,  5,  5,  5,   3,   4},     -- denominator of brake power ratio
-}
+}]]--
+local brake_table = {
+	{-0.8,	-0.6,	-0.4,	-0.2,	0.0,	0.2,	0.4,	0.6,	0.8,	1.0},				
+	{ 1,	1,		3,		2,		2,		3,		7,		4,		9,		1},
+	{ 10,	5,		10,		5,		4,		5,		10,		5,		10,		1},
+					}
 
 function get_brake_ratio(v)
     for i = 1,#brake_table[1] do
@@ -172,8 +192,8 @@ function update_brakes()
     end
 
     if brakes_on then
-        local x,y = get_brake_ratio(vel_xz_brakes())
-
+        --local x,y = get_brake_ratio(vel_xz_brakes())
+		local x,y = get_brake_ratio(brake_axis_value)
         -- brake_now cycles from 1 to y
         -- brakes are enabled if brake_now <= x
         -- adjust ratios in brake_table above
