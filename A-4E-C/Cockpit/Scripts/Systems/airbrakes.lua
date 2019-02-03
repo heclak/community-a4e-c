@@ -298,9 +298,11 @@ function update_birth()
 	if birth_tics < 200 then
 		brakes_on = true
 		birth_tics = birth_tics + 1
+		brake_axis_value = 1
 	elseif birth_tics < 205 then
 		brakes_on = false
 		birth_tics = birth_tics + 1
+		brake_axis_value= -1
 	end
 end
 
