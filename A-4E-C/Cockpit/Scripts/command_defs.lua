@@ -421,4 +421,9 @@ device_commands =
 	ecm_msl_alert_axis_outer	= __counter(),
 	
 	ecm_selector_knob = __counter(),
+	
+	pitch_axis_mod 	= __counter(),
+	roll_axis_mod 	= __counter(),
+	rudder_axis_mod = __counter(),
+	brake_axis_mod 	= __counter(),
 }

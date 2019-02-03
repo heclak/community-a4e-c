@@ -593,7 +593,7 @@ axisCommands = {
 
     {combos = defaultDeviceAssignmentFor("roll")  ,  action = iCommandPlaneRoll		   , name = _('Roll')},
     {combos = defaultDeviceAssignmentFor("pitch") ,  action = iCommandPlanePitch	   , name = _('Pitch')},
-    {combos = defaultDeviceAssignmentFor("rudder"),  action = iCommandPlaneRudder	   , name = _('Rudder')},
+    --{combos = defaultDeviceAssignmentFor("rudder"),  action = iCommandPlaneRudder	   , name = _('Rudder')},
     
 	--Old throttle
 	--{combos = defaultDeviceAssignmentFor("thrust"),  action = iCommandPlaneThrustCommon, name = _('Thrust')},
@@ -603,6 +603,10 @@ axisCommands = {
    
     {action = device_commands.ecm_msl_alert_axis_inner 	,cockpit_device_id = devices.RWR ,name = _('PRF volume (inner knob)')},
 	{action = device_commands.ecm_msl_alert_axis_outer 	,cockpit_device_id = devices.RWR ,name = _('MSL volume (outer knob)')},
+	
+	{combos = defaultDeviceAssignmentFor("rudder"),action = device_commands.rudder_axis_mod 	,cockpit_device_id = devices.SFMEXTENDER ,name = _('Rudder Axis')},					
+						
+    {action = device_commands.brake_axis_mod 	,cockpit_device_id = devices.AIRBRAKES ,name = _('single brake Axis')},
    
    --{action = iCommandPlaneThrustLeft			, name = _('Thrust Left')},
     --{action = iCommandPlaneThrustRight			, name = _('Thrust Right')},
