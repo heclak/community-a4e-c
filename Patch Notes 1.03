@@ -21,11 +21,14 @@ New Features:
 - SALVO mode will now correctly only dispense one weapon from each readied station per weapon release pulse from AWRSAWRS QTY SEL will now correctly limit the number of times the weapons are released in the RIPPLE modes. 
 - AWE-1(AWRS) now powered from the monitor dc bus. Master arm switch no longer turns off the AWE-1
 - Weapons will no longer be released from centerline station when in STEP PAIRS or RIPPLE PAIRS
+- Station of equal priority are not required for weapon release in PAIRS modes.
 - CBU bomblets are now released in tubes (CBU-1/A, CBU-2/A, CBU-2/B)
 - Added kneeboard page for CBU config to change the number of tubes of bomblets released per weapon pulse. (CBU-2/A, CBU-2B/A)
 - Added options to set CBU config from the mission planner/editor
 - Tweaked start condition of weapon system when spawning hot
 - New option to change trim speed in aircraft options menu
+- New implementation of the AN/ALE-29A Chaff Dispensing System. Auto mode is linked to the RWR missile launch warning
+- New mission planner options for setting options for the AN/ALE-29A programmer
 
 Bug Fixes:
 - Red Light switch no longer stuck.
