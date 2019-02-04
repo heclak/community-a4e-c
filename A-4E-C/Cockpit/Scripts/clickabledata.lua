@@ -347,7 +347,7 @@ elements["PNT_393"] = default_2_position_tumb("GunPods: Right Enable", devices.W
 
 
 elements["PNT_522"] = multiposition_switch_limited("Countermeasures: Bank Select", devices.COUNTERMEASURES, device_commands.cm_bank, 522, 3, 1, true, -1, TOGGLECLICK_LEFT_FWD)
-elements["PNT_523"] = default_2_position_tumb("Countermeasures: Auto Mode Toggle", devices.COUNTERMEASURES, device_commands.cm_auto, 523, TOGGLECLICK_LEFT_FWD)
+elements["PNT_523"] = default_button("Countermeasures: Auto Mode Toggle", devices.COUNTERMEASURES, device_commands.cm_auto, 523, 1, nil, TOGGLECLICK_LEFT_FWD)
 elements["PNT_524"] = default_axis("Countermeasures: Bank 1 Adjust", devices.COUNTERMEASURES, device_commands.cm_adj1, 524, 0.0, 1, false, true)
 elements["PNT_525"] = default_axis("Countermeasures: Bank 2 Adjust", devices.COUNTERMEASURES, device_commands.cm_adj2, 525, 0.0, 1, false, true)
 elements["PNT_530"] = default_2_position_tumb("Countermeasures: Power Toggle", devices.COUNTERMEASURES, device_commands.cm_pwr, 530, TOGGLECLICK_LEFT_FWD)

@@ -549,12 +549,14 @@ A_4E_C =  {
 	},
 
     chaff_flare_dispenser 	= {
-        -- { dir =  {Z, Y, X}, pos =  {Z, Y, X}, }  -- Z=back/fwd,Y=down/up,X=left/right
-        -- TODO: tune these positions, and number of dispensers appropriately (see code in weapon_system.lua which refers to these, drop_flare and drop_chaff)
-        { dir =  {-1, -0.1, -0.1}, pos =  {-2.867, -0.6, -0.216}, }, -- Flares L
-        --{ dir =  {-1, -0.1,  0.1}, pos =  {-2.867, -0.6,  0.216}, }, -- Flares R
-        --{ dir =  {-1, -1, 0}, pos =  {-4.296, -0.429, 0}, }, -- Chaff aft 0
-        --{ dir =  {-1, -1, 0}, pos =  {-2.296, -0.429, 0}, }, -- Chaff fwd 1
+        -- althought the index here starts from 1. When calling drop_flares or drop_chaff, the index begins from 0
+        -- { dir =  {Z, Y, X}, pos =  {Z, Y, X}, }  -- Z=back/fwd,Y=down/up(+),X=left/right
+        -- { dir =  {-1, -0.1, -0.1}, pos =  {-2.867, -0.6, -0.216}, }, -- Flares L
+        -- { dir =  {-1, -0.1,  0.1}, pos =  {-2.867, -0.6,  0.216}, }, -- Flares R
+        -- { dir =  {-1, -1, 0}, pos =  {-4.296, -0.429, 0}, }, -- Chaff aft 0
+        -- { dir =  {-1, -1, 0}, pos =  {-2.296, -0.429, 0}, }, -- Chaff fwd 1
+        [1] = { dir =  {0, -1, 0}, pos =  {-2.2, -0.8, 0.3}, }, -- Fwd Dispenser
+        [2] = { dir =  {0, -1, 0}, pos =  {-3.9, -0.8, -0.3}, }, -- Aft Dispenser
     },
 
 --sensors
