@@ -88,10 +88,10 @@ CMS:listen_command(device_commands.cm_auto)
 CMS:listen_command(iCommandActiveJamming)
 CMS:listen_command(iCommandPlaneDropFlareOnce)
 CMS:listen_command(iCommandPlaneDropChaffOnce)
-CMS:listen_command(Keys.CmDrop)
+CMS:listen_command(Keys.JATOFiringButton)
 CMS:listen_command(Keys.CmBankSelectRotate)
 CMS:listen_command(Keys.CmBankSelect)
-CMS:listen_command(Keys.CmAutoModeToggle)
+CMS:listen_command(Keys.CmAutoButton)
 CMS:listen_command(Keys.CmBank1AdjUp)
 CMS:listen_command(Keys.CmBank1AdjDown)
 CMS:listen_command(Keys.CmBank2AdjUp)
@@ -389,7 +389,7 @@ function SetCommand(command, value)
         cm_bank2_show = round(cm_bank2_show + 5*value)
         cm_bank2_show = cm_bank2_show % 100
 
-    elseif command == Keys.CmDrop then
+    elseif command == Keys.JATOFiringButton then
         if cm_enabled and get_elec_mon_dc_ok() then
             if cms_dispense then
                 release_countermeasure()
@@ -411,12 +411,8 @@ function SetCommand(command, value)
             CMS:performClickableAction(device_commands.cm_bank, 1, false)
         end
 
-    elseif command == Keys.CmAutoModeToggle then
-        if cm_auto_mode then
-            CMS:performClickableAction(device_commands.cm_auto, 0, false)
-        else
-            CMS:performClickableAction(device_commands.cm_auto, 1, false)
-        end
+    elseif command == Keys.CmAutoButton then
+        CMS:performClickableAction(device_commands.cm_auto, 1, false)
 
     elseif command == Keys.CmBank1AdjUp then
         CMS:performClickableAction(device_commands.cm_adj1, 0.15, false)
