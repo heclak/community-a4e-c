@@ -49,3 +49,45 @@ Other Changes:
 - AWRS now selects appropriate ripple quantities.
 - Increased Pilot Size to reflect reference imagery.
 
+
+
+Catapult logic reworked:
+	You need to rebind your "Throttle Axis"
+	There are 3 new keybinds for interacting with the Catapult:
+	Ready Catapult 	> Hooks you in
+	Fire Catapult 	> Fires you off the ship
+	Abort Catapult	> Unhooks you from the Cat
+	
+	Usage:
+		Drive up to the Catapult and use keybind "Ready Catapult".
+		you are now locked in place (no need to hold breaks).
+		Spool up engine to max MIL power.
+		Use keybind "Fire Catapult", to shoot you off the Deck.
+
+	Carrier TACAN:
+		After a takeoff by the Catapult, a carrier TACAN is available on channel 99.
+		Notes:
+			This ONLY works if you took of from the carrier.
+			The carrier can't be stationary, it needs to drive at least 5knots.
+			The carrier must be driving at a constant speed and heading for the entire mission
+		
+Options/special/A-4E
+	
+	* Ability to show/hide Controlstrick (no need to use a keybind at the start of a mission)
+	* later will include the ability to select type of RWR (currently only the very early version of a RWR is in)
+	* Speed of trim can be selected: 100%(default) or 50%
+		
+Wheelbrakes as axis
+	* Wheelbreaks can be bound to a single axis (Left/Right brakes might come later)
+
+
+ECM Panel/RWR
+	* On/off switch for RWR
+	* Volume knobs for SEARCH and LOCK
+	* RWR added: plays different sounds depending on search/lock/launch + Threat warning lamp
+	
+Ground Handling
+	* Nosewheel feels less arcady	
+	* Plane is frozen in place on a carrier for a few seconds after spawn, to give you the chance to apply the wheelchocks
+		
+
