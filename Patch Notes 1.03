@@ -27,7 +27,7 @@ New Features:
 - Added options to set CBU config from the mission planner/editor
 - Tweaked start condition of weapon system when spawning hot
 - New option to change trim speed in aircraft options menu
-- New implementation of the AN/ALE-29A Chaff Dispensing System. Auto mode is linked to the RWR missile launch warning
+- New implementation of the AN/ALE-29A Chaff Dispensing System.
 - New mission planner options for setting options for the AN/ALE-29A programmer
 
 Bug Fixes:
@@ -48,4 +48,5 @@ Other Changes:
 - Console and Instrument Backlighting now controlled by appropriate knobs.
 - AWRS now selects appropriate ripple quantities.
 - Increased Pilot Size to reflect reference imagery.
+- Updated keybinding. Countermeasures release is now known as the JATO firing button. Function is the same.
 
