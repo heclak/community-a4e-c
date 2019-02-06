@@ -234,10 +234,10 @@ Keys =
 
     ToggleStick = __custom_counter(),
 
-    CmDrop = __custom_counter(),
+    JATOFiringButton = __custom_counter(),
     CmBankSelectRotate = __custom_counter(),
     CmBankSelect = __custom_counter(),
-    CmAutoModeToggle = __custom_counter(),
+    CmAutoButton = __custom_counter(),
     CmBank1AdjUp = __custom_counter(),
     CmBank1AdjDown = __custom_counter(),
     CmBank2AdjUp = __custom_counter(),

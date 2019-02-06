@@ -32,15 +32,20 @@ local chaff_count = 0
 local flare_count = 0
 local cm_bank1_show = 0
 local cm_bank2_show = 0
+local cm_bank1_count = 0
+local cm_bank2_count = 0
 local cm_banksel = "both"
 local cm_auto_mode = false
 local cm_enabled = false
 local ECM_status = false
-local flare_pos = 0
-local chaff_pos = 0
+local cms_bank1_pos = 0
+local cms_bank2_pos = 0
 local cms_dispense = false
+local cms_manual_salvo_dispense = false
 local burst_counter = 0
 local salvo_counter = 0
+local cm_bank1_type = nil
+local cm_bank2_type = nil
 
 -- cms programmer settings
 local cms_bursts_setting = 1
@@ -83,10 +88,10 @@ CMS:listen_command(device_commands.cm_auto)
 CMS:listen_command(iCommandActiveJamming)
 CMS:listen_command(iCommandPlaneDropFlareOnce)
 CMS:listen_command(iCommandPlaneDropChaffOnce)
-CMS:listen_command(Keys.CmDrop)
+CMS:listen_command(Keys.JATOFiringButton)
 CMS:listen_command(Keys.CmBankSelectRotate)
 CMS:listen_command(Keys.CmBankSelect)
-CMS:listen_command(Keys.CmAutoModeToggle)
+CMS:listen_command(Keys.CmAutoButton)
 CMS:listen_command(Keys.CmBank1AdjUp)
 CMS:listen_command(Keys.CmBank1AdjDown)
 CMS:listen_command(Keys.CmBank2AdjUp)
@@ -127,22 +132,55 @@ end
 
 function release_countermeasure()
     debug_print("releasing countermeasures")
-    if cm_banksel == "bank_1" or cm_banksel == "both" then
-        chaff_count = CMS:get_chaff_count()
-        if chaff_count > 0 then
-            debug_print("Drop Chaff")
-            CMS:drop_chaff(1, chaff_pos)  -- first param is count, second param is dispenser number (see chaff_flare_dispenser in aircraft definition)
-            cm_bank1_show = (cm_bank1_show - 1) % 100
+
+    if (cm_banksel == "bank_1" or cm_bank2_count < 1) and cm_bank1_count > 0 then
+        debug_print("Dropping bank 1")
+        if cm_bank1_type == "chaff" then
+            CMS:drop_chaff(1, cms_bank1_pos)  -- first param is count, second param is dispenser number (see chaff_flare_dispenser in aircraft definition)
+        else
+            CMS:drop_flare(1, cms_bank1_pos)  -- first param is count, second param is dispenser number (see chaff_flare_dispenser in aircraft definition)
         end
-    end
-    if cm_banksel == "bank_2" or cm_banksel == "both" then
-        flare_count = CMS:get_flare_count()
-        if flare_count > 0 then
-            debug_print("Drop Flare")
-            CMS:drop_flare(1, flare_pos)  -- first param is count, second param is dispenser number (see chaff_flare_dispenser in aircraft definition)
+        cm_bank1_count = cm_bank1_count - 1
+        cm_bank1_show = (cm_bank1_show - 1) % 100
+
+    elseif (cm_banksel == "bank_2" or cm_bank1_count < 1) and cm_bank2_count > 0 then
+        debug_print("Dropping bank 2")
+        if cm_bank2_type == "chaff" then
+            CMS:drop_chaff(1, cms_bank2_pos)  -- first param is count, second param is dispenser number (see chaff_flare_dispenser in aircraft definition)
+        else
+            CMS:drop_flare(1, cms_bank2_pos)  -- first param is count, second param is dispenser number (see chaff_flare_dispenser in aircraft definition)
+        end
+        cm_bank2_count = cm_bank2_count - 1
+        cm_bank2_show = (cm_bank2_show - 1) % 100
+
+    elseif cm_banksel == "both" then
+
+        -- release from bank 1
+        if cm_bank1_count > 0 then
+            debug_print("Dropping bank 1")
+            if cm_bank1_type == "chaff" then
+                CMS:drop_chaff(1, cms_bank1_pos)  -- first param is count, second param is dispenser number (see chaff_flare_dispenser in aircraft definition)
+            else
+                CMS:drop_flare(1, cms_bank1_pos)  -- first param is count, second param is dispenser number (see chaff_flare_dispenser in aircraft definition)
+            end
+            cm_bank1_count = cm_bank1_count - 1
+            cm_bank1_show = (cm_bank1_show - 1) % 100
+        end -- cm_bank1_count > 0
+
+        -- release from bank 2
+        if cm_bank2_count > 0 then
+            debug_print("Dropping bank 2")
+            if cm_bank2_type == "chaff" then
+                CMS:drop_chaff(1, cms_bank2_pos)  -- first param is count, second param is dispenser number (see chaff_flare_dispenser in aircraft definition)
+            else
+                CMS:drop_flare(1, cms_bank2_pos)  -- first param is count, second param is dispenser number (see chaff_flare_dispenser in aircraft definition)
+            end
+            cm_bank2_count = cm_bank2_count - 1
             cm_bank2_show = (cm_bank2_show - 1) % 100
-        end -- if flare_count
+        end -- cm_bank2_count > 0
     end -- if cm_banksel
+    debug_print("Countermeasures remaining: Bank 1 = "..cm_bank1_count.." Bank 2 = "..cm_bank2_count)
+    debug_print("Countermeasures remaining: Flares = "..tostring(CMS:get_flare_count()).." Chaff = "..tostring(CMS:get_chaff_count()))
 end -- release_countermeasure()
 
 function missile_warning_check()
@@ -168,6 +206,12 @@ function missile_warning_check()
     end
 end
 
+function reset_auto_sequence()
+    cms_dispense = false
+    salvo_counter = 0
+    burst_counter = 0
+end
+
 function update_cms_params()
     cms_bursts_setting          = cms_bursts_setting_array[cms_bursts_setting_array_pos]
     cms_burst_interval_setting  = cms_burst_interval_setting_array[cms_burst_interval_setting_array_pos]
@@ -181,11 +225,38 @@ function update_cms_params()
 end -- update_cms_params()
 
 function post_initialize()
-    flare_count     = CMS:get_flare_count()
-    chaff_count     = CMS:get_chaff_count()
-    cm_bank1_show   = chaff_count
-    cm_bank2_show   = flare_count
     cm_banksel      = "both"
+    
+    -- fill dispensers with chaff
+    chaff_count     = CMS:get_chaff_count()
+    if chaff_count > 0 then
+        -- fill bank 1 with chaff
+        cm_bank1_type = "chaff"
+        cm_bank1_count = 30
+    end
+    
+    -- fill bank 2 with chaff if more than 30 chaff
+    if chaff_count > 30 then
+        cm_bank2_type = "chaff"
+        cm_bank2_count = 30
+    end
+
+    -- fill dispensers with chaff
+    flare_count     = CMS:get_flare_count()
+    if flare_count > 0 then
+        cm_bank2_type = "flare"
+        cm_bank2_count = 30
+    end
+    
+    -- fill bank 2 with flare if more than 30 flare
+    if flare_count > 30 then
+        -- fill bank 1 with flare
+        cm_bank1_type = "flare"
+        cm_bank1_count = 30
+    end
+
+    cm_bank1_show   = cm_bank1_count
+    cm_bank2_show   = cm_bank2_count
     
     -- init values from mission options
     cms_bursts_setting_array_pos          = get_aircraft_property("CMS_BURSTS")
@@ -204,7 +275,8 @@ function update()
     time_ticker = time_ticker + update_rate
 
     -- update missile warning status
-    missile_warning_check()
+    -- NOTE: Turns out the RWR link requires the AN/ALE-39 which this aircraft doesn't have.
+    -- missile_warning_check()
 
     -- check if monitored dc bus power is available
     -- check if AN/ALE-29A panel is on
@@ -255,6 +327,33 @@ function update()
                 burst_counter = 0
             end
         end -- cms_dispense
+
+        -- single salvo manual dispense (power on, jato button pressed)
+        if cms_manual_salvo_dispense == true and cms_dispense == false then
+            -- continue burst sequence if not completed
+            if burst_counter < cms_bursts_setting then
+                -- debug_print("running burst sequence")
+                -- check if burst interval is reached
+                if (time_ticker - last_burst_time) > cms_burst_interval_setting then
+                    release_countermeasure()
+                    last_burst_time = time_ticker
+                    burst_counter = burst_counter + 1
+                    
+                    -- check if burst sequence complete. Mark end time if completed.
+                    if burst_counter == cms_bursts_setting then
+                        last_salvo_time = time_ticker
+                    end
+                end
+
+            -- stop dispensing if bursts and salvos completed
+            elseif burst_counter == cms_bursts_setting then
+                debug_print("sequence complete")
+                cms_manual_salvo_dispense = false
+                burst_counter = 0
+            end
+        end -- cms_manual_salvo_dispense
+
+
     end -- get_elec_mon_dc_ok() and        
 
     update_countermeasures_display()
@@ -265,6 +364,7 @@ function SetCommand(command, value)
 
     if command == device_commands.cm_pwr then
         cm_enabled = (value > 0) and true or false
+        if value == 0 then reset_auto_sequence() end -- end auto sequence if power is turned off
 
     elseif command == device_commands.cm_bank then
         if value == -1 then cm_banksel = "bank_1" -- bank 1
@@ -273,7 +373,11 @@ function SetCommand(command, value)
         end
 
     elseif command == device_commands.cm_auto then
-        cm_auto_mode = (value > 0) and true or false
+        -- cm_auto_mode = (value > 0) and true or false
+        if cm_enabled and get_elec_mon_dc_ok() then
+            cms_dispense = true
+        end
+        
 
     elseif command == device_commands.cm_adj1 then
         --print_message_to_user("value = "..value)
@@ -285,10 +389,13 @@ function SetCommand(command, value)
         cm_bank2_show = round(cm_bank2_show + 5*value)
         cm_bank2_show = cm_bank2_show % 100
 
-    elseif command == Keys.CmDrop then
+    elseif command == Keys.JATOFiringButton then
         if cm_enabled and get_elec_mon_dc_ok() then
-            -- cms_dispense = true -- remove this before production
-            release_countermeasure()
+            if cms_dispense then
+                release_countermeasure()
+            else
+                cms_manual_salvo_dispense = true
+            end
         end
 
     elseif command == Keys.CmBankSelect then
@@ -304,12 +411,8 @@ function SetCommand(command, value)
             CMS:performClickableAction(device_commands.cm_bank, 1, false)
         end
 
-    elseif command == Keys.CmAutoModeToggle then
-        if cm_auto_mode then
-            CMS:performClickableAction(device_commands.cm_auto, 0, false)
-        else
-            CMS:performClickableAction(device_commands.cm_auto, 1, false)
-        end
+    elseif command == Keys.CmAutoButton then
+        CMS:performClickableAction(device_commands.cm_auto, 1, false)
 
     elseif command == Keys.CmBank1AdjUp then
         CMS:performClickableAction(device_commands.cm_adj1, 0.15, false)

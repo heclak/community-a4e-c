@@ -317,7 +317,7 @@ keyCommands = {
 
     -- Countermeasures
     --{down = iCommandPlaneDropSnar, name = _('Countermeasures: Continuously Dispense'), category = _('Countermeasures')},
-    {combos = {{key = 'JOY_BTN15'}}, down = Keys.CmDrop, name = _('Countermeasures: Release'), category = _('Countermeasures')},
+    {combos = {{key = 'JOY_BTN15'}}, down = Keys.JATOFiringButton, name = _('JATO Firing Button'), category = {_('JATO'), _('Countermeasures')}},
     --{down = iCommandPlaneDropFlareOnce, name = _('Countermeasures Flares Dispense'), category = _('Countermeasures')},
     --{down = iCommandPlaneDropChaffOnce, name = _('Countermeasures Chaff Dispense'), category = _('Countermeasures')},
     {combos = {{key = 'JOY_BTN17'}}, down = iCommandActiveJamming, name = _('Countermeasures: ECM'), category = _('Countermeasures')},
@@ -326,7 +326,7 @@ keyCommands = {
     {down = Keys.CmBankSelect, value_down = -1, name = _('Countermeasures: Bank Select 1'), category = _('Countermeasures')},
     {down = Keys.CmBankSelect, value_down = 1,  name = _('Countermeasures: Bank Select 2'), category = _('Countermeasures')},
     {down = Keys.CmBankSelect, value_down = 0,  name = _('Countermeasures: Bank Select Both'), category = _('Countermeasures')},
-    {down = Keys.CmAutoModeToggle, name = _('Countermeasures: Auto Mode Toggle'), category = _('Countermeasures')},
+    {down = device_commands.cm_auto,    up = device_commands.cm_auto,   cockpit_device_id = devices.COUNTERMEASURES,  value_down = 1.0,   value_up = 0, name = _('Countermeasures: Auto Pushbutton'), category = _('Countermeasures')},
     {down = Keys.CmBank1AdjUp, name = _('Countermeasures: Bank 1 Adjust Up'), category = _('Countermeasures')},
     {down = Keys.CmBank1AdjDown, name = _('Countermeasures: Bank 1 Adjust Down'), category = _('Countermeasures')},
     {down = Keys.CmBank2AdjUp, name = _('Countermeasures: Bank 2 Adjust Up'), category = _('Countermeasures')},
