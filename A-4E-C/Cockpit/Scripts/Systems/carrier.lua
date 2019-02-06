@@ -83,17 +83,17 @@ function SetCommand(command,value)
 	if command == Keys.catapult_ready then
 		if on_carrier() == true and catapult_status == 0 and
 			wheelchocks_state_param:get() == 0 then
-		--	print_message_to_user(birth_carrier_heading.."\n"..Sensor_Data_Mod.self_head)		
-			if (birth_carrier_heading - Sensor_Data_Mod.self_head) > -math.rad(3) and
-			   (birth_carrier_heading - Sensor_Data_Mod.self_head) < math.rad(12) then
+	
+		--	if (birth_carrier_heading - Sensor_Data_Mod.self_head) > -math.rad(3) and
+		--	   (birth_carrier_heading - Sensor_Data_Mod.self_head) < math.rad(12) then
 			
 				catapult_status = 1
 				print_message_to_user("The catapult is ready!\nYou are hooked in.\nCheck takeoff flaps and trim\nSpool up the engine to max MIL\nSignal FIRE CATAPULT when ready.", 10)
 				
 				cat_hook_tics = 0		
-			else
-				print_message_to_user("You are not correctly aligned")
-			end
+		--	else
+		--		print_message_to_user("You are not correctly aligned")
+		--	end
 			
 		elseif wheelchocks_state_param:get() == 1 then
 				print_message_to_user("Wheel chocks are on!")	
