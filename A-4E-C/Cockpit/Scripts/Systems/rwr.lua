@@ -177,17 +177,16 @@ end
 
 function update()
 
-	if (get_elec_mon_dc_ok()) and rwr_master_status == 1 then
---print_message_to_user("RWR on")
-		if get_elec_aft_mon_ac_ok() == true then
-			GetDevice(devices.RWR):set_power(true)			
-			--print_message_to_user("RWR on")
-		else
-			GetDevice(devices.RWR):set_power(false)			
-			--print_message_to_user("RWR off")
-		end
-
-
+--	if (get_elec_mon_dc_ok()) and rwr_master_status == 1 then
+	
+	if get_elec_aft_mon_ac_ok() == true then
+		GetDevice(devices.RWR):set_power(true)			
+	else
+		GetDevice(devices.RWR):set_power(false)			
+	end
+	
+	
+	if rwr_master_status == 1 then
 		local tmp_rwr_signal 	= 0
 		local tmp_rwr_type		= 0
 		local tmp_rwr_power		= 0
