@@ -426,4 +426,6 @@ device_commands =
 	roll_axis_mod 	= __counter(),
 	rudder_axis_mod = __counter(),
 	brake_axis_mod 	= __counter(),
+
+    shrike_sidewinder_volume    = __counter(),
 }

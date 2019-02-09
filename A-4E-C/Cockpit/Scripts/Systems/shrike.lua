@@ -18,7 +18,6 @@ device_timer_dt     = 0.02  	--0.2
 
 local sensor_data = get_base_data()
 
-
 function debug_print(message)
     print_message_to_user(message)
 end
@@ -31,6 +30,10 @@ local aircraft_pitch_deg = 0
 local shrike_lock = false
 local target_expire_time = 3.0
 local shrike_lock_volume = 0
+-- local shrike_sidewinder_volume = 0.5
+
+shrike_armed_param = get_param_handle("SHRIKE_ARMED")
+shrike_sidewinder_volume = get_param_handle("SHRIKE_SIDEWINDER_VOLUME")
 
 -- populate table with contacts from the RWR
 maxContacts = 9
@@ -56,60 +59,59 @@ local shrike_targets = {}
 
 function post_initialize()
     local RWR = GetDevice(devices.RWR)
-    RWR:set_power(true)
+    shrike_armed_param:set(0)
+    -- RWR:set_power(true)
 
     -- initialise sounds
     sndhost             = create_sound_host("SHRIKE","2D",0,0,0) -- TODO: look into defining this sound host for HEADPHONES/HELMET
     snd_shrike_tone     = sndhost:create_sound("agm-45a-shrike-tone")
     snd_shrike_search   = sndhost:create_sound("agm-45a-shrike-search")
     snd_shrike_lock     = sndhost:create_sound("agm-45a-shrike-lock")
-    snd_shrike_tone:update(nil, 0.2, nil)
 end
 
 function update()
-    if not snd_shrike_tone:is_playing() then
-        snd_shrike_tone:play_continue()
-    end
-
-    local currentDeviation = 180
-
-    for i = 1, maxContacts do
-        debug_print(i.." - Signal: "..tostring(contacts[i].signal_h:get()).." Power: "..tostring(contacts[i].power_h:get()).." General Type: "..tostring(contacts[i].general_type_h:get()).." Azimuth: "..tostring(math.rad(contacts[i].azimuth_h:get())).." Elevation: "..tostring(contacts[i].elevation_h:get()).." Unit Type: "..tostring(contacts[i].unit_type_h:get()).." Priority: "..tostring(contacts[i].priority_h:get()).." Time: "..tostring(contacts[i].time_h:get()).." Source: "..tostring(contacts[i].source_h:get()))
-        -- debug_print(i.." Raw Azimuth: "..tostring(contacts[i].azimuth_h:get()).." Heading: "..tostring(math.deg(contacts[i].azimuth_h:get())))
-        -- debug_print(i.." Raw Elevation: "..tostring(contacts[i].elevation_h:get()).." Elevation: "..tostring(math.deg(contacts[i].elevation_h:get())))
-    end
-
-    -- get aircraft current heading
-    aircraft_heading_deg    = math.deg(sensor_data.getMagneticHeading())
-    aircraft_pitch_deg      = math.deg(sensor_data.getPitch())
-    local current_time      = get_absolute_model_time()
+    -- TODO: Check for AFT MON AC BUS and MONITORED DC BUS
+    if get_elec_aft_mon_ac_ok() and get_elec_mon_dc_ok() then
     
-    -- TODO: Delete invalid targets after 3 seconds
-    for i, contact in ipairs(contacts) do
-        if contact.power_h:get() > 0 and contact.time_h:get() < 0.05 and (contact.general_type_h:get() == 2 or contact.general_type_h:get() == 0) then
-            local id = contact.source_h:get()
-            -- check if data already exists
-            if shrike_targets[id] then
-                -- only update target data if data is new
-                if shrike_targets[id].raw_azimuth ~= contact.azimuth_h:get() then
+        for i = 1, maxContacts do
+            -- debug_print(i.." - Signal: "..tostring(contacts[i].signal_h:get()).." Power: "..tostring(contacts[i].power_h:get()).." General Type: "..tostring(contacts[i].general_type_h:get()).." Azimuth: "..tostring(math.rad(contacts[i].azimuth_h:get())).." Elevation: "..tostring(contacts[i].elevation_h:get()).." Unit Type: "..tostring(contacts[i].unit_type_h:get()).." Priority: "..tostring(contacts[i].priority_h:get()).." Time: "..tostring(contacts[i].time_h:get()).." Source: "..tostring(contacts[i].source_h:get()))
+            -- debug_print(i.." Raw Azimuth: "..tostring(contacts[i].azimuth_h:get()).." Heading: "..tostring(math.deg(contacts[i].azimuth_h:get())))
+            -- debug_print(i.." Raw Elevation: "..tostring(contacts[i].elevation_h:get()).." Elevation: "..tostring(math.deg(contacts[i].elevation_h:get())))
+        end
+        
+        -- get aircraft current heading
+        aircraft_heading_deg    = math.deg(sensor_data.getMagneticHeading())
+        aircraft_pitch_deg      = math.deg(sensor_data.getPitch())
+        local current_time      = get_absolute_model_time()
+        
+        -- TODO: Delete invalid targets after 3 seconds
+        for i, contact in ipairs(contacts) do
+            if contact.power_h:get() > 0 and contact.time_h:get() < 0.05 and (contact.general_type_h:get() == 2 or contact.general_type_h:get() == 0) then
+                local id = contact.source_h:get()
+                -- check if data already exists
+                if shrike_targets[id] then
+                    -- only update target data if data is new
+                    if shrike_targets[id].raw_azimuth ~= contact.azimuth_h:get() then
+                        updateTargetData(id, contact, current_time)
+                    end
+                else -- create new target
                     updateTargetData(id, contact, current_time)
                 end
-            else -- create new target
-                updateTargetData(id, contact, current_time)
             end
         end
-    end
 
-    shrike_lock = false
-    -- sort through target list and get deviations
-    for i, target in pairs(shrike_targets) do
-        -- check contact is still valid based on time last updated.
-        if (current_time - target.time_stored) < target_expire_time then
-            if checkShrikeLock(target) then
-                shrike_lock = true
+        shrike_lock = false
+        -- sort through target list and get deviations
+        for i, target in pairs(shrike_targets) do
+            -- check contact is still valid based on time last updated.
+            if (current_time - target.time_stored) < target_expire_time then
+                if checkShrikeLock(target) then
+                    shrike_lock = true
+                end
             end
         end
-    end
+
+    end -- check power is available
 
     -- update search volume with deviation
     update_lock_volume()
@@ -117,7 +119,6 @@ function update()
 end
 
 function SetCommand(command, value)
-
 end
 
 -- this function parses the raw data format into the target table
@@ -164,20 +165,35 @@ function getTargetElevation(target_elevation_deg, aircraft_pitch)
 end
 
 function update_lock_volume()
-    if not shrike_lock then
-        snd_shrike_lock:update(nil, 0, nil)
-        snd_shrike_search:update(nil, 1.0, nil)
+
+    if shrike_armed_param:get() == 1 and (get_elec_aft_mon_ac_ok() and get_elec_mon_dc_ok()) then
+
+        snd_shrike_tone:update(nil, LinearTodB(0.2 * shrike_sidewinder_volume:get()), nil)
+
+        if not snd_shrike_tone:is_playing() then
+            snd_shrike_tone:play_continue()
+        end
+
+        if not shrike_lock then
+            snd_shrike_lock:update(nil, 0, nil)
+            snd_shrike_search:update(nil, LinearTodB(1.0 * shrike_sidewinder_volume:get()), nil)
+        else
+            snd_shrike_lock:update(nil, LinearTodB(1.0 * shrike_sidewinder_volume:get()), nil)
+            snd_shrike_search:update(nil, 0, nil)
+        end
+
+        if not snd_shrike_lock:is_playing() then
+            snd_shrike_lock:play_continue()
+        end
+        if not snd_shrike_search:is_playing() then
+            snd_shrike_search:play_continue()
+        end
     else
-        snd_shrike_lock:update(nil, LinearTodB(shrike_lock_volume), nil)
+        snd_shrike_tone:update(nil, 0, nil)
         snd_shrike_search:update(nil, 0, nil)
+        snd_shrike_lock:update(nil, 0, nil)
     end
 
-    if not snd_shrike_lock:is_playing() then
-        snd_shrike_lock:play_continue()
-    end
-    if not snd_shrike_search:is_playing() then
-        snd_shrike_search:play_continue()
-    end
 end
 
 

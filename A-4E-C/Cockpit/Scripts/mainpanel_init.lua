@@ -1030,7 +1030,11 @@ ECM_Test_Lower_LR.input                      = {0.0, 1.0}
 ECM_Test_Lower_LR.output                     = {0.0, 1.0}
 ECM_Test_Lower_LR.parameter_name             = "ECM_TEST_LOWER_LR"
 
-
+-- Shrike_Sidewinder_Volume                       = CreateGauge("parameter")
+-- Shrike_Sidewinder_Volume.arg_number            = 726
+-- Shrike_Sidewinder_Volume.input                 = {0.0, 1.0}
+-- Shrike_Sidewinder_Volume.output                = {0.0, 1.0}
+-- Shrike_Sidewinder_Volume.parameter_name        = "SHRIKE_SIDEWINDER_VOLUME"
 
 --TEST_PARAM_GAUGE      			  = CreateGauge("parameter")
 --TEST_PARAM_GAUGE.parameter_name   = "TEST"
