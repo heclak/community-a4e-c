@@ -30,6 +30,8 @@ New Features:
 - New option to change trim speed in aircraft options menu
 - New implementation of the AN/ALE-29A Chaff Dispensing System.
 - New mission planner options for setting options for the AN/ALE-29A programmer
+- New shrike search and lock system added. Behaviour is similar to AIM-9 Sidewinders arming procedure.
+- New volume control for shrike and sidewinder volume (placeholder model)
 
 Bug Fixes:
 - Red Light switch no longer stuck.
