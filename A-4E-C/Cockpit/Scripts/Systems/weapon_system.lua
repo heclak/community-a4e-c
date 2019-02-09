@@ -974,6 +974,7 @@ function SetCommand(command,value)
         local func=math.floor(math.ceil(value*100)/10)
         next_pylon=1
         if function_selector ~= func then
+            print_message_to_user("function changed")
             function_selector = func
             check_sidewinder(_master_arm)
             check_shrike(_master_arm)
@@ -1045,6 +1046,8 @@ function SetCommand(command,value)
             function_selector = FUNC_BOMBS_GM_ARM
         end
 
+        check_sidewinder(_master_arm)
+        check_shrike(_master_arm)
         WeaponSystem:performClickableAction(device_commands.arm_func_selector,function_selector/10,false)
         next_pylon=1
     elseif command == device_commands.arm_emer_sel then
