@@ -81,6 +81,7 @@ creators[devices.CARRIER]		= {	"avLuaDevice",	LockOn_Options.script_path.."Syste
 creators[devices.RWR]			= {	"avSimpleRWR",	LockOn_Options.script_path.."Systems/rwr.lua",}
 creators[devices.COUNTERMEASURES]   = {"avSimpleWeaponSystem"   ,LockOn_Options.script_path.."Systems/countermeasures.lua"}
 creators[devices.SFMEXTENDER]	= {	"avLuaDevice",	LockOn_Options.script_path.."Systems/sfm_extender.lua",}
+creators[devices.SHRIKE]            = {"avLuaDevice"            ,LockOn_Options.script_path.."Systems/shrike.lua", {devices.RWR}}
 
 --creators[devices.TEMP1]          = {"avBasicLightSystem"            ,LockOn_Options.script_path.."dump_device.lua", {{"ElecInterface",	devices.ELECTRIC_SYSTEM}} }
 --creators[devices.TEMP2]          = {"avBasicHearingSensitivityInterface"            ,LockOn_Options.script_path.."dump_device.lua", {{"Oxygen",	devices.TEMP3}} }
