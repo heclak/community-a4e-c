@@ -133,6 +133,8 @@ local MASTER_TEST_BTN = get_param_handle("D_MASTER_TEST")
 local GLARE_LABS_ANNUN = get_param_handle("D_GLARE_LABS")
 local glare_labs_annun_state = false
 
+local shrike_armed_param = get_param_handle("SHRIKE_ARMED")
+
 
 ------------------------------------------------
 -----------  AIRCRAFT DEFINITION  --------------
@@ -178,6 +180,7 @@ WeaponSystem:listen_command(Keys.Station5)
 WeaponSystem:listen_command(Keys.ArmsFuncSelectorCCW)
 WeaponSystem:listen_command(Keys.ArmsFuncSelectorCW)
 WeaponSystem:listen_command(Keys.GunsReadyToggle)
+WeaponSystem:listen_command(device_commands.shrike_sidewinder_volume)
 
 WeaponSystem:listen_command(device_commands.AWRS_quantity)
 WeaponSystem:listen_command(device_commands.AWRS_drop_interval)
@@ -186,6 +189,8 @@ WeaponSystem:listen_command(device_commands.AWRS_stepripple)
 
 WeaponSystem:listen_command(Keys.ChangeCBU2AQuantity)
 WeaponSystem:listen_command(Keys.ChangeCBU2BAQuantity)
+
+local shrike_sidewinder_volume = get_param_handle("SHRIKE_SIDEWINDER_VOLUME")
 
 local cbu1a_quantity = get_param_handle("CBU1A_QTY")
 local cbu2a_quantity = get_param_handle("CBU2A_QTY")
@@ -233,6 +238,7 @@ function post_initialize()
     dev:performClickableAction(device_commands.AWRS_stepripple,0.2,true) -- arg 744, 2=>step single
     dev:performClickableAction(device_commands.AWRS_multiplier,0.0,true) -- arg 743, 0=>1x
     dev:performClickableAction(device_commands.arm_bomb,bomb_arm_switch-1,true)
+    dev:performClickableAction(device_commands.shrike_sidewinder_volume, 0.5, true)
     
     -- update cbu dispenser release behaviour from mission planner settings
     cbu1a_quantity:set(2)
@@ -364,16 +370,18 @@ function update()
 			end
 		end
 	end	--]]
-	
+    
+    
     time_ticker = time_ticker + update_rate
     local _master_arm = get_elec_mon_arms_dc_ok() -- check master arm status
-
+    
     -- print_message_to_user("check sidewinder locked is "..tostring(check_sidewinder_lock))
     -- print_message_to_user("sidewinder locked is "..tostring(ir_missile_lock_param:get()))
     
     -- check if master arm changed from the last update
     if _previous_master_arm ~= _master_arm then
         check_sidewinder(_master_arm)
+        check_shrike(_master_arm)
         _previous_master_arm = _master_arm
         debug_print("master arm changed")
     end
@@ -570,6 +578,7 @@ function update()
 	
     if released_weapon then
         check_sidewinder(_master_arm) -- re-check sidewinder stores
+        check_shrike(_master_arm)
     end
 
     if check_sidewinder_lock then
@@ -609,6 +618,7 @@ function update()
 
     release_cbu_bomblets()
     update_labs_annunciator()
+    -- update_sidewinder_volume()
 end
 
 function release_cbu_bomblets()
@@ -724,6 +734,43 @@ function check_sidewinder(_master_arm)
     end
 end
 
+-- function update_sidewinder_volume()
+--     aim9seek:update(nil, shrike_sidewinder_volume:get(), nil)
+-- end
+
+function check_shrike(_master_arm)
+
+    local non_shrike = false
+    local shrike = false
+    -- iterate over all readied station to check if all readied stations are shrikes
+    if _master_arm then
+        for i = 1, num_stations do
+            local station = WeaponSystem:get_station_info( i - 1 )
+            if station_states[i] == STATION_READY then
+                if (
+                ((station.weapon.level2 == wsType_Missile) and (station.weapon.level3 == wsType_AS_Missile) and function_selector == FUNC_BOMBS_GM_ARM)
+                ) then
+                    if station.count > 0 then
+                        
+                        shrike = true
+                    end
+                else
+                    non_shrike = true
+                end -- check weapon type
+            end
+        end
+    end -- _master_arm
+
+    if shrike then
+        shrike_armed_param:set(1)
+    else
+        shrike_armed_param:set(0)
+    end
+    if non_shrike then
+        shrike_armed_param:set(0)
+    end
+end
+
 function SetCommand(command,value)
     local _master_arm = get_elec_mon_arms_dc_ok()
     local nosegear=get_aircraft_draw_argument_value(0) -- nose gear
@@ -824,6 +871,7 @@ function SetCommand(command,value)
             end
 
             check_sidewinder(_master_arm)  -- re-check sidewinder stores
+            check_shrike(_master_arm)
         end
 
     elseif command == iCommandPlaneChangeWeapon then
@@ -928,6 +976,7 @@ function SetCommand(command,value)
         if function_selector ~= func then
             function_selector = func
             check_sidewinder(_master_arm)
+            check_shrike(_master_arm)
         end
         debug_print("Armament Select: "..selector_debug_text[function_selector+1])
         
@@ -935,6 +984,7 @@ function SetCommand(command,value)
         station_states[command-device_commands.arm_station1+1] = value
         debug_print("Station "..(command-device_commands.arm_station1+1)..": "..station_debug_text[value+2])
         check_sidewinder(_master_arm)
+        check_shrike(_master_arm)
         next_pylon=1
 
     elseif command >= Keys.Station1 and command <= Keys.Station5 then
@@ -1023,6 +1073,7 @@ function SetCommand(command,value)
                     end
                 end
                 check_sidewinder(_master_arm)  -- re-check sidewinder stores
+                check_shrike(_master_arm)
             end
             emer_bomb_release_countdown = 0.25 -- seconds until spring pulls back lever
         end
@@ -1073,6 +1124,10 @@ function SetCommand(command,value)
             -- get quantity
             cbu2ba_quantity:set(cbu2ba_quantity_array[cbu2ba_quantity_array_pos+1])
         end
+    elseif command == device_commands.shrike_sidewinder_volume then
+        debug_print("shrike_sidewinder_volume: "..value)
+        shrike_sidewinder_volume:set(value)
+        aim9seek:update(nil, LinearTodB(shrike_sidewinder_volume:get()), nil)
     end
 end
 
