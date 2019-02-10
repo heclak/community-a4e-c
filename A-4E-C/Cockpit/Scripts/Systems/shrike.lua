@@ -19,7 +19,7 @@ device_timer_dt     = 0.02  	--0.2
 local sensor_data = get_base_data()
 
 function debug_print(message)
-    print_message_to_user(message)
+    -- print_message_to_user(message)
 end
 
 SHRIKE_HORZ_FOV = 6
