@@ -618,7 +618,6 @@ function update()
 
     release_cbu_bomblets()
     update_labs_annunciator()
-    -- update_sidewinder_volume()
 end
 
 function release_cbu_bomblets()
@@ -734,9 +733,6 @@ function check_sidewinder(_master_arm)
     end
 end
 
--- function update_sidewinder_volume()
---     aim9seek:update(nil, shrike_sidewinder_volume:get(), nil)
--- end
 
 function check_shrike(_master_arm)
 
@@ -974,7 +970,6 @@ function SetCommand(command,value)
         local func=math.floor(math.ceil(value*100)/10)
         next_pylon=1
         if function_selector ~= func then
-            print_message_to_user("function changed")
             function_selector = func
             check_sidewinder(_master_arm)
             check_shrike(_master_arm)
