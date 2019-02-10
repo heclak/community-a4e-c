@@ -134,7 +134,8 @@ local function get_inboard_weapons( side )
 
         --AIR AIR--
         { CLSID = "{GAR-8}", connector = rocketConnector, arg_value = 0.2 },  -- AIM-9B, aligned to -3deg armament datum
-		{ CLSID = "{AIM-9P5}", connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P
+	{ CLSID = "{AIM-9P-ON-ADAPTER}", connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P
+	{ CLSID = "{AIM-9P5-ON-ADAPTER}", connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P5
 
         --ROCKETS--
         { CLSID = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}", connector = rocketConnector, arg_value = 0.2 }, -- LAU-10 Zuni
