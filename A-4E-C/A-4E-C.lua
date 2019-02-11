@@ -98,15 +98,15 @@ local function get_outboard_weapons( side )
 
         --SPECIAL--
         { CLSID = "{647C5F26-BDD1-41e6-A371-8DE1E4CC0E94}"}, -- temporarily add M257 parachute flares until we can add: Mk-5 mod 7, Mk-6 mod 5, Mk-24 mod 2A, SUU-40/44
-    	
-		-- SMOKE PODS -- 
+
+		-- SMOKE PODS --
 		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E741}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Red
 		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E742}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Green
 		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E743}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Blue
 		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E744}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod White
 		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E745}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Yellow
 		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E746}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Orange
-		
+
 		-- CLEAN --
 		{ CLSID = "<CLEAN>", arg_value = 1 },
 	}
@@ -198,15 +198,15 @@ local function get_inboard_weapons( side )
 
         -- GUN PODS --
         {CLSID = "{Mk4 HIPEG}", connector = rocketConnector, arg_value = 0.2 },  -- Mk 4 Mod 0 HIPEG gun pod
-		
-		-- SMOKE PODS -- 
+
+		-- SMOKE PODS --
 		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E741}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Red
 		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E742}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Green
 		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E743}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Blue
 		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E744}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod White
 		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E745}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Yellow
 		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E746}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Orange
-		
+
 		-- CLEAN --
 		{ CLSID = "<CLEAN>", arg_value = 1 },
     }
@@ -293,16 +293,16 @@ local function get_centerline_weapons( side )
 
         -- GUN PODS --
         {CLSID = "{Mk4 HIPEG}", connector = rocketConnector, arg_value = 0.2 },  -- Mk 4 Mod 0 HIPEG gun pod
-		
-		-- SMOKE PODS -- 
+
+		-- SMOKE PODS --
 		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E741}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Red
 		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E742}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Green
 		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E743}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Blue
 		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E744}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod White
 		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E745}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Yellow
 		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E746}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Orange
-		
-		
+
+
 		-- CLEAN --
 		{ CLSID = "<CLEAN>", arg_value = 1 },
     }
@@ -366,6 +366,7 @@ A_4E_C =  {
         15, -- right elevator
         16, -- left elevator
         17, -- rudder
+        2,  -- nose wheel steering
 
         21, -- SFM air brake
         13, -- right slat
@@ -384,6 +385,8 @@ A_4E_C =  {
         402, --huffer
         500, -- model air brake
         501, -- RAT
+        499, -- wheel chocks
+
     },
 	-------------------------
     mapclasskey         = "P0091000024",
@@ -980,7 +983,7 @@ A_4E_C =  {
                                 {   0.86,  0.94,  0.976,    0.976,  0.967},--H = 12192   -- 40000'
 					}
 				},
-			
+
 				 TSFC_afterburner =  -- afterburning thrust specific fuel consumption by altitude and Mach number RPM  100%, 2d table
 				 {
 					 M 		 = {0,0.3,0.5,0.7,1.0},
@@ -992,7 +995,7 @@ A_4E_C =  {
 								 {   1,   1,  1,   1,   1},--H = 10000
 					 }
 				 },
-				
+
                 -- per ADA057325:
                 -- SFC = 0.836 (0% bleed) to 1.415 (15.44% bleed) at low throttle
                 -- SFC = 0.777 (0% bleed) to 0.964 (16.84% bleed) at MIL throttle
