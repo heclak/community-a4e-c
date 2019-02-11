@@ -1,6 +1,7 @@
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
+dofile(LockOn_Options.script_path.."Systems/mission.lua")
 
 startup_print("nav: load")
 
@@ -20,6 +21,7 @@ local nm2meter = 1852
 
 local degrees_per_radian = 57.2957795
 --local feet_per_meter_per_minute = 196.8
+
 
 ----------------------
 local carrier_posx_param = get_param_handle("CARRIER_POSX")
@@ -366,6 +368,9 @@ function post_initialize()
 
     end
 
+	load_tempmission_file() 
+	miz_carriers = decode_mission()
+	--print_message_to_user(#miz_carriers)
     startup_print("nav: postinit end")
 end
 
@@ -1565,10 +1570,13 @@ function update_morse_playback()
 end
 
 function update()
+	model_time = get_model_time()
+	get_base_sensor_data()
     if not get_elec_26V_ac_ok() then
         return
     end
     
+	update_carrier_pos()
 	update_carrier_tcn()	
 	
 	  
@@ -1583,40 +1591,120 @@ end
 
 function update_carrier_tcn()
 
-local cvn_x = carrier_posx_param:get()
-local cvn_z = carrier_posz_param:get()
-	
-	if cvn_x ~=	0 then
+--local cvn_x = carrier_posx_param:get()
+--local cvn_z = carrier_posz_param:get()
 
-		for i = 1,#beacon_data do
-			
-			if beacon_data[i].callsign == "CVN" then
-				beacon_data[i].channel 		= 99
-				beacon_data[i].position.x 	= cvn_x
-				beacon_data[i].position.z 	= cvn_z
-				beacon_data[i].position.y 	= 40
-				beacon_data[i].ntype		= NAV_TYPE_TCN
-				beacon_data[i].frequency    =1234
-				cvn_tcn_id = i
-						
+--print_message_to_user(#miz_carriers)
+	for i = 1,#miz_carriers do
+	--	print_message_to_user(i)
+		if miz_carriers[i].tacan ~= -1 then
+--		print_message_to_user("updatecarriertcn - "..miz_carriers[i].tacan)
+			local cvn_tcn_id = nil
+			--print_message_to_user(#beacon_data)
+			for ib = 1,#beacon_data do
+--	print_message_to_user(beacon_data[ib].callsign)			
+				if beacon_data[ib].callsign == (miz_carriers[i].tacan .."x") then
+					beacon_data[ib].channel 	= miz_carriers[i].tacan
+					beacon_data[ib].position.x 	= miz_carriers[i].act_x
+					beacon_data[ib].position.z 	= miz_carriers[i].act_z
+					--beacon_data[ib].position.x , beacon_data[ib].position.z = get_actual_carrier_pos(i)
+					beacon_data[ib].position.y 	= 21
+					beacon_data[ib].ntype		= NAV_TYPE_TCN
+					beacon_data[ib].frequency    = miz_carriers[i].tacan
+					cvn_tcn_id = ib
+							
+				end	
 			end	
-		end	
-		
-		if not cvn_tcn_id then
-			beacon_data[#beacon_data+1] = {
-											callsign 			="CVN",
-											channel 		= 99,
-											position		= {x = cvn_x,z 	= cvn_z,y=40},
-											ntype			= NAV_TYPE_TCN,
-											frequency    	= 1234,
-											
-											}
-			--print_message_to_user(dir(beacon_data[#beacon_data]))
-		end									
-											
+			
+			if not cvn_tcn_id then
+				beacon_data[#beacon_data+1] = {
+												callsign 		= miz_carriers[i].tacan .."x",
+												channel 		= miz_carriers[i].tacan ,
+												position		= {
+																	x = miz_carriers[i].x,
+																	z = miz_carriers[i].z,
+																	y =21},
+												ntype			= NAV_TYPE_TCN,
+												frequency    	= miz_carriers[i].tacan,
+												
+												}
+				--print_message_to_user(dir(beacon_data[#beacon_data]))
+			end						
+	
+	
+		end
 	end
 
+	--	if cvn_x ~=	0 then
+	--	end
+	
+	
+	
+	
+	
+
 end	
+
+
+function get_base_sensor_data()
+
+	Sensor_Data_Raw = get_base_data()
+	
+	local self_loc_x , own_alt, self_loc_y = Sensor_Data_Raw.getSelfCoordinates()
+	local self_vel_l,	self_vel_v,self_vel_h = Sensor_Data_Raw.getSelfAirspeed()
+	Sensor_Data_Mod = 	{
+							throttle_pos_l  = Sensor_Data_Raw.getThrottleLeftPosition(),
+							throttle_pos_r  = Sensor_Data_Raw.getThrottleRightPosition(),
+							mach			= Sensor_Data_Raw.getMachNumber(),
+							nose_wow		= Sensor_Data_Raw.getWOW_NoseLandingGear(),
+							
+							AoS 			= math.deg(Sensor_Data_Raw.getAngleOfSlide()),		--is in rad
+							AoA 			= math.deg(Sensor_Data_Raw.getAngleOfAttack()),		--is in rad?
+							
+							self_m_x 		= self_loc_x,
+							self_m_z 		= self_loc_y,
+							self_m_y 		= own_alt,
+							self_alt 		= own_alt,
+							
+							self_vl			= self_vel_l,
+							self_vv			= self_vel_v,
+							self_vh			= self_vel_h,
+							self_gs			= math.sqrt(self_vel_h^2 + self_vel_l^2),	--grondspeed meters/s
+							
+							
+							self_balt		= Sensor_Data_Raw.getBarometricAltitude(),
+							self_ralt		= Sensor_Data_Raw.getRadarAltitude(),
+							
+							self_pitch		= math.deg(Sensor_Data_Raw.getPitch()),
+							self_bank		= math.deg(Sensor_Data_Raw.getRoll()),
+							
+							self_head			= math.rad(360)-Sensor_Data_Raw.getHeading(),
+							self_head_raw		= Sensor_Data_Raw.getHeading(),
+							self_head_rad		= math.rad(360)-Sensor_Data_Raw.getHeading(),
+							self_head_deg		= -((math.deg(Sensor_Data_Raw.getHeading()))-360),
+							
+							self_head_wpt_rad	= math.rad((360-(math.deg(Sensor_Data_Raw.getHeading()))) + 0),
+							
+							self_ias 			=  Sensor_Data_Raw.getIndicatedAirSpeed(),
+							true_speed			= Sensor_Data_Raw.getTrueAirSpeed()		,
+							--true_speed			= (3600 * (Sensor_Data_Raw.getTrueAirSpeed()))		/ 1000,
+							
+							eng_l_fuel_usage	=	Sensor_Data_Raw.getEngineLeftFuelConsumption(),
+							eng_l_rpm_text		=	Sensor_Data_Raw.getEngineLeftRPM(),
+							eng_l_temp_text		=	Sensor_Data_Raw.getEngineLeftTemperatureBeforeTurbine(),
+							eng_l_rpm_rot		=	math.rad(180) * (Sensor_Data_Raw.getEngineLeftRPM()),
+							eng_l_temp_rot		=	(Sensor_Data_Raw.getEngineLeftTemperatureBeforeTurbine()),
+													
+							eng_r_fuel_usage	=	Sensor_Data_Raw.getEngineRightFuelConsumption(),
+							eng_r_rpm_text		=	Sensor_Data_Raw.getEngineRightRPM(),
+							eng_r_temp_text		=	Sensor_Data_Raw.getEngineRightTemperatureBeforeTurbine(),
+							eng_r_rpm_rot		=	math.rad(180) * (Sensor_Data_Raw.getEngineRightRPM()),
+							eng_r_temp_rot		=	(Sensor_Data_Raw.getEngineRightTemperatureBeforeTurbine()),
+
+							fuel_weight			= 	Sensor_Data_Raw.getTotalFuelWeight(),
+						}	
+
+end
 
 
 startup_print("nav: load end")
