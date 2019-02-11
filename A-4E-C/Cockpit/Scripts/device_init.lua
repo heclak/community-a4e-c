@@ -92,7 +92,7 @@ creators[devices.SHRIKE]            = {"avLuaDevice"            ,LockOn_Options.
 --creators[devices.TEMP2]          = {"avBasicHearingSensitivityInterface"            ,LockOn_Options.script_path.."dump_device.lua", {devices.OXYGEN} }
 --creators[devices.TEMP3]          = {"avUHF_ARC_164"            ,LockOn_Options.script_path.."dump_device.lua" }
 
---creators[devices.ILS]         = {"avLuaDevice",LockOn_Options.script_path.."Nav/ils.lua"}
+creators[devices.ILS]         = {"avLuaDevice",LockOn_Options.script_path.."Nav/ils.lua"}
 --creators[devices.NAV_TERRAIN] = {"avLuaDevice",LockOn_Options.script_path.."Nav/terrainmask.lua"}
 
 -- Indicators

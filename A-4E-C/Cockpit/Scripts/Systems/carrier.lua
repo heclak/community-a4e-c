@@ -1,11 +1,21 @@
+
+my_carrier = nil
 --carrier launch script
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
+dofile(LockOn_Options.script_path.."Systems/debug.lua")
+
+
+dofile(LockOn_Options.script_path.."Systems/mission.lua")
+--dofile(LockOn_Options.script_path.."Systems//mission.lua")
 
 local catapult_max_tics 	= 215
 --local catapult_max_length 	= 75	--stennis catapults should be 118m, but are actualy 100m in game?! Oriskanys should be 75m
 local catapult_max_length 	= 100	--stennis catapults should be 118m, but are actualy 100m in game?! Oriskanys should be 75m
 
+--local miz_carriers = {}
+ 
+ --model_time
 -------------------------------------------------
 -------------------------------------------------
 Terrain   	= require('terrain')
@@ -37,7 +47,7 @@ local carrier_heading	= 0
 local carrier_tacan_tics= 0
 
 local birth_tics			= 0
-local birth_carrier_heading	= 0
+local birth_carrier_heading	= -999
 
 local debug_txt =""
 
@@ -70,9 +80,11 @@ elseif theatre == "Persian Gulf" then
 end
 
 function post_initialize()
-	--print_message_to_user("Init - Carrier- "..theatre)
-	
-	
+--	print_message_to_user("Init - Carrier- "..theatre)
+--decode_mission()
+
+	load_tempmission_file() 
+	miz_carriers = decode_mission()
 end
 
 
@@ -83,17 +95,20 @@ function SetCommand(command,value)
 	if command == Keys.catapult_ready then
 		if on_carrier() == true and catapult_status == 0 and
 			wheelchocks_state_param:get() == 0 then
-	
-		--	if (birth_carrier_heading - Sensor_Data_Mod.self_head) > -math.rad(3) and
-		--	   (birth_carrier_heading - Sensor_Data_Mod.self_head) < math.rad(12) then
 			
+			compare_carriers()
+	
+			if (birth_carrier_heading - Sensor_Data_Mod.self_head) > -math.rad(3) and
+			   (birth_carrier_heading - Sensor_Data_Mod.self_head) < math.rad(12) and birth_carrier_heading ~= -999 then
+			--if my_carrier and ( my_carrier.heading > -math.rad(3) and my_carrier.heading < math.rad(12)) then
 				catapult_status = 1
 				print_message_to_user("The catapult is ready!\nYou are hooked in.\nCheck takeoff flaps and trim\nSpool up the engine to max MIL\nSignal FIRE CATAPULT when ready.", 10)
 				
 				cat_hook_tics = 0		
-		--	else
-		--		print_message_to_user("You are not correctly aligned")
-		--	end
+			else
+				print_message_to_user("You are not correctly aligned")
+			--	print_message_to_user(birth_carrier_heading .. "\n" ..Sensor_Data_Mod.self_head )
+			end
 			
 		elseif wheelchocks_state_param:get() == 1 then
 				print_message_to_user("Wheel chocks are on!")	
@@ -143,9 +158,19 @@ end
 
 function update()
 	get_base_sensor_data()
+	model_time = get_model_time()
 	
-
-	if on_carrier() == true then
+--	local test = get_model_time
+--	print_message_to_user(test)
+--	print_message_to_user("modeltime:  " .. get_model_time())
+--	print_message_to_user("Abs time:   " .. get_absolute_model_time())
+	--print_message_to_user(get_aircraft_type())
+	
+	
+	--if on_carrier() == true then
+		
+		
+		--[[
 		if birth_tics < 1 then
 			birth_tics = birth_tics	+ 1 	
 			carrier_start_pos =	{	x = Sensor_Data_Mod.self_m_x,
@@ -163,11 +188,20 @@ function update()
 			carrier_start_pos 	= {}
 			birth_tics = birth_tics	+ 1 
 		--	print_message_to_user(math.deg(birth_carrier_heading))
+		--	birth_carrier_heading = -999
 		else
 		end
-	end
+		]]--
+	--end
 
+	if birth_tics < 41 then
+		birth_tics = birth_tics	+ 1 	
+	end
 	
+	if birth_tics == 40 and mission then
+	--	miz_carriers = decode_mission()
+	--	compare_carriers()
+	end
 	
 	if catapult_status == 0 then
 	
@@ -257,6 +291,8 @@ function update()
 		calc_carrier_position()
 	end
 	
+--	print_message_to_user(my_carrier.heading)
+--	update_tacans()
 end
 
 function on_carrier()
@@ -299,6 +335,7 @@ function calc_carrier_position()
 	end
 	]]--
 end
+
 
 
 
@@ -384,6 +421,39 @@ function pnt_dir(pnt_x,pnt_z,angle_rad,distance)
 	new_x = pnt_x + (distance * math.cos(angle_rad))
 
 	return new_x,new_z
+end
+
+
+
+function compare_carriers()
+	local tmp_carrier
+	local closest_carrier_dist = 9999999
+	update_carrier_pos()
+
+	for i = 1,#miz_carriers do
+--[[	
+		local act_travel_dist = model_time * miz_carriers[i].speed
+			local new_x,new_z =pnt_dir(	miz_carriers[i].x,
+										miz_carriers[i].z,
+										miz_carriers[i].heading,
+										act_travel_dist)
+		]]--
+		local tmp_dist = math.dist(Sensor_Data_Mod.self_m_x,Sensor_Data_Mod.self_m_z,miz_carriers[i].act_x,miz_carriers[i].act_z)--miz_carriers[i].x,miz_carriers[i].z)
+--		print_message_to_user(tmp_dist)
+
+		if tmp_dist < closest_carrier_dist then
+			closest_carrier_dist = tmp_dist
+			tmp_carrier = miz_carriers[i]
+		end
+	end	
+			
+	print_message_to_user(">>"..closest_carrier_dist)	
+
+	if closest_carrier_dist < 500 then
+		my_carrier = tmp_carrier
+		birth_carrier_heading = my_carrier.heading
+--		print_message_to_user( my_carrier.speed)
+	end	
 end
 
 
