@@ -3,7 +3,7 @@ my_carrier = nil
 --carrier launch script
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
-dofile(LockOn_Options.script_path.."Systems/debug.lua")
+--dofile(LockOn_Options.script_path.."Systems/debug.lua")
 
 
 dofile(LockOn_Options.script_path.."Systems/mission.lua")
@@ -98,7 +98,7 @@ function SetCommand(command,value)
 			
 			compare_carriers()
 	
-			if (birth_carrier_heading - Sensor_Data_Mod.self_head) > -math.rad(3) and
+			if (birth_carrier_heading - Sensor_Data_Mod.self_head) > -math.rad(4) and
 			   (birth_carrier_heading - Sensor_Data_Mod.self_head) < math.rad(12) and birth_carrier_heading ~= -999 then
 			--if my_carrier and ( my_carrier.heading > -math.rad(3) and my_carrier.heading < math.rad(12)) then
 				catapult_status = 1
@@ -447,7 +447,7 @@ function compare_carriers()
 		end
 	end	
 			
-	print_message_to_user(">>"..closest_carrier_dist)	
+--	print_message_to_user(">>"..closest_carrier_dist)	
 
 	if closest_carrier_dist < 500 then
 		my_carrier = tmp_carrier
