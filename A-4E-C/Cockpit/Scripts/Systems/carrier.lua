@@ -93,25 +93,20 @@ function SetCommand(command,value)
 --	print_message_to_user("carrier: command "..tostring(command).." = "..tostring(value))
 	
 	if command == Keys.catapult_ready then
-		if on_carrier() == true and catapult_status == 0 and
-			wheelchocks_state_param:get() == 0 then
+		if on_carrier() == true and catapult_status == 0 and wheelchocks_state_param:get() == 0 then
 			
 			compare_carriers()
-	
-			if (birth_carrier_heading - Sensor_Data_Mod.self_head) > -math.rad(4) and
-			   (birth_carrier_heading - Sensor_Data_Mod.self_head) < math.rad(12) and birth_carrier_heading ~= -999 then
-			--if my_carrier and ( my_carrier.heading > -math.rad(3) and my_carrier.heading < math.rad(12)) then
+			local tmp_bchsh = compate_angels(math.deg(birth_carrier_heading),math.deg(Sensor_Data_Mod.self_head))
+			if tmp_bchsh < 6 then
 				catapult_status = 1
 				print_message_to_user("The catapult is ready!\nYou are hooked in.\nCheck takeoff flaps and trim\nSpool up the engine to max MIL\nSignal FIRE CATAPULT when ready.", 10)
-				
 				cat_hook_tics = 0		
 			else
 				print_message_to_user("You are not correctly aligned")
-			--	print_message_to_user(birth_carrier_heading .. "\n" ..Sensor_Data_Mod.self_head )
 			end
 			
 		elseif wheelchocks_state_param:get() == 1 then
-				print_message_to_user("Wheel chocks are on!")	
+			print_message_to_user("Wheel chocks are on!")	
 		else	
 			print_message_to_user("You are not on a carrier!")
 		end
@@ -453,7 +448,20 @@ function compare_carriers()
 		my_carrier = tmp_carrier
 		birth_carrier_heading = my_carrier.heading
 --		print_message_to_user( my_carrier.speed)
+
 	end	
+end
+
+function compate_angels(a,b)
+
+	local diff = a-b
+	if diff < -180 then 
+		diff = diff + 360 
+	elseif diff >  180 then 
+		diff = diff - 360 
+	end
+	return diff
+        
 end
 
 
