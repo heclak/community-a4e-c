@@ -3,7 +3,7 @@ my_carrier = nil
 --carrier launch script
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
-dofile(LockOn_Options.script_path.."Systems/debug.lua")
+//dofile(LockOn_Options.script_path.."Systems/debug.lua")
 
 
 dofile(LockOn_Options.script_path.."Systems/mission.lua")
