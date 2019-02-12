@@ -70,10 +70,10 @@ end
 
 function decode_mission()
 	local miz_carriers = {}
-print_message_to_user("decode mission")
+--print_message_to_user("decode mission")
 
 	if mission then
-		print_message_to_user("MissionCarrier TRUE")
+--		print_message_to_user("MissionCarrier TRUE")
 		local wind ={
 		dir 	= mission.weather.wind.atGround.dir	,
 		ms 	= mission.weather.wind.atGround.speed * 2,
