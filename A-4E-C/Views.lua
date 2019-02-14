@@ -17,8 +17,13 @@ ViewSettings = {
 	}, -- Cockpit 
 
 	Chase = {
-		LocalPoint      = {-10.000000,1.100000,-0.300000}, -- Vue F4
-		AnglesDefault   = {180.000000,-8.000000},
+	--	LocalPoint      = {-10.000000,1.100000,-0.300000}, -- Vue F4
+	--	AnglesDefault   = {180.000000,-8.000000},
+		--LocalPoint      = {-8.0,3.0,-5.0},
+		--AnglesDefault   = {-90.000000,-20.000000},
+						--Left/right	up/down	front/back
+		LocalPoint      = {-8.0,3.0,-4.0},
+		AnglesDefault   = {-60.000000,-30.000000},
 
 	}, -- Chase 
 

@@ -95,14 +95,17 @@ function SetCommand(command,value)
 	if command == Keys.catapult_ready then
 		if on_carrier() == true and catapult_status == 0 and wheelchocks_state_param:get() == 0 then
 			
+			update_carrier_pos()
 			compare_carriers()
-			local tmp_bchsh = compate_angels(math.deg(birth_carrier_heading),math.deg(Sensor_Data_Mod.self_head))
-			if tmp_bchsh < 6 then
+		--	check_catapult()
+		--	local tmp_bchsh = compare_angels(math.deg(birth_carrier_heading),math.deg(Sensor_Data_Mod.self_head))
+		--	if tmp_bchsh < 6  then
+			if check_catapult() then
 				catapult_status = 1
 				print_message_to_user("The catapult is ready!\nYou are hooked in.\nCheck takeoff flaps and trim\nSpool up the engine to max MIL\nSignal FIRE CATAPULT when ready.", 10)
 				cat_hook_tics = 0		
 			else
-				print_message_to_user("You are not correctly aligned")
+				print_message_to_user("position or alignement wrong")--("You are not correctly aligned")
 			end
 			
 		elseif wheelchocks_state_param:get() == 1 then
@@ -154,40 +157,11 @@ end
 function update()
 	get_base_sensor_data()
 	model_time = get_model_time()
-	
---	local test = get_model_time
+
 --	print_message_to_user(test)
---	print_message_to_user("modeltime:  " .. get_model_time())
---	print_message_to_user("Abs time:   " .. get_absolute_model_time())
-	--print_message_to_user(get_aircraft_type())
-	
-	
-	--if on_carrier() == true then
-		
-		
-		--[[
-		if birth_tics < 1 then
-			birth_tics = birth_tics	+ 1 	
-			carrier_start_pos =	{	x = Sensor_Data_Mod.self_m_x,
-										y = Sensor_Data_Mod.self_m_y,
-										z = Sensor_Data_Mod.self_m_z,}
-		elseif birth_tics < 41 then
-			birth_tics = birth_tics	+ 1 	
-		elseif birth_tics == 41 then
-			cat_start_pos =	{	x = Sensor_Data_Mod.self_m_x,
-								y = Sensor_Data_Mod.self_m_y,
-								z = Sensor_Data_Mod.self_m_z,}
-			birth_carrier_heading = calc_bearing( carrier_start_pos.x,	carrier_start_pos.z,cat_start_pos.x,		cat_start_pos.z  )
-			if birth_carrier_heading < 0 then birth_carrier_heading = birth_carrier_heading + math.rad(360) end
-			cat_start_pos 		= {}
-			carrier_start_pos 	= {}
-			birth_tics = birth_tics	+ 1 
-		--	print_message_to_user(math.deg(birth_carrier_heading))
-		--	birth_carrier_heading = -999
-		else
-		end
-		]]--
-	--end
+update_carrier_pos()
+--compare_carriers()
+--check_catapult()
 
 	if birth_tics < 41 then
 		birth_tics = birth_tics	+ 1 	
@@ -423,7 +397,7 @@ end
 function compare_carriers()
 	local tmp_carrier
 	local closest_carrier_dist = 9999999
-	update_carrier_pos()
+--	update_carrier_pos()
 
 	for i = 1,#miz_carriers do
 --[[	
@@ -452,22 +426,60 @@ function compare_carriers()
 	end	
 end
 
-function compate_angels(a,b)
-
+function compare_angels(a,b)
+	
 	local diff = a-b
 	if diff < -180 then 
 		diff = diff + 360 
 	elseif diff >  180 then 
 		diff = diff - 360 
 	end
-	return diff
+	return math.abs(diff)
         
 end
 
 
+function check_catapult()
+local catpos = {
+				{	angel 	= math.rad(18),
+					dist 	= 48.3 ,
+					heading = 6.208-math.pi*2,	--radians
+				},
+				{	angel 	= math.rad(-5),
+					dist 	= 43,
+					heading = 6.253-math.pi*2,
+				},
+				{	angel 	= math.rad(-157.7),
+					dist 	= 50 ,
+					heading = 6.209-math.pi*2,
+				},
+				{	angel 	= math.rad(-154),
+					dist 	= 69.15 ,
+					heading = 0.003,
+				},
+			   }
+local close_to_cat	= false
+local tmp_dist,tmp_angel_dif
+			   
+	for i = 1,#catpos do
+		local new_x,new_z 	= pnt_dir(my_carrier.act_x,my_carrier.act_z,my_carrier.heading + catpos[i].angel,catpos[i].dist)
+		tmp_dist 		= math.dist(Sensor_Data_Mod.self_m_x,Sensor_Data_Mod.self_m_z,new_x,new_z)
+		if tmp_dist < 2 then
+			tmp_angel_dif = compare_angels((math.deg(my_carrier.heading) + math.deg(catpos[i].heading)) ,Sensor_Data_Mod.self_head_deg)
+			if tmp_angel_dif < 3 then		
+				close_to_cat = true
+			end
+		end
+
+	end	
+
+	return close_to_cat
+	
+end
 
 
 
+function math.angle(x1,y1, x2,y2) return math.atan2(y2-y1, x2-x1) end
 --[[
 default.lua - joystick 	- axis
 	{action = device_commands.throttle_axis_mod 	,cockpit_device_id = devices.CARRIER ,name = _('Modded Throttle Axis')},
