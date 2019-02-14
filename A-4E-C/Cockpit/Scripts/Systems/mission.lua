@@ -128,18 +128,54 @@ function decode_mission()
 				
 			end
 		end
-		
-		--[[
-		Bulls_red = {
-						m_x = mission.coalition.red.bullseye.x,
-						m_y = mission.coalition.red.bullseye.y,	
-					}
+---------------------------------------
+		for i = 1,#mission.coalitions.red do
+			if mission.coalition.red.country[i].ship then
+				--num_red_groups = num_red_groups + #mission.coalition.red.country[i].vehicle.group
+			--	print_message_to_user("country")
+				for ig = 1,#mission.coalition.red.country[i].ship.group do
+				--	print_message_to_user("group")
+					
+					for iu = 1,#mission.coalition.red.country[i].ship.group[ig].units do
+			--
+						local tacan = -1	
+						local speed = mission.coalition.red.country[i].ship.group[ig].route.points[1].speed
+						for it = 1 ,#mission.coalition.red.country[i].ship.group[ig].route.points	do
+							
+							for itt = 1,#mission.coalition.red.country[i].ship.group[ig].route.points[it].task.params.tasks do
+								if mission.coalition.red.country[i].ship.group[ig].route.points[it].task.params.tasks[itt].params.action.id == "ActivateBeacon"	then
+									tacan = mission.coalition.red.country[i].ship.group[ig].route.points[it].task.params.tasks[itt].params.action.params.channel
+								end		
+							end					
+							
+						end
+						
+						if mission.coalition.red.country[i].ship.group[ig].units[iu].type == "Stennis" then
+							miz_carriers[#miz_carriers+1] = {
+								type 	= mission.coalition.red.country[i].ship.group[ig].units[iu].type,
+								x 		= mission.coalition.red.country[i].ship.group[ig].units[iu].x,
+								z 		= mission.coalition.red.country[i].ship.group[ig].units[iu].y,
+								heading = mission.coalition.red.country[i].ship.group[ig].units[iu].heading,
+								tacan	= tacan,
+								speed	= speed,
+								act_x	= mission.coalition.red.country[i].ship.group[ig].units[iu].x,
+								act_z	= mission.coalition.red.country[i].ship.group[ig].units[iu].y,
+															}
+						end	
+						--print_message_to_user(tacan.." / "..speed)
+					end
 				
-		Bulls_blue = {
-						m_x = mission.coalition.blue.bullseye.x,
-						m_y = mission.coalition.blue.bullseye.y,		
-					}	
-		]]--
+				end
+				
+			end
+		end
+
+
+
+
+
+
+		
 	end
 	
 	return miz_carriers
