@@ -31,6 +31,8 @@ local ils_loc_bar = get_param_handle("BDHI_ILS_LOC")
 --local vor_i010 = get_param_handle("D_VOR_I_010")
 --local vor_i100 = get_param_handle("D_VOR_I_100")
 
+local tacan_channel_param = get_param_handle("TACAN_CHANNEL")
+
 -- Variables
 
  ils_loc = {}
@@ -70,7 +72,7 @@ function post_initialize()
   ilschnidx = 0
   
   
-  
+ --[[ 
 ils_loc[1] = {
 				name 	 = "name",
 				position = {x = -93827,
@@ -89,7 +91,7 @@ ils_gs[1] = {
 				frequency = 123.122,
 				}
   
-  
+  ]]--
   
 	load_tempmission_file() 
 	miz_carriers = decode_mission()
@@ -136,6 +138,12 @@ function SetCommand(command,value)
   elseif command == Keys.NavReset then
     ilschnidx = 0
     print_message_to_user("Reset ils channels")
+	--[[
+	ilschnidx = find_tacan_ils()
+	if ilschnidx ~= 0 then
+		print_message_to_user("ils: "..ils_gs[ilschnidx].name)	
+	end
+	]]--
   end
   
 end
@@ -277,6 +285,19 @@ local function evalGS(data_src, navchnidx)
   return rate
 end
 
+function find_tacan_ils()
+	local found_id = 0
+	local current_tacan_channel = tacan_channel_param:get()
+	if current_tacan_channel ~= 0 then
+		for i =1, #ils_loc do
+			if ils_loc[i].frequency == current_tacan_channel then
+				found_id = i
+			end
+		end
+	end
+	return found_id
+end
+
 
 function update()
 	model_time = get_model_time()
@@ -284,6 +305,9 @@ function update()
 	--update_tacans()
 	update_carrier_pos()
 	update_carrier_ils()
+	
+	
+	ilschnidx = find_tacan_ils()
 
 
 	loc_arg = evalLoc(ils_loc, ilschnidx)

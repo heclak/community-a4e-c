@@ -51,6 +51,9 @@ local birth_carrier_heading	= -999
 
 local debug_txt =""
 
+local last_cat_dist			= 99
+local just_airborne			= false
+
 dev:listen_command(device_commands.throttle_axis_mod)
 dev:listen_command(Keys.catapult_ready)
 dev:listen_command(Keys.catapult_shoot)
@@ -100,16 +103,25 @@ function SetCommand(command,value)
 		--	check_catapult()
 		--	local tmp_bchsh = compare_angels(math.deg(birth_carrier_heading),math.deg(Sensor_Data_Mod.self_head))
 		--	if tmp_bchsh < 6  then
-			if check_catapult() then
+			local close_to_cat,closest_cat,angel_to_cat	= check_catapult()
+			--if check_catapult() then
+			if close_to_cat then
 				catapult_status = 1
 				print_message_to_user("The catapult is ready!\nYou are hooked in.\nCheck takeoff flaps and trim\nSpool up the engine to max MIL\nSignal FIRE CATAPULT when ready.", 10)
 				cat_hook_tics = 0		
 			else
-				print_message_to_user("position or alignement wrong")--("You are not correctly aligned")
+				--print_message_to_user("position or alignement wrong")--("You are not correctly aligned")
+				if closest_cat > 15 then
+					print_message_to_user("You are not close enough to any catapult")
+				else
+					print_message_to_user("position or alignement wrong\nDistance " ..round(closest_cat,1) .."m (max 2m)\nAngel "..round((angel_to_cat),1) .. "(max 3 degrees)" )
+				end
 			end
 			
 		elseif wheelchocks_state_param:get() == 1 then
 			print_message_to_user("Wheel chocks are on!")	
+		elseif catapult_status == 1 then
+			print_message_to_user("You are allready hooked into the catapult.")	
 		else	
 			print_message_to_user("You are not on a carrier!")
 		end
@@ -158,19 +170,34 @@ function update()
 	get_base_sensor_data()
 	model_time = get_model_time()
 
---	print_message_to_user(test)
-update_carrier_pos()
---compare_carriers()
---check_catapult()
+	--	print_message_to_user(test)
+	update_carrier_pos()
+	--compare_carriers()
 
+	if on_carrier() and catapult_status == 0 then
+		compare_carriers()
+	--	if not just_airborne then
+	--		compare_carriers()
+	--	end
+	
+		--local tmp_cat_dist = check_catapult("dist")
+		local close_to_cat,tmp_cat_dist,angel_to_cat	= check_catapult()
+		if tmp_cat_dist < last_cat_dist -1 or tmp_cat_dist > last_cat_dist +1 then
+			last_cat_dist = round(tmp_cat_dist,0)
+			if last_cat_dist < 1.5 then
+				print_message_to_user("You are close enough to hook in!")
+			elseif last_cat_dist < 6 then
+				print_message_to_user(last_cat_dist .. " meters")
+			end
+		end
+	end
 	if birth_tics < 41 then
 		birth_tics = birth_tics	+ 1 	
 	end
-	
-	if birth_tics == 40 and mission then
-	--	miz_carriers = decode_mission()
-	--	compare_carriers()
+	if birth_tics == 20 and mission then
+		compare_carriers()
 	end
+
 	
 	if catapult_status == 0 then
 	
@@ -226,6 +253,8 @@ update_carrier_pos()
 			cat_curr_pos  = 0
 			cat_fire_tics = 0
 			cat_fire_dist = 0
+			last_cat_dist = 99
+			just_airborne = true
 			
 			carrier_tacan_tics = 0
 			carrier_tacan = true
@@ -395,6 +424,7 @@ end
 
 
 function compare_carriers()
+	if not mission then return end
 	local tmp_carrier
 	local closest_carrier_dist = 9999999
 --	update_carrier_pos()
@@ -439,7 +469,10 @@ function compare_angels(a,b)
 end
 
 
-function check_catapult()
+function check_catapult(data)
+--local close_to_cat,closest_cat,angel_to_cat	= check_catapult()
+if not my_carrier and data == "dist" then return 100 end
+--local closest_cat = 99
 local catpos = {
 				{	angel 	= math.rad(18),
 					dist 	= 48.3 ,
@@ -459,22 +492,36 @@ local catpos = {
 				},
 			   }
 local close_to_cat	= false
+local closest_cat = 999
+local angel_to_cat = 0
 local tmp_dist,tmp_angel_dif
 			   
 	for i = 1,#catpos do
 		local new_x,new_z 	= pnt_dir(my_carrier.act_x,my_carrier.act_z,my_carrier.heading + catpos[i].angel,catpos[i].dist)
 		tmp_dist 		= math.dist(Sensor_Data_Mod.self_m_x,Sensor_Data_Mod.self_m_z,new_x,new_z)
+		
+		if tmp_dist < closest_cat then
+			closest_cat 	= tmp_dist
+			angel_to_cat 	= compare_angels((math.deg(my_carrier.heading) + math.deg(catpos[i].heading)) ,Sensor_Data_Mod.self_head_deg)
+		end	
+		
 		if tmp_dist < 2 then
 			tmp_angel_dif = compare_angels((math.deg(my_carrier.heading) + math.deg(catpos[i].heading)) ,Sensor_Data_Mod.self_head_deg)
+			angel_to_cat = tmp_angel_dif
 			if tmp_angel_dif < 3 then		
 				close_to_cat = true
 			end
 		end
 
 	end	
-
-	return close_to_cat
-	
+--[[
+	if data == "dist" then
+		return closest_cat
+	else
+		return close_to_cat
+	end
+]]--	
+return close_to_cat,closest_cat,angel_to_cat		
 end
 
 

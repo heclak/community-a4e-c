@@ -28,6 +28,7 @@ local carrier_posx_param = get_param_handle("CARRIER_POSX")
 local carrier_posz_param = get_param_handle("CARRIER_POSZ")
 local cvn_tcn_id = nil
 
+local tacan_channel_param = get_param_handle("TACAN_CHANNEL")
 
 -----------------------------------------------------------------------
 -----------------------------------------------------------------------
@@ -370,6 +371,7 @@ function post_initialize()
 
 	load_tempmission_file() 
 	miz_carriers = decode_mission()
+	tacan_channel_param:set(0)
 	--print_message_to_user(#miz_carriers)
     startup_print("nav: postinit end")
 end
@@ -1376,7 +1378,7 @@ function find_matched_tacan(chan)
                     beacon_data[i].position.y = Terrain.GetHeight(beacon_data[i].position.x, beacon_data[i].position.z)+10   -- fix caucasus height
                 end
 
-				
+			--	tacan_channel_param:set(chan)
                 return beacon_data[i]
 				
 				
@@ -1390,9 +1392,13 @@ function update_tacan()
     local max_tacan_range = 225
 
     -- for position of the active_tacan beacon, update visibility, distance, and range
-    if atcn ~= nil and (tacan_mode == "REC" or tacan_mode == "T/R") then
+    if atcn ~= nil and (tacan_mode == "REC" or tacan_mode == "T/R" or tacan_mode == "A/A") then
 
-
+	if tacan_mode == "A/A" then
+		tacan_channel_param:set(tacan_channel)
+	else
+		tacan_channel_param:set(0)
+	end
 	   local curx,cury,curz = sensor_data.getSelfCoordinates()
 
         if Terrain.isVisible(curx,cury,curz,atcn.position.x,atcn.position.y+15,atcn.position.z) then
