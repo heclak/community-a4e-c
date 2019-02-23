@@ -74,6 +74,7 @@ Catapult logic reworked:
 			This ONLY works if you took of from the carrier.
 			The carrier can't be stationary, it needs to drive at least 5knots.
 			The carrier must be driving at a constant speed and heading for the entire mission
+		ILS is linked to the Carrier-TACAN	
 		
 Options/special/A-4E
 	
