@@ -67,6 +67,8 @@ carrier_posx_param:set(0)
 carrier_posz_param:set(0)
 
 local wheelchocks_state_param = get_param_handle("WHEEL_CHOCKS_STATE")
+local egt_param = get_param_handle("EGT_C")
+local rpm_param = get_param_handle("RPM")
 
 
 local iCommandPlaneWheelBrakeOn = 74	--dispatch_action(nil,iCommandPlaneWheelBrakeOn)
@@ -198,6 +200,13 @@ function update()
 		compare_carriers()
 	end
 
+-----------------	
+	if catapult_status == 1 and rpm_param:get() > 100 then
+				catapult_status = 2
+				dispatch_action(nil, 2004,-1)
+				print_message_to_user("Fire Catapult!")
+	end			
+-------------------	
 	
 	if catapult_status == 0 then
 	
