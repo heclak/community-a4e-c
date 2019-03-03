@@ -74,6 +74,8 @@ local rpm_param = get_param_handle("RPM")
 local iCommandPlaneWheelBrakeOn = 74	--dispatch_action(nil,iCommandPlaneWheelBrakeOn)
 local iCommandPlaneWheelBrakeOff = 75	--dispatch_action(nil,iCommandPlaneWheelBrakeOff)
 
+-- SOUND PARAMS
+local param_catapult_takeoff = get_param_handle("SOUND_CAT_TAKEOFF")
 
 
 local theatre = get_terrain_related_data("name")
@@ -135,6 +137,7 @@ function SetCommand(command,value)
 				catapult_status = 2
 				dispatch_action(nil, 2004,-1)
 		--		print_message_to_user("Fire Catapult!")
+				param_catapult_takeoff:set(1)
 			else
 		--		print_message_to_user("Engines are not at max MIL power!")
 			end
@@ -259,6 +262,7 @@ function update()
 			catapult_status=0
 			dispatch_action(nil, 2004,-0.999)
 		--	print_message_to_user("Airborne!")
+			param_catapult_takeoff:set(0)
 			cat_start_pos = 0
 			cat_curr_pos  = 0
 			cat_fire_tics = 0
