@@ -1,0 +1,4 @@
+inner_radius = 10
+outer_radius = 100
+release = 0.1
+lowpass = 1000.0
