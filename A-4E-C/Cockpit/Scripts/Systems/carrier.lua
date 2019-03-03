@@ -109,7 +109,8 @@ function SetCommand(command,value)
 			--if check_catapult() then
 			if close_to_cat then
 				catapult_status = 1
-				print_message_to_user("The catapult is ready!\nYou are hooked in.\nCheck takeoff flaps and trim\nSpool up the engine to max MIL\nSignal FIRE CATAPULT when ready.", 10)
+				--print_message_to_user("The catapult is ready!\nYou are hooked in.\nCheck takeoff flaps and trim\nSpool up the engine to max MIL\nSignal FIRE CATAPULT when ready.", 10)
+				print_message_to_user("You are hooked in")
 				cat_hook_tics = 0		
 			else
 				--print_message_to_user("position or alignement wrong")--("You are not correctly aligned")
@@ -133,9 +134,9 @@ function SetCommand(command,value)
 			if Sensor_Data_Mod.throttle_pos_l > 0.9 then
 				catapult_status = 2
 				dispatch_action(nil, 2004,-1)
-				print_message_to_user("Fire Catapult!")
+		--		print_message_to_user("Fire Catapult!")
 			else
-				print_message_to_user("Engines are not at max MIL power!")
+		--		print_message_to_user("Engines are not at max MIL power!")
 			end
 		end
 	elseif command == Keys.catapult_abort then
@@ -189,7 +190,7 @@ function update()
 			if last_cat_dist < 1.5 then
 				print_message_to_user("You are close enough to hook in!")
 			elseif last_cat_dist < 6 then
-				print_message_to_user(last_cat_dist .. " meters")
+		--		print_message_to_user(last_cat_dist .. " meters")
 			end
 		end
 	end
@@ -204,7 +205,7 @@ function update()
 	if catapult_status == 1 and rpm_param:get() > 100 then
 				catapult_status = 2
 				dispatch_action(nil, 2004,-1)
-				print_message_to_user("Fire Catapult!")
+	--			print_message_to_user("Fire Catapult!")
 	end			
 -------------------	
 	
@@ -257,7 +258,7 @@ function update()
 		if cat_fire_dist > catapult_max_length then
 			catapult_status=0
 			dispatch_action(nil, 2004,-0.999)
-			print_message_to_user("Airborne!")
+		--	print_message_to_user("Airborne!")
 			cat_start_pos = 0
 			cat_curr_pos  = 0
 			cat_fire_tics = 0
