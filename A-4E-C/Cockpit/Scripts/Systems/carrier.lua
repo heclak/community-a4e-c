@@ -75,7 +75,7 @@ local iCommandPlaneWheelBrakeOn = 74	--dispatch_action(nil,iCommandPlaneWheelBra
 local iCommandPlaneWheelBrakeOff = 75	--dispatch_action(nil,iCommandPlaneWheelBrakeOff)
 
 -- SOUND PARAMS
-local param_catapult_takeoff = get_param_handle("SOUND_CAT_TAKEOFF")
+local param_snd_catapult_takeoff = get_param_handle("SOUND_CAT_TAKEOFF")
 
 
 local theatre = get_terrain_related_data("name")
@@ -119,14 +119,14 @@ function SetCommand(command,value)
 				if closest_cat > 15 then
 					print_message_to_user("You are not close enough to any catapult")
 				else
-					print_message_to_user("position or alignement wrong\nDistance " ..round(closest_cat,1) .."m (max 2m)\nAngel "..round((angel_to_cat),1) .. "(max 3 degrees)" )
+					print_message_to_user("position or alignment wrong\nDistance " ..round(closest_cat,1) .."m (max 2m)\nAngel "..round((angel_to_cat),1) .. "(max 3 degrees)" )
 				end
 			end
 			
 		elseif wheelchocks_state_param:get() == 1 then
 			print_message_to_user("Wheel chocks are on!")	
 		elseif catapult_status == 1 then
-			print_message_to_user("You are allready hooked into the catapult.")	
+			print_message_to_user("You are already hooked into the catapult.")	
 		else	
 			print_message_to_user("You are not on a carrier!")
 		end
@@ -137,7 +137,7 @@ function SetCommand(command,value)
 				catapult_status = 2
 				dispatch_action(nil, 2004,-1)
 		--		print_message_to_user("Fire Catapult!")
-				param_catapult_takeoff:set(1)
+				param_snd_catapult_takeoff:set(1)
 			else
 		--		print_message_to_user("Engines are not at max MIL power!")
 			end
@@ -262,7 +262,7 @@ function update()
 			catapult_status=0
 			dispatch_action(nil, 2004,-0.999)
 		--	print_message_to_user("Airborne!")
-			param_catapult_takeoff:set(0)
+			param_snd_catapult_takeoff:set(0)
 			cat_start_pos = 0
 			cat_curr_pos  = 0
 			cat_fire_tics = 0
