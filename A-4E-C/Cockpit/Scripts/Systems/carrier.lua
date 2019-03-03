@@ -208,6 +208,7 @@ function update()
 	if catapult_status == 1 and rpm_param:get() > 100 then
 				catapult_status = 2
 				dispatch_action(nil, 2004,-1)
+				param_snd_catapult_takeoff:set(1)
 	--			print_message_to_user("Fire Catapult!")
 	end			
 -------------------	
