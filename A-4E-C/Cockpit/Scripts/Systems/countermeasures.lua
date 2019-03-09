@@ -374,7 +374,7 @@ function SetCommand(command, value)
 
     elseif command == device_commands.cm_auto then
         -- cm_auto_mode = (value > 0) and true or false
-        if cm_enabled and get_elec_mon_dc_ok() then
+        if cm_enabled and get_elec_mon_dc_ok() and get_elec_retraction_release_airborne() then
             cms_dispense = true
         end
         
@@ -390,7 +390,7 @@ function SetCommand(command, value)
         cm_bank2_show = cm_bank2_show % 100
 
     elseif command == Keys.JATOFiringButton then
-        if cm_enabled and get_elec_mon_dc_ok() then
+        if cm_enabled and get_elec_mon_dc_ok() and get_elec_retraction_release_airborne() then
             if cms_dispense then
                 release_countermeasure()
             else
