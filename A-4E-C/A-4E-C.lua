@@ -1149,7 +1149,7 @@ A_4E_C =  {
         ["FUSELAGE_RIGHT_SIDE"]     = {critical_damage = 3}, --10
         ["FUSELAGE_TOP"]            = {critical_damage = 3}, -- 99 avionics hump?
         ["FUSELAGE_BOTTOM"]         = {critical_damage = 4}, --82
-        ["ENGINE"]                  = {args = {42}, critical_damage = 2},-- 11
+        ["ENGINE"]                  = {critical_damage = 2},-- 11
 
         ["MTG_L"]                   = {critical_damage = 3}, -- 17 left engine nacelle
         ["MTG_R"]                   = {critical_damage = 3}, -- 18 right engine nacelle
