@@ -1157,14 +1157,14 @@ A_4E_C =  {
         ["AIR_BRAKE_L"]             = {args = {610}, critical_damage = 1}, -- 19
         ["AIR_BRAKE_R"]             = {args = {611}, critical_damage = 1}, -- 20
 
-        ["WING_L_IN"]               = {args = {608}, critical_damage = 2, deps_cells = {"WING_L_OUT", "FLAP_L", "FLAP_L_CENTER", "AILERON_L"}}, -- 35
+        ["WING_L_IN"]               = {args = {608}, critical_damage = 2, deps_cells = {"WING_L_OUT", "FLAP_L", "AILERON_L"}}, -- 35
         ["WING_L_OUT"]              = {args = {612}, critical_damage = 2}, -- 23
         ["FLAP_L"]                  = {args = {606}, critical_damage = 2}, -- 37
         -- ["FLAP_L_CENTER"]           = {critical_damage = 2}, -- 101 spoilers?
         ["AILERON_L"]               = {args = {601}, critical_damage = 1}, --25
         ["WHEEL_L"]                 = {critical_damage = 3}, -- 84
 
-        ["WING_R_IN"]               = {args = {609}, critical_damage = 2, deps_cells = {"WING_R_OUT", "FLAP_R", "FLAP_R_CENTER", "AILERON_R"}}, -- 36
+        ["WING_R_IN"]               = {args = {609}, critical_damage = 2, deps_cells = {"WING_R_OUT", "FLAP_R", "AILERON_R"}}, -- 36
         ["WING_R_OUT"]              = {args = {613}, critical_damage = 2}, --24
         ["FLAP_R"]                  = {args = {607}, critical_damage = 2}, -- 38
         -- ["FLAP_R_CENTER"]           = {critical_damage = 2}, -- 102 spoilers?
