@@ -339,18 +339,21 @@ A_4E_C =  {
     {
         {
             file       = 'A-4E';
-            life       = 8; -- lifebar
+            life       = 18; -- lifebar
             vis        = 3;  -- visibility gain.
-            desrt    = 'Alphajet-destr'; -- Name of destroyed object file name Alphajet-destr. This is a placeholder.
+            desrt    = 'Fighter-2-crush'; -- Name of destroyed object file name Alphajet-destr. This is a placeholder.
             fire       = {300, 3}; -- Fire on the ground after destoyed: 300sec 2m
             username = 'A-4E-C';
             index    =  WSTYPE_PLACEHOLDER;
+            classname   = "lLandPlane";
+			positioning = "BYNORMAL";
         },
-        {
-            name  = "Alphajet-destr";
-            file  = "Alphajet-destr";
-            fire  = {240, 2};  -- 240  2
-        },
+        -- no need for this as we are using a built in destroyed model
+        -- {
+        --     name  = "Alphajet-destr";
+        --     file  = "Alphajet-destr";
+        --     fire  = {240, 2};  -- 240  2
+        -- },
 
     },
     -------------------------
@@ -389,9 +392,9 @@ A_4E_C =  {
 
     },
 	-------------------------
-    mapclasskey         = "P0091000024",
-    attribute              = {wsType_Air, wsType_Airplane, wsType_Fighter, WSTYPE_PLACEHOLDER, "Multirole fighters", "Refuelable" },
-    Categories = {"{78EFB7A2-FD52-4b57-A6A6-3BF0E1D6555F}", "Interceptor",},
+    mapclasskey = "P0091000024",
+    attribute   = {wsType_Air, wsType_Airplane, wsType_Fighter, WSTYPE_PLACEHOLDER, "Multirole fighters", "Refuelable" },
+    Categories  = {"{78EFB7A2-FD52-4b57-A6A6-3BF0E1D6555F}", "Interceptor",},
     -------------------------
     -- Operating Weight includes:  centerline rack, crew, engine oil, trapped fuel and oil, liquid oxygen, avionics pod, ECM, and misc equipment
     -- A-4E:  10,802 lbs operating weight
@@ -496,7 +499,7 @@ A_4E_C =  {
             drop_canopy_name    =    "A-4E_canopy", --23,
             pos =         {3.077,    -0.03,    0}, --changes the position of the cockpit view {3.077,    0.574,    0}
             canopy_pos = {3.077,    0.674,    0},
-			canopy_pos = {2.677,2.677,0},
+			-- canopy_pos = {2.677,2.677,0},
 			--ejection_play_arg = 149,
 			--can_be_playable 	= true,
 			--ejection_through_canopy = true,
@@ -510,13 +513,13 @@ A_4E_C =  {
 ---------------------------------------------------------------------------------------------------------------------------------------------
     fires_pos =
     {
-        [1] =     {-0.232,    0.262,    0}, 	-- Fuselage
-        [2] =     {-2,    -0.5,    1.3}, 		-- wing (inner?) right
-        [3] =     {-2,    -0.5,    -1.3}, 		-- wing (inner?) left
-        [4] =     {-0.82,    0.265,    2.774},  -- Wing center Right? {-0.82,    0.265,    2.774},
-        [5] =     {-0.82,    0.265,    -2.774}, -- Wing center Left?  {-0.82,    0.265,    -2.774},
-        [6] =     {-0.82,    0.255,    4.274},  -- Wing outer Right? {-0.82,    0.255,    4.274},
-        [7] =     {-0.82,    0.255,    -4.274}, -- Wing outer Left?  {-0.82,    0.255,    -4.274},
+        [1] =     {-0.232,    1.262,    0}, 	-- Fuselage
+        [2] =     {-0.2,    -0.5,    0.84}, 		-- wing (inner?) right, WING_R_IN
+        [3] =     {-0.75,    -0.5,    -0.8}, 		-- wing (inner?) left, WING_L_IN
+        [4] =     {-0.32,    0.265,    1.774},  -- Wing center Right? {-0.82,    0.265,    2.774},
+        [5] =     {-0.32,    0.265,    -1.774}, -- Wing center Left?  {-0.82,    0.265,    -2.774},
+        [6] =     {-1.0,    -0.5,    4.0},  -- Wing outer Right? {-0.82,    0.255,    4.274}, probably WING_R_OUT
+        [7] =     {-1.0,    -0.5,    -4.0}, -- Wing outer Left?  {-0.82,    0.255,    -4.274}, probably WING_L_OUT
         [8] =     {-5.6,    0.185,    0},       -- High Altitude Contrails
         [9] =     {-5.5,    0.2,    0},    		-- left engine
         [10] =     {-7.728,    0.039,    0.5},  -- Right Engine? {0.304,    -0.748,    0.442},
@@ -1095,44 +1098,100 @@ A_4E_C =  {
     },
 ---------------------------------------------------------------------------------------------------------------------------------------------
     --damage , index meaning see in  Scripts\Aircrafts\_Common\Damage.lua
-    Damage = {
-                [0] = {critical_damage = 5, args = {82}},  							-- 0 - nose center
-                [3] = {critical_damage = 10, args = {65}}, 							-- 3 - cockpit
-                [8] = {critical_damage = 10}, 			  							-- 8 - front gear
-                [11] = {critical_damage = 3}, 			  							-- 11 - engine in left
-                [12] = {critical_damage = 3}, 			  							-- 12 - engine in right
-                [15] = {critical_damage = 10},			   							-- 15 - gear left
-                [16] = {critical_damage = 10}, 										-- 16 - gear right
-                [17] = {critical_damage = 3}, 										-- 17 - motogondola left (left engine out, left ewu)
-                [18] = {critical_damage = 3}, 										-- 18 - motogondola right (right engine out, right ewu)
-                [25] = {critical_damage = 5, args = {53}}, 							-- 25 - eleron left
-                [26] = {critical_damage = 5, args = {54}}, 							-- 26 - eleron right
-                [35] = {critical_damage = 10, args = {67}, deps_cells = {25, 37}},  -- 35 - wing in left
-                [36] = {critical_damage = 10, args = {68}, deps_cells = {26, 38}},  -- 36 - wing in right
-                [37] = {critical_damage = 4, args = {55}}, 						    -- 37 - flap in left
-                [38] = {critical_damage = 4, args = {56}}, 						    -- 38 - flap in right
-                [43] = {critical_damage = 4, args = {61}, deps_cells = {53}}, 		-- 43 - fin bottom left
-                [44] = {critical_damage = 4, args = {62}, deps_cells = {54}}, 		-- 44 - fin bottom right
-                [47] = {critical_damage = 5, args = {63}, deps_cells = {51}}, 		-- 47 - stabilizer in left
-                [48] = {critical_damage = 5, args = {64}, deps_cells = {52}}, 		-- 48 - stabilizer in right
-                [51] = {critical_damage = 2, args = {59}}, 							-- 51 - elevator in left
-                [52] = {critical_damage = 2, args = {60}}, 							-- 52 - elevator in right
-                [53] = {critical_damage = 2, args = {57}}, 							-- 53 - rudder left
-                [54] = {critical_damage = 2, args = {58}}, 							-- 54 - rudder right
-                [55] = {critical_damage = 5, args = {81}}, 							-- 55 - tail
-                [83]    = {critical_damage = 3, args = {134}}, 						-- nose wheel
-                [84]    = {critical_damage = 3, args = {136}}, 						-- left wheel
-                [85]    = {critical_damage = 3, args = {135}}, 						-- right wheel
-    },
+    -- Damage = {
+    --             [0] = {critical_damage = 5, args = {82}},  							-- 0 - nose center
+    --             [3] = {critical_damage = 10, args = {65}}, 							-- 3 - cockpit
+    --             [8] = {critical_damage = 10}, 			  							-- 8 - front gear
+    --             [11] = {critical_damage = 3}, 			  							-- 11 - engine in left
+    --             [12] = {critical_damage = 3}, 			  							-- 12 - engine in right
+    --             [15] = {critical_damage = 10},			   							-- 15 - gear left
+    --             [16] = {critical_damage = 10}, 										-- 16 - gear right
+    --             [17] = {critical_damage = 3}, 										-- 17 - motogondola left (left engine out, left ewu)
+    --             [18] = {critical_damage = 3}, 										-- 18 - motogondola right (right engine out, right ewu)
+    --             [25] = {critical_damage = 5, args = {53}}, 							-- 25 - eleron left
+    --             [26] = {critical_damage = 5, args = {54}}, 							-- 26 - eleron right
+    --             [35] = {critical_damage = 10, args = {67}, deps_cells = {25, 37}},  -- 35 - wing in left
+    --             [36] = {critical_damage = 10, args = {68}, deps_cells = {26, 38}},  -- 36 - wing in right
+    --             [37] = {critical_damage = 4, args = {55}}, 						    -- 37 - flap in left
+    --             [38] = {critical_damage = 4, args = {56}}, 						    -- 38 - flap in right
+    --             [43] = {critical_damage = 4, args = {61}, deps_cells = {53}}, 		-- 43 - fin bottom left
+    --             [44] = {critical_damage = 4, args = {62}, deps_cells = {54}}, 		-- 44 - fin bottom right
+    --             [47] = {critical_damage = 5, args = {63}, deps_cells = {51}}, 		-- 47 - stabilizer in left
+    --             [48] = {critical_damage = 5, args = {64}, deps_cells = {52}}, 		-- 48 - stabilizer in right
+    --             [51] = {critical_damage = 2, args = {59}}, 							-- 51 - elevator in left
+    --             [52] = {critical_damage = 2, args = {60}}, 							-- 52 - elevator in right
+    --             [53] = {critical_damage = 2, args = {57}}, 							-- 53 - rudder left
+    --             [54] = {critical_damage = 2, args = {58}}, 							-- 54 - rudder right
+    --             [55] = {critical_damage = 5, args = {81}}, 							-- 55 - tail
+    --             [83]    = {critical_damage = 3, args = {134}}, 						-- nose wheel
+    --             [84]    = {critical_damage = 3, args = {136}}, 						-- left wheel
+    --             [85]    = {critical_damage = 3, args = {135}}, 						-- right wheel
+    -- },
+
+    Damage = verbose_to_dmg_properties(
+	{
+        ["NOSE_CENTER"]             = {critical_damage = 3}, -- 0
+        ["NOSE_LEFT_SIDE"]          = {critical_damage = 3}, -- 1
+        ["NOSE_RIGHT_SIDE"]         = {critical_damage = 3}, -- 2
+        ["NOSE_BOTTOM"]             = {critical_damage = 3}, -- 59
+
+        ["COCKPIT"]                 = {args = {38}, critical_damage = 1}, -- 3
+        ["CABIN_LEFT_SIDE"]         = {critical_damage = 3}, -- 4
+        ["CABIN_RIGHT_SIDE"]        = {critical_damage = 3}, -- 5
+        ["CABIN_BOTTOM"]            = {critical_damage = 3}, -- 6
+
+        ["GUN"]                     = {critical_damage = 2}, -- 7 refuelling probe?
+        ["PITOT"]                   = {critical_damage = 2}, -- 60
+
+        ["WHEEL_F"]                 = {critical_damage = 3}, -- 83
+
+        ["FUSELAGE_LEFT_SIDE"]      = {critical_damage = 3}, -- 9
+        ["FUSELAGE_RIGHT_SIDE"]     = {critical_damage = 3}, --10
+        ["FUSELAGE_TOP"]            = {critical_damage = 3}, -- 99 avionics hump?
+        ["FUSELAGE_BOTTOM"]         = {critical_damage = 4}, --82
+        ["ENGINE"]                  = {args = {42}, critical_damage = 2},-- 11
+
+        ["MTG_L"]                   = {critical_damage = 3}, -- 17 left engine nacelle
+        ["MTG_R"]                   = {critical_damage = 3}, -- 18 right engine nacelle
+
+        ["AIR_BRAKE_L"]             = {critical_damage = 1}, -- 19
+        ["AIR_BRAKE_R"]             = {critical_damage = 1}, -- 20
+
+        ["WING_L_IN"]               = {critical_damage = 2, deps_cells = {"WING_L_OUT", "FLAP_L", "FLAP_L_CENTER", "AILERON_L"}}, -- 35
+        ["WING_L_OUT"]              = {critical_damage = 2}, -- 23
+        ["FLAP_L"]                  = {critical_damage = 2}, -- 37
+        ["FLAP_L_CENTER"]           = {critical_damage = 2}, -- 101 spoilers?
+        ["AILERON_L"]               = {critical_damage = 1}, --25
+        ["WHEEL_L"]                 = {critical_damage = 3}, -- 84
+
+        ["WING_R_IN"]               = {critical_damage = 2, deps_cells = {"WING_R_OUT", "FLAP_R", "FLAP_R_CENTER", "AILERON_R"}}, -- 36
+        ["WING_R_OUT"]              = {critical_damage = 2}, --24
+        ["FLAP_R"]                  = {critical_damage = 2}, -- 38
+        ["FLAP_R_CENTER"]           = {critical_damage = 2}, -- 102 spoilers?
+        ["AILERON_R"]               = {critical_damage = 1}, --26
+        ["WHEEL_R"]                 = {critical_damage = 3}, -- 85
+
+        ["TAIL"]                    = {critical_damage = 2, deps_cells = {"RUDDER"}}, -- 55
+        ["TAIL_LEFT_SIDE"]          = {critical_damage = 3}, -- 56
+        ["TAIL_RIGHT_SIDE"]         = {critical_damage = 3}, -- 57
+        ["TAIL_BOTTOM"]             = {critical_damage = 2}, --58
+        ["STABILIZATOR_L"]          = {critical_damage = 2, deps_cells = {"ELEVATOR_L"}}, -- 47
+        ["ELEVATOR_L"]              = {critical_damage = 1}, -- 51
+        ["STABILIZATOR_R"]          = {critical_damage = 2, deps_cells = {"ELEVATOR_R"}}, -- 48
+        ["ELEVATOR_R"]              = {critical_damage = 1}, -- 52
+        ["RUDDER"]                  = {critical_damage = 1}, --53
+
+        ["HOOK"]                    = {critical_damage = 2}, -- 98
+
+    }),
 
 
     DamageParts =
     {
-        [1] = "a4_dmg_wing_right", 	-- Right Wing
-        [2] = "a4_dmg_wing_left", 	-- Left Wing
-        [3] = "a4_dmg_fus_front", 	-- nose
-        [4] = "a4_dmg_fus_back", 	-- tail
-        [5] = "a4_dmg_fus_back", 	-- tail
+        -- [1] = "a4_dmg_wing_right", 	-- Right Wing
+        -- [2] = "a4_dmg_wing_left", 	-- Left Wing
+        -- [3] = "a4_dmg_fus_front", 	-- nose
+        -- [4] = "a4_dmg_fus_back", 	-- tail
     },
 ---------------------------------------------------------------------------------------------------------------------------------------------
     lights_data = {

@@ -266,9 +266,9 @@ end
 
 L_ENGINE	   = 0
 
-Damage = {
-	{Failure = L_ENGINE, Failure_name = 'l_engine', Failure_editor_name = _('L-ENGINE'),  Element = 3, Integrity_Treshold = 0.05, work_time_to_fail_probability = 0.5, work_time_to_fail = 3600*300},
-}
+-- Damage = {
+-- 	{Failure = L_ENGINE, Failure_name = 'l_engine', Failure_editor_name = _('L-ENGINE'),  Element = 3, Integrity_Treshold = 0.05, work_time_to_fail_probability = 0.5, work_time_to_fail = 3600*300},
+-- }
 
 -- this hasn't worked (yet)
 --[[
@@ -276,10 +276,10 @@ From DCS wHumanCustomPhysicsAPI.h:
 // void ed_fm_on_damage(int Element, double element_integrity_factor) callback when damage occurs for airframe element
 typedef void (*PFN_ON_DAMAGE) (int Element, double element_integrity_factor);
 --]]
-function SetDamage(command,val)
-    log.alert("test damage: "..tostring(command))
-    print_message_to_user("test damage: "..tostring(command))
-end
+-- function SetDamage(command,val)
+    -- log.alert("test damage: "..tostring(command))
+    -- print_message_to_user("test damage: "..tostring(command))
+-- end
 
 -- this hasn't worked (yet)
 --[[
@@ -287,10 +287,10 @@ From DCS wHumanCustomPhysicsAPI.h:
 // void ed_fm_on_planned_failure(const char * ) callback when preplaneed failure triggered from mission
 typedef void (*PFN_ON_PLANNED_FAILURE) (const char *);
 --]]
-function SetFailure(command,val)
-    log.alert("test failure: "..tostring(command))
-    print_message_to_user("test failure: "..tostring(command))
-end
+-- function SetFailure(command,val)
+    -- log.alert("test failure: "..tostring(command))
+    -- print_message_to_user("test failure: "..tostring(command))
+-- end
 
 -- these events seem to work correctly
 --dev:listen_event("GroundPowerOn")
@@ -308,15 +308,15 @@ dev:listen_event("Clear")
 dev:listen_event("WeaponRearmComplete")
 dev:listen_event("Repair") -- maybe aircraft needs to be damaged first?
 dev:listen_event("repair") -- maybe aircraft needs to be damaged first?
-dev:listen_event("Damage")
-dev:listen_event("damage")
+-- dev:listen_event("Damage")
+-- dev:listen_event("damage")
 dev:listen_event("l_engine")
 dev:listen_event("Failure")
 dev:listen_event("failure")
 
 function CockpitEvent(command,val)
     -- val seems to mostly be empty table: {}
-    log.alert("CockpitEvent event: "..tostring(command).."="..tostring(val))
+    -- log.alert("CockpitEvent event: "..tostring(command).."="..tostring(val))
     if val then
         local str=dump("event",val)
         local lines=strsplit("\n",str)
@@ -324,7 +324,7 @@ function CockpitEvent(command,val)
             log.alert(v)
         end
     end
-    print_message_to_user("CockpitEvent event: "..tostring(command).."="..tostring(val))
+    -- print_message_to_user("CockpitEvent event: "..tostring(command).."="..tostring(val))
     if val then
         local str=dump("event",val)
         local lines=strsplit("\n",str)
@@ -338,10 +338,10 @@ function SetCommand(command,value)
 	if command == Keys.PlaneModeNAV then
         -- NAV = abused here for debug, for stuff you cannot ordinarily see ;)
         if debug_enable:get()==0 then
-            print_message_to_user("debug enable")
+            -- print_message_to_user("debug enable")
             debug_enable:set(1)
         else
-            print_message_to_user("debug disable")
+            -- print_message_to_user("debug disable")
             debug_enable:set(0)
         end
     elseif command == Keys.PlaneModeBVR then
@@ -584,12 +584,12 @@ function SetCommand(command,value)
     elseif command == Keys.PlaneModeBore then
         log_en = not log_en
         if log_en then
-            print_message_to_user("A-4E data log: ON")
+            -- print_message_to_user("A-4E data log: ON")
         else
-            print_message_to_user("A-4E data log: OFF")
+            -- print_message_to_user("A-4E data log: OFF")
         end
     else
-        print_message_to_user("Unexpected command="..tostring(command)..",val="..tostring(value))
+        -- print_message_to_user("Unexpected command="..tostring(command)..",val="..tostring(value))
     end
 end
 
