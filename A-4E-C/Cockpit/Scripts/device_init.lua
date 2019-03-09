@@ -47,7 +47,7 @@ MainPanel = {"ccMainPanel",LockOn_Options.script_path.."mainpanel_init.lua",
 --						  <{{"NAME_OF_INDICATOR_CLASS", "INDICATOR_SCRIPT_FILE"}, ...}>
 --						 }
 creators    = {}
-creators[devices.TEST]          = {"avLuaDevice"            ,LockOn_Options.script_path.."test_device.lua"}
+-- creators[devices.TEST]          = {"avLuaDevice"            ,LockOn_Options.script_path.."test_device.lua"}
 creators[devices.WEAPON_SYSTEM] = {"avSimpleWeaponSystem"   ,LockOn_Options.script_path.."Systems/weapon_system.lua"}
 creators[devices.AVIONICS]      = {"avLuaDevice"            ,LockOn_Options.script_path.."Systems/avionics.lua"}
 creators[devices.CLOCK]         = {"avLuaDevice"               ,LockOn_Options.script_path.."clock.lua"}
