@@ -284,6 +284,7 @@ keyCommands = {
     {down = iCommandPlaneGear, name = _('Landing Gear Up/Down'), category = _('Systems')},
     {down = iCommandPlaneGearUp, name = _('Landing Gear Up'), category = _('Systems')},
     {down = iCommandPlaneGearDown, name = _('Landing Gear Down'), category = _('Systems')},
+    {down = iCommandPlaneGearUp, up = iCommandPlaneGearDown, name = _('Landing Gear Up/Down (HOTAS)'), category = {_('Systems'), _('HOTAS')}}, -- for Warthog/HOTAS Toggle
     {down = Keys.BrakesOn, up = Keys.BrakesOff, name = _('Wheel Brake On'), category = _('Systems')},
     {down = iCommandPlaneFonar, name = _('Canopy Open/Close'), category = _('Systems')},
     {down = iCommandPlaneParachute, name = _('Dragging Chute'), category = _('Systems')},
