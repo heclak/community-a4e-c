@@ -62,10 +62,10 @@ function SetCommand(command,value)
 
     if command == device_commands.arc51_mode then
         arc51_input = arc51_inputlist[ round((value*10)+1) ]
-        print_message_to_user("mode = "..arc51_input)
+        -- print_message_to_user("mode = "..arc51_input)
     elseif command == device_commands.arc51_xmitmode then
         arc51_xmit_input = arc51_xmitinputlist[ round(value+2) ]
-        print_message_to_user("xmit mode = "..arc51_xmit_input)
+        -- print_message_to_user("xmit mode = "..arc51_xmit_input)
     elseif command == device_commands.arc51_volume then
         if value < 0.2 then
             dev:performClickableAction(device_commands.arc51_volume, 0.2, false)
@@ -98,7 +98,7 @@ function SetCommand(command,value)
 
     --arc51_frequency = round((arc51_freq_XXxxx * 200) + 220 + (arc51_freq_xxXxx*10) + arc51_freq_xxxXX, 2) * 1E6
     if arc51_frequency ~= arc51_freq_last then
-        print_message_to_user("freq = "..arc51_frequency)
+        -- print_message_to_user("freq = "..arc51_frequency)
     end
 
 end

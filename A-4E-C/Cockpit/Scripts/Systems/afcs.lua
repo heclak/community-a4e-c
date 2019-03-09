@@ -520,16 +520,16 @@ function SetCommand(command,value)
     elseif command == Keys.RadarHoldToggle then
         if radarHold < 0 then
             radarHold = sensor_data.getRadarAltitude()
-            print_message_to_user("Radar Alt Hold: Enabled: "..radarHold*meters_to_feet)
+            debug_print_afcs("Radar Alt Hold: Enabled: "..radarHold*meters_to_feet)
         else
             radarHold = -100
-            print_message_to_user("Radar Alt Hold: Disabled")
+            debug_print_afcs("Radar Alt Hold: Disabled")
         end
     elseif command == Keys.RadarHoldInc then
         if radarHold >= 10 then
             radarHold = round(radarHold * meters_to_feet, -1)
             radarHold = radarHold+10
-            print_message_to_user("Radar Alt Hold: "..radarHold)
+            debug_print_afcs("Radar Alt Hold: "..radarHold)
             radarHold = radarHold / meters_to_feet
             altitude_hold_m = radarHold
         end
@@ -537,30 +537,30 @@ function SetCommand(command,value)
         if radarHold > 20 then
             radarHold = round(radarHold * meters_to_feet, -1)
             radarHold = radarHold-10
-            print_message_to_user("Radar Alt Hold: "..radarHold)
+            debug_print_afcs("Radar Alt Hold: "..radarHold)
             radarHold = radarHold / meters_to_feet
             altitude_hold_m = radarHold
         end
     elseif command == Keys.SpeedHoldToggle then
         if speedHold < 0 then
             speedHold = sensor_data.getTrueAirSpeed()
-            print_message_to_user("TAS Hold: Enabled: "..speedHold*MPS_TO_KNOTS)
+            debug_print_afcs("TAS Hold: Enabled: "..speedHold*MPS_TO_KNOTS)
         else
             speedHold = -100
-            print_message_to_user("TAS Hold: Disabled")
+            debug_print_afcs("TAS Hold: Disabled")
         end
     elseif command == Keys.SpeedHoldInc then
         if speedHold >= 0 then
             speedHold = round((speedHold * MPS_TO_KNOTS)/5, 0)
             speedHold = (speedHold*5)+5
-            print_message_to_user("TAS Hold: "..speedHold)
+            debug_print_afcs("TAS Hold: "..speedHold)
             speedHold = speedHold / MPS_TO_KNOTS
         end
     elseif command == Keys.SpeedHoldDec then
         if speedHold >= 100 then
             speedHold = round((speedHold * MPS_TO_KNOTS)/5, 0)
             speedHold = (speedHold*5)-5
-            print_message_to_user("TAS Hold: "..speedHold)
+            debug_print_afcs("TAS Hold: "..speedHold)
             speedHold = speedHold / MPS_TO_KNOTS
         end
     end

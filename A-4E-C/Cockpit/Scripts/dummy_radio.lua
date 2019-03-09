@@ -21,7 +21,7 @@ function post_initialize()
 end
 
 function SetCommand(command,value)
-    print_message_to_user("SetCommand in dummy_radio: "..tostring(command).."="..tostring(value))
+    -- print_message_to_user("SetCommand in dummy_radio: "..tostring(command).."="..tostring(value))
 end
 
 
