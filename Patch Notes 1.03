@@ -19,22 +19,18 @@ New Features:
 - RwR now integrated. Option to have either the AN/APR-23 or AN/APR-25.
 - A-4E can now be launched with the catapault.
 - Reworked AWRS for more accurate system simulation
-- SALVO mode will now correctly only dispense one weapon from each readied station per weapon release pulse from AWRSAWRS QTY SEL will now correctly limit the number of times the weapons are released in the RIPPLE modes. 
-- AWE-1(AWRS) now powered from the monitor dc bus. Master arm switch no longer turns off the AWE-1
-- Weapons will no longer be released from centerline station when in STEP PAIRS or RIPPLE PAIRS
-- Station of equal priority are not required for weapon release in PAIRS modes.
-- CBU bomblets are now released in tubes (CBU-1/A, CBU-2/A, CBU-2/B)
-- Added kneeboard page for CBU config to change the number of tubes of bomblets released per weapon pulse. (CBU-2/A, CBU-2B/A)
-- Added options to set CBU config from the mission planner/editor
-- Tweaked start condition of weapon system when spawning hot
+- Reworked CBUs release code for more accurate simulation
 - New option to change trim speed in aircraft options menu
 - New implementation of the AN/ALE-29A Chaff Dispensing System.
 - New mission planner options for setting options for the AN/ALE-29A programmer
 - New shrike search and lock system added. Behaviour is similar to AIM-9 Sidewinders arming procedure.
 - New volume control for shrike and sidewinder volume (placeholder model)
+- Added carrier catapult launch sounds (cockpit-only)
+- New menu music
+- Completely new collision and damage model. Fixes previous damage issues.
 
 Bug Fixes:
-- Red Light switch no longer stuck.
+- Red floodlight switch no longer stuck.
 - No CTD when spawning on carrier.
 - Fixed canopy visibility in cockpit when open.
 - CBU visibility has been fixed.
@@ -45,6 +41,7 @@ Bug Fixes:
 - Fixed issue where turning a knob with the scroll wheel will cause it to jump back to the beginning when it reaches the end.
 - Tweaked weight of SUU-7 dispenser
 - Fixed anti-collision light switch on exterior lighting panel
+- Fixed TrackIR issues
 
 
 Other Changes:
@@ -53,7 +50,15 @@ Other Changes:
 - Increased Pilot Size to reflect reference imagery.
 - Updated keybinding. Countermeasures release is now known as the JATO firing button. Function is the same.
 
-
+Weapon Systems:
+- SALVO mode will now correctly only dispense one weapon from each readied station per weapon release pulse from AWRSAWRS QTY SEL will now correctly limit the number of times the weapons are released in the RIPPLE modes. 
+- AWE-1(AWRS) now powered from the monitor dc bus. Master arm switch no longer turns off the AWE-1
+- Weapons will no longer be released from centerline station when in STEP PAIRS or RIPPLE PAIRS
+- Station of equal priority are now required for weapon release in PAIRS modes.
+- CBU bomblets are now released in tubes (CBU-1/A, CBU-2/A, CBU-2/B)
+- Added kneeboard page for CBU config to change the number of tubes of bomblets released per weapon pulse. (CBU-2/A, CBU-2B/A)
+- Added options to set CBU config from the mission planner/editor
+- Tweaked start condition of weapon system when spawning hot
 
 Catapult logic reworked:
 	You need to rebind your "Throttle Axis"
@@ -83,7 +88,7 @@ Options/special/A-4E
 	* Speed of trim can be selected: 100%(default) or 50%
 		
 Wheelbrakes as axis
-	* Wheelbreaks can be bound to a single axis (Left/Right brakes might come later)
+	* Wheelbrakes can be bound to a single axis (Left/Right brakes might come later)
 
 
 ECM Panel/RWR
