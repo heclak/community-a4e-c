@@ -1,6 +1,6 @@
 # Community A-4E-C
 The Community Repo for A-4E-C and its Official Submods
-## Version 1.03 Changelog
+## Version 1.3 Changelog
 
 Completed:
  - AWRS rewrite
