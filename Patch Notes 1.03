@@ -16,8 +16,9 @@ New Features:
 - Chocks now hold aircraft in place, selectable via Ground Crew Interface (Tentative). Carrier starts now possible.
 - Added joystick mapping axis for inst light and console light.
 - Lights inside cockpit reworked. Now red.
-- RwR now integrated. Option to have either the AN/APR-23 or AN/APR-25.
-- A-4E can now be launched with the catapault.
+- RwR now integrated. Including sounds.(AN/APR-23)
+- A-4E can now be launched with the catapault. (see the A4E-Community Guide for details)	
+- Carriers can now have TACAN and ILS. (see the A4E-Community Guide for details)
 - Reworked AWRS for more accurate system simulation
 - Reworked CBUs release code for more accurate simulation
 - New option to change trim speed in aircraft options menu
@@ -28,6 +29,10 @@ New Features:
 - Added carrier catapult launch sounds (cockpit-only)
 - New menu music
 - Completely new collision and damage model. Fixes previous damage issues.
+- Wheelbrakes can now be bound to a (single) Axis.
+- Improved ground handling
+- Options/special/A-4E: serveral options have been added like "hide Stick" and "trimspeed"
+	
 
 Bug Fixes:
 - Red floodlight switch no longer stuck.
@@ -60,44 +65,12 @@ Weapon Systems:
 - Added options to set CBU config from the mission planner/editor
 - Tweaked start condition of weapon system when spawning hot
 
-Catapult logic reworked:
-	You need to rebind your "Throttle Axis"
-	There are 3 new keybinds for interacting with the Catapult:
-	Ready Catapult 	> Hooks you in
-	Fire Catapult 	> Fires you off the ship
-	Abort Catapult	> Unhooks you from the Cat
-	
-	Usage:
-		Drive up to the Catapult and use keybind "Ready Catapult".
-		you are now locked in place (no need to hold breaks).
-		Spool up engine to max MIL power.
-		Use keybind "Fire Catapult", to shoot you off the Deck.
-
-	Carrier TACAN:
-		After a takeoff by the Catapult, a carrier TACAN is available on channel 99.
-		Notes:
-			This ONLY works if you took of from the carrier.
-			The carrier can't be stationary, it needs to drive at least 5knots.
-			The carrier must be driving at a constant speed and heading for the entire mission
-		ILS is linked to the Carrier-TACAN	
-		
-Options/special/A-4E
-	
-	* Ability to show/hide Controlstrick (no need to use a keybind at the start of a mission)
-	* later will include the ability to select type of RWR (currently only the very early version of a RWR is in)
-	* Speed of trim can be selected: 100%(default) or 50%
-		
-Wheelbrakes as axis
-	* Wheelbrakes can be bound to a single axis (Left/Right brakes might come later)
 
 
-ECM Panel/RWR
-	* On/off switch for RWR
-	* Volume knobs for SEARCH and LOCK
-	* RWR added: plays different sounds depending on search/lock/launch + Threat warning lamp
+Important:
+You need to rebind your "Throttle Axis" and "Rudder Axis".
+Read the A4E-Community Guide by heclak to avoid issues with the new carrier mechanics.
 	
-Ground Handling
-	* Nosewheel feels less arcady	
-	* Plane is frozen in place on a carrier for a few seconds after spawn, to give you the chance to apply the wheelchocks
+
 		
 
