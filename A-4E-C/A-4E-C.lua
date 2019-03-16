@@ -460,9 +460,9 @@ A_4E_C =  {
     main_gear_pos = {-0.79, -2.46, 1.18}, --{-0.79, -2.42, 1.18},    --  0.79,   -2.35,    1.18
     tand_gear_max = 0.554, -- // tangent on maximum yaw angle of front wheel
 
-    nose_gear_amortizer_direct_stroke    = 0.1, --1.878 - 1.878,  -- down from nose_gear_pos !!!
+    nose_gear_amortizer_direct_stroke    = 0.0, --1.878 - 1.878,  -- down from nose_gear_pos !!!
     nose_gear_amortizer_reversal_stroke  = -0.32, --1.348 - 1.878,  -- up
-    main_gear_amortizer_direct_stroke     = 0.1, --1.592 - 1.592, --  down from main_gear_pos !!!
+    main_gear_amortizer_direct_stroke     = 0.0, --1.592 - 1.592, --  down from main_gear_pos !!!
     main_gear_amortizer_reversal_stroke  = -0.43, --1.192 - 1.592, --  up
 
     nose_gear_amortizer_normal_weight_stroke = -0.18, -- 0.144
