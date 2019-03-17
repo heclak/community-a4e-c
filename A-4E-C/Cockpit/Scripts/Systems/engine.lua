@@ -38,6 +38,7 @@ local ENGINE_IGN = 1
 local ENGINE_STARTING = 2
 local ENGINE_RUNNING = 3
 local engine_state = ENGINE_OFF
+local EMER_FUEL_SHUTOFF = false -- state of emergency fuel shutoff control 
 
 local THROTTLE_OFF = 0
 local THROTTLE_IGN = 1
@@ -102,9 +103,9 @@ function SetCommand(command,value)
 
     if command==device_commands.push_starter_switch then
         if value==1 then
-            if (engine_state==ENGINE_OFF) and rpm<5 and get_elec_external_power() then -- initiate ground start procedure
+            if (engine_state==ENGINE_OFF) and rpm<5 and get_elec_external_power() and EMER_FUEL_SHUTOFF == false then -- initiate ground start procedure
                 dispatch_action(nil,iCommandEnginesStart)
-            elseif (engine_state==ENGINE_OFF) and rpm<50 and rpm>10 and get_elec_primary_ac_ok() and get_elec_primary_dc_ok() and throttle_state==THROTTLE_IGN then -- initiate air start
+            elseif (engine_state==ENGINE_OFF) and rpm<50 and rpm>10 and get_elec_primary_ac_ok() and get_elec_primary_dc_ok() and throttle_state==THROTTLE_IGN  and EMER_FUEL_SHUTOFF == false  then -- initiate air start
                 engine_state = ENGINE_STARTING
                 dispatch_action(nil,iCommandEnginesStart)
             else
@@ -150,6 +151,17 @@ function SetCommand(command,value)
         elseif value==1 and throttle_state==THROTTLE_IGN then
             -- click to ADJUST from IGN
             throttle_state = THROTTLE_ADJUST
+        end
+    elseif command==device_commands.emer_fuel_shutoff then
+        -- if fuel is cut off, shutdown engines and prevent engines from restarting until lever is reset.
+        if value == 1 then 
+            debug_print("engine has been turned off")
+            dispatch_action(nil,iCommandEnginesStop)
+            engine_state = ENGINE_OFF
+            Engine:performClickableAction(device_commands.push_starter_switch,0,false) -- pop up start button
+            EMER_FUEL_SHUTOFF = true
+        else
+            EMER_FUEL_SHUTOFF = false
         end
     else
         print_message_to_user("engine unknown cmd: "..command.."="..tostring(value))
