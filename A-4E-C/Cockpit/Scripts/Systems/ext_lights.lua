@@ -119,7 +119,7 @@ local extlight_taxi = 0
 local extlight_anticoll = 0
 local extlight_fuselage = 0
 local extlight_flashsteady = 0
-local extlight_nav = -1
+local extlight_nav = 0
 local extlight_tail = 0
 
 local extlight_key_allon = 0
