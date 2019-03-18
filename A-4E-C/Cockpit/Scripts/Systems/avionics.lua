@@ -524,12 +524,8 @@ function update_ias_mach()
 end
 
 function update_flaps_indicator()
-    if get_elec_primary_dc_ok() then
-        local value = math.min(get_aircraft_draw_argument_value(9), 0.99)   -- 1.00 is reserved for the "OFF" state
-        flaps_ind:set(value)  -- use right flaps (9) as the input to gauge
-    else
-        flaps_ind:set(1.0)
-    end
+    local value = math.min(get_aircraft_draw_argument_value(9), 0.98)   -- 1.00 is reserved for the "OFF" state
+    flaps_ind:set(value)  -- use right flaps (9) as the input to gauge
 end
 
 local standby_off_value = WMA(0.15, 0)
