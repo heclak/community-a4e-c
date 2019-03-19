@@ -119,7 +119,7 @@ local extlight_taxi = 0
 local extlight_anticoll = 0
 local extlight_fuselage = 0
 local extlight_flashsteady = 0
-local extlight_nav = -1
+local extlight_nav = 0
 local extlight_tail = 0
 
 local extlight_key_allon = 0
@@ -287,12 +287,12 @@ local anticoll_inc = 1
 -- returns linear movement from 0.0 to 1.0 at 85 cycles per minute
 function update_anticoll_value()
     if anticoll_inc == 1 then
-        flashcounter = flashcounter + (update_time_step*(flashperminute/60)*.5)
+        flashcounter = flashcounter + (update_time_step*(flashperminute/60) * 0.5)
     else
-        flashcounter = flashcounter - (update_time_step*(flashperminute/60)*.5)
+        flashcounter = flashcounter - (update_time_step*(flashperminute/60) * 0.5)
     end
 
-    if flashcounter > 1 or flashcounter < 0.5 then
+    if flashcounter > 1 or flashcounter < 0.075 then
         anticoll_inc = 1 - anticoll_inc
     end
 
