@@ -186,6 +186,12 @@ WeaponSystem:listen_command(device_commands.AWRS_quantity)
 WeaponSystem:listen_command(device_commands.AWRS_drop_interval)
 WeaponSystem:listen_command(device_commands.AWRS_multiplier)
 WeaponSystem:listen_command(device_commands.AWRS_stepripple)
+WeaponSystem:listen_command(Keys.AWRSMultiplierToggle)
+WeaponSystem:listen_command(Keys.AWRSQtySelIncrease)
+WeaponSystem:listen_command(Keys.AWRSQtySelDecrease)
+WeaponSystem:listen_command(Keys.AWRSModeSelCCW)
+WeaponSystem:listen_command(Keys.AWRSModeSelCW)
+WeaponSystem:listen_command(device_commands.AWRS_drop_interval_AXIS)
 
 WeaponSystem:listen_command(Keys.ChangeCBU2AQuantity)
 WeaponSystem:listen_command(Keys.ChangeCBU2BAQuantity)
@@ -1076,18 +1082,36 @@ function SetCommand(command,value)
             emer_bomb_release_countdown = 0.25 -- seconds until spring pulls back lever
         end
     elseif command == device_commands.AWRS_quantity then
-        -- debug_print("AWRS Quantity: "..value)
+        debug_print("AWRS Quantity: "..value)
         local func=math.floor(math.ceil(value*100)/5) -- 0 to 11
         func = AWRS_quantity_array[func+1]
         debug_print("quantity:"..tostring(func))
         if AWRS_quantity ~= func then
             AWRS_quantity = func
         end
+
+    elseif command == Keys.AWRSQtySelIncrease then
+        local currentValue = get_cockpit_draw_argument_value(740)
+        if currentValue < 0.53 then
+            WeaponSystem:performClickableAction(device_commands.AWRS_quantity, currentValue + 0.05, false)
+        end
+
+    elseif command == Keys.AWRSQtySelDecrease then
+        local currentValue = get_cockpit_draw_argument_value(740)
+        if currentValue > 0.01 then
+            WeaponSystem:performClickableAction(device_commands.AWRS_quantity, currentValue - 0.05, false)
+        end
+
     elseif command == device_commands.AWRS_drop_interval then
         local interval=math.ceil(((200-20)/0.9)*value+20) -- interval is from 20 to 200
         AWRS_interval = (interval/1000.0)
         weapon_interval = AWRS_multiplier*AWRS_interval
-        --debug_print("interval:"..tostring(weapon_interval))
+        debug_print("interval:"..tostring(weapon_interval))
+        
+    elseif command == device_commands.AWRS_drop_interval_AXIS then
+        local normalisedValue = ( ( value + 1 ) / 2 ) * 0.9 -- normalised {-1 to 1} to {0 - 0.9}
+        WeaponSystem:performClickableAction(device_commands.AWRS_drop_interval, normalisedValue, false)
+
     elseif command == device_commands.AWRS_multiplier then
         if value==1 then
             AWRS_multiplier = 10
@@ -1095,12 +1119,32 @@ function SetCommand(command,value)
             AWRS_multiplier = 1
         end
         weapon_interval = AWRS_multiplier*AWRS_interval
-        debug_print("multiplier:"..tostring(AWRS_multiplier))
+
+    elseif command == Keys.AWRSMultiplierToggle then
+        if AWRS_multiplier == 10 then
+            WeaponSystem:performClickableAction(device_commands.AWRS_multiplier, 0, false)
+        else
+            WeaponSystem:performClickableAction(device_commands.AWRS_multiplier, 1, false)
+        end
+
     elseif command == device_commands.AWRS_stepripple then
         local func=math.floor(math.ceil(value*100)/10) --0 to 5
+        debug_print("mode:"..value)
         debug_print("mode:"..AWRS_mode_debug_text[func+1])
         if AWRS_mode ~= func then
             AWRS_mode = func
+        end
+
+    elseif command == Keys.AWRSModeSelCCW then
+        local currentValue = get_cockpit_draw_argument_value(744)
+        if currentValue > 0 then
+            WeaponSystem:performClickableAction(device_commands.AWRS_stepripple, currentValue - 0.1, false)
+        end
+
+    elseif command == Keys.AWRSModeSelCW then
+        local currentValue = get_cockpit_draw_argument_value(744)
+        if currentValue < 0.5 then
+            WeaponSystem:performClickableAction(device_commands.AWRS_stepripple, currentValue + 0.1, false)
         end
         
     elseif command == Keys.ChangeCBU2AQuantity then

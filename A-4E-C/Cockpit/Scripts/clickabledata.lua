@@ -400,8 +400,8 @@ elements["PNT_724"] = multiposition_switch_limited("BDHI mode",devices.NAV,devic
 
 -- AIRCRAFT WEAPONS RELEASE SYSTEM PANEL #37
 elements["PNT_740"] = multiposition_switch_limited("AWRS quantity selector",devices.WEAPON_SYSTEM, device_commands.AWRS_quantity,740,12,0.05,false,nil,KNOBCLICK_MID_FWD)
-elements["PNT_742"] = default_movable_axis("AWRS drop interval",devices.WEAPON_SYSTEM, device_commands.AWRS_drop_interval,742,0,0.05,false,false)
-elements["PNT_742"].arg_lim = {0,0.9}
+elements["PNT_742"] = default_axis_limited("AWRS drop interval",devices.WEAPON_SYSTEM, device_commands.AWRS_drop_interval,742,0,0.05,false,false, {0, 0.9})
+-- elements["PNT_742"].arg_lim = {0,0.9}
 
 elements["PNT_743"] = default_2_position_tumb("AWRS multiplier",devices.WEAPON_SYSTEM, device_commands.AWRS_multiplier,743,TOGGLECLICK_MID_FWD)
 elements["PNT_744"] = multiposition_switch_limited("AWRS mode",devices.WEAPON_SYSTEM, device_commands.AWRS_stepripple,744,6,0.1,false,nil,KNOBCLICK_MID_FWD)
@@ -470,7 +470,7 @@ elements["PNT_1061"] = default_2_position_tumb("Emergency generator bypass",devi
 elements["PNT_106"] = default_axis_limited( "Instrument Lighting", devices.AVIONICS, device_commands.intlight_instruments, 106, 0.0, 0.3, false, false, {0,1} )
 elements["PNT_107"] = default_axis_limited( "Console Lighting", devices.AVIONICS, device_commands.intlight_console, 107, 0.0, 0.3, false, false, {0,1} )
 elements["PNT_108"] = multiposition_switch_limited("Console Light Intensity", devices.AVIONICS, device_commands.intlight_brightness, 108, 3, 1, true, -1.0, TOGGLECLICK_RIGHT_AFT)
-elements["PNT_110"] = default_axis_limited( "White Floodlight Control", devices.AVIONICS, device_commands.intlight_whiteflood, 110, 0.0, 0.3, false, false, {-1,1} )
+elements["PNT_110"] = default_axis_limited( "White Floodlight Control", devices.AVIONICS, device_commands.intlight_whiteflood, 110, 0.0, 0.3, false, false, {0,1} )
 
 -- AN/ARC-51 UHF RADIO #67
 elements["PNT_361"] = multiposition_switch_limited("ARC-51 UHF Preset Channel", devices.RADIO, device_commands.arc51_freq_preset, 361, 20, 0.05, false, 0.00, KNOBCLICK_RIGHT_MID)

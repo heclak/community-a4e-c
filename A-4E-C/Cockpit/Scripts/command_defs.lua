@@ -273,6 +273,12 @@ Keys =
     ChangeCmsBurstInterval  = __custom_counter(),
     ChangeCmsSalvos         = __custom_counter(),
     ChangeSalvoInterval     = __custom_counter(),
+
+    AWRSMultiplierToggle      = __custom_counter(),
+    AWRSQtySelIncrease      = __custom_counter(),
+    AWRSQtySelDecrease      = __custom_counter(),
+    AWRSModeSelCCW      = __custom_counter(),
+    AWRSModeSelCW      = __custom_counter(),
 	
 }
 
@@ -428,4 +434,9 @@ device_commands =
 	brake_axis_mod 	= __counter(),
 
     shrike_sidewinder_volume    = __counter(),
+
+    AWRS_drop_interval_AXIS     = __counter(),
+    intlight_whiteflood_AXIS = __counter(),
+    intlight_instruments_AXIS = __counter(),
+    intlight_console_AXIS = __counter(),
 }
