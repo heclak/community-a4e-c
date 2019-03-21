@@ -127,6 +127,9 @@ function post_initialize()
 	
 	rwrAAASearch	= sndhost:create_sound("a4e-rwr-ai-loop")							--("a4e-rwr-aaa-lo-loop") 
 	rwrAAALock		= sndhost:create_sound("a4e-rwr-aaa-lo-loop") 
+
+	dev:performClickableAction(device_commands.ecm_msl_alert_axis_inner, 0)
+	dev:performClickableAction(device_commands.ecm_msl_alert_axis_outer, 0)
 	
 
 end
