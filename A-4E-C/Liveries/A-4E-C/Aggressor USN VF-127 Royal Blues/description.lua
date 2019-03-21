@@ -48,4 +48,4 @@ livery = {
 name = "USN VF-127 Royal Blues"
 --name_xx = ""
 --[[ assign the countries ]]
-countries = {"USA"}
+countries = {"USA", "AUSAF"}

@@ -51,4 +51,4 @@ livery =
 name = "USMC TOPGUN MiG-17"
 --name_xx = ""
 --[[ assign the countries ]]
-countries = {"USA"}
+countries = {"USA", "AUSAF"}
