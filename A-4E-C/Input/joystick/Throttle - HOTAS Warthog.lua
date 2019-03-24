@@ -453,6 +453,18 @@ keyCommands = {
     {down = Keys.SpoilersArmOff, name = _('Spoilers ARM-OFF: OFF'), category = _('Systems')},
     {combos = {{key = 'JOY_BTN16'}}, down = Keys.SpoilersArmOn, up = Keys.SpoilersArmOff, name = _('*Spoilers ARM: ON else OFF'), category = 'HOTAS'},
 
+    {down = device_commands.bdhi_mode, value_down = -1, up = device_commands.bdhi_mode, value_up = 0, cockpit_device_id = devices.NAV, name = _('BDHI - TACAN/NAV PAC (HOTAS)'), category = {_('Navigation'), _('HOTAS')}},
+    {down = device_commands.bdhi_mode, value_down = 1, up = device_commands.bdhi_mode, value_up = 0, cockpit_device_id = devices.NAV, name = _('BDHI - TACAN/NAV CMPTR (HOTAS)'), category = {_('Navigation'), _('HOTAS')}},
+    {down = device_commands.bdhi_mode, value_down = 1, cockpit_device_id = devices.NAV, name = _('BDHI - NAV CMPTR'), category = {_('Navigation')}},
+    {down = device_commands.bdhi_mode, value_down = 0, cockpit_device_id = devices.NAV, name = _('BDHI - TACAN'), category = {_('Navigation')}},
+    {down = device_commands.bdhi_mode, value_down = -1, cockpit_device_id = devices.NAV, name = _('BDHI - NAV PAC'), category = {_('Navigation')}},
+
+    {down = device_commands.arm_bomb, value_down = -1, up = device_commands.arm_bomb, value_up = 0, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('BOMB ARM - OFF/TAIL (HOTAS)'), category = {_('Weapons'), _('HOTAS')}},
+    {down = device_commands.arm_bomb, value_down = 1, up = device_commands.arm_bomb, value_up = 0, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('BOMB ARM - OFF/NOSE & TAIL (HOTAS)'), category = {_('Weapons'), _('HOTAS')}},
+    {down = device_commands.arm_bomb, value_down = 1, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('BOMB ARM - NOSE & TAIL'), category = {_('Weapons')}},
+    {down = device_commands.arm_bomb, value_down = 0, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('BOMB ARM - OFF'), category = {_('Weapons')}},
+    {down = device_commands.arm_bomb, value_down = -1, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('BOMB ARM - TAIL'), category = {_('Weapons')}},
+
     {combos = {{key = 'JOY_BTN32'}}, down = Keys.FuelGaugeExt, up = Keys.FuelGaugeInt, name = _('*Fuel Gauge EXT else INT'), category = 'HOTAS'},
 
 
