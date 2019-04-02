@@ -986,49 +986,49 @@ Stopwatch_secs.parameter_name      = "STOPWATCH_SECS"
 
 --------------------ECM panel
 
-ECM_Test_Upper_U		                    = CreateGauge("parameter")
-ECM_Test_Upper_U.arg_number                 = 514
-ECM_Test_Upper_U.input                      = {0.0, 1.0}
-ECM_Test_Upper_U.output                     = {0.0, 1.0}
-ECM_Test_Upper_U.parameter_name             = "ECM_TEST_UPPER_U"
+ECM_TEST		                    = CreateGauge("parameter")
+ECM_TEST.arg_number                 = 514
+ECM_TEST.input                      = {0.0, 1.0}
+ECM_TEST.output                     = {0.0, 1.0}
+ECM_TEST.parameter_name             = "ECM_TEST"
 
-ECM_Test_Upper_LL		                    = CreateGauge("parameter")
-ECM_Test_Upper_LL.arg_number                = 515
-ECM_Test_Upper_LL.input                     = {0.0, 1.0}
-ECM_Test_Upper_LL.output                    = {0.0, 1.0}
-ECM_Test_Upper_LL.parameter_name            = "ECM_TEST_UPPER_LL"
+ECM_GO		                    	= CreateGauge("parameter")
+ECM_GO.arg_number                	= 515
+ECM_GO.input                     	= {0.0, 1.0}
+ECM_GO.output                    	= {0.0, 1.0}
+ECM_GO.parameter_name            	= "ECM_GO"
 
-ECM_Test_Upper_LR		                    = CreateGauge("parameter")
-ECM_Test_Upper_LR.arg_number                 = 516
-ECM_Test_Upper_LR.input                      = {0.0, 1.0}
-ECM_Test_Upper_LR.output                     = {0.0, 1.0}
-ECM_Test_Upper_LR.parameter_name             = "ECM_TEST_UPPER_LR"
+ECM_NO_GO		                    = CreateGauge("parameter")
+ECM_NO_GO.arg_number                = 516
+ECM_NO_GO.input                    	= {0.0, 1.0}
+ECM_NO_GO.output                   	= {0.0, 1.0}
+ECM_NO_GO.parameter_name         	= "ECM_NO_GO"
 
 
 
-ECM_Test_Lower_UL		                    = CreateGauge("parameter")
-ECM_Test_Lower_UL.arg_number                = 517
-ECM_Test_Lower_UL.input                     = {0.0, 1.0}
-ECM_Test_Lower_UL.output                    = {0.0, 1.0}
-ECM_Test_Lower_UL.parameter_name            = "ECM_TEST_LOWER_UL"
+ECM_SAM		                    	= CreateGauge("parameter")
+ECM_SAM.arg_number                	= 517
+ECM_SAM.input                     	= {0.0, 1.0}
+ECM_SAM.output                    	= {0.0, 1.0}
+ECM_SAM.parameter_name            	= "ECM_SAM"
 
-ECM_Test_Lower_UR		                    = CreateGauge("parameter")
-ECM_Test_Lower_UR.arg_number                 = 518
-ECM_Test_Lower_UR.input                      = {0.0, 1.0}
-ECM_Test_Lower_UR.output                     = {0.0, 1.0}
-ECM_Test_Lower_UR.parameter_name             = "ECM_TEST_LOWER_UR"
+ECM_RPT		                    	= CreateGauge("parameter")
+ECM_RPT.arg_number                 	= 518
+ECM_RPT.input                      	= {0.0, 1.0}
+ECM_RPT.output                     	= {0.0, 1.0}
+ECM_RPT.parameter_name             	= "ECM_RPT"
 
-ECM_Test_Lower_LL		                    = CreateGauge("parameter")
-ECM_Test_Lower_LL.arg_number                = 519
-ECM_Test_Lower_LL.input                     = {0.0, 1.0}
-ECM_Test_Lower_LL.output                    = {0.0, 1.0}
-ECM_Test_Lower_LL.parameter_name            = "ECM_TEST_LOWER_LL"
+ECM_STBY		                   	= CreateGauge("parameter")
+ECM_STBY.arg_number                	= 519
+ECM_STBY.input                     	= {0.0, 1.0}
+ECM_STBY.output                    	= {0.0, 1.0}
+ECM_STBY.parameter_name            	= "ECM_STBY"
 
-ECM_Test_Lower_LR		                    = CreateGauge("parameter")
-ECM_Test_Lower_LR.arg_number                 = 500
-ECM_Test_Lower_LR.input                      = {0.0, 1.0}
-ECM_Test_Lower_LR.output                     = {0.0, 1.0}
-ECM_Test_Lower_LR.parameter_name             = "ECM_TEST_LOWER_LR"
+ECM_REC								= CreateGauge("parameter")
+ECM_REC.arg_number					= 500
+ECM_REC.input						= {0.0, 1.0}
+ECM_REC.output						= {0.0, 1.0}
+ECM_REC.parameter_name				= "ECM_REC"
 
 --TEST_PARAM_GAUGE      			  = CreateGauge("parameter")
 --TEST_PARAM_GAUGE.parameter_name   = "TEST"
