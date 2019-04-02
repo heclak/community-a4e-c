@@ -77,12 +77,13 @@ local light_ticker = 0
 local Launch_played=false
 local Lock_played=false
 
+local master_test_param 			= get_param_handle("D_MASTER_TEST")
 --local glare_rwr_light=get_param_handle("D_GLARE_RWR")	-- glare_rwr_light:set(rwr_val)
-local glare_rwr_light=get_param_handle("D_GLARE_OBST")	--glare_obst_light:set(obst_val) --USED ONLY UNTIL PROPPER LIGHT IS IN
+local glare_rwr_light					= get_param_handle("D_GLARE_OBST")	--glare_obst_light:set(obst_val) --USED ONLY UNTIL PROPPER LIGHT IS IN
 
-local glare_rwr_param=get_param_handle("D_GLARE_RWR")
-local rwr_status_light_param=get_param_handle("RWR_STATUS_LIGHT")
-local rwr_status_signal_param=get_param_handle("RWR_STATUS_SIGNAL")
+local glare_rwr_param					= get_param_handle("D_GLARE_RWR")
+local rwr_status_light_param	= get_param_handle("RWR_STATUS_LIGHT")
+local rwr_status_signal_param	= get_param_handle("RWR_STATUS_SIGNAL")
 rwr_status_light_param:set(0)
 rwr_status_signal_param:set(0)
 
@@ -234,12 +235,12 @@ function SetCommand(command,value)
 	-- Upper button on the ECM Panel
 	elseif command == device_commands.ecm_systest_upper then
 		ecm_upper_button = value
-		print_message_to_user("Test Button: "..value)
+		-- print_message_to_user("Test Button: "..value)
 
 		if value == 1  and ALQ_MODE == 2 and ALQ_READY then -- ALQ is in REC mode
 			-- start bit test if test is not running
 			if not BIT_TEST_STATE then
-				print_message_to_user("BIT TEST STARTED")
+				-- print_message_to_user("BIT TEST STARTED")
 				TIMER_BIT_TEST = 0
 				BIT_TEST_STATE = true
 				BIT_TEST_TEST_LIGHT_STATE = true
@@ -401,7 +402,6 @@ function update()
 	end	
 	
 	update_ALQ()
-	-- update_apr27()
 	alq_bit_test()
 end
 
@@ -463,7 +463,16 @@ function update_ALQ()
 
 	-- print_message_to_user("ALQ READY: "..tostring(ALQ_READY))
 
-	if ALQ_MODE == 0 then -- ALQ OFF
+	if master_test_param:get() == 1 then
+		Light.ECM_RPT:set(1)
+		Light.ECM_SAM:set(1)
+		Light.ECM_REC:set(1)
+		Light.ECM_STBY:set(1)
+		Light.ECM_TEST:set(1)
+		Light.ECM_GO:set(1)
+		Light.ECM_NO_GO:set(1)
+
+	elseif ALQ_MODE == 0 then -- ALQ OFF
 		-- reset warmup timer and ready mode
 		TIMER_alq_warmup = 0
 		ALQ_READY = false
@@ -481,6 +490,12 @@ function update_ALQ()
 		-- check if warmup time has passed
 		if ALQ_READY then
 			Light.ECM_STBY:set(0)
+			Light.ECM_SAM:set(0)
+			Light.ECM_REC:set(0)
+			Light.ECM_RPT:set(0)
+			Light.ECM_TEST:set(0)
+			Light.ECM_GO:set(0)
+			Light.ECM_NO_GO:set(0)
 		else
 			Light.ECM_STBY:set(1)
 			Light.ECM_SAM:set(0)
@@ -607,45 +622,7 @@ function alq_warm_up()
 	end
 end
 
-function update_apr27()
 
-	if rwr_apr27_status == 1 and (get_elec_mon_dc_ok()) then
-		
-		
-		if ecm_lower_button == 1 then
-			Light.ECM_RPT:set(1)
-			Light.ECM_SAM:set(1)
-			Light.ECM_REC:set(1)
-			Light.ECM_STBY:set(1)
-		else
-			Light.ECM_RPT:set(0)
-			Light.ECM_SAM:set(0)
-			Light.ECM_REC:set(0)
-		end
-		
-		if ecm_upper_button == 1 then
-			Light.ECM_TEST:set(1)
-			Light.ECM_NO_GO:set(1)
-			Light.ECM_GO:set(1)
-		else
-			Light.ECM_TEST:set(0)
-			Light.ECM_NO_GO:set(0)
-			Light.ECM_GO:set(0)
-		end
-		
-		
-		
-	else
-		Light.ECM_RPT:set(0)
-		Light.ECM_SAM:set(0)
-		Light.ECM_REC:set(0)
-	end
-
-end
-
-
-
--- missing audio tone in bit test
 function alq_bit_test()
 	if ALQ_MODE == 2 and ALQ_READY then
 		-- update test state if test is running
@@ -671,13 +648,13 @@ function alq_bit_test()
 			end
 
 			TIMER_BIT_TEST = TIMER_BIT_TEST + device_timer_dt
-			print_message_to_user(TIMER_BIT_TEST)
+			-- print_message_to_user(TIMER_BIT_TEST)
 		end
 	end
 end
 
 function stop_bit_test()
-	print_message_to_user("BIT TEST STOPPED")
+	-- print_message_to_user("BIT TEST STOPPED")
 	BIT_TEST_STATE = false
 	BIT_TEST_REC_LIGHT_STATE = false
 	BIT_TEST_RPT_LIGHT_STATE = false
