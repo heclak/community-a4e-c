@@ -439,4 +439,10 @@ device_commands =
     intlight_whiteflood_AXIS = __counter(),
     intlight_instruments_AXIS = __counter(),
     intlight_console_AXIS = __counter(),
+    
+    cabin_pressure                  = __counter(),
+    windshield_defrost              = __counter(),
+    cabin_temp                      = __counter(),
+
+    emer_fuel_shutoff               = __counter(),
 }

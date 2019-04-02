@@ -296,7 +296,7 @@ elements["PNT_132"] = multiposition_switch_limited("Flaps Lever", devices.FLAPS,
 -- THROTTLE CONTROL PANEL
 elements["PNT_80"] = default_3_position_tumb("Throttle",devices.ENGINE, device_commands.throttle_click,0,false,true)
 elements["PNT_82"] = default_axis_limited("Rudder trim", devices.TRIM, device_commands.rudder_trim, 82, 0.0, 0.3, false, false, {-1,1})
-
+elements["PNT_130"] = default_2_position_tumb("Emergency Fuel Shutoff Control",devices.ENGINE, device_commands.emer_fuel_shutoff, 130)
 
 --ENGINE CONTROL PANEL
 elements["PNT_100"] = default_2_position_tumb("Starter switch",devices.ENGINE, device_commands.push_starter_switch,100)
@@ -506,7 +506,10 @@ elements["PNT_505"] = default_axis_limited( "MSL volume (outer knob)", devices.R
 
 elements["PNT_502"] = multiposition_switch_limited("ECM selector knob",devices.RWR, device_commands.ecm_selector_knob,502,4,0.33,false,0.0,KNOBCLICK_MID_FWD)
 
-
+-- AIR CONDITIONING PANEL
+elements["PNT_1251"] = default_2_position_tumb("Cabin Pressure Switch", devices.ELECTRIC_SYSTEM, device_commands.cabin_pressure , 224, TOGGLECLICK_LEFT_MID)
+elements["PNT_225"] = default_3_position_tumb("Windshield Defrost", devices.ELECTRIC_SYSTEM, device_commands.windshield_defrost , 225, nil, nil, TOGGLECLICK_MID_FWD)
+elements["PNT_226"] = default_axis_limited("Cabin Temp Knob", devices.ELECTRIC_SYSTEM, device_commands.cabin_temp , 226, 0.0, 0.3, false, false, {0,1} )
 
 for i,o in pairs(elements) do
 	if  o.class[1] == class_type.TUMB or 
