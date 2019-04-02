@@ -194,11 +194,11 @@ keyCommands = {
     {down = iCommandViewObjectsAll, name = _('Objects all excluded - include'), category = _('View Extended')},
 
     -- Padlock
-    --{down = iCommandViewLock, name = _('Lock View (cycle padlock)'), category = _('View Padlock')},
-    --{down = iCommandViewUnlock, name = _('Unlock view (stop padlock)'), category = _('View Padlock')},
-    --{down = iCommandAllMissilePadlock, name = _('All missiles padlock'), category = _('View Padlock')},
-    --{down = iCommandThreatMissilePadlock, name = _('Threat missile padlock'), category = _('View Padlock')},
-    --{down = iCommandViewTerrainLock, name = _('Lock terrain view'), category = _('View Padlock')},
+    {down = iCommandViewLock, name = _('Lock View (cycle padlock)'), category = _('View Padlock')},
+    {down = iCommandViewUnlock, name = _('Unlock view (stop padlock)'), category = _('View Padlock')},
+    {down = iCommandAllMissilePadlock, name = _('All missiles padlock'), category = _('View Padlock')},
+    {down = iCommandThreatMissilePadlock, name = _('Threat missile padlock'), category = _('View Padlock')},
+    {down = iCommandViewTerrainLock, name = _('Lock terrain view'), category = _('View Padlock')},
 
     -- Labels
     {down = iCommandMarkerState, name = _('All Labels'), category = _('Labels')},
@@ -294,15 +294,11 @@ keyCommands = {
     {down = iCommandPlaneEject, name = _('Eject (3 times)'), category = _('Systems')},
     {down = iCommandFlightClockReset, name = _('Flight Clock Start/Stop/Reset'), category = _('Systems')},
     {down = iCommandClockElapsedTimeReset, name = _('Elapsed Time Clock Start/Stop/Reset'), category = _('Systems')},
-    --{down = iCommandEnginesStart, name = _('Engines Start'), category = _('Systems')},
-    --{down = iCommandEnginesStop, name = _('Engines Stop'), category = _('Systems')},
-    --{down = iCommandLeftEngineStart, name = _('Engine Left Start'), category = _('Systems')},
-    --{down = iCommandLeftEngineStop, name = _('Engine Left Stop'), category = _('Systems')},
-    --{down = iCommandRightEngineStart, name = _('Engine Right Start'), category = _('Systems')},
-    --{down = iCommandRightEngineStop, name = _('Engine Right Stop'), category = _('Systems')},
-    {down = iCommandBrightnessILS, name = _('HUD Color'), category = _('Systems')},
-    {pressed = iCommandHUDBrightnessUp, name = _('HUD Brightness up'), category = _('Systems')},
-    {pressed = iCommandHUDBrightnessDown, name = _('HUD Brightness down'), category = _('Systems')},
+    {down = Keys.Engine_Start, name = _('Engines Start'), category = _('Systems')},
+    {down = Keys.Engine_Stop, name = _('Engines Stop'), category = _('Systems')},
+    -- {down = iCommandBrightnessILS, name = _('HUD Color'), category = _('Systems')},
+    -- {pressed = iCommandHUDBrightnessUp, name = _('HUD Brightness up'), category = _('Systems')},
+    -- {pressed = iCommandHUDBrightnessDown, name = _('HUD Brightness down'), category = _('Systems')},
     {down = iCommandPlaneFuelOn, up = iCommandPlaneFuelOff, name = _('Fuel Dump'), category = _('Systems')},
 
     -- Modes
@@ -441,6 +437,12 @@ keyCommands = {
     {down = Keys.GunsReadyToggle, name = _('Armament: Guns READY/SAFE Toggle'), category = _('Weapons')},
     {down = Keys.MasterArmToggle, name = _('Armament: Master Arm Toggle'), category = _('Weapons')},
 
+    {down = Keys.AWRSMultiplierToggle, name = _('AWRS: Toggle multiplier'), category = _('Weapons')},
+    {down = Keys.AWRSQtySelIncrease, name = _('AWRS: Quantity Select Increase'), category = _('Weapons')},
+    {down = Keys.AWRSQtySelDecrease, name = _('AWRS: Quantity Select Decrease'), category = _('Weapons')},
+    {down = Keys.AWRSModeSelCCW, name = _('AWRS: Mode Select CCW'), category = _('Weapons')},
+    {down = Keys.AWRSModeSelCW, name = _('AWRS: Mode Select CW'), category = _('Weapons')},
+
     {down = Keys.GunpodCharge, name = _('GunPods: OFF/CHARGE/CLEAR Toggle'), category = _('Weapons')},
     {down = Keys.GunpodLeft, name = _('GunPods: Left Enable/Disable'), category = _('Weapons')},
     {down = Keys.GunpodCenter, name = _('GunPods: Center Enable/Disable'), category = _('Weapons')},
@@ -451,12 +453,20 @@ keyCommands = {
     {down = Keys.SpoilersArmOff, name = _('Spoilers ARM-OFF: OFF'), category = _('Systems')},
     {combos = {{key = 'JOY_BTN16'}}, down = Keys.SpoilersArmOn, up = Keys.SpoilersArmOff, name = _('*Spoilers ARM: ON else OFF'), category = 'HOTAS'},
 
+    {down = device_commands.bdhi_mode, value_down = -1, up = device_commands.bdhi_mode, value_up = 0, cockpit_device_id = devices.NAV, name = _('BDHI - TACAN/NAV PAC (HOTAS)'), category = {_('Navigation'), _('HOTAS')}},
+    {down = device_commands.bdhi_mode, value_down = 1, up = device_commands.bdhi_mode, value_up = 0, cockpit_device_id = devices.NAV, name = _('BDHI - TACAN/NAV CMPTR (HOTAS)'), category = {_('Navigation'), _('HOTAS')}},
+    {down = device_commands.bdhi_mode, value_down = 1, cockpit_device_id = devices.NAV, name = _('BDHI - NAV CMPTR'), category = {_('Navigation')}},
+    {down = device_commands.bdhi_mode, value_down = 0, cockpit_device_id = devices.NAV, name = _('BDHI - TACAN'), category = {_('Navigation')}},
+    {down = device_commands.bdhi_mode, value_down = -1, cockpit_device_id = devices.NAV, name = _('BDHI - NAV PAC'), category = {_('Navigation')}},
+
+    {down = device_commands.arm_bomb, value_down = -1, up = device_commands.arm_bomb, value_up = 0, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('BOMB ARM - OFF/TAIL (HOTAS)'), category = {_('Weapons'), _('HOTAS')}},
+    {down = device_commands.arm_bomb, value_down = 1, up = device_commands.arm_bomb, value_up = 0, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('BOMB ARM - OFF/NOSE & TAIL (HOTAS)'), category = {_('Weapons'), _('HOTAS')}},
+    {down = device_commands.arm_bomb, value_down = 1, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('BOMB ARM - NOSE & TAIL'), category = {_('Weapons')}},
+    {down = device_commands.arm_bomb, value_down = 0, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('BOMB ARM - OFF'), category = {_('Weapons')}},
+    {down = device_commands.arm_bomb, value_down = -1, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('BOMB ARM - TAIL'), category = {_('Weapons')}},
+
     {combos = {{key = 'JOY_BTN32'}}, down = Keys.FuelGaugeExt, up = Keys.FuelGaugeInt, name = _('*Fuel Gauge EXT else INT'), category = 'HOTAS'},
 
-    {down = Keys.GunpodCharge, name = _('GunPods: OFF/CHARGE/CLEAR Toggle'), category = _('Weapons')},
-    {down = Keys.GunpodLeft, name = _('GunPods: Left Enable/Disable'), category = _('Weapons')},
-    {down = Keys.GunpodCenter, name = _('GunPods: Center Enable/Disable'), category = _('Weapons')},
-    {down = Keys.GunpodRight, name = _('GunPods: Right Enable/Disable'), category = _('Weapons')},
 
     -- APG-53A Radar
     {down = Keys.RadarModeOFF, name = _('Radar Mode: OFF'), category = _('Radar')},
@@ -555,6 +565,19 @@ keyCommands = {
     {combos = {{key = 'JOY_BTN28'}}, down = Keys.AFCSHotasMode, value_down = -1, up = Keys.AFCSHotasMode, value_up = 0, name = _('*AFCS Altitude Mode else Altitude+Heading (HOTAS)'), category = 'Autopilot'},
     {combos = {{key = 'JOY_BTN26'}}, down = Keys.AFCSHotasEngage, name = _('*AFCS Engage (HOTAS)'), category = 'Autopilot'},
 
+    -- APC
+    {down = Keys.APCEngageStbyOff, value_down = -1, name = _('APC: POWER - OFF'), category = _('APC Control Panel')},
+    {down = Keys.APCEngageStbyOff, value_down = 0, name = _('APC: POWER - STBY'), category = _('APC Control Panel')},
+    {down = Keys.APCEngageStbyOff, value_down = 1, name = _('APC: POWER - ENGAGE'), category = _('APC Control Panel')},
+    {down = Keys.APCHotStdCold, value_down = -1, name = _('APC: TEMP - COLD'), category = _('APC Control Panel')},
+    {down = Keys.APCHotStdCold, value_down = 0, name = _('APC: TEMP - STD'), category = _('APC Control Panel')},
+    {down = Keys.APCHotStdCold, value_down = 1, name = _('APC: TEMP - HOT'), category = _('APC Control Panel')},
+
+    {down = Keys.APCEngageStbyOff, value_down = -1, up = Keys.APCEngageStbyOff, value_up = 0, name = _('APC: POWER - STBY/OFF (HOTAS)'), category = {_('APC Control Panel'), _('HOTAS')}},
+    {down = Keys.APCEngageStbyOff, value_down = 1, up = Keys.APCEngageStbyOff, value_up = 0, name = _('APC: POWER - STBY/ENGAGE (HOTAS)'), category = {_('APC Control Panel'), _('HOTAS')}},
+
+    {down = Keys.APCHotStdCold, value_down = -1, up = Keys.APCHotStdCold, value_up = 0, name = _('APC: TEMP - STD/COLD (HOTAS)'), category = {_('APC Control Panel'), _('HOTAS')}},
+    {down = Keys.APCHotStdCold, value_down = 1, up = Keys.APCHotStdCold, value_up = 0, name = _('APC: TEMP - STD/HOT (HOTAS)'), category = {_('APC Control Panel'), _('HOTAS')}},
 
         -- PID tuning
     {down = Keys.Tune1, value_down = 0.1, name = _('Tune1: +0.1'), category = _('Debug')},
@@ -586,8 +609,11 @@ axisCommands = {
 
     {action = device_commands.radar_angle_axis, cockpit_device_id = devices.RADAR, name = _('Radar Angle Slew')},
     {action = device_commands.radar_angle_axis_abs, cockpit_device_id = devices.RADAR, name = _('Radar Angle Absolute')},
-    {action = device_commands.intlight_instruments, cockpit_device_id = devices.AVIONICS, name = _('Instrument Lighting')},
-    {action = device_commands.intlight_console, cockpit_device_id = devices.AVIONICS, name = _('Console Lighting')},
+    {action = device_commands.intlight_instruments_AXIS, cockpit_device_id = devices.AVIONICS, name = _('Lighting: Instrument')},
+    {action = device_commands.intlight_console_AXIS, cockpit_device_id = devices.AVIONICS, name = _('Lighting: Console')},
+    {action = device_commands.intlight_whiteflood_AXIS, cockpit_device_id = devices.AVIONICS, name = _('Lighting: White Flood')},
+
+    {action = device_commands.AWRS_drop_interval_AXIS, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('AWRS: Drop Interval')},
 
     -- from base_joystick_binding.lua...
 

@@ -362,8 +362,20 @@ function SetCommand(command,value)
 
     elseif command == device_commands.intlight_instruments then
         lights_instruments_val = value
+
+    elseif command == device_commands.intlight_instruments_AXIS then
+        -- print_message_to_user("Test value: "..value)
+        local normalisedValue = ( ( value + 1 ) / 2 ) * 1.0 -- normalised {-1 to 1} to {0 - 1.0}
+        dev:performClickableAction(device_commands.intlight_instruments, normalisedValue, false)
+
     elseif command == device_commands.intlight_console then
         lights_console_val = value
+
+    elseif command == device_commands.intlight_console_AXIS then
+        -- print_message_to_user("Test value: "..value)
+        local normalisedValue = ( ( value + 1 ) / 2 ) * 1.0 -- normalised {-1 to 1} to {0 - 1.0}
+        dev:performClickableAction(device_commands.intlight_console, normalisedValue, false)
+        
     elseif command == device_commands.intlight_brightness then
         local x = value
         if x == 1.0 then
@@ -375,14 +387,13 @@ function SetCommand(command,value)
         end
     elseif command == device_commands.intlight_whiteflood then
         local whiteflood = value
-        if whiteflood < -0.5 or whiteflood > 1 then
-            dev:performClickableAction(device_commands.intlight_whiteflood, 1, false)  -- bound check to fix wrap
-        elseif whiteflood < 0 and whiteflood > -0.5 then
-            dev:performClickableAction(device_commands.intlight_whiteflood, 0, false)  -- bounds check to fix wrap
-        else
-            lights_floodwhite_val = whiteflood
-            --print_message_to_user("flood value: "..value)
-        end
+        lights_floodwhite_val = whiteflood
+        -- print_message_to_user("flood value: "..value)
+        
+    elseif command == device_commands.intlight_whiteflood_AXIS then
+        local normalisedValue = ( ( value + 1 ) / 2 ) * 1.0 -- normalised {-1 to 1} to {0 - 1.0}
+        dev:performClickableAction(device_commands.intlight_whiteflood, normalisedValue, false)
+
     elseif command == Keys.IntLightWhiteFlood then
         local whiteflood = whiteflood_val + value
         if whiteflood > 1 then
@@ -391,6 +402,7 @@ function SetCommand(command,value)
             whiteflood = 0
         end
         dev:performClickableAction(device_commands.intlight_whiteflood, whiteflood, false)  -- pass through to clickable device
+
     elseif command == Keys.AccelReset then
         dev:performClickableAction(device_commands.accel_reset, 1, false)
     elseif command == device_commands.accel_reset then

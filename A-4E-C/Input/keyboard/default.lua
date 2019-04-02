@@ -193,11 +193,11 @@ keyCommands = {
     {combos = {{key = 'Insert', reformers = {'LAlt'}}}, down = iCommandViewObjectsAll, name = _('Objects all excluded - include'), category = _('View Extended')},
 
     -- Padlock
-    --{combos = {{key = 'Num.'}}, down = iCommandViewLock, name = _('Lock View (cycle padlock)'), category = _('View Padlock')},
-    --{combos = {{key = 'NumLock'}}, down = iCommandViewUnlock, name = _('Unlock view (stop padlock)'), category = _('View Padlock')},
-    --{combos = {{key = 'Num.', reformers = {'RShift'}}}, down = iCommandAllMissilePadlock, name = _('All missiles padlock'), category = _('View Padlock')},
-    --{combos = {{key = 'Num.', reformers = {'RAlt'}}}, down = iCommandThreatMissilePadlock, name = _('Threat missile padlock'), category = _('View Padlock')},
-    --{combos = {{key = 'Num.', reformers = {'RCtrl'}}}, down = iCommandViewTerrainLock, name = _('Lock terrain view'), category = _('View Padlock')},
+    {combos = {{key = 'Num.'}}, down = iCommandViewLock, name = _('Lock View (cycle padlock)'), category = _('View Padlock')},
+    {combos = {{key = 'NumLock'}}, down = iCommandViewUnlock, name = _('Unlock view (stop padlock)'), category = _('View Padlock')},
+    {combos = {{key = 'Num.', reformers = {'RShift'}}}, down = iCommandAllMissilePadlock, name = _('All missiles padlock'), category = _('View Padlock')},
+    {combos = {{key = 'Num.', reformers = {'RAlt'}}}, down = iCommandThreatMissilePadlock, name = _('Threat missile padlock'), category = _('View Padlock')},
+    {combos = {{key = 'Num.', reformers = {'RCtrl'}}}, down = iCommandViewTerrainLock, name = _('Lock terrain view'), category = _('View Padlock')},
 
     -- Labels
     {combos = {{key = 'F10', reformers = {'LShift'}}}, down = iCommandMarkerState, name = _('All Labels'), category = _('Labels')},
@@ -300,9 +300,9 @@ keyCommands = {
     --{combos = {{key = 'End', reformers = {'RAlt'}}}, down = iCommandLeftEngineStop, name = _('Engine Left Stop'), category = _('Systems')},
     --{combos = {{key = 'Home', reformers = {'RCtrl'}}}, down = iCommandRightEngineStart, name = _('Engine Right Start'), category = _('Systems')},
     --{combos = {{key = 'End', reformers = {'RCtrl'}}}, down = iCommandRightEngineStop, name = _('Engine Right Stop'), category = _('Systems')},
-    {combos = {{key = 'H', reformers = {'RCtrl'}}}, down = iCommandBrightnessILS, name = _('HUD Color'), category = _('Systems')},
-    {combos = {{key = 'H', reformers = {'RCtrl','RShift'}}}, pressed = iCommandHUDBrightnessUp, name = _('HUD Brightness up'), category = _('Systems')},
-    {combos = {{key = 'H', reformers = {'RShift','RAlt'}}}, pressed = iCommandHUDBrightnessDown, name = _('HUD Brightness down'), category = _('Systems')},
+    -- {combos = {{key = 'H', reformers = {'RCtrl'}}}, down = iCommandBrightnessILS, name = _('HUD Color'), category = _('Systems')},
+    -- {combos = {{key = 'H', reformers = {'RCtrl','RShift'}}}, pressed = iCommandHUDBrightnessUp, name = _('HUD Brightness up'), category = _('Systems')},
+    -- {combos = {{key = 'H', reformers = {'RShift','RAlt'}}}, pressed = iCommandHUDBrightnessDown, name = _('HUD Brightness down'), category = _('Systems')},
     {combos = {{key = 'R'}}, down = iCommandPlaneFuelOn, up = iCommandPlaneFuelOff, name = _('Fuel Dump'), category = _('Systems')},
 
     -- Modes
@@ -318,8 +318,14 @@ keyCommands = {
     {combos = {{key = 'Space', reformers = {'LAlt'}}}, down = Keys.PickleOn,	up = Keys.PickleOff, name = _('Weapon Release'), category = 'Weapons'},
     {combos = {{key = 'D'}}, down = iCommandPlaneChangeWeapon, name = _('Weapon Change'), category = _('Weapons')},
     {combos = {{key = 'C'}}, down = iCommandPlaneModeCannon, name = _('Cannon'), category = _('Weapons')},
-    --{combos = {{key = 'W', reformers = {'LAlt'}}}, down = iCommandPlaneLaunchPermissionOverride, name = _('Launch Permission Override'), category = _('Weapons')},
+    {down = Keys.AWRSMultiplierToggle, name = _('AWRS: Toggle multiplier'), category = _('Weapons')},
+    {down = Keys.AWRSQtySelIncrease, name = _('AWRS: Quantity Select Increase'), category = _('Weapons')},
+    {down = Keys.AWRSQtySelDecrease, name = _('AWRS: Quantity Select Decrease'), category = _('Weapons')},
+    {down = Keys.AWRSModeSelCCW, name = _('AWRS: Mode Select CCW'), category = _('Weapons')},
+    {down = Keys.AWRSModeSelCW, name = _('AWRS: Mode Select CW'), category = _('Weapons')},
+    
 
+    --{combos = {{key = 'W', reformers = {'LAlt'}}}, down = iCommandPlaneLaunchPermissionOverride, name = _('Launch Permission Override'), category = _('Weapons')},
     -- Countermeasures
     --{combos = {{key = 'Q', reformers = {'LShift'}}}, down = iCommandPlaneDropSnar, name = _('Countermeasures Continuously Dispense'), category = _('Countermeasures')},
     {combos = {{key = 'Q'}}, down = Keys.JATOFiringButton, name = _('JATO Firing Button'), category = {_('JATO'), _('Countermeasures')}},
@@ -382,10 +388,10 @@ keyCommands = {
     --{combos = {{key = 'P', reformers = {'RCtrl'}}}, down = iCommandPlanePackWing, name = _('Folding Wings'), category = _('Systems')},
 
     -- Modes
-    {combos = {{key = '1', reformers = {'LShift'}}}, down = iCommandPlaneModeNAV, name = _('(1) Navigation Modes'), category = _('Modes')},
-    {combos = {{key = '2', reformers = {'LShift'}}}, down = iCommandPlaneModeBVR, name = _('(2) Beyond Visual Range Mode'), category = _('Modes')},
-    {combos = {{key = '3', reformers = {'LShift'}}}, down = iCommandPlaneModeVS, name = _('(3) Close Air Combat Vertical Scan Mode'), category = _('Modes')},
-    {combos = {{key = '4', reformers = {'LShift'}}}, down = Keys.PlaneModeBore, name = _('(4) Close Air Combat Bore Mode'), category = _('Modes')},
+    -- {combos = {{key = '1', reformers = {'LShift'}}}, down = iCommandPlaneModeNAV, name = _('(1) Navigation Modes'), category = _('Modes')},
+    -- {combos = {{key = '2', reformers = {'LShift'}}}, down = iCommandPlaneModeBVR, name = _('(2) Beyond Visual Range Mode'), category = _('Modes')},
+    -- {combos = {{key = '3', reformers = {'LShift'}}}, down = iCommandPlaneModeVS, name = _('(3) Close Air Combat Vertical Scan Mode'), category = _('Modes')},
+    -- {combos = {{key = '4', reformers = {'LShift'}}}, down = Keys.PlaneModeBore, name = _('(4) Close Air Combat Bore Mode'), category = _('Modes')},
     --{combos = {{key = '5'}}, down = iCommandPlaneModeHelmet, name = _('(5) Close Air Combat HMD Helmet Mode'), category = _('Modes')},
     --{combos = {{key = '6'}}, down = iCommandPlaneModeFI0, name = _('(6) Longitudinal Missile Aiming Mode'), category = _('Modes')},
     --{combos = {{key = '7', reformers = {'LShift'}}}, down = iCommandPlaneModeGround, name = _('(7) Air-To-Ground Mode'), category = _('Modes')},
@@ -463,6 +469,14 @@ keyCommands = {
 
     {combos = {{key = '-', reformers = {'RCtrl'}}}, down = Keys.RadarAltWarningDown, name = _('Radar Altitude Warning: Lower'), category = _('Systems')},
     {combos = {{key = '=', reformers = {'RCtrl'}}}, down = Keys.RadarAltWarningUp, name = _('Radar Altitude Warning: Raise'), category = _('Systems')},
+
+    {down = device_commands.bdhi_mode, value_down = 1, cockpit_device_id = devices.NAV, name = _('BDHI - NAV CMPTR'), category = _('Navigation')},
+    {down = device_commands.bdhi_mode, value_down = 0, cockpit_device_id = devices.NAV, name = _('BDHI - TACAN'), category = _('Navigation')},
+    {down = device_commands.bdhi_mode, value_down = -1, cockpit_device_id = devices.NAV, name = _('BDHI - NAV PAC'), category = _('Navigation')},
+
+    {down = device_commands.arm_bomb, value_down = 1, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('BOMB ARM - NOSE & TAIL'), category = {_('Weapons')}},
+    {down = device_commands.arm_bomb, value_down = 0, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('BOMB ARM - OFF'), category = {_('Weapons')}},
+    {down = device_commands.arm_bomb, value_down = -1, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('BOMB ARM - TAIL'), category = {_('Weapons')}},
 
     {down = Keys.FuelGaugeExt, name = _('Misc Switches: Fuel Gauge EXT'), category = _('Systems')},
     {down = Keys.FuelGaugeInt, name = _('Misc Switches: Fuel Gauge INT'), category = _('Systems')},
@@ -579,6 +593,14 @@ keyCommands = {
     {down = Keys.AFCSHotasAltHdg, name = _('AFCS Altitude + Heading Modes'), category = 'Autopilot'},
     {down = Keys.AFCSHotasAlt, name = _('AFCS Altitude Mode'), category = 'Autopilot'},
     {down = Keys.AFCSHotasEngage, name = _('AFCS Engage'), category = 'Autopilot'},
+
+    -- APC
+    {down = Keys.APCEngageStbyOff, value_down = -1, name = _('APC: POWER - OFF'), category = _('APC Control Panel')},
+    {down = Keys.APCEngageStbyOff, value_down = 0, name = _('APC: POWER - STBY'), category = _('APC Control Panel')},
+    {down = Keys.APCEngageStbyOff, value_down = 1, name = _('APC: POWER - ENGAGE'), category = _('APC Control Panel')},
+    {down = Keys.APCHotStdCold, value_down = -1, name = _('APC: TEMP - COLD'), category = _('APC Control Panel')},
+    {down = Keys.APCHotStdCold, value_down = 0, name = _('APC: TEMP - STD'), category = _('APC Control Panel')},
+    {down = Keys.APCHotStdCold, value_down = 1, name = _('APC: TEMP - HOT'), category = _('APC Control Panel')},
 
     -- PID tuning
     {down = Keys.Tune1, value_down = 0.1, name = _('Tune1: +0.1'), category = _('Debug')},
