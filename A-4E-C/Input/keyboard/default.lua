@@ -300,9 +300,9 @@ keyCommands = {
     --{combos = {{key = 'End', reformers = {'RAlt'}}}, down = iCommandLeftEngineStop, name = _('Engine Left Stop'), category = _('Systems')},
     --{combos = {{key = 'Home', reformers = {'RCtrl'}}}, down = iCommandRightEngineStart, name = _('Engine Right Start'), category = _('Systems')},
     --{combos = {{key = 'End', reformers = {'RCtrl'}}}, down = iCommandRightEngineStop, name = _('Engine Right Stop'), category = _('Systems')},
-    {combos = {{key = 'H', reformers = {'RCtrl'}}}, down = iCommandBrightnessILS, name = _('HUD Color'), category = _('Systems')},
-    {combos = {{key = 'H', reformers = {'RCtrl','RShift'}}}, pressed = iCommandHUDBrightnessUp, name = _('HUD Brightness up'), category = _('Systems')},
-    {combos = {{key = 'H', reformers = {'RShift','RAlt'}}}, pressed = iCommandHUDBrightnessDown, name = _('HUD Brightness down'), category = _('Systems')},
+    -- {combos = {{key = 'H', reformers = {'RCtrl'}}}, down = iCommandBrightnessILS, name = _('HUD Color'), category = _('Systems')},
+    -- {combos = {{key = 'H', reformers = {'RCtrl','RShift'}}}, pressed = iCommandHUDBrightnessUp, name = _('HUD Brightness up'), category = _('Systems')},
+    -- {combos = {{key = 'H', reformers = {'RShift','RAlt'}}}, pressed = iCommandHUDBrightnessDown, name = _('HUD Brightness down'), category = _('Systems')},
     {combos = {{key = 'R'}}, down = iCommandPlaneFuelOn, up = iCommandPlaneFuelOff, name = _('Fuel Dump'), category = _('Systems')},
 
     -- Modes
@@ -388,10 +388,10 @@ keyCommands = {
     --{combos = {{key = 'P', reformers = {'RCtrl'}}}, down = iCommandPlanePackWing, name = _('Folding Wings'), category = _('Systems')},
 
     -- Modes
-    {combos = {{key = '1', reformers = {'LShift'}}}, down = iCommandPlaneModeNAV, name = _('(1) Navigation Modes'), category = _('Modes')},
-    {combos = {{key = '2', reformers = {'LShift'}}}, down = iCommandPlaneModeBVR, name = _('(2) Beyond Visual Range Mode'), category = _('Modes')},
-    {combos = {{key = '3', reformers = {'LShift'}}}, down = iCommandPlaneModeVS, name = _('(3) Close Air Combat Vertical Scan Mode'), category = _('Modes')},
-    {combos = {{key = '4', reformers = {'LShift'}}}, down = Keys.PlaneModeBore, name = _('(4) Close Air Combat Bore Mode'), category = _('Modes')},
+    -- {combos = {{key = '1', reformers = {'LShift'}}}, down = iCommandPlaneModeNAV, name = _('(1) Navigation Modes'), category = _('Modes')},
+    -- {combos = {{key = '2', reformers = {'LShift'}}}, down = iCommandPlaneModeBVR, name = _('(2) Beyond Visual Range Mode'), category = _('Modes')},
+    -- {combos = {{key = '3', reformers = {'LShift'}}}, down = iCommandPlaneModeVS, name = _('(3) Close Air Combat Vertical Scan Mode'), category = _('Modes')},
+    -- {combos = {{key = '4', reformers = {'LShift'}}}, down = Keys.PlaneModeBore, name = _('(4) Close Air Combat Bore Mode'), category = _('Modes')},
     --{combos = {{key = '5'}}, down = iCommandPlaneModeHelmet, name = _('(5) Close Air Combat HMD Helmet Mode'), category = _('Modes')},
     --{combos = {{key = '6'}}, down = iCommandPlaneModeFI0, name = _('(6) Longitudinal Missile Aiming Mode'), category = _('Modes')},
     --{combos = {{key = '7', reformers = {'LShift'}}}, down = iCommandPlaneModeGround, name = _('(7) Air-To-Ground Mode'), category = _('Modes')},

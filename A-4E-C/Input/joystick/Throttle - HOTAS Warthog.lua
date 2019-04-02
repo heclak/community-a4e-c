@@ -296,9 +296,9 @@ keyCommands = {
     {down = iCommandClockElapsedTimeReset, name = _('Elapsed Time Clock Start/Stop/Reset'), category = _('Systems')},
     {down = Keys.Engine_Start, name = _('Engines Start'), category = _('Systems')},
     {down = Keys.Engine_Stop, name = _('Engines Stop'), category = _('Systems')},
-    {down = iCommandBrightnessILS, name = _('HUD Color'), category = _('Systems')},
-    {pressed = iCommandHUDBrightnessUp, name = _('HUD Brightness up'), category = _('Systems')},
-    {pressed = iCommandHUDBrightnessDown, name = _('HUD Brightness down'), category = _('Systems')},
+    -- {down = iCommandBrightnessILS, name = _('HUD Color'), category = _('Systems')},
+    -- {pressed = iCommandHUDBrightnessUp, name = _('HUD Brightness up'), category = _('Systems')},
+    -- {pressed = iCommandHUDBrightnessDown, name = _('HUD Brightness down'), category = _('Systems')},
     {down = iCommandPlaneFuelOn, up = iCommandPlaneFuelOff, name = _('Fuel Dump'), category = _('Systems')},
 
     -- Modes
