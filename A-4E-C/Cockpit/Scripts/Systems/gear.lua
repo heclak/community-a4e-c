@@ -196,47 +196,52 @@ function update_gear()
         end
     end
 
-    -- make primary nosegear adjustments if needed
-    if GEAR_TARGET ~= GEAR_NOSE_STATE then
-        if GEAR_NOSE_STATE < GEAR_TARGET or GEAR_ERR==1 then
-            GEAR_NOSE_STATE = GEAR_NOSE_STATE + gear_nose_extend_increment
-            if GEAR_ERR == 1 then -- extend more quickly (drop by gravity and ram air pressure)
-                GEAR_NOSE_STATE = GEAR_NOSE_STATE + 2*gear_nose_extend_increment
-            end
-        else
-            if GEAR_ERR == 0 and allowRetract then
-                GEAR_NOSE_STATE = GEAR_NOSE_STATE - gear_nose_retract_increment
-            end
-        end
-    end
+    -- gear movement is dependent on operational utility hydraulics.
+    -- gear will be stuck in transit if hydraulic fails during transit.
+    if get_hyd_utility_ok() or GEAR_ERR == 1 then
 
-    -- make primary main gear adjustments if needed
-    if GEAR_TARGET ~= GEAR_LEFT_STATE or GEAR_TARGET ~= GEAR_RIGHT_STATE then
-        -- left gear moves first, both up and down
-        if GEAR_LEFT_STATE < GEAR_TARGET or GEAR_ERR==1 then
-            -- extending
-            GEAR_LEFT_STATE = GEAR_LEFT_STATE + gear_main_increment
-            if GEAR_ERR == 1 then -- extend more quickly (drop by gravity and ram air pressure)
-                GEAR_LEFT_STATE = GEAR_LEFT_STATE + 2*gear_main_increment
-            end
-        else
-            if GEAR_ERR == 0 and allowRetract then
-                GEAR_LEFT_STATE = GEAR_LEFT_STATE - gear_main_increment
-            end
-        end
-
-        -- right gear lags left gear by LeftSideLead seconds
-        if GEAR_RIGHT_STATE < GEAR_TARGET or GEAR_ERR==1 then
-            if GEAR_LEFT_STATE > LeftSideLead then
-                GEAR_RIGHT_STATE = GEAR_RIGHT_STATE + gear_main_increment
+        -- make primary nosegear adjustments if needed
+        if GEAR_TARGET ~= GEAR_NOSE_STATE then
+            if GEAR_NOSE_STATE < GEAR_TARGET or GEAR_ERR==1 then
+                GEAR_NOSE_STATE = GEAR_NOSE_STATE + gear_nose_extend_increment
                 if GEAR_ERR == 1 then -- extend more quickly (drop by gravity and ram air pressure)
-                    GEAR_RIGHT_STATE = GEAR_RIGHT_STATE + 2*gear_main_increment
+                    GEAR_NOSE_STATE = GEAR_NOSE_STATE + 2*gear_nose_extend_increment
+                end
+            else
+                if GEAR_ERR == 0 and allowRetract then
+                    GEAR_NOSE_STATE = GEAR_NOSE_STATE - gear_nose_retract_increment
                 end
             end
-        else
-            if GEAR_LEFT_STATE < (1-LeftSideLead) then
+        end
+
+        -- make primary main gear adjustments if needed
+        if GEAR_TARGET ~= GEAR_LEFT_STATE or GEAR_TARGET ~= GEAR_RIGHT_STATE then
+            -- left gear moves first, both up and down
+            if GEAR_LEFT_STATE < GEAR_TARGET or GEAR_ERR==1 then
+                -- extending
+                GEAR_LEFT_STATE = GEAR_LEFT_STATE + gear_main_increment
+                if GEAR_ERR == 1 then -- extend more quickly (drop by gravity and ram air pressure)
+                    GEAR_LEFT_STATE = GEAR_LEFT_STATE + 2*gear_main_increment
+                end
+            else
                 if GEAR_ERR == 0 and allowRetract then
-                    GEAR_RIGHT_STATE = GEAR_RIGHT_STATE - gear_main_increment
+                    GEAR_LEFT_STATE = GEAR_LEFT_STATE - gear_main_increment
+                end
+            end
+
+            -- right gear lags left gear by LeftSideLead seconds
+            if GEAR_RIGHT_STATE < GEAR_TARGET or GEAR_ERR==1 then
+                if GEAR_LEFT_STATE > LeftSideLead then
+                    GEAR_RIGHT_STATE = GEAR_RIGHT_STATE + gear_main_increment
+                    if GEAR_ERR == 1 then -- extend more quickly (drop by gravity and ram air pressure)
+                        GEAR_RIGHT_STATE = GEAR_RIGHT_STATE + 2*gear_main_increment
+                    end
+                end
+            else
+                if GEAR_LEFT_STATE < (1-LeftSideLead) then
+                    if GEAR_ERR == 0 and allowRetract then
+                        GEAR_RIGHT_STATE = GEAR_RIGHT_STATE - gear_main_increment
+                    end
                 end
             end
         end
