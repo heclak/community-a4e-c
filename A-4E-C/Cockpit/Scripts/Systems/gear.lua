@@ -306,7 +306,7 @@ function update_gear()
         end
     end
 
-    if ( ((GEAR_NOSE_STATE+GEAR_LEFT_STATE+GEAR_RIGHT_STATE)/3) ~= gear_handle_pos) then
+    if ( ((GEAR_NOSE_STATE+GEAR_LEFT_STATE+GEAR_RIGHT_STATE)/3) ~= gear_handle_pos) and get_elec_primary_ac_ok() then
         gear_light_param:set(1.0)
     else
         gear_light_param:set(0.0)
@@ -363,6 +363,21 @@ landing gear handle.
     have power on emergency generator.
 
 pg 1-30
+A warning light in the wheel-shaped handle of the
+control comes on when the handle is moved to either
+of its two positions. The light remains on until the
+wheels are locked in either the up or down position.
+The position of the wheels is shown on the wheels
+and flaps position indicator on the left console. A
+flasher-type wheels warning light (figures 1-5 and
+1-6) i s installed beneath the upper left side of the
+glareshield adjacent to the LABS light. With the
+wing flap handle at any position other than the UP
+detent and the landing gear up or unsafe, retarding
+the throttle below approximately 92 percent rpm
+causes the WHEELS warning light to flash, informing
+the pilot of a possible unsafe condition.
+
 In the event of utility hydraulic system failure, the
 landing gear may be lowered manually by means of
 the emergency landing gear release T -handle (figures
