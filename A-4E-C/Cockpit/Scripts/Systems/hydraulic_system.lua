@@ -17,6 +17,14 @@ local master_test_param=get_param_handle("D_MASTER_TEST")
 
 local engine_rpm = 0
 
+function SetCommand(command, value)
+    if command == device_commands.man_flt_control_override then
+        if value == 1 then
+            print_message_to_user("Flight Controls Disconnected")
+        end
+    end
+end
+
 function update_hydraulic_state()
     -- only enable hydraulics when engine is running
     -- hydraulic system is powered if engine is turning at IDLE RPM (55%) or greater
@@ -30,7 +38,8 @@ function update_hydraulic_state()
     else
         hyd_flight_control_ok:set(0)
         hyd_utility_ok:set(0)
-        hyd_brakes_ok:set(0)
+        -- brakes are available with hydraulic failure. Need to look into gradual loss of hydraulic pressure.
+        hyd_brakes_ok:set(1)
     end
 
     if get_elec_primary_ac_ok() then
@@ -60,10 +69,6 @@ function post_initialize()
     conthyd_light_param:set(0)
     utilhyd_light_param:set(0)
     startup_print("hydraulic_system: postinit end")
-end
-
-function SetCommand(command,value)
-
 end
 
 startup_print("hydraulic_system: load end")
