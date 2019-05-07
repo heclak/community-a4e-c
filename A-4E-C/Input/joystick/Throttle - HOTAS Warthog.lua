@@ -371,6 +371,7 @@ keyCommands = {
     {down = iCommandPlaneFSQuantityIndicatorSelectorMAIN, name = _('Fuel Quantity Selector'), category = 'Systems'},
     {down = iCommandPlaneFSQuantityIndicatorTest, up = iCommandPlaneFSQuantityIndicatorSelectorINT, name = _('Fuel Quantity Test'), category = 'Systems'},
     {down = iCommandPlaneHook, name = _('Tail Hook Up/Down'), category = 'Systems'},
+    {down = device_commands.fueldump,    up = device_commands.fueldump,   cockpit_device_id = devices.AVIONICS,  value_down = 1.0,   value_up = 0, name = _('Fuel Dump Toggle'), category = _('Systems')},
     --{down = Keys.PlaneHookUp, name = _('Tail Hook Up'), category = 'Systems'},
     --{down = Keys.PlaneHookDown, name = _('Tail Hook Down'), category = 'Systems'},
     --{down = Keys.PlaneHookDown, up = Keys.PlaneHookUp, name = _('Tail Hook Down else Up (HOTAS)'), category = 'HOTAS'},
