@@ -445,5 +445,7 @@ device_commands =
     cabin_temp                      = __counter(),
 
     emer_fuel_shutoff               = __counter(),
-    fueldump = __counter(),
+    fueldump                        = __counter(),
+    man_flt_control_override        = __counter(),
+
 }
