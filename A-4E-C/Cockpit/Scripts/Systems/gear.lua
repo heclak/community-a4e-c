@@ -124,7 +124,7 @@ function SetCommand(command,value)
             if GEAR_ERR==0 then -- necessary to differentiate from gear error?
                 if gear_handle_pos == 1 then  -- gear handle down
                     if not get_hyd_utility_ok() then
-                        print_message_to_user("Emergency gear release")
+                        -- print_message_to_user("Emergency gear release")
                         GEAR_ERR = 1 -- necessary to differentiate from gear error?
                         GEAR_TARGET = 1
                     end
