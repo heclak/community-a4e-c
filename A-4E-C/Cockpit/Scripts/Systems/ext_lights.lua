@@ -13,6 +13,7 @@ end
 local ExtLight_LeftNav_arg = 190
 local ExtLight_RightNav_arg = 191
 local ExtLight_Tail_arg = 192
+local ExtLight_FuelProbe_arg = 193
 local ExtLight_TopCollision_arg = 198
 local ExtLight_BottomCollision_arg = 199
 local ExtLight_Taxi_arg = 208
@@ -183,7 +184,7 @@ function SetCommand(command,value)
         if value == 1 or value == 0 then
             extlight_probe = value
         elseif value == -1 then
-            extlight_probe = 0.5
+            extlight_probe = 0.6
         end
     elseif command == Keys.ExtLightProbe then
         dev:performClickableAction(device_commands.extlight_probe, value, false)
@@ -342,6 +343,7 @@ function update()
         end
 
         set_aircraft_draw_argument_value(ExtLight_Taxi_arg, (gear > 0) and extlight_taxi or 0)
+        set_aircraft_draw_argument_value(ExtLight_FuelProbe_arg, extlight_probe)
 
         if extlight_anticoll == 1 then
             set_aircraft_draw_argument_value(ExtLight_TopCollision_arg, anticoll)
