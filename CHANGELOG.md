@@ -1,10 +1,41 @@
-========================================================
-Please list the changes you've made in this file. Thanks!
-========================================================
+# Changelog
 
-Version 1.3
+Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
+
+## Unreleased
+
+### Added
+
+- New keybindings
+  - Added "clickable cockpit" binding to mouse
+  - Added AWRS keybinds
+  - Added axis for white floodlights
+  - Fixed lighting axis
+  - Added APC keybinds
+  - Added engine start/stop keybinds for joystick
+  - Added View padlock bindings
+  - Added BOMB ARM and BDHI keybinds
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+- Some unused keybindings may be removed. Primarily leftover FC3 keybindings.
+
+### Fixed
+
+- Fixed init code where left wing tip nav light turns invisible when the master light switch is toggled at the start
+- Updated anti-collision rotation angle to 180 degrees
+- Fixed RWR initial volume to match volume position
+- Added aggressor liveries to AUSAF
+- Fixed condition where flaps indicator is invisible when power is not available
+
+## Version 1.3 - 11 March 2019
 
 Contributors:  (Insert your name here!)
+
 - Heclak
 - Nero
 - Merker
@@ -13,11 +44,12 @@ Contributors:  (Insert your name here!)
 - Storm (AIM-9P Fixes)
 
 New Features:
+
 - Chocks now hold aircraft in place, selectable via Ground Crew Interface (Tentative). Carrier starts now possible.
 - Added joystick mapping axis for inst light and console light.
 - Lights inside cockpit reworked. Now red.
 - RwR now integrated. Including sounds.(AN/APR-23)
-- A-4E can now be launched with the catapault. (see the A4E-Community Guide for details)	
+- A-4E can now be launched with the catapault. (see the A4E-Community Guide for details)
 - Carriers can now have TACAN and ILS. (see the A4E-Community Guide for details)
 - Reworked AWRS for more accurate system simulation
 - Reworked CBUs release code for more accurate simulation
@@ -32,9 +64,9 @@ New Features:
 - Wheelbrakes can now be bound to a (single) Axis.
 - Improved ground handling
 - Options/special/A-4E: serveral options have been added like "hide Stick" and "trimspeed"
-	
 
 Bug Fixes:
+
 - Red floodlight switch no longer stuck.
 - No CTD when spawning on carrier.
 - Fixed canopy visibility in cockpit when open.
@@ -47,15 +79,17 @@ Bug Fixes:
 - Tweaked weight of SUU-7 dispenser
 - Fixed anti-collision light switch on exterior lighting panel
 - Fixed TrackIR issues
-
+- Fixed pilot size
 
 Other Changes:
+
 - Console and Instrument Backlighting now controlled by appropriate knobs.
 - AWRS now selects appropriate ripple quantities.
 - Increased Pilot Size to reflect reference imagery.
 - Updated keybinding. Countermeasures release is now known as the JATO firing button. Function is the same.
 
 Weapon Systems:
+
 - SALVO mode will now correctly only dispense one weapon from each readied station per weapon release pulse from AWRSAWRS QTY SEL will now correctly limit the number of times the weapons are released in the RIPPLE modes. 
 - AWE-1(AWRS) now powered from the monitor dc bus. Master arm switch no longer turns off the AWE-1
 - Weapons will no longer be released from centerline station when in STEP PAIRS or RIPPLE PAIRS
@@ -65,12 +99,6 @@ Weapon Systems:
 - Added options to set CBU config from the mission planner/editor
 - Tweaked start condition of weapon system when spawning hot
 
-
-
 Important:
 You need to rebind your "Throttle Axis" and "Rudder Axis".
 Read the A4E-Community Guide by heclak to avoid issues with the new carrier mechanics.
-	
-
-		
-
