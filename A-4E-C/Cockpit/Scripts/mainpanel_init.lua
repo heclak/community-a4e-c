@@ -666,6 +666,12 @@ AFCS_HDG_1s.input                = {0.0, 1.0}
 AFCS_HDG_1s.output               = {0.0, 1.0}
 AFCS_HDG_1s.parameter_name       = "AFCS_HDG_1s"
 
+APG53A_Glow								= CreateGauge("parameter")
+APG53A_Glow.arg_number					= 115
+APG53A_Glow.input						= {0.0, 1.0}
+APG53A_Glow.output						= {0.0, 1.0}
+APG53A_Glow.parameter_name				= "APG53A_GLOW"
+
 
 -- APN-153 Doppler Radar
 
