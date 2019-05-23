@@ -63,6 +63,8 @@ dev:listen_command(Keys.catapult_abort)
 local carrier_posx_param = get_param_handle("CARRIER_POSX")
 local carrier_posz_param = get_param_handle("CARRIER_POSZ")
 
+option_catapultCheck = get_plugin_option_value("A-4E-C","catapultProximityCheck","local")
+
 carrier_posx_param:set(0)
 carrier_posz_param:set(0)
 
@@ -100,7 +102,7 @@ function SetCommand(command,value)
 --	print_message_to_user("carrier: command "..tostring(command).." = "..tostring(value))
 	
 	if command == Keys.catapult_ready then
-		if on_carrier() == true and catapult_status == 0 and wheelchocks_state_param:get() == 0 then
+		if on_carrier() == true and catapult_status == 0 and wheelchocks_state_param:get() == 0 and option_catapultCheck == 1 then
 			
 			update_carrier_pos()
 			compare_carriers()
@@ -122,7 +124,10 @@ function SetCommand(command,value)
 					print_message_to_user("position or alignment wrong\nDistance " ..round(closest_cat,1) .."m (max 2m)\nAngel "..round((angel_to_cat),1) .. "(max 3 degrees)" )
 				end
 			end
-			
+		elseif on_carrier() and option_catapultCheck == 0 then -- need to add checks if on carrier. Should not trigger if on land.
+			catapult_status = 1
+			print_message_to_user("You are hooked in")
+			cat_hook_tics = 0
 		elseif wheelchocks_state_param:get() == 1 then
 			print_message_to_user("Wheel chocks are on!")	
 		elseif catapult_status == 1 then
@@ -309,16 +314,12 @@ function update()
 end
 
 function on_carrier()
-	local on_carrier_bool 
-
 	if  tostring(Sensor_Data_Mod.nose_wow) == "1" and Sensor_Data_Mod.self_alt > 20 and Sensor_Data_Mod.self_alt < 23 and 
-		Terrain.GetSurfaceType(Sensor_Data_Mod.self_m_x,Sensor_Data_Mod.self_m_z) == "sea" then
-		
-		on_carrier_bool = true
+		Terrain.GetSurfaceType(Sensor_Data_Mod.self_m_x,Sensor_Data_Mod.self_m_z) == "sea" then	
+		return true
 	else
-		on_carrier_bool = false
+		return false
 	end
-	return on_carrier_bool
 end
 
 

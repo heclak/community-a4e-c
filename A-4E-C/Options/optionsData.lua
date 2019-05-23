@@ -4,6 +4,7 @@ cdata =
 	RWRTYPE					= _('RWR-Type(WIP-Nonfunctional)'),
 	HIDESTICK				= _('Control Stick'),
 	TRIMSPEEDL				= _('Trimspeed'),
+	CATAPULTCHECK			= _('Catapult Checks'),
 --[[	SARPP_BEHAVIOUR			= _('SARPP MODE'),
     CPDICT                  = _('CUSTOMIZED COCKPIT (C)'),
     CPDICTZA                = _('CUSTOMIZED COCKPIT(ZA)'),

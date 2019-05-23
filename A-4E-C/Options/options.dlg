@@ -163,6 +163,52 @@ dialog = {
 				},				
 --------------------------------
 
+["catapultProximityCheckComboList"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 180,
+							["x"] = 331,
+							["y"] = 210,
+						},
+						["enabled"] = true,
+						["tabOrder"] = 0,
+						["text"] = "Item1",
+						["tooltip"] = "Disable the catapult proximity checks (for advanced users only)",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "comboListSkin_options",
+						},
+					},
+					["type"] = "ComboList",
+				},
+["catapultProximityCheckLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 260,
+							["x"] = 57,
+							["y"] = 210,
+						},
+						["enabled"] = true,
+						["text"] = "$CATAPULTCHECK",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsCaptionSkin",
+						},
+					},
+					["type"] = "Static",
+				},
+
+--------------------------------
+
 --[[		
 				["hideStickCheckbox"] = {
 						["params"] = {

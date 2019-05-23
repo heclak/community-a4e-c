@@ -28,12 +28,15 @@ return {
 																--[[DbOption.Item(_('ON')):Value(2),
 																DbOption.Item(_('DISMOUNTED')):Value(3),]]--
 																}),
-	hideControlStick		= DbOption.new():setValue(0):combo({DbOption.Item(_('show')):Value(0),
-																DbOption.Item(_('hide')):Value(1),																
+	hideControlStick		= DbOption.new():setValue(0):combo({DbOption.Item(_('Show')):Value(0),
+																DbOption.Item(_('Hide')):Value(1),																
 																}),
 	trimSpeed				= DbOption.new():setValue(0):combo({DbOption.Item(_('100% (default)')):Value(0),
 																DbOption.Item(_('50%')):Value(1),																
-																}),																
+																}),
+	catapultProximityCheck	= DbOption.new():setValue(0):combo({DbOption.Item(_('Enable')):Value(1),
+																DbOption.Item(_('Disable')):Value(0),																
+																}),																	
 	--hideControlStick		= DbOption.new():setValue(1):checkbox(),
 --[[
 	sarpp					= DbOption.new():setValue(1):combo({DbOption.Item(_('OFF')):Value(0),
