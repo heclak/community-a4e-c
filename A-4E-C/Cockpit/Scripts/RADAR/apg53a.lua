@@ -24,6 +24,7 @@ local apg53a_bottomrange = get_param_handle("APG53A-BOTTOMRANGE")
 local master_test_param = get_param_handle("D_MASTER_TEST")
 local glare_obst_light=get_param_handle("D_GLARE_OBST")
 local radar_filter_param=get_param_handle("RADAR_FILTER")
+local apg53a_glow_param = get_param_handle("APG53A_GLOW")
 
 -- Variables
 local apg53a_state = "apg53a-off"
@@ -55,6 +56,7 @@ local apg53a_detail = 0.5
 local apg53a_gain = 0.5
 local apg53a_reticle = 0.5
 local apg53a_volume = 0.0
+local radar_filter_position_arg = 405
 
 local theta_inc = 1
 local sweep_theta = 0
@@ -1259,6 +1261,16 @@ function update_apg53a()
             apg53a_scan_a2g(hdg,pitch-math.rad(3))  -- performs range array update[], always uses weapon datum
             apg53a_draw_a2g()
         end
+    end
+
+    -- green glow for radar scope
+    -- refactor code to only set glow to off if state has changed. Consider moving it to state change code?
+    if apg53a_state == "apg53a-off" or apg53a_state == "apg53a-stby" then
+        apg53a_glow_param:set(0)
+    else
+        local jitter = math.random() / 50 -- calculate jitter for radar scope to simulate changing scope image
+        local glow_value = (0.3 + jitter) * apg53a_brilliance * get_cockpit_draw_argument_value(radar_filter_position_arg)
+        apg53a_glow_param:set(glow_value)
     end
 end
 
