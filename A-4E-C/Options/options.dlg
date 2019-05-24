@@ -1,229 +1,260 @@
+-- Layout Variables
+
+local MarginLeft = 56
+local LeftColumnX = MarginLeft
+local LeftColumnWidth = 500
+local LeftColumnLabelWidth = 200
+local LeftColumnComboListX = LeftColumnX + LeftColumnLabelWidth
+
+-- Styles
+
+local HelpSkin = {
+	["params"] = {
+		["name"] = "staticSkin2",
+	},
+	["states"] = {
+		["released"] = {
+			[1] = {
+				["text"] = {
+					["fontSize"] = 11,
+					["horzAlign"] = {
+						["type"] = "min"
+					}
+				}
+			}
+		}
+	}
+}
+
+local CheckBoxSkin = {
+	["params"] = {
+		["name"] = "checkBoxSkin_options",
+	},
+}
+
+-- Content
+
 dialog = {
 	["children"] = {
 		["containerPlugin"] = {
 			["children"] = {
-				
-				["rwrTypeComboList"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = 24,
-							["w"] = 180,
-							["x"] = 331,
-							["y"] = 90,
-						},
-						["enabled"] = true,
-						["tabOrder"] = 0,
-						["text"] = "Item1",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = {
-						["params"] = {
-							["name"] = "comboListSkin_options",
-						},
-					},
-					["type"] = "ComboList",
-				},
-				["rwrTypeLabel"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = 24,
-							["w"] = 260,
-							["x"] = 57,
-							["y"] = 90,
-						},
-						["enabled"] = true,
-						["text"] = "$RWRTYPE",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = {
-						["params"] = {
-							["name"] = "staticOptionsCaptionSkin",
-						},
-					},
-					["type"] = "Static",
-				},
+				--------------------------------------------
+				-- Options Title
+				--------------------------------------------
 
 				["nameLabel"] = {
 					["params"] = {
 						["bounds"] = {
 							["h"] = 18,
 							["w"] = 454,
-							["x"] = 57,
-							["y"] = 41,
+							["x"] = 25,
+							["y"] = 41
 						},
 						["enabled"] = true,
-						["text"] = "$PLANENAME",
+						["text"] = "$A4E_AIRCRAFTNAME",
 						["tooltip"] = "",
 						["visible"] = true,
-						["zindex"] = 0,
+						["zindex"] = 0
 					},
 					["skin"] = {
 						["params"] = {
-							["name"] = "staticOptionsTitleSkin",
-						},
+							["name"] = "staticOptionsTitleSkin"
+						}
 					},
-					["type"] = "Static",
+					["type"] = "Static"
 				},
-				
-				
-				
-				
-				
-["hideControlStickComboList"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = 24,
-							["w"] = 180,
-							["x"] = 331,
-							["y"] = 130,
-						},
-						["enabled"] = true,
-						["tabOrder"] = 0,
-						["text"] = "Item1",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = {
-						["params"] = {
-							["name"] = "comboListSkin_options",
-						},
-					},
-					["type"] = "ComboList",
-				},
-["hideControlStickLabel"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = 24,
-							["w"] = 260,
-							["x"] = 57,
-							["y"] = 130,
-						},
-						["enabled"] = true,
-						["text"] = "$HIDESTICK",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = {
-						["params"] = {
-							["name"] = "staticOptionsCaptionSkin",
-						},
-					},
-					["type"] = "Static",
-				},				
---------------------------------	
 
-["trimSpeedComboList"] = {
+				--------------------------------------------
+				-- Control Stick Option
+				--------------------------------------------
+
+				["hideControlStickCheckbox"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 300,
+							["x"] = LeftColumnX,
+							["y"] = 90,
+						},
+						["enabled"] = true,
+						["state"] = false,
+						["tabOrder"] = 0,
+						["text"] = "$A4E_HIDESTICK_TEXT",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = CheckBoxSkin,
+					["type"] = "CheckBox",
+				},
+
+				--------------------------------------------
+				-- Catapult Check Option
+				--------------------------------------------
+
+				["catapultAlignmentCheckCheckbox"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 300,
+							["x"] = LeftColumnX,
+							["y"] = 130,
+						},
+						["enabled"] = true,
+						["state"] = true,
+						["tabOrder"] = 0,
+						["text"] = "$A4E_CATAPULT_ALIGNMENT_CHECK_TEXT",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = CheckBoxSkin,
+					["type"] = "CheckBox",
+				},
+				["catapultAlignmentCheckHelpLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 500,
+							["x"] = LeftColumnX,
+							["y"] = 130 + 20,
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_CATAPULT_ALIGNMENT_CHECK_HELP",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = HelpSkin,
+					["type"] = "Static",
+				},
+
+				--------------------------------------------
+				-- RWR Options
+				--------------------------------------------
+
+				["rwrTypeLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 260,
+							["x"] = LeftColumnX,
+							["y"] = 190
+						},
+						["enabled"] = true,
+						["text"] = "$RWRTYPE",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsCaptionSkin"
+						}
+					},
+					["type"] = "Static"
+				},
+				["rwrTypeComboList"] = {
 					["params"] = {
 						["bounds"] = {
 							["h"] = 24,
 							["w"] = 180,
-							["x"] = 331,
-							["y"] = 170,
+							["x"] = LeftColumnComboListX,
+							["y"] = 190
 						},
 						["enabled"] = true,
 						["tabOrder"] = 0,
 						["text"] = "Item1",
 						["tooltip"] = "",
 						["visible"] = true,
-						["zindex"] = 0,
+						["zindex"] = 0
 					},
 					["skin"] = {
 						["params"] = {
-							["name"] = "comboListSkin_options",
-						},
+							["name"] = "comboListSkin_options"
+						}
 					},
-					["type"] = "ComboList",
+					["type"] = "ComboList"
 				},
-["trimSpeedLabel"] = {
+				
+
+				--------------------------------------------
+				-- Trimspeed Option
+				--------------------------------------------
+
+				["trimSpeedLabel"] = {
 					["params"] = {
 						["bounds"] = {
 							["h"] = 24,
 							["w"] = 260,
-							["x"] = 57,
-							["y"] = 170,
+							["x"] = LeftColumnX,
+							["y"] = 230
 						},
 						["enabled"] = true,
 						["text"] = "$TRIMSPEEDL",
 						["tooltip"] = "",
 						["visible"] = true,
-						["zindex"] = 0,
+						["zindex"] = 0
 					},
 					["skin"] = {
 						["params"] = {
-							["name"] = "staticOptionsCaptionSkin",
-						},
+							["name"] = "staticOptionsCaptionSkin"
+						}
 					},
-					["type"] = "Static",
-				},				
---------------------------------
-
---[[		
-				["hideStickCheckbox"] = {
+					["type"] = "Static"
+				},
+				["trimSpeedComboList"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 180,
+							["x"] = LeftColumnComboListX,
+							["y"] = 230
+						},
+						["enabled"] = true,
+						["tabOrder"] = 0,
+						["text"] = "Item1",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0
+					},
+					["skin"] = {
 						["params"] = {
-							["bounds"] = {
-								["h"] = 18,
-								["w"] = 300,
-								["x"] = 57,
-								["y"] = 175,
-							},
-							["enabled"] = true,
-							["state"] = false,
-							["tabOrder"] = 0,
-							["text"] = "$HIDESTICK",
-							["tooltip"] = "",
-							["visible"] = true,
-							["zindex"] = 0,
-						},
-						["skin"] = {
-							["params"] = {
-								["name"] = "checkBoxSkin_options",
-							},
-						},
-						["type"] = "CheckBox",
+							["name"] = "comboListSkin_options"
+						}
 					},
-			]]--
-
-			
---------------------------------			
+					["type"] = "ComboList"
+				},
 				
-				
-				
-				
+				--------------------------------
 			},
-
 			["params"] = {
 				["bounds"] = {
 					["h"] = 600,
 					["w"] = 974,
 					["x"] = 0,
-					["y"] = 0,
+					["y"] = 0
 				},
 				["enabled"] = true,
 				["text"] = "",
 				["tooltip"] = "",
 				["visible"] = true,
-				["zindex"] = 2,
+				["zindex"] = 2
 			},
 			["skin"] = {
 				["params"] = {
-					["name"] = "panelSkin",
-				},
+					["name"] = "panelSkin"
+				}
 			},
-			["type"] = "Panel",
-		},
+			["type"] = "Panel"
+		}
 	},
 	["params"] = {
 		["bounds"] = {
 			["h"] = 851,
 			["w"] = 1135,
 			["x"] = 0,
-			["y"] = 0,
+			["y"] = 0
 		},
 		["draggable"] = true,
 		["enabled"] = true,
@@ -233,12 +264,12 @@ dialog = {
 		["offscreen"] = false,
 		["resizable"] = false,
 		["text"] = "New dialog",
-		["zOrder"] = 0,
+		["zOrder"] = 0
 	},
 	["skin"] = {
 		["params"] = {
-			["name"] = "windowSkin",
-		},
+			["name"] = "windowSkin"
+		}
 	},
-	["type"] = "Window",
+	["type"] = "Window"
 }
