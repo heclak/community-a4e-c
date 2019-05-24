@@ -22,15 +22,20 @@ if (initial_canopy>0) then
     CANOPY_COMMAND = 1
 end
 
-local HIDESTICK         =   0   -- 0 = visible, 1 = hidden
-local HideStick = get_param_handle("HIDE_STICK")
+local stick_vis_state         =   0   -- 0 = visible, 1 = hidden
+local stick_vis_param = get_param_handle("HIDE_STICK")
 
 dev:listen_command(Canopy)
 dev:listen_command(Keys.ToggleStick)
 
 
 local optionsData_hidestick =  get_plugin_option_value("A-4E-C","hideControlStick","local")
-HIDESTICK = optionsData_hidestick
+
+if optionsData_hidestick == true then
+    stick_vis_state = 1
+else
+    stick_vis_state = 0
+end
 
 
 --dev:listen_command(CanopyOpenClose) --test
@@ -46,7 +51,7 @@ function SetCommand(command,value)
             CANOPY_COMMAND = 1-CANOPY_COMMAND --toggle
         end
     elseif command == Keys.ToggleStick then
-        HIDESTICK = 1 - HIDESTICK
+        stick_vis_state = 1 - stick_vis_state
 	end
 end
 
@@ -73,7 +78,7 @@ function update()
     end
 	
 	
-    HideStick:set(HIDESTICK)
+    stick_vis_param:set(stick_vis_state)
 end
 
 need_to_be_closed = false -- close lua state after initialization
