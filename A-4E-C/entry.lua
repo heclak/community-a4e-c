@@ -24,7 +24,7 @@ Skins	=
 	{
 		{
 			name	= _("A-4E-C"),
-			dir		= "Theme"
+			dir		= "Skins/1"
 		},
 	},
 Missions =
@@ -60,6 +60,7 @@ Options =
 
 -- mounting 3d model paths and texture paths
 
+mount_vfs_texture_path	(current_mod_path.."/Skins/1/ME")	-- for simulator loading window
 mount_vfs_model_path    (current_mod_path.."/Shapes")
 mount_vfs_model_path    (current_mod_path.."/Cockpit/Shapes")
 mount_vfs_liveries_path (current_mod_path.."/Liveries")
