@@ -18,7 +18,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 
 ### Added
 
-- Added new quick start (instant action) missions (4 in Caucasus, 4 in Persian Gulf). Feedback is welcomed. Please check functionality of carrier missions.
+- Added new quick start (instant action) missions (4 in Caucasus, 4 in Persian Gulf).
 - New keybindings
   - Added "clickable cockpit" binding to mouse
   - Added AWRS keybinds

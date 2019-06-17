@@ -39,6 +39,8 @@ SkateZilla, uboats, The Original HoggitDev Team
 - Fixed TrackIR issues
 - New menu music by Eric Haugen [http://erichaugen.bandcamp.com](http://erichaugen.bandcamp.com)
 
+[See full changelog](CHANGELOG.md)
+
 ### Known Bugs
 
 #### Dispensing high volumes of bomblets (40+) from SUU-7/CBU-1/CBU-2 causes serious performance dip and/or crashes to desktop
