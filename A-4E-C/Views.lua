@@ -3,15 +3,14 @@ ViewSettings = {
 	Cockpit = {
 
 	[1] = {-- player slot 1
-		--CockpitLocalPoint      = {-1.6,1.1,0.000000},
 		CameraViewAngleLimits  = {30,120}, -- FOV Mini Maxi
+		CockpitLocalPoint      = {3.065, 0.585, 0.000000},
 		CameraAngleRestriction = {false,90,0.4},
 		CameraAngleLimits      = {200,-90,90}, -- max wiew right/left, max view down, max view up
-		limits_6DOF            = {x = {-0.05,0.30},y = {-0.3,0.1},z = {-0.17,0.17},roll = 90.000000}, -- movement back,front bottom,top right,left
-		--EyePoint               = {0.1000000,0.000000,0.000000},
+		EyePoint               = {0.0000000,0.000000,0.000000},
 		ShoulderSize 		   = 0.25,
 		Allow360rotation		= false,
-																						
+		limits_6DOF            = {x = {-0.05,0.30},y = {-0.3,0.1},z = {-0.17,0.17},roll = 90.000000}, -- movement back,front bottom,top right,left																
 	},	
 
 	}, -- Cockpit 
