@@ -13,7 +13,6 @@ draw_pilot					 = false
 external_model_canopy_arg	 = 38
 
 use_external_views = false
-cockpit_local_point = {3.1, 0.63, 0.0} --{3.2, 0.16, 0.0}
 
 day_texture_set_value   = 0.0
 night_texture_set_value = 0.1

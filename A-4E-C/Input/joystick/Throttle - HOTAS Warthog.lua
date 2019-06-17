@@ -418,7 +418,6 @@ keyCommands = {
     {down = iCommandPlaneThreatWarnSoundVolumeUp, name = _('RWR/SPO Sound Signals Volume Up'), category = 'Sensors'},
 
     -- Weapons                                                                        
-    {down = iCommandPlaneSalvoOnOff, name = _('Salvo Mode'), category = 'Weapons'},
     {down = Keys.PickleOn,	up = Keys.PickleOff, name = _('Weapon Release'), category = 'Weapons'},
     --{down = iCommandChangeGunRateOfFire, name = _('Cannon Rate Of Fire / Cut Of Burst select'), category = 'Weapons'},
 
@@ -432,17 +431,24 @@ keyCommands = {
     {down = Keys.Station4, name = _('Armament: Station 4 Enable/Disable'), category = _('Weapons')},
     {down = Keys.Station5, name = _('Armament: Station 5 Enable/Disable'), category = _('Weapons')},
 
+    {down = device_commands.arm_func_selector,  cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.0,  name = _('Function Selector: OFF'),             category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
+    {down = device_commands.arm_func_selector,  cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.1,  name = _('Function Selector: ROCKETS'),         category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
+    {down = device_commands.arm_func_selector,  cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.2,  name = _('Function Selector: GM UNARM'),        category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
+    {down = device_commands.arm_func_selector,  cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.3,  name = _('Function Selector: SPRAY TANK'),      category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
+    {down = device_commands.arm_func_selector,  cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.4,  name = _('Function Selector: LABS'),            category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
+    {down = device_commands.arm_func_selector,  cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.5,  name = _('Function Selector: BOMBS & GM ARM'),  category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
+
     {down = Keys.ArmsFuncSelectorCCW, name = _('Armament: Function Selector: CCW'), category = _('Weapons')},
     {down = Keys.ArmsFuncSelectorCW, name = _('Armament: Function Selector: CW'), category = _('Weapons')},
 
     {down = Keys.GunsReadyToggle, name = _('Armament: Guns READY/SAFE Toggle'), category = _('Weapons')},
     {down = Keys.MasterArmToggle, name = _('Armament: Master Arm Toggle'), category = _('Weapons')},
 
-    {down = Keys.AWRSMultiplierToggle, name = _('AWRS: Toggle multiplier'), category = _('Weapons')},
-    {down = Keys.AWRSQtySelIncrease, name = _('AWRS: Quantity Select Increase'), category = _('Weapons')},
-    {down = Keys.AWRSQtySelDecrease, name = _('AWRS: Quantity Select Decrease'), category = _('Weapons')},
-    {down = Keys.AWRSModeSelCCW, name = _('AWRS: Mode Select CCW'), category = _('Weapons')},
-    {down = Keys.AWRSModeSelCW, name = _('AWRS: Mode Select CW'), category = _('Weapons')},
+    {down = Keys.AWRSMultiplierToggle,  name = _('AWRS: Toggle multiplier'),        category = {_('Instrument Panel'), _('AWE-1'), _('Weapons')}},
+    {down = Keys.AWRSQtySelIncrease,    name = _('AWRS: Quantity Select Increase'), category = {_('Instrument Panel'), _('AWE-1'), _('Weapons')}},
+    {down = Keys.AWRSQtySelDecrease,    name = _('AWRS: Quantity Select Decrease'), category = {_('Instrument Panel'), _('AWE-1'), _('Weapons')}},
+    {down = Keys.AWRSModeSelCCW,        name = _('AWRS: Mode Select CCW'),          category = {_('Instrument Panel'), _('AWE-1'), _('Weapons')}},
+    {down = Keys.AWRSModeSelCW,         name = _('AWRS: Mode Select CW'),           category = {_('Instrument Panel'), _('AWE-1'), _('Weapons')}},
 
     {down = Keys.GunpodCharge, name = _('GunPods: OFF/CHARGE/CLEAR Toggle'), category = _('Weapons')},
     {down = Keys.GunpodLeft, name = _('GunPods: Left Enable/Disable'), category = _('Weapons')},
@@ -501,6 +507,14 @@ keyCommands = {
     {combos = {{key = 'JOY_BTN25'}}, down = Keys.RadarRangeLongShort, value_down = 1, up = Keys.RadarRangeLongShort, value_up = 0, name = _('*Radar Range: Long ELSE Short'), category = _('Radar')},
     {down = Keys.RadarAoAComp, value_down = 1, up = Keys.RadarAoAComp, value_up = 0, name = _('*Radar AoA Compensation: ON ELSE OFF'), category = _('Radar')},
 
+    -- Interior Lights Panel
+    {down = device_commands.intlight_whiteflood_CHANGE,     cockpit_device_id = devices.AVIONICS,  value_down = 0.1,     name = _('Interior Lights: White Floodlight Increase'),        category = {_('Right Console'), _('INT LTS Panel')}},
+    {down = device_commands.intlight_whiteflood_CHANGE,     cockpit_device_id = devices.AVIONICS,  value_down = -0.1,    name = _('Interior Lights: White Floodlight Decrease'),        category = {_('Right Console'), _('INT LTS Panel')}},
+    {down = device_commands.intlight_instruments_CHANGE,    cockpit_device_id = devices.AVIONICS,  value_down = 0.1,     name = _('Interior Lights: Instrument Lights Increase'),       category = {_('Right Console'), _('INT LTS Panel')}},
+    {down = device_commands.intlight_instruments_CHANGE,    cockpit_device_id = devices.AVIONICS,  value_down = -0.1,    name = _('Interior Lights: Instrument Lights Decrease'),       category = {_('Right Console'), _('INT LTS Panel')}},
+    {down = device_commands.intlight_console_CHANGE,        cockpit_device_id = devices.AVIONICS,  value_down = 0.1,     name = _('Interior Lights: Console Lights Increase'),          category = {_('Right Console'), _('INT LTS Panel')}},
+    {down = device_commands.intlight_console_CHANGE,        cockpit_device_id = devices.AVIONICS,  value_down = -0.1,    name = _('Interior Lights: Console Lights Decrease'),          category = {_('Right Console'), _('INT LTS Panel')}},
+    
     -- lighting keys
     {down = Keys.ExtLightMaster, value_down = 1, name = _('Master Exterior Lights: ON'), category = _('Systems')},
     {down = Keys.ExtLightMaster, value_down = 0, name = _('Master Exterior Lights: OFF'), category = _('Systems')},
@@ -608,13 +622,13 @@ axisCommands = {
     {action = iCommandViewVertTransAbs 			, name = _('Absolute Vertical Shift Camera View')},
     {action = iCommandViewLongitudeTransAbs 	, name = _('Absolute Longitude Shift Camera View')},
 
-    {action = device_commands.radar_angle_axis, cockpit_device_id = devices.RADAR, name = _('Radar Angle Slew')},
-    {action = device_commands.radar_angle_axis_abs, cockpit_device_id = devices.RADAR, name = _('Radar Angle Absolute')},
-    {action = device_commands.intlight_instruments_AXIS, cockpit_device_id = devices.AVIONICS, name = _('Lighting: Instrument')},
-    {action = device_commands.intlight_console_AXIS, cockpit_device_id = devices.AVIONICS, name = _('Lighting: Console')},
-    {action = device_commands.intlight_whiteflood_AXIS, cockpit_device_id = devices.AVIONICS, name = _('Lighting: White Flood')},
+    {action = device_commands.radar_angle_axis,             cockpit_device_id = devices.RADAR,          name = _('Radar Angle Slew')},
+    {action = device_commands.radar_angle_axis_abs,         cockpit_device_id = devices.RADAR,          name = _('Radar Angle Absolute')},
+    {action = device_commands.intlight_instruments_AXIS,    cockpit_device_id = devices.AVIONICS,       name = _('Lighting: Instrument'),           category = {_('Right Console'), _('INT LTS Panel')}},
+    {action = device_commands.intlight_console_AXIS,        cockpit_device_id = devices.AVIONICS,       name = _('Lighting: Console'),              category = {_('Right Console'), _('INT LTS Panel')}},
+    {action = device_commands.intlight_whiteflood_AXIS,     cockpit_device_id = devices.AVIONICS,       name = _('Lighting: White Flood'),          category = {_('Right Console'), _('INT LTS Panel')}},
 
-    {action = device_commands.AWRS_drop_interval_AXIS, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('AWRS: Drop Interval')},
+    {action = device_commands.AWRS_drop_interval_AXIS,      cockpit_device_id = devices.WEAPON_SYSTEM,  name = _('AWRS: Drop Interval'),            category = {_('Instrument Panel'), _('AWE-1'), _('Weapons')}},
 
     -- from base_joystick_binding.lua...
 

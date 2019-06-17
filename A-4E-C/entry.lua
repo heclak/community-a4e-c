@@ -16,7 +16,7 @@ displayName  = _("A-4E-C"),
 
 fileMenuName = _("A-4E-C"),
 update_id        = "A-4E-C",
-version		 = "1.3",	--
+version		 = "1.3.1",	-- increment this number on the release branch. Use semantic versioning https://semver.org
 state		 = "installed",
 info		 = _("A-4E-C aka \"Community A-4E\"\n\nThe A-4 is a lightweight, subsonic, single-engine attack aircraft. Entering service in 1956, it was designed to deliver conventional and nuclear weapons in daytime visual flight conditions.  However, using the APG-53(A) radar first installed on the A-4C, the A-4 is capable of all-weather navigation at low altitudes, as well as limited computer-assisted weapon delivery."),
 encyclopedia_path = current_mod_path..'/Encyclopedia',
@@ -26,7 +26,7 @@ Skins	=
 	{
 		{
 			name	= _("A-4E-C"),
-			dir		= "Theme"
+			dir		= "Skins/1"
 		},
 	},
 Missions =
@@ -62,6 +62,7 @@ Options =
 
 -- mounting 3d model paths and texture paths
 
+mount_vfs_texture_path	(current_mod_path.."/Skins/1/ME")	-- for simulator loading window
 mount_vfs_model_path    (current_mod_path.."/Shapes")
 mount_vfs_model_path    (current_mod_path.."/Cockpit/Shapes")
 mount_vfs_liveries_path (current_mod_path.."/Liveries")

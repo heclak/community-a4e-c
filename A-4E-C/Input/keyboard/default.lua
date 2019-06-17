@@ -318,11 +318,12 @@ keyCommands = {
     {combos = {{key = 'Space', reformers = {'LAlt'}}}, down = Keys.PickleOn,	up = Keys.PickleOff, name = _('Weapon Release'), category = 'Weapons'},
     {combos = {{key = 'D'}}, down = iCommandPlaneChangeWeapon, name = _('Weapon Change'), category = _('Weapons')},
     {combos = {{key = 'C'}}, down = iCommandPlaneModeCannon, name = _('Cannon'), category = _('Weapons')},
-    {down = Keys.AWRSMultiplierToggle, name = _('AWRS: Toggle multiplier'), category = _('Weapons')},
-    {down = Keys.AWRSQtySelIncrease, name = _('AWRS: Quantity Select Increase'), category = _('Weapons')},
-    {down = Keys.AWRSQtySelDecrease, name = _('AWRS: Quantity Select Decrease'), category = _('Weapons')},
-    {down = Keys.AWRSModeSelCCW, name = _('AWRS: Mode Select CCW'), category = _('Weapons')},
-    {down = Keys.AWRSModeSelCW, name = _('AWRS: Mode Select CW'), category = _('Weapons')},
+    
+    {down = Keys.AWRSMultiplierToggle,  name = _('AWRS: Toggle multiplier'),        category = {_('Instrument Panel'), _('AWE-1'), _('Weapons')}},
+    {down = Keys.AWRSQtySelIncrease,    name = _('AWRS: Quantity Select Increase'), category = {_('Instrument Panel'), _('AWE-1'), _('Weapons')}},
+    {down = Keys.AWRSQtySelDecrease,    name = _('AWRS: Quantity Select Decrease'), category = {_('Instrument Panel'), _('AWE-1'), _('Weapons')}},
+    {down = Keys.AWRSModeSelCCW,        name = _('AWRS: Mode Select CCW'),          category = {_('Instrument Panel'), _('AWE-1'), _('Weapons')}},
+    {down = Keys.AWRSModeSelCW,         name = _('AWRS: Mode Select CW'),           category = {_('Instrument Panel'), _('AWE-1'), _('Weapons')}},
     
 
     --{combos = {{key = 'W', reformers = {'LAlt'}}}, down = iCommandPlaneLaunchPermissionOverride, name = _('Launch Permission Override'), category = _('Weapons')},
@@ -431,13 +432,18 @@ keyCommands = {
     {combos = {{key = '.', reformers = {'RAlt'}}}, down = iCommandPlaneThreatWarnSoundVolumeUp, name = _('RWR/SPO Sound Signals Volume Up'), category = _('Sensors')},
 
     -- Weapons                                                                        
-    {combos = {{key = 'V', reformers = {'LCtrl'}}}, down = iCommandPlaneSalvoOnOff, name = _('Salvo Mode'), category = _('Weapons')},
-    --{combos = {{key = 'C', reformers = {'LShift'}}}, down = iCommandChangeGunRateOfFire, name = _('Cut Of Burst select'), category = _('Weapons')},
     {combos = {{key = '1'}}, down = Keys.Station1, name = _('Armament: Station 1 Enable/Disable'), category = _('Weapons')},
     {combos = {{key = '2'}}, down = Keys.Station2, name = _('Armament: Station 2 Enable/Disable'), category = _('Weapons')},
     {combos = {{key = '3'}}, down = Keys.Station3, name = _('Armament: Station 3 Enable/Disable'), category = _('Weapons')},
     {combos = {{key = '4'}}, down = Keys.Station4, name = _('Armament: Station 4 Enable/Disable'), category = _('Weapons')},
     {combos = {{key = '5'}}, down = Keys.Station5, name = _('Armament: Station 5 Enable/Disable'), category = _('Weapons')},
+
+    {down = device_commands.arm_func_selector,  cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.0,  name = _('Function Selector: OFF'),             category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
+    {down = device_commands.arm_func_selector,  cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.1,  name = _('Function Selector: ROCKETS'),         category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
+    {down = device_commands.arm_func_selector,  cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.2,  name = _('Function Selector: GM UNARM'),        category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
+    {down = device_commands.arm_func_selector,  cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.3,  name = _('Function Selector: SPRAY TANK'),      category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
+    {down = device_commands.arm_func_selector,  cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.4,  name = _('Function Selector: LABS'),            category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
+    {down = device_commands.arm_func_selector,  cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.5,  name = _('Function Selector: BOMBS & GM ARM'),  category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
 
     {combos = {{key = '7'}}, down = Keys.ArmsFuncSelectorCCW, name = _('Armament: Function Selector: CCW'), category = _('Weapons')},
     {combos = {{key = '8'}}, down = Keys.ArmsFuncSelectorCW, name = _('Armament: Function Selector: CW'), category = _('Weapons')},
@@ -542,6 +548,14 @@ keyCommands = {
     {down = Keys.RadarVolume, value_down = 1, name = _('Radar Warning Volume: Increase'), category = _('Radar')},
     {down = Keys.RadarVolume, value_down = 0, name = _('Radar Warning Volume: Decrease'), category = _('Radar')},
 
+    -- Interior Lights Panel
+    {down = device_commands.intlight_whiteflood_CHANGE,     cockpit_device_id = devices.AVIONICS,  value_down = 0.1,     name = _('Interior Lights: White Floodlight Increase'),      category = {_('Right Console'), _('INT LTS Panel')}},
+    {down = device_commands.intlight_whiteflood_CHANGE,     cockpit_device_id = devices.AVIONICS,  value_down = -0.1,    name = _('Interior Lights: White Floodlight Decrease'),      category = {_('Right Console'), _('INT LTS Panel')}},
+    {down = device_commands.intlight_instruments_CHANGE,    cockpit_device_id = devices.AVIONICS,  value_down = 0.1,     name = _('Interior Lights: Instrument Lights Increase'),     category = {_('Right Console'), _('INT LTS Panel')}},
+    {down = device_commands.intlight_instruments_CHANGE,    cockpit_device_id = devices.AVIONICS,  value_down = -0.1,    name = _('Interior Lights: Instrument Lights Decrease'),     category = {_('Right Console'), _('INT LTS Panel')}},
+    {down = device_commands.intlight_console_CHANGE,        cockpit_device_id = devices.AVIONICS,  value_down = 0.1,     name = _('Interior Lights: Console Lights Increase'),        category = {_('Right Console'), _('INT LTS Panel')}},
+    {down = device_commands.intlight_console_CHANGE,        cockpit_device_id = devices.AVIONICS,  value_down = -0.1,    name = _('Interior Lights: Console Lights Decrease'),        category = {_('Right Console'), _('INT LTS Panel')}},
+
     -- lighting keys
     {down = Keys.ExtLightMaster, value_down = 1, name = _('Master Exterior Lights: ON'), category = _('Systems')},
     {down = Keys.ExtLightMaster, value_down = 0, name = _('Master Exterior Lights: OFF'), category = _('Systems')},
@@ -578,9 +592,6 @@ keyCommands = {
     {down = Keys.ExtLightFlashSteady, value_down = 1, name = _('Exterior Lights: FLASH'), category = _('Systems')},
     {down = Keys.ExtLightFlashSteady, value_down = 0, name = _('Exterior Lights: STEADY'), category = _('Systems')},
     {down = Keys.ExtLightFlashSteadyToggle, name = _('Exterior Lights: FLASH/STEADY'), category = _('Systems')},
-
-    {combos = {{key = 'I', reformers = {'RShift'}}}, down = Keys.IntLightWhiteFlood, value_down = 0.05, name = _('Interior White Flood Light: Increase'), category = _('Systems')},
-    {combos = {{key = 'I', reformers = {'RCtrl'}}}, down = Keys.IntLightWhiteFlood, value_down = -0.05, name = _('Interior White Flood Light: Decrease'), category = _('Systems')},
 
     {down = Keys.AFCSOverride, name = _('AFCS Override (emergency)'), category = 'Autopilot'},
     {down = Keys.AFCSStandbyToggle, name = _('AFCS Standby Toggle'), category = 'Autopilot'},

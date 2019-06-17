@@ -6,6 +6,19 @@ Please list the changes you've made in this file. We should try to follow the gu
 
 ### Added
 
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+## Version 1.3.1 - 17 June 2019
+
+### Added
+
+- Added new quick start (instant action) missions (4 in Caucasus, 4 in Persian Gulf).
 - New keybindings
   - Added "clickable cockpit" binding to mouse
   - Added AWRS keybinds
@@ -15,10 +28,16 @@ Please list the changes you've made in this file. We should try to follow the gu
   - Added engine start/stop keybinds for joystick
   - Added View padlock bindings
   - Added BOMB ARM and BDHI keybinds
+  - Added new incremental controls for lighting
 
 ### Changed
 
+- Corrected cockpit position with respect to external model (Gunsight alignment is slightly affected but the offset should be negligible)
+- Aircraft will now be hooked into the catapult if spawned on the catapult.
+
 ### Deprecated
+
+- removed unused FC3 keybindings for HUD and HUD modes
 
 ### Removed
 
@@ -26,11 +45,111 @@ Please list the changes you've made in this file. We should try to follow the gu
 
 ### Fixed
 
+- fixed floating nosegear
 - Fixed init code where left wing tip nav light turns invisible when the master light switch is toggled at the start
 - Updated anti-collision rotation angle to 180 degrees
 - Fixed RWR initial volume to match volume position
 - Added aggressor liveries to AUSAF
 - Fixed condition where flaps indicator is invisible when power is not available
+- replaced EDM8 files with EDM10 files as support for EDM8 was dropped with 2.5.5.31917
+- updated theme to get loading image automatically loaded when A-4E-C is used
+
+### List of new keybindings
+
+#### Mouse
+
+- Clickable Mouse Cockpit Mode On/Off
+
+#### Keyboard
+
+- Lock view (cycle padlock)
+- Unlock view (stop padlock)
+- All missiles padlock
+- Threat missile padlock
+- Lock terrain view
+- AWRS: Toggle multiplier
+- AWRS: Quantity select increase
+- AWRS: Quantity select decrease
+- AWRS: Mode Select CCW
+- AWRS: Mode Select CW
+- APC: Power - OFF
+- APC: Power - Stby
+- APC: Power - Engage
+- APC: Temp - Cold
+- APC: Temp - Std
+- APC: Temp - Hot
+- BDHI - NAV CMPTR
+- BDHI - TACAN
+- BDHI - NAV PAC
+- BOMB ARM - NOSE & TAIL
+- BOMB ARM - OFF
+- BOMB ARM - TAIL
+- Function Selector: OFF
+- Function Selector: ROCKETS
+- Function Selector: GM UNARM
+- Function Selector: SPRAY TANK
+- Function Selector: LABS
+- Function Selector: BOMBS & GM ARM
+- Interior Lights: White Floodlight Increase
+- Interior Lights: White Floodlight Decrease
+- Interior Lights: Instrument Lights Increase
+- Interior Lights: Instrument Lights Decrease
+- Interior Lights: Console Lights Increase
+- Interior Lights: Console Lights Decrease
+
+#### Joystick
+
+- Lock view (cycle padlock)
+- Unlock view (stop padlock)
+- All missiles padlock
+- Threat missile padlock
+- Lock terrain view
+- Engine Start
+- Engine Stop
+- AWRS: Toggle multiplier
+- AWRS: Quantity select increase
+- AWRS: Quantity select decrease
+- AWRS: Mode Select CCW
+- AWRS: Mode Select CW
+- APC: Power - OFF
+- APC: Power - Stby
+- APC: Power - Engage
+- APC: Temp - Cold
+- APC: Temp - Std
+- APC: Temp - Hot
+- APC: Power - STBY/OFF
+- APC: Power - STBY/ENGAGE
+- APC: Temp - STD/COLD
+- APC: Temp - STD/HOT
+- BDHI - NAV CMPTR
+- BDHI - TACAN
+- BDHI - NAV PAC
+- BDHI - TACAN/NAV CMPTR
+- BDHI - TACAN/NAV PAC
+- BOMB ARM - NOSE & TAIL
+- BOMB ARM - OFF
+- BOMB ARM - TAIL
+- BOMB ARM - OFF/NOSE & TAIL
+- BOMB ARM - OFF/TAIL
+- Function Selector: OFF
+- Function Selector: ROCKETS
+- Function Selector: GM UNARM
+- Function Selector: SPRAY TANK
+- Function Selector: LABS
+- Function Selector: BOMBS & GM ARM
+- Interior Lights: White Floodlight Increase
+- Interior Lights: White Floodlight Decrease
+- Interior Lights: Instrument Lights Increase
+- Interior Lights: Instrument Lights Decrease
+- Interior Lights: Console Lights Increase
+- Interior Lights: Console Lights Decrease
+
+#### Joystick Axis
+
+- Lighting: Instrument
+- Lighting: Console
+- Lighting: White Flood
+- AWRS Drop Interval
 
 ## Version 1.3 - 11 March 2019
 

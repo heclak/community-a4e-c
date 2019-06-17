@@ -7,7 +7,6 @@ dofile(LockOn_Options.script_path.."utils.lua")
 
 
 dofile(LockOn_Options.script_path.."Systems/mission.lua")
---dofile(LockOn_Options.script_path.."Systems//mission.lua")
 
 local catapult_max_tics 	= 215
 --local catapult_max_length 	= 75	--stennis catapults should be 118m, but are actualy 100m in game?! Oriskanys should be 75m
@@ -94,9 +93,32 @@ function post_initialize()
 
 	load_tempmission_file() 
 	miz_carriers = decode_mission()
+
+	local birth = LockOn_Options.init_conditions.birth_place
+	if birth=="GROUND_HOT" then --"GROUND_COLD","GROUND_HOT","AIR_HOT"
+		update()
+		spawn_in_catapult()
+    end
 end
 
-
+function spawn_in_catapult()
+	if on_carrier() == true and catapult_status == 0 and wheelchocks_state_param:get() == 0 then
+		update_carrier_pos()
+		compare_carriers()
+		local close_to_cat,closest_cat,angel_to_cat	= check_catapult_proximity()
+		--if check_catapult_proximity() then
+		if close_to_cat then
+			catapult_status = 1
+			cat_hook_tics = 0		
+		else
+			if closest_cat > 15 then
+				print_message_to_user("You are not close enough to any catapult")
+			else
+				print_message_to_user("position or alignment wrong\nDistance " ..round(closest_cat,1) .."m (max 2m)\nAngel "..round((angel_to_cat),1) .. "(max 3 degrees)" )
+			end
+		end
+	end
+end
 
 function SetCommand(command,value)
 --	print_message_to_user("carrier: command "..tostring(command).." = "..tostring(value))
@@ -106,11 +128,11 @@ function SetCommand(command,value)
 			
 			update_carrier_pos()
 			compare_carriers()
-		--	check_catapult()
+		--	check_catapult_proximity()
 		--	local tmp_bchsh = compare_angels(math.deg(birth_carrier_heading),math.deg(Sensor_Data_Mod.self_head))
 		--	if tmp_bchsh < 6  then
-			local close_to_cat,closest_cat,angel_to_cat	= check_catapult()
-			--if check_catapult() then
+			local close_to_cat,closest_cat,angel_to_cat	= check_catapult_proximity()
+			--if check_catapult_proximity() then
 			if close_to_cat then
 				catapult_status = 1
 				--print_message_to_user("The catapult is ready!\nYou are hooked in.\nCheck takeoff flaps and trim\nSpool up the engine to max MIL\nSignal FIRE CATAPULT when ready.", 10)
@@ -190,8 +212,8 @@ function update()
 	--		compare_carriers()
 	--	end
 	
-		--local tmp_cat_dist = check_catapult("dist")
-		local close_to_cat,tmp_cat_dist,angel_to_cat	= check_catapult()
+		--local tmp_cat_dist = check_catapult_proximity("dist")
+		local close_to_cat,tmp_cat_dist,angel_to_cat	= check_catapult_proximity()
 		if tmp_cat_dist < last_cat_dist -1 or tmp_cat_dist > last_cat_dist +1 then
 			last_cat_dist = round(tmp_cat_dist,0)
 			if last_cat_dist < 1.5 then
@@ -484,8 +506,8 @@ function compare_angels(a,b)
 end
 
 
-function check_catapult(data)
---local close_to_cat,closest_cat,angel_to_cat	= check_catapult()
+function check_catapult_proximity(data)
+--local close_to_cat,closest_cat,angel_to_cat	= check_catapult_proximity()
 if not my_carrier and data == "dist" then return 100 end
 --local closest_cat = 99
 local catpos = {
