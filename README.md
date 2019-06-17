@@ -57,7 +57,7 @@ Find a bug? Let us know! [Report bugs here](https://github.com/heclak/community-
 
 ## Installation
 
-Download the latest A-4E-C installation file from the releases page. [Version 1.3](https://github.com/heclak/community-a4e-c/releases/tag/v1.3)
+Download the latest A-4E-C installation file from the [releases page](https://github.com/heclak/community-a4e-c/releases/)
 
 Unzip the contents of the zip file into the following folder: `C:\Users\username\Saved Games\DCS`
 
