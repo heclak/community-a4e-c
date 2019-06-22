@@ -1,3 +1,4 @@
+dofile(LockOn_Options.script_path.."clickable_defs.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."devices.lua")
 dofile(LockOn_Options.script_path.."sounds.lua")
@@ -6,267 +7,7 @@ dofile(LockOn_Options.script_path.."sounds.lua")
 local gettext = require("i_18n")
 _ = gettext.translate
 
-cursor_mode = 
-{ 
-    CUMODE_CLICKABLE = 0,
-    CUMODE_CLICKABLE_AND_CAMERA  = 1,
-    CUMODE_CAMERA = 2,
-};
 
-clickable_mode_initial_status  = cursor_mode.CUMODE_CLICKABLE
-use_pointer_name			   = true
-
-function default_button(hint_,device_,command_,arg_,arg_val_,arg_lim_, sound_)
-
-	local   arg_val_ = arg_val_ or 1
-	local   arg_lim_ = arg_lim_ or {0,1}
-
-	return  {	
-				class 				= {class_type.BTN},
-				hint  				= hint_,
-				device 				= device_,
-				action 				= {command_},
-				stop_action 		= {command_},
-				arg 				= {arg_},
-				arg_value			= {arg_val_}, 
-				arg_lim 			= {arg_lim_},
-				use_release_message = {true},
-                sound = sound_ and {{sound_},{sound_}} or nil
-			}
-end
-
-function default_1_position_tumb(hint_, device_, command_, arg_, arg_val_, arg_lim_)
-	local   arg_val_ = arg_val_ or 1
-	local   arg_lim_ = arg_lim_ or {0,1}
-	return  {	
-				class 		= {class_type.TUMB},
-				hint  		= hint_,
-				device 		= device_,
-				action 		= {command_},
-				arg 	  	= {arg_},
-				arg_value 	= {arg_val_}, 
-				arg_lim   	= {arg_lim_},
-				updatable 	= true, 
-				use_OBB 	= true
-			}
-end
-
-function default_2_position_tumb(hint_, device_, command_, arg_, sound_)
-	return  {	
-				class 		= {class_type.TUMB,class_type.TUMB},
-				hint  		= hint_,
-				device 		= device_,
-				action 		= {command_,command_},
-				arg 	  	= {arg_,arg_},
-				arg_value 	= {1,-1}, 
-				arg_lim   	= {{0,1},{0,1}},
-				updatable 	= true, 
-				use_OBB 	= true,
-                sound = sound_ and {{sound_,sound_}} or nil
-			}
-end
-
-function default_3_position_tumb(hint_,device_,command_,arg_,cycled_,inversed_, sound_)
-	local cycled = true
-	
-	
-	local val =  1
-	if inversed_ then
-	      val = -1
-	end
-	if cycled_ ~= nil then
-	   cycled = cycled_
-	end
-	return  {	
-				class 		= {class_type.TUMB,class_type.TUMB},
-				hint  		= hint_,
-				device 		= device_,
-				action 		= {command_,command_},
-				arg 	  	= {arg_,arg_},
-				arg_value 	= {val,-val}, 
-				arg_lim   	= {{-1,1},{-1,1}},
-				updatable 	= true, 
-				use_OBB 	= true,
-				cycle       = cycled,
-                sound = sound_ and {{sound_,sound_}} or nil
-			}
-end
-
-function default_axis(hint_,device_,command_,arg_, default_, gain_,updatable_,relative_)
-	
-	local default = default_ or 1
-	local gain = gain_ or 0.1
-	local updatable = updatable_ or false
-	local relative  = relative_ or false
-	
-	return  {	
-				class 		= {class_type.LEV},
-				hint  		= hint_,
-				device 		= device_,
-				action 		= {command_},
-				arg 	  	= {arg_},
-				arg_value 	= {default}, 
-				arg_lim   	= {{0,1}},
-				updatable 	= updatable, 
-				use_OBB 	= true,
-				gain		= {gain},
-				relative    = {relative}, 				
-			}
-end
-
-function default_movable_axis(hint_,device_,command_,arg_, default_, gain_,updatable_,relative_)
-	
-	local default = default_ or 1
-	local gain = gain_ or 0.1
-	local updatable = updatable_ or false
-	local relative  = relative_ or false
-	
-	return  {	
-				class 		= {class_type.MOVABLE_LEV},
-				hint  		= hint_,
-				device 		= device_,
-				action 		= {command_},
-				arg 	  	= {arg_},
-				arg_value 	= {default}, 
-				arg_lim   	= {{0,1}},
-				updatable 	= updatable, 
-				use_OBB 	= true,
-				gain		= {gain},
-				relative    = {relative}, 				
-			}
-end
-
-function default_axis_limited(hint_,device_,command_,arg_, default_, gain_,updatable_,relative_, arg_lim_)
-	
-	local relative = false
-	local default = default_ or 0
-	local updatable = updatable_ or false
-	if relative_ ~= nil then
-		relative = relative_
-	end
-
-	local gain = gain_ or 0.1
-	return  {	
-				class 		= {class_type.LEV},
-				hint  		= hint_,
-				device 		= device_,
-				action 		= {command_},
-				arg 	  	= {arg_},
-				arg_value 	= {default}, 
-				arg_lim   	= {arg_lim_},
-				updatable 	= updatable, 
-				use_OBB 	= false,
-				gain		= {gain},
-				relative    = {relative},
-				cycle		= false
-			}
-end
-
-
-function multiposition_switch(hint_,device_,command_,arg_,count_,delta_,inversed_, min_, sound_)
-    local min_   = min_ or 0
-	local delta_ = delta_ or 0.5
-	
-	local inversed = 1
-	if	inversed_ then
-		inversed = -1
-	end
-	
-	return  {	
-				class 		= {class_type.TUMB,class_type.TUMB},
-				hint  		= hint_,
-				device 		= device_,
-				action 		= {command_,command_},
-				arg 	  	= {arg_,arg_},
-				arg_value 	= {-delta_ * inversed,delta_ * inversed}, 
-				arg_lim   	= {{min_, min_ + delta_ * (count_ -1)},
-							   {min_, min_ + delta_ * (count_ -1)}},
-				updatable 	= true, 
-				use_OBB 	= true,
-                sound = sound_ and {{sound_,sound_}} or nil
-			}
-end
-
-function multiposition_switch_limited(hint_,device_,command_,arg_,count_,delta_,inversed_,min_, sound_)
-    local min_   = min_ or 0
-	local delta_ = delta_ or 0.5
-	
-	local inversed = 1
-	if	inversed_ then
-		inversed = -1
-	end
-	
-	return  {	
-				class 		= {class_type.TUMB,class_type.TUMB},
-				hint  		= hint_,
-				device 		= device_,
-				action 		= {command_,command_},
-				arg 	  	= {arg_,arg_},
-				arg_value 	= {-delta_ * inversed,delta_ * inversed}, 
-				arg_lim   	= {{min_, min_ + delta_ * (count_ -1)},
-							   {min_, min_ + delta_ * (count_ -1)}},
-				updatable 	= true, 
-				use_OBB 	= true,
-				cycle     	= false, 
-                sound = sound_ and {{sound_,sound_}} or nil
-			}
-end
-
-function default_button_axis(hint_, device_,command_1, command_2, arg_1, arg_2, limit_1, limit_2)
-	local limit_1_   = limit_1 or 1.0
-	local limit_2_   = limit_2 or 1.0
-return {
-			class		=	{class_type.BTN, class_type.LEV},
-			hint		=	hint_,
-			device		=	device_,
-			action		=	{command_1, command_2},
-			stop_action =   {command_1, 0},
-			arg			=	{arg_1, arg_2},
-			arg_value	= 	{1, 0.5},
-			arg_lim		= 	{{0, limit_1_}, {0,limit_2_}},
-			animated        = {false,true},
-			animation_speed = {0, 0.4},
-			gain = {0, 0.1},
-			relative	= 	{false, false},
-			updatable 	= 	true, 
-			use_OBB 	= 	true,
-			use_release_message = {true, false}
-	}
-end
-
-function default_animated_lever(hint_, device_, command_, arg_, animation_speed_,arg_lim_)
-local arg_lim__ = arg_lim_ or {0.0,1.0}
-return  {	
-	class  = {class_type.TUMB, class_type.TUMB},
-	hint   	= hint_, 
-	device 	= device_,
-	action 	= {command_, command_},
-	arg 		= {arg_, arg_},
-	arg_value 	= {1, 0},
-	arg_lim 	= {arg_lim__, arg_lim__},
-	updatable  = true, 
-	gain 		= {0.1, 0.1},
-	animated 	= {true, true},
-	animation_speed = {animation_speed_, 0},
-	cycle = true
-}
-end
-
-function default_button_tumb(hint_, device_, command1_, command2_, arg_)
-	return  {	
-				class 		= {class_type.BTN,class_type.TUMB},
-				hint  		= hint_,
-				device 		= device_,
-				action 		= {command1_,command2_},
-				stop_action = {command1_,0},
-				arg 	  	= {arg_,arg_},
-				arg_value 	= {-1,1}, 
-				arg_lim   	= {{-1,0},{0,1}},
-				updatable 	= true, 
-				use_OBB 	= true,
-				use_release_message = {true,false}
-			}
-end
 
 elements = {}
 
@@ -296,7 +37,7 @@ elements["PNT_132"] = multiposition_switch_limited("Flaps Lever", devices.FLAPS,
 -- THROTTLE CONTROL PANEL
 elements["PNT_80"] = default_3_position_tumb("Throttle",devices.ENGINE, device_commands.throttle_click,0,false,true)
 elements["PNT_82"] = default_axis_limited("Rudder trim", devices.TRIM, device_commands.rudder_trim, 82, 0.0, 0.3, false, false, {-1,1})
-elements["PNT_130"] = default_2_position_tumb("Emergency Fuel Shutoff Control",devices.ENGINE, device_commands.emer_fuel_shutoff, 130)
+elements["PNT_130"] = default_2_position_tumb("Emergency Fuel Shutoff Control",devices.ENGINE, device_commands.emer_fuel_shutoff, 130, nil, 3)
 
 --ENGINE CONTROL PANEL
 elements["PNT_100"] = default_2_position_tumb("Starter switch",devices.ENGINE, device_commands.push_starter_switch,100)
@@ -340,7 +81,7 @@ elements["PNT_405"] = default_2_position_tumb("Radar Filter Plate", devices.RADA
 elements["PNT_405"].animated        = {true, true}
 elements["PNT_405"].animation_speed = {4, 4}  -- animation duration = 1/value.  4 means animates in .25 seconds.
 
-elements["PNT_390"] = multiposition_switch("GunPods: Charge/Off/Clear", devices.WEAPON_SYSTEM, device_commands.gunpod_chargeclear, 390, 3, 1, false, -1, TOGGLECLICK_LEFT_FWD)
+elements["PNT_390"] = multiposition_switch_limited("GunPods: Charge/Off/Clear", devices.WEAPON_SYSTEM, device_commands.gunpod_chargeclear, 390, 3, 1, false, -1, TOGGLECLICK_LEFT_FWD)
 elements["PNT_391"] = default_2_position_tumb("GunPods: Left Enable", devices.WEAPON_SYSTEM, device_commands.gunpod_l, 391, TOGGLECLICK_LEFT_FWD)
 elements["PNT_392"] = default_2_position_tumb("GunPods: Center Enable", devices.WEAPON_SYSTEM, device_commands.gunpod_c, 392, TOGGLECLICK_LEFT_FWD)
 elements["PNT_393"] = default_2_position_tumb("GunPods: Right Enable", devices.WEAPON_SYSTEM, device_commands.gunpod_r, 393, TOGGLECLICK_LEFT_FWD)
@@ -383,13 +124,13 @@ elements["PNT_700"] = multiposition_switch_limited("Emergency release selector",
 --elements["PNT_700"].animated        = {true, true}
 --elements["PNT_700"].animation_speed = {2, 2}
 elements["PNT_701"] = default_2_position_tumb("Guns switch",devices.WEAPON_SYSTEM, device_commands.arm_gun,701,TOGGLECLICK_MID_FWD)
-elements["PNT_702"] = default_3_position_tumb("Bomb arm switch",devices.WEAPON_SYSTEM, device_commands.arm_bomb,702,nil,nil,TOGGLECLICK_MID_FWD)
+elements["PNT_702"] = default_3_position_tumb("Bomb arm switch",devices.WEAPON_SYSTEM, device_commands.arm_bomb,702,nil,true,TOGGLECLICK_MID_FWD)
 elements["PNT_703"] = default_2_position_tumb("Station 1 select",devices.WEAPON_SYSTEM, device_commands.arm_station1,703,TOGGLECLICK_MID_FWD)
 elements["PNT_704"] = default_2_position_tumb("Station 2 select",devices.WEAPON_SYSTEM, device_commands.arm_station2,704,TOGGLECLICK_MID_FWD)
 elements["PNT_705"] = default_2_position_tumb("Station 3 select",devices.WEAPON_SYSTEM, device_commands.arm_station3,705,TOGGLECLICK_MID_FWD)
 elements["PNT_706"] = default_2_position_tumb("Station 4 select",devices.WEAPON_SYSTEM, device_commands.arm_station4,706,TOGGLECLICK_MID_FWD)
 elements["PNT_707"] = default_2_position_tumb("Station 5 select",devices.WEAPON_SYSTEM, device_commands.arm_station5,707,TOGGLECLICK_MID_FWD)
-elements["PNT_708"] = multiposition_switch_limited("Function selector",devices.WEAPON_SYSTEM, device_commands.arm_func_selector,708,6,0.1,false,nil,KNOBCLICK_MID_FWD)
+elements["PNT_708"] = multiposition_switch_limited("Function selector",devices.WEAPON_SYSTEM, device_commands.arm_func_selector,708,6,0.1,false,nil,KNOBCLICK_MID_FWD, 2)
 
 --elements["PNT_708"].animated        = {true, true}
 --elements["PNT_708"].animation_speed = {2, 2}
@@ -399,12 +140,12 @@ elements["PNT_722"] = default_2_position_tumb("Radar Long/Short Range",devices.R
 elements["PNT_724"] = multiposition_switch_limited("BDHI mode",devices.NAV,device_commands.bdhi_mode,724,3,1.0,false,-1.0,TOGGLECLICK_MID_FWD)    -- values = -1,0,1
 
 -- AIRCRAFT WEAPONS RELEASE SYSTEM PANEL #37
-elements["PNT_740"] = multiposition_switch_limited("AWRS quantity selector",devices.WEAPON_SYSTEM, device_commands.AWRS_quantity,740,12,0.05,false,nil,KNOBCLICK_MID_FWD)
+elements["PNT_740"] = multiposition_switch_limited("AWRS quantity selector",devices.WEAPON_SYSTEM, device_commands.AWRS_quantity,740,12,0.05,false,nil,KNOBCLICK_MID_FWD, 1)
 elements["PNT_742"] = default_axis_limited("AWRS drop interval",devices.WEAPON_SYSTEM, device_commands.AWRS_drop_interval,742,0,0.05,false,false, {0, 0.9})
 -- elements["PNT_742"].arg_lim = {0,0.9}
 
 elements["PNT_743"] = default_2_position_tumb("AWRS multiplier",devices.WEAPON_SYSTEM, device_commands.AWRS_multiplier,743,TOGGLECLICK_MID_FWD)
-elements["PNT_744"] = multiposition_switch_limited("AWRS mode",devices.WEAPON_SYSTEM, device_commands.AWRS_stepripple,744,6,0.1,false,nil,KNOBCLICK_MID_FWD)
+elements["PNT_744"] = multiposition_switch_limited("AWRS mode",devices.WEAPON_SYSTEM, device_commands.AWRS_stepripple,744,6,0.1,false,nil,KNOBCLICK_MID_FWD, 2)
 --elements["PNT_744"].animated        = {true, true}
 --elements["PNT_744"].animation_speed = {4, 4}  -- multiply these numbers by the base 1.0 second animation speed to get final speed.  4 means animates in 0.25 seconds.
 
@@ -455,13 +196,13 @@ elements["PNT_213"] = default_axis("ASN-41 Wind Bearing", devices.NAV, device_co
 
 -- LIGHTS SWITCHES PANEL #47
 -- see also PNT_83 on the throttle, for master external lighting switch
-elements["PNT_217"] = multiposition_switch_limited("Probe Light", devices.EXT_LIGHTS, device_commands.extlight_probe, 217, 3, 1, false, -1.0, TOGGLECLICK_RIGHT_MID)
+elements["PNT_217"] = multiposition_switch_limited("Probe Light", devices.EXT_LIGHTS, device_commands.extlight_probe, 217, 3, 1, true, -1.0, TOGGLECLICK_RIGHT_MID)
 elements["PNT_218"] = default_2_position_tumb("Taxi Light", devices.EXT_LIGHTS, device_commands.extlight_taxi, 218, TOGGLECLICK_RIGHT_MID)
 elements["PNT_219"] = default_2_position_tumb("Anti-Collision Lights", devices.EXT_LIGHTS, device_commands.extlight_anticoll, 219, TOGGLECLICK_RIGHT_MID)
-elements["PNT_220"] = multiposition_switch_limited("Fuselage Lights", devices.EXT_LIGHTS, device_commands.extlight_fuselage, 220, 3, 1, false, -1.0, TOGGLECLICK_RIGHT_MID)
+elements["PNT_220"] = multiposition_switch_limited("Fuselage Lights", devices.EXT_LIGHTS, device_commands.extlight_fuselage, 220, 3, 1, true, -1.0, TOGGLECLICK_RIGHT_MID)
 elements["PNT_221"] = default_2_position_tumb("Lighting Flash/Steady mode", devices.EXT_LIGHTS, device_commands.extlight_flashsteady, 221, TOGGLECLICK_RIGHT_MID)
-elements["PNT_222"] = multiposition_switch_limited("Navigation Lights", devices.EXT_LIGHTS, device_commands.extlight_nav, 222, 3, 1, false, -1.0, TOGGLECLICK_RIGHT_MID)
-elements["PNT_223"] = multiposition_switch_limited("Tail Light", devices.EXT_LIGHTS, device_commands.extlight_tail, 223, 3, 1, false, -1.0, TOGGLECLICK_RIGHT_MID)
+elements["PNT_222"] = multiposition_switch_limited("Navigation Lights", devices.EXT_LIGHTS, device_commands.extlight_nav, 222, 3, 1, true, -1.0, TOGGLECLICK_RIGHT_MID)
+elements["PNT_223"] = multiposition_switch_limited("Tail Light", devices.EXT_LIGHTS, device_commands.extlight_tail, 223, 3, 1, true, -1.0, TOGGLECLICK_RIGHT_MID)
 
 -- MISC SWITCHES PANEL #53
 elements["PNT_1061"] = default_2_position_tumb("Emergency generator bypass",devices.ELECTRIC_SYSTEM, device_commands.emer_gen_bypass,1061, TOGGLECLICK_RIGHT_AFT)
@@ -507,7 +248,7 @@ elements["PNT_510"] = default_button("APR/27 light", devices.RWR, device_command
 elements["PNT_506"] = default_axis_limited( "PRF volume (inner knob)", devices.RWR, device_commands.ecm_msl_alert_axis_inner, 506, 0.0, 0.3, false, false, {-0.8,0.8} )
 elements["PNT_505"] = default_axis_limited( "MSL volume (outer knob)", devices.RWR, device_commands.ecm_msl_alert_axis_outer, 505, 0.0, 0.3, false, false, {-0.8,0.8} )
 
-elements["PNT_502"] = multiposition_switch_limited("ECM selector knob",devices.RWR, device_commands.ecm_selector_knob,502,4,0.33,false,0.0,KNOBCLICK_MID_FWD)
+elements["PNT_502"] = multiposition_switch_limited("ECM selector knob",devices.RWR, device_commands.ecm_selector_knob,502,4,0.33,false,0.0,KNOBCLICK_MID_FWD, 5)
 
 -- AIR CONDITIONING PANEL
 elements["PNT_1251"] = default_2_position_tumb("Cabin Pressure Switch", devices.ELECTRIC_SYSTEM, device_commands.cabin_pressure , 224, TOGGLECLICK_LEFT_MID)
