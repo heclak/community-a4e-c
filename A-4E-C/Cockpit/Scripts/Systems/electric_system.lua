@@ -18,26 +18,6 @@ local sensor_data = get_base_data()
 
 local master_arm = false
 
-dev:listen_event("GroundPowerOn")
-dev:listen_event("GroundPowerOff")
-
--- none of these seem to work
-dev:listen_event("Stop")
-dev:listen_event("GroundCrewStop")
-dev:listen_event("GroundPowerStop")
-
-function CockpitEvent(event,val)
-    -- val is mostly just empty table {}
-    debug_print("Electric system event: "..tostring(event))
-    if event == "GroundPowerOn" then
-        debug_print("Ground power on")
-        elec_external_power:set(1)
-    elseif event == "GroundPowerOff" then
-        debug_print("Ground power off")
-        elec_external_power:set(0)
-    end
-end
-
 local prev_ac_volts
 local prev_emerg_gen=false
 local emergency_generator_deployed=false
