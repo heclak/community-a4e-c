@@ -66,7 +66,6 @@ function post_initialize()
     sndhost_cockpit         = create_sound_host("COCKPIT","3D",0,0,2) -- TODO: look into defining this sound host for HEADPHONES/HELMET
     -- snd_huffer_starting     = sndhost_cockpit:create_sound("Aircrafts/Engines/APUBeginIn")
     snd_huffer_running      = sndhost_cockpit:create_sound("Aircrafts/Engines/APUIn")
-    host = ED_AudioAPI.createHost(ED_AudioAPI.ContextWorld, "Aircraft")
 
 end
 
