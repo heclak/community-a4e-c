@@ -181,6 +181,7 @@ WeaponSystem:listen_command(Keys.ArmsFuncSelectorCCW)
 WeaponSystem:listen_command(Keys.ArmsFuncSelectorCW)
 WeaponSystem:listen_command(Keys.GunsReadyToggle)
 WeaponSystem:listen_command(device_commands.shrike_sidewinder_volume)
+WeaponSystem:listen_command(device_commands.shrike_selector)
 
 WeaponSystem:listen_command(device_commands.AWRS_quantity)
 WeaponSystem:listen_command(device_commands.AWRS_drop_interval)
@@ -1170,6 +1171,8 @@ function SetCommand(command,value)
         debug_print("shrike_sidewinder_volume: "..value)
         shrike_sidewinder_volume:set(value)
         aim9seek:update(nil, LinearTodB(shrike_sidewinder_volume:get()), nil)
+    elseif command == device_commands.shrike_selector then
+        -- print_message_to_user(value)
     end
 end
 

@@ -45,6 +45,8 @@ elements["PNT_100"].sound = {{PUSHPRESS,PUSHRELEASE}}
 
 --elements["PNT_201"] = default_3_position_tumb("Throttle cutoff",devices.ENGINE, device_commands.throttle,201,false)
 
+-- OXYGEN and ANTI-G PANEL
+elements["PNT_125"] = default_2_position_tumb("Oxygen Switch",devices.AVIONICS, device_commands.oxygen_switch, 125, TOGGLECLICK_LEFT_MID)
 
 -- RADAR CONTROL PANEL #6
 elements["PNT_120"] = multiposition_switch_limited( "Radar Mode", devices.RADAR, device_commands.radar_mode, 120, 5, 0.10, nil, nil, KNOBCLICK_LEFT_MID )
@@ -150,9 +152,10 @@ elements["PNT_744"] = multiposition_switch_limited("AWRS mode",devices.WEAPON_SY
 --elements["PNT_744"].animation_speed = {4, 4}  -- multiply these numbers by the base 1.0 second animation speed to get final speed.  4 means animates in 0.25 seconds.
 
 -- MISC SWITCHES PANEL #36
-elements["PNT_720"] = default_button("Show EXT Fuel", devices.AVIONICS, device_commands.FuelGaugeExtButton, 720, nil, nil, TOGGLECLICK_MID_FWD)
+elements["PNT_720"] = default_button("Show EXT Fuel", devices.AVIONICS, device_commands.FuelGaugeExtButton, 720)
 elements["PNT_723"] = default_button("Master test", devices.AVIONICS, device_commands.master_test, 723)
-elements["PNT_726"] = default_axis_limited( "Shrike Volume Knob", devices.WEAPON_SYSTEM, device_commands.shrike_sidewinder_volume, 726, 0.25, 0.3, false, false, {0,1.0} )
+elements["PNT_725"] = multiposition_switch_limited( "Shrike Selector Knob", devices.WEAPON_SYSTEM, device_commands.shrike_selector, 725, 5, 0.1, false, nil, KNOBCLICK_MID_FWD, 2)
+elements["PNT_726"] = default_axis_limited( "Sidewinder Volume Knob", devices.WEAPON_SYSTEM, device_commands.shrike_sidewinder_volume, 726, 0, 0.1, false, false, {-1.0,1.0} )
 
 
 -- ALTIMETER PANEL #41

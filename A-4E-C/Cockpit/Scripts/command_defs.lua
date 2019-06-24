@@ -451,4 +451,7 @@ device_commands =
     fueldump                        = __counter(),
     man_flt_control_override        = __counter(),
 
+    shrike_selector                 = __counter(),
+    oxygen_switch                   = __counter(),
+
 }
