@@ -339,7 +339,7 @@ A_4E_C =  {
     {
         {
             file       = 'A-4E';
-            life       = 18; -- lifebar
+            life       = 16; -- lifebar
             vis        = 3;  -- visibility gain.
             desrt    = 'Fighter-2-crush'; -- Name of destroyed object file name Alphajet-destr. This is a placeholder.
             fire       = {300, 3}; -- Fire on the ground after destoyed: 300sec 2m
@@ -1130,26 +1130,26 @@ A_4E_C =  {
 
     Damage = verbose_to_dmg_properties(
 	{
-        -- ["NOSE_CENTER"]             = {critical_damage = 1}, -- 0
-        ["NOSE_LEFT_SIDE"]          = {critical_damage = 1}, -- 1
-        ["NOSE_RIGHT_SIDE"]         = {critical_damage = 1}, -- 2
-        -- ["NOSE_BOTTOM"]             = {critical_damage = 1}, -- 59
+        ["NOSE_CENTER"]             = {critical_damage = 3}, -- 0
+        ["NOSE_LEFT_SIDE"]          = {critical_damage = 3}, -- 1
+        ["NOSE_RIGHT_SIDE"]         = {critical_damage = 3}, -- 2
+        ["NOSE_BOTTOM"]             = {critical_damage = 3}, -- 59
 
-        ["COCKPIT"]                 = {critical_damage = 5}, -- 3
-        -- ["CABIN_LEFT_SIDE"]         = {critical_damage = 2}, -- 4
-        -- ["CABIN_RIGHT_SIDE"]        = {critical_damage = 2}, -- 5
-        -- ["CABIN_BOTTOM"]            = {critical_damage = 3}, -- 6
+        ["COCKPIT"]                 = {critical_damage = 1}, -- 3
+        ["CABIN_LEFT_SIDE"]         = {critical_damage = 3}, -- 4
+        ["CABIN_RIGHT_SIDE"]        = {critical_damage = 3}, -- 5
+        ["CABIN_BOTTOM"]            = {critical_damage = 3}, -- 6
 
         ["GUN"]                     = {critical_damage = 2}, -- 7 refuelling probe?
-        -- ["PITOT"]                   = {critical_damage = 2}, -- 60
+        ["PITOT"]                   = {critical_damage = 1}, -- 60
 
         ["WHEEL_F"]                 = {critical_damage = 3}, -- 83
 
-        ["FUSELAGE_LEFT_SIDE"]      = {critical_damage = 3}, -- 9
+        ["FUSELAGE_LEFT_SIDE"]      = {critical_damage = 3, args = {600}}, -- 9
         ["FUSELAGE_RIGHT_SIDE"]     = {critical_damage = 3}, --10
         ["FUSELAGE_TOP"]            = {critical_damage = 3}, -- 99 avionics hump?
         ["FUSELAGE_BOTTOM"]         = {critical_damage = 4}, --82
-        ["ENGINE"]                  = {critical_damage = 3},-- 11
+        ["ENGINE"]                  = {critical_damage = 2},-- 11
 
         -- ["MTG_L"]                   = {critical_damage = 3}, -- 17 left engine nacelle
         -- ["MTG_R"]                   = {critical_damage = 3}, -- 18 right engine nacelle
@@ -1157,30 +1157,34 @@ A_4E_C =  {
         ["AIR_BRAKE_L"]             = {critical_damage = 1}, -- 19
         ["AIR_BRAKE_R"]             = {critical_damage = 1}, -- 20
 
-        ["WING_L_IN"]               = {critical_damage = 4, deps_cells = {"WING_L_OUT", "FLAP_L", "AILERON_L"}}, -- 35
-        ["WING_L_OUT"]              = {critical_damage = 3}, -- 23
+        ["WING_L_IN"]               = {critical_damage = 5, deps_cells = {"WING_L_CENTER"}}, -- 35
+        ["WING_L_CENTER"]           = {critical_damage = 4, deps_cells = {"WING_L_PART_CENTER", "FLAP_L", "WING_L_OUT"}}, -- 29
+        ["WING_L_PART_CENTER"]      = {critical_damage = 1.5}, -- 27 -- spoiler
+        ["WING_L_OUT"]              = {critical_damage = 3, deps_cells = {"AILERON_L"}}, -- 23
         ["FLAP_L"]                  = {critical_damage = 2}, -- 37
-        -- ["FLAP_L_CENTER"]           = {critical_damage = 2}, -- 101 spoilers?
         ["AILERON_L"]               = {critical_damage = 1}, --25
         ["WHEEL_L"]                 = {critical_damage = 3}, -- 84
 
-        ["WING_R_IN"]               = {critical_damage = 4, deps_cells = {"WING_R_OUT", "FLAP_R", "AILERON_R"}}, -- 36
-        ["WING_R_OUT"]              = {critical_damage = 3}, --24
+        ["WING_R_IN"]               = {critical_damage = 5, deps_cells = {"WING_R_CENTER"}}, -- 36
+        ["WING_R_CENTER"]           = {critical_damage = 4, deps_cells = {"WING_R_PART_CENTER", "FLAP_R", "WING_R_OUT"}}, -- 30
+        ["WING_R_PART_CENTER"]      = {critical_damage = 1.5}, -- 28 -- spoiler
+        ["WING_R_OUT"]              = {critical_damage = 3, deps_cells = {"AILERON_R"}}, -- 24
         ["FLAP_R"]                  = {critical_damage = 2}, -- 38
-        -- ["FLAP_R_CENTER"]           = {critical_damage = 2}, -- 102 spoilers?
         ["AILERON_R"]               = {critical_damage = 1}, --26
         ["WHEEL_R"]                 = {critical_damage = 3}, -- 85
 
-        ["TAIL"]                    = {critical_damage = 5, deps_cells = {"RUDDER"}}, -- 55
-        ["TAIL_LEFT_SIDE"]          = {critical_damage = 5}, -- 56
-        ["TAIL_RIGHT_SIDE"]         = {critical_damage = 5}, -- 57
-        ["TAIL_BOTTOM"]             = {critical_damage = 3}, --58
-        ["STABILIZATOR_L"]          = {critical_damage = 3, deps_cells = {"ELEVATOR_L"}}, -- 47
+        ["TAIL"]                    = {critical_damage = 2}, -- 55
+        ["TAIL_LEFT_SIDE"]          = {critical_damage = 3}, -- 56
+        ["TAIL_RIGHT_SIDE"]         = {critical_damage = 3}, -- 57
+        -- ["TAIL_BOTTOM"]             = {critical_damage = 3}, --58
+        ["STABILIZATOR_L"]          = {critical_damage = 2, deps_cells = {"ELEVATOR_L"}}, -- 47
         ["ELEVATOR_L"]              = {critical_damage = 1}, -- 51
-        ["STABILIZATOR_R"]          = {critical_damage = 3, deps_cells = {"ELEVATOR_R"}}, -- 48
+        ["STABILIZATOR_R"]          = {critical_damage = 2, deps_cells = {"ELEVATOR_R"}}, -- 48
         ["ELEVATOR_R"]              = {critical_damage = 1}, -- 52
         ["RUDDER"]                  = {critical_damage = 1}, --53
 
+        ["FIN_L_TOP"]               = {critical_damage = 4}, --53
+        ["FIN_L_BOTTOM"]            = {critical_damage = 4, deps_cells = {"RUDDER", "FIN_L_TOP"}}, --53
         -- ["HOOK"]                    = {critical_damage = 2}, -- 98
 
     }),
