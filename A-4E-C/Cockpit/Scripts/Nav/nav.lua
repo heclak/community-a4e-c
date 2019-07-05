@@ -287,8 +287,8 @@ local tacan_audio_active = false
 function post_initialize()
     startup_print("nav: postinit")
     sndhost = create_sound_host("COCKPIT_TACAN","HEADPHONES",0,0,0)
-    morse_dot_snd = sndhost:create_sound("MorzeDot") -- refers to sdef file, and sdef file content refers to sound file, see DCSWorld/Sounds/sdef/_example.sdef
-    morse_dash_snd = sndhost:create_sound("MorzeDash")
+    morse_dot_snd = sndhost:create_sound("Aircrafts/A-4E-C/MorzeDot") -- refers to sdef file, and sdef file content refers to sound file, see DCSWorld/Sounds/sdef/_example.sdef
+    morse_dash_snd = sndhost:create_sound("Aircrafts/A-4E-C/MorzeDash")
 
     local mhdg = get_magnetic()
   

@@ -1,0 +1,28 @@
+wave = {
+    "Effects/Aircrafts/A-4E-C/click1.wav",
+    "Effects/Aircrafts/A-4E-C/click2.wav",
+    "Effects/Aircrafts/A-4E-C/click3.wav",
+    "Effects/Aircrafts/A-4E-C/click4.wav",
+    "Effects/Aircrafts/A-4E-C/click5.wav",
+    "Effects/Aircrafts/A-4E-C/click6.wav",
+    "Effects/Aircrafts/A-4E-C/click7.wav",
+    "Effects/Aircrafts/A-4E-C/click8.wav",
+    "Effects/Aircrafts/A-4E-C/click9.wav",
+    "Effects/Aircrafts/A-4E-C/click10.wav",
+    "Effects/Aircrafts/A-4E-C/click11.wav",
+    "Effects/Aircrafts/A-4E-C/click12.wav",
+    "Effects/Aircrafts/A-4E-C/click13.wav",
+    "Effects/Aircrafts/A-4E-C/click14.wav",
+    "Effects/Aircrafts/A-4E-C/click15.wav",
+    "Effects/Aircrafts/A-4E-C/click16.wav",
+    "Effects/Aircrafts/A-4E-C/click17.wav"
+    }
+
+inner_radius = 1
+outer_radius = 4
+
+position = {0,-0.2,0.5}
+
+detached = true
+
+listmode = RANDOM

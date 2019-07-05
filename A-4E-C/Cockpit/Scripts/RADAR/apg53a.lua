@@ -183,8 +183,8 @@ end
 
 function post_initialize()
     -- initialize sounds first
-    sndhost = create_sound_host("COCKPIT_RADAR","2D",0,0,0)
-    obsttone = sndhost:create_sound("obsttone") -- refers to sdef file, and sdef file content refers to sound file, see DCSWorld/Sounds/sdef/_example.sdef
+    sndhost = create_sound_host("COCKPIT_RADAR","HEADPHONES",0,0,0)
+    obsttone = sndhost:create_sound("Aircrafts/A-4E-C/obsttone") -- refers to sdef file, and sdef file content refers to sound file, see DCSWorld/Sounds/sdef/_example.sdef
 
     local birth = LockOn_Options.init_conditions.birth_place
     if birth=="GROUND_HOT" or birth=="AIR_HOT" then
