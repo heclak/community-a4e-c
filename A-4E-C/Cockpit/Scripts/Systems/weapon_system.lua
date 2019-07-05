@@ -213,7 +213,7 @@ function post_initialize()
     startup_print("weapon_system: postinit start")
 
     sndhost = create_sound_host("COCKPIT_ARMS","2D",0,0,0)
-    labs_tone = sndhost:create_sound("bombtone") -- refers to sdef file, and sdef file content refers to sound file, see DCSWorld/Sounds/sdef/_example.sdef
+    labs_tone = sndhost:create_sound("Aircrafts/A-4E-C/bombtone") -- refers to sdef file, and sdef file content refers to sound file, see DCSWorld/Sounds/sdef/_example.sdef
     aim9seek = sndhost:create_sound("Aircrafts/Cockpits/AIM9")
     aim9lock = sndhost:create_sound("Aircrafts/Cockpits/SidewinderLow")
     --aim9lock2 = sndhost:create_sound("Aircrafts/Cockpits/SidewinderLowQuiet")

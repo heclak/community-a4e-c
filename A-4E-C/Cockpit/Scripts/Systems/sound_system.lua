@@ -22,8 +22,8 @@ function post_initialize()
     sndhost_cockpit             = create_sound_host("COCKPIT","2D",0,0,0) -- TODO: look into defining this sound host for HEADPHONES/HELMET
 
     -- initialise sounds
-    snd_catapultTakeoff = sndhost_cockpit:create_sound("A4E-CarrierCatapultTakeoff_In")
-    snd_catapultLaunchbarDisconnect = sndhost_cockpit:create_sound("A4E-CarrierLaunchBarDisconnect")
+    snd_catapultTakeoff = sndhost_cockpit:create_sound("Aircrafts/A-4E-C/A4E-CarrierCatapultTakeoff_In")
+    snd_catapultLaunchbarDisconnect = sndhost_cockpit:create_sound("Aircrafts/A-4E-C/A4E-CarrierLaunchBarDisconnect")
     
     param_catapult_takeoff:set(-1)
 end

@@ -134,20 +134,20 @@ function post_initialize()
 --	print_message_to_user("Init - RWR")
 	
 	sndhost = create_sound_host("COCKPIT_RADAR_WARN","2D",0,0,0)
-    --rwrLock = sndhost:create_sound("obsttone") 
-	--rwrLaunch = sndhost:create_sound("radarwarn") 
+    --rwrLock = sndhost:create_sound("Aircrafts/A-4E-C/obsttone") 
+	--rwrLaunch = sndhost:create_sound("Aircrafts/A-4E-C/radarwarn") 
 	
 	
-	-- rwrLock 	= sndhost:create_sound("a4e-rwr-aaa-lo-loop") 
-	rwrLaunch 	= sndhost:create_sound("a4e-rwr-aaa-hi-loop") 
-	rwrHum		= sndhost:create_sound("a4e-rwr-hum-loop") 
+	-- rwrLock 	= sndhost:create_sound("Aircrafts/A-4E-C/a4e-rwr-aaa-lo-loop") 
+	rwrLaunch 	= sndhost:create_sound("Aircrafts/A-4E-C/a4e-rwr-aaa-hi-loop") 
+	rwrHum		= sndhost:create_sound("Aircrafts/A-4E-C/a4e-rwr-hum-loop") 
 	
 	
-	rwrEsamSearch	= sndhost:create_sound("a4e-rwr-e-sam-hi-loop") 	--yes they are switched
-	rwrEsamLock		= sndhost:create_sound("a4e-rwr-e-sam-lo-loop") 	--yes they are switched
+	rwrEsamSearch	= sndhost:create_sound("Aircrafts/A-4E-C/a4e-rwr-e-sam-hi-loop") 	--yes they are switched
+	rwrEsamLock		= sndhost:create_sound("Aircrafts/A-4E-C/a4e-rwr-e-sam-lo-loop") 	--yes they are switched
 	
-	rwrAAASearch	= sndhost:create_sound("a4e-rwr-ai-loop")							--("a4e-rwr-aaa-lo-loop") 
-	rwrAAALock		= sndhost:create_sound("a4e-rwr-aaa-lo-loop") 
+	rwrAAASearch	= sndhost:create_sound("Aircrafts/A-4E-C/a4e-rwr-ai-loop")							--("a4e-rwr-aaa-lo-loop") 
+	rwrAAALock		= sndhost:create_sound("Aircrafts/A-4E-C/a4e-rwr-aaa-lo-loop") 
 
 
 	-------------------------------------
