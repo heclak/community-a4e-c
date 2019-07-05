@@ -133,7 +133,7 @@ function post_initialize()
 	--GetDevice(devices.RWR):set_power(true)			
 --	print_message_to_user("Init - RWR")
 	
-	sndhost = create_sound_host("COCKPIT_RADAR_WARN","2D",0,0,0)
+	sndhost = create_sound_host("COCKPIT_RADAR_WARN","HEADPHONES",0,0,0)
     --rwrLock = sndhost:create_sound("Aircrafts/A-4E-C/obsttone") 
 	--rwrLaunch = sndhost:create_sound("Aircrafts/A-4E-C/radarwarn") 
 	

@@ -14,7 +14,7 @@ local sensor_data = get_base_data()
 function post_initialize()
     startup_print("radarwarn: postinit")
 
-    sndhost = create_sound_host("COCKPIT_RADAR_WARN","2D",0,0,0)
+    sndhost = create_sound_host("COCKPIT_RADAR_WARN","HEADPHONES",0,0,0)
     radartone = sndhost:create_sound("Aircrafts/A-4E-C/radarwarn") -- refers to sdef file, and sdef file content refers to sound file, see DCSWorld/Sounds/sdef/_example.sdef
     local birth = LockOn_Options.init_conditions.birth_place
     if birth=="GROUND_HOT" or birth=="GROUND_COLD" then
