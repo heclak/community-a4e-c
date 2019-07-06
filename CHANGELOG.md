@@ -6,13 +6,64 @@ Please list the changes you've made in this file. We should try to follow the gu
 
 ### Added
 
+- updated 3D cockpit model
+  - fixed canopy uv mapping
+  - fixed white floodlight canopy glare
+  - added radar glow
+  - updated cockpit lighting. Added red floodlights on both sides of the ejection seat
+  - made clickable (oxygen switch, walleye/shrike selector, air-conditioning panel)
+  - new sidewinder volume knob
+  - fixed nav panel digit glitch
+  - added destination slew knobs for navigation computer panel
+  - new compass controller panel model
+  - revised engine control panel with clickable switches
+  - new AFCS test panel model
+  - updated misc switch panel for accuracy
+  - external fuel quantity check is now a button
+  - new light indicator model for manual fuel control, jato, and doppler memory mode indicators
+
+- reworked ECM control systems
+  - upgraded AN/APR-23 to AN/APR-25
+  - added separate APR-27 simulation
+  - added ALQ-51A
+  - added ALQ-51A BIT Test
+
+- air cond panel is now clickable
+- added emergency fuel shutoff control
+  - engine will shutdown if lever is set to 'emer off'
+  - engine will not start with lever in 'emer off' position
+
+- added fueldump capability
+- added command for manual flight control override. Update brake hydraulic system
+- added refuelling probe light
+- added radar scope glow. radar scope glow is linked to brilliance setting
+- added option to disable catapult location checks (client side checks)
+- toggle switches and multiposition switches are now animated
+- moved external power logic to the huffer. Initial implementation of huffer simulation and sounds.
+
 ### Changed
+
+- new collision model and updated critical damage values
+- updated hydraulic system to be dependent on engine rpm
+- changed layout of option menu
+- moved clickable definitions to separate file (clickable_defs.lua)
+- tweaked switch behaviour to be consistent between left/right clicks
+- weapons and RWR sounds will now be played through the pilot headphones. Sounds will sound like it is coming through the helmet when "hear like headphones" is used"
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+
+- ECM panel indicators will now work with master test light button
+- gear handle light will no longer light up when primary ac power is not available
+- spoilers are now linked to the hydraulic system
+- flaps and gear are now dependent on utility hydraulic
+- fixed bouncing nose gear
+- fixed briefing map to auto load with A-4E-C missions
+- restructured sounds folder for sound asset isolation. Sounds should no longer affect other modules.
+- cockpit damage is revised to fix issue where the sim counts the aircraft as dead but the pilot is still alive.
 
 ## Version 1.3.1 - 17 June 2019
 
