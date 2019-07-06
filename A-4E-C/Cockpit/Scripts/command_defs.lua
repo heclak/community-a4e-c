@@ -454,4 +454,15 @@ device_commands =
     shrike_selector                 = __counter(),
     oxygen_switch                   = __counter(),
 
+    COMPASS_set_heading             = __counter(),
+    COMPASS_push_to_sync            = __counter(),
+    COMPASS_free_slaved_switch      = __counter(),
+    COMPASS_latitude                = __counter(),
+
+    ENGINE_wing_fuel_dump           = __counter(),
+    ENGINE_emer_trans               = __counter(),
+    ENGINE_drop_tanks_press         = __counter(),
+    ENGINE_flight_refuel            = __counter(),
+    ENGINE_fuel_control             = __counter(),
+    ENGINE_fuel_shutoff_catch       = __counter(),
 }

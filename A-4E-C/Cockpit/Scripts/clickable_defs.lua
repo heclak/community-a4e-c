@@ -92,6 +92,31 @@ function default_3_position_tumb(hint_, device_, command_, arg_, cycled_, invers
     }
 end
 
+function springloaded_3_pos_tumb(hint_, device_, command_, arg_, inversed_, sound_, animation_speed_)
+    local animation_speed_ = animation_speed_ or anim_speed_default
+    local val = 1
+    if inversed_ then
+        val = -1
+    end
+
+    return {
+        class               = {class_type.BTN, class_type.BTN},
+        hint                = hint_,
+        device              = device_,
+        action              = {command_, command_},
+        stop_action         = {command_, command_},
+        arg                 = {arg_, arg_},
+        arg_value           = {val, -val},
+        arg_lim             = {{-1, 1}, {-1, 1}},
+        updatable           = true,
+        use_OBB             = true,
+        use_release_message = true,
+        animated            = {true, true},
+        animation_speed     = {animation_speed_, animation_speed_},
+        sound               = sound_ and {{sound_, sound_}} or nil
+    }
+end
+
 -- rotary axis with no end stops. suitable for continuously rotating knobs
 function default_axis(hint_, device_, command_, arg_, default_, gain_, updatable_, relative_)
     local default = default_ or 1

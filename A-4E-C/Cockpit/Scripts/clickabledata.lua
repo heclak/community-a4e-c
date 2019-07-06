@@ -38,11 +38,14 @@ elements["PNT_132"] = multiposition_switch_limited("Flaps Lever", devices.FLAPS,
 elements["PNT_80"] = default_3_position_tumb("Throttle",devices.ENGINE, device_commands.throttle_click,0,false,true)
 elements["PNT_82"] = default_axis_limited("Rudder trim", devices.TRIM, device_commands.rudder_trim, 82, 0.0, 0.3, false, false, {-1,1})
 elements["PNT_130"] = default_2_position_tumb("Emergency Fuel Shutoff Control",devices.ENGINE, device_commands.emer_fuel_shutoff, 130, nil, 3)
+elements["PNT_131"] = default_2_position_tumb("Emergency Fuel Shutoff Catch",devices.ENGINE, device_commands.ENGINE_fuel_shutoff_catch, 131, nil, 3) -- NO COMMAND
 
 --ENGINE CONTROL PANEL
 elements["PNT_100"] = default_2_position_tumb("Starter switch",devices.ENGINE, device_commands.push_starter_switch,100)
 elements["PNT_100"].sound = {{PUSHPRESS,PUSHRELEASE}}
-
+elements["PNT_101"] = default_3_position_tumb( "Drop Tanks Pressurization and Flight Refuel switch", devices.ENGINE, device_commands.ENGINE_drop_tanks_press, 101, false, true, TOGGLECLICK_LEFT_MID) -- NO COMMAND
+elements["PNT_103"] = default_3_position_tumb( "Emer Tranfer and Wing Fuel Dump switch", devices.ENGINE, device_commands.ENGINE_wing_fuel_dump, 103, false, true, TOGGLECLICK_LEFT_MID) -- NO COMMAND
+elements["PNT_104"] = default_2_position_tumb("Fuel control switch",devices.ENGINE, device_commands.ENGINE_fuel_control,104, TOGGLECLICK_LEFT_MID)
 --elements["PNT_201"] = default_3_position_tumb("Throttle cutoff",devices.ENGINE, device_commands.throttle,201,false)
 
 -- OXYGEN and ANTI-G PANEL
@@ -225,6 +228,13 @@ elements["PNT_368"] = multiposition_switch_limited("ARC-51 UHF Manual Frequency 
 elements["PNT_369"] = multiposition_switch_limited("ARC-51 UHF Manual Frequency 50 kHz", devices.RADIO, device_commands.arc51_freq_xxxXX, 369, 20, 0.05, false, 0, KNOBCLICK_RIGHT_MID)
 elements["PNT_370"] = default_2_position_tumb("ARC-51 UHF Squelch Disable", devices.RADIO, device_commands.arc51_squelch, 370, TOGGLECLICK_RIGHT_MID)
 elements["PNT_372"] = multiposition_switch_limited("ARC-51 UHF Mode", devices.RADIO, device_commands.arc51_mode, 372, 4, 0.1, false, 0, KNOBCLICK_RIGHT_MID)
+
+-- COMPASS CONTROLLER
+elements["PNT_509"] = default_axis_limited("Compass latitude knob", devices.COMPASS, device_commands.COMPASS_latitude, 509, 0, 0.3, false, false, {-1,1})
+elements["PNT_511"] = springloaded_3_pos_tumb("Compass heading set knob", devices.COMPASS, device_commands.COMPASS_set_heading, 511, true, KNOBCLICK_RIGHT_MID)
+elements["PNT_512"] = default_2_position_tumb("Compass Free/Slaved Mode Switch", devices.COMPASS, device_commands.COMPASS_free_slaved_switch, 512, TOGGLECLICK_RIGHT_MID) -- NO COMMAND
+elements["PNT_513"] = default_button("Compass Push to Sync", devices.COMPASS, device_commands.COMPASS_push_to_sync, 513) -- NO COMMAND
+
 
 -- T handles
 elements["PNT_1240"] = default_2_position_tumb("Emergency gear release",devices.GEAR, device_commands.emer_gear_release,1240)
