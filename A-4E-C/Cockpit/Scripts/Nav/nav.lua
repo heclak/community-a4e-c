@@ -1213,7 +1213,7 @@ function update_apn153()
     if apn153_state == "apn153-off" then
         apn153_gs:set(0)
         apn153_drift:set(0)
-        apn153_memorylight:set( apn153_memorylight_test==1 and 1 or 0 )
+        set_apn153_memorylight( apn153_memorylight_test==1 and 1 or 0 )
         apn153_warm = false
 
         if apn153_input ~= "OFF" then
@@ -1230,7 +1230,7 @@ function update_apn153()
 
     elseif apn153_state == "apn153-mem-stby" then
         -- speed and drift do not update in standby modes
-        apn153_memorylight:set(1)
+        set_apn153_memorylight(1)
 
         if apn153_input ~= "STBY" then
             if apn153_input == "OFF" then apn153_state = "apn153-off"
@@ -1242,7 +1242,7 @@ function update_apn153()
 
     elseif apn153_state == "apn153-mem-land" then
         -- speed and drift do not update in standby modes
-        apn153_memorylight:set(1)
+        set_apn153_memorylight(1)
 
         if apn153_input ~= "LAND" then
             if apn153_input == "OFF" then apn153_state = "apn153-off"
@@ -1258,7 +1258,7 @@ function update_apn153()
 
     elseif apn153_state == "apn153-mem-sea" then
         -- speed and drift do not update in standby modes
-        apn153_memorylight:set(1)
+        set_apn153_memorylight(1)
 
         if apn153_input ~= "SEA" then
             if apn153_input == "OFF" then apn153_state = "apn153-off"
@@ -1273,7 +1273,7 @@ function update_apn153()
         end
 
     elseif apn153_state == "apn153-land" then
-        apn153_memorylight:set( apn153_memorylight_test==1 and 1 or 0 )
+        set_apn153_memorylight( apn153_memorylight_test==1 and 1 or 0 )
 
         if apn153_input ~= "LAND" then
             if apn153_input == "OFF" then apn153_state = "apn153-off"
@@ -1296,7 +1296,7 @@ function update_apn153()
 
 
     elseif apn153_state == "apn153-sea" then
-        apn153_memorylight:set( apn153_memorylight_test==1 and 1 or 0 )
+        set_apn153_memorylight( apn153_memorylight_test==1 and 1 or 0 )
 
         if apn153_input ~= "SEA" then
             if apn153_input == "OFF" then apn153_state = "apn153-off"
@@ -1327,12 +1327,12 @@ function update_apn153()
             end
         else
             if timenow >= apn153_test_timer then
-                apn153_memorylight:set( apn153_memorylight_test==1 and 1 or 0 )
+                set_apn153_memorylight( apn153_memorylight_test==1 and 1 or 0 )
                 -- set the "test OK" values once upon entry
                 apn153_gs:set(121)
                 apn153_drift:set(0)
             else
-                apn153_memorylight:set(1)
+                set_apn153_memorylight(1)
             end
         end
 
@@ -1346,6 +1346,20 @@ function update_apn153()
 
     if not updated then
         apn153_speed_and_drift_dummy()  -- don't let lastx/lastz get far away, to prevent impulses in speed
+    end
+end
+
+-- setter function for apn153 memory light
+-- do not set param directly to allow for electrical supply checks
+function set_apn153_memorylight(state)
+    if state ~= 0 and state ~= 1 then
+        return false
+    end
+
+    if get_elec_fwd_mon_ac_ok() and state == 1 then
+        apn153_memorylight:set(1)
+    else
+        apn153_memorylight:set(0)
     end
 end
 
@@ -1578,18 +1592,25 @@ end
 function update()
 	model_time = get_model_time()
 	get_base_sensor_data()
-    if not get_elec_26V_ac_ok() then
-        return
-    end
     
 	update_carrier_pos()
 	update_carrier_tcn()	
 	
-	  
-    update_apn153() -- AN/APN-153(V) RADAR NAVIGATION SET (DOPPLER)
-    update_asn41()  -- AN/ASN-41 NAVIGATION COMPUTER SYSTEM
-    update_tacan()  -- AN/ARN-52(V) TACAN BEARING-DISTANCE EQUIPMENT
-    update_bdhi()
+	if get_elec_fwd_mon_ac_ok() then
+        update_apn153() -- AN/APN-153(V) RADAR NAVIGATION SET (DOPPLER)
+        update_asn41()  -- AN/ASN-41 NAVIGATION COMPUTER SYSTEM
+    else
+        set_apn153_memorylight(0)
+        apn153_state = "apn153-off"
+    end
+
+    if get_elec_mon_primary_ac_ok() then
+        update_tacan()  -- AN/ARN-52(V) TACAN BEARING-DISTANCE EQUIPMENT
+    end
+
+    if get_elec_26V_ac_ok() then
+        update_bdhi()
+    end
     if tacan_audio_active then
         update_morse_playback()
     end
