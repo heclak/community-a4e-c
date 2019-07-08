@@ -44,6 +44,7 @@ local apn153_warm = false
 local apn153_warmup_timer = 0
 local apn153_test_timer = 99999
 local apn153_memorylight_test = 0
+local apn153_test_running = false -- check if test is running
 
 -- apn-153 shared output data
 local apn153_gs = get_param_handle("APN153-GS")
@@ -55,6 +56,10 @@ local apn153_speed_nXn = get_param_handle("APN153-SPEED-nXn")
 local apn153_speed_nnX = get_param_handle("APN153-SPEED-nnX")
 local apn153_drift_gauge = get_param_handle("APN153-DRIFT-GAUGE")
 local apn153_memorylight = get_param_handle("APN153-MEMORYLIGHT")
+
+-- apn-153 constants
+local APN153_WARMUP_TIME = 300 -- warmup time duration in seconds
+local APN153_TEST_TIME = 60 -- test sequence time duration in seconds
 
 
 -----------------------------------------------------------------------
@@ -982,8 +987,8 @@ performance:
     accurate from -40 to +40 degrees of drift
     uses variable-PRF narrow-beam microwave pulses
 
-    5 minutes to execute test mode
-    1 minute warmup
+    1 minutes to execute test mode
+    5 minute warmup
     first signal acquision "within 30 seconds of reaching 150 knots of ground speed and greater than 40 feet of altitude"
     bank limited to 30 degrees relative to terrain below, or else memory mode "may" trigger
 
@@ -1003,8 +1008,8 @@ states:
     apn153-off [0]:
         output: GS=0, drift=0
         set: "warm" = false
-        set: "warmup" timer = 1 minute in the future
-        set: "test" timer = 5 minutes in the future
+        set: "warmup" timer = 5 minute in the future
+        set: "test" timer = 1 minutes in the future
         
         transition: if switch == off, stay here
         transition: if switch == stby goto apn153-mem-stby
@@ -1013,7 +1018,7 @@ states:
         transition: if switch == test goto apn153-testrun
 
     apn153-testrun [1]:
-        upon entry, begin 5 minute "test" timer
+        upon entry, begin 1 minute "test" timer
         if "warmup" timer < now(), set "warm" = true
         output: GS=0, drift=0
 
@@ -1036,7 +1041,7 @@ states:
         transition: if switch == test, stay here
     
     apn153-mem-stby [3]:
-        set: "test" timer = 5 minutes in the future
+        set: "test" timer = 1 minutes in the future
         if "warmup" timer < now(), set "warm" = true
 
         output: memory light = on
@@ -1218,8 +1223,7 @@ function update_apn153()
 
         if apn153_input ~= "OFF" then
             print_message_to_user("AN/APN-153: warmup starting, time:"..timenow)
-            apn153_warmup_timer = timenow+60
-            apn153_test_timer = timenow+300
+            apn153_warmup_timer = timenow + APN153_WARMUP_TIME
 
             if apn153_input == "STBY" then apn153_state = "apn153-mem-stby"
             elseif apn153_input == "LAND" then apn153_state = "apn153-mem-land"
@@ -1320,12 +1324,24 @@ function update_apn153()
     elseif apn153_state == "apn153-test" then
 
         if apn153_input ~= "TEST" then
-            if apn153_input == "OFF" then apn153_state = "apn153-off"
-            elseif apn153_input == "STBY" then apn153_state = "apn153-mem-stby"
-            elseif apn153_input == "LAND" then apn153_state = "apn153-mem-land"
-            elseif apn153_input == "SEA" then apn153_state = "apn153-mem-sea"
+            if apn153_input == "OFF" then 
+                apn153_test_running = false
+                apn153_state = "apn153-off"
+            elseif apn153_input == "STBY" then
+                apn153_test_running = false
+                apn153_state = "apn153-mem-stby"
+            elseif apn153_input == "LAND" then
+                apn153_test_running = false
+                apn153_state = "apn153-mem-land"
+            elseif apn153_input == "SEA" then
+                apn153_test_running = false
+                apn153_state = "apn153-mem-sea"
             end
         else
+            if apn153_test_running == false then
+                apn153_test_running = true
+                apn153_test_timer = timenow + APN153_TEST_TIME
+            end
             if timenow >= apn153_test_timer then
                 set_apn153_memorylight( apn153_memorylight_test==1 and 1 or 0 )
                 -- set the "test OK" values once upon entry
