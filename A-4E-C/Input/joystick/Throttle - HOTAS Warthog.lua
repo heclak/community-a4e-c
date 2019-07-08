@@ -278,8 +278,8 @@ keyCommands = {
     {down = iCommandPlaneFlapsOn, name = _('Flaps Down'), category = _('Systems')},
     {down = iCommandPlaneFlapsOff, name = _('Flaps Up'), category = _('Systems')},
     {down = Keys.PlaneFlapsStop, name = _('Flaps Stop'), category = 'Systems'},
-    {combos = {{key = 'JOY_BTN22'}}, down = Keys.PlaneFlapsDownHotas, up = Keys.PlaneFlapsStop, name = _('Flaps Down else Stop (HOTAS)'), category = 'HOTAS'}, -- for Warthog/HOTAS Flaps lever - realistic
-    {combos = {{key = 'JOY_BTN23'}}, down = Keys.PlaneFlapsUpHotas, up = Keys.PlaneFlapsStop, name = _('Flaps Up else Stop (HOTAS)'), category = 'HOTAS'},  -- for Warthog/HOTAS Flaps lever - realistic
+    {combos = {{key = 'JOY_BTN23'}}, down = Keys.PlaneFlapsDownHotas, up = Keys.PlaneFlapsStop, name = _('Flaps Down else Stop (HOTAS)'), category = 'HOTAS'}, -- for Warthog/HOTAS Flaps lever - realistic
+    {combos = {{key = 'JOY_BTN22'}}, down = Keys.PlaneFlapsUpHotas, up = Keys.PlaneFlapsStop, name = _('Flaps Up else Stop (HOTAS)'), category = 'HOTAS'},  -- for Warthog/HOTAS Flaps lever - realistic
 
     {down = iCommandPlaneGear, name = _('Landing Gear Up/Down'), category = _('Systems')},
     {down = iCommandPlaneGearUp, name = _('Landing Gear Up'), category = _('Systems')},

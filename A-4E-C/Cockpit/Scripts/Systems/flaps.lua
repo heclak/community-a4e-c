@@ -95,12 +95,12 @@ function SetCommand(command,value)
         fromKeyboard = true
         dev:performClickableAction(device_commands.flaps, -1, false)    -- target: extension
     elseif command == Keys.PlaneFlapsUpHotas then
-        dev:performClickableAction(device_commands.flaps, -1, false)    -- target: extension
+        dev:performClickableAction(device_commands.flaps, 1, false)    -- target: extension
     elseif command == Keys.PlaneFlapsOff then
         fromKeyboard = true
         dev:performClickableAction(device_commands.flaps, 1, false)     -- target: retraction
     elseif command == Keys.PlaneFlapsDownHotas then
-        dev:performClickableAction(device_commands.flaps, 1, false)     -- target: retraction
+        dev:performClickableAction(device_commands.flaps, -1, false)     -- target: retraction
     elseif command == Keys.PlaneFlaps then
         if MOVING == 1 then
             fromKeyboard = false
