@@ -49,6 +49,8 @@ local apn153_test_running = false -- check if test is running
 -- apn-153 shared output data
 local apn153_gs = get_param_handle("APN153-GS")
 local apn153_drift = get_param_handle("APN153-DRIFT")
+local apn153_wind_speed = get_param_handle("APN153-WIND-SPEED")
+local apn153_wind_dir = get_param_handle("APN153-WIND-DIR")
 
 -- apn-153 indicators
 local apn153_speed_Xnn = get_param_handle("APN153-SPEED-Xnn")
@@ -952,8 +954,10 @@ function update_asn41()
             -- asn41-d1 output
             asn41_update_range_and_bearing(1)
             -- asn41-d1 draw
-            asn41_draw_windspeed( asn41_windspeed_offset )
-            asn41_draw_winddir( asn41_winddir_offset )
+            -- asn41_draw_windspeed( asn41_windspeed_offset )
+            -- asn41_draw_winddir( asn41_winddir_offset )
+            asn41_draw_windspeed(apn153_wind_speed:get())
+            asn41_draw_winddir(apn153_wind_dir:get())
             asn41_draw_magvar( asn41_magvar_offset )
             update_and_draw_ppos(asn41_ppos_lat_offset, asn41_ppos_lon_offset)  -- fully tracks present position
             draw_dest(asn41_d1_lat+asn41_d1_lat_offset, asn41_d1_lon+asn41_d1_lon_offset)
@@ -969,8 +973,10 @@ function update_asn41()
             -- asn41-d2 output
             asn41_update_range_and_bearing(2)
             -- asn41-d2 draw
-            asn41_draw_windspeed( asn41_windspeed_offset )
-            asn41_draw_winddir( asn41_winddir_offset )
+            -- asn41_draw_windspeed( asn41_windspeed_offset )
+            -- asn41_draw_winddir( asn41_winddir_offset )
+            asn41_draw_windspeed(apn153_wind_speed:get())
+            asn41_draw_winddir(apn153_wind_dir:get())
             asn41_draw_magvar( asn41_magvar_offset )
             update_and_draw_ppos(asn41_ppos_lat_offset, asn41_ppos_lon_offset)
             draw_dest(asn41_d2_lat+asn41_d2_lat_offset, asn41_d2_lon+asn41_d2_lon_offset)
@@ -1138,6 +1144,51 @@ function apn153_get_signal_ok()
     return true
 end
 
+-- Used to calculate the wind vector from the data provided by the AN/APN-153
+-- @return wind direction and wind speed
+function apn153_calculate_wind_vector(true_heading, true_airspeed, ground_track, ground_speed)
+    -- print_message_to_user("true heading: "..true_heading.." true airspeed: "..true_airspeed.." ground track: "..ground_track.." ground speed: "..ground_speed)
+
+    -- this function uses the air vector as the beginning of the vector path
+    -- flip the air vector in preparation for vector addition
+    local air_vector_heading_rad = math.rad((true_heading + 180) % 360)
+    -- convert to radians
+    local ground_track_rad = math.rad(ground_track)
+
+    -- calculate the wind vector
+    local air_vector = {
+        x = true_airspeed * math.cos(air_vector_heading_rad),
+        y = true_airspeed * math.sin(air_vector_heading_rad)
+    }
+    local ground_vector = {
+        x = ground_speed * math.cos(ground_track_rad),
+        y = ground_speed * math.sin(ground_track_rad)
+    }
+    local wind_vector = {
+        x = air_vector.x + ground_vector.x,
+        y = air_vector.y + ground_vector.y
+    }
+    wind_vector.magnitude = math.sqrt((wind_vector.x * wind_vector.x) + (wind_vector.y * wind_vector.y))
+
+    -- check which quadrant is the wind vector in and adjust the direction
+    -- this wind direction indicates the direction the wind is blowing towards
+    if wind_vector.x >= 0 and wind_vector.y >= 0 then -- quadrant 1
+        wind_vector.direction = math.deg(math.atan(wind_vector.y, wind_vector.x))
+    elseif wind_vector.x < 0 and wind_vector.y >= 0 then -- quadrant 2
+        wind_vector.direction = math.rad(math.atan(wind_vector.y, wind_vector.x)) + 180
+    elseif wind_vector.x < 0 and wind_vector.y < 0 then -- quadrant 3
+        wind_vector.direction = math.rad(math.atan(wind_vector.y, wind_vector.x)) + 180
+    elseif wind_vector.x >= 0 and wind_vector.y < 0 then -- quadrant 4
+        wind_vector.direction = math.rad(math.atan(wind_vector.y, wind_vector.x)) + 360
+    end
+
+    -- invert the wind direction to remain consistent with ATIS wind reporting
+    -- wind direction will indicate the direction the wind is coming FROM
+    wind_vector.direction = (wind_vector.direction + 180) % 360
+
+    return wind_vector.magnitude, wind_vector.direction
+end
+
 -- This function is executed by the AN/APN-153 for purposes of preventing large impluses in
 -- speed when the sensor transitions from inactive to active.  We run it on every pass through
 -- the update_apn153() function where apn153_speed_and_drift() does not execute.
@@ -1165,6 +1216,11 @@ function apn153_speed_and_drift(land)
     speed = speed * 72000 / knot2meter                          -- speed in knots = delta meters * (3600/update_time_step) * (1 / knot2meter)
 
     local angle = math.deg( math.atan2(curz-lastz, curx-lastx) ) % 360
+
+    -- calculate wind data and share
+    local wind_speed, wind_direction = apn153_calculate_wind_vector(heading, sensor_data.getTrueAirSpeed() * 1.94384, angle, speed)
+    apn153_wind_speed:set(wind_speed)
+    apn153_wind_dir:set(wind_direction)
 
     drift = (angle-heading)
     
