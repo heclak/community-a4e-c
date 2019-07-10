@@ -39,6 +39,7 @@ local ENGINE_STARTING = 2
 local ENGINE_RUNNING = 3
 local engine_state = ENGINE_OFF
 local EMER_FUEL_SHUTOFF = false -- state of emergency fuel shutoff control 
+local EMER_FUEL_SHUTOFF_CATCH = false -- state of emergency fuel shutoff catch 
 
 local THROTTLE_OFF = 0
 local THROTTLE_IGN = 1
@@ -56,6 +57,7 @@ local throttle_state = THROTTLE_ADJUST
 Engine:listen_command(device_commands.push_starter_switch)
 Engine:listen_command(Keys.Engine_Start)
 Engine:listen_command(Keys.Engine_Stop)
+Engine:listen_command(device_commands.ENGINE_manual_fuel_shutoff)
 --Engine:listen_command(device_commands.throttle_axis)
 
 function post_initialize()
@@ -65,6 +67,8 @@ function post_initialize()
     local throttle_clickable_ref = get_clickable_element_reference("PNT_80")
     local sensor_data = get_base_data()
     local throttle = sensor_data.getThrottleLeftPosition()
+    local manual_fuel_shutoff_clickable_ref = get_clickable_element_reference("PNT_130")
+    manual_fuel_shutoff_clickable_ref:hide(true)
 
     local birth = LockOn_Options.init_conditions.birth_place
     if birth=="GROUND_HOT" then
@@ -72,6 +76,7 @@ function post_initialize()
         throttle_state = THROTTLE_ADJUST
         throttle_clickable_ref:hide(throttle>0.01)
         dev:performClickableAction(device_commands.throttle_click,1,false)
+        dev:performClickableAction(device_commands.ENGINE_manual_fuel_shutoff,0,false)
     elseif birth=="AIR_HOT" then
         engine_state = ENGINE_RUNNING
         throttle_state = THROTTLE_ADJUST
@@ -152,16 +157,50 @@ function SetCommand(command,value)
             -- click to ADJUST from IGN
             throttle_state = THROTTLE_ADJUST
         end
-    elseif command==device_commands.emer_fuel_shutoff then
+    elseif command==device_commands.ENGINE_manual_fuel_shutoff then
+        local manual_fuel_shutoff_catch_clickable_ref = get_clickable_element_reference("PNT_131")
         -- if fuel is cut off, shutdown engines and prevent engines from restarting until lever is reset.
-        if value == 1 then 
-            debug_print("engine has been turned off")
+        if value == 1 then
             dispatch_action(nil,iCommandEnginesStop)
             engine_state = ENGINE_OFF
             Engine:performClickableAction(device_commands.push_starter_switch,0,false) -- pop up start button
             EMER_FUEL_SHUTOFF = true
+            manual_fuel_shutoff_catch_clickable_ref:hide(true)
         else
             EMER_FUEL_SHUTOFF = false
+            manual_fuel_shutoff_catch_clickable_ref:hide(false)
+        end
+    elseif command==device_commands.ENGINE_manual_fuel_shutoff_catch then
+        -- catch needs to in the raise position before the manual fuel cutoff lever is allowed to be pulled.
+        local manual_fuel_shutoff_clickable_ref = get_clickable_element_reference("PNT_130")
+        if value == 1 then 
+            manual_fuel_shutoff_clickable_ref:hide(false)
+        else
+            manual_fuel_shutoff_clickable_ref:hide(true)
+        end
+    elseif command == device_commands.ENGINE_wing_fuel_sw then
+        -- print_message_to_user("Fuel Dump "..value)
+        if value == 1 then
+            dispatch_action(nil, 79)
+        elseif value == -1 then
+            -- emer trans
+            -- TODO implement logic
+        else
+            dispatch_action(nil, 80)
+        end
+    elseif command == device_commands.ENGINE_fuel_control_sw then
+        print_message_to_user("Fuel Control Switch: "..value)
+        if value == 1 then
+            -- TODO implement logic
+        else
+            -- TODO implement logic
+        end
+    elseif command == device_commands.ENGINE_drop_tanks_sw then
+        print_message_to_user("Drop Tanks Switch: "..value)
+        if value == 1 then
+            -- TODO implement logic
+        else
+            -- TODO implement logic
         end
     else
         print_message_to_user("engine unknown cmd: "..command.."="..tostring(value))

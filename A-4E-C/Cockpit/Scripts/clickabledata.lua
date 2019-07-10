@@ -34,18 +34,20 @@ elements["PNT_129"] = default_2_position_tumb("Canopy", devices.CANOPY, Keys.Can
 
 elements["PNT_132"] = multiposition_switch_limited("Flaps Lever", devices.FLAPS, device_commands.flaps, 132, 3, 1, false, -1.0)
 
--- THROTTLE CONTROL PANEL
-elements["PNT_80"] = default_3_position_tumb("Throttle",devices.ENGINE, device_commands.throttle_click,0,false,true)
-elements["PNT_82"] = default_axis_limited("Rudder trim", devices.TRIM, device_commands.rudder_trim, 82, 0.0, 0.3, false, false, {-1,1})
-elements["PNT_130"] = default_2_position_tumb("Emergency Fuel Shutoff Control",devices.ENGINE, device_commands.emer_fuel_shutoff, 130, nil, 3)
-elements["PNT_131"] = default_2_position_tumb("Emergency Fuel Shutoff Catch",devices.ENGINE, device_commands.ENGINE_fuel_shutoff_catch, 131, nil, 3) -- NO COMMAND
+-- THROTTLE PANEL
+elements["PNT_80"] 	= default_3_position_tumb("Throttle", devices.ENGINE, device_commands.throttle_click,0, false, true)
+elements["PNT_82"] 	= default_axis_limited("Rudder trim", devices.TRIM, device_commands.rudder_trim, 82, 0.0, 0.3, false, false, {-1,1})
 
 --ENGINE CONTROL PANEL
 elements["PNT_100"] = default_2_position_tumb("Starter switch",devices.ENGINE, device_commands.push_starter_switch,100)
 elements["PNT_100"].sound = {{PUSHPRESS,PUSHRELEASE}}
-elements["PNT_101"] = default_3_position_tumb( "Drop Tanks Pressurization and Flight Refuel switch", devices.ENGINE, device_commands.ENGINE_drop_tanks_press, 101, false, true, TOGGLECLICK_LEFT_MID) -- NO COMMAND
-elements["PNT_103"] = default_3_position_tumb( "Emer Tranfer and Wing Fuel Dump switch", devices.ENGINE, device_commands.ENGINE_wing_fuel_dump, 103, false, true, TOGGLECLICK_LEFT_MID) -- NO COMMAND
-elements["PNT_104"] = default_2_position_tumb("Fuel control switch",devices.ENGINE, device_commands.ENGINE_fuel_control,104, TOGGLECLICK_LEFT_MID)
+elements["PNT_101"] = default_3_position_tumb("Drop Tanks Pressurization and Flight Refuel switch", devices.ENGINE, device_commands.ENGINE_drop_tanks_sw, 101, false, true, TOGGLECLICK_LEFT_MID) -- NO COMMAND
+elements["PNT_103"] = default_3_position_tumb("Emer Tranfer and Wing Fuel Dump switch", devices.ENGINE, device_commands.ENGINE_wing_fuel_sw, 103, false, true, TOGGLECLICK_LEFT_MID) -- NO COMMAND
+elements["PNT_104"] = default_2_position_tumb("Fuel control switch",devices.ENGINE, device_commands.ENGINE_fuel_control_sw,104, TOGGLECLICK_LEFT_MID)
+elements["PNT_130"] = default_2_position_tumb("Manual Fuel Shutoff Lever",devices.ENGINE, device_commands.ENGINE_manual_fuel_shutoff, 130, nil, 3)
+-- elements["PNT_130"].updatable = false
+-- elements["PNT_130"].use_OBB = false
+elements["PNT_131"] = default_2_position_tumb("Manual Fuel Shutoff Catch",devices.ENGINE, device_commands.ENGINE_manual_fuel_shutoff_catch, 131, nil, 2) -- NO COMMAND
 --elements["PNT_201"] = default_3_position_tumb("Throttle cutoff",devices.ENGINE, device_commands.throttle,201,false)
 
 -- OXYGEN and ANTI-G PANEL
@@ -268,11 +270,13 @@ elements["PNT_1251"] = default_2_position_tumb("Cabin Pressure Switch", devices.
 elements["PNT_225"] = default_3_position_tumb("Windshield Defrost", devices.ELECTRIC_SYSTEM, device_commands.windshield_defrost , 225, nil, nil, TOGGLECLICK_MID_FWD)
 elements["PNT_226"] = default_axis_limited("Cabin Temp Knob", devices.ELECTRIC_SYSTEM, device_commands.cabin_temp , 226, 0.0, 0.3, false, false, {0,1} )
 
-for i,o in pairs(elements) do
-	if  o.class[1] == class_type.TUMB or 
-	   (o.class[2]  and o.class[2] == class_type.TUMB) or
-	   (o.class[3]  and o.class[3] == class_type.TUMB)  then
-	   o.updatable = true
-	   o.use_OBB   = true
-	end
-end
+-- Commented out because it doesn't seem to be required anymore [HECLAK]
+-- Can be removed if someone figures out what the original requirement was
+-- for i,o in pairs(elements) do
+-- 	if  o.class[1] == class_type.TUMB or 
+-- 	   (o.class[2]  and o.class[2] == class_type.TUMB) or
+-- 	   (o.class[3]  and o.class[3] == class_type.TUMB)  then
+-- 	   o.updatable = true
+-- 	   o.use_OBB   = true
+-- 	end
+-- end

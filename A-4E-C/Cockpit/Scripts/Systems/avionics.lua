@@ -227,7 +227,6 @@ dev:listen_command(Keys.IntLightWhiteFlood)
 dev:listen_command(Keys.IntLightInstruments)
 dev:listen_command(Keys.IntLightConsole)
 dev:listen_command(Keys.IntLightBrightness)
-dev:listen_command(device_commands.fueldump)
 
 function dump_table(t)
     for key,value in pairs(t) do
@@ -430,13 +429,8 @@ function SetCommand(command,value)
     elseif command == device_commands.accel_reset then
         accel_val_max = 1.0
         accel_val_min = 1.0
-    elseif command == device_commands.fueldump then
-        -- print_message_to_user("Fuel Dump "..value)
-        if value == 1 then
-            dispatch_action(nil, 79)
-        else
-            dispatch_action(nil, 80)
-        end
+    else
+        print_message_to_user(command.." "..value)
     end
 end
 

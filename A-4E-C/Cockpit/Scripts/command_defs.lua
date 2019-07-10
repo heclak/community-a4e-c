@@ -447,22 +447,19 @@ device_commands =
     windshield_defrost              = __counter(),
     cabin_temp                      = __counter(),
 
-    emer_fuel_shutoff               = __counter(),
-    fueldump                        = __counter(),
     man_flt_control_override        = __counter(),
-
+    
     shrike_selector                 = __counter(),
     oxygen_switch                   = __counter(),
-
+    
     COMPASS_set_heading             = __counter(),
     COMPASS_push_to_sync            = __counter(),
     COMPASS_free_slaved_switch      = __counter(),
     COMPASS_latitude                = __counter(),
-
-    ENGINE_wing_fuel_dump           = __counter(),
-    ENGINE_emer_trans               = __counter(),
-    ENGINE_drop_tanks_press         = __counter(),
-    ENGINE_flight_refuel            = __counter(),
-    ENGINE_fuel_control             = __counter(),
-    ENGINE_fuel_shutoff_catch       = __counter(),
+    
+    ENGINE_wing_fuel_sw             = __counter(),
+    ENGINE_drop_tanks_sw            = __counter(),
+    ENGINE_fuel_control_sw          = __counter(),
+    ENGINE_manual_fuel_shutoff        = __counter(),
+    ENGINE_manual_fuel_shutoff_catch  = __counter(),
 }
