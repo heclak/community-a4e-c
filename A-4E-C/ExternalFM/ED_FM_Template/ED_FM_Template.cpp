@@ -203,7 +203,7 @@ void ed_fm_simulate(double dt)
 	common_force  = Vec3();
 	common_moment = Vec3();
 
-	common_moment -= Vec3(rx*10000.0, 0, 0);
+	//common_moment -= Vec3(rx*10000.0, 0, 0);
 
 	Vec3 airspeed;
 
@@ -251,8 +251,8 @@ void ed_fm_simulate(double dt)
 	Vec3 elevator(0, - 0.5 * stick_pitch * CyAlpha_ * q * S, 0);
 	Vec3 elevatorPos(-5, 0, 0);
 
-	Vec3 aileron_left (0 , -4 * 0.05 * Cy * (stick_roll) * q * S , 0 );
-	Vec3 aileron_right(0 ,4 * 0.05 * Cy * (stick_roll) * q * S , 0 );
+	Vec3 aileron_left (0 , -4 * 0.05 * (CyAlpha_ * 57.3) * (stick_roll) * q * S , 0 );
+	Vec3 aileron_right(0 ,4 * 0.05 * (CyAlpha_ * 57.3) * (stick_roll) * q * S , 0 );
 
 	Vec3 aileron_left_pos(0,0,-5.0);
 	Vec3 aileron_right_pos(0,0, 5.0);
