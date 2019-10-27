@@ -155,19 +155,10 @@ double CyMax[] = {
 
 void add_local_force(const Vec3 & Force, const Vec3 & Force_pos)
 {
-	common_force.x += Force.x;
-	common_force.y += Force.y;
-	common_force.z += Force.z;
-
-	Vec3 delta_pos(Force_pos.x - center_of_gravity.x,
-				   Force_pos.y - center_of_gravity.y,
-				   Force_pos.z - center_of_gravity.z);
-
+	common_force += Force;
+	Vec3 delta_pos = Force_pos - center_of_gravity;
 	Vec3 delta_moment = cross(delta_pos, Force);
-
-	common_moment.x += delta_moment.x;
-	common_moment.y += delta_moment.y;
-	common_moment.z += delta_moment.z;
+	common_moment += delta_moment;
 }
 
 
@@ -212,7 +203,7 @@ void ed_fm_simulate(double dt)
 	common_force  = Vec3();
 	common_moment = Vec3();
 
-	common_moment
+	common_moment -= Vec3(rx*10000.0, 0, 0);
 
 	Vec3 airspeed;
 
@@ -257,7 +248,7 @@ void ed_fm_simulate(double dt)
 	Vec3 rudder(0, 0, -0.05*beta * CyAlpha_ * 57.3 * q * S);
 	Vec3 rudderPos(-5, 0, 0);
 
-	Vec3 elevator(0, 0.05 * stick_pitch * CyAlpha_ * q * S, 0);
+	Vec3 elevator(0, - 0.5 * stick_pitch * CyAlpha_ * q * S, 0);
 	Vec3 elevatorPos(-5, 0, 0);
 
 	Vec3 aileron_left (0 , -4 * 0.05 * Cy * (stick_roll) * q * S , 0 );

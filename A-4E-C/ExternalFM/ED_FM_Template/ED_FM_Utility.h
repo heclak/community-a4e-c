@@ -7,6 +7,16 @@ struct Vec3
 	double y;
 	double z;
 
+	//Overloaded Operators for ED's silly vector struct.
+	Vec3& operator- ()
+
+	{
+		this->x = -this->x;
+		this->y = -this->y;
+		this->z = -this->z;
+		return *this;
+	}
+
 	Vec3& operator+= (const Vec3& v)
 
 	{
@@ -43,7 +53,7 @@ struct Vec3
 		return *this;
 	}
 
-	Vec3 operator+ (const Vec3& v)
+	Vec3 operator+ (const Vec3& v) const
 
 	{
 		Vec3 result;
@@ -53,7 +63,7 @@ struct Vec3
 		return result;
 	}
 
-	Vec3 operator- (const Vec3& v)
+	Vec3 operator- (const Vec3& v) const
 
 	{
 		Vec3 result;
@@ -63,7 +73,7 @@ struct Vec3
 		return result;
 	}
 
-	Vec3 operator/ (const double& s)
+	Vec3 operator/ (const double& s) const
 
 	{
 		Vec3 result;
@@ -74,7 +84,26 @@ struct Vec3
 	}
 };
 
+//Overloaded Operators for ED's silly vector struct.
+Vec3 operator* (const double& s, const Vec3& v)
 
+{
+	Vec3 result;
+	result.x = v.x * s;
+	result.y = v.y * s;
+	result.z = v.z * s;
+	return result;
+}
+
+Vec3 operator* (const Vec3& v, const double& s)
+
+{
+	Vec3 result;
+	result.x = v.x * s;
+	result.y = v.y * s;
+	result.z = v.z * s;
+	return result;
+}
 
 
 inline Vec3 cross(const Vec3 & a, const Vec3 & b)
