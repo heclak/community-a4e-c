@@ -6,7 +6,75 @@ struct Vec3
 	double x;
 	double y;
 	double z;
+
+	Vec3& operator+= (const Vec3& v)
+
+	{
+		this->x += v.x;
+		this->y += v.y;
+		this->z += v.z;
+		return *this;
+	}
+
+	Vec3& operator-= (const Vec3& v)
+
+	{
+		this->x -= v.x;
+		this->y -= v.y;
+		this->z -= v.z;
+		return *this;
+	}
+
+	Vec3& operator*= (const double& s)
+
+	{
+		this->x *= s;
+		this->y *= s;
+		this->z *= s;
+		return *this;
+	}
+
+	Vec3& operator/= (const double& s)
+
+	{
+		this->x /= s;
+		this->y /= s;
+		this->z /= s;
+		return *this;
+	}
+
+	Vec3 operator+ (const Vec3& v)
+
+	{
+		Vec3 result;
+		result.x = this->x + v.x;
+		result.y = this->y + v.y;
+		result.z = this->z + v.z;
+		return result;
+	}
+
+	Vec3 operator- (const Vec3& v)
+
+	{
+		Vec3 result;
+		result.x = this->x - v.x;
+		result.y = this->y - v.y;
+		result.z = this->z - v.z;
+		return result;
+	}
+
+	Vec3 operator/ (const double& s)
+
+	{
+		Vec3 result;
+		result.x = this->x / s;
+		result.y = this->y / s;
+		result.z = this->z / s;
+		return result;
+	}
 };
+
+
 
 
 inline Vec3 cross(const Vec3 & a, const Vec3 & b)

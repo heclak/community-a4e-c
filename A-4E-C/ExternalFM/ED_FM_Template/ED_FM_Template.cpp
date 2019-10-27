@@ -23,6 +23,10 @@ double  aoa = 0;
 double  beta = 0;
 double  speed_of_sound = 320;
 
+double rx = 0;
+double ry = 0;
+double rz = 0;
+
 
 double mach_table[] = {
 	0,	
@@ -208,6 +212,8 @@ void ed_fm_simulate(double dt)
 	common_force  = Vec3();
 	common_moment = Vec3();
 
+	common_moment
+
 	Vec3 airspeed;
 
 	airspeed.x = velocity_world_cs.x - wind.x;
@@ -357,6 +363,9 @@ void ed_fm_set_current_state_body_axis(double ax,//linear acceleration component
 {
 	aoa = common_angle_of_attack;
 	beta = common_angle_of_slide;
+	rx = omegax;
+	ry = omegay;
+	rz = omegaz;
 }
 /*
 input handling
