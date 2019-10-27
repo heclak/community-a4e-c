@@ -213,7 +213,7 @@ void ed_fm_simulate(double dt)
 
 	
 	Vec3 thrust_pos(-5.0,0,0);
-	Vec3 thrust(throttle * 5000, 0 , 0);
+	Vec3 thrust(throttle * 38000, 0 , 0);
 
 	double V_scalar =  sqrt(airspeed.x * airspeed.x + airspeed.y * airspeed.y + airspeed.z * airspeed.z);
 
@@ -245,14 +245,14 @@ void ed_fm_simulate(double dt)
 	add_local_force(aerodynamic_force,aerodynamic_force_pos);
 	add_local_force(thrust			 ,thrust_pos);
 
-	Vec3 rudder(0, 0, -0.05*beta * CyAlpha_ * 57.3 * q * S);
+	Vec3 rudder(0, 0, -0.5*beta * CyAlpha_ * 57.3 * q * S);
 	Vec3 rudderPos(-5, 0, 0);
 
-	Vec3 elevator(0, - 0.5 * stick_pitch * CyAlpha_ * q * S, 0);
+	Vec3 elevator(0, - 0.2 * stick_pitch * CyAlpha_ * q * S, 0);
 	Vec3 elevatorPos(-5, 0, 0);
 
-	Vec3 aileron_left (0 , -4 * 0.05 * (CyAlpha_ * 57.3) * (stick_roll) * q * S , 0 );
-	Vec3 aileron_right(0 ,4 * 0.05 * (CyAlpha_ * 57.3) * (stick_roll) * q * S , 0 );
+	Vec3 aileron_left (0 , 0.1 * 0.05 * (CyAlpha_ * 57.3) * (stick_roll) * q * S , 0 );
+	Vec3 aileron_right(0 ,-0.1 * 0.05 * (CyAlpha_ * 57.3) * (stick_roll) * q * S , 0 );
 
 	Vec3 aileron_left_pos(0,0,-5.0);
 	Vec3 aileron_right_pos(0,0, 5.0);
