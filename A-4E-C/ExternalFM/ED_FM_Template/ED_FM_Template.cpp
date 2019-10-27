@@ -203,7 +203,7 @@ void ed_fm_simulate(double dt)
 	common_force  = Vec3();
 	common_moment = Vec3();
 
-	//common_moment -= Vec3(rx*10000.0, 0, 0);
+	common_moment -= Vec3(rx*50000.0, ry * 10000.0, rz * 10000.0);
 
 	Vec3 airspeed;
 
@@ -232,7 +232,7 @@ void ed_fm_simulate(double dt)
 	if (Cy > CyMax_)
 		Cy = CyMax_;
 
-	double Cx  = 0.05 + B_ * Cy * Cy + B4_ * Cy * Cy * Cy * Cy;
+	double Cx  = 0.05 + B_ * (Cy * Cy) + B4_ * Cy * Cy * Cy * Cy;
 
 	double q	   =  0.5 * atmosphere_density * V_scalar * V_scalar;
 	const double S = 25;
@@ -248,7 +248,7 @@ void ed_fm_simulate(double dt)
 	Vec3 rudder(0, 0, -0.5*beta * CyAlpha_ * 57.3 * q * S);
 	Vec3 rudderPos(-5, 0, 0);
 
-	Vec3 elevator(0, - 0.2 * stick_pitch * CyAlpha_ * q * S, 0);
+	Vec3 elevator(0, - 0.4 * stick_pitch * CyAlpha_ * q * S, 0);
 	Vec3 elevatorPos(-5, 0, 0);
 
 	Vec3 aileron_left (0 , 0.1 * 0.05 * (CyAlpha_ * 57.3) * (stick_roll) * q * S , 0 );
