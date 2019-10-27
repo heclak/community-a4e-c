@@ -17,7 +17,7 @@ encyclopedia_path = current_mod_path..'/Encyclopedia',
 
 binaries   =
 {
-    'ED_FM_Template',
+    'A-4E-C',
 },
 
 Skins	=
@@ -96,10 +96,9 @@ local FM =
 
 {
 	[1] = self_ID,
-	[2] = 'ED_FM_Template',
+	[2] = 'A-4E-C',
 	center_of_mass		=	{ 0.183 , 0.261 , 0.0},
 	moment_of_inertia  	= 	{12874.0, 85552.1, 75673.6},
-	suspension=nil,
 }
 
 make_flyable('A-4E-C'	, current_mod_path..'/Cockpit/Scripts/', FM, current_mod_path..'/comm.lua')

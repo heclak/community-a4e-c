@@ -1,9 +1,10 @@
-﻿  stdafx.cpp
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(438,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  stdafx.cpp
   dllmain.cpp
   ED_FM_Template.cpp
-     Creating library C:\Users\joshn\source\repos\A-4 FM Dev\community-a4e-c\A-4E-C\ExternalFM\x64\Release\ED_FM_Template.lib and object C:\Users\joshn\source\repos\A-4 FM Dev\community-a4e-c\A-4E-C\ExternalFM\x64\Release\ED_FM_Template.exp
+     Creating library ..\..\bin\A-4E-C.lib and object ..\..\bin\A-4E-C.exp
   Generating code
   Previous IPDB not found, fall back to full compilation.
   All 36 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
-  ED_FM_Template.vcxproj -> C:\Users\joshn\source\repos\A-4 FM Dev\community-a4e-c\A-4E-C\ExternalFM\x64\Release\ED_FM_Template.dll
+  ED_FM_Template.vcxproj -> C:\Users\joshn\source\repos\A-4 FM Dev\community-a4e-c\A-4E-C\ExternalFM\ED_FM_Template\..\..\bin\A-4E-C.dll
