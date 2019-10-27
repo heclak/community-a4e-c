@@ -1,0 +1,9 @@
+﻿  stdafx.cpp
+  dllmain.cpp
+  ED_FM_Template.cpp
+     Creating library C:\Users\joshn\source\repos\A-4 FM Dev\community-a4e-c\A-4E-C\ExternalFM\x64\Release\ED_FM_Template.lib and object C:\Users\joshn\source\repos\A-4 FM Dev\community-a4e-c\A-4E-C\ExternalFM\x64\Release\ED_FM_Template.exp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 36 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  ED_FM_Template.vcxproj -> C:\Users\joshn\source\repos\A-4 FM Dev\community-a4e-c\A-4E-C\ExternalFM\x64\Release\ED_FM_Template.dll
