@@ -20,6 +20,7 @@ double  internal_fuel     = 0;
 double  fuel_consumption_since_last_time  = 0;
 double  atmosphere_density = 0;
 double  aoa = 0;
+double  beta = 0;
 double  speed_of_sound = 320;
 
 
@@ -179,6 +180,7 @@ void ed_fm_add_local_force(double & x,double &y,double &z,double & pos_x,double 
 	x = common_force.x;
 	y = common_force.y;
 	z = common_force.z;
+
 	pos_x = center_of_gravity.x;
 	pos_y = center_of_gravity.y;
 	pos_z = center_of_gravity.z;
@@ -241,13 +243,19 @@ void ed_fm_simulate(double dt)
 	double Drag =  Cx * q * S;
 	
 	Vec3 aerodynamic_force(-Drag , Lift , 0 );
-	Vec3 aerodynamic_force_pos(1.0,0,0);
+	Vec3 aerodynamic_force_pos(0.0,0,0);
 
 	add_local_force(aerodynamic_force,aerodynamic_force_pos);
 	add_local_force(thrust			 ,thrust_pos);
 
-	Vec3 aileron_left (0 , 0.05 * Cy * (stick_roll) * q * S , 0 );
-	Vec3 aileron_right(0 ,-0.05 * Cy * (stick_roll) * q * S , 0 );
+	Vec3 rudder(0, 0, -0.05*beta * CyAlpha_ * 57.3 * q * S);
+	Vec3 rudderPos(-5, 0, 0);
+
+	Vec3 elevator(0, 0.05 * stick_pitch * CyAlpha_ * q * S, 0);
+	Vec3 elevatorPos(-5, 0, 0);
+
+	Vec3 aileron_left (0 , -4 * 0.05 * Cy * (stick_roll) * q * S , 0 );
+	Vec3 aileron_right(0 ,4 * 0.05 * Cy * (stick_roll) * q * S , 0 );
 
 	Vec3 aileron_left_pos(0,0,-5.0);
 	Vec3 aileron_right_pos(0,0, 5.0);
@@ -255,6 +263,8 @@ void ed_fm_simulate(double dt)
 
 	add_local_force(aileron_left ,aileron_left_pos);
 	add_local_force(aileron_right,aileron_right_pos);
+	add_local_force(rudder, rudderPos);
+	add_local_force(elevator, elevatorPos);
 
 	simulate_fuel_consumption(dt);
 }
@@ -346,6 +356,7 @@ void ed_fm_set_current_state_body_axis(double ax,//linear acceleration component
 	)
 {
 	aoa = common_angle_of_attack;
+	beta = common_angle_of_slide;
 }
 /*
 input handling
