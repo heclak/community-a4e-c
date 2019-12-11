@@ -95,6 +95,7 @@ creators[devices.SOUNDSYSTEM]       = {"avLuaDevice"            ,LockOn_Options.
 
 creators[devices.ILS]         = {"avLuaDevice",LockOn_Options.script_path.."Nav/ils.lua"}
 --creators[devices.NAV_TERRAIN] = {"avLuaDevice",LockOn_Options.script_path.."Nav/terrainmask.lua"}
+creators[devices.NVG]          = {"avNightVisionGoggles", LockOn_Options.script_path.."HELMET/NVG.lua",{}}
 
 -- Indicators
 indicators = {}

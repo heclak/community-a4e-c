@@ -43,6 +43,7 @@ devices["COUNTERMEASURES"] 			= counter()
 devices["SFMEXTENDER"] = counter()
 devices["SHRIKE"] 					= counter()
 devices["SOUNDSYSTEM"]				= counter()
+devices["NVG"]						= counter()
 
 
 -- temporary dummy devices
