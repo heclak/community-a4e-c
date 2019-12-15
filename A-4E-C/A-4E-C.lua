@@ -481,10 +481,14 @@ A_4E_C =  {
     {
         [1] =
         {
-            pos =     {-5.9,    0.163,    0}, -- nozzle coords
+            pos =     {-5.62,    0.163,    0}, -- nozzle coords
             elevation    =    0.0, -- AFB cone elevation
-            diameter    =    0.675, -- AFB cone diameter
-            exhaust_length_ab    =    3.0, -- lenght in m
+
+            -- Diameter is 0 to hide AB for AI. AB is used for catapult simulation.
+            -- If AB is no longer used for catapult then diameter can be set for exhaust smoke.
+            diameter    =    0.0, -- AFB cone diameter.
+            -- diameter    =    0.675, -- AFB cone diameter
+            exhaust_length_ab    =    0, -- lenght in m
             exhaust_length_ab_K    =    0.707, -- AB animation
             smokiness_level     =     0.15,
         }, -- end of [1]
