@@ -1205,41 +1205,41 @@ A_4E_C =  {
     lights_data = {
         typename = "collection",
         lights = {
-        [1] = { typename = "collection",
-                lights = {
-                    -- Top Anticollision Light (red)
-                    --[1] = { typename = "strobelight", connector = "RED_BEACON_T", argument = 198, color = {1, 0, 0}, period = 1.2, phase_shift = 0 },
-                    [1] = { typename = "strobelight", connector = "RED_BEACON_T", color = {1, 0, 0}, period = 1.2, phase_shift = 0 },
-                    -- Bottom Anticollision Light (red)
-                    --[2] = { typename = "strobelight", connector = "RED_BEACON_B", argument = 199, color = {1, 0, 0}, period = 1.2, phase_shift = 0 },
-                    [2] = { typename = "strobelight", connector = "RED_BEACON_B", color = {1, 0, 0}, period = 1.2, phase_shift = 0 },
-                    }
-              },
-        [2] = { typename = "collection",
-                lights = {
-                    -- Taxi Light
-                    --[1] = { typename = "spotlight", connector = "MAIN_SPOT_PTR_01", argument = 208, dir_correction = {elevation = math.rad( 3)} },
-                    [1] = { typename = "spotlight", connector = "MAIN_SPOT_PTR_01", dir_correction = {elevation = math.rad( 3)} },
-                    }
-              },
-        [3] = { typename = "collection",
-                lights = { --[[
-                    -- Left Position Light (red)
-                    [1] = { typename = "omnilight", connector = "RED_NAV_L", color = {1, 0, 0}, pos_correction  = {0.0, 0, -0.2}, argument  = 190 },
-                    -- Right Position Light (green)
-                    [2] = { typename = "omnilight", connector = "GREEN_NAV_R", color = {0, 1, 0}, pos_correction = {0.0, 0, 0.2}, argument  = 191 },
-                    -- Tail Position Light (white)
-                    [3] = { typename = "omnilight", connector = "WHITE_NAV_T", color = {1, 1, 1}, pos_correction  = {0, 0, 0}, argument  = 192 },   --]]
-                    -- Left Position Light (red)
-                    [1] = { typename = "omnilight", connector = "RED_NAV_L", color = {1, 0, 0}, pos_correction  = {0.0, 0, -0.2} },
-                    -- Right Position Light (green)
-                    [2] = { typename = "omnilight", connector = "GREEN_NAV_R", color = {0, 1, 0}, pos_correction = {0.0, 0, 0.2} },
-                    -- Tail Position Light (white)
-                    [3] = { typename = "omnilight", connector = "WHITE_NAV_T", color = {1, 1, 1}, pos_correction  = {0, 0, 0} },
-                    }
-              },
-        }
-    },
+            -- STROBES
+            [1] = {
+                typename = "collection",
+                lights = {  {typename = "argnatostrobelight", argument = 198, period = 1.2, phase_shift = 0, speed = 20},
+                            {typename = "argnatostrobelight", argument = 199, period = 1.2, phase_shift = 0.5, speed = 1},
+                },
+            },
+            -- SPOTS / TAXI & LANDING
+            [2] = {
+                typename = "collection",
+                lights = {  {typename  = "argumentlight", argument  = 208},	-- taxi light
+                },
+            },
+            -- NAVLIGHTS
+            [3] = {
+                typename = "collection",
+                lights = {  {typename  = "argumentlight", argument  = 190},	-- red
+                            {typename  = "argumentlight", argument  = 191},	-- green
+                            {typename  = "argumentlight", argument  = 192},	-- white
+                },
+            },
+            -- FORMATION
+            [4] = {},
+            -- TIPS
+            [5] = {},
+            -- REFUEL
+            [6] = {
+                typename = "collection",
+                lights = {  {typename  = "argumentlight", argument  = 193},	-- probe light
+                },
+            },
+            -- ANTI-COLLISION
+            [7] = {},
+        }, -- end of lights
+    }, -- end of lights_data
 }
 
 add_aircraft(A_4E_C)
