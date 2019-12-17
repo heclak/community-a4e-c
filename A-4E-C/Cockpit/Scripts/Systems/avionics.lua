@@ -40,6 +40,8 @@ local refueling_rate_upper_limit = refueling_rate * 1.2
 local refueling_rate_lower_limit = refueling_rate * 0.8
 local refueling_rate_tank_change = refueling_rate_upper_limit * 2
 
+local iCommandPlaneEject = 83
+
 -- Variables
 --local ias = get_param_handle("D_IAS")
 
@@ -419,7 +421,7 @@ function SetCommand(command,value)
         end
         lights_floodwhite_val = newValue
         dev:performClickableAction(device_commands.intlight_whiteflood, lights_floodwhite_val, false)  -- pass through to clickable device
-        
+
     elseif command == device_commands.intlight_whiteflood_AXIS then
         local normalisedValue = ( ( value + 1 ) / 2 ) * 1.0 -- normalised {-1 to 1} to {0 - 1.0}
         dev:performClickableAction(device_commands.intlight_whiteflood, normalisedValue, false)
@@ -429,8 +431,12 @@ function SetCommand(command,value)
     elseif command == device_commands.accel_reset then
         accel_val_max = 1.0
         accel_val_min = 1.0
+    elseif command == device_commands.CPT_secondary_ejection_handle then
+        for i = 0, 2, 1 do
+            dispatch_action(nil, iCommandPlaneEject)
+        end
     else
-        print_message_to_user(command.." "..value)
+        print("Unknown command:"..command.." Value:"..value)
     end
 end
 

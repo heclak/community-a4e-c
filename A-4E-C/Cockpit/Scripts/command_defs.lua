@@ -462,4 +462,7 @@ device_commands =
     ENGINE_fuel_control_sw          = __counter(),
     ENGINE_manual_fuel_shutoff        = __counter(),
     ENGINE_manual_fuel_shutoff_catch  = __counter(),
+
+    CPT_shoulder_harness            = __counter(),
+    CPT_secondary_ejection_handle   = __counter(),
 }

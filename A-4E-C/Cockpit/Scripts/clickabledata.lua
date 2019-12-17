@@ -270,6 +270,14 @@ elements["PNT_1251"] = default_2_position_tumb("Cabin Pressure Switch", devices.
 elements["PNT_225"] = default_3_position_tumb("Windshield Defrost", devices.ELECTRIC_SYSTEM, device_commands.windshield_defrost , 225, nil, nil, TOGGLECLICK_MID_FWD)
 elements["PNT_226"] = default_axis_limited("Cabin Temp Knob", devices.ELECTRIC_SYSTEM, device_commands.cabin_temp , 226, 0.0, 0.3, false, false, {0,1} )
 
+-- EJECTION SEAT
+elements["PNT_24"] = default_2_position_tumb("Shoulder Harness Inertia Reel Control", devices.AVIONICS ,device_commands.CPT_shoulder_harness, 24, nil)
+elements["PNT_24"].animated        = {true, true}
+elements["PNT_24"].animation_speed = {7, 7}
+elements["PNT_25"] = default_2_position_tumb("Secondary Ejection Handle", devices.AVIONICS ,device_commands.CPT_secondary_ejection_handle, 25, nil)
+elements["PNT_25"].animated        = {true, true}
+elements["PNT_25"].animation_speed = {7, 7}
+
 -- Commented out because it doesn't seem to be required anymore [HECLAK]
 -- Can be removed if someone figures out what the original requirement was
 -- for i,o in pairs(elements) do
