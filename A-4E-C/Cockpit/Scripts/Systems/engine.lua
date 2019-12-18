@@ -21,8 +21,10 @@ sensor_data.mod_fuel_flow = function()
 	return org_fuel_flow
 end
 
-local iCommandEnginesStart=309
-local iCommandEnginesStop=310
+local iCommandEnginesStart  = 309
+local iCommandEnginesStop   = 310
+local iCommandPlaneFuelOff  = 80
+local iCommandPlaneFuelOn   = 79
 
 local pressure_ratio = get_param_handle("PRESSURE_RATIO")
 local oil_pressure = get_param_handle("OIL_PRESSURE")
@@ -61,8 +63,7 @@ Engine:listen_command(device_commands.ENGINE_manual_fuel_shutoff)
 --Engine:listen_command(device_commands.throttle_axis)
 
 function post_initialize()
-	
-	local dev = GetSelf()
+
     dev:performClickableAction(device_commands.push_starter_switch,0,false)
     local throttle_clickable_ref = get_clickable_element_reference("PNT_80")
     local sensor_data = get_base_data()
@@ -181,29 +182,38 @@ function SetCommand(command,value)
     elseif command == device_commands.ENGINE_wing_fuel_sw then
         -- print_message_to_user("Fuel Dump "..value)
         if value == 1 then
-            dispatch_action(nil, 79)
+            -- activate fuel dump
+            dispatch_action(nil, iCommandPlaneFuelOn)
         elseif value == -1 then
-            -- emer trans
+            -- position: emer trans
             -- TODO implement logic
-        else
-            dispatch_action(nil, 80)
+        elseif value == 0 then
+            -- position: off
+            dispatch_action(nil, iCommandPlaneFuelOff)
         end
     elseif command == device_commands.ENGINE_fuel_control_sw then
         print_message_to_user("Fuel Control Switch: "..value)
         if value == 1 then
+            -- position: manual
             -- TODO implement logic
-        else
+        elseif value == 0 then
+            -- position: primary
             -- TODO implement logic
         end
     elseif command == device_commands.ENGINE_drop_tanks_sw then
         print_message_to_user("Drop Tanks Switch: "..value)
         if value == 1 then
+            -- position: off
             -- TODO implement logic
-        else
+        elseif value == 0 then
+            -- position: press
+            -- TODO implement logic
+        elseif value == -1 then
+            -- position: flight refuel
             -- TODO implement logic
         end
     else
-        print_message_to_user("engine unknown cmd: "..command.."="..tostring(value))
+        -- print_message_to_user("engine unknown cmd: "..command.."="..tostring(value))
     end
 end
 
