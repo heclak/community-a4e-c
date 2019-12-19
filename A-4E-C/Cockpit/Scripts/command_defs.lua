@@ -465,4 +465,11 @@ device_commands =
 
     CPT_shoulder_harness            = __counter(),
     CPT_secondary_ejection_handle   = __counter(),
+    ppos_lat_push                   = __counter(),
+    ppos_lon_push                   = __counter(),
+    dest_lat_push                   = __counter(),
+    dest_lon_push                   = __counter(),
+    asn41_magvar_push               = __counter(),
+    asn41_windspeed_push            = __counter(),
+    asn41_winddir_push              = __counter(),
 }

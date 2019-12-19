@@ -94,6 +94,14 @@ local asn41_magvar_offset = 0
 local asn41_winddir_offset = 0
 local asn41_windspeed_offset = 0
 
+local ppos_lat_push_state = 0
+local ppos_lon_push_state = 0
+local dest_lat_push_state = 0
+local dest_lon_push_state = 0
+local asn41_magvar_push_state = 0
+local asn41_windspeed_push_state = 0
+local asn41_winddir_push_state = 0
+
 -- asn-41 shared output data
 local asn41_valid = get_param_handle("ASN41-VALID")
 local asn41_bearing = get_param_handle("ASN41-BEARING")     -- calculated magnetic bearing to target
@@ -400,41 +408,78 @@ function SetCommand(command,value)
         asn41_input = asn41_inputlist[ round((value*10)+1,0) ]
     elseif command == device_commands.bdhi_mode then
         bdhi_mode = bdhi_modelist[ value+2 ]   -- -1,0,1
+
+
+    ----------------------------------
+    -- NAV panel knob pushstates
+    ----------------------------------
+    elseif command == device_commands.ppos_lat_push then
+        if value == 1 or value == 0 then
+            ppos_lat_push_state = value
+        end
+    elseif command == device_commands.ppos_lon_push then
+        if value == 1 or value == 0 then
+            ppos_lon_push_state = value
+        end
+    elseif command == device_commands.dest_lat_push then
+        if value == 1 or value == 0 then
+            dest_lat_push_state = value
+        end
+    elseif command == device_commands.dest_lon_push then
+        if value == 1 or value == 0 then
+            dest_lon_push_state = value
+        end
+    elseif command == device_commands.asn41_magvar_push then
+        if value == 1 or value == 0 then
+            asn41_magvar_push_state = value
+        end
+    elseif command == device_commands.asn41_windspeed_push then
+        if value == 1 or value == 0 then
+            asn41_windspeed_push_state = value
+        end
+    elseif command == device_commands.asn41_winddir_push then
+        if value == 1 or value == 0 then
+            asn41_winddir_push_state = value
+        end
+
+    ----------------------------------
+    -- NAV panel knobs
+    ----------------------------------
     elseif command == device_commands.ppos_lat then
-        if asn41_state ~= "asn41-test" then
+        if asn41_state ~= "asn41-test" and ppos_lat_push_state == 1 then
             -- gain 0.1 so 0.015 per "tick", we want increments of 0.01 or less
             -- divide by 15 = 0.001 per tick, then multiply by 10
             asn41_ppos_lat_offset = asn41_ppos_lat_offset + (value*10/15)
         end
     elseif command == device_commands.ppos_lon then
-        if asn41_state ~= "asn41-test" then
+        if asn41_state ~= "asn41-test" and ppos_lon_push_state == 1 then
             asn41_ppos_lon_offset = asn41_ppos_lon_offset - (value*10/15) -- "positive" input = west which is negative lon
         end
     elseif command == device_commands.dest_lat then
-        if asn41_state == "asn41-off" or asn41_state == "asn41-stby" or asn41_state == "asn41-d1" then
+        if dest_lat_push_state == 1 and asn41_state == "asn41-off" or asn41_state == "asn41-stby" or asn41_state == "asn41-d1" then
             asn41_d1_lat_offset = asn41_d1_lat_offset + (value*10/15)
-        elseif asn41_state == "asn41-d2" then
+        elseif asn41_state == "asn41-d2" and dest_lat_push_state == 1 then
             asn41_d2_lat_offset = asn41_d2_lat_offset + (value*10/15)
         end
     elseif command == device_commands.dest_lon then
-        if asn41_state == "asn41-off" or asn41_state == "asn41-stby" or asn41_state == "asn41-d1" then
+        if dest_lon_push_state == 1 and asn41_state == "asn41-off" or asn41_state == "asn41-stby" or asn41_state == "asn41-d1" then
             asn41_d1_lon_offset = asn41_d1_lon_offset - (value*10/15) -- "positive" input = west which is negative lon
-        elseif asn41_state == "asn41-d2" then
+        elseif asn41_state == "asn41-d2" and dest_lat_push_state == 1 then
             asn41_d2_lon_offset = asn41_d2_lon_offset - (value*10/15) -- "positive" input = west which is negative lon
         end
     elseif command == device_commands.asn41_magvar then
-        if asn41_state ~= "asn41-test" then
+        if asn41_state ~= "asn41-test" and asn41_magvar_push_state == 1 then
             asn41_magvar_offset = asn41_magvar_offset + (value*100/15) -- 0.015 per click * 100/15 = ~0.1
             asn41_magvar_offset = asn41_magvar_offset % 360
         end
     elseif command == device_commands.asn41_windspeed then
-        if asn41_state ~= "asn41-test" then
+        if asn41_state ~= "asn41-test" and asn41_windspeed_push_state == 1 then
             asn41_windspeed_offset = asn41_windspeed_offset + (value*1000/15) -- 0.015 per click * 1000/15 = ~1
             if asn41_windspeed_offset < 0 then asn41_windspeed_offset = 0 end
             if asn41_windspeed_offset > 300 then asn41_windspeed_offset = 300 end
         end
     elseif command == device_commands.asn41_winddir then
-        if asn41_state ~= "asn41-test" then
+        if asn41_state ~= "asn41-test" and asn41_winddir_push_state == 1 then
             asn41_winddir_offset = asn41_winddir_offset + (value*1000/15) -- 0.015 per click * 1000/15 = ~1
             asn41_winddir_offset = asn41_winddir_offset % 360
         end
