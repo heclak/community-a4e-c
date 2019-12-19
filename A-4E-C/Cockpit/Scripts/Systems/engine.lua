@@ -30,6 +30,7 @@ local pressure_ratio = get_param_handle("PRESSURE_RATIO")
 local oil_pressure = get_param_handle("OIL_PRESSURE")
 local egt_c = get_param_handle("EGT_C")
 local engine_heat_stress = get_param_handle("ENGINE_HEAT_STRESS")
+local manual_fuel_control_warn_param = get_param_handle("MANUAL_FUEL_CONTROL_WARN")
 
 local throttle_position = get_param_handle("THROTTLE_POSITION")
 local throttle_position_wma = WMA(0.15, 0)
@@ -47,6 +48,9 @@ local THROTTLE_OFF = 0
 local THROTTLE_IGN = 1
 local THROTTLE_ADJUST = 2
 local throttle_state = THROTTLE_ADJUST
+
+local manual_fuel_control_mode = 1
+local manual_fuel_control_mode_sw = 0
 
 ------------------------------------------------
 ----------------  CONSTANTS  -------------------
@@ -195,10 +199,10 @@ function SetCommand(command,value)
         -- print_message_to_user("Fuel Control Switch: "..value)
         if value == 1 then
             -- position: manual
-            -- TODO implement logic
+            manual_fuel_control_mode_sw = 1
         elseif value == 0 then
             -- position: primary
-            -- TODO implement logic
+            manual_fuel_control_mode_sw = 0
         end
     elseif command == device_commands.ENGINE_drop_tanks_sw then
         -- print_message_to_user("Drop Tanks Switch: "..value)
@@ -387,6 +391,29 @@ function accumulate_temp()
     engine_heat_stress:set(life_s_accum)
 end
 
+function update_fuel_control_mode()
+    -- check fuel control switch state
+    if manual_fuel_control_mode_sw == 1 then
+        manual_fuel_control_mode = 1
+    elseif manual_fuel_control_mode_sw == 0 then
+        -- check if engine conditions allow for primary fuel control
+        -- fuel system switches to PRIMARY when engine rpm approximately 5 to 10 percent rpm
+        local engine_rpm = sensor_data.getEngineLeftRPM()
+        if engine_rpm > 8 then
+            manual_fuel_control_mode = 0
+        else
+            manual_fuel_control_mode = 1
+        end
+    end
+
+    -- update indicator
+    if manual_fuel_control_mode == 1 and get_elec_primary_ac_ok() then
+        manual_fuel_control_warn_param:set(1)
+    else
+        manual_fuel_control_warn_param:set(0)
+    end
+end
+
 local prev_rpm=0
 local prev_throttle_pos=0
 local once_per_sec = 1/update_rate
@@ -399,6 +426,7 @@ function update()
     update_oil_pressure()
     update_pressure_ratio()
     update_egt()
+    update_fuel_control_mode()
 
     once_per_sec = once_per_sec - 1
     if once_per_sec <= 0 then

@@ -171,6 +171,12 @@ PressureRatio.input                 = {1.2, 3.4}
 PressureRatio.output                = {0.0, 1.0}
 PressureRatio.parameter_name        = "PRESSURE_RATIO"
 
+ManualFuelControl_Warn                       = CreateGauge("parameter")
+ManualFuelControl_Warn.arg_number            = 105
+ManualFuelControl_Warn.input                 = {0.0, 1.0}
+ManualFuelControl_Warn.output                = {0.0, 1.0}
+ManualFuelControl_Warn.parameter_name        = "MANUAL_FUEL_CONTROL_WARN"
+
 ---------------------------------------------------------------
 -- INSTRUMENTS
 ---------------------------------------------------------------
