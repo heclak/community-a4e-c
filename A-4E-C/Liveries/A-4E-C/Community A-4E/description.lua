@@ -3,6 +3,8 @@ livery =
 {
     {"Bottom", 0, "community-a4e-bot", true};
     {"Top", 0, "community-a4e-top", true};
+    {"Bottom", ROUGHNESS_METALLIC, "fus_bot_v472_RoughMet_hi", true};
+    {"Top", ROUGHNESS_METALLIC, "fus_top_v494_RoughMet_hi", true};
 
         -- flaps, used on most liveries
     {"flaps_001", 0, "a4e_bort_white", true};

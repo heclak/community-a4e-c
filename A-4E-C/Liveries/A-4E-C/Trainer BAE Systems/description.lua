@@ -2,6 +2,8 @@ livery =
 {
     {"Bottom", 0, "fus_bot_v472", true};
     {"Top", 0, "a4e-trn-bae-top", true};
+    {"Bottom", ROUGHNESS_METALLIC, "fus_bot_v472_RoughMet_hi", true};
+    {"Top", ROUGHNESS_METALLIC, "fus_top_v494_RoughMet_hi", true};
 
         -- flaps, used on most liveries
     {"flaps_001", 0, "empty", true};

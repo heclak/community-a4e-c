@@ -1,6 +1,8 @@
 livery = {
     {"Bottom", 0, "a4e_blueangels-bot", true};
     {"Top", 0, "a4e_blueangels-top-4", true};
+    {"Bottom", ROUGHNESS_METALLIC, "a4e_blueangels-bot_Roughmet", true};
+    {"Top", ROUGHNESS_METALLIC, "a4e_blueangels-top_Roughmet", true};
 
     -- flaps, used on most liveries
     {"flaps_001", 0, "a4e_bort_gold", true};
