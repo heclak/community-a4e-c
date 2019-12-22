@@ -39,7 +39,7 @@ livery =
     {"tail_100", 0, "empty", true};
 }
 
-name = "Trainer: BAE Systems"
+name = "BAE Systems"
 --name_xx = ""
 --[[ assign the countries ]]
-countries = {"USA", "UK"}
+countries = {"USA", "UK", "GER"}

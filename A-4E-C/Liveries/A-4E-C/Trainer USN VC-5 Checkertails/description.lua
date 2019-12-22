@@ -40,17 +40,17 @@ livery =
     {"tail_100", 0, "empty", true};
 
     -- custom fuel tanks: 150 gallon
-    --{"fuel_150_a4e", 0, "a4e-aggr-usmc-topgun-mig-17-ft", true};
+    {"fuel_150_a4e", 0, "a4e-aggr-usn-topgun-ft", true};
 
     -- custom fuel tank: 300 gallon left/right
-    --{"fuel_300lr_a4e", 0, "a4e-aggr-usmc-topgun-mig-17-ft", true};
+    {"fuel_300lr_a4e", 0, "a4e-aggr-usn-topgun-ft", true};
 
     -- custom fuel tank: 300 gallon center
-    --{"fuel_300c_a4e", 0, "a4e-aggr-usmc-topgun-mig-17-ft", true};
+    {"fuel_300c_a4e", 0, "a4e-aggr-usn-topgun-ft", true};
 
 }
 
-name = "USMC TOPGUN MiG-17"
+name = "USN VC-5 Checkertails"
 --name_xx = ""
 --[[ assign the countries ]]
-countries = {"USA", "AUSAF"}
+countries = {"USA"}

@@ -45,7 +45,7 @@ livery = {
 
 }
 
-name = "Trainer USN Bare Metal"
+name = "USN Bare Metal"
 --name_xx = ""
 --[[ assign the countries ]]
 countries = {"USA"}
