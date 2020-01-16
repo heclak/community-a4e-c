@@ -1208,8 +1208,9 @@ A_4E_C =  {
             -- STROBES
             [1] = {
                 typename = "collection",
-                lights = {  {typename = "argnatostrobelight", argument = 198, period = 1.2, phase_shift = 0, speed = 20},
-                            {typename = "argnatostrobelight", argument = 199, period = 1.2, phase_shift = 0.5, speed = 1},
+                lights = {
+                            {typename = "argnatostrobelight", argument = 204, period = 1.2, phase_shift = 0},
+                            {typename = "argnatostrobelight", argument = 205, period = 1.2, phase_shift = 0.5},
                 },
             },
             -- SPOTS / TAXI & LANDING
