@@ -1013,7 +1013,9 @@ function update_int_lights()
         if lights_console_val > 0 then
             lights_int_floodred:set(lights_floodred_val * red_floodlights_max_brightness_multiplier)
         else
-            lights_int_floodred:set(0)
+            if get_cockpit_draw_argument_value(114) > 0 then
+                lights_int_floodred:set(0)
+            end
         end
     else
         lights_int_instruments:set(0)
