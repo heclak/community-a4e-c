@@ -46,6 +46,9 @@ livery = {
     -- custom fuel tank: 300 gallon center
     {"fuel_300c_a4e", 0, "a4e-aggr-usn-topgun-ft", true};
 
+    -- custom MER rack
+    {"a4e_mer", 0, "a4e_mer_topgun", true};
+
 }
 
 name = "USN TOPGUN"

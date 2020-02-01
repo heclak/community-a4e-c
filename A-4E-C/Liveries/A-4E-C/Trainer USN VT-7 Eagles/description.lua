@@ -38,10 +38,10 @@ livery =
     {"tail_100", 0, "empty", true};
 
     -- custom fuel tanks: 150 gallon
-    -- {"fuel_150_a4e", 0, "uvmapsfueltank_dft150_dft300", true};
+    -- {"fuel_150_a4e", 0, "uvmapsfueltank_dft150_dft300-orange", true};
 
     -- custom fuel tank: 300 gallon left/right
-    -- {"fuel_300lr_a4e", 0, "uvmapsfueltank_dft150_dft300", true};
+    -- {"fuel_300lr_a4e", 0, "uvmapsfueltank_dft150_dft300-orange", true};
 
 }
 
