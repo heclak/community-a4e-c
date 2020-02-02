@@ -11,6 +11,8 @@ _ = gettext.translate
 
 elements = {}
 
+elements["PNT_2"] = default_2_position_tumb("Hide Stick Toggle", devices.CANOPY, Keys.ToggleStick, nil)
+
 -- Landing Gear & Tail Hook
 elements["PNT_8"] = default_2_position_tumb("Landing Gear Handle", devices.GEAR, device_commands.Gear, 8)
 elements["PNT_8"].animated        = {true, true}
