@@ -265,45 +265,54 @@ keyCommands = {
     --{combos = {{key = 'PageUp', reformers = {'RShift'}}}, down = iCommandPlaneAUTIncreaseRegimeRight, name = _('Throttle Step Up Right'), category = _('Flight Control')},
     --{combos = {{key = 'PageDown', reformers = {'RShift'}}}, down = iCommandPlaneAUTDecreaseRegimeRight, name = _('Throttle Step Down Right'), category = _('Flight Control')},
 
+
+    ---------------------------------------------
+    -- Throttle Quadrant ------------------------
+    ---------------------------------------------
+
+    {down = Keys.ExtLightMaster, value_down = 1, name = _('Master Exterior Lights - ON'), category = {_('Throttle')}},
+    {down = Keys.ExtLightMaster, value_down = 0, name = _('Master Exterior Lights - OFF'), category = {_('Throttle')}},
+    {down = Keys.ExtLightMasterToggle, name = _('Master Exterior Lights - Toggle'), category = {_('Throttle')}},
+    {combos = {{key = 'B', reformers = {'LShift'}}}, down = iCommandPlaneAirBrakeOn, name = _('Speedbrake OPEN'), category = {_('Throttle')}},
+    {combos = {{key = 'B', reformers = {'LCtrl'}}}, down = iCommandPlaneAirBrakeOff, name = _('Speedbrake CLOSE'), category = {_('Throttle')}},
+
     -- Systems
 
-    {combos = {{key = 'L', reformers = {'RShift'}}}, down = iCommandPowerOnOff, name = _('Electric Power Switch'), category = _('Systems')},
-    {combos = {{key = 'B'}}, down = iCommandPlaneAirBrake, name = _('Airbrake'), category = _('Systems')},
-    {combos = {{key = 'B', reformers = {'LShift'}}}, down = iCommandPlaneAirBrakeOn, name = _('Airbrake On'), category = _('Systems')},
-    {combos = {{key = 'B', reformers = {'LCtrl'}}}, down = iCommandPlaneAirBrakeOff, name = _('Airbrake Off'), category = _('Systems')},
-    {combos = {{key = 'T'}}, down = iCommandPlaneWingtipSmokeOnOff, name = _('Smoke'), category = _('Systems')},
-    {combos = {{key = 'L'}}, down = iCommandPlaneCockpitIllumination, name = _('Illumination Cockpit'), category = _('Systems')},
-    {combos = {{key = 'L', reformers = {'RCtrl'}}}, down = Keys.PlaneLightsOnOff, name = _('Navigation Lights Bright/Dim/Off'), category = _('Systems')},
-    {combos = {{key = 'L', reformers = {'RAlt'}}}, down = Keys.PlaneHeadlightOnOff, name = _('Taxi Light On/Off'), category = _('Systems')},
+    {combos = {{key = 'L', reformers = {'RShift'}}}, down = iCommandPowerOnOff, name = _('Electric Power Switch'), category = {_('Systems')}},
+    {combos = {{key = 'B'}}, down = iCommandPlaneAirBrake, name = _('Speedbrake'), category = {_('Systems')}},
+    {combos = {{key = 'T'}}, down = iCommandPlaneWingtipSmokeOnOff, name = _('Smoke'), category = {_('Systems')}},
+    {combos = {{key = 'L'}}, down = iCommandPlaneCockpitIllumination, name = _('Illumination Cockpit'), category = {_('Systems')}},
+    {combos = {{key = 'L', reformers = {'RCtrl'}}}, down = Keys.PlaneLightsOnOff, name = _('Navigation Lights Bright/Dim/Off'), category = {_('Systems')}},
+    {combos = {{key = 'L', reformers = {'RAlt'}}}, down = Keys.PlaneHeadlightOnOff, name = _('Taxi Light On/Off'), category = {_('Systems')}},
 
-    {combos = {{key = 'F'}}, down = iCommandPlaneFlaps, name = _('Flaps Up/Down'), category = _('Systems')},
-    {combos = {{key = 'F', reformers = {'LCtrl'}}}, down = iCommandPlaneFlapsOn, name = _('Flaps Down'), category = _('Systems')},
-    {combos = {{key = 'F', reformers = {'LShift'}}}, down = iCommandPlaneFlapsOff, name = _('Flaps Up'), category = _('Systems')},
-    {combos = {{key = 'F', reformers = {'LAlt'}}}, down = Keys.PlaneFlapsStop, name = _('Flaps Stop'), category = _('Systems')},
+    {combos = {{key = 'F'}}, down = iCommandPlaneFlaps, name = _('Flaps Up/Down'), category = {_('Systems')}},
+    {combos = {{key = 'F', reformers = {'LCtrl'}}}, down = iCommandPlaneFlapsOn, name = _('Flaps Down'), category = {_('Systems')}},
+    {combos = {{key = 'F', reformers = {'LShift'}}}, down = iCommandPlaneFlapsOff, name = _('Flaps Up'), category = {_('Systems')}},
+    {combos = {{key = 'F', reformers = {'LAlt'}}}, down = Keys.PlaneFlapsStop, name = _('Flaps Stop'), category = {_('Systems')}},
 
-    {combos = {{key = 'G'}}, down = Keys.PlaneGear, name = _('Landing Gear Up/Down'), category = _('Systems')},
-    {combos = {{key = 'G', reformers = {'LCtrl'}}}, down = Keys.PlaneGearUp, name = _('Landing Gear Up'), category = _('Systems')},
-    {combos = {{key = 'G', reformers = {'LShift'}}}, down = Keys.PlaneGearDown, name = _('Landing Gear Down'), category = _('Systems')},
+    {combos = {{key = 'G'}}, down = Keys.PlaneGear, name = _('Landing Gear Up/Down'), category = {_('Systems')}},
+    {combos = {{key = 'G', reformers = {'LCtrl'}}}, down = Keys.PlaneGearUp, name = _('Landing Gear Up'), category = {_('Systems')}},
+    {combos = {{key = 'G', reformers = {'LShift'}}}, down = Keys.PlaneGearDown, name = _('Landing Gear Down'), category = {_('Systems')}},
 
-    {combos = {{key = 'W'}}, down = Keys.BrakesOn, up = Keys.BrakesOff, name = _('Wheel Brake On'), category = _('Systems')},
-    {combos = {{key = 'C', reformers = {'LCtrl'}}}, down = iCommandPlaneFonar, name = _('Canopy Open/Close'), category = _('Systems')},
-    {combos = {{key = 'P'}}, down = iCommandPlaneParachute, name = _('Dragging Chute'), category = _('Systems')},
-    {combos = {{key = 'N', reformers = {'RShift'}}}, down = iCommandPlaneResetMasterWarning, name = _('Audible Warning Reset'), category = _('Systems')},
-    {down = Keys.JettisonWeapons,up = Keys.JettisonWeaponsUp, name = _('Weapons Jettison: Realistic'), category = _('Systems')},
-    {combos = {{key = 'W', reformers = {'LCtrl'}}}, down = Keys.JettisonFC3,up = Keys.JettisonWeaponsUp, name = _('Weapons Jettison: FC3-style'), category = _('Systems')},
-    {combos = {{key = 'E', reformers = {'LCtrl'}}}, down = iCommandPlaneEject, name = _('Eject (3 times)'), category = _('Systems')},
-    {combos = {{key = 'C', reformers = {'RShift'}}}, down = iCommandFlightClockReset, name = _('Flight Clock Start/Stop/Reset'), category = _('Systems')},
-    {down = iCommandClockElapsedTimeReset, name = _('Elapsed Time Clock Start/Stop/Reset'), category = _('Systems')},
-    {combos = {{key = 'Home', reformers = {'RShift'}}}, down = Keys.Engine_Start, name = _('Engines Start'), category = _('Systems')},
-    {combos = {{key = 'End', reformers = {'RShift'}}}, down = Keys.Engine_Stop, name = _('Engines Stop'), category = _('Systems')},
-    --{combos = {{key = 'Home', reformers = {'RAlt'}}}, down = iCommandLeftEngineStart, name = _('Engine Left Start'), category = _('Systems')},
-    --{combos = {{key = 'End', reformers = {'RAlt'}}}, down = iCommandLeftEngineStop, name = _('Engine Left Stop'), category = _('Systems')},
-    --{combos = {{key = 'Home', reformers = {'RCtrl'}}}, down = iCommandRightEngineStart, name = _('Engine Right Start'), category = _('Systems')},
-    --{combos = {{key = 'End', reformers = {'RCtrl'}}}, down = iCommandRightEngineStop, name = _('Engine Right Stop'), category = _('Systems')},
-    -- {combos = {{key = 'H', reformers = {'RCtrl'}}}, down = iCommandBrightnessILS, name = _('HUD Color'), category = _('Systems')},
-    -- {combos = {{key = 'H', reformers = {'RCtrl','RShift'}}}, pressed = iCommandHUDBrightnessUp, name = _('HUD Brightness up'), category = _('Systems')},
-    -- {combos = {{key = 'H', reformers = {'RShift','RAlt'}}}, pressed = iCommandHUDBrightnessDown, name = _('HUD Brightness down'), category = _('Systems')},
-    {combos = {{key = 'R'}}, down = iCommandPlaneFuelOn, up = iCommandPlaneFuelOff, name = _('Fuel Dump'), category = _('Systems')},
+    {combos = {{key = 'W'}}, down = Keys.BrakesOn, up = Keys.BrakesOff, name = _('Wheel Brake On'), category = {_('Systems')}},
+    {combos = {{key = 'C', reformers = {'LCtrl'}}}, down = iCommandPlaneFonar, name = _('Canopy Open/Close'), category = {_('Systems')}},
+    {combos = {{key = 'P'}}, down = iCommandPlaneParachute, name = _('Dragging Chute'), category = {_('Systems')}},
+    {combos = {{key = 'N', reformers = {'RShift'}}}, down = iCommandPlaneResetMasterWarning, name = _('Audible Warning Reset'), category = {_('Systems')}},
+    {down = Keys.JettisonWeapons,up = Keys.JettisonWeaponsUp, name = _('Weapons Jettison: Realistic'), category = {_('Systems')}},
+    {combos = {{key = 'W', reformers = {'LCtrl'}}}, down = Keys.JettisonFC3,up = Keys.JettisonWeaponsUp, name = _('Weapons Jettison: FC3-style'), category = {_('Systems')}},
+    {combos = {{key = 'E', reformers = {'LCtrl'}}}, down = iCommandPlaneEject, name = _('Eject (3 times)'), category = {_('Systems')}},
+    {combos = {{key = 'C', reformers = {'RShift'}}}, down = iCommandFlightClockReset, name = _('Flight Clock Start/Stop/Reset'), category = {_('Systems')}},
+    {down = iCommandClockElapsedTimeReset, name = _('Elapsed Time Clock Start/Stop/Reset'), category = {_('Systems')}},
+    {combos = {{key = 'Home', reformers = {'RShift'}}}, down = Keys.Engine_Start, name = _('Engines Start'), category = {_('Systems')}},
+    {combos = {{key = 'End', reformers = {'RShift'}}}, down = Keys.Engine_Stop, name = _('Engines Stop'), category = {_('Systems')}},
+    --{combos = {{key = 'Home', reformers = {'RAlt'}}}, down = iCommandLeftEngineStart, name = _('Engine Left Start'), category = {_('Systems')}},
+    --{combos = {{key = 'End', reformers = {'RAlt'}}}, down = iCommandLeftEngineStop, name = _('Engine Left Stop'), category = {_('Systems')}},
+    --{combos = {{key = 'Home', reformers = {'RCtrl'}}}, down = iCommandRightEngineStart, name = _('Engine Right Start'), category = {_('Systems')}},
+    --{combos = {{key = 'End', reformers = {'RCtrl'}}}, down = iCommandRightEngineStop, name = _('Engine Right Stop'), category = {_('Systems')}},
+    -- {combos = {{key = 'H', reformers = {'RCtrl'}}}, down = iCommandBrightnessILS, name = _('HUD Color'), category = {_('Systems')}},
+    -- {combos = {{key = 'H', reformers = {'RCtrl','RShift'}}}, pressed = iCommandHUDBrightnessUp, name = _('HUD Brightness up'), category = {_('Systems')}},
+    -- {combos = {{key = 'H', reformers = {'RShift','RAlt'}}}, pressed = iCommandHUDBrightnessDown, name = _('HUD Brightness down'), category = {_('Systems')}},
+    {combos = {{key = 'R'}}, down = iCommandPlaneFuelOn, up = iCommandPlaneFuelOff, name = _('Fuel Dump'), category = {_('Systems')}},
 
     -- Modes
     {combos = {{key = '`', reformers = {'LCtrl'}}}, down = iCommandPlaneChangeTarget  , name = _('Next Waypoint, Airfield Or Target'), category = _('Modes')},
@@ -382,11 +391,11 @@ keyCommands = {
     -- {combos = {{key = '7', reformers = {'LAlt'}}}, down = iCommandPlaneStabCancel, name = _('Autopilot Disengage'), category = _('Autopilot')},
 
     -- Systems
-    {combos = {{key = 'R', reformers = {'LCtrl'}}}, down = iCommandPlaneAirRefuel, name = _('Refueling Boom'), category = _('Systems')},
-    {combos = {{key = 'G', reformers = {'LAlt'}}}, down = iCommandPlaneHook, name = _('Tail Hook Up/Down'), category = _('Systems')},
-    --{down = Keys.PlaneHookUp, name = _('Tail Hook Up'), category = _('Systems')},
-    --{down = Keys.PlaneHookDown, name = _('Tail Hook Down'), category = _('Systems')},
-    --{combos = {{key = 'P', reformers = {'RCtrl'}}}, down = iCommandPlanePackWing, name = _('Folding Wings'), category = _('Systems')},
+    {combos = {{key = 'R', reformers = {'LCtrl'}}}, down = iCommandPlaneAirRefuel, name = _('Refueling Boom'), category = {_('Systems')}},
+    {combos = {{key = 'G', reformers = {'LAlt'}}}, down = iCommandPlaneHook, name = _('Tail Hook Up/Down'), category = {_('Systems')}},
+    --{down = Keys.PlaneHookUp, name = _('Tail Hook Up'), category = {_('Systems')}},
+    --{down = Keys.PlaneHookDown, name = _('Tail Hook Down'), category = {_('Systems')}},
+    --{combos = {{key = 'P', reformers = {'RCtrl'}}}, down = iCommandPlanePackWing, name = _('Folding Wings'), category = {_('Systems')}},
 
     -- Modes
     -- {combos = {{key = '1', reformers = {'LShift'}}}, down = iCommandPlaneModeNAV, name = _('(1) Navigation Modes'), category = _('Modes')},
@@ -457,24 +466,24 @@ keyCommands = {
     {down = Keys.GunpodRight, name = _('GunPods: Right Enable/Disable'), category = _('Weapons')},
 
     --{combos = {{key = 'H', reformers = {'RShift'}}}, down = iCommandPlaneHUDFilterOnOff, name = _('HUD Filter On Off'), category = _('Weapons')},
-    --{down = iCommandPlaneRightMFD_OSB1 , name = _('MFD HUD Repeater Mode On Off'), category = _('Systems')},
+    --{down = iCommandPlaneRightMFD_OSB1 , name = _('MFD HUD Repeater Mode On Off'), category = {_('Systems')}},
 
 
     --
     -- ADD NEW/CUSTOM COMMANDS for A-4E HERE:
     --
 
-    --{combos = {{key = 'S', reformers = {'LShift'}}},down = Keys.SpoilerCoverToggle, name = _('Spoilers Switch Cover: Toggle'), category = _('Systems')},
-    {combos = {{key = 'S'}}, down = Keys.SpoilersArmToggle, name = _('Spoilers ARM-OFF Toggle'), category = _('Systems')},
-    {down = Keys.SpoilersArmOn, name = _('Spoilers ARM-OFF: ON'), category = _('Systems')},
-    {down = Keys.SpoilersArmOff, name = _('Spoilers ARM-OFF: OFF'), category = _('Systems')},
+    --{combos = {{key = 'S', reformers = {'LShift'}}},down = Keys.SpoilerCoverToggle, name = _('Spoilers Switch Cover: Toggle'), category = {_('Systems')}},
+    {combos = {{key = 'S'}}, down = Keys.SpoilersArmToggle, name = _('Spoilers ARM-OFF Toggle'), category = {_('Systems')}},
+    {down = Keys.SpoilersArmOn, name = _('Spoilers ARM-OFF: ON'), category = {_('Systems')}},
+    {down = Keys.SpoilersArmOff, name = _('Spoilers ARM-OFF: OFF'), category = {_('Systems')}},
 
 
-    {combos = {{key = '-', reformers = {'RShift'}}}, down = Keys.AltPressureDec, name = _('Altimeter Pressure Decrease'), category = _('Systems')},
-    {combos = {{key = '=', reformers = {'RShift'}}}, down = Keys.AltPressureInc, name = _('Altimeter Pressure Increase'), category = _('Systems')},
+    {combos = {{key = '-', reformers = {'RShift'}}}, down = Keys.AltPressureDec, name = _('Altimeter Pressure Decrease'), category = {_('Systems')}},
+    {combos = {{key = '=', reformers = {'RShift'}}}, down = Keys.AltPressureInc, name = _('Altimeter Pressure Increase'), category = {_('Systems')}},
 
-    {combos = {{key = '-', reformers = {'RCtrl'}}}, down = Keys.RadarAltWarningDown, name = _('Radar Altitude Warning: Lower'), category = _('Systems')},
-    {combos = {{key = '=', reformers = {'RCtrl'}}}, down = Keys.RadarAltWarningUp, name = _('Radar Altitude Warning: Raise'), category = _('Systems')},
+    {combos = {{key = '-', reformers = {'RCtrl'}}}, down = Keys.RadarAltWarningDown, name = _('Radar Altitude Warning: Lower'), category = {_('Systems')}},
+    {combos = {{key = '=', reformers = {'RCtrl'}}}, down = Keys.RadarAltWarningUp, name = _('Radar Altitude Warning: Raise'), category = {_('Systems')}},
 
     {down = device_commands.bdhi_mode, value_down = 1, cockpit_device_id = devices.NAV, name = _('BDHI - NAV CMPTR'), category = _('Navigation')},
     {down = device_commands.bdhi_mode, value_down = 0, cockpit_device_id = devices.NAV, name = _('BDHI - TACAN'), category = _('Navigation')},
@@ -484,18 +493,18 @@ keyCommands = {
     {down = device_commands.arm_bomb, value_down = 0, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('BOMB ARM - OFF'), category = {_('Weapons')}},
     {down = device_commands.arm_bomb, value_down = -1, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('BOMB ARM - TAIL'), category = {_('Weapons')}},
 
-    {down = Keys.FuelGaugeExt, name = _('Misc Switches: Fuel Gauge EXT'), category = _('Systems')},
-    {down = Keys.FuelGaugeInt, name = _('Misc Switches: Fuel Gauge INT'), category = _('Systems')},
+    {down = Keys.FuelGaugeExt, name = _('Misc Switches: Fuel Gauge EXT'), category = {_('Systems')}},
+    {down = Keys.FuelGaugeInt, name = _('Misc Switches: Fuel Gauge INT'), category = {_('Systems')}},
 
     -- NAV SYSTEM
     -- fake/shortcuts
-    {combos = {{key = '0', reformers = {'LCtrl'}}}, down = Keys.NavReset, name = _('Reset Both TCN & NDB Channels'), category = _('Systems')},
-    --{combos = {{key = '-', reformers = {'LAlt'}}}, down = Keys.NavTCNPrev, name = _('TACAN Channel: Previous'), category = _('Systems')},
-    --{combos = {{key = '=', reformers = {'LAlt'}}}, down = Keys.NavTCNNext, name = _('TACAN Channel: Next'), category = _('Systems')},
-    {combos = {{key = '-', reformers = {'LCtrl'}}}, down = Keys.NavNDBPrev, name = _('NDB Channel: Previous'), category = _('Systems')},
-    {combos = {{key = '=', reformers = {'LCtrl'}}}, down = Keys.NavNDBNext, name = _('NDB Channel: Next'), category = _('Systems')},
-    {combos = {{key = '-', reformers = {'LShift'}}}, down = Keys.NavILSPrev, name = _('ILS Channel: Previous'), category = _('Systems')},
-    {combos = {{key = '=', reformers = {'LShift'}}}, down = Keys.NavILSNext, name = _('ILS Channel: Next'), category = _('Systems')},
+    {combos = {{key = '0', reformers = {'LCtrl'}}}, down = Keys.NavReset, name = _('Reset Both TCN & NDB Channels'), category = {_('Systems')}},
+    --{combos = {{key = '-', reformers = {'LAlt'}}}, down = Keys.NavTCNPrev, name = _('TACAN Channel: Previous'), category = {_('Systems')}},
+    --{combos = {{key = '=', reformers = {'LAlt'}}}, down = Keys.NavTCNNext, name = _('TACAN Channel: Next'), category = {_('Systems')}},
+    {combos = {{key = '-', reformers = {'LCtrl'}}}, down = Keys.NavNDBPrev, name = _('NDB Channel: Previous'), category = {_('Systems')}},
+    {combos = {{key = '=', reformers = {'LCtrl'}}}, down = Keys.NavNDBNext, name = _('NDB Channel: Next'), category = {_('Systems')}},
+    {combos = {{key = '-', reformers = {'LShift'}}}, down = Keys.NavILSPrev, name = _('ILS Channel: Previous'), category = {_('Systems')}},
+    {combos = {{key = '=', reformers = {'LShift'}}}, down = Keys.NavILSNext, name = _('ILS Channel: Next'), category = {_('Systems')}},
 
     -- real nav system
     {down = Keys.NavPPosLatInc, name = _('Present Position Latitude - Increase'), category = _('Navigation')},
@@ -557,41 +566,38 @@ keyCommands = {
     {down = device_commands.intlight_console_CHANGE,        cockpit_device_id = devices.AVIONICS,  value_down = -0.1,    name = _('Interior Lights: Console Lights Decrease'),        category = {_('Right Console'), _('INT LTS Panel')}},
 
     -- lighting keys
-    {down = Keys.ExtLightMaster, value_down = 1, name = _('Master Exterior Lights: ON'), category = _('Systems')},
-    {down = Keys.ExtLightMaster, value_down = 0, name = _('Master Exterior Lights: OFF'), category = _('Systems')},
-    {down = Keys.ExtLightMasterToggle, name = _('Master Exterior Lights: ON/OFF'), category = _('Systems')},
 
-    {down = Keys.ExtLightProbe, value_down = 1, name = _('Refueling Probe Light: BRIGHT'), category = _('Systems')},
-    {down = Keys.ExtLightProbe, value_down = -1, name = _('Refueling Probe Light: DIM'), category = _('Systems')},
-    {down = Keys.ExtLightProbe, value_down = 0, name = _('Refueling Probe Light: OFF'), category = _('Systems')},
-    {down = Keys.ExtLightProbeCycle, name = _('Refueling Probe Light: BRIGHT/DIM/OFF'), category = _('Systems')},
+    {down = Keys.ExtLightProbe, value_down = 1, name = _('Refueling Probe Light: BRIGHT'), category = {_('Systems')}},
+    {down = Keys.ExtLightProbe, value_down = -1, name = _('Refueling Probe Light: DIM'), category = {_('Systems')}},
+    {down = Keys.ExtLightProbe, value_down = 0, name = _('Refueling Probe Light: OFF'), category = {_('Systems')}},
+    {down = Keys.ExtLightProbeCycle, name = _('Refueling Probe Light: BRIGHT/DIM/OFF'), category = {_('Systems')}},
 
-    {down = Keys.ExtLightTaxi, value_down = 1, name = _('Taxi Light: ON'), category = _('Systems')},
-    {down = Keys.ExtLightTaxi, value_down = 0, name = _('Taxi Light: OFF'), category = _('Systems')},
-    {down = Keys.ExtLightTaxiToggle, name = _('Taxi Light: ON/OFF'), category = _('Systems')},
+    {down = Keys.ExtLightTaxi, value_down = 1, name = _('Taxi Light: ON'), category = {_('Systems')}},
+    {down = Keys.ExtLightTaxi, value_down = 0, name = _('Taxi Light: OFF'), category = {_('Systems')}},
+    {down = Keys.ExtLightTaxiToggle, name = _('Taxi Light: ON/OFF'), category = {_('Systems')}},
 
-    {down = Keys.ExtLightAnticollision, value_down = 1, name = _('Anti-collision Lights: ON'), category = _('Systems')},
-    {down = Keys.ExtLightAnticollision, value_down = 0, name = _('Anti-collision Lights: OFF'), category = _('Systems')},
-    {down = Keys.ExtLightAnticollisionToggle, name = _('Anti-collision Lights: ON/OFF'), category = _('Systems')},
+    {down = Keys.ExtLightAnticollision, value_down = 1, name = _('Anti-collision Lights: ON'), category = {_('Systems')}},
+    {down = Keys.ExtLightAnticollision, value_down = 0, name = _('Anti-collision Lights: OFF'), category = {_('Systems')}},
+    {down = Keys.ExtLightAnticollisionToggle, name = _('Anti-collision Lights: ON/OFF'), category = {_('Systems')}},
 
-    {down = Keys.ExtLightNav, value_down = 1, name = _('Navigation Lights: BRIGHT'), category = _('Systems')},
-    {down = Keys.ExtLightNav, value_down = -1, name = _('Navigation Lights: DIM'), category = _('Systems')},
-    {down = Keys.ExtLightNav, value_down = 0, name = _('Navigation Lights: OFF'), category = _('Systems')},
-    {down = Keys.ExtLightNavCycle, name = _('Navigation Lights: BRIGHT/DIM/OFF'), category = _('Systems')},
+    {down = Keys.ExtLightNav, value_down = 1, name = _('Navigation Lights: BRIGHT'), category = {_('Systems')}},
+    {down = Keys.ExtLightNav, value_down = -1, name = _('Navigation Lights: DIM'), category = {_('Systems')}},
+    {down = Keys.ExtLightNav, value_down = 0, name = _('Navigation Lights: OFF'), category = {_('Systems')}},
+    {down = Keys.ExtLightNavCycle, name = _('Navigation Lights: BRIGHT/DIM/OFF'), category = {_('Systems')}},
 
-    {down = Keys.ExtLightTail, value_down = 1, name = _('Tail Light: BRIGHT'), category = _('Systems')},
-    {down = Keys.ExtLightTail, value_down = -1, name = _('Tail Light: DIM'), category = _('Systems')},
-    {down = Keys.ExtLightTail, value_down = 0, name = _('Tail Light: OFF'), category = _('Systems')},
-    {down = Keys.ExtLightTailCycle, name = _('Tail Light: BRIGHT/DIM/OFF'), category = _('Systems')},
+    {down = Keys.ExtLightTail, value_down = 1, name = _('Tail Light: BRIGHT'), category = {_('Systems')}},
+    {down = Keys.ExtLightTail, value_down = -1, name = _('Tail Light: DIM'), category = {_('Systems')}},
+    {down = Keys.ExtLightTail, value_down = 0, name = _('Tail Light: OFF'), category = {_('Systems')}},
+    {down = Keys.ExtLightTailCycle, name = _('Tail Light: BRIGHT/DIM/OFF'), category = {_('Systems')}},
 
-    {down = Keys.ExtLightFuselage, value_down = 1, name = _('Fuselage Lights: BRIGHT'), category = _('Systems')},
-    {down = Keys.ExtLightFuselage, value_down = -1, name = _('Fuselage Lights: DIM'), category = _('Systems')},
-    {down = Keys.ExtLightFuselage, value_down = 0, name = _('Fuselage Lights: OFF'), category = _('Systems')},
-    {down = Keys.ExtLightFuselageCycle, name = _('Fuselage Lights: BRIGHT/DIM/OFF'), category = _('Systems')},
+    {down = Keys.ExtLightFuselage, value_down = 1, name = _('Fuselage Lights: BRIGHT'), category = {_('Systems')}},
+    {down = Keys.ExtLightFuselage, value_down = -1, name = _('Fuselage Lights: DIM'), category = {_('Systems')}},
+    {down = Keys.ExtLightFuselage, value_down = 0, name = _('Fuselage Lights: OFF'), category = {_('Systems')}},
+    {down = Keys.ExtLightFuselageCycle, name = _('Fuselage Lights: BRIGHT/DIM/OFF'), category = {_('Systems')}},
 
-    {down = Keys.ExtLightFlashSteady, value_down = 1, name = _('Exterior Lights: FLASH'), category = _('Systems')},
-    {down = Keys.ExtLightFlashSteady, value_down = 0, name = _('Exterior Lights: STEADY'), category = _('Systems')},
-    {down = Keys.ExtLightFlashSteadyToggle, name = _('Exterior Lights: FLASH/STEADY'), category = _('Systems')},
+    {down = Keys.ExtLightFlashSteady, value_down = 1, name = _('Exterior Lights: FLASH'), category = {_('Systems')}},
+    {down = Keys.ExtLightFlashSteady, value_down = 0, name = _('Exterior Lights: STEADY'), category = {_('Systems')}},
+    {down = Keys.ExtLightFlashSteadyToggle, name = _('Exterior Lights: FLASH/STEADY'), category = {_('Systems')}},
 
     {down = Keys.AFCSOverride, name = _('AFCS Override (emergency)'), category = 'Autopilot'},
     {down = Keys.AFCSStandbyToggle, name = _('AFCS Standby Toggle'), category = 'Autopilot'},
