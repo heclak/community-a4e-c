@@ -464,7 +464,7 @@ function SetCommand(command,value)
     elseif command == device_commands.dest_lon then
         if dest_lon_push_state == 1 and asn41_state == "asn41-off" or asn41_state == "asn41-stby" or asn41_state == "asn41-d1" then
             asn41_d1_lon_offset = asn41_d1_lon_offset - (value*10/15) -- "positive" input = west which is negative lon
-        elseif asn41_state == "asn41-d2" and dest_lat_push_state == 1 then
+        elseif asn41_state == "asn41-d2" and dest_lon_push_state == 1 then
             asn41_d2_lon_offset = asn41_d2_lon_offset - (value*10/15) -- "positive" input = west which is negative lon
         end
     elseif command == device_commands.asn41_magvar then
