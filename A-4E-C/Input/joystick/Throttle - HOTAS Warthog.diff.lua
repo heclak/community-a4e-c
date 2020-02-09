@@ -32,7 +32,7 @@ local diff = {
 					["key"] = "JOY_BTN22",
 				},
 			},
-			["name"] = "Flaps Up else Stop (HOTAS)",
+			["name"] = "FLAP Switch - UP else STOP",
 		},
 		["d10002pnilu10000cdnilvdnilvpnilvunil"] = {
 			["added"] = {
@@ -40,10 +40,10 @@ local diff = {
 					["key"] = "JOY_BTN23",
 				},
 			},
-			["name"] = "Flaps Down else Stop (HOTAS)",
+			["name"] = "FLAP Switch - DOWN else STOP",
 		},
 		["d10006pnilu10007cdnilvdnilvpnilvunil"] = {
-			["name"] = "Weapon Fire",
+			["name"] = "Gun-Rocket Trigger",
 			["removed"] = {
 				[1] = {
 					["key"] = "JOY_BTN1",
@@ -51,7 +51,7 @@ local diff = {
 			},
 		},
 		["d10008pnilu10009cdnilvdnilvpnilvunil"] = {
-			["name"] = "Weapon Release",
+			["name"] = "Bomb Release Button",
 			["removed"] = {
 				[1] = {
 					["key"] = "JOY_BTN2",
@@ -64,7 +64,7 @@ local diff = {
 					["key"] = "JOY_BTN14",
 				},
 			},
-			["name"] = "Master Exterior Lights - MOMENTARY ON else OFF",
+			["name"] = "Master Exterior Lights Switch - MOMENTARY ON else OFF",
 		},
 		["d10093pnilu10093cdnilvd1vpnilvu0"] = {
 			["added"] = {
@@ -72,7 +72,15 @@ local diff = {
 					["key"] = "JOY_BTN13",
 				},
 			},
-			["name"] = "Master Exterior Lights - ON else OFF",
+			["name"] = "Master Exterior Lights Switch - ON else OFF",
+		},
+		["d10123pnilunilcdnilvdnilvpnilvunil"] = {
+			["added"] = {
+				[1] = {
+					["key"] = "JOY_BTN26",
+				},
+			},
+			["name"] = "AFCS Override Button",
 		},
 		["d147pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
@@ -80,7 +88,7 @@ local diff = {
 					["key"] = "JOY_BTN8",
 				},
 			},
-			["name"] = "Speedbrake OPEN",
+			["name"] = "Speedbrake Switch - OPEN",
 		},
 		["d148pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
@@ -88,7 +96,7 @@ local diff = {
 					["key"] = "JOY_BTN7",
 				},
 			},
-			["name"] = "Speedbrake CLOSE",
+			["name"] = "Speedbrake Switch - CLOSE",
 		},
 	},
 }
