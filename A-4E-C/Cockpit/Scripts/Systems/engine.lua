@@ -144,6 +144,10 @@ function SetCommand(command,value)
 --        --print_message_to_user("throt"..string.format("%.2f",throt))
 --        dispatch_action(nil, iCommandPlaneThrustCommon, throt)
     elseif command==device_commands.throttle_click then
+        -- validate that throttle is not in adjust range
+        if sensor_data.getThrottleLeftPosition() > 0.01 then 
+            return
+        end
         if value==0 and throttle_state==THROTTLE_ADJUST and throttle<=0.01 then
             -- click to IGN from adjust
             throttle_state = THROTTLE_IGN
@@ -161,6 +165,31 @@ function SetCommand(command,value)
         elseif value==1 and throttle_state==THROTTLE_IGN then
             -- click to ADJUST from IGN
             throttle_state = THROTTLE_ADJUST
+        end
+    elseif command == device_commands.throttle_click_ITER then
+        -- validate that throttle is not in adjust range else cancel action
+        if sensor_data.getThrottleLeftPosition() > 0.01 then
+            return
+        end
+        -- value should be +1 or -1
+        if value == -1 or value == 1 then
+
+            -- get current throttle state to iterate over
+            local current_throttle_click_position = 0
+            if throttle_state == THROTTLE_OFF then current_throttle_click_position = -1
+            elseif throttle_state == THROTTLE_IGN then current_throttle_click_position = 0
+            elseif throttle_state == THROTTLE_ADJUST then current_throttle_click_position = 1 end
+
+            -- iterate value of click position
+            local new_throttle_click_value = current_throttle_click_position + value
+            -- print_message_to_user("new.."..new_throttle_click_value)
+
+            -- validate throttle click value is within range
+            if new_throttle_click_value > 1 then new_throttle_click_value = 1
+            elseif new_throttle_click_value < -1 then new_throttle_click_value = -1
+            end
+            
+            dev:performClickableAction(device_commands.throttle_click, new_throttle_click_value, false)
         end
     elseif command==device_commands.ENGINE_manual_fuel_shutoff then
         local manual_fuel_shutoff_catch_clickable_ref = get_clickable_element_reference("PNT_131")

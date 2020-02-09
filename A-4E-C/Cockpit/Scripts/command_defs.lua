@@ -472,4 +472,6 @@ device_commands =
     asn41_magvar_push               = __counter(),
     asn41_windspeed_push            = __counter(),
     asn41_winddir_push              = __counter(),
+
+    throttle_click_ITER             = __counter(),
 }
