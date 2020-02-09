@@ -205,16 +205,16 @@ join(res.keyCommands,{
     {down = Keys.APCHotStdCold, value_down = -1,                                              name = _('APC TEMP Switch - COLD'),                category = {_('Left Console'), _('APC Control Panel')}},
     {down = Keys.APCHotStdCold, value_down = 0,                                               name = _('APC TEMP Switch - STD'),                 category = {_('Left Console'), _('APC Control Panel')}},
     {down = Keys.APCHotStdCold, value_down = 1,                                               name = _('APC TEMP Switch - HOT'),                 category = {_('Left Console'), _('APC Control Panel')}},
-    {down = Keys.APCEngageStbyOff, value_down = -1, up = Keys.APCEngageStbyOff, value_up = 0, name = _('APC POWER Switch - STBY else OFF'),      category = {_('Left Console'), _('APC Control Panel'), _('Special For Joystick')}},
-    {down = Keys.APCEngageStbyOff, value_down = 1, up = Keys.APCEngageStbyOff, value_up = 0,  name = _('APC POWER Switch - STBY else ENGAGE'),   category = {_('Left Console'), _('APC Control Panel'), _('Special For Joystick')}},
-    {down = Keys.APCHotStdCold, value_down = -1, up = Keys.APCHotStdCold, value_up = 0,       name = _('APC TEMP Switch - STD else COLD'),       category = {_('Left Console'), _('APC Control Panel'), _('Special For Joystick')}},
-    {down = Keys.APCHotStdCold, value_down = 1, up = Keys.APCHotStdCold, value_up = 0,        name = _('APC TEMP Switch - STD else HOT'),        category = {_('Left Console'), _('APC Control Panel'), _('Special For Joystick')}},
+    {down = Keys.APCEngageStbyOff, value_down = -1, up = Keys.APCEngageStbyOff, value_up = 0, name = _('APC POWER Switch - OFF else STBY'),      category = {_('Left Console'), _('APC Control Panel'), _('Special For Joystick')}},
+    {down = Keys.APCEngageStbyOff, value_down = 1, up = Keys.APCEngageStbyOff, value_up = 0,  name = _('APC POWER Switch - ENGAGE else STBY'),   category = {_('Left Console'), _('APC Control Panel'), _('Special For Joystick')}},
+    {down = Keys.APCHotStdCold, value_down = -1, up = Keys.APCHotStdCold, value_up = 0,       name = _('APC TEMP Switch - COLD else STD'),       category = {_('Left Console'), _('APC Control Panel'), _('Special For Joystick')}},
+    {down = Keys.APCHotStdCold, value_down = 1, up = Keys.APCHotStdCold, value_up = 0,        name = _('APC TEMP Switch - HOT else STD'),        category = {_('Left Console'), _('APC Control Panel'), _('Special For Joystick')}},
     
     -- JATO Control Panel
-    {down = Keys.SpoilersArmToggle,                                                           name = _('Spoilers ARM-OFF Switch - ON/OFF'),      category = {_('Left Console'), _('JATO Control Panel')}},
-    {down = Keys.SpoilersArmOn,                                                               name = _('Spoilers ARM-OFF Switch - ON'),          category = {_('Left Console'), _('JATO Control Panel')}},
+    {down = Keys.SpoilersArmToggle,                                                           name = _('Spoilers ARM-OFF Switch - ARM/OFF'),      category = {_('Left Console'), _('JATO Control Panel')}},
+    {down = Keys.SpoilersArmOn,                                                               name = _('Spoilers ARM-OFF Switch - ARM'),          category = {_('Left Console'), _('JATO Control Panel')}},
     {down = Keys.SpoilersArmOff,                                                              name = _('Spoilers ARM-OFF Switch - OFF'),         category = {_('Left Console'), _('JATO Control Panel')}},
-    {down = Keys.SpoilersArmOn, up = Keys.SpoilersArmOff,                                     name = _('Spoilers ARM-Off Switch - OFF else ON'), category = {_('Left Console'), _('JATO Control Panel'), _("Special for Joystick")}},
+    {down = Keys.SpoilersArmOn, up = Keys.SpoilersArmOff,                                     name = _('Spoilers ARM-Off Switch - ARM else OFF'), category = {_('Left Console'), _('JATO Control Panel'), _("Special For Joystick")}},
     {down = Keys.JATOFiringButton,                                                            name = _('JATO Firing Button'),                    category = {_('Left Console'), _('JATO Control Panel')}},
 
     -- Engine Control Panel
@@ -237,9 +237,9 @@ join(res.keyCommands,{
     {down = Keys.RadarVolume, value_down = 1,                                           name = _('Radar Obstacle Tone Volume Knob - Increase'),                  category = {_('Left Console'), _('Radar Control Panel')}},
     {down = Keys.RadarVolume, value_down = 0,                                           name = _('Radar Obstacle Tone Volume Knob - Decrease'),                  category = {_('Left Console'), _('Radar Control Panel')}},
     
-    {down = Keys.RadarModeSearch, up = Keys.RadarModeTC,                                name = _('Radar Mode Selector Switch Knob - SEARCH else TC'),            category = {_('Left Console'), _('Radar Control Panel'), _('Special for Joystick')}},
-    {down = Keys.RadarModeA2G, up = Keys.RadarModeTC,                                   name = _('Radar Mode Selector Switch Knob - A2G else TC'),               category = {_('Left Console'), _('Radar Control Panel'), _('Special for Joystick')}},
-    {down = Keys.RadarAoAComp, value_down = 1, up = Keys.RadarAoAComp, value_up = 0,    name = _('Radar AoA Compensation Switch - ON else OFF'),                 category = {_('Left Console'), _('Radar Control Panel'), _('Special for Joystick')}},
+    {down = Keys.RadarModeSearch, up = Keys.RadarModeTC,                                name = _('Radar Mode Selector Switch Knob - SEARCH else TC'),            category = {_('Left Console'), _('Radar Control Panel'), _('Special For Joystick')}},
+    {down = Keys.RadarModeA2G, up = Keys.RadarModeTC,                                   name = _('Radar Mode Selector Switch Knob - A2G else TC'),               category = {_('Left Console'), _('Radar Control Panel'), _('Special For Joystick')}},
+    {down = Keys.RadarAoAComp, value_down = 1, up = Keys.RadarAoAComp, value_up = 0,    name = _('Radar AoA Compensation Switch - ON else OFF'),                 category = {_('Left Console'), _('Radar Control Panel'), _('Special For Joystick')}},
     
     -- AFCS Panel
     {down = Keys.AFCSStandbyToggle,                                                     name = _('AFCS Standby Switch - OFF/STANDBY'),                           category = {_('Left Console'), _('AFCS Panel')}},
@@ -254,9 +254,9 @@ join(res.keyCommands,{
     {down = Keys.AFCSHotasAlt,                                                          name = _('AFCS Altitude Mode'),                                          category = {_('Left Console'), _('AFCS Panel')}},
 
     -- Special commands for Warthog Throttle
-    {down = Keys.AFCSHotasMode, value_down = 1, up = Keys.AFCSHotasMode, value_up = 0,  name = _('AFCS Path Mode else Altitude+Heading (Warthog Throttle)'),     category = {_('Left Console'), _('AFCS Panel'), _('Special for Joystick')}},
-    {down = Keys.AFCSHotasMode, value_down = -1, up = Keys.AFCSHotasMode, value_up = 0, name = _('AFCS Altitude Mode else Altitude+Heading (Warthog Throttle)'), category = {_('Left Console'), _('AFCS Panel'), _('Special for Joystick')}},
-    {down = Keys.AFCSHotasEngage,                                                       name = _('AFCS Engage (Warthog Throttle)'),                              category = {_('Left Console'), _('AFCS Panel'), _('Special for Joystick')}},
+    {down = Keys.AFCSHotasMode, value_down = 1, up = Keys.AFCSHotasMode, value_up = 0,  name = _('AFCS Path Mode else Altitude+Heading (Warthog Throttle)'),     category = {_('Left Console'), _('AFCS Panel'), _('Special For Joystick')}},
+    {down = Keys.AFCSHotasMode, value_down = -1, up = Keys.AFCSHotasMode, value_up = 0, name = _('AFCS Altitude Mode else Altitude+Heading (Warthog Throttle)'), category = {_('Left Console'), _('AFCS Panel'), _('Special For Joystick')}},
+    {down = Keys.AFCSHotasEngage,                                                       name = _('AFCS Engage (Warthog Throttle)'),                              category = {_('Left Console'), _('AFCS Panel'), _('Special For Joystick')}},
 
     -- Oxygen and Anti-G Panel
 
@@ -315,44 +315,44 @@ join(res.keyCommands,{
     {down = Keys.ExtLightProbe, value_down = -1,                                                       name = _('PROBE Light Switch - DIM'),             category = {_('Right Console'), _('Exterior Lights Panel')}},
     {down = Keys.ExtLightProbe, value_down = 0,                                                        name = _('PROBE Light Switch - OFF'),             category = {_('Right Console'), _('Exterior Lights Panel')}},
     {down = Keys.ExtLightProbeCycle,                                                                   name = _('PROBE Light Switch - BRIGHT/DIM/OFF'),  category = {_('Right Console'), _('Exterior Lights Panel')}},
-    {down = Keys.ExtLightProbe, value_down = 1, up = Keys.ExtLightProbe, value_up = 0,                 name = _('PROBE Light Switch - BRIGHT else OFF'), category = {_('Right Console'), _('Exterior Lights Panel'), _('Special for Joystick')}},
-    {down = Keys.ExtLightProbe, value_down = -1, up = Keys.ExtLightProbe, value_up = 0,                name = _('PROBE Light Switch - DIM else OFF'),    category = {_('Right Console'), _('Exterior Lights Panel'), _('Special for Joystick')}},
+    {down = Keys.ExtLightProbe, value_down = 1, up = Keys.ExtLightProbe, value_up = 0,                 name = _('PROBE Light Switch - BRIGHT else OFF'), category = {_('Right Console'), _('Exterior Lights Panel'), _('Special For Joystick')}},
+    {down = Keys.ExtLightProbe, value_down = -1, up = Keys.ExtLightProbe, value_up = 0,                name = _('PROBE Light Switch - DIM else OFF'),    category = {_('Right Console'), _('Exterior Lights Panel'), _('Special For Joystick')}},
 
     {down = Keys.ExtLightTaxi, value_down = 1,                                                         name = _('TAXI Light Switch - ON'),               category = {_('Right Console'), _('Exterior Lights Panel')}},
     {down = Keys.ExtLightTaxi, value_down = 0,                                                         name = _('TAXI Light Switch - OFF'),              category = {_('Right Console'), _('Exterior Lights Panel')}},
     {down = Keys.ExtLightTaxiToggle,                                                                   name = _('TAXI Light Switch - ON/OFF'),           category = {_('Right Console'), _('Exterior Lights Panel')}},
-    {down = Keys.ExtLightTaxi, value_down = 1, up = Keys.ExtLightTaxi, value_down = 0,                 name = _('TAXI Light Switch - ON else OFF'),      category = {_('Right Console'), _('Exterior Lights Panel'), _('Special for Joystick')}},
+    {down = Keys.ExtLightTaxi, value_down = 1, up = Keys.ExtLightTaxi, value_down = 0,                 name = _('TAXI Light Switch - ON else OFF'),      category = {_('Right Console'), _('Exterior Lights Panel'), _('Special For Joystick')}},
 
     {down = Keys.ExtLightAnticollision, value_down = 1,                                                name = _('ANTI-COLL Light Switch - ON'),          category = {_('Right Console'), _('Exterior Lights Panel')}},
     {down = Keys.ExtLightAnticollision, value_down = 0,                                                name = _('ANTI-COLL Light Switch - OFF'),         category = {_('Right Console'), _('Exterior Lights Panel')}},
     {down = Keys.ExtLightAnticollisionToggle,                                                          name = _('ANTI-COLL Light Switch - ON/OFF'),      category = {_('Right Console'), _('Exterior Lights Panel')}},
-    {down = Keys.ExtLightAnticollision, value_down = 1, up = Keys.ExtLightAnticollision, value_up = 0, name = _('ANTI-COLL Light Switch - ON else OFF'), category = {_('Right Console'), _('Exterior Lights Panel'), _('Special for Joystick')}},
+    {down = Keys.ExtLightAnticollision, value_down = 1, up = Keys.ExtLightAnticollision, value_up = 0, name = _('ANTI-COLL Light Switch - ON else OFF'), category = {_('Right Console'), _('Exterior Lights Panel'), _('Special For Joystick')}},
 
     {down = Keys.ExtLightNav, value_down = 1,                                                          name = _('WING Light Switch - BRIGHT'),           category = {_('Right Console'), _('Exterior Lights Panel')}},
     {down = Keys.ExtLightNav, value_down = -1,                                                         name = _('WING Light Switch - DIM'),              category = {_('Right Console'), _('Exterior Lights Panel')}},
     {down = Keys.ExtLightNav, value_down = 0,                                                          name = _('WING Light Switch - OFF'),              category = {_('Right Console'), _('Exterior Lights Panel')}},
     {down = Keys.ExtLightNavCycle,                                                                     name = _('WING Light Switch - BRIGHT/DIM/OFF'),   category = {_('Right Console'), _('Exterior Lights Panel')}},
-    {down = Keys.ExtLightNav, value_down = 1, up = Keys.ExtLightNav, value_up = 0,                     name = _('WING Light Switch - BRIGHT else OFF'),  category = {_('Right Console'), _('Exterior Lights Panel'), _('Special for Joystick')}},
-    {down = Keys.ExtLightNav, value_down = -1, up = Keys.ExtLightNav, value_up = 0,                    name = _('WING Light Switch - DIM else OFF'),     category = {_('Right Console'), _('Exterior Lights Panel'), _('Special for Joystick')}},
+    {down = Keys.ExtLightNav, value_down = 1, up = Keys.ExtLightNav, value_up = 0,                     name = _('WING Light Switch - BRIGHT else OFF'),  category = {_('Right Console'), _('Exterior Lights Panel'), _('Special For Joystick')}},
+    {down = Keys.ExtLightNav, value_down = -1, up = Keys.ExtLightNav, value_up = 0,                    name = _('WING Light Switch - DIM else OFF'),     category = {_('Right Console'), _('Exterior Lights Panel'), _('Special For Joystick')}},
 
     {down = Keys.ExtLightTail, value_down = 1,                                                         name = _('TAIL Light Switch - BRIGHT'),           category = {_('Right Console'), _('Exterior Lights Panel')}},
     {down = Keys.ExtLightTail, value_down = -1,                                                        name = _('TAIL Light Switch - DIM'),              category = {_('Right Console'), _('Exterior Lights Panel')}},
     {down = Keys.ExtLightTail, value_down = 0,                                                         name = _('TAIL Light Switch - OFF'),              category = {_('Right Console'), _('Exterior Lights Panel')}},
     {down = Keys.ExtLightTailCycle,                                                                    name = _('TAIL Light Switch - BRIGHT/DIM/OFF'),   category = {_('Right Console'), _('Exterior Lights Panel')}},
-    {down = Keys.ExtLightTail, value_down = 1, up = Keys.ExtLightTail, value_up = 0,                   name = _('TAIL Light Switch - BRIGHT else OFF'),  category = {_('Right Console'), _('Exterior Lights Panel'), _('Special for Joystick')}},
-    {down = Keys.ExtLightTail, value_down = -1, up = Keys.ExtLightTail, value_up = 0,                  name = _('TAIL Light Switch - DIM else OFF'),     category = {_('Right Console'), _('Exterior Lights Panel'), _('Special for Joystick')}},
+    {down = Keys.ExtLightTail, value_down = 1, up = Keys.ExtLightTail, value_up = 0,                   name = _('TAIL Light Switch - BRIGHT else OFF'),  category = {_('Right Console'), _('Exterior Lights Panel'), _('Special For Joystick')}},
+    {down = Keys.ExtLightTail, value_down = -1, up = Keys.ExtLightTail, value_up = 0,                  name = _('TAIL Light Switch - DIM else OFF'),     category = {_('Right Console'), _('Exterior Lights Panel'), _('Special For Joystick')}},
 
     {down = Keys.ExtLightFuselage, value_down = 1,                                                     name = _('FUS Light Switch - BRIGHT'),            category = {_('Right Console'), _('Exterior Lights Panel')}},
     {down = Keys.ExtLightFuselage, value_down = -1,                                                    name = _('FUS Light Switch - DIM'),               category = {_('Right Console'), _('Exterior Lights Panel')}},
     {down = Keys.ExtLightFuselage, value_down = 0,                                                     name = _('FUS Light Switch - OFF'),               category = {_('Right Console'), _('Exterior Lights Panel')}},
     {down = Keys.ExtLightFuselageCycle,                                                                name = _('FUS Light Switch - BRIGHT/DIM/OFF'),    category = {_('Right Console'), _('Exterior Lights Panel')}},
-    {down = Keys.ExtLightFuselage, value_down = 1, up = Keys.ExtLightFuselage, value_up = 0,           name = _('FUS Light Switch - BRIGHT else OFF'),   category = {_('Right Console'), _('Exterior Lights Panel'), _('Special for Joystick')}},
-    {down = Keys.ExtLightFuselage, value_down = -1, up = Keys.ExtLightFuselage, value_up = 0,          name = _('FUS Light Switch - DIM else OFF'),      category = {_('Right Console'), _('Exterior Lights Panel'), _('Special for Joystick')}},
+    {down = Keys.ExtLightFuselage, value_down = 1, up = Keys.ExtLightFuselage, value_up = 0,           name = _('FUS Light Switch - BRIGHT else OFF'),   category = {_('Right Console'), _('Exterior Lights Panel'), _('Special For Joystick')}},
+    {down = Keys.ExtLightFuselage, value_down = -1, up = Keys.ExtLightFuselage, value_up = 0,          name = _('FUS Light Switch - DIM else OFF'),      category = {_('Right Console'), _('Exterior Lights Panel'), _('Special For Joystick')}},
 
-    {down = Keys.ExtLightFlashSteady, value_down = 1,                                                  name = _('FLASH/STEADY Switch - FLSH'),           category = {_('Right Console'), _('Exterior Lights Panel')}},
-    {down = Keys.ExtLightFlashSteady, value_down = 0,                                                  name = _('FLASH/STEADY Switch - STDY'),           category = {_('Right Console'), _('Exterior Lights Panel')}},
-    {down = Keys.ExtLightFlashSteadyToggle,                                                            name = _('FLASH/STEADY Switch - FLSH/STDY'),      category = {_('Right Console'), _('Exterior Lights Panel')}},
-    {down = Keys.ExtLightFlashSteady, value_down = 1, up = Keys.ExtLightFlashSteady, value_up = 0,     name = _('FLASH/STEADY Switch - FLSH else STDY'), category = {_('Right Console'), _('Exterior Lights Panel'), _('Special for Joystick')}},
+    {down = Keys.ExtLightFlashSteady, value_down = 1,                                                  name = _('FLASH-STEADY Switch - FLSH'),           category = {_('Right Console'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightFlashSteady, value_down = 0,                                                  name = _('FLASH-STEADY Switch - STDY'),           category = {_('Right Console'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightFlashSteadyToggle,                                                            name = _('FLASH-STEADY Switch - FLSH/STDY'),      category = {_('Right Console'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightFlashSteady, value_down = 1, up = Keys.ExtLightFlashSteady, value_up = 0,     name = _('FLASH-STEADY Switch - FLSH else STDY'), category = {_('Right Console'), _('Exterior Lights Panel'), _('Special For Joystick')}},
 
     ---------------------------------------------
     -- Carrier Catapult -------------------------

@@ -192,8 +192,8 @@ join(res.keyCommands,{
     {down = Keys.APCHotStdCold, value_down = 1,                                     name = _('APC TEMP Switch - HOT'),            category = {_('Left Console'), _('APC Control Panel')}},
 
     -- JATO Control Panel
-    {combos = {{key = 'S'}}, down = Keys.SpoilersArmToggle,                         name = _('Spoilers ARM-OFF Switch - ON/OFF'), category = {_('Left Console'), _('JATO Control Panel')}},
-    {down = Keys.SpoilersArmOn,                                                     name = _('Spoilers ARM-OFF Switch - ON'),     category = {_('Left Console'), _('JATO Control Panel')}},
+    {combos = {{key = 'S'}}, down = Keys.SpoilersArmToggle,                         name = _('Spoilers ARM-OFF Switch - ARM/OFF'), category = {_('Left Console'), _('JATO Control Panel')}},
+    {down = Keys.SpoilersArmOn,                                                     name = _('Spoilers ARM-OFF Switch - ARM'),     category = {_('Left Console'), _('JATO Control Panel')}},
     {down = Keys.SpoilersArmOff,                                                    name = _('Spoilers ARM-OFF Switch - OFF'),    category = {_('Left Console'), _('JATO Control Panel')}},
     {combos = {{key = 'Q'}}, down = Keys.JATOFiringButton,                          name = _('JATO Firing Button'),               category = {_('Left Console'), _('JATO Control Panel')}},
 
@@ -311,9 +311,9 @@ join(res.keyCommands,{
     {down = Keys.ExtLightFuselage, value_down = 0,      name = _('FUS Light Switch - OFF'),              category = {_('Right Console'), _('Exterior Lights Panel')}},
     {down = Keys.ExtLightFuselageCycle,                 name = _('FUS Light Switch - BRIGHT/DIM/OFF'),   category = {_('Right Console'), _('Exterior Lights Panel')}},
 
-    {down = Keys.ExtLightFlashSteady, value_down = 1,   name = _('FLASH/STEADY Switch - FLSH'),          category = {_('Right Console'), _('Exterior Lights Panel')}},
-    {down = Keys.ExtLightFlashSteady, value_down = 0,   name = _('FLASH/STEADY Switch - STDY'),          category = {_('Right Console'), _('Exterior Lights Panel')}},
-    {down = Keys.ExtLightFlashSteadyToggle,             name = _('FLASH/STEADY Switch - FLSH/STDY'),     category = {_('Right Console'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightFlashSteady, value_down = 1,   name = _('FLASH-STEADY Switch - FLSH'),          category = {_('Right Console'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightFlashSteady, value_down = 0,   name = _('FLASH-STEADY Switch - STDY'),          category = {_('Right Console'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightFlashSteadyToggle,             name = _('FLASH-STEADY Switch - FLSH/STDY'),     category = {_('Right Console'), _('Exterior Lights Panel')}},
 	
 		---------------------------------------------
     -- Carrier Catapult -------------------------
