@@ -65,30 +65,6 @@ dialog = {
 				},
 
 				--------------------------------------------
-				-- Control Stick Option
-				--------------------------------------------
-
-				["hideControlStickCheckbox"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = 24,
-							["w"] = 300,
-							["x"] = LeftColumnX,
-							["y"] = 90,
-						},
-						["enabled"] = true,
-						["state"] = false,
-						["tabOrder"] = 0,
-						["text"] = "$A4E_HIDESTICK_TEXT",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = CheckBoxSkin,
-					["type"] = "CheckBox",
-				},
-
-				--------------------------------------------
 				-- Catapult Check Option
 				--------------------------------------------
 
@@ -98,7 +74,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 300,
 							["x"] = LeftColumnX,
-							["y"] = 130,
+							["y"] = 90,
 						},
 						["enabled"] = true,
 						["state"] = true,
@@ -117,7 +93,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 500,
 							["x"] = LeftColumnX,
-							["y"] = 130 + 20,
+							["y"] = 90 + 20,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_CATAPULT_ALIGNMENT_CHECK_HELP",
@@ -139,7 +115,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 260,
 							["x"] = LeftColumnX,
-							["y"] = 190
+							["y"] = 150
 						},
 						["enabled"] = true,
 						["text"] = "$RWRTYPE",
@@ -160,7 +136,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 180,
 							["x"] = LeftColumnComboListX,
-							["y"] = 190
+							["y"] = 150
 						},
 						["enabled"] = true,
 						["tabOrder"] = 0,
@@ -188,7 +164,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 260,
 							["x"] = LeftColumnX,
-							["y"] = 230
+							["y"] = 190
 						},
 						["enabled"] = true,
 						["text"] = "$TRIMSPEEDL",
@@ -209,7 +185,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 180,
 							["x"] = LeftColumnComboListX,
-							["y"] = 230
+							["y"] = 190
 						},
 						["enabled"] = true,
 						["tabOrder"] = 0,
