@@ -28,6 +28,8 @@ local stick_vis_param = get_param_handle("HIDE_STICK")
 dev:listen_command(Canopy)
 dev:listen_command(Keys.ToggleStick)
 
+dev:listen_event("repair")
+
 
 local optionsData_hidestick =  get_plugin_option_value("A-4E-C","hideControlStick","local")
 
@@ -79,6 +81,12 @@ function update()
 	
 	
     stick_vis_param:set(stick_vis_state)
+end
+
+function CockpitEvent(event, val)
+    if event == "repair" then
+        CANOPY_COMMAND = 1 -- reset canopy from jettison state to open state
+    end
 end
 
 need_to_be_closed = false -- close lua state after initialization
