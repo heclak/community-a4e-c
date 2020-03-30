@@ -63,6 +63,14 @@ Download the latest A-4E-C installation file from the [releases page](https://gi
 
 Unzip the contents of the zip file into the following folder: `C:\Users\username\Saved Games\DCS`
 
+**NOTE: The mod MUST be installed into this folder, EVEN if you have installed DCS into a different folder than default.**
+
+**FAILURE TO DO SO WILL CAUSE THE MOD TO NOT WORK AND WILL CAUSE YOUR CLIENT TO FAIL THE IC CHECK**
+
+If you are installing onto an openbeta client the path changes to: `C:\Users\username\Saved Games\DCS.openbeta`
+
+Note: The above does not apply to steam clients, they are still installed into: `C:\Users\username\Saved Games\DCS`
+
 _To assist JSGME users, we’ve included the “mods/aircraft/” folders in the zip. You can safely merge these folders with your DCS World user folder._
 
 ### Updating to the latest version
