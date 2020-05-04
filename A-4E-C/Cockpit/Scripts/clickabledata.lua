@@ -11,6 +11,10 @@ _ = gettext.translate
 
 elements = {}
 
+-- Mirrors
+elements["PNT_MIRROR_LEFT"]  = default_2_position_tumb("Toggle Mirrors", 0, 1625, nil)
+elements["PNT_MIRROR_RIGHT"] = default_2_position_tumb("Toggle Mirrors", 0, 1625, nil)
+
 elements["PNT_2"] = default_2_position_tumb("Hide Stick Toggle", devices.CANOPY, Keys.ToggleStick, nil)
 
 -- Landing Gear & Tail Hook
