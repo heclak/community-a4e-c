@@ -40,7 +40,7 @@ local tacan_channel_param = get_param_handle("TACAN_CHANNEL")
 apn153_inputlist = {"OFF", "STBY", "LAND", "SEA", "TEST"}
 local apn153_input = "OFF"
 local apn153_state = "apn153-off"
-local apn153_warm = false
+local apn153_tempcondition = 0
 local apn153_warmup_timer = 0
 local apn153_test_timer = 99999
 local apn153_memorylight_test = 0
@@ -61,8 +61,9 @@ local apn153_memorylight = get_param_handle("APN153-MEMORYLIGHT")
 
 -- apn-153 constants
 local APN153_WARMUP_TIME = 300 -- warmup time duration in seconds
-local APN153_TEST_TIME = 60 -- test sequence time duration in seconds
-
+local APN153_COOLDOWN_TIME = 900 -- cooldown time duration in seconds. This number is an arbitrary number
+local APN153_WARMUP_DELTA = 100 / (APN153_WARMUP_TIME / update_time_step) -- calculate percentage warmup per simulation time step
+local APN153_COOLDOWN_DELTA = 100 / (APN153_COOLDOWN_TIME / update_time_step) -- calculate percentage cooldown per simulation time step
 
 -----------------------------------------------------------------------
 -----------------------------------------------------------------------
@@ -359,7 +360,7 @@ function post_initialize()
         -- setup doppler
         apn153_state = "apn153-mem-stby"
         apn153_input = "STBY"
-        apn153_warm = true
+        apn153_tempcondition = 100
         apn153_warmup_timer = 0
         apn153_test_timer = 0
         dev:performClickableAction(device_commands.doppler_select, 0.1, true)   -- STBY by default for warm starts
@@ -372,7 +373,7 @@ function post_initialize()
         -- setup doppler
         apn153_state = "apn153-off"
         apn153_input = "OFF"
-        apn153_warm = false
+        apn153_tempcondition = 0
         apn153_warmup_timer = 99999
         apn153_test_timer = 99999
         dev:performClickableAction(device_commands.doppler_select, 0.0, true)   -- OFF by default for cold starts
@@ -1307,28 +1308,36 @@ function apn153_speed_and_drift(land)
     return speed,drift
 end
 
-    
+local function apn153_update_tempcondition()
+    -- warm up unit if power if applied but apply cooldown function if power is removed.
+    if apn153_state ~= "apn153-off" and apn153_tempcondition < 100 then
+        -- warmup unit
+        apn153_tempcondition = apn153_tempcondition + APN153_WARMUP_DELTA
+        if apn153_tempcondition > 100 then
+            apn153_tempcondition = 100
+        end
+    elseif apn153_state == "apn153-off" and apn153_tempcondition > 0 then
+        -- apply cooldown
+        apn153_tempcondition = apn153_tempcondition - APN153_COOLDOWN_DELTA
+        if apn153_tempcondition < 0 then
+            apn153_tempcondition = 0
+        end
+    end
 
-function update_apn153()
+    -- print_message_to_user("APN-153 Temp Condition: "..apn153_tempcondition)
+end
+
+local function update_apn153()
     local timenow = get_model_time() -- time since spawn in seconds
     local signalok = apn153_get_signal_ok()
     local updated = false
-
-    if not apn153_warm and timenow >= apn153_warmup_timer and apn153_state ~= "apn153-off" then
-        apn153_warm = true
-        print_message_to_user("AN/APN-153: warmup complete, time:"..timenow)
-    end
 
     if apn153_state == "apn153-off" then
         apn153_gs:set(0)
         apn153_drift:set(0)
         set_apn153_memorylight( apn153_memorylight_test==1 and 1 or 0 )
-        apn153_warm = false
 
         if apn153_input ~= "OFF" then
-            print_message_to_user("AN/APN-153: warmup starting, time:"..timenow)
-            apn153_warmup_timer = timenow + APN153_WARMUP_TIME
-
             if apn153_input == "STBY" then apn153_state = "apn153-mem-stby"
             elseif apn153_input == "LAND" then apn153_state = "apn153-mem-land"
             elseif apn153_input == "SEA" then apn153_state = "apn153-mem-sea"
@@ -1359,7 +1368,7 @@ function update_apn153()
             elseif apn153_input == "TEST" then apn153_state = "apn153-test"
             end
         else
-            if apn153_warm and signalok then
+            if apn153_tempcondition == 100 and signalok then
                 apn153_state = "apn153-land"
             end
         end
@@ -1375,7 +1384,7 @@ function update_apn153()
             elseif apn153_input == "TEST" then apn153_state = "apn153-test"
             end
         else
-            if apn153_warm and signalok then
+            if apn153_tempcondition == 100 and signalok then
                 apn153_state = "apn153-sea"
             end
         end
@@ -1442,11 +1451,7 @@ function update_apn153()
                 apn153_state = "apn153-mem-sea"
             end
         else
-            if apn153_test_running == false then
-                apn153_test_running = true
-                apn153_test_timer = timenow + APN153_TEST_TIME
-            end
-            if timenow >= apn153_test_timer then
+            if apn153_tempcondition == 100 then
                 set_apn153_memorylight( apn153_memorylight_test==1 and 1 or 0 )
                 -- set the "test OK" values once upon entry
                 apn153_gs:set(121)
@@ -1467,6 +1472,8 @@ function update_apn153()
     if not updated then
         apn153_speed_and_drift_dummy()  -- don't let lastx/lastz get far away, to prevent impulses in speed
     end
+
+    apn153_update_tempcondition()
 end
 
 -- setter function for apn153 memory light
@@ -1722,6 +1729,7 @@ function update()
     else
         set_apn153_memorylight(0)
         apn153_state = "apn153-off"
+        apn153_update_tempcondition()
     end
 
     if get_elec_mon_primary_ac_ok() then
