@@ -477,4 +477,6 @@ device_commands =
 
     JATO_arm                        = __counter(),
     JATO_jettison                   = __counter(),
+
+    GunsightElevationControl_AXIS   = __counter(),
 }
