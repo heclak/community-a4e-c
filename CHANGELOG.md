@@ -18,6 +18,10 @@ Please list the changes you've made in this file. We should try to follow the gu
   - updated misc switch panel for accuracy
   - external fuel quantity check is now a button
   - new light indicator model for manual fuel control, jato, and doppler memory mode indicators
+  - implement clickable spot for hiding the control stick (#9)
+  - Added clickspots to toggle rear view mirrors in the cockpit
+- 3D/External Model
+  - New anti-collision light model and effect
 - reworked ECM control systems
   - upgraded AN/APR-23 to AN/APR-25
   - added separate APR-27 simulation
@@ -44,6 +48,8 @@ Please list the changes you've made in this file. We should try to follow the gu
   - manual mode will occur when engine rpm is less than approximately 5-10 percent
 - added sdef for engine sounds to allow for customisation for engine sounds
 - added ability to export radar display. Display name is "A4E_RADAR"
+- Made JATO ARM-OFF and JATO JETTISON-SAFE switches clickable. Switches are clickable but no logic is coded in the systems due to lack of JATO.
+- Added axis binding for gunsight elevation control
 - Liveries:
   - added Trainer USMC VMAT-102
   - added Trainer USN Bare Metal 1956
@@ -71,6 +77,10 @@ Please list the changes you've made in this file. We should try to follow the gu
 - changed ASN-41 to require a push-and-turn to change values (same in real world, left + right-click and drag or left-click and scroll)
 - new UI elements for version 1.4
 - updated MER model and textured
+- Hide stick option is now consolidated with main sim options. Remove option to hide stick from A-4E-C special options menu.
+- rewrite more accurate simulation of APN-153 warmup time. Change APN-153 TEST sequence.
+- updated hydraulic system pressurization to occur when engine startup has reached idle rpm. (#189)
+  - Although idle rpm is set at 55%, the sim approaches but does not reach 55.0 or greater upon startup. Lower the hydraulic checks to 54.9 will guarantee the trigger to occur for engine startups.
 - 3D/External model
   - updated navigation lights
   - fixed uv for pylons, bypass fan, fuselage bottom
@@ -93,6 +103,17 @@ Please list the changes you've made in this file. We should try to follow the gu
 - Missions:
   - updated Caucasus missions with new liveries, times and weathers
   - updated Persian Gulf missions with new liveries, times and weather
+- UI:
+  - New main menu splash screen image
+  - New briefing windows images
+- Input:
+  - Major rewrite of keybinding files. HOTAS profiles will now use diff files instead
+  - Duplicate keybinds are removed
+  - Standardise naming convention of binding names and categories
+  - fixed some standardisation for "else" and capitalisation for "Special For Joystick"
+  - new binding diff file for CH Fighterstick and removed old binding file for Warthog joystick. Updated throttle binding.
+  - added diff bindings for Sidewinder Force Feedback 2
+  - added default binding for Logitech Wireless Gamepad F710 in XInput mode
 
 ### Deprecated
 
@@ -113,10 +134,16 @@ Please list the changes you've made in this file. We should try to follow the gu
 - fixed windspeed and wind direction displayed on ASN-41 and BDHI when in test mode
 - fixed issue where A-4E-C does not appear in encyclopedia
 - corrected warthog bindings for flaps up and flaps down
+- fix bug where countermeasure values were not updated after rearming or with unlimited weapons
+- make canopy functional after ground crew repair
+- fixed external anti-collision lights not turning off when master light switch is turned off or power is disconnected. (#199)
+- fixed hookpoint for better catapult wire tracking.
 - 3D/Cockpit Model
   - fixed canopy uv mapping
   - fixed white floodlight canopy glare
   - fixed nav panel digit glitch
+  - fixed incorrect appearance for control hydraulic annuciator on state (#176)
+  - fixed green glow from radar while radar is powered off and in the dark. (#57)
 
 ## Version 1.3.1 - 17 June 2019
 
