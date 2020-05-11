@@ -80,6 +80,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 - updated MER model and textured
 - Hide stick option is now consolidated with main sim options. Remove option to hide stick from A-4E-C special options menu.
 - rewrite more accurate simulation of APN-153 warmup time. Change APN-153 TEST sequence.
+- changed brightness of lights to match lighting changes in 2.5.6
 - updated hydraulic system pressurization to occur when engine startup has reached idle rpm. (#189)
   - Although idle rpm is set at 55%, the sim approaches but does not reach 55.0 or greater upon startup. Lower the hydraulic checks to 54.9 will guarantee the trigger to occur for engine startups.
 - 3D/External model
