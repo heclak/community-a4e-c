@@ -50,6 +50,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 - added ability to export radar display. Display name is "A4E_RADAR"
 - Made JATO ARM-OFF and JATO JETTISON-SAFE switches clickable. Switches are clickable but no logic is coded in the systems due to lack of JATO.
 - Added axis binding for gunsight elevation control
+- added support to take off from the Sao Paulo A12 and Charles de Gaulle carriers
 - Liveries:
   - added Trainer USMC VMAT-102
   - added Trainer USN Bare Metal 1956
