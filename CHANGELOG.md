@@ -139,6 +139,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 - make canopy functional after ground crew repair
 - fixed external anti-collision lights not turning off when master light switch is turned off or power is disconnected. (#199)
 - fixed hookpoint for better catapult wire tracking.
+- fixed issue where probe light is not connected to the master exterior light switch
 - 3D/Cockpit Model
   - fixed canopy uv mapping
   - fixed white floodlight canopy glare
