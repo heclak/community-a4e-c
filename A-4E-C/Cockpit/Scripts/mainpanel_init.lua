@@ -1,6 +1,4 @@
-dofile(LockOn_Options.script_path.."VR_config.lua")
-
-shape_name   	   = "Cockpit_A-4E" --"Cockpit_A4F
+shape_name   	   = "Cockpit_A-4E"
 is_EDM			   = true
 new_model_format   = true
 ambient_light    = {255,255,255}
