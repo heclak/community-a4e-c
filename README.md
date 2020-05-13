@@ -41,7 +41,7 @@ SkateZilla, uboats, The Original HoggitDev Team
 
 [See full changelog](CHANGELOG.md)
 
-### Known Bugs
+### Known Issues
 
 #### Dispensing high volumes of bomblets (40+) from SUU-7/CBU-1/CBU-2 causes serious performance dip and/or crashes to desktop
 
