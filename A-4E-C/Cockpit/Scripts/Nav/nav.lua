@@ -2,6 +2,7 @@ dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.script_path.."Systems/mission.lua")
+dofile(LockOn_Options.script_path.."Nav/NAV_util.lua")
 
 startup_print("nav: load")
 
@@ -615,58 +616,6 @@ local function evalSrc(data_src, data_idx, navchnidx, tgt_brn, cur_hdg)
   
   return ct, tgt_brn
 end
-
-
--- extracts the digits from an XXX.YY lua number, returning them in reverse order using degree:minutes
--- first entry is "true" if number is positive
-function get_digits_LL123(x)
-    local y = {false, 0, 0, 0, 0, 0}
-    local n = 2
-
-    if x >= 0 then
-        y[1] = true
-    else
-        y[1] = false
-        x = math.abs(x)
-    end
-
-    local a,b = math.modf(x)
-    x = (a * 100) + (b * 60)
-
-    while x > 0 and n <= 6 do
-        y[n] = x % 10
-        x = math.floor(x/10)
-        n = n + 1
-    end
-
-    return y
-end
-
--- extracts the digits from an XX.YY lua number, returning them in reverse order using degree:minutes
--- first entry is "true" if number is positive
-function get_digits_LL122(x)
-    local y = {false, 0, 0, 0, 0}
-    local n = 2
-
-    if x >= 0 then
-        y[1] = true
-    else
-        y[1] = false
-        x = math.abs(x)
-    end
-
-    local a,b = math.modf(x)
-    x = (a * 100) + (b * 60)
-
-    while x > 0 and n <= 5 do
-        y[n] = x % 10
-        x = math.floor(x/10)
-        n = n + 1
-    end
-
-    return y
-end
-
 
 -- utility function to update nav display
 function draw_speed(x)
