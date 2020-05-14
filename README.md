@@ -71,7 +71,7 @@ If you are installing onto an openbeta client the path changes to: `C:\Users\use
 
 Note: The above does not apply to steam clients, they are still installed into: `C:\Users\username\Saved Games\DCS`
 
-_To assist JSGME users, we’ve included the “mods/aircraft/” folders in the zip. You can safely merge these folders with your DCS World user folder._
+_To assist OvGME and JSGME users, we’ve included the “mods/aircraft/” folders in the zip. You can safely merge these folders with your DCS World user folder._
 
 ### Updating to the latest version
 
