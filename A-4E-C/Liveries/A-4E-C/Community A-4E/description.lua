@@ -7,8 +7,8 @@ livery =
     {"Top", ROUGHNESS_METALLIC, "fus_top_v494_RoughMet_hi", true};
 
         -- flaps, used on most liveries
-    {"flaps_001", 0, "a4e_bort_white", true};
-    {"flaps_010", 0, "a4e_bort_white", true};
+    {"flaps_001", 0, "a4e_bort_white_smooth", true};
+    {"flaps_010", 0, "a4e_bort_white_smooth", true};
     {"flaps_100", 0, "empty", true};
 
     -- three digit, smaller nose numbers, used on most liveries
@@ -17,8 +17,8 @@ livery =
     {"nose_100", 0, "empty", true};
 
     -- two digit top-of-tail, used on most USMC liveries
-    {"tail_aggressor_001", 0, "a4e_bort_grey", true};
-    {"tail_aggressor_010", 0, "a4e_bort_grey", true};
+    {"tail_aggressor_001", 0, "a4e_bort_grey_smooth", true};
+    {"tail_aggressor_010", 0, "a4e_bort_grey_smooth", true};
 
     -- three digit top-of-rudder, used on most USN liveries
     {"rudder_001", 0, "empty", true};
@@ -31,8 +31,8 @@ livery =
     {"wing_100", 0, "empty", true};
 
     -- 2-digit large nose numbers, used on USN/USMC aggressors
-    {"nose_aggressor_001", 0, "a4e_bort_red-white", true};
-    {"nose_aggressor_010", 0, "a4e_bort_red-white", true};
+    {"nose_aggressor_001", 0, "a4e_bort_red-white_smooth", true};
+    {"nose_aggressor_010", 0, "a4e_bort_red-white_smooth", true};
 
     -- 3-digit large tail numbers, used on some USN/USMC aggressors
     {"tail_001", 0, "empty", true};
