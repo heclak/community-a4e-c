@@ -104,56 +104,7 @@ dialog = {
 					["skin"] = HelpSkin,
 					["type"] = "Static",
 				},
-
-				--------------------------------------------
-				-- RWR Options
-				--------------------------------------------
-
-				["rwrTypeLabel"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = 24,
-							["w"] = 260,
-							["x"] = LeftColumnX,
-							["y"] = 150
-						},
-						["enabled"] = true,
-						["text"] = "$RWRTYPE",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0
-					},
-					["skin"] = {
-						["params"] = {
-							["name"] = "staticOptionsCaptionSkin"
-						}
-					},
-					["type"] = "Static"
-				},
-				["rwrTypeComboList"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = 24,
-							["w"] = 180,
-							["x"] = LeftColumnComboListX,
-							["y"] = 150
-						},
-						["enabled"] = true,
-						["tabOrder"] = 0,
-						["text"] = "Item1",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0
-					},
-					["skin"] = {
-						["params"] = {
-							["name"] = "comboListSkin_options"
-						}
-					},
-					["type"] = "ComboList"
-				},
-				
-
+	
 				--------------------------------------------
 				-- Trimspeed Option
 				--------------------------------------------
@@ -164,7 +115,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 260,
 							["x"] = LeftColumnX,
-							["y"] = 190
+							["y"] = 150
 						},
 						["enabled"] = true,
 						["text"] = "$TRIMSPEEDL",
@@ -185,7 +136,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 180,
 							["x"] = LeftColumnComboListX,
-							["y"] = 190
+							["y"] = 150
 						},
 						["enabled"] = true,
 						["tabOrder"] = 0,
