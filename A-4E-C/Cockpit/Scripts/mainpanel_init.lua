@@ -1041,6 +1041,12 @@ ECM_REC.input						= {0.0, 1.0}
 ECM_REC.output						= {0.0, 1.0}
 ECM_REC.parameter_name				= "ECM_REC"
 
+ECM_Visibilty						= CreateGauge("parameter")
+ECM_Visibilty.arg_number			= 531
+ECM_Visibilty.input					= {0.0, 1.0}
+ECM_Visibilty.output				= {0.0, 1.0}
+ECM_Visibilty.parameter_name		= "ECM_VIS"
+
 --TEST_PARAM_GAUGE      			  = CreateGauge("parameter")
 --TEST_PARAM_GAUGE.parameter_name   = "TEST"
 --TEST_PARAM_GAUGE.arg_number    	  = 113
