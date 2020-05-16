@@ -381,6 +381,11 @@ function update()
 
         set_aircraft_draw_argument_value(ExtLight_TopCollision_arg, 0)
         set_aircraft_draw_argument_value(ExtLight_BottomCollision_arg, 0)
+
+        set_aircraft_draw_argument_value(ExtLight_TopCollisionBrightness_arg, 0)
+        set_aircraft_draw_argument_value(ExtLight_BottomCollisionBrightness_arg, 0)
+
+        set_aircraft_draw_argument_value(ExtLight_FuelProbe_arg, 0)
     end
 
 end

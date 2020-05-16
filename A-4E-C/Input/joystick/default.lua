@@ -446,5 +446,7 @@ join(res.axisCommands,{
     --{action = iCommandLeftWheelBrake,	name = _('Wheel Brake Left')},
     --{action = iCommandRightWheelBrake,	name = _('Wheel Brake Right')},
 
+    {action = device_commands.GunsightElevationControl_AXIS,   cockpit_device_id = devices.GUNSIGHT,       name = _('Gunsight Elevation Control'),      category = {_('Instrument Panel'), _('Gunsight Panel')}},
+
 })
 return res

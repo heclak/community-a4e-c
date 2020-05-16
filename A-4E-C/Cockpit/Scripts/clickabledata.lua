@@ -11,6 +11,10 @@ _ = gettext.translate
 
 elements = {}
 
+-- Mirrors
+elements["PNT_MIRROR_LEFT"]  = default_2_position_tumb("Toggle Mirrors", 0, 1625, nil)
+elements["PNT_MIRROR_RIGHT"] = default_2_position_tumb("Toggle Mirrors", 0, 1625, nil)
+
 elements["PNT_2"] = default_2_position_tumb("Hide Stick Toggle", devices.CANOPY, Keys.ToggleStick, nil)
 
 -- Landing Gear & Tail Hook
@@ -27,6 +31,8 @@ elements["PNT_83"] = multiposition_switch_limited("Master Lighting ON/OFF/Moment
 
 --Spoilers
 elements["PNT_84"] = default_2_position_tumb("Spoiler Arm Switch",devices.SPOILERS, device_commands.spoiler_arm,84,TOGGLECLICK_LEFT_MID)
+elements["PNT_133"] = default_2_position_tumb("JATO ARM-OFF Switch",devices.AVIONICS, device_commands.JATO_arm,133,TOGGLECLICK_LEFT_MID)
+elements["PNT_134"] = default_2_position_tumb("JATO JETTISON-SAFE Switch",devices.AVIONICS, device_commands.JATO_jettison,134,TOGGLECLICK_LEFT_MID)
 --Speedbrake
 elements["PNT_85"] = default_2_position_tumb("Speedbrake switch",devices.AIRBRAKES, device_commands.speedbrake,85,TOGGLECLICK_LEFT_MID)
 elements["PNT_128"] = default_3_position_tumb("Speedbrake emergency",devices.AIRBRAKES, device_commands.speedbrake_emer,128)
@@ -172,9 +178,9 @@ elements["PNT_884"].relative = {false,true}
 elements["PNT_884"].gain = {1.0, 0.2}
 
 -- GUNSIGHT
-elements["PNT_895"] = default_axis("Gunsight brightness",devices.GUNSIGHT, device_commands.GunsightBrightness,895,0,0.1,false,false)
-elements["PNT_891"] = default_2_position_tumb("Gunsight day/night",devices.GUNSIGHT, device_commands.GunsightDayNight,891,TOGGLECLICK_MID_FWD)
-elements["PNT_892"] = default_movable_axis("Gunsight elevation", devices.GUNSIGHT, device_commands.GunsightKnob, 892, 1.0, 0.05, false, false)
+elements["PNT_895"] = default_axis("Gunsight Light Control",devices.GUNSIGHT, device_commands.GunsightBrightness,895,0,0.1,false,false)
+elements["PNT_891"] = default_2_position_tumb("Gunsight Day/Night Switch",devices.GUNSIGHT, device_commands.GunsightDayNight,891,TOGGLECLICK_MID_FWD)
+elements["PNT_892"] = default_movable_axis("Gunsight Elevation Control", devices.GUNSIGHT, device_commands.GunsightKnob, 892, 1.0, 0.05, false, false)
 
 -- ARN-52V TACAN
 elements["PNT_900"] = multiposition_switch_limited("TACAN Mode", devices.NAV, device_commands.tacan_mode, 900, 4, 0.1, false, nil, KNOBCLICK_RIGHT_MID)

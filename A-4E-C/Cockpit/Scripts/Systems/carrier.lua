@@ -335,7 +335,7 @@ function update()
 end
 
 function on_carrier()
-	if  tostring(Sensor_Data_Mod.nose_wow) == "1" and Sensor_Data_Mod.self_alt > 20 and Sensor_Data_Mod.self_alt < 23 and 
+	if  tostring(Sensor_Data_Mod.nose_wow) == "1" and Sensor_Data_Mod.self_alt > 16 and Sensor_Data_Mod.self_alt < 23 and 
 		Terrain.GetSurfaceType(Sensor_Data_Mod.self_m_x,Sensor_Data_Mod.self_m_z) == "sea" then	
 		return true
 	else

@@ -474,4 +474,9 @@ device_commands =
     asn41_winddir_push              = __counter(),
 
     throttle_click_ITER             = __counter(),
+
+    JATO_arm                        = __counter(),
+    JATO_jettison                   = __counter(),
+
+    GunsightElevationControl_AXIS   = __counter(),
 }

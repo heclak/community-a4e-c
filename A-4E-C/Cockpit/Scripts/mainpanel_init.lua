@@ -1,4 +1,4 @@
-shape_name   	   = "Cockpit_A-4E" --"Cockpit_A4F
+shape_name   	   = "Cockpit_A-4E"
 is_EDM			   = true
 new_model_format   = true
 ambient_light    = {255,255,255}
@@ -942,7 +942,7 @@ ARC51_Freq_Preset.parameter_name     = "ARC51-FREQ-PRESET"
 FloodWhite                          = CreateGauge("parameter")
 FloodWhite.arg_number               = 111
 FloodWhite.input                    = {0.0, 1.0}
-FloodWhite.output                   = {0.0, 1.0}
+FloodWhite.output                   = {0.0, 0.75}
 FloodWhite.parameter_name           = "LIGHTS-FLOOD-WHITE"
 
 FloodRed                            = CreateGauge("parameter")

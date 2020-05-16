@@ -47,7 +47,7 @@ end
 
 function SetCommand(command,value)
     if (command == device_commands.GunsightKnob) then
-        --print_message_to_user("gunsight:"..tostring(value))
+        -- print_message_to_user("gunsight:"..tostring(value))
         --[[
         reflector_pos=reflector_pos+value
         if (reflector_pos<0) then
@@ -62,6 +62,9 @@ function SetCommand(command,value)
         gunsight_mil=math.floor(gunsight_mil*1000)/1000.0  -- restrict to 3 decimal places
         gunsight_mil_param:set(gunsight_mil)
         reflector_pos=1-value
+    elseif (command == device_commands.GunsightElevationControl_AXIS) then
+        local normalisedValue = ( ( value + 1 ) / 2 ) * 1.0 -- normalised {-1 to 1} to {0 - 1.0}
+        dev:performClickableAction(device_commands.GunsightKnob, normalisedValue, false)
     elseif (command == device_commands.GunsightDayNight) then
         daynight = value -- value 0=day, 1=night
         adjusted_brightness = (daynight==1) and (brightness*0.5) or (brightness)

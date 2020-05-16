@@ -331,3 +331,53 @@ function getBeaconPosition(x, y, angle, position)
 					
 	return x, y
 end
+
+-- extracts the digits from an XXX.YY lua number, returning them in reverse order using degree:minutes
+-- first entry is "true" if number is positive
+function get_digits_LL123(x)
+  local y = {false, 0, 0, 0, 0, 0}
+  local n = 2
+
+  if x >= 0 then
+      y[1] = true
+  else
+      y[1] = false
+      x = math.abs(x)
+  end
+
+  local a,b = math.modf(x)
+  x = (a * 100) + (b * 60)
+
+  while x > 0 and n <= 6 do
+      y[n] = x % 10
+      x = math.floor(x/10)
+      n = n + 1
+  end
+
+  return y
+end
+
+-- extracts the digits from an XX.YY lua number, returning them in reverse order using degree:minutes
+-- first entry is "true" if number is positive
+function get_digits_LL122(x)
+  local y = {false, 0, 0, 0, 0}
+  local n = 2
+
+  if x >= 0 then
+      y[1] = true
+  else
+      y[1] = false
+      x = math.abs(x)
+  end
+
+  local a,b = math.modf(x)
+  x = (a * 100) + (b * 60)
+
+  while x > 0 and n <= 5 do
+      y[n] = x % 10
+      x = math.floor(x/10)
+      n = n + 1
+  end
+
+  return y
+end
