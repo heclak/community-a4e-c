@@ -52,6 +52,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 - Added axis binding for gunsight elevation control
 - added support to take off from the Sao Paulo A12 and Charles de Gaulle carriers
 - added navigation log page to kneeboard
+- added option to remove ECM control panel from cockpit via mission editor
 - Liveries:
   - added Trainer USMC VMAT-102
   - added Trainer USN Bare Metal 1956

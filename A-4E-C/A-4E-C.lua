@@ -671,6 +671,13 @@ A_4E_C =  {
     },
     -- Aircraft Additional Properties
     AddPropAircraft = {
+        {
+			id = "HideECMPanel",
+			control = "checkbox",
+			label = _("Remove ECM control panel"),
+			defValue = false,
+			weightWhenOn = -80
+		},
         { id = "CBU2ATPP",			control = 'comboList', label = _('CBU-2/A Tubes Per Pulse'),
             values = {
                 {id =  0, dispName = _("1 tube")},

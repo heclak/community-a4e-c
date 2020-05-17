@@ -113,6 +113,8 @@ local BIT_TEST_TEST_LIGHT_STATE = false
 local BIT_TEST_GO_LIGHT_STATE = false
 local BIT_TEST_NOGO_LIGHT_STATE = false
 
+local HIDE_ECM = false
+
 
 dev:listen_command(device_commands.ecm_apr25_off)
 dev:listen_command(device_commands.ecm_apr25_audio)
@@ -128,7 +130,22 @@ dev:listen_command(device_commands.ecm_msl_alert_axis_outer)
 
 dev:listen_command(Keys.ecm_apr25_off)
 
+local ECM_vis_param = get_param_handle("ECM_VIS")
+
+local function hideECMPanel(hideECM)
+    if hideECM == 1 then
+        local ECM_CLICKABLES = {"PNT_503", "PNT_504", "PNT_501", "PNT_507", "PNT_510", "PNT_506", "PNT_505", "PNT_502"}
+        ECM_vis_param:set(1)
+        for i = 1, #ECM_CLICKABLES, 1 do
+            local clickable_ref = get_clickable_element_reference(ECM_CLICKABLES[i])
+            clickable_ref:hide(0)
+        end
+    end
+end
+
 function post_initialize()
+
+	HIDE_ECM = get_aircraft_property("HideECMPanel")
 	
 	--GetDevice(devices.RWR):set_power(true)			
 --	print_message_to_user("Init - RWR")
@@ -259,7 +276,13 @@ function SetCommand(command,value)
 end
 
 function update()
-
+	
+	hideECMPanel(HIDE_ECM)
+	
+	if HIDE_ECM == 1 then -- if ECM is removed from cockpit. Skip ECM code.
+		return
+	end
+	
 --	if (get_elec_mon_dc_ok()) and rwr_apr25_power == 1 then
 	
 	if get_elec_aft_mon_ac_ok() == true then
