@@ -597,7 +597,7 @@ A_4E_C =  {
 
     panelRadio = {
         [1] = {
-            name = _("AN/ARC-27A"),
+            name = _("AN/ARC-51A"),
             range = {
                 {min = 225.0, max = 399.9}
             },
