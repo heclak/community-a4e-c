@@ -20,6 +20,7 @@ Please list the changes you've made in this file. We should try to follow the gu
   - new light indicator model for manual fuel control, jato, and doppler memory mode indicators
   - implement clickable spot for hiding the control stick (#9)
   - Added clickspots to toggle rear view mirrors in the cockpit
+  - added animated brake pedals to cockpit
 - 3D/External Model
   - New anti-collision light model and effect
 - reworked ECM control systems

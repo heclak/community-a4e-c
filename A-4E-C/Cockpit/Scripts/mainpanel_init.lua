@@ -68,6 +68,18 @@ RudderPedals.input					= {-100,100}
 RudderPedals.output					= {-1,1}
 RudderPedals.controller				= controllers.base_gauge_RudderPosition
 
+LeftBrakePedal						= CreateGauge("parameter")
+LeftBrakePedal.arg_number			= 5
+LeftBrakePedal.input				= {-1,1}
+LeftBrakePedal.output				= {0,1}
+LeftBrakePedal.parameter_name		= "LEFT_BRAKE_PEDAL"
+
+RightBrakePedal						= CreateGauge("parameter")
+RightBrakePedal.arg_number			= 6
+RightBrakePedal.input				= {-1,1}
+RightBrakePedal.output				= {0,1}
+RightBrakePedal.parameter_name		= "RIGHT_BRAKE_PEDAL"
+
 Throttle							= CreateGauge("parameter")
 Throttle.arg_number					= 80
 Throttle.input						= {-1, 1}

@@ -129,6 +129,8 @@ local a4_max_speed_knots = 540 -- approx, only used to calc linear speedbrake cl
 local current_spoiler=get_param_handle("D_SPOILERS")
 local spdbrk_caution=get_param_handle("D_SPDBRK_CAUTION")
 local master_test_param = get_param_handle("D_MASTER_TEST")
+local left_brake_pedal_param = get_param_handle("LEFT_BRAKE_PEDAL")
+local right_brake_pedal_param = get_param_handle("RIGHT_BRAKE_PEDAL")
 
 function post_initialize()
     startup_print("airbrake: postinit")
@@ -217,6 +219,11 @@ function update_brakes()
         end
     end
     brakes_on_last = brakes_on
+
+    -- update brake pedal positions
+    left_brake_pedal_param:set(brake_axis_value)
+    right_brake_pedal_param:set(brake_axis_value)
+    -- print_message_to_user(brake_axis_value)
 end
 
 
