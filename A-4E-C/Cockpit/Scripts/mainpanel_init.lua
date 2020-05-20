@@ -294,7 +294,7 @@ LAWS_OFF.parameter_name   = "D_RADAR_OFF"
 LAWS_light_gauge					= CreateGauge("parameter")
 LAWS_light_gauge.arg_number		= 605
 LAWS_light_gauge.input			= { 0.0, 1.0}
-LAWS_light_gauge.output			= {0.0, 1.0}
+LAWS_light_gauge.output			= {0.0, 0.6}
 LAWS_light_gauge.parameter_name   = "D_RADAR_WARN"
 
 Oil_light_gauge                      = CreateGauge("parameter")
