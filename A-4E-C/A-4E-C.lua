@@ -780,31 +780,31 @@ A_4E_C =  {
     Pylons =     {
         pylon(1, 0, -0.609, -0.762, -2.845, --
             {
-               use_full_connector_position = true, connector = "Pylon1", arg = 341, arg_value = 0,
+               use_full_connector_position = true, connector = "Pylon1", arg = 308, arg_value = 0,
             },
             get_outboard_weapons("L")
         ),
         pylon(2, 0, -0.047, -0.97, -1.899,
             {
-               use_full_connector_position = true, connector = "Pylon2", arg = 342, arg_value = 0,
+               use_full_connector_position = true, connector = "Pylon2", arg = 309, arg_value = 0,
             },
             get_inboard_weapons("L")
         ),
         pylon(3, 0, 0.11, -0.90, 0,
             {
-               use_full_connector_position = true, connector = "Pylon3", arg = 343, arg_value = 0,
+               use_full_connector_position = true, connector = "Pylon3", arg = 310, arg_value = 0,
             },
             get_centerline_weapons("C")
         ),
         pylon(4, 0, -0.047, -0.97, 1.899,
             {
-               use_full_connector_position = true, connector = "Pylon4", arg = 344, arg_value = 0,
+               use_full_connector_position = true, connector = "Pylon4", arg = 311, arg_value = 0,
             },
             get_inboard_weapons("R")
         ),
         pylon(5, 0, -0.609, -0.762, 2.845,
             {
-               use_full_connector_position = true, connector = "Pylon5", arg = 345, arg_value = 0,
+               use_full_connector_position = true, connector = "Pylon5", arg = 312, arg_value = 0,
             },
             get_outboard_weapons("R")
         ),

@@ -149,6 +149,8 @@ Please list the changes you've made in this file. We should try to follow the gu
   - fixed nav panel digit glitch
   - fixed incorrect appearance for control hydraulic annuciator on state (#176)
   - fixed green glow from radar while radar is powered off and in the dark. (#57)
+  - fixed issue with pylon 1 not being removed on AI model
+  - fixed issue with shrike pylons not appearing correctly in multiplayer
 
 ## Version 1.3.1 - 17 June 2019
 
