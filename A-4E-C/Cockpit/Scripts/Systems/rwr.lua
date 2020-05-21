@@ -300,7 +300,7 @@ function update()
 	end
 	
 	
-	if (rwr_apr25_power == 1) or (ALQ_MODE > 1) then
+	if get_elec_aft_mon_ac_ok() == true and ((rwr_apr25_power == 1) or (ALQ_MODE > 1)) then
 		local tmp_rwr_signal 	= 0
 		local tmp_rwr_type		= 0
 		local tmp_rwr_power		= 0
@@ -482,25 +482,159 @@ end
 
 function update_ALQ()
 
-	alq_warm_up()
+	if get_elec_aft_mon_ac_ok() == true then
 
-	-- print_message_to_user("ALQ READY: "..tostring(ALQ_READY))
+		alq_warm_up()
 
-	if master_test_param:get() == 1 then
-		Light.ECM_RPT:set(1)
-		Light.ECM_SAM:set(1)
-		Light.ECM_REC:set(1)
-		Light.ECM_STBY:set(1)
-		Light.ECM_TEST:set(1)
-		Light.ECM_GO:set(1)
-		Light.ECM_NO_GO:set(1)
+		-- print_message_to_user("ALQ READY: "..tostring(ALQ_READY))
 
-	elseif ALQ_MODE == 0 then -- ALQ OFF
-		-- reset warmup timer and ready mode
-		TIMER_alq_warmup = 0
-		ALQ_READY = false
+		if master_test_param:get() == 1 then
+			Light.ECM_RPT:set(1)
+			Light.ECM_SAM:set(1)
+			Light.ECM_REC:set(1)
+			Light.ECM_STBY:set(1)
+			Light.ECM_TEST:set(1)
+			Light.ECM_GO:set(1)
+			Light.ECM_NO_GO:set(1)
 
-		-- all lights should be off when ALQ is OFF
+		elseif ALQ_MODE == 0 then -- ALQ OFF
+			-- reset warmup timer and ready mode
+			TIMER_alq_warmup = 0
+			ALQ_READY = false
+
+			-- all lights should be off when ALQ is OFF
+			Light.ECM_RPT:set(0)
+			Light.ECM_SAM:set(0)
+			Light.ECM_REC:set(0)
+			Light.ECM_STBY:set(0)
+			Light.ECM_TEST:set(0)
+			Light.ECM_GO:set(0)
+			Light.ECM_NO_GO:set(0)
+
+		elseif ALQ_MODE == 1 then -- ALQ STBY
+			-- check if warmup time has passed
+			if ALQ_READY then
+				Light.ECM_STBY:set(0)
+				Light.ECM_SAM:set(0)
+				Light.ECM_REC:set(0)
+				Light.ECM_RPT:set(0)
+				Light.ECM_TEST:set(0)
+				Light.ECM_GO:set(0)
+				Light.ECM_NO_GO:set(0)
+			else
+				Light.ECM_STBY:set(1)
+				Light.ECM_SAM:set(0)
+				Light.ECM_REC:set(0)
+				Light.ECM_RPT:set(0)
+				Light.ECM_TEST:set(0)
+				Light.ECM_GO:set(0)
+				Light.ECM_NO_GO:set(0)
+			end
+
+		elseif ALQ_MODE == 2 then -- ALQ REC
+			if not ALQ_READY then
+				Light.ECM_STBY:set(1)
+				Light.ECM_SAM:set(0)
+				Light.ECM_REC:set(0)
+				Light.ECM_RPT:set(0)
+				Light.ECM_TEST:set(0)
+				Light.ECM_GO:set(0)
+				Light.ECM_NO_GO:set(0)
+
+			elseif not BIT_TEST_STATE then
+				-- turn on REC light if radar lock detected
+				if (rwr_status_signal_param:get() == 2 or rwr_status_signal_param:get() == 3) then
+					Light.ECM_REC:set(1)
+				else
+					Light.ECM_REC:set(0)
+				end
+
+				-- turn on SAM light if launched upon and APR-27 is ON
+				if rwr_status_signal_param:get() == 3 and rwr_apr27_status == 1 then
+					Light.ECM_SAM:set(1)
+				else
+					Light.ECM_SAM:set(0)
+				end
+
+				Light.ECM_STBY:set(0)
+				Light.ECM_RPT:set(0)
+				Light.ECM_TEST:set(0)
+				Light.ECM_GO:set(0)
+				Light.ECM_NO_GO:set(0)
+
+			elseif BIT_TEST_STATE then
+
+				if BIT_TEST_RPT_LIGHT_STATE then
+					Light.ECM_RPT:set(1)
+				else
+					Light.ECM_RPT:set(0)
+				end
+				
+				if BIT_TEST_REC_LIGHT_STATE then
+					Light.ECM_REC:set(1)
+				else
+					Light.ECM_REC:set(0)
+				end
+				
+				if BIT_TEST_TEST_LIGHT_STATE then
+					Light.ECM_TEST:set(1)
+				else
+					Light.ECM_TEST:set(0)
+				end
+
+				if BIT_TEST_GO_LIGHT_STATE then
+					Light.ECM_GO:set(1)
+				else
+					Light.ECM_GO:set(0)
+				end
+
+				if BIT_TEST_NOGO_LIGHT_STATE then
+					Light.ECM_NO_GO:set(1)
+				else
+					Light.ECM_NO_GO:set(0)
+				end
+
+				Light.ECM_STBY:set(0)
+				Light.ECM_SAM:set(0)
+			end
+
+
+
+		elseif ALQ_MODE == 3 then -- ALQ RPT
+			-- check if warmup time has passed
+			if not ALQ_READY then
+				Light.ECM_STBY:set(1)
+				
+			elseif not BIT_TEST_STATE then
+			-- turn on REC and RPT light if radar lock detected
+				if (rwr_status_signal_param:get() == 2 or rwr_status_signal_param:get() == 3) then
+					Light.ECM_REC:set(1)
+					Light.ECM_RPT:set(1)
+				else
+					Light.ECM_REC:set(0)
+					Light.ECM_RPT:set(0)
+				end
+
+				-- turn on SAM light if launched upon and APR-27 is ON
+				if rwr_status_signal_param:get() == 3 and rwr_apr27_status == 1 then
+					Light.ECM_SAM:set(1)
+				else
+					Light.ECM_SAM:set(0)
+				end
+
+				Light.ECM_STBY:set(0)
+				Light.ECM_TEST:set(0)
+				Light.ECM_GO:set(0)
+				Light.ECM_NO_GO:set(0)
+
+			elseif BIT_TEST_STATE then
+				stop_bit_test()
+			end
+
+		else
+			-- log error message
+		end
+	else
 		Light.ECM_RPT:set(0)
 		Light.ECM_SAM:set(0)
 		Light.ECM_REC:set(0)
@@ -508,130 +642,8 @@ function update_ALQ()
 		Light.ECM_TEST:set(0)
 		Light.ECM_GO:set(0)
 		Light.ECM_NO_GO:set(0)
-
-	elseif ALQ_MODE == 1 then -- ALQ STBY
-		-- check if warmup time has passed
-		if ALQ_READY then
-			Light.ECM_STBY:set(0)
-			Light.ECM_SAM:set(0)
-			Light.ECM_REC:set(0)
-			Light.ECM_RPT:set(0)
-			Light.ECM_TEST:set(0)
-			Light.ECM_GO:set(0)
-			Light.ECM_NO_GO:set(0)
-		else
-			Light.ECM_STBY:set(1)
-			Light.ECM_SAM:set(0)
-			Light.ECM_REC:set(0)
-			Light.ECM_RPT:set(0)
-			Light.ECM_TEST:set(0)
-			Light.ECM_GO:set(0)
-			Light.ECM_NO_GO:set(0)
-		end
-
-	elseif ALQ_MODE == 2 then -- ALQ REC
-		if not ALQ_READY then
-			Light.ECM_STBY:set(1)
-			Light.ECM_SAM:set(0)
-			Light.ECM_REC:set(0)
-			Light.ECM_RPT:set(0)
-			Light.ECM_TEST:set(0)
-			Light.ECM_GO:set(0)
-			Light.ECM_NO_GO:set(0)
-
-		elseif not BIT_TEST_STATE then
-			-- turn on REC light if radar lock detected
-			if (rwr_status_signal_param:get() == 2 or rwr_status_signal_param:get() == 3) then
-				Light.ECM_REC:set(1)
-			else
-				Light.ECM_REC:set(0)
-			end
-
-			-- turn on SAM light if launched upon and APR-27 is ON
-			if rwr_status_signal_param:get() == 3 and rwr_apr27_status == 1 then
-				Light.ECM_SAM:set(1)
-			else
-				Light.ECM_SAM:set(0)
-			end
-
-			Light.ECM_STBY:set(0)
-			Light.ECM_RPT:set(0)
-			Light.ECM_TEST:set(0)
-			Light.ECM_GO:set(0)
-			Light.ECM_NO_GO:set(0)
-
-		elseif BIT_TEST_STATE then
-
-			if BIT_TEST_RPT_LIGHT_STATE then
-				Light.ECM_RPT:set(1)
-			else
-				Light.ECM_RPT:set(0)
-			end
-			
-			if BIT_TEST_REC_LIGHT_STATE then
-				Light.ECM_REC:set(1)
-			else
-				Light.ECM_REC:set(0)
-			end
-			
-			if BIT_TEST_TEST_LIGHT_STATE then
-				Light.ECM_TEST:set(1)
-			else
-				Light.ECM_TEST:set(0)
-			end
-
-			if BIT_TEST_GO_LIGHT_STATE then
-				Light.ECM_GO:set(1)
-			else
-				Light.ECM_GO:set(0)
-			end
-
-			if BIT_TEST_NOGO_LIGHT_STATE then
-				Light.ECM_NO_GO:set(1)
-			else
-				Light.ECM_NO_GO:set(0)
-			end
-
-			Light.ECM_STBY:set(0)
-			Light.ECM_SAM:set(0)
-		end
-
-
-
-	elseif ALQ_MODE == 3 then -- ALQ RPT
-		-- check if warmup time has passed
-		if not ALQ_READY then
-			Light.ECM_STBY:set(1)
-			
-		elseif not BIT_TEST_STATE then
-		-- turn on REC and RPT light if radar lock detected
-			if (rwr_status_signal_param:get() == 2 or rwr_status_signal_param:get() == 3) then
-				Light.ECM_REC:set(1)
-				Light.ECM_RPT:set(1)
-			else
-				Light.ECM_REC:set(0)
-				Light.ECM_RPT:set(0)
-			end
-
-			-- turn on SAM light if launched upon and APR-27 is ON
-			if rwr_status_signal_param:get() == 3 and rwr_apr27_status == 1 then
-				Light.ECM_SAM:set(1)
-			else
-				Light.ECM_SAM:set(0)
-			end
-
-			Light.ECM_STBY:set(0)
-			Light.ECM_TEST:set(0)
-			Light.ECM_GO:set(0)
-			Light.ECM_NO_GO:set(0)
-
-		elseif BIT_TEST_STATE then
-			stop_bit_test()
-		end
-
-	else
-		-- log error message
 	end
+
 	
 end
 
