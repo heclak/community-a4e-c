@@ -58,11 +58,11 @@ dev:listen_command(Keys.catapult_ready)
 dev:listen_command(Keys.catapult_shoot)
 dev:listen_command(Keys.catapult_abort)
 
-
 local carrier_posx_param = get_param_handle("CARRIER_POSX")
 local carrier_posz_param = get_param_handle("CARRIER_POSZ")
 
-option_bypassCatapultCheck = get_plugin_option_value("A-4E-C","catapultAlignmentCheck","local")
+local option_bypassCatapultCheck = get_plugin_option_value("A-4E-C","catapultAlignmentCheck","local")
+local option_catapultLaunchMode = get_plugin_option_value("A-4E-C","catapultLaunchMode","local") -- 0 = MIL POWER Launch, 1 = Salute Launch
 
 carrier_posx_param:set(0)
 carrier_posz_param:set(0)
@@ -74,6 +74,7 @@ local rpm_param = get_param_handle("RPM")
 
 local iCommandPlaneWheelBrakeOn = 74	--dispatch_action(nil,iCommandPlaneWheelBrakeOn)
 local iCommandPlaneWheelBrakeOff = 75	--dispatch_action(nil,iCommandPlaneWheelBrakeOff)
+local THROTTLEAXIS = 2004
 
 -- SOUND PARAMS
 local param_snd_catapult_takeoff = get_param_handle("SOUND_CAT_TAKEOFF")
@@ -120,6 +121,13 @@ function spawn_in_catapult()
 	end
 end
 
+local function disconnect_from_catapult()
+	catapult_status = 0
+	print_message_to_user("Abort Takeoff! Unhooking the plane")
+	--dispatch_action(nil,Keys.BrakesOff)
+	dispatch_action(nil,iCommandPlaneWheelBrakeOff)
+end
+
 function SetCommand(command,value)
 --	print_message_to_user("carrier: command "..tostring(command).." = "..tostring(value))
 	
@@ -146,14 +154,14 @@ function SetCommand(command,value)
 					print_message_to_user("position or alignment wrong\nDistance " ..round(closest_cat,1) .."m (max 2m)\nAngel "..round((angel_to_cat),1) .. "(max 3 degrees)" )
 				end
 			end
-		elseif on_carrier() and option_bypassCatapultCheck == true then -- need to add checks if on carrier. Should not trigger if on land.
+		elseif on_carrier() and catapult_status == 0 and option_bypassCatapultCheck == true then -- need to add checks if on carrier. Should not trigger if on land.
 			catapult_status = 1
 			print_message_to_user("You are hooked in")
 			cat_hook_tics = 0
 		elseif wheelchocks_state_param:get() == 1 then
 			print_message_to_user("Wheel chocks are on!")	
 		elseif catapult_status == 1 then
-			print_message_to_user("You are already hooked into the catapult.")	
+			disconnect_from_catapult()
 		else	
 			print_message_to_user("You are not on a carrier!")
 		end
@@ -162,7 +170,7 @@ function SetCommand(command,value)
 		
 			if Sensor_Data_Mod.throttle_pos_l > 0.9 then
 				catapult_status = 2
-				dispatch_action(nil, 2004,-1)
+				dispatch_action(nil, THROTTLEAXIS,-1)
 		--		print_message_to_user("Fire Catapult!")
 				param_snd_catapult_takeoff:set(1)
 			else
@@ -172,10 +180,7 @@ function SetCommand(command,value)
 	elseif command == Keys.catapult_abort then
 			
 			if catapult_status ~= 0 then
-				catapult_status = 0
-				print_message_to_user("Abort Takeoff! Unhooking the plane")
-				--dispatch_action(nil,Keys.BrakesOff)
-				dispatch_action(nil,iCommandPlaneWheelBrakeOff)
+				disconnect_from_catapult()
 			end
 	end
 	
@@ -183,16 +188,16 @@ function SetCommand(command,value)
 	if command == device_commands.throttle_axis_mod then
 
 		if  catapult_status == 3 then
-			dispatch_action(nil, 2004,-1)
+			dispatch_action(nil, THROTTLEAXIS,-1)
 		else	
 			if value < 0 then 
 				if catapult_status == 2 then
-					dispatch_action(nil, 2004,value)
+					dispatch_action(nil, THROTTLEAXIS,value)
 				else
-					dispatch_action(nil, 2004,value * 0.999)
+					dispatch_action(nil, THROTTLEAXIS,value * 0.999)
 				end
 			else
-				dispatch_action(nil, 2004,value)
+				dispatch_action(nil, THROTTLEAXIS,value)
 			end
 		end
 	end
@@ -230,12 +235,14 @@ function update()
 		compare_carriers()
 	end
 
------------------	
-	if catapult_status == 1 and rpm_param:get() > 100 then
+	--------------------------------------------
+	-- LAUNCH CATAPULT BASED ON THROTTLE SETTING
+	--------------------------------------------	
+	if catapult_status == 1 and rpm_param:get() > 100 and option_catapultLaunchMode == 0 then
 				catapult_status = 2
-				dispatch_action(nil, 2004,-1)
+				dispatch_action(nil, THROTTLEAXIS,-1)
 				param_snd_catapult_takeoff:set(1)
-	--			print_message_to_user("Fire Catapult!")
+				-- print_message_to_user("Fire Catapult!")
 	end			
 -------------------	
 	
@@ -257,7 +264,7 @@ function update()
 	elseif catapult_status == 2 then
 		--dispatch_action(nil,Keys.BrakesOff)
 		dispatch_action(nil,iCommandPlaneWheelBrakeOff)
-		dispatch_action(nil, 2004,-1)
+		dispatch_action(nil, THROTTLEAXIS,-1)
 		catapult_status=3
 		
 		cat_start_pos =	{	x = Sensor_Data_Mod.self_m_x,
@@ -273,7 +280,7 @@ function update()
 			
 	
 	elseif catapult_status == 3 then
-		dispatch_action(nil, 2004,-1)
+		dispatch_action(nil, THROTTLEAXIS,-1)
 		cat_curr_pos =	{	x = Sensor_Data_Mod.self_m_x,
 							y = Sensor_Data_Mod.self_m_y,
 							z = Sensor_Data_Mod.self_m_z,}
@@ -287,7 +294,7 @@ function update()
 		--if cat_fire_dist > 2 then --catapult_max_length then
 		if cat_fire_dist > catapult_max_length then
 			catapult_status=0
-			dispatch_action(nil, 2004,-0.999)
+			dispatch_action(nil, THROTTLEAXIS,-0.999)
 		--	print_message_to_user("Airborne!")
 			param_snd_catapult_takeoff:set(0)
 			cat_start_pos = 0
@@ -323,7 +330,7 @@ function update()
 	
 	if Sensor_Data_Mod.throttle_pos_l > 0.999 and catapult_status == 3 then
 	elseif  Sensor_Data_Mod.throttle_pos_l > 0.9999 then
-		dispatch_action(nil, 2004,-0.999)
+		dispatch_action(nil, THROTTLEAXIS,-0.999)
 	end
  
 	if carrier_tacan == true then
