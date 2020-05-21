@@ -40,6 +40,7 @@ local cat_fire_tics		= 0
 local cat_hook_tics		= 0
 local cat_fire_dist		= 0
 local carrier_dist_per_tic = 0
+local pilot_salute 		= false
 
 local carrier_tacan		= false
 local carrier_heading	= 0
@@ -128,6 +129,27 @@ local function disconnect_from_catapult()
 	dispatch_action(nil,iCommandPlaneWheelBrakeOff)
 end
 
+local function shoot_catapult()
+	catapult_status = 2
+	dispatch_action(nil, THROTTLEAXIS,-1)
+	param_snd_catapult_takeoff:set(1)
+end
+
+local shooter_countdown = 0	-- duration that shooter takes between salute and catapult shoot
+local SHOOTER_MIN_DELAY = 1.5
+
+local function simulate_shooter()
+	if on_carrier() == true and catapult_status == 1 and Sensor_Data_Mod.throttle_pos_l > 0.9 then
+		shooter_countdown = shooter_countdown - update_time_step
+		if shooter_countdown < 0 then
+			shoot_catapult()
+		end
+	else
+		print_message_to_user("Shooter countdown cancelled")
+		pilot_salute = false
+	end
+end
+
 function SetCommand(command,value)
 --	print_message_to_user("carrier: command "..tostring(command).." = "..tostring(value))
 	
@@ -169,19 +191,23 @@ function SetCommand(command,value)
 		if on_carrier() == true and catapult_status == 1 then
 		
 			if Sensor_Data_Mod.throttle_pos_l > 0.9 then
-				catapult_status = 2
-				dispatch_action(nil, THROTTLEAXIS,-1)
-		--		print_message_to_user("Fire Catapult!")
-				param_snd_catapult_takeoff:set(1)
+				shoot_catapult()
 			else
 		--		print_message_to_user("Engines are not at max MIL power!")
 			end
 		end
-	elseif command == Keys.catapult_abort then
-			
-			if catapult_status ~= 0 then
-				disconnect_from_catapult()
-			end
+
+	elseif command == Keys.catapult_abort then	
+		if catapult_status ~= 0 then
+			disconnect_from_catapult()
+		end
+
+	elseif command == device_commands.pilot_salute then
+		pilot_salute = true
+		math.randomseed(get_absolute_model_time())
+		shooter_countdown = math.random() + SHOOTER_MIN_DELAY
+		print_message_to_user("Salute")
+		-- print_message_to_user(shooter_countdown)
 	end
 	
 	
@@ -239,16 +265,17 @@ function update()
 	-- LAUNCH CATAPULT BASED ON THROTTLE SETTING
 	--------------------------------------------	
 	if catapult_status == 1 and rpm_param:get() > 100 and option_catapultLaunchMode == 0 then
-				catapult_status = 2
-				dispatch_action(nil, THROTTLEAXIS,-1)
-				param_snd_catapult_takeoff:set(1)
-				-- print_message_to_user("Fire Catapult!")
+		shoot_catapult()
 	end			
 -------------------	
 	
 	if catapult_status == 0 then
 	
 	elseif catapult_status == 1 then
+
+		if pilot_salute == true then
+			simulate_shooter()
+		end
 		--dispatch_action(nil,Keys.BrakesOn)
 		dispatch_action(nil,iCommandPlaneWheelBrakeOn)
 		

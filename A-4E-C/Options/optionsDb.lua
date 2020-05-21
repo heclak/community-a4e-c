@@ -27,7 +27,7 @@ return {
 																}),
 
 	catapultLaunchMode		= DbOption.new():setValue(0):combo({DbOption.Item(_('MIL Power')):Value(0),
-																DbOption.Item(_('Salute')):Value(1),
+																DbOption.Item(_('Manual')):Value(1),
 																}),
 
 	catapultAlignmentCheck	= DbOption.new():setValue(true):checkbox(),

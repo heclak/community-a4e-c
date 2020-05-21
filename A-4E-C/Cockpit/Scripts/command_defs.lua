@@ -479,4 +479,5 @@ device_commands =
     JATO_jettison                   = __counter(),
 
     GunsightElevationControl_AXIS   = __counter(),
+    pilot_salute                    = __counter(),
 }
