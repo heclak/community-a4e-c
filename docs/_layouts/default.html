@@ -29,8 +29,9 @@
         <a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
       {% endif %}
       {% if site.show_downloads %}
-        <a href="{{ site.github.releases_url }}" class="btn">Download</a>
+        <a href="{{ site.github.latest_release.html_url }}" class="btn">Download Latest Version</a>
       {% endif %}
+      <a href="{{ site.github.issues_url }}" class="btn">Report a Bug</a>
     </header>
 
     <main id="content" class="main-content" role="main">
