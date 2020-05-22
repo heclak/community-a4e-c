@@ -61,8 +61,6 @@ StyleCopReport.xml
 
 # Files built by Visual Studio
 *_i.c
-*.sln
-*.vcxproj
 *.tlog
 *_p.c
 *_h.h

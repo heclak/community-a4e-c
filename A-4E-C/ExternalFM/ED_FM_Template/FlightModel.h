@@ -86,6 +86,8 @@ private:
 				 
 	const double m_verticalTailArea = 2.9;
 	const double m_verticalTailArm = 5.1;
+
+	const double m_wingIncidence = 0.035;
 				 
 	const double m_thrust = 38000;
 
