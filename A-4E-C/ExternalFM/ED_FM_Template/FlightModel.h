@@ -283,9 +283,9 @@ void FlightModel::lift()
 
 void FlightModel::drag()
 {
-	double CD = CDi(0.0) + CDalpha(m_aoa) + CDbeta(m_beta) + CDde(0.0)*elevator() + CDmach(m_mach);
-	//printf("CDI: %lf, CDalpha: %lf, CDbeta: %lf, CDde*elevator: %lf, CDmach: %lf, CDalphaCD*CD: %lf",
-		//CDi(0.0), CDalpha(m_aoa), CDbeta(m_beta), CDde(0.0) * elevator(), CDmach(m_mach), CDalpha(m_aoa) * CLalpha(m_aoa) * CLalpha(m_aoa));
+	double CD = CDi(0.0)*CLalpha(m_aoa) * CLalpha(m_aoa) + CDalpha(m_aoa) + CDbeta(m_beta) + CDde(0.0)*elevator() + CDmach(m_mach);
+	printf("CDI*CL*CL: %lf, CDalpha: %lf, CDbeta: %lf, CDde*elevator: %lf, CDmach: %lf",
+		CDi(0.0) * CLalpha(m_aoa) * CLalpha(m_aoa), CDalpha(m_aoa), CDbeta(m_beta), CDde(0.0) * elevator(), CDmach(m_mach));
 	addForce(Vec3(-m_k * CD, 0.0, 0.0), getCOM());
 }
 
