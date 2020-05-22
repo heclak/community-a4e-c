@@ -48,7 +48,7 @@ Skyhawk::FlightModel::FlightModel(Input& controls) :
 	Clp({ -0.4 }, 0.0, 1.0),
 	Clr({ 0.15 }, 0.0, 1.0),
 	Cla({ 0.110, 0.037 }, 0.0, 2.0),
-	Cldr({ 0.1 }, 0.0, 1.0),
+	Cldr({ 0.01 }, 0.0, 1.0),
 
 	Cmalpha({-0.38}, 0.0, 1.0),
 	Cmde({-0.5,-0.2}, 0.0, 2.0), //x = mach

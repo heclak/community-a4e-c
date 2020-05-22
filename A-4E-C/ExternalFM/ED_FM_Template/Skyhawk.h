@@ -3,6 +3,25 @@
 
 extern "C" 
 {
+
+	enum DrawArgEnum
+	{
+		RIGHT_AILERON = 11,
+		LEFT_AILERON = 12,
+		RIGHT_ELEVATOR = 15,
+		LEFT_ELEVATOR = 16,
+		RUDDER = 17,
+		NOSE_GEAR = 0,
+		NOSE_GEAR_SHOCK = 1,
+		LEFT_GEAR = 5,
+		LEFT_GEAR_SHOCK = 6,
+		RIGHT_GEAR = 3,
+		RIGHT_GEAR_SHOCK = 4,
+		LEFT_FLAP = 9,
+		RIGHT_FLAP = 10,
+	};
+
+
 	/*/////////////////////////////////////////////////////////////////////////
 	function of force source in body axis 
 	x,y,z			  - force components in body coordinate system
@@ -192,5 +211,7 @@ extern "C"
 	ED_FM_API void ed_fm_cold_start();
 	ED_FM_API void ed_fm_hot_start();
 	ED_FM_API void ed_fm_hot_start_in_air();
+
+	ED_FM_API double ed_fm_get_shake_amplitude();
 
 };

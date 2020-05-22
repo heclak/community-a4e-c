@@ -147,6 +147,9 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\Cockpit\ccParametersAPI.h" />
+    <ClInclude Include="..\include\FM\wHumanCustomPhysicsAPI.h" />
+    <ClInclude Include="..\include\FM\wHumanCustomPhysicsAPI_ImplementationDeclare.h" />
     <ClInclude Include="A-4_Aero.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Skyhawk.h" />

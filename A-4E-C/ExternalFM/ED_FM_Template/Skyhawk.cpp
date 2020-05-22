@@ -529,6 +529,14 @@ void ed_fm_set_draw_args (EdDrawArgument * drawargs,size_t size)
 		drawargs[616].f = drawargs[5].f;
 	}
 
+	drawargs[LEFT_AILERON].f = -s_input.roll();
+	drawargs[RIGHT_AILERON].f = s_input.roll();
+
+	drawargs[LEFT_ELEVATOR].f = s_input.pitch();
+	drawargs[RIGHT_ELEVATOR].f = s_input.pitch();
+
+	drawargs[RUDDER].f = s_input.yaw();
+
 }
 
 
@@ -554,9 +562,11 @@ double ed_fm_get_param(unsigned index)
 		case ED_FM_ENGINE_1_RELATED_RPM:
 			return throttle;
 		case ED_FM_ENGINE_1_THRUST:
-			return throttle * 5000 * 9.81;
+			return s_fm.thrust();
 		case ED_FM_ENGINE_1_RELATED_THRUST:
 			return throttle;
+		case ED_FM_FC3_STICK_PITCH:
+			return s_input.pitch();
 		}
 	}
 	else if (index >= ED_FM_SUSPENSION_0_RELATIVE_BRAKE_MOMENT &&
@@ -609,5 +619,10 @@ bool ed_fm_add_local_moment_component( double & x,double &y,double &z )
 bool ed_fm_add_global_moment_component( double & x,double &y,double &z )
 {
 	return false;
+}
+
+double ed_fm_get_shake_amplitude()
+{
+	return 0.0;
 }
 

@@ -246,12 +246,13 @@ void FlightModel::M_stab()
 {
 	//m_moment.z
 	m_moment.z += 0.5 * m_scalarVSquared * m_totalWingArea * m_chord * (Cmalpha(m_aoa) * m_aoa + Cmde(m_mach) * elevator()) + 0.25 * m_mach * m_speedOfSound * m_totalWingArea * m_chord * m_chord * (Cmq(0.0)*m_omega.z + Cmadot(0.0)*m_aoaDot);
+	printf("m_moment.z: %lf, cmadot: %lf", m_moment.z, m_aoaDot);
 }
 
 void FlightModel::N_stab()
 {
 	//m_moment.y
-	m_moment.y += m_q * (-Cnb(m_mach)*m_beta + Cnda(0.0)*aileron() + Cndr(0.0)*rudder() ) + m_p * (Cnr(0.0)*m_omega.y);
+	m_moment.y += m_q * (-Cnb(m_mach)*m_beta + Cndr(0.0)*rudder() ) + m_p * (Cnr(0.0)*m_omega.y);
 	//printf("m_moment.y: %lf, m_beta: %lf, Cnb(mach)*m_beta: %lf, Cndr*rudder: %lf, Cnr*m_omega.y: %lf\n",
 		//m_moment.y, m_beta, Cnb(m_mach)*m_beta, Cndr(0.0)*rudder(), Cnr(0.0)*m_omega.y);
 }

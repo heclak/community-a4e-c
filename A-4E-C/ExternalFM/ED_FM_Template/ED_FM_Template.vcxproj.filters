@@ -27,6 +27,15 @@
     <ClInclude Include="Table.h">
       <Filter>Utility</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\Cockpit\ccParametersAPI.h">
+      <Filter>include\Cockpit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\FM\wHumanCustomPhysicsAPI.h">
+      <Filter>include\FM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\FM\wHumanCustomPhysicsAPI_ImplementationDeclare.h">
+      <Filter>include\FM</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -40,6 +49,15 @@
     </Filter>
     <Filter Include="Utility">
       <UniqueIdentifier>{f7759748-e5bc-4651-b7fe-14a59a53a86f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{7f5002ca-b89a-4122-aa8c-c70123c42f33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\Cockpit">
+      <UniqueIdentifier>{53ade45d-66fd-4b7a-ac67-1c2ba2d1fb37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\FM">
+      <UniqueIdentifier>{ebceb1d7-3713-46b0-bb34-91067244d0b2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
