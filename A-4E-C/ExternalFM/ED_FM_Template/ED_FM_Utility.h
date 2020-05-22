@@ -1,118 +1,7 @@
+#ifndef ED_FM_UTILITY_H
+#define ED_FM_UTILITY_H
 #pragma once
-
-struct Vec3 
-{
-	Vec3(double x_ = 0,double y_ = 0,double z_ = 0) :x(x_),y(y_),z(z_){}
-	double x;
-	double y;
-	double z;
-
-	//Overloaded Operators for ED's silly vector struct.
-	Vec3& operator- ()
-
-	{
-		this->x = -this->x;
-		this->y = -this->y;
-		this->z = -this->z;
-		return *this;
-	}
-
-	Vec3& operator+= (const Vec3& v)
-
-	{
-		this->x += v.x;
-		this->y += v.y;
-		this->z += v.z;
-		return *this;
-	}
-
-	Vec3& operator-= (const Vec3& v)
-
-	{
-		this->x -= v.x;
-		this->y -= v.y;
-		this->z -= v.z;
-		return *this;
-	}
-
-	Vec3& operator*= (const double& s)
-
-	{
-		this->x *= s;
-		this->y *= s;
-		this->z *= s;
-		return *this;
-	}
-
-	Vec3& operator/= (const double& s)
-
-	{
-		this->x /= s;
-		this->y /= s;
-		this->z /= s;
-		return *this;
-	}
-
-	Vec3 operator+ (const Vec3& v) const
-
-	{
-		Vec3 result;
-		result.x = this->x + v.x;
-		result.y = this->y + v.y;
-		result.z = this->z + v.z;
-		return result;
-	}
-
-	Vec3 operator- (const Vec3& v) const
-
-	{
-		Vec3 result;
-		result.x = this->x - v.x;
-		result.y = this->y - v.y;
-		result.z = this->z - v.z;
-		return result;
-	}
-
-	Vec3 operator/ (const double& s) const
-
-	{
-		Vec3 result;
-		result.x = this->x / s;
-		result.y = this->y / s;
-		result.z = this->z / s;
-		return result;
-	}
-};
-
-//Overloaded Operators for ED's silly vector struct.
-Vec3 operator* (const double& s, const Vec3& v)
-
-{
-	Vec3 result;
-	result.x = v.x * s;
-	result.y = v.y * s;
-	result.z = v.z * s;
-	return result;
-}
-
-Vec3 operator* (const Vec3& v, const double& s)
-
-{
-	Vec3 result;
-	result.x = v.x * s;
-	result.y = v.y * s;
-	result.z = v.z * s;
-	return result;
-}
-
-
-inline Vec3 cross(const Vec3 & a, const Vec3 & b)
-{
-	return Vec3 (a.y * b.z - a.z * b.y,
-				 a.z * b.x - a.x * b.z,
-				 a.x * b.y - a.y * b.x);
-}
-
+#include "Vec3.h"
 
 struct Matrix33
 {
@@ -175,3 +64,5 @@ double lerp(double * x,double * f, unsigned sz, double t)
 	}
 	return f[sz-1];
 }
+
+#endif

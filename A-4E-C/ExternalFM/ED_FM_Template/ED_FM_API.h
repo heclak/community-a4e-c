@@ -7,8 +7,8 @@
 
 #pragma once
 
-#ifdef ED_FM_TEMPLATE_EXPORTS
-#define ED_FM_TEMPLATE_API __declspec(dllexport)
+#ifdef ED_FM_EXPORTS
+#define ED_FM_API __declspec(dllexport)
 #else
-#define ED_FM_TEMPLATE_API __declspec(dllimport)
+#define ED_FM_API __declspec(dllimport)
 #endif

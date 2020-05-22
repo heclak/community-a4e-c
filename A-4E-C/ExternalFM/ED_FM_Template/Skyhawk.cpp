@@ -1,32 +1,31 @@
 // ED_FM_Template.cpp : Defines the exported functions for the DLL application.
+//#include "ED_FM_Utility.h"
 #include "stdafx.h"
-#include "ED_FM_Template.h"
-#include "ED_FM_Utility.h"
+//#include "A-4_Aero.h"
+#include "Skyhawk.h"
 #include <Math.h>
 #include <stdio.h>
 #include <string>
+#include "Vec3.h"
+#include "Input.h"
+#include "FlightModel.h"
+
+//============================ Skyhawk Statics ============================//
+static Skyhawk::Input s_input;
+static Skyhawk::FlightModel s_fm(s_input);
 
 
-Vec3	common_moment;
-Vec3	common_force;
-Vec3    center_of_gravity;
-Vec3	wind;
-Vec3	velocity_world_cs;
+
+//========================================================================//
+
 double  throttle		  = 0;
 double  stick_roll		  = 0;
 double  stick_pitch		  = 0;
 
 double  internal_fuel     = 0;
 double  fuel_consumption_since_last_time  = 0;
-double  atmosphere_density = 0;
-double  aoa = 0;
-double  beta = 0;
-double  speed_of_sound = 320;
-
-double rx = 0;
-double ry = 0;
-double rz = 0;
-
+double s_mass = 0;
+Vec3 s_pos;
 
 double mach_table[] = {
 	0,	
@@ -151,14 +150,19 @@ double CyMax[] = {
 	0.4,
 };
 
+namespace Skyhawk
+{
+
+}
+
 
 
 void add_local_force(const Vec3 & Force, const Vec3 & Force_pos)
 {
-	common_force += Force;
+	/*common_force += Force;
 	Vec3 delta_pos = Force_pos - center_of_gravity;
 	Vec3 delta_moment = cross(delta_pos, Force);
-	common_moment += delta_moment;
+	common_moment += delta_moment;*/
 }
 
 
@@ -172,18 +176,22 @@ void simulate_fuel_consumption(double dt)
 
 void ed_fm_add_local_force(double & x,double &y,double &z,double & pos_x,double & pos_y,double & pos_z)
 {
-	x = common_force.x;
-	y = common_force.y;
-	z = common_force.z;
+	x = s_fm.getForce().x;
+	y = s_fm.getForce().y;
+	z = s_fm.getForce().z;
 
-	pos_x = center_of_gravity.x;
-	pos_y = center_of_gravity.y;
-	pos_z = center_of_gravity.z;
+	pos_x = s_fm.getCOM().x;
+	pos_y = s_fm.getCOM().y;
+	pos_z = s_fm.getCOM().z;
 }
 
 void ed_fm_add_global_force(double & x,double &y,double &z,double & pos_x,double & pos_y,double & pos_z)
 {
-
+	/*y = s_mass * 9.81;
+	Vec3 pos = s_pos - s_fm.getCOM();
+	pos_x = pos.x;
+	pos_y = pos.y;
+	pos_z = pos.z;*/
 }
 
 void ed_fm_add_global_moment(double & x,double &y,double &z)
@@ -193,77 +201,95 @@ void ed_fm_add_global_moment(double & x,double &y,double &z)
 
 void ed_fm_add_local_moment(double & x,double &y,double &z)
 {
-	x = common_moment.x;
-	y = common_moment.y;
-	z = common_moment.z;
+	x = s_fm.getMoment().x;
+	y = s_fm.getMoment().y;
+	z = s_fm.getMoment().z;
 }
 
 void ed_fm_simulate(double dt)
 {
-	common_force  = Vec3();
+	s_fm.calculateForcesAndMoments(dt);
+	/*common_force = Vec3();
 	common_moment = Vec3();
 
-	//common_moment -= Vec3(rx*10000.0, 0, 0);
-
-	Vec3 airspeed;
-
-	airspeed.x = velocity_world_cs.x - wind.x;
-	airspeed.y = velocity_world_cs.y - wind.y;
-	airspeed.z = velocity_world_cs.z - wind.z;
-
 	
-	Vec3 thrust_pos(-5.0,0,0);
-	Vec3 thrust(throttle * 38000, 0 , 0);
 
-	double V_scalar =  sqrt(airspeed.x * airspeed.x + airspeed.y * airspeed.y + airspeed.z * airspeed.z);
+	Vec3 airspeed = velocity_world_cs - wind;
+	printf("vx: %lf vy: %lf vz: %lf\n", airspeed.x, airspeed.y, airspeed.z);
 
-	double Mach		= V_scalar/ speed_of_sound;
+	double V_scalar = sqrt(airspeed.x * airspeed.x + airspeed.y * airspeed.y + airspeed.z * airspeed.z);
+	double q = (0.5 * atmosphere_density * V_scalar * V_scalar) * 1.0;
+	Skyhawk::APars params(q, aoa, beta, 0.0, rx);
+	Skyhawk::calculate(params, 0.0, stick_roll, stick_pitch, 0.0, throttle, center_of_gravity);
 
-	double CyAlpha_ = lerp(mach_table,Cya  ,sizeof(mach_table)/sizeof(double),Mach);
-	double Cx0_     = lerp(mach_table,cx0  ,sizeof(mach_table)/sizeof(double),Mach);
-	double CyMax_   = lerp(mach_table,CyMax,sizeof(mach_table)/sizeof(double),Mach);
-	double B_	    = lerp(mach_table,B    ,sizeof(mach_table)/sizeof(double),Mach);
-	double B4_	    = lerp(mach_table,B4   ,sizeof(mach_table)/sizeof(double),Mach);
-
-
-	double Cy  = (CyAlpha_ * 57.3) * aoa;
-	if (fabs(aoa) > 90/57.3)
-		Cy = 0;
-	if (Cy > CyMax_)
-		Cy = CyMax_;
-
-	double Cx  = 0.05 + B_ * Cy * Cy + B4_ * Cy * Cy * Cy * Cy;
-
-	double q	   =  0.5 * atmosphere_density * V_scalar * V_scalar;
-	const double S = 25;
-	double Lift =  Cy * q * S;
-	double Drag =  Cx * q * S;
+	common_force = Skyhawk::netForce;
+	common_moment = Skyhawk::netMoment;*/
 	
-	Vec3 aerodynamic_force(-Drag , Lift , 0 );
-	Vec3 aerodynamic_force_pos(0.0,0,0);
 
-	add_local_force(aerodynamic_force,aerodynamic_force_pos);
-	add_local_force(thrust			 ,thrust_pos);
+	//common_force  = Vec3();
+	//common_moment = Vec3();
 
-	Vec3 rudder(0, 0, -0.5*beta * CyAlpha_ * 57.3 * q * S);
-	Vec3 rudderPos(-5, 0, 0);
+	////common_moment -= Vec3(rx*10000.0, 0, 0);
 
-	Vec3 elevator(0, - 0.2 * stick_pitch * CyAlpha_ * q * S, 0);
-	Vec3 elevatorPos(-5, 0, 0);
+	//Vec3 airspeed;
 
-	Vec3 aileron_left (0 , 0.1 * 0.05 * (CyAlpha_ * 57.3) * (stick_roll) * q * S , 0 );
-	Vec3 aileron_right(0 ,-0.1 * 0.05 * (CyAlpha_ * 57.3) * (stick_roll) * q * S , 0 );
+	//airspeed.x = velocity_world_cs.x - wind.x;
+	//airspeed.y = velocity_world_cs.y - wind.y;
+	//airspeed.z = velocity_world_cs.z - wind.z;
 
-	Vec3 aileron_left_pos(0,0,-5.0);
-	Vec3 aileron_right_pos(0,0, 5.0);
+	//
+	//Vec3 thrust_pos(-5.0,0,0);
+	//Vec3 thrust(throttle * 38000, 0 , 0);
+
+	//double V_scalar =  sqrt(airspeed.x * airspeed.x + airspeed.y * airspeed.y + airspeed.z * airspeed.z);
+
+	//double Mach		= V_scalar/ speed_of_sound;
+
+	//double CyAlpha_ = lerp(mach_table,Cya  ,sizeof(mach_table)/sizeof(double),Mach);
+	//double Cx0_     = lerp(mach_table,cx0  ,sizeof(mach_table)/sizeof(double),Mach);
+	//double CyMax_   = lerp(mach_table,CyMax,sizeof(mach_table)/sizeof(double),Mach);
+	//double B_	    = lerp(mach_table,B    ,sizeof(mach_table)/sizeof(double),Mach);
+	//double B4_	    = lerp(mach_table,B4   ,sizeof(mach_table)/sizeof(double),Mach);
 
 
-	add_local_force(aileron_left ,aileron_left_pos);
-	add_local_force(aileron_right,aileron_right_pos);
-	add_local_force(rudder, rudderPos);
-	add_local_force(elevator, elevatorPos);
+	//double Cy  = (CyAlpha_ * 57.3) * aoa;
+	//if (fabs(aoa) > 90/57.3)
+	//	Cy = 0;
+	//if (Cy > CyMax_)
+	//	Cy = CyMax_;
 
-	simulate_fuel_consumption(dt);
+	//double Cx  = 0.05 + B_ * Cy * Cy + B4_ * Cy * Cy * Cy * Cy;
+
+	//double q	   =  0.5 * atmosphere_density * V_scalar * V_scalar;
+	//const double S = 25;
+	//double Lift =  Cy * q * S;
+	//double Drag =  Cx * q * S;
+	//
+	//Vec3 aerodynamic_force(-Drag , Lift , 0 );
+	//Vec3 aerodynamic_force_pos(0.0,0,0);
+
+	//add_local_force(aerodynamic_force,aerodynamic_force_pos);
+	//add_local_force(thrust			 ,thrust_pos);
+
+	//Vec3 rudder(0, 0, -0.5*beta * CyAlpha_ * 57.3 * q * S);
+	//Vec3 rudderPos(-5, 0, 0);
+
+	//Vec3 elevator(0, - 0.2 * stick_pitch * CyAlpha_ * q * S, 0);
+	//Vec3 elevatorPos(-5, 0, 0);
+
+	//Vec3 aileron_left (0 , 0.1 * 0.05 * (CyAlpha_ * 57.3) * (stick_roll) * q * S , 0 );
+	//Vec3 aileron_right(0 ,-0.1 * 0.05 * (CyAlpha_ * 57.3) * (stick_roll) * q * S , 0 );
+
+	//Vec3 aileron_left_pos(0,0,-5.0);
+	//Vec3 aileron_right_pos(0,0, 5.0);
+
+
+	//add_local_force(aileron_left ,aileron_left_pos);
+	//add_local_force(aileron_right,aileron_right_pos);
+	//add_local_force(rudder, rudderPos);
+	//add_local_force(elevator, elevatorPos);
+
+	//simulate_fuel_consumption(dt);
 }
 
 void ed_fm_set_atmosphere(double h,//altitude above sea level
@@ -276,12 +302,14 @@ void ed_fm_set_atmosphere(double h,//altitude above sea level
 							double wind_vz //components of velocity vector, including turbulence in world coordinate system
 						)
 {
-	wind.x = wind_vx;
+	s_fm.setAtmosphericParams(ro, a, Vec3(wind_vx, wind_vy, wind_vz));
+
+	/*wind.x = wind_vx;
 	wind.y = wind_vy;
 	wind.z = wind_vz;
 
 	atmosphere_density = ro;
-	speed_of_sound     = a;
+	speed_of_sound     = a;*/
 }
 /*
 called before simulation to set up your environment for the next step
@@ -295,9 +323,12 @@ void ed_fm_set_current_mass_state (double mass,
 									double moment_of_inertia_z
 									)
 {
-	center_of_gravity.x  = center_of_mass_x;
+	s_mass = mass;
+	s_fm.setCOM(Vec3(center_of_mass_x, center_of_mass_y, center_of_mass_z));
+
+	/*center_of_gravity.x  = center_of_mass_x;
 	center_of_gravity.y  = center_of_mass_y;
-	center_of_gravity.z  = center_of_mass_z;
+	center_of_gravity.z  = center_of_mass_z;*/
 }
 /*
 called before simulation to set up your environment for the next step
@@ -323,9 +354,12 @@ void ed_fm_set_current_state (double ax,//linear acceleration component in world
 							double quaternion_w //orientation quaternion components in world coordinate system
 							)
 {
+	s_fm.setWorldVelocity(Vec3(vx, vy, vz));
+	s_pos = Vec3(px, py, pz);
+	/*
 	velocity_world_cs.x = vx;
 	velocity_world_cs.y = vy;
-	velocity_world_cs.z = vz;
+	velocity_world_cs.z = vz;*/
 }
 
 
@@ -352,30 +386,53 @@ void ed_fm_set_current_state_body_axis(double ax,//linear acceleration component
 	double common_angle_of_slide   //AoS radians
 	)
 {
-	aoa = common_angle_of_attack;
-	beta = common_angle_of_slide;
-	rx = omegax;
-	ry = omegay;
-	rz = omegaz;
+	s_fm.setPhysicsParams(common_angle_of_attack, common_angle_of_slide, Vec3(yaw, pitch, roll), Vec3(omegax, omegay, omegaz), Vec3(omegadotx, omegadoty, omegadoty));
+
+
+	//aoa = common_angle_of_attack;
+	//beta = common_angle_of_slide;
+	//rx = omegax;
+	//ry = omegay;
+	//rz = omegaz;
 }
 /*
 input handling
 */
-void ed_fm_set_command (int command,
-							float value)
+void ed_fm_set_command
+(
+	int command,
+	float value
+)
 {
-	if (command == 2004)//iCommandPlaneThrustCommon
+	switch (command)
 	{
-		throttle = 0.5 * (-value + 1.0);
+	case Skyhawk::Control::PITCH:
+		s_input.pitch() = value;
+		break;
+	case Skyhawk::Control::ROLL:
+		s_input.roll() = value;
+		break;
+	case Skyhawk::Control::YAW:
+		s_input.yaw() = value;
+		break;
+	case Skyhawk::Control::THROTTLE:
+		s_input.throttle() = value;
+		break;
 	}
-	else if (command == 2001)//iCommandPlanePitch
-	{
-		stick_pitch		  = value;
-	}
-	else if (command == 2002)//iCommandPlaneRoll
-	{
-		stick_roll		  = value;
-	}
+
+
+	//if (command == 2004)//iCommandPlaneThrustCommon
+	//{
+	//	throttle = 0.5 * (-value + 1.0);
+	//}
+	//else if (command == 2001)//iCommandPlanePitch
+	//{
+	//	stick_pitch		  = value;
+	//}
+	//else if (command == 2002)//iCommandPlaneRoll
+	//{
+	//	stick_roll		  = value;
+	//}
 }
 /*
 	Mass handling 

@@ -98,7 +98,7 @@ local FM =
 	[1] = self_ID,
 	[2] = 'A-4E-C',
 	center_of_mass		=	{ 0.183 , 0.261 , 0.0},
-	moment_of_inertia  	= 	{12874.0, 85552.1, 75673.6},
+	moment_of_inertia  	= 	{7834, 35116, 27228},
 }
 
 make_flyable('A-4E-C'	, current_mod_path..'/Cockpit/Scripts/', FM, current_mod_path..'/comm.lua')
