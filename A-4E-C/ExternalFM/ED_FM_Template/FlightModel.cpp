@@ -44,7 +44,7 @@ Skyhawk::FlightModel::FlightModel(Input& controls) :
 
 	CYb({-1}, 0.0, 1.0),
 
-	Clb({ -0.1 }, 0.0, 1.0),
+	Clb({ -0.01 }, 0.0, 1.0),
 	Clp({ -0.4 }, 0.0, 1.0),
 	Clr({ 0.15 }, 0.0, 1.0),
 	Cla({ 0.110, 0.037 }, 0.0, 2.0),
