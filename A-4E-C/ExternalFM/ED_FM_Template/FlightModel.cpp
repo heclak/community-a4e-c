@@ -19,12 +19,14 @@ Skyhawk::FlightModel::FlightModel(Input& controls) :
 	m_fuel(0.0),
 	m_previousFuel(0.0),
 	m_scalarVSquared(0.0),
+	m_scalarV(0.0),
 	m_aileronLeft(0.0),
 	m_aileronRight(0.0),
 	m_elevator(0.0),
 	m_rudder(0.0),
 	m_q(0.0),
 	m_p(0.0),
+	m_k(0.0),
 	m_mach(0.0),
 	m_aoaDot(0.0),
 	m_aoaPrevious(0.0),
@@ -96,8 +98,8 @@ void Skyhawk::FlightModel::calculateForcesAndMoments(double dt)
 	m_airspeed = m_worldVelocity - m_wind;
 	m_scalarVSquared = m_airspeed.x * m_airspeed.x + m_airspeed.y * m_airspeed.y + m_airspeed.z * m_airspeed.z;
 
-	double V = sqrt(m_scalarVSquared);
-	m_mach = V / m_speedOfSound;
+	m_scalarV = sqrt(m_scalarVSquared);
+	m_mach = m_scalarV / m_speedOfSound;
 
 	m_k = m_scalarVSquared * m_density * 0.5 * m_totalWingArea;
 	m_q = m_k * m_totalWingSpan;

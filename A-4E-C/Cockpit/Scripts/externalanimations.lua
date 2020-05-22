@@ -16,6 +16,7 @@ end
 
 
 function update()
+	return
 	--Test set anim argument
 
 	local ROLL_STATE = sensor_data:getStickPitchPosition() / 100

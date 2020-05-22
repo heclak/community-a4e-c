@@ -535,7 +535,7 @@ void ed_fm_set_draw_args (EdDrawArgument * drawargs,size_t size)
 	drawargs[LEFT_ELEVATOR].f = s_input.pitch();
 	drawargs[RIGHT_ELEVATOR].f = s_input.pitch();
 
-	drawargs[RUDDER].f = s_input.yaw();
+	drawargs[RUDDER].f = -s_input.yaw();
 
 }
 

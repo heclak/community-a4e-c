@@ -109,6 +109,7 @@ private:
 	Vec3 m_airspeed; //speed through the air
 	double m_mach;
 	double m_scalarVSquared;
+	double m_scalarV;
 	double m_aoa; //angle of attack
 	double m_aoaPrevious; //previous frame angle of attack
 	double m_aoaDot; //aoa per unit time
@@ -245,8 +246,7 @@ void FlightModel::L_stab()
 void FlightModel::M_stab()
 {
 	//m_moment.z
-	m_moment.z += 0.5 * m_scalarVSquared * m_totalWingArea * m_chord * (Cmalpha(m_aoa) * m_aoa + Cmde(m_mach) * elevator()) + 0.25 * m_mach * m_speedOfSound * m_totalWingArea * m_chord * m_chord * (Cmq(0.0)*m_omega.z + Cmadot(0.0)*m_aoaDot);
-	printf("m_moment.z: %lf, cmadot: %lf", m_moment.z, m_aoaDot);
+	m_moment.z += m_k * m_chord * (Cmalpha(m_aoa) * m_aoa + Cmde(m_mach) * elevator()) + 0.25 * m_scalarV * m_totalWingArea * m_chord * m_chord * (Cmq(0.0)*m_omega.z + Cmadot(0.0)*m_aoaDot);
 }
 
 void FlightModel::N_stab()
@@ -274,21 +274,18 @@ double FlightModel::rudder()
 
 double FlightModel::thrust()
 {
-
-	printf("thrust: %lf, force: %lf\n", m_controls.throttle(), (-m_controls.throttle() + 1) * m_thrust / 2.0);
 	return (-m_controls.throttle() + 1) * m_thrust / 2.0;
 }
 
 void FlightModel::lift()
 {
+	printf("CL: %lf\n", CLalpha(m_aoa, true));
 	addForce(Vec3(0.0, m_k*CLalpha(m_aoa), 0.0), getCOM());
 }
 
 void FlightModel::drag()
 {
 	double CD = CDi(0.0)*CLalpha(m_aoa) * CLalpha(m_aoa) + CDalpha(m_aoa) + CDbeta(m_beta) + CDde(0.0)*elevator() + CDmach(m_mach);
-	printf("CDI*CL*CL: %lf, CDalpha: %lf, CDbeta: %lf, CDde*elevator: %lf, CDmach: %lf",
-		CDi(0.0) * CLalpha(m_aoa) * CLalpha(m_aoa), CDalpha(m_aoa), CDbeta(m_beta), CDde(0.0) * elevator(), CDmach(m_mach));
 	addForce(Vec3(-m_k * CD, 0.0, 0.0), getCOM());
 }
 
