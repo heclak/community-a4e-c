@@ -413,11 +413,10 @@ join(res.keyCommands,{
 -- joystick axes 
 join(res.axisCommands,{
 
-    {combos = defaultDeviceAssignmentFor("roll"),   action = iCommandPlaneRoll,                                                          name = _('Roll')},
-    {combos = defaultDeviceAssignmentFor("pitch"),  action = iCommandPlanePitch,                                                         name = _('Pitch')},
-	{combos = defaultDeviceAssignmentFor("rudder"), action = device_commands.rudder_axis_mod,   cockpit_device_id = devices.SFMEXTENDER ,name = _('Rudder Axis')},
-	{combos = defaultDeviceAssignmentFor("thrust"), action = device_commands.throttle_axis_mod, cockpit_device_id = devices.CARRIER ,    name = _('Throttle Axis')},
-    {                                               action = device_commands.brake_axis_mod,    cockpit_device_id = devices.AIRBRAKES ,  name = _('single brake Axis')},
+    {combos = defaultDeviceAssignmentFor("roll"),   action = iCommandPlaneRoll,                                                             name = _('Roll'),              category = {_('Flight Control')}},
+    {combos = defaultDeviceAssignmentFor("pitch"),  action = iCommandPlanePitch,                                                            name = _('Pitch'),             category = {_('Flight Control')}},
+	{combos = defaultDeviceAssignmentFor("rudder"), action = device_commands.rudder_axis_mod,      cockpit_device_id = devices.SFMEXTENDER, name = _('Rudder'),            category = {_('Flight Control')}},
+	{combos = defaultDeviceAssignmentFor("thrust"), action = device_commands.throttle_axis_mod,    cockpit_device_id = devices.CARRIER ,    name = _('Thrust'),            category = {_('Flight Control')}},
     {                                               action = device_commands.brake_axis_mod,       cockpit_device_id = devices.AIRBRAKES ,  name = _('Wheel Brake'),       category = {_('Systems')}},
     
 	--Old throttle
