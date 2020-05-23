@@ -6,7 +6,7 @@ local diff = {
 					["key"] = "JOY_SLIDER1",
 				},
 			},
-			["name"] = "Throttle Axis",
+			["name"] = "Thrust",
 			["removed"] = {
 				[1] = {
 					["key"] = "JOY_Z",
@@ -32,7 +32,7 @@ local diff = {
 					["key"] = "JOY_BTN6",
 				},
 			},
-			["name"] = "Wheel Brake On",
+			["name"] = "Wheel Brake - ON/OFF",
 		},
 		["d68pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {

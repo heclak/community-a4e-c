@@ -1,7 +1,7 @@
 local diff = {
 	["axisDiffs"] = {
 		["a3123cd35"] = {
-			["name"] = "Rudder Axis",
+			["name"] = "Rudder",
 			["removed"] = {
 				[1] = {
 					["key"] = "JOY_RZ",

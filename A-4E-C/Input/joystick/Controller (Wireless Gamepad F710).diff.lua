@@ -73,7 +73,7 @@ local diff = {
 			["name"] = "Absolute Camera Vertical View",
 		},
 		["a3112cd32"] = {
-			["name"] = "Throttle Axis",
+			["name"] = "Thrust",
 			["removed"] = {
 				[1] = {
 					["key"] = "JOY_Z",
@@ -96,7 +96,7 @@ local diff = {
 					["key"] = "JOY_Z",
 				},
 			},
-			["name"] = "Rudder Axis",
+			["name"] = "Rudder",
 			["removed"] = {
 				[1] = {
 					["key"] = "JOY_RZ",
@@ -111,7 +111,7 @@ local diff = {
 					["key"] = "JOY_BTN9",
 				},
 			},
-			["name"] = "Wheel Brake On",
+			["name"] = "Wheel Brake - ON/OFF",
 		},
 		["d10141pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
