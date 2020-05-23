@@ -12,7 +12,5 @@ axisCommands = {
 {combos = {{key = 'MOUSE_Y'}}, action = iCommandPlaneViewVertical, name = _('Camera Vertical View')},
 {combos = {{key = 'MOUSE_Z'}}, action = iCommandPlaneZoomView, name = _('Camera Zoom View')},
 
-{action = iCommandPlaneSelecterHorizontal, name = _('TDC Slew Horizontal (mouse)')},
-{action = iCommandPlaneSelecterVertical	, name = _('TDC Slew Vertical (mouse)')},
 },
 }
