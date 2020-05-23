@@ -57,8 +57,12 @@ dev:listen_command(Keys.BrakesOff)
 dev:listen_event("WheelChocksOn")
 dev:listen_event("WheelChocksOff")
 
-dev:listen_command(device_commands.brake_axis_mod)
-local brake_axis_value = -1
+dev:listen_command(device_commands.wheelbrake_AXIS)
+local single_wheelbrake_axis_value = -1
+local left_wheelbrake_AXIS_value = -1
+local right_wheelbrake_AXIS_value = -1
+local wheelbrake_axis_value = -1
+
 
 function CockpitEvent(event,val)
     -- val is mostly just empty table {}
@@ -106,19 +110,16 @@ function SetCommand(command,value)
         end
     elseif command == Keys.BrakesOn then
         brakes_on = true
-		brake_axis_value = 1
+		wheelbrake_axis_value = 1
     elseif command == Keys.BrakesOff then
         brakes_on = false
-		brake_axis_value = -1
-	elseif command == device_commands.brake_axis_mod then
-		brake_axis_value = value
-	
-		if brake_axis_value > -0.95 then
-			brakes_on = true
-		else
-			brakes_on = false
-		end
-	
+		wheelbrake_axis_value = -1
+	elseif command == device_commands.wheelbrake_AXIS then
+		single_wheelbrake_axis_value = value
+    elseif command == device_commands.left_wheelbrake_AXIS then
+        left_wheelbrake_AXIS_value = value
+    elseif command == device_commands.right_wheelbrake_AXIS then
+        right_wheelbrake_AXIS_value = value
     end
 end
 
@@ -193,9 +194,27 @@ function update_brakes()
         dispatch_action(nil,iCommandPlaneWheelBrakeOn)
     end
 
+    -- calculate combined brake axis
+    wheelbrake_axis_value = -1
+
+    wheelbrake_axis_value = single_wheelbrake_axis_value
+    if left_wheelbrake_AXIS_value > wheelbrake_axis_value then
+        wheelbrake_axis_value = left_wheelbrake_AXIS_value
+    end
+
+    if right_wheelbrake_AXIS_value > wheelbrake_axis_value then
+        wheelbrake_axis_value = right_wheelbrake_AXIS_value
+    end
+
+    if wheelbrake_axis_value > -0.95 then
+        brakes_on = true
+    else
+        brakes_on = false
+    end
+
     if brakes_on then
         --local x,y = get_brake_ratio(vel_xz_brakes())
-		local x,y = get_brake_ratio(brake_axis_value)
+		local x,y = get_brake_ratio(wheelbrake_axis_value)
         -- brake_now cycles from 1 to y
         -- brakes are enabled if brake_now <= x
         -- adjust ratios in brake_table above
@@ -213,6 +232,8 @@ function update_brakes()
             brake_now = 1
         end
     else
+        -- turn off the brakes if the brakes were still on
+        -- brakes are not set again if the brakes are already off
         if brakes_on_last ~= brakes_on then  -- edge triggered
             dispatch_action(nil,iCommandPlaneWheelBrakeOff)
             brake_eff:set(0)
@@ -221,9 +242,9 @@ function update_brakes()
     brakes_on_last = brakes_on
 
     -- update brake pedal positions
-    left_brake_pedal_param:set(brake_axis_value)
-    right_brake_pedal_param:set(brake_axis_value)
-    -- print_message_to_user(brake_axis_value)
+    left_brake_pedal_param:set(wheelbrake_axis_value)
+    right_brake_pedal_param:set(wheelbrake_axis_value)
+    -- print_message_to_user(wheelbrake_axis_value)
 end
 
 
@@ -305,11 +326,11 @@ function update_birth()
 	if birth_tics < 200 then
 		brakes_on = true
 		birth_tics = birth_tics + 1
-		brake_axis_value = 1
+		wheelbrake_axis_value = 1
 	elseif birth_tics < 205 then
 		brakes_on = false
 		birth_tics = birth_tics + 1
-		brake_axis_value= -1
+		wheelbrake_axis_value= -1
 	end
 end
 

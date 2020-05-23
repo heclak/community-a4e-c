@@ -431,7 +431,7 @@ device_commands =
 	pitch_axis_mod 	                = __counter(),
 	roll_axis_mod 	                = __counter(),
 	rudder_axis_mod                 = __counter(),
-	brake_axis_mod 	                = __counter(),
+	wheelbrake_AXIS 	            = __counter(),
 
     shrike_sidewinder_volume        = __counter(),
 
@@ -480,4 +480,7 @@ device_commands =
 
     GunsightElevationControl_AXIS   = __counter(),
     pilot_salute                    = __counter(),
+
+    left_wheelbrake_AXIS            = __counter(),
+    right_wheelbrake_AXIS           = __counter(),
 }
