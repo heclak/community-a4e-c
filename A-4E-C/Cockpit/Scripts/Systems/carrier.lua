@@ -143,9 +143,10 @@ local function simulate_shooter()
 		shooter_countdown = shooter_countdown - update_time_step
 		if shooter_countdown < 0 then
 			shoot_catapult()
+			pilot_salute = false
 		end
 	else
-		print_message_to_user("Shooter countdown cancelled")
+		print_message_to_user("Shooter: Catapult launch cancelled")
 		pilot_salute = false
 	end
 end
