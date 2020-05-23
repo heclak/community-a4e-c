@@ -63,12 +63,12 @@ main_amortizer_direct_damper_force_factor = main_damper_force * 1.2
 main_amortizer_back_damper_force_factor = main_damper_force * 1.0
 ]]--
 
-wheel_static_friction_factor_COMMON = 0.50
-wheel_side_friction_factor_COMMON = 0.50
+wheel_static_friction_factor_COMMON = 0.80
+wheel_side_friction_factor_COMMON = 0.70
 wheel_roll_friction_factor_COMMON = 0.028
 wheel_glide_friction_factor_COMMON = 0.40
 
-brake_moment_main = 10000.0
+brake_moment_main = 1000.0
 
 wheel_radius_factor = 0.1
 
@@ -117,7 +117,7 @@ suspension =
 
     --MAINGEAR LEFT
     {
-        anti_skid_installed = false,
+        anti_skid_installed = true,
 	
 		mass = 200.0,
 		damage_element = 84,
@@ -153,12 +153,12 @@ suspension =
 		arg_amortizer = 6,
 		arg_wheel_rotation = 77,
 		arg_wheel_yaw = -1,
-		collision_shell_name = "WHEEL_L",
+		collision_shell_name = "WHEEL_R",
     },
 
     --MAINGEAR RIGHT
     {
-        anti_skid_installed = false,
+        anti_skid_installed = true,
 		
 		mass = 200.0,
 		damage_element = 84,--?

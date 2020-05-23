@@ -13,8 +13,8 @@
 
 //============================ Skyhawk Statics ============================//
 static Skyhawk::Input s_input;
-static Skyhawk::FlightModel s_fm(s_input);
 static Skyhawk::Airframe s_airframe(s_input);
+static Skyhawk::FlightModel s_fm(s_input, s_airframe);
 
 
 //========================================================================//
@@ -421,32 +421,41 @@ void ed_fm_set_command
 		s_input.throttle() = value;
 		break;
 	case Skyhawk::Control::GEAR_DOWN:
-		s_input.gear() = Skyhawk::Input::GearPos::UP;
-		printf("Gear down\n");
+		s_input.gear() = Skyhawk::Input::GearPos::DOWN;
 		break;
 	case Skyhawk::Control::GEAR_UP:
-		s_input.gear() = Skyhawk::Input::GearPos::DOWN;
-		printf("Gear up\n");
+		s_input.gear() = Skyhawk::Input::GearPos::UP;
 		break;
 	case Skyhawk::Control::GEAR_TOGGLE:
-		printf("Gear toggle\n");
 		s_input.gear() = s_input.gear() == Skyhawk::Input::GearPos::DOWN ? Skyhawk::Input::GearPos::UP : Skyhawk::Input::GearPos::DOWN;
 		break;
+	case Skyhawk::Control::BRAKE:
+		s_input.brakeLeft() = value;
+		s_input.brakeRight() = value;
+		break;
+	case Skyhawk::Control::LEFT_BRAKE:
+		s_input.brakeLeft() = value;
+		break;
+	case Skyhawk::Control::RIGHT_BRAKE:
+		s_input.brakeRight() = value;
+		break;
+	case Skyhawk::Control::FLAPS_UP:
+		s_input.flaps() = 0.0;
+		break;
+	case Skyhawk::Control::FLAPS_DOWN:
+		s_input.flaps() = 1.0;
+		break;
+	case Skyhawk::Control::FLAPS_TOGGLE:
+		s_input.flaps() = s_input.flaps() > 0.5 ? 0.0: 1.0;
+	case Skyhawk::Control::AIRBRAKE_EXTEND:
+		s_input.airbrake() = 1.0;
+		break;
+	case Skyhawk::Control::AIRBRAKE_RETRACT:
+		s_input.airbrake() = 0.0;
+		break;
+	default:
+		printf("number %d: %lf\n", command, value);
 	}
-
-
-	//if (command == 2004)//iCommandPlaneThrustCommon
-	//{
-	//	throttle = 0.5 * (-value + 1.0);
-	//}
-	//else if (command == 2001)//iCommandPlanePitch
-	//{
-	//	stick_pitch		  = value;
-	//}
-	//else if (command == 2002)//iCommandPlaneRoll
-	//{
-	//	stick_roll		  = value;
-	//}
 }
 /*
 	Mass handling 
@@ -543,13 +552,33 @@ void ed_fm_set_draw_args (EdDrawArgument * drawargs,size_t size)
 		drawargs[616].f = drawargs[5].f;
 	}
 
-	drawargs[LEFT_AILERON].f = -s_input.roll();
-	drawargs[RIGHT_AILERON].f = s_input.roll();
+	drawargs[LEFT_AILERON].f = -s_airframe.aileron();
+	drawargs[RIGHT_AILERON].f = s_airframe.aileron();
 
-	drawargs[LEFT_ELEVATOR].f = s_input.pitch();
-	drawargs[RIGHT_ELEVATOR].f = s_input.pitch();
+	drawargs[LEFT_ELEVATOR].f = s_airframe.elevator();
+	drawargs[RIGHT_ELEVATOR].f = s_airframe.elevator();
 
-	drawargs[RUDDER].f = -s_input.yaw();
+	drawargs[RUDDER].f = -s_airframe.rudder();
+
+	drawargs[LEFT_FLAP].f = s_airframe.getFlapsPosition();
+	drawargs[RIGHT_FLAP].f = s_airframe.getFlapsPosition();
+
+	drawargs[LEFT_SLAT].f = s_airframe.getSlatsPosition();
+	drawargs[RIGHT_SLAT].f = s_airframe.getSlatsPosition();
+
+	drawargs[AIRBRAKE].f = s_airframe.getSpeedBrakePosition();
+
+	s_airframe.setSpoilerPosition((drawargs[LEFT_SPOILER].f + drawargs[RIGHT_SPOILER].f)/2.0);
+
+	drawargs[HOOK].f = s_airframe.getHookPosition();
+
+	/*drawargs[LEFT_GEAR].f = s_airframe.getGearPosition();
+	drawargs[RIGHT_GEAR].f = s_airframe.getGearPosition();
+	drawargs[NOSE_GEAR].f = s_airframe.getGearPosition();
+	drawargs[LEFT_GEAR_SHOCK].f = s_airframe.getGearPosition();
+	drawargs[RIGHT_GEAR_SHOCK].f = s_airframe.getGearPosition();
+	drawargs[NOSE_GEAR_SHOCK].f = s_airframe.getGearPosition();*/
+
 }
 
 
@@ -575,41 +604,37 @@ double ed_fm_get_param(unsigned index)
 	case ED_FM_SUSPENSION_1_UP_LOCK:
 	case ED_FM_SUSPENSION_2_UP_LOCK:
 		return s_airframe.getGearPosition();
-	}
-
-	switch (index)
-	{
+	case ED_FM_ANTI_SKID_ENABLE:
+	case ED_FM_CAN_ACCEPT_FUEL_FROM_TANKER:
+		return 1.0;
 	case ED_FM_ENGINE_1_CORE_RPM:
 	case ED_FM_ENGINE_1_RPM:
 		return s_input.throttleNorm() * 3000;
 
+	case ED_FM_ENGINE_1_TEMPERATURE:
+		return 600.0;
+
+	case ED_FM_ENGINE_1_OIL_PRESSURE:
+		return 600.0;
+
+	case ED_FM_ENGINE_1_FUEL_FLOW:
+		return 5.0;
+
+	case ED_FM_ENGINE_1_CORE_RELATED_THRUST:
 	case ED_FM_ENGINE_1_RELATED_THRUST:
 	case ED_FM_ENGINE_1_RELATED_RPM:
 	case ED_FM_ENGINE_1_CORE_RELATED_RPM:
 		return s_input.throttleNorm();
 
-	case ED_FM_ENGINE_1_CORE_RELATED_THRUST:
+	case ED_FM_ENGINE_1_CORE_THRUST:
 	case ED_FM_ENGINE_1_THRUST:
 		return s_fm.thrust();
-		return s_input.throttleNorm();
 	case ED_FM_ENGINE_1_COMBUSTION:
 		return 1.0;
-	case ED_FM_FC3_STICK_PITCH:
-		return s_input.pitch();
-	}
-	
-
-	if (index >= ED_FM_SUSPENSION_0_RELATIVE_BRAKE_MOMENT &&
-			 index < ED_FM_OXYGEN_SUPPLY)
-	{
-		static const int block_size = ED_FM_SUSPENSION_1_RELATIVE_BRAKE_MOMENT - ED_FM_SUSPENSION_0_RELATIVE_BRAKE_MOMENT;
-		switch (index)
-		{
-		case 0 * block_size + ED_FM_SUSPENSION_0_GEAR_POST_STATE:
-		case 1 * block_size + ED_FM_SUSPENSION_0_GEAR_POST_STATE:
-		case 2 * block_size + ED_FM_SUSPENSION_0_GEAR_POST_STATE:
-			return test_gear_state;
-		}
+	case ED_FM_SUSPENSION_1_RELATIVE_BRAKE_MOMENT:
+		return s_input.normalise(s_input.brakeLeft());
+	case ED_FM_SUSPENSION_2_RELATIVE_BRAKE_MOMENT:
+		return s_input.normalise(s_input.brakeRight());
 	}
 
 	return 0;
@@ -619,17 +644,20 @@ double ed_fm_get_param(unsigned index)
 
 void ed_fm_cold_start()
 {
-
+	s_fm.coldInit();
+	s_airframe.coldInit();
 }
 
 void ed_fm_hot_start()
 {
-
+	s_fm.hotInit();
+	s_airframe.hotInit();
 }
 
 void ed_fm_hot_start_in_air()
 {
-
+	s_fm.airbornInit();
+	s_airframe.airborneInit();
 }
 
 bool ed_fm_add_local_force_component( double & x,double &y,double &z,double & pos_x,double & pos_y,double & pos_z )

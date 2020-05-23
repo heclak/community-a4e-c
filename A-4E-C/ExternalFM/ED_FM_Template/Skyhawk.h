@@ -19,6 +19,12 @@ extern "C"
 		RIGHT_GEAR_SHOCK = 4,
 		LEFT_FLAP = 9,
 		RIGHT_FLAP = 10,
+		HOOK = 25,
+		AIRBRAKE = 500,
+		LEFT_SPOILER = 123,
+		RIGHT_SPOILER = 120,
+		LEFT_SLAT = 14,
+		RIGHT_SLAT = 13,
 	};
 
 

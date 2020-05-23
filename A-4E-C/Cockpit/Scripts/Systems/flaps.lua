@@ -159,8 +159,8 @@ function update()
         FLAPS_STATE = 1
     end
             
-	set_aircraft_draw_argument_value(9,FLAPS_STATE)
-	set_aircraft_draw_argument_value(10,FLAPS_STATE)
+	--set_aircraft_draw_argument_value(9,FLAPS_STATE)
+	--set_aircraft_draw_argument_value(10,FLAPS_STATE)
 	
 end
 

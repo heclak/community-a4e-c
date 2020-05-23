@@ -4,14 +4,20 @@
 #include "Vec3.h"
 #include "Table.h"
 #include "Input.h"
+#include "Airframe.h"
 namespace Skyhawk
 {//begin namespace
 
 class FlightModel
 {
 public:
-	FlightModel(Input& controls);
+	FlightModel(Input& controls, Airframe& airframe);
 	~FlightModel();
+
+	void coldInit();
+	void hotInit();
+	void airbornInit();
+
 
 	//Utility.
 	//Used to snap gear into place for say cold start or airstart.
@@ -63,20 +69,6 @@ private:
 	//of declaration not the order of the list in the constructor.
 	//=====================BIG WARNING=====================//
 	//Aircraft constants (METRIC and RADIANS)
-	const double m_aileronUp = 0.35;
-	const double m_aileronDown = -0.35;
-				 
-	const double m_elevatorUp = 0.3;
-	const double m_elevatorDown = -0.35;
-				 
-	const double m_rudderRight = 0.35;
-	const double m_rudderLeft = -0.35;
-				 
-	const double m_flapUp = 0.0;
-	const double m_flapDown = 0.52;
-				 
-	const double m_speedBrakeIn = 0.0;
-	const double m_speedBrakeOut = 1.0;
 				 
 	const double m_totalWingArea = 24;
 	const double m_totalWingSpan = 8.3;
@@ -104,8 +96,6 @@ private:
 
 	//Aircraft Parameters
 	Vec3 m_com; //Centre of mass
-	double m_fuel;
-	double m_previousFuel;
 
 	Vec3 m_worldVelocity; //velocity in the world frame
 	Vec3 m_airspeed; //speed through the air
@@ -125,7 +115,7 @@ private:
 	Vec3 m_force; //total force on the aircraft
 
 	//Aircraft Settings
-
+	Airframe& m_airframe;
 	double m_aileronLeft;
 	double m_aileronRight;
 	double m_elevator;
@@ -265,17 +255,17 @@ void FlightModel::N_stab()
 
 double FlightModel::elevator()
 {
-	return m_controls.pitch() > 0.0 ? -m_elevatorUp * m_controls.pitch() : m_elevatorDown * m_controls.pitch();
+	return m_airframe.elevatorAngle();
 }
 
 double FlightModel::aileron()
 {
-	return m_controls.roll() > 0.0 ? m_aileronUp * m_controls.roll() : -m_aileronDown * m_controls.roll();
+	return m_airframe.aileronAngle();
 }
 
 double FlightModel::rudder()
 {
-	return m_controls.yaw() > 0.0 ? m_rudderRight * m_controls.yaw() : -m_rudderLeft * m_controls.yaw();
+	return m_airframe.rudderAngle();
 }
 
 double FlightModel::thrust()

@@ -10,14 +10,13 @@
 
 //Set everything to zero.
 //Vectors already constructor to zero vector.
-Skyhawk::FlightModel::FlightModel(Input& controls) :
+Skyhawk::FlightModel::FlightModel(Input& controls, Airframe& airframe) :
 	m_controls(controls),
+	m_airframe(airframe),
 	m_density(0.0),
 	m_speedOfSound(0.0),
 	m_aoa(0.0),
 	m_beta(0.0),
-	m_fuel(0.0),
-	m_previousFuel(0.0),
 	m_scalarVSquared(0.0),
 	m_scalarV(0.0),
 	m_aileronLeft(0.0),
@@ -33,16 +32,16 @@ Skyhawk::FlightModel::FlightModel(Input& controls) :
 
 	//Setup tables
 	CLalpha(d_CLalpha, -0.2698, 0.6),
-	dCLflap({0.669}, m_flapUp, m_flapDown),
-	CLde({0.2}, m_elevatorDown, m_elevatorUp),
+	dCLflap({0.669}, c_flapUp, c_flapDown),
+	CLde({0.2}, c_elevatorDown, c_elevatorUp),
 
 	CDalpha(d_CDalpha,-1.57, 1.57),
 	CDi({0.09}, 0, 1),
 	CDmach(d_CDmach,0.0, 1.8),
-	CDflap({0.153}, m_flapUp, m_flapDown),
+	CDflap({0.153}, c_flapUp, c_flapDown),
 	CDspeedBrake({0.021}, 0.0, 1.0),
 	CDbeta(d_CDbeta,-1.57, 1.57),
-	CDde({0.12}, m_elevatorDown, m_elevatorUp),
+	CDde({0.12}, c_elevatorDown, c_elevatorUp),
 
 	CYb({-1}, 0.0, 1.0),
 
@@ -66,6 +65,21 @@ Skyhawk::FlightModel::FlightModel(Input& controls) :
 }
 
 Skyhawk::FlightModel::~FlightModel()
+{
+
+}
+
+void Skyhawk::FlightModel::coldInit()
+{
+
+}
+
+void Skyhawk::FlightModel::hotInit()
+{
+
+}
+
+void Skyhawk::FlightModel::airbornInit()
 {
 
 }
