@@ -386,7 +386,7 @@ A_4E_C =  {
         199, -- anticollision (flashing red) bottom light
         208, -- taxi light (white) right main gear door
         324, -- engine fan blade
-        402, --huffer
+        402, -- huffer
         500, -- model air brake
         501, -- RAT
         499, -- wheel chocks
