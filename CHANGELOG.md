@@ -54,6 +54,8 @@ Please list the changes you've made in this file. We should try to follow the gu
 - added support to take off from the Sao Paulo A12 and Charles de Gaulle carriers
 - added navigation log page to kneeboard
 - added option to remove ECM control panel from cockpit via mission editor
+- added option to choose between MIL Power or Manual catapult launch in A-4E options menu
+- added ability to map two axis to the brake axis. Both axis still function as one combined brake axis and does not perform differential braking.
 - Liveries:
   - added Trainer USMC VMAT-102
   - added Trainer USN Bare Metal 1956
@@ -84,6 +86,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 - Hide stick option is now consolidated with main sim options. Remove option to hide stick from A-4E-C special options menu.
 - rewrite more accurate simulation of APN-153 warmup time. Change APN-153 TEST sequence.
 - changed brightness of lights to match lighting changes in 2.5.6
+- renamed radio in mission editor to ARC-51A
 - updated hydraulic system pressurization to occur when engine startup has reached idle rpm. (#189)
   - Although idle rpm is set at 55%, the sim approaches but does not reach 55.0 or greater upon startup. Lower the hydraulic checks to 54.9 will guarantee the trigger to occur for engine startups.
 - 3D/External model
@@ -144,6 +147,9 @@ Please list the changes you've made in this file. We should try to follow the gu
 - fixed external anti-collision lights not turning off when master light switch is turned off or power is disconnected. (#199)
 - fixed hookpoint for better catapult wire tracking.
 - fixed issue where probe light is not connected to the master exterior light switch
+- fixed issue where ECM panel still functions without power
+- fixed issue with missing shrike pylons in multiplayer
+- fixed issue where pylon cannot be removed from AI aircraft
 - 3D/Cockpit Model
   - fixed canopy uv mapping
   - fixed white floodlight canopy glare
@@ -152,6 +158,7 @@ Please list the changes you've made in this file. We should try to follow the gu
   - fixed green glow from radar while radar is powered off and in the dark. (#57)
   - fixed issue with pylon 1 not being removed on AI model
   - fixed issue with shrike pylons not appearing correctly in multiplayer
+  - fixed normals on top surface of spoilers
 
 ## Version 1.3.1 - 17 June 2019
 
