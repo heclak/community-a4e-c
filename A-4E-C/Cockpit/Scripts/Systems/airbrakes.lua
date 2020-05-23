@@ -62,6 +62,7 @@ local single_wheelbrake_axis_value = -1
 local left_wheelbrake_AXIS_value = -1
 local right_wheelbrake_AXIS_value = -1
 local wheelbrake_axis_value = -1
+local wheelbrake_toggle_state = false
 
 
 function CockpitEvent(event,val)
@@ -109,11 +110,9 @@ function SetCommand(command,value)
             end
         end
     elseif command == Keys.BrakesOn then
-        brakes_on = true
-		wheelbrake_axis_value = 1
+		wheelbrake_toggle_state = true
     elseif command == Keys.BrakesOff then
-        brakes_on = false
-		wheelbrake_axis_value = -1
+		wheelbrake_toggle_state = false
 	elseif command == device_commands.wheelbrake_AXIS then
 		single_wheelbrake_axis_value = value
     elseif command == device_commands.left_wheelbrake_AXIS then
@@ -206,10 +205,14 @@ function update_brakes()
         wheelbrake_axis_value = right_wheelbrake_AXIS_value
     end
 
-    if wheelbrake_axis_value > -0.95 then
+    if wheelbrake_axis_value > -0.95 or wheelbrake_toggle_state == true then
         brakes_on = true
     else
         brakes_on = false
+    end
+
+    if wheelbrake_toggle_state == true then
+        wheelbrake_axis_value = 1
     end
 
     if brakes_on then
