@@ -29,7 +29,7 @@ join(res.keyCommands,{
     -- Systems ----------------------------------
     ---------------------------------------------
     {down = iCommandPlaneEject,                                                      name = _('Eject (3 times)'),                  category = {_('Systems')}},
-    {down = Keys.BrakesOn, up = Keys.BrakesOff,                                      name = _('Wheel Brake On'),                   category = {_('Systems')}},
+    {down = Keys.BrakesOn, up = Keys.BrakesOff,                                      name = _('Wheel Brake - ON/OFF'),                   category = {_('Systems')}},
 
     ---------------------------------------------
     -- Flight Control ---------------------------
@@ -418,6 +418,7 @@ join(res.axisCommands,{
 	{combos = defaultDeviceAssignmentFor("rudder"), action = device_commands.rudder_axis_mod,   cockpit_device_id = devices.SFMEXTENDER ,name = _('Rudder Axis')},
 	{combos = defaultDeviceAssignmentFor("thrust"), action = device_commands.throttle_axis_mod, cockpit_device_id = devices.CARRIER ,    name = _('Throttle Axis')},
     {                                               action = device_commands.brake_axis_mod,    cockpit_device_id = devices.AIRBRAKES ,  name = _('single brake Axis')},
+    {                                               action = device_commands.brake_axis_mod,       cockpit_device_id = devices.AIRBRAKES ,  name = _('Wheel Brake'),       category = {_('Systems')}},
     
 	--Old throttle
     --{combos = defaultDeviceAssignmentFor("rudder"),  action = iCommandPlaneRudder	   , name = _('Rudder')},

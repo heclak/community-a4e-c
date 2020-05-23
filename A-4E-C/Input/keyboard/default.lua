@@ -29,7 +29,7 @@ join(res.keyCommands,{
     -- Systems ----------------------------------
     ---------------------------------------------
     {combos = {{key = 'E', reformers = {'LCtrl'}}}, down = iCommandPlaneEject,                                           name = _('Eject (3 times)'),                  category = {_('Systems')}},
-    {combos = {{key = 'W'}}, down = Keys.BrakesOn, up = Keys.BrakesOff,                                                  name = _('Wheel Brake On'),                   category = {_('Systems')}},
+    {combos = {{key = 'W'}}, down = Keys.BrakesOn, up = Keys.BrakesOff,                                                  name = _('Wheel Brake - ON/OFF'),                   category = {_('Systems')}},
 
     ---------------------------------------------
     -- Flight Control ---------------------------
