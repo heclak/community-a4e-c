@@ -47,7 +47,7 @@ function update_elec_state()
     --local external_power_connected=(get_aircraft_draw_argument_value(402)==1) -- pretend we have external power when huffer is shown (TODO: AC electric mobile power plant, see Fig 1-49 of NATOPS)
     local external_power_connected=get_elec_external_power()
     if true --[[(electric_system:get_AC_Bus_1_voltage() ~= prev_ac_volts) or (prev_emerg_gen ~= emergency_generator_deployed)--]] then
-        if electric_system:get_AC_Bus_1_voltage() > 0 and ((not emergency_generator_deployed) or (emergency_generator_deployed and emergency_generator_bypass)) then
+        if --[[electric_system:get_AC_Bus_1_voltage()]] 1.0 > 0 and ((not emergency_generator_deployed) or (emergency_generator_deployed and emergency_generator_bypass)) then
             -- main generator on
             elec_primary_ac_ok:set(1)
             elec_primary_dc_ok:set(1)

@@ -62,6 +62,7 @@ Skyhawk::FlightModel::FlightModel(Input& controls) :
 	Cndr({-0.1}, 0.0, 1.0),
 	Cnda({0.0}, 0.0, 1.0)
 {
+
 }
 
 Skyhawk::FlightModel::~FlightModel()

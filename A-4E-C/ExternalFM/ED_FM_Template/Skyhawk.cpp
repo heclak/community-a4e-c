@@ -9,11 +9,12 @@
 #include "Vec3.h"
 #include "Input.h"
 #include "FlightModel.h"
+#include "Airframe.h"
 
 //============================ Skyhawk Statics ============================//
 static Skyhawk::Input s_input;
 static Skyhawk::FlightModel s_fm(s_input);
-
+static Skyhawk::Airframe s_airframe(s_input);
 
 
 //========================================================================//
@@ -208,6 +209,7 @@ void ed_fm_add_local_moment(double & x,double &y,double &z)
 
 void ed_fm_simulate(double dt)
 {
+	s_airframe.airframeUpdate(dt);
 	s_fm.calculateForcesAndMoments(dt);
 	/*common_force = Vec3();
 	common_moment = Vec3();
@@ -418,6 +420,18 @@ void ed_fm_set_command
 	case Skyhawk::Control::THROTTLE:
 		s_input.throttle() = value;
 		break;
+	case Skyhawk::Control::GEAR_DOWN:
+		s_input.gear() = Skyhawk::Input::GearPos::UP;
+		printf("Gear down\n");
+		break;
+	case Skyhawk::Control::GEAR_UP:
+		s_input.gear() = Skyhawk::Input::GearPos::DOWN;
+		printf("Gear up\n");
+		break;
+	case Skyhawk::Control::GEAR_TOGGLE:
+		printf("Gear toggle\n");
+		s_input.gear() = s_input.gear() == Skyhawk::Input::GearPos::DOWN ? Skyhawk::Input::GearPos::UP : Skyhawk::Input::GearPos::DOWN;
+		break;
 	}
 
 
@@ -536,7 +550,6 @@ void ed_fm_set_draw_args (EdDrawArgument * drawargs,size_t size)
 	drawargs[RIGHT_ELEVATOR].f = s_input.pitch();
 
 	drawargs[RUDDER].f = -s_input.yaw();
-
 }
 
 
@@ -548,28 +561,45 @@ void ed_fm_configure(const char * cfg_path)
 double test_gear_state = 0;
 double ed_fm_get_param(unsigned index)
 {
-	if (index <= ED_FM_END_ENGINE_BLOCK)
+
+
+	switch (index)
 	{
-		switch (index)
-		{
-		case ED_FM_ENGINE_0_RPM:			
-		case ED_FM_ENGINE_0_RELATED_RPM:	
-		case ED_FM_ENGINE_0_THRUST:			
-		case ED_FM_ENGINE_0_RELATED_THRUST:	
-			return 0; // APU
-		case ED_FM_ENGINE_1_RPM:
-			return throttle * 3000;
-		case ED_FM_ENGINE_1_RELATED_RPM:
-			return throttle;
-		case ED_FM_ENGINE_1_THRUST:
-			return s_fm.thrust();
-		case ED_FM_ENGINE_1_RELATED_THRUST:
-			return throttle;
-		case ED_FM_FC3_STICK_PITCH:
-			return s_input.pitch();
-		}
+	case ED_FM_SUSPENSION_0_GEAR_POST_STATE:
+	case ED_FM_SUSPENSION_1_GEAR_POST_STATE:
+	case ED_FM_SUSPENSION_2_GEAR_POST_STATE:
+	case ED_FM_SUSPENSION_0_DOWN_LOCK:
+	case ED_FM_SUSPENSION_1_DOWN_LOCK:
+	case ED_FM_SUSPENSION_2_DOWN_LOCK:
+	case ED_FM_SUSPENSION_0_UP_LOCK:
+	case ED_FM_SUSPENSION_1_UP_LOCK:
+	case ED_FM_SUSPENSION_2_UP_LOCK:
+		return s_airframe.getGearPosition();
 	}
-	else if (index >= ED_FM_SUSPENSION_0_RELATIVE_BRAKE_MOMENT &&
+
+	switch (index)
+	{
+	case ED_FM_ENGINE_1_CORE_RPM:
+	case ED_FM_ENGINE_1_RPM:
+		return s_input.throttleNorm() * 3000;
+
+	case ED_FM_ENGINE_1_RELATED_THRUST:
+	case ED_FM_ENGINE_1_RELATED_RPM:
+	case ED_FM_ENGINE_1_CORE_RELATED_RPM:
+		return s_input.throttleNorm();
+
+	case ED_FM_ENGINE_1_CORE_RELATED_THRUST:
+	case ED_FM_ENGINE_1_THRUST:
+		return s_fm.thrust();
+		return s_input.throttleNorm();
+	case ED_FM_ENGINE_1_COMBUSTION:
+		return 1.0;
+	case ED_FM_FC3_STICK_PITCH:
+		return s_input.pitch();
+	}
+	
+
+	if (index >= ED_FM_SUSPENSION_0_RELATIVE_BRAKE_MOMENT &&
 			 index < ED_FM_OXYGEN_SUPPLY)
 	{
 		static const int block_size = ED_FM_SUSPENSION_1_RELATIVE_BRAKE_MOMENT - ED_FM_SUSPENSION_0_RELATIVE_BRAKE_MOMENT;
@@ -581,6 +611,7 @@ double ed_fm_get_param(unsigned index)
 			return test_gear_state;
 		}
 	}
+
 	return 0;
 
 }
@@ -626,3 +657,10 @@ double ed_fm_get_shake_amplitude()
 	return 0.0;
 }
 
+void ed_fm_suspension_feedback(int idx, const ed_fm_suspension_info* info)
+{
+	//printf("Force(%lf, %lf, %lf)\n", info->acting_force[0], info->acting_force[1], info->acting_force[2]);
+	//printf("Position(%lf, %lf, %lf)\n", info->acting_force_point[0], info->acting_force_point[1], info->acting_force_point[2]);
+	//printf("Struct Compression %d: %lf\n", idx, info->struct_compression);
+	//printf("Integrity Factor: %lf", info->integrity_factor);
+}

@@ -457,7 +457,7 @@ A_4E_C =  {
 	----------------- SUSPENSION CODE BEGINS
 	-----------------------------------------------------------------------
     nose_gear_pos = {2.72, -2.38, 0}, --{2.72, -2.37, 0},    --      2.72,       -2.28,    0
-    main_gear_pos = {-0.79, -2.46, 1.18}, --{-0.79, -2.42, 1.18},    --  0.79,   -2.35,    1.18
+    main_gear_pos = {-0.79, -2.35, 1.18}, --{-0.79, -2.42, 1.18},    --  0.79,   -2.35,    1.18
     tand_gear_max = 0.554, -- // tangent on maximum yaw angle of front wheel
 
     nose_gear_amortizer_direct_stroke    = 0.0, --1.878 - 1.878,  -- down from nose_gear_pos !!!

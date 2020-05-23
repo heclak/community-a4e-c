@@ -14,7 +14,8 @@ public:
 	~FlightModel();
 
 	//Utility.
-
+	//Used to snap gear into place for say cold start or airstart.
+	void setGearPosition();
 
 	//Adds a force (and moment caused by it)
 	//in the local reference frame of the aircraft.
@@ -100,6 +101,7 @@ private:
 	double m_q; //0.5*V^2 * s * b
 	double m_p; //0.25*V * s * b^2
 	double m_k; //0.5V^2 * s
+
 	//Aircraft Parameters
 	Vec3 m_com; //Centre of mass
 	double m_fuel;
@@ -122,10 +124,14 @@ private:
 	Vec3 m_moment; //total moment of aircraft
 	Vec3 m_force; //total force on the aircraft
 
+	//Aircraft Settings
+
 	double m_aileronLeft;
 	double m_aileronRight;
 	double m_elevator;
 	double m_rudder;
+
+	double m_gearPosition = 0.0;
 
 	//Tables m_ removed for easy of use
 
@@ -274,12 +280,12 @@ double FlightModel::rudder()
 
 double FlightModel::thrust()
 {
-	return (-m_controls.throttle() + 1) * m_thrust / 2.0;
+	return m_controls.throttleNorm() * m_thrust;
 }
 
 void FlightModel::lift()
 {
-	printf("CL: %lf\n", CLalpha(m_aoa, true));
+	//printf("CL: %lf\n", CLalpha(m_aoa, true));
 	addForce(Vec3(0.0, m_k*CLalpha(m_aoa), 0.0), getCOM());
 }
 

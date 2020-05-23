@@ -147,9 +147,9 @@ function post_initialize()
     dev:performClickableAction(device_commands.Gear,GEAR_TARGET,true)   -- sync handle to gear state
     gear_clickable_ref:hide(GEAR_TARGET==1)
 
-    set_aircraft_draw_argument_value(0,GEAR_NOSE_STATE)     -- nose gear draw angle
-    set_aircraft_draw_argument_value(3,GEAR_RIGHT_STATE)    -- right gear draw angle
-    set_aircraft_draw_argument_value(5,GEAR_LEFT_STATE)     -- left gear draw angle
+    --set_aircraft_draw_argument_value(0,GEAR_NOSE_STATE)     -- nose gear draw angle
+    --set_aircraft_draw_argument_value(3,GEAR_RIGHT_STATE)    -- right gear draw angle
+    --set_aircraft_draw_argument_value(5,GEAR_LEFT_STATE)     -- left gear draw angle
 
     set_aircraft_draw_argument_value(25,HOOK_TARGET)
 end
@@ -261,9 +261,9 @@ function update_gear()
         GEAR_RIGHT_STATE = 1
     end
 
-    set_aircraft_draw_argument_value(0,GEAR_NOSE_STATE) -- nose gear draw angle
-    set_aircraft_draw_argument_value(3,GEAR_RIGHT_STATE) -- right gear draw angle
-    set_aircraft_draw_argument_value(5,GEAR_LEFT_STATE) -- left gear draw angle
+    --set_aircraft_draw_argument_value(0,GEAR_NOSE_STATE) -- nose gear draw angle
+    --set_aircraft_draw_argument_value(3,GEAR_RIGHT_STATE) -- right gear draw angle
+    --set_aircraft_draw_argument_value(5,GEAR_LEFT_STATE) -- left gear draw angle
 
     -- reflect gear state on gear-flaps indicator panel
     local dev_gear_nose = get_param_handle("GEAR_NOSE")

@@ -92,6 +92,8 @@ mount_vfs_texture_path  (current_mod_path.."/Textures/a4e_blueangels")
     --FM=nil
 --end
 
+dofile(current_mod_path..'/Entry/Suspension.lua')
+
 local FM = 
 
 {
@@ -100,7 +102,7 @@ local FM =
 	center_of_mass		=	{ 0.183 , 0.261 , 0.0},
 	
 	moment_of_inertia  	= 	{11904, 38641, 35116,-5518},
-	--moment_of_inertia  	= 	{11904, 35116, 38641,-5518},
+	suspension = suspension
 }
 
 make_flyable('A-4E-C'	, current_mod_path..'/Cockpit/Scripts/', FM, current_mod_path..'/comm.lua')
