@@ -321,7 +321,7 @@ join(res.keyCommands,{
     {down = Keys.ExtLightTaxi, value_down = 1,                                                         name = _('TAXI Light Switch - ON'),               category = {_('Right Console'), _('Exterior Lights Panel')}},
     {down = Keys.ExtLightTaxi, value_down = 0,                                                         name = _('TAXI Light Switch - OFF'),              category = {_('Right Console'), _('Exterior Lights Panel')}},
     {down = Keys.ExtLightTaxiToggle,                                                                   name = _('TAXI Light Switch - ON/OFF'),           category = {_('Right Console'), _('Exterior Lights Panel')}},
-    {down = Keys.ExtLightTaxi, value_down = 1, up = Keys.ExtLightTaxi, value_down = 0,                 name = _('TAXI Light Switch - ON else OFF'),      category = {_('Right Console'), _('Exterior Lights Panel'), _('Special For Joystick')}},
+    {down = Keys.ExtLightTaxi, value_down = 1, up = Keys.ExtLightTaxi, value_up = 0,                   name = _('TAXI Light Switch - ON else OFF'),      category = {_('Right Console'), _('Exterior Lights Panel'), _('Special For Joystick')}},
 
     {down = Keys.ExtLightAnticollision, value_down = 1,                                                name = _('ANTI-COLL Light Switch - ON'),          category = {_('Right Console'), _('Exterior Lights Panel')}},
     {down = Keys.ExtLightAnticollision, value_down = 0,                                                name = _('ANTI-COLL Light Switch - OFF'),         category = {_('Right Console'), _('Exterior Lights Panel')}},
