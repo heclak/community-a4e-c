@@ -100,7 +100,14 @@ function post_initialize()
 	if birth=="GROUND_HOT" then --"GROUND_COLD","GROUND_HOT","AIR_HOT"
 		update()
 		spawn_in_catapult()
-    end
+	end
+	
+	-- initialise lua random function
+	-- random function requires a few calls to start generating random number
+	math.randomseed(os.time())
+	math.random()
+	math.random()
+	math.random()
 end
 
 function spawn_in_catapult()
@@ -136,7 +143,6 @@ local function shoot_catapult()
 end
 
 local shooter_countdown = 0	-- duration that shooter takes between salute and catapult shoot
-local SHOOTER_MIN_DELAY = 1.5
 
 local function simulate_shooter()
 	if on_carrier() == true and catapult_status == 1 and Sensor_Data_Mod.throttle_pos_l > 0.9 then
@@ -205,10 +211,9 @@ function SetCommand(command,value)
 
 	elseif command == device_commands.pilot_salute then
 		pilot_salute = true
-		math.randomseed(get_absolute_model_time())
-		shooter_countdown = math.random() + SHOOTER_MIN_DELAY
-		print_message_to_user("Salute")
-		-- print_message_to_user(shooter_countdown)
+		local random_shooter_delay = math.random(200,350)/100
+		shooter_countdown = random_shooter_delay
+		print_message_to_user("Pilot: Salute")
 	end
 	
 	
