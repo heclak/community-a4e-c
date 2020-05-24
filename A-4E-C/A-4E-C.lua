@@ -369,8 +369,8 @@ A_4E_C =  {
         15, -- right elevator
         16, -- left elevator
         17, -- rudder
-        2,  -- nose wheel steering
 
+        2,  -- nose wheel steering
         21, -- SFM air brake
         13, -- right slat
         14, -- left slat
@@ -385,7 +385,6 @@ A_4E_C =  {
         198, -- anticollision (flashing red) top light
         199, -- anticollision (flashing red) bottom light
         208, -- taxi light (white) right main gear door
-        324, -- engine fan blade
         402, -- huffer
         500, -- model air brake
         501, -- RAT
@@ -487,11 +486,12 @@ A_4E_C =  {
 
             -- Diameter is 0 to hide AB for AI. AB is used for catapult simulation.
             -- If AB is no longer used for catapult then diameter can be set for exhaust smoke.
-            diameter    =    0.0, -- AFB cone diameter.
-            -- diameter    =    0.675, -- AFB cone diameter
-            exhaust_length_ab    =    0, -- lenght in m
+            -- diameter    =    0.0, -- AFB cone diameter.
+            diameter    =    0.675, -- AFB cone diameter
+            exhaust_length_ab    =    0.01, -- lenght in m
             exhaust_length_ab_K    =    0.707, -- AB animation
-            smokiness_level     =     0.15,
+            smokiness_level     =     0.2,
+            afterburner_circles_count = 0,
         }, -- end of [1]
     }, -- end of engines_nozzles
 
