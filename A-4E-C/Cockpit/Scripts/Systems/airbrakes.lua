@@ -288,8 +288,8 @@ function update()
     -- used only on the ground. Instead of dumping lift, we will emulate them as
     -- airbrakes (increasing drag)
     local effective_airbrake = 0.333*ABRAKE_STATE + 0.667*spoil -- TODO: determine percentage split between airbrake and spoiler
-    set_aircraft_draw_argument_value(21,effective_airbrake)
-    set_aircraft_draw_argument_value(500,ABRAKE_STATE)
+    --set_aircraft_draw_argument_value(21,effective_airbrake)
+    --set_aircraft_draw_argument_value(500,ABRAKE_STATE)
     set_aircraft_draw_argument_value(WHEELCHOCKS_ANIM_ARG, WHEELCHOCKS_STATE) -- draw wheel chocks if state is 1. 
 end
 

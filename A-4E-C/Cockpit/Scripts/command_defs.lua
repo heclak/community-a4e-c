@@ -442,4 +442,6 @@ device_commands =
     intlight_whiteflood_CHANGE = __counter(),
     intlight_instruments_CHANGE = __counter(),
     intlight_console_CHANGE = __counter(),
+	nosewheel_steering_engage = __counter(),
+	nosewheel_steering_disengage = __counter(),
 }

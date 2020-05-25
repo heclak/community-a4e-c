@@ -275,7 +275,7 @@ local AIM9B_WPN =   {
 					},
 }
 declare_weapon(AIM9B_WPN)
-
+--]]
 
 ---------AIR TO AIR-------------
 declare_loadout({	--AIM-9B
@@ -293,10 +293,10 @@ declare_loadout({	--AIM-9B
 		{	ShapeName	=	"AIM9B-SHAPE" ,	Position	=	{0,-0.124918,0}}, --name of the shape_table_data
 	}, -- end of Elements
 })
---]]
+
 
 ---------MISSILES-------------
---[[
+
 declare_loadout({	--AGM 45 SHRIKE
 	category	=	CAT_MISSILES,
 	CLSID	=	"{AGM45_SHRIKE}",
@@ -312,7 +312,7 @@ declare_loadout({	--AGM 45 SHRIKE
 		{	ShapeName	=	"AGM-45" , Position	=	{0,	-0.22,	0} }, --{0,	-0.22,	0}
 	}, -- end of Elements
 })
---]]
+
 
 ---------ROCKETS--------------
 declare_loadout({	--TER LAU-61

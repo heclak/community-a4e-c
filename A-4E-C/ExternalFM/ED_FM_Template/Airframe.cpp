@@ -1,7 +1,8 @@
 #include "Airframe.h"
 #include <algorithm>
-Skyhawk::Airframe::Airframe(Input& controls):
-	m_controls(controls)
+Skyhawk::Airframe::Airframe(Input& controls, Engine& engine):
+	m_controls(controls),
+	m_engine(engine)
 {
 
 }
@@ -55,7 +56,7 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 		m_gearPosition = std::min(m_gearPosition, 1.0);
 	}
 
-	if (m_controls.airbrake() > m_speedBrakePosition)
+	if (m_controls.airbrake() >= m_speedBrakePosition)
 	{
 		m_speedBrakePosition += dt / m_airbrakesExtendTime;
 		m_speedBrakePosition = std::min(m_speedBrakePosition, 1.0);
@@ -66,7 +67,7 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 		m_speedBrakePosition = std::max(m_speedBrakePosition, 0.0);
 	}
 
-	if (m_controls.flaps() > m_flapsPosition)
+	if (m_controls.flaps() >= m_flapsPosition)
 	{
 		m_flapsPosition += dt / m_flapsExtendTime;
 		m_flapsPosition = std::min(m_flapsPosition, 1.0);
@@ -77,10 +78,29 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 		m_flapsPosition = std::max(m_flapsPosition, 0.0);
 	}
 
+	if (m_controls.hook())
+	{
+		m_hookPosition += dt / m_hookExtendTime;
+		m_hookPosition = std::min(m_hookPosition, 1.0);
+	}
+	else
+	{
+		m_hookPosition -= dt / m_hookExtendTime;
+		m_hookPosition = std::max(m_hookPosition, 0.0);
+	}
+
 	
 	m_elevator = m_controls.pitch();
 	m_aileronLeft = m_controls.roll();
 	m_aileronRight = -m_aileronLeft;
 	m_rudder = m_controls.yaw();
 	m_slatsPosition = m_controls.slats();
+
+
+	if (m_catapultState == ON_CAT_NOT_READY && m_engine.getRPMNorm() > 0.9)
+	{
+		m_catapultState = ON_CAT_READY;
+	}
+
+	m_catStateSent = false;
 }

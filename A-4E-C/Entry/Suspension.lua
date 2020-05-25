@@ -63,14 +63,14 @@ main_amortizer_direct_damper_force_factor = main_damper_force * 1.2
 main_amortizer_back_damper_force_factor = main_damper_force * 1.0
 ]]--
 
-wheel_static_friction_factor_COMMON = 0.80
+wheel_static_friction_factor_COMMON = 1.00
 wheel_side_friction_factor_COMMON = 0.70
-wheel_roll_friction_factor_COMMON = 0.028
+wheel_roll_friction_factor_COMMON = 0.035
 wheel_glide_friction_factor_COMMON = 0.40
 
-brake_moment_main = 1000.0
+brake_moment_main = 10000.0
 
-wheel_radius_factor = 0.1
+wheel_radius_factor = 1.0
 
 suspension = 
 {
@@ -80,9 +80,9 @@ suspension =
 		
 		mass = 200,
 		damage_element = 83,
-		moment_of_inertia = {10.0,10.0,10.0},--leg
-		wheel_axle_offset = 0.09,
-		self_attitude = false,
+		moment_of_inertia = {10.0,30.0,10.0},--leg
+		wheel_axle_offset = 0.00,
+		self_attitude = true,
 		yaw_limit = math.rad(90.0),
 		
 		amortizer_min_length = nose_amortizer_min_length,
@@ -184,7 +184,7 @@ suspension =
 		wheel_side_friction_factor = wheel_side_friction_factor_COMMON,
 		wheel_roll_friction_factor = wheel_roll_friction_factor_COMMON,
 		wheel_glide_friction_factor = wheel_glide_friction_factor_COMMON,
-		wheel_damage_force_factor = 150.0,
+		wheel_damage_force_factor = 250.0,
 		wheel_damage_speed = 200.0, 
 		wheel_brake_moment_max = brake_moment_main,
 		wheel_moment_of_inertia = 0.13,

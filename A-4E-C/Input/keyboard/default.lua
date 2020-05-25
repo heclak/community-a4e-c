@@ -465,6 +465,8 @@ keyCommands = {
     --
 
     --{combos = {{key = 'S', reformers = {'LShift'}}},down = Keys.SpoilerCoverToggle, name = _('Spoilers Switch Cover: Toggle'), category = _('Systems')},
+	{down = device_commands.nosewheel_steering_engage, up = device_commands.nosewheel_steering_disengage, name = _('Nosewheel Steering Engage'), category = _('Systems')},
+	
     {combos = {{key = 'S'}}, down = Keys.SpoilersArmToggle, name = _('Spoilers ARM-OFF Toggle'), category = _('Systems')},
     {down = Keys.SpoilersArmOn, name = _('Spoilers ARM-OFF: ON'), category = _('Systems')},
     {down = Keys.SpoilersArmOff, name = _('Spoilers ARM-OFF: OFF'), category = _('Systems')},

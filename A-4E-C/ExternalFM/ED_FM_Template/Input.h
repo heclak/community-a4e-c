@@ -11,9 +11,9 @@ enum Control
 	ROLL = 2002, //Stick roll axis
 	YAW = 2003, //Pedals yaw axis
 	THROTTLE = 2004, //Throttle axis
-	GEAR_TOGGLE = 68,
-	GEAR_UP = 430,
-	GEAR_DOWN = 431,
+	GEAR_TOGGLE = 68, //68
+	GEAR_UP = 430, //
+	GEAR_DOWN = 431, //
 	BRAKE = 2111,
 	LEFT_BRAKE = 2112,
 	RIGHT_BRAKE = 2113,
@@ -23,7 +23,13 @@ enum Control
 	FLAPS_UP = 146,
 	FLAPS_TOGGLE = 72,
 	AIRBRAKE_EXTEND = 147,
-	AIRBRAKE_RETRACT = 148
+	AIRBRAKE_RETRACT = 148,
+	HOOK_TOGGLE = 69,
+	CONNECT_TO_CAT = 120,
+	NOSEWHEEL_STEERING_ENGAGE = 3133,
+	NOSEWHEEL_STEERING_DISENGAGE = 3134,
+	STARTER_BUTTON = 3013,
+	THROTTLE_DETEND = 3087,
 };
 
 class Input
@@ -34,6 +40,13 @@ public:
 	{
 		DOWN,
 		UP
+	};
+
+	enum class ThrottleState
+	{
+		CUTOFF,
+		START,
+		IDLE
 	};
 
 
@@ -49,16 +62,28 @@ public:
 	void coldInit()
 	{
 		m_gear = GearPos::DOWN;
+		m_hook = false;
+		m_nosewheelSteering = false;
+		m_throttleState = ThrottleState::CUTOFF;
+		m_starter = false;
 	}
 
 	void hotInit()
 	{
 		m_gear = GearPos::DOWN;
+		m_hook = false;
+		m_nosewheelSteering = false;
+		m_throttleState = ThrottleState::IDLE;
+		m_starter = false;
 	}
 
 	void airbornInit()
 	{
 		m_gear = GearPos::UP;
+		m_hook = false;
+		m_nosewheelSteering = false;
+		m_throttleState = ThrottleState::IDLE;
+		m_starter = false;
 	}
 
 	inline double normalise(double value)
@@ -153,6 +178,38 @@ public:
 	{
 		return m_slats;
 	}
+	inline const bool& hook() const
+	{
+		return m_hook;
+	}
+	inline bool& hook()
+	{
+		return m_hook;
+	}
+	inline const bool& nosewheelSteering() const
+	{
+		return m_nosewheelSteering;
+	}
+	inline bool& nosewheelSteering()
+	{
+		return m_nosewheelSteering;
+	}
+	inline const ThrottleState& throttleState() const
+	{
+		return m_throttleState;
+	}
+	inline ThrottleState& throttleState()
+	{
+		return m_throttleState;
+	}
+	inline const bool& starter() const
+	{
+		return m_starter;
+	}
+	inline bool& starter()
+	{
+		return m_starter;
+	}
 private:
 	double m_pitch = 0.0;
 	double m_roll = 0.0;
@@ -164,6 +221,10 @@ private:
 	double m_flaps = 0.0;
 	double m_slats = 0.0; //desired by fm
 	GearPos m_gear = GearPos::UP;
+	ThrottleState m_throttleState = ThrottleState::CUTOFF;
+	bool m_hook = false;
+	bool m_nosewheelSteering = false;
+	bool m_starter = false;
 };
 
 }//end namespace

@@ -10,6 +10,9 @@
     <ClCompile Include="Airframe.cpp">
       <Filter>A4-Skyhawk</Filter>
     </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>A4-Skyhawk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="A-4_Aero.h" />
@@ -40,6 +43,9 @@
       <Filter>include\FM</Filter>
     </ClInclude>
     <ClInclude Include="Airframe.h">
+      <Filter>A4-Skyhawk</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
       <Filter>A4-Skyhawk</Filter>
     </ClInclude>
   </ItemGroup>

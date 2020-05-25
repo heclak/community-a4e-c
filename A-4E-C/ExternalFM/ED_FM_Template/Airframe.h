@@ -3,6 +3,7 @@
 #pragma once
 #include "Input.h"
 #include <stdio.h>
+#include "Engine.h"
 namespace Skyhawk
 {//begin namespace
 
@@ -27,7 +28,19 @@ namespace Skyhawk
 class Airframe
 {
 public:
-	Airframe(Input& controls);
+
+	enum CatapultState
+	{
+		ON_CAT_READY,
+		ON_CAT_NOT_READY,
+		ON_CAT_WAITING,
+		ON_CAT_LAUNCHING,
+		OFF_CAT
+	};
+
+
+
+	Airframe(Input& controls, Engine& engine);
 	~Airframe();
 	void zeroInit();
 	void coldInit();
@@ -53,6 +66,12 @@ public:
 	inline double elevatorAngle();
 	inline double rudderAngle();
 
+	inline const CatapultState& catapultState() const;
+	inline CatapultState& catapultState();
+	inline const bool& catapultStateSent() const;
+	inline bool& catapultStateSent();
+	inline void setCatStateFromKey();
+
 	//Update
 	void airframeUpdate(double dt); //performs calculations and updates
 
@@ -64,7 +83,7 @@ private:
 	const double m_gearExtendTime = 3.0;
 	const double m_flapsExtendTime = 5.0;
 	const double m_airbrakesExtendTime = 3.0;
-
+	const double m_hookExtendTime = 1.5;
 
 
 	//Airframe Variables
@@ -80,6 +99,10 @@ private:
 	double m_elevator = 0.0;
 	double m_rudder = 0.0;
 
+	CatapultState m_catapultState = OFF_CAT;
+	bool m_catStateSent = false;
+
+	Engine& m_engine;
 	Input& m_controls;
 };
 
@@ -151,6 +174,43 @@ double Airframe::rudderAngle()
 void Airframe::setSpoilerPosition(double position)
 {
 	m_spoilerPosition = position;
+}
+
+const Airframe::CatapultState& Airframe::catapultState() const
+{
+	return m_catapultState;
+}
+
+Airframe::CatapultState& Airframe::catapultState()
+{
+	return m_catapultState;
+}
+
+const bool& Airframe::catapultStateSent() const
+{
+	return m_catStateSent;
+}
+
+bool& Airframe::catapultStateSent()
+{
+	return m_catStateSent;
+}
+
+void Airframe::setCatStateFromKey()
+{
+	switch (m_catapultState)
+	{
+	case ON_CAT_NOT_READY:
+	case ON_CAT_READY:
+	case ON_CAT_WAITING:
+		printf("OFF_CAT\n");
+		m_catapultState = OFF_CAT;
+		break;
+	case OFF_CAT:
+		printf("ON_CAT_NOT_READY\n");
+		m_catapultState = ON_CAT_NOT_READY;
+		break;
+	}
 }
 
 }//end namespace

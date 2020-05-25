@@ -10,11 +10,12 @@
 #include "Input.h"
 #include "FlightModel.h"
 #include "Airframe.h"
-
+#include "Engine.h"
 //============================ Skyhawk Statics ============================//
 static Skyhawk::Input s_input;
-static Skyhawk::Airframe s_airframe(s_input);
-static Skyhawk::FlightModel s_fm(s_input, s_airframe);
+static Skyhawk::Engine s_engine(s_input);
+static Skyhawk::Airframe s_airframe(s_input, s_engine);
+static Skyhawk::FlightModel s_fm(s_input, s_airframe, s_engine);
 
 
 //========================================================================//
@@ -209,6 +210,7 @@ void ed_fm_add_local_moment(double & x,double &y,double &z)
 
 void ed_fm_simulate(double dt)
 {
+	s_engine.updateEngine(dt);
 	s_airframe.airframeUpdate(dt);
 	s_fm.calculateForcesAndMoments(dt);
 	/*common_force = Vec3();
@@ -447,11 +449,35 @@ void ed_fm_set_command
 		break;
 	case Skyhawk::Control::FLAPS_TOGGLE:
 		s_input.flaps() = s_input.flaps() > 0.5 ? 0.0: 1.0;
+		break;
 	case Skyhawk::Control::AIRBRAKE_EXTEND:
 		s_input.airbrake() = 1.0;
 		break;
 	case Skyhawk::Control::AIRBRAKE_RETRACT:
 		s_input.airbrake() = 0.0;
+		break;
+	case Skyhawk::Control::HOOK_TOGGLE:
+		s_input.hook() = !s_input.hook();
+		break;
+	case Skyhawk::Control::CONNECT_TO_CAT:
+		s_airframe.setCatStateFromKey();
+		break;
+	case Skyhawk::Control::NOSEWHEEL_STEERING_ENGAGE:
+		s_input.nosewheelSteering() = true;
+		break;
+	case Skyhawk::Control::NOSEWHEEL_STEERING_DISENGAGE:
+		s_input.nosewheelSteering() = false;
+		break;
+	case Skyhawk::Control::STARTER_BUTTON:
+		s_input.starter() = value > 17.26;
+		break;
+	case Skyhawk::Control::THROTTLE_DETEND:
+		if (value < 17.24)
+			s_input.throttleState() = Skyhawk::Input::ThrottleState::CUTOFF;
+		else if (value > 17.26)
+			s_input.throttleState() = Skyhawk::Input::ThrottleState::IDLE;
+		else
+			s_input.throttleState() = Skyhawk::Input::ThrottleState::START;
 		break;
 	default:
 		printf("number %d: %lf\n", command, value);
@@ -609,55 +635,117 @@ double ed_fm_get_param(unsigned index)
 		return 1.0;
 	case ED_FM_ENGINE_1_CORE_RPM:
 	case ED_FM_ENGINE_1_RPM:
-		return s_input.throttleNorm() * 3000;
+		return s_engine.getRPM();
 
 	case ED_FM_ENGINE_1_TEMPERATURE:
-		return 600.0;
+		return s_engine.getTemperature();
 
 	case ED_FM_ENGINE_1_OIL_PRESSURE:
 		return 600.0;
 
 	case ED_FM_ENGINE_1_FUEL_FLOW:
-		return 5.0;
+		return s_engine.getFuelFlow();
 
 	case ED_FM_ENGINE_1_CORE_RELATED_THRUST:
 	case ED_FM_ENGINE_1_RELATED_THRUST:
 	case ED_FM_ENGINE_1_RELATED_RPM:
 	case ED_FM_ENGINE_1_CORE_RELATED_RPM:
-		return s_input.throttleNorm();
+		return s_engine.getRPMNorm();
 
 	case ED_FM_ENGINE_1_CORE_THRUST:
 	case ED_FM_ENGINE_1_THRUST:
 		return s_fm.thrust();
 	case ED_FM_ENGINE_1_COMBUSTION:
-		return 1.0;
+		return s_engine.getFuelFlow() / c_maxFuelFlow;
 	case ED_FM_SUSPENSION_1_RELATIVE_BRAKE_MOMENT:
+		//printf("BrakeLeft: %lf\n", s_input.normalise(s_input.brakeLeft()));
 		return s_input.normalise(s_input.brakeLeft());
 	case ED_FM_SUSPENSION_2_RELATIVE_BRAKE_MOMENT:
+		//printf("BrakeRight: %lf\n", s_input.normalise(s_input.brakeRight()));
 		return s_input.normalise(s_input.brakeRight());
+	case ED_FM_SUSPENSION_0_WHEEL_SELF_ATTITUDE:
+		return !s_input.nosewheelSteering();
+	case ED_FM_SUSPENSION_0_WHEEL_YAW:
+		return -s_input.yaw()/2.0;
 	}
 
 	return 0;
 
 }
 
+bool ed_fm_pop_simulation_event(ed_fm_simulation_event& out)
+{
+	if (s_airframe.catapultState() == Skyhawk::Airframe::ON_CAT_NOT_READY && !s_airframe.catapultStateSent())
+	{
+		out.event_type = ED_FM_EVENT_CARRIER_CATAPULT;
+		out.event_params[0] = 0;
+		s_airframe.catapultStateSent() = true;
+		return true;
+	}
+	else if (s_airframe.catapultState() == Skyhawk::Airframe::ON_CAT_READY)
+	{
+		out.event_type = ED_FM_EVENT_CARRIER_CATAPULT;
+		out.event_params[0] = 1;
+		out.event_params[1] = 3.0f;
+		out.event_params[2] = 60.0f;
+		out.event_params[3] = 30000.0f;
+		s_airframe.catapultState() = Skyhawk::Airframe::ON_CAT_WAITING;
+		return true;
+	}
+
+	return false;
+}
+
+bool ed_fm_push_simulation_event(const ed_fm_simulation_event& in)
+{
+	if (in.event_type == ED_FM_EVENT_CARRIER_CATAPULT)
+	{
+		if (in.event_params[0] == 1)
+		{
+			s_airframe.catapultState() = Skyhawk::Airframe::ON_CAT_NOT_READY;
+		}
+		else if (in.event_params[0] == 2)
+		{
+			s_airframe.catapultState() = Skyhawk::Airframe::ON_CAT_LAUNCHING;
+		}
+		else if (in.event_params[0] == 3)
+		{
+			if (s_airframe.catapultState() == Skyhawk::Airframe::ON_CAT_LAUNCHING)
+			{
+				s_airframe.catapultState() = Skyhawk::Airframe::OFF_CAT;
+			}
+			else
+			{
+				s_airframe.catapultState() = Skyhawk::Airframe::OFF_CAT;
+			}
+		}
+	}
+	return true;
+}
+
 
 void ed_fm_cold_start()
 {
+	s_input.coldInit();
 	s_fm.coldInit();
 	s_airframe.coldInit();
+	s_engine.coldInit();
 }
 
 void ed_fm_hot_start()
 {
+	s_input.hotInit();
 	s_fm.hotInit();
 	s_airframe.hotInit();
+	s_engine.hotInit();
 }
 
 void ed_fm_hot_start_in_air()
 {
+	s_input.airbornInit();
 	s_fm.airbornInit();
 	s_airframe.airborneInit();
+	s_engine.airbornInit();
 }
 
 bool ed_fm_add_local_force_component( double & x,double &y,double &z,double & pos_x,double & pos_y,double & pos_z )

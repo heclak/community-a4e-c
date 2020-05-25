@@ -21,8 +21,8 @@ function update()
 		
 	end
 	
-	set_aircraft_draw_argument_value(13,SLAT_STATE)
-	set_aircraft_draw_argument_value(14,SLAT_STATE)
+	--set_aircraft_draw_argument_value(13,SLAT_STATE)
+	--set_aircraft_draw_argument_value(14,SLAT_STATE)
 	
 end
 

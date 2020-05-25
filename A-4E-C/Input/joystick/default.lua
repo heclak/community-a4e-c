@@ -364,8 +364,6 @@ keyCommands = {
     -- Systems
     {down = iCommandPlaneAirRefuel, name = _('Refueling Boom'), category = 'Systems'},
     {down = iCommandPlaneJettisonFuelTanks, name = _('Jettison Fuel Tanks'), category = 'Systems'},
-    {down = iCommandPlane_HOTAS_NoseWheelSteeringButton, up = iCommandPlane_HOTAS_NoseWheelSteeringButton, name = _('Nose Gear Maneuvering Range'), category = 'Systems'},
-    {down = iCommandPlane_HOTAS_NoseWheelSteeringButtonOff, up = iCommandPlane_HOTAS_NoseWheelSteeringButtonOff, name = _('Nose Gear Steering Disengage'), category = 'Systems'},
     --{down = iCommandPlaneWheelBrakeLeftOn, up = iCommandPlaneWheelBrakeLeftOff, name = _('Wheel Brake Left On/Off'), category = 'Systems'},
     --{down = iCommandPlaneWheelBrakeRightOn, up = iCommandPlaneWheelBrakeRightOff, name = _('Wheel Brake Right On/Off'), category = 'Systems'},
     {down = iCommandPlaneFSQuantityIndicatorSelectorMAIN, name = _('Fuel Quantity Selector'), category = 'Systems'},
@@ -423,6 +421,7 @@ keyCommands = {
     --
     -- ADD NEW CUSTOM A-4E JOYSTICK COMMANDS HERE:
     --
+	{down = device_commands.nosewheel_steering_engage, up = device_commands.nosewheel_steering_disengage, name = _('Nosewheel Steering Engage'), category = _('Systems')},
 
     {down = Keys.Station1, name = _('Armament: Station 1 Enable/Disable'), category = _('Weapons')},
     {down = Keys.Station2, name = _('Armament: Station 2 Enable/Disable'), category = _('Weapons')},

@@ -211,6 +211,9 @@ extern "C"
 
 	ED_FM_API double ed_fm_get_param(unsigned index);
 
+	ED_FM_API bool ed_fm_pop_simulation_event(ed_fm_simulation_event& out);
+	ED_FM_API bool ed_fm_push_simulation_event(const ed_fm_simulation_event& in);
+
 	/*
 	call backs for diffrenrt starting conditions
 	*/

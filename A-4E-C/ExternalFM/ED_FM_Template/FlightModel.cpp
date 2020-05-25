@@ -10,9 +10,10 @@
 
 //Set everything to zero.
 //Vectors already constructor to zero vector.
-Skyhawk::FlightModel::FlightModel(Input& controls, Airframe& airframe) :
+Skyhawk::FlightModel::FlightModel(Input& controls, Airframe& airframe, Engine& engine):
 	m_controls(controls),
 	m_airframe(airframe),
+	m_engine(engine),
 	m_density(0.0),
 	m_speedOfSound(0.0),
 	m_aoa(0.0),

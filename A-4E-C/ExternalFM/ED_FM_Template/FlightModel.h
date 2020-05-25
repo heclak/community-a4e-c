@@ -5,13 +5,14 @@
 #include "Table.h"
 #include "Input.h"
 #include "Airframe.h"
+#include "Engine.h"
 namespace Skyhawk
 {//begin namespace
 
 class FlightModel
 {
 public:
-	FlightModel(Input& controls, Airframe& airframe);
+	FlightModel(Input& controls, Airframe& airframe, Engine& engine);
 	~FlightModel();
 
 	void coldInit();
@@ -115,6 +116,7 @@ private:
 	Vec3 m_force; //total force on the aircraft
 
 	//Aircraft Settings
+	Engine& m_engine;
 	Airframe& m_airframe;
 	double m_aileronLeft;
 	double m_aileronRight;
@@ -292,7 +294,8 @@ void FlightModel::sideForce()
 
 void FlightModel::thrustForce()
 {
-	addForce(Vec3(thrust(), 0.0, 0.0), getCOM());
+	//addForce(Vec3(thrust(), 0.0, 0.0), getCOM());
+	addForce(Vec3(m_engine.getThrust(), 0.0, 0.0), getCOM());
 }
 
 }//end namespace
