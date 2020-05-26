@@ -129,7 +129,8 @@ private:
 
 	//Lift
 	Table CLalpha; //lift with alpha (RADIANS)
-	Table dCLflap; //delta lift with flap (DEGREE) CHANGEME
+	Table dCLflap; //delta lift with flap, alpha (RADIANS)
+	Table dCLslat; //delta lift with slat, alpha (RADIANS)
 	Table CLde; //lift elevator deflection
 
 	//Drag
@@ -278,7 +279,9 @@ double FlightModel::thrust()
 void FlightModel::lift()
 {
 	//printf("CL: %lf\n", CLalpha(m_aoa, true));
-	addForce(Vec3(0.0, m_k*CLalpha(m_aoa), 0.0), getCOM());
+	addForce(Vec3(0.0, m_k*(CLalpha(m_aoa) + dCLflap(m_aoa)*m_airframe.getFlapsPosition() + dCLslat(m_aoa)*m_airframe.getSlatsPosition()), 0.0), getCOM());
+
+	printf("CLflap: %lf, flap-pos: %lf\n", dCLflap(m_aoa) * m_airframe.getFlapsPosition(), m_airframe.getSlatsPosition());
 }
 
 void FlightModel::drag()
