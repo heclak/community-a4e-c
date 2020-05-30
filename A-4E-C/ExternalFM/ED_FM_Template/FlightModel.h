@@ -158,10 +158,10 @@ private:
 	Table Cldr; //roll moment due to rudder (RADIANS)
 
 	//Pitch
-	Table Cmalpha; //pitch moment with alpha (RADIANS)
+	Table Cmalpha; //pitch moment with alpha (MACH)
 	Table Cmde; //pitch moment due to elevator (RADIANS)
-	Table Cmq; //pitch moment due to pitch rate (RADIANS per Second)
-	Table Cmadot; //pitch moment due to alpha rate (RADIANS per second)
+	Table Cmq; //pitch moment due to pitch rate (RADIANS per Second) [MACH]
+	Table Cmadot; //pitch moment due to alpha rate (MACH)
 
 	//Yaw
 	Table Cnb; //yaw moment due to beta (RADIANS)
@@ -249,7 +249,8 @@ void FlightModel::L_stab()
 void FlightModel::M_stab()
 {
 	//m_moment.z
-	m_moment.z += m_k * m_chord * (Cmalpha(m_aoa) * m_aoa + Cmde(m_mach) * elevator()) + 0.25 * m_scalarV * m_totalWingArea * m_chord * m_chord * (Cmq(0.0)*m_omega.z + Cmadot(0.0)*m_aoaDot);
+	m_moment.z += m_k * m_chord * (Cmalpha(m_mach) * m_aoa + Cmde(m_mach) * elevator()) + 0.25 * m_scalarV * m_totalWingArea * m_chord * m_chord * (Cmq(m_mach)*m_omega.z + Cmadot(m_mach)*m_aoaDot);
+	//printf("elevator: %lf\n", elevator());
 }
 
 void FlightModel::N_stab()
@@ -283,9 +284,9 @@ double FlightModel::thrust()
 void FlightModel::lift()
 {
 	//printf("CL: %lf\n", CLalpha(m_aoa, true));
-	addForce(Vec3(0.0, m_k*(CLalpha(m_aoa) + dCLflap(m_aoa)*m_airframe.getFlapsPosition() + dCLslat(m_aoa)*m_airframe.getSlatsPosition()), 0.0), getCOM());
-
-	printf("CLflap: %lf, flap-pos: %lf\n", dCLflap(m_aoa) * m_airframe.getFlapsPosition(), m_airframe.getSlatsPosition());
+	addForce(Vec3(0.0, m_k*(CLalpha(m_aoa) + CLde(m_mach)*elevator() + dCLflap(m_aoa)*m_airframe.getFlapsPosition() + dCLslat(m_aoa)*m_airframe.getSlatsPosition()), 0.0), getCOM());
+	printf("CLde: %lf\n", CLde(m_mach) * elevator());
+	//printf("CLflap: %lf, flap-pos: %lf\n", dCLflap(m_aoa) * m_airframe.getFlapsPosition(), m_airframe.getSlatsPosition());
 }
 
 void FlightModel::drag()
