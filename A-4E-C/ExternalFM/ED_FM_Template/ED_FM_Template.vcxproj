@@ -152,6 +152,7 @@
     <ClInclude Include="..\include\FM\wHumanCustomPhysicsAPI_ImplementationDeclare.h" />
     <ClInclude Include="A-4_Aero.h" />
     <ClInclude Include="Airframe.h" />
+    <ClInclude Include="Avionics.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Skyhawk.h" />
@@ -165,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Airframe.cpp" />
+    <ClCompile Include="Avionics.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>

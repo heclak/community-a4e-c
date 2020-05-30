@@ -21,6 +21,8 @@ void Skyhawk::Airframe::zeroInit()
 	m_hookPosition = 0.0;
 	m_slatsPosition = 0.0;
 	m_flapsPosition = 0.0;
+	//m_fuel = 0.0;
+	//m_fuelPrevious = 0.0;
 }
 
 void Skyhawk::Airframe::coldInit()
@@ -59,23 +61,23 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 	if (m_controls.airbrake() >= m_speedBrakePosition)
 	{
 		m_speedBrakePosition += dt / m_airbrakesExtendTime;
-		m_speedBrakePosition = std::min(m_speedBrakePosition, 1.0);
+		m_speedBrakePosition = std::min(m_speedBrakePosition, m_controls.airbrake());
 	}
 	else
 	{
 		m_speedBrakePosition -= dt / m_airbrakesExtendTime;
-		m_speedBrakePosition = std::max(m_speedBrakePosition, 0.0);
+		m_speedBrakePosition = std::max(m_speedBrakePosition, m_controls.airbrake());
 	}
 
 	if (m_controls.flaps() >= m_flapsPosition)
 	{
 		m_flapsPosition += dt / m_flapsExtendTime;
-		m_flapsPosition = std::min(m_flapsPosition, 1.0);
+		m_flapsPosition = std::min(m_flapsPosition, m_controls.flaps());
 	}
 	else
 	{
 		m_flapsPosition -= dt / m_flapsExtendTime;
-		m_flapsPosition = std::max(m_flapsPosition, 0.0);
+		m_flapsPosition = std::max(m_flapsPosition, m_controls.flaps());
 	}
 
 	if (m_controls.hook())
@@ -89,11 +91,15 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 		m_hookPosition = std::max(m_hookPosition, 0.0);
 	}
 
+	m_fuelPrevious = m_fuel;
+	printf("FUEL: %lf\n", m_fuel);
+	m_fuel -= m_engine.getFuelFlow()*dt;
+	m_engine.setHasFuel(m_fuel > 50.0);
 	
 	m_elevator = m_controls.pitch();
 	m_aileronLeft = m_controls.roll();
 	m_aileronRight = -m_aileronLeft;
-	m_rudder = m_controls.yaw();
+	m_rudder = m_controls.yaw() + m_controls.yawDamper();
 	m_slatsPosition = m_controls.slats();
 
 

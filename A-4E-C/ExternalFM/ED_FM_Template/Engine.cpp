@@ -24,6 +24,7 @@ void Skyhawk::Engine::zeroInit()
 	m_ignitors = false;
 	m_startAir = 0.0;
 	m_desiredFuelFlow = 0.0;
+	m_haveFuel = true;
 }
 
 void Skyhawk::Engine::coldInit()
@@ -84,6 +85,8 @@ void Skyhawk::Engine::updateEngine(double dt)
 		m_fuelFlow = std::min(m_fuelFlow, m_desiredFuelFlow);
 	}
 
+	m_fuelFlow = m_haveFuel ? m_fuelFlow : 0.0;
+
 	//double cutoffValue = m_cutoff ? 0.0 : 1.0;
 	//m_fuelFlow = cutoffValue*c_maxFuelFlow*(m_input.throttleNorm() + 0.4)/1.4;
 
@@ -97,6 +100,6 @@ void Skyhawk::Engine::updateEngine(double dt)
 
 	double omegaDot = (m_startAir*c_starterTorque + combustionTorque - c_thrustCoeff * getThrust() - c_engineDragCoeff * m_omega - c_constantEngineDragCoeff*engineDrag) / c_momentOfIntertiaTurbine;
 	m_omega += omegaDot * dt;
-	m_temperature = 800*(m_fuelFlow / c_maxFuelFlow) + 800*(m_omega/c_maxOmega) + 23.0;
-	printf("Omega: %lf, RPM %: %lf, Fuel Flow(kg/s): %lf\n", m_omega, 100.0 * m_omega / 1152.0, m_fuelFlow);
+	m_temperature = 400*(m_fuelFlow / c_maxFuelFlow) + 400*(m_omega/c_maxOmega) + 23.0;
+	//printf("Omega: %lf, RPM %: %lf, Fuel Flow(kg/s): %lf\n", m_omega, 100.0 * m_omega / 1152.0, m_fuelFlow);
 }

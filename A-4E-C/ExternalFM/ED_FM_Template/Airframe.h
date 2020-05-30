@@ -24,6 +24,7 @@ namespace Skyhawk
 #define c_speedBrakeIn 0.0
 #define c_speedBrakeOut 1.0
 
+#define c_maxfuel 2137.8
 
 class Airframe
 {
@@ -51,6 +52,8 @@ public:
 	inline void setGearPosition(double position); //for airstart or ground start
 	inline void setSpoilerPosition(double position);
 	inline void setSlatsPosition(double position);
+	inline void setFuelState(double fuel);
+	inline void setFuelStateNorm(double fuel);
 
 	inline double getGearPosition(); //returns gear pos
 	inline double getFlapsPosition();
@@ -58,6 +61,9 @@ public:
 	inline double getSpeedBrakePosition();
 	inline double getHookPosition();
 	inline double getSlatsPosition();
+	inline double getFuelState();
+	inline double getPrevFuelState();
+	inline double getFuelStateNorm();
 	inline double aileron();
 	inline double elevator();
 	inline double rudder();
@@ -74,7 +80,7 @@ public:
 
 	//Update
 	void airframeUpdate(double dt); //performs calculations and updates
-
+	inline void fuelUpdate(double dt);
 	//Airframe Angles
 
 private:
@@ -99,12 +105,33 @@ private:
 	double m_elevator = 0.0;
 	double m_rudder = 0.0;
 
+	double m_fuel = 0.0;
+	double m_fuelPrevious = 0.0;
+
 	CatapultState m_catapultState = OFF_CAT;
 	bool m_catStateSent = false;
 
 	Engine& m_engine;
 	Input& m_controls;
 };
+
+void Airframe::fuelUpdate(double dt)
+{
+	m_fuel -= m_engine.getFuelFlow() * dt;
+}
+
+void Airframe::setFuelState(double fuel)
+{
+	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFUEL: %lf, this: %p\n", fuel, this);
+	m_fuel = fuel;
+	m_fuelPrevious = fuel;
+}
+
+void Airframe::setFuelStateNorm(double fuel)
+{
+	m_fuel = c_maxfuel * fuel;
+	m_fuelPrevious = c_maxfuel * fuel;
+}
 
 void Airframe::setGearPosition(double position)
 {
@@ -211,6 +238,21 @@ void Airframe::setCatStateFromKey()
 		m_catapultState = ON_CAT_NOT_READY;
 		break;
 	}
+}
+
+double Airframe::getFuelState()
+{
+	return m_fuel;
+}
+
+double Airframe::getPrevFuelState()
+{
+	return m_fuelPrevious;
+}
+
+double Airframe::getFuelStateNorm()
+{
+	return m_fuel / c_maxfuel;
 }
 
 }//end namespace

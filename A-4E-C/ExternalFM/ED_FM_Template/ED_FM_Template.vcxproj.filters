@@ -13,6 +13,9 @@
     <ClCompile Include="Engine.cpp">
       <Filter>A4-Skyhawk</Filter>
     </ClCompile>
+    <ClCompile Include="Avionics.cpp">
+      <Filter>A4-Skyhawk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="A-4_Aero.h" />
@@ -46,6 +49,9 @@
       <Filter>A4-Skyhawk</Filter>
     </ClInclude>
     <ClInclude Include="Engine.h">
+      <Filter>A4-Skyhawk</Filter>
+    </ClInclude>
+    <ClInclude Include="Avionics.h">
       <Filter>A4-Skyhawk</Filter>
     </ClInclude>
   </ItemGroup>

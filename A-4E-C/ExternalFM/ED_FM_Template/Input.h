@@ -117,6 +117,14 @@ public:
 	{
 		return m_yaw;
 	}
+	inline const double& yawDamper() const
+	{
+		return m_yawDamper;
+	}
+	inline double& yawDamper()
+	{
+		return m_yawDamper;
+	}
 	inline const double& throttle() const
 	{
 		return m_throttle;
@@ -214,6 +222,7 @@ private:
 	double m_pitch = 0.0;
 	double m_roll = 0.0;
 	double m_yaw = 0.0;
+	double m_yawDamper = 0.0;
 	double m_throttle = 0.0;
 	double m_brakeLeft = 0.0;
 	double m_brakeRight = 0.0;

@@ -11,11 +11,13 @@
 #include "FlightModel.h"
 #include "Airframe.h"
 #include "Engine.h"
+#include "Avionics.h"
 //============================ Skyhawk Statics ============================//
 static Skyhawk::Input s_input;
 static Skyhawk::Engine s_engine(s_input);
 static Skyhawk::Airframe s_airframe(s_input, s_engine);
 static Skyhawk::FlightModel s_fm(s_input, s_airframe, s_engine);
+static Skyhawk::Avionics s_avionics(s_input, s_fm, s_engine, s_airframe);
 
 
 //========================================================================//
@@ -29,152 +31,6 @@ double  fuel_consumption_since_last_time  = 0;
 double s_mass = 0;
 Vec3 s_pos;
 
-double mach_table[] = {
-	0,	
-	0.2,
-	0.4,
-	0.6,
-	0.7,
-	0.8,
-	0.9,
-	1,	
-	1.05,
-	1.1,
-	1.2,
-	1.3,
-	1.5,
-	1.7,
-	1.8,
-	2,	
-	2.2,
-	2.5,
-	3.9,
-};
-
-double cx0[] =
-{
-	0.0165,
-	0.0165,
-	0.0165,
-	0.0165,
-	0.0170,
-	0.0178,
-	0.0215,
-	0.0310,
-	0.0422,
-	0.0440,
-	0.0432,
-	0.0423,
-	0.0416,
-	0.0416,
-	0.0416,
-	0.0410,
-	0.0395,
-};
-
-double Cya[] = {
-	   0.077,	
-	   0.077,	
-	   0.077,	
-	   0.080,	
-	   0.083,	
-	   0.087,	
-	   0.091,	
-	   0.094,	
-	   0.094,	
-	   0.091,	
-	   0.085,	
-	   0.068,	
-	   0.051,	
-	   0.043,	
-	   0.037,	
-	   0.036,	
-	   0.033,	
-};
-
-double B[] ={
-	0.1,	
-	0.1,	
-	0.1,	 
-	0.094,	
-	0.094,	
-	0.094,	
-	0.11,	
-	0.15,	
-	0.15,	
-	0.14,	
-	0.17,	
-	0.23,	
-	0.23,	
-	0.08,	
-	0.16,	
-	0.25,	
-	0.35,	
-};
-
-double B4[] ={
-	0.032,	
-	0.032,	 
-	0.032,	
-	0.043,	
-	0.045,	
-	0.048,	
-	0.050,	
-	0.1,	
-	0.1,	
-	0.1,	
-	0.096,	
-	0.09,	
-	0.38,	
-	2.5,	
-	3.2,	
-	4.5,	
-	6.0,	
-};
-
-double CyMax[] = {
-	1.6,
-	1.6,
-	1.6,
-	1.5,
-	1.45,
-	1.4,
-	1.3,
-	1.2,
-	1.1,
-	1.05,
-	1.0,
-	0.9,
-	0.7,
-	0.55,
-	0.4,
-	0.4,
-	0.4,
-};
-
-namespace Skyhawk
-{
-
-}
-
-
-
-void add_local_force(const Vec3 & Force, const Vec3 & Force_pos)
-{
-	/*common_force += Force;
-	Vec3 delta_pos = Force_pos - center_of_gravity;
-	Vec3 delta_moment = cross(delta_pos, Force);
-	common_moment += delta_moment;*/
-}
-
-
-void simulate_fuel_consumption(double dt)
-{
-	fuel_consumption_since_last_time =  10 * throttle * dt; //10 kg persecond
-	if (fuel_consumption_since_last_time > internal_fuel)
-		fuel_consumption_since_last_time = internal_fuel;
-	internal_fuel -= fuel_consumption_since_last_time;
-}
 
 void ed_fm_add_local_force(double & x,double &y,double &z,double & pos_x,double & pos_y,double & pos_z)
 {
@@ -212,6 +68,7 @@ void ed_fm_simulate(double dt)
 {
 	s_engine.updateEngine(dt);
 	s_airframe.airframeUpdate(dt);
+	s_avionics.updateAvionics(dt);
 	s_fm.calculateForcesAndMoments(dt);
 	/*common_force = Vec3();
 	common_moment = Vec3();
@@ -479,8 +336,8 @@ void ed_fm_set_command
 		else
 			s_input.throttleState() = Skyhawk::Input::ThrottleState::START;
 		break;
-	default:
-		printf("number %d: %lf\n", command, value);
+	//default:
+		//printf("number %d: %lf\n", command, value);
 	}
 }
 /*
@@ -512,25 +369,16 @@ bool ed_fm_change_mass  (double & delta_mass,
 						double & delta_mass_moment_of_inertia_z
 						)
 {
-	if (fuel_consumption_since_last_time > 0)
-	{
-		delta_mass		 = fuel_consumption_since_last_time;
-		delta_mass_pos_x = -1.0;
-		delta_mass_pos_y =  1.0;
-		delta_mass_pos_z =  0;
+	delta_mass_moment_of_inertia_x = 0.0;
+	delta_mass_moment_of_inertia_y = 0.0;
+	delta_mass_moment_of_inertia_z = 0.0;
 
-		delta_mass_moment_of_inertia_x	= 0;
-		delta_mass_moment_of_inertia_y	= 0;
-		delta_mass_moment_of_inertia_z	= 0;
+	delta_mass_pos_x = s_fm.getCOM().x;
+	delta_mass_pos_y = s_fm.getCOM().y;
+	delta_mass_pos_z = s_fm.getCOM().z;
 
-		fuel_consumption_since_last_time = 0; // set it 0 to avoid infinite loop, because it called in cycle 
-		// better to use stack like structure for mass changing 
-		return true;
-	}
-	else 
-	{
-		return false;
-	}
+	delta_mass = s_airframe.getFuelState() - s_airframe.getPrevFuelState();
+	return false;
 }
 /*
 	set internal fuel volume , init function, called on object creation and for refueling , 
@@ -538,14 +386,14 @@ bool ed_fm_change_mass  (double & delta_mass,
 */
 void   ed_fm_set_internal_fuel(double fuel)
 {
-	internal_fuel = fuel;
+	s_airframe.setFuelState(fuel);
 }
 /*
 	get internal fuel volume 
 */
 double ed_fm_get_internal_fuel()
 {
-	return internal_fuel;
+	return s_airframe.getFuelState();
 }
 /*
 	set external fuel volume for each payload station , called for weapon init and on reload
@@ -730,6 +578,7 @@ void ed_fm_cold_start()
 	s_fm.coldInit();
 	s_airframe.coldInit();
 	s_engine.coldInit();
+	s_avionics.coldInit();
 }
 
 void ed_fm_hot_start()
@@ -738,6 +587,7 @@ void ed_fm_hot_start()
 	s_fm.hotInit();
 	s_airframe.hotInit();
 	s_engine.hotInit();
+	s_avionics.hotInit();
 }
 
 void ed_fm_hot_start_in_air()
@@ -746,6 +596,7 @@ void ed_fm_hot_start_in_air()
 	s_fm.airbornInit();
 	s_airframe.airborneInit();
 	s_engine.airbornInit();
+	s_avionics.airbornInit();
 }
 
 bool ed_fm_add_local_force_component( double & x,double &y,double &z,double & pos_x,double & pos_y,double & pos_z )

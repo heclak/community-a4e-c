@@ -37,6 +37,7 @@ public:
 	inline double getRPMNorm();
 	inline double getTemperature();
 	inline double getFuelFlow();
+	inline void setHasFuel(bool fuel);
 
 private:
 	//Constants
@@ -57,6 +58,7 @@ private:
 	double m_nozzle = 1.0;
 	bool m_cutoff = true;
 	bool m_ignitors = false;
+	bool m_haveFuel = true;
 	double m_startAir = 0.0;
 
 
@@ -85,6 +87,11 @@ double Engine::getTemperature()
 double Engine::getFuelFlow()
 {
 	return m_fuelFlow;
+}
+
+void Engine::setHasFuel(bool fuel)
+{
+	m_haveFuel = fuel;
 }
 
 }//end namespace

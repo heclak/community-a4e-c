@@ -61,6 +61,10 @@ public:
 	//Get COM for ED physics engine.
 	inline const Vec3& getCOM() const;
 
+	//get yaw rate
+	inline double yawRate();
+	inline double mach();
+
 private:
 
 	//=====================BIG WARNING=====================//
@@ -296,6 +300,16 @@ void FlightModel::thrustForce()
 {
 	//addForce(Vec3(thrust(), 0.0, 0.0), getCOM());
 	addForce(Vec3(m_engine.getThrust(), 0.0, 0.0), getCOM());
+}
+
+double FlightModel::yawRate()
+{
+	return m_omega.y;
+}
+
+double FlightModel::mach()
+{
+	return m_mach;
 }
 
 }//end namespace
