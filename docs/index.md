@@ -95,7 +95,7 @@ Do not attempt to install the A-4E-C module files directly into your DCS World i
 
 **Q: Is there a paint kit I can use to create my own A-4E-C liveries?**
 
-- Indeed, there is! (Requires Adobe Photoshop CC): [Download Paintkit](https://drive.google.com/uc?export=download&id=1wjLMFu38EXqYOcEjJakuvzedhWdbWNW0)
+- Indeed, there is! (Requires Adobe Photoshop CC): [Download Paintkit](https://drive.google.com/open?id=19w_bD8xHJiZpAi1JbA2xyPDJpl9dje-4)
 
 **Q: Is there a user manual or tutorials available?**
 
