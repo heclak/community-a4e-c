@@ -100,3 +100,23 @@ Do not attempt to install the A-4E-C module files directly into your DCS World i
 **Q: Is there a user manual or tutorials available?**
 
 - Heclak's Community A-4 Guide is a great resource: [Community A-4E-C Guide](https://docs.google.com/presentation/d/1cUH7jpAoGHm-IzUDnv_NDhiZlvX55Q9WvpgR1d9ksYY/edit?usp=sharing)
+
+**Q: Can I use radio functions?**
+
+- We are unable to implement working radios as we do not have access to DCS SDK. This is only available for official 3rd devs so no chance of having radios working. Some mods have functional radios as they are using FC3 modules and wrapping a new model around it. We are a fully custom module (like how 3rd party modules are made) so we can't add radios unless the SDK is opened to the public.
+
+**Q: Can I do aerial refuelling?**
+
+- No. Aerial refuelling cannot be done without functioning radios and we can’t do that because we don’t have access to the SDK.
+
+**Q: Can I fly the A-4E-C as a tanker and refuel other aircraft?**
+
+- No. DCS does not have support for this feature and we are unlikely to be able to support this as we are not an official third party partner.
+
+**Q: When will you be adding the AGM-12 Bullpup?**
+
+- Probably never. Implementing the AGM-12 Bullpup or other guided weapons will require access to the DCS SDK. This is only available to official 3rd party devs so we do not have the required support to implement this.
+
+**Q: When will you be adding the AGM-62 Walleye?**
+
+- Probably never. Implementing the AGM-62 Walleye will require access to the DCS SDK. This is only available to official 3rd party devs so we do not have the required support to implement this. Additionally, the specific airframe/cockpit that we have modelled does not have the ability to carry the AGM-62 Walleye. A-4Es that were able to carry the AGM-62 Walleye had the ground radar display replaced with a TV monitor for use with the AGM-62 Walleye. For that fact, it would not be possible for this aircraft to use the AGM-62 Walleye and it is not in the plans to implement it.
