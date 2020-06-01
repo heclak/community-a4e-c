@@ -1,0 +1,33 @@
+---
+---
+
+@import 'jekyll-theme-cayman';
+
+.btn-green {
+	background-color:#44c767;
+	border:1px solid #18ab29;
+	color:#ffffff;
+}
+
+.btn-green:hover {
+	background-color:#5cbf2a;
+}
+
+.btn-red {
+	background-color:#f23333;
+	border:1px solid #b80000;
+	color:#ffffff;
+}
+
+.btn-red:hover {
+	background-color:#e30404;
+}
+
+.page-header {
+    background-image: nil;
+    background-color: #3e3e3e;
+}
+
+.project-name {
+    text-transform: uppercase;
+}
