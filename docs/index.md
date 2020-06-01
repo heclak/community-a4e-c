@@ -30,6 +30,17 @@ SkateZilla, uboats, The Original HoggitDev Team
   - Mk-77 napalm canister
   - SUU-7 bomblet dispenser
 
+### Version 1.4 Featured Changes
+
+- updated carrier launch procedures for more flexible carrier usage
+- updated 3D cockpit model and lighting
+- new external 3D lighting
+- updated liveries with new roughmet files
+- complete rewrite of input bindings for consistency
+- new collision model and updated critical damage values
+- improved systems simulation
+- and lots of bug fixes
+
 ### Version 1.3 Changelog
 
 - Added carrier catapult mechanics
@@ -41,7 +52,7 @@ SkateZilla, uboats, The Original HoggitDev Team
 - Fixed TrackIR issues
 - New menu music by Eric Haugen [http://erichaugen.bandcamp.com](http://erichaugen.bandcamp.com)
 
-[See full changelog](../CHANGELOG.md)
+[See full changelog]([https://github.com/heclak/community-a4e-c/blob/master/CHANGELOG.md)
 
 ### Known Bugs
 
