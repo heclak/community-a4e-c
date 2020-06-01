@@ -61,23 +61,31 @@ Find a bug? Let us know! [Report bugs here](https://github.com/heclak/community-
 
 ## Installation
 
-Download the latest A-4E-C installation file from the [releases page](https://github.com/heclak/community-a4e-c/releases/)
+Failure to perform these steps will result in DCS World not recognizing the module, inability to use the module, or input errors when using the module. Never install the A-4E-C files directly into your DCS World installation files!
 
-Unzip the contents of the zip file into the following folder: `C:\Users\username\Saved Games\DCS`
+STEP 1: If you are upgrading from an older version of the A4-E-C, perform these following actions. Otherwise, skip them and move on to Step 2.
 
-_To assist JSGME users, we’ve included the “mods/aircraft/” folders in the zip. You can safely merge these folders with your DCS World user folder._
+- Delete the contents of your old A4-E-C installation folder: `C:\Users\username\Saved Games\DCS\Mods\aircraft\A-4E-C`
+- Delete your A4-E-C input settings by opening the following folder: `C:\Users\username\Saved Games\DCS\Input\A4-E-C`
+- Delete the joystick, keyboard, mouse and trackir folders.
+
+STEP 2: Install the module files.
+
+- Download the latest official A4-E-C release package. Do not download directly from the Github repository.
+- Unzip the contents of the `A4-E-C` folder in the zip into the following folder: `C:\Users\username\Saved Games\DCS`
+- If you have installed other DCS World mods, you might already have the `Mods` and `aircraft` folders indicated in the file path. If this is the case, merge the A4-E-C folder into any existing folders, so as to avoid overwriting any other DCS modules you might have installed in these folders.
+
+Your correctly installed files should look something like the following image, substituting your Windows account name where the image displays Partario. If you're using the release branch of DCS World, the folder is `DCS` instead of `DCS.openbeta`.
 
 ### Updating to the latest version
 
 To update your A-4E-C to the latest version. You **must delete** the currently installed A-4E-C folder before placing the new version in its place. This is to remove any old files that are no longer used in the updated version. Not doing so will cause problems with your installation.
 
-## Troubleshooting
+## Installation Troubleshooting
 
-If you have used multiple instances of DCS World (especially users who have used DCS_updater.exe to change versions of their installation), you may need to experiment to locate the correct DCS World user folder, e.g. `C:\Users\username\Saved Games\DCS`
+- Never install the A-4E-C files directly into your DCS World installation files! This can cause your DCS World to not locate the module, create conflicts with other modules, or other problems like failing client integrity checks required by online servers.
 
-The correct folder might not match the version of DCS World you are using. You can quickly identify which folder is in use by your computer by launching DCS world, creating and saving a mission file in the mission editor and noting its file name and location.
-
-Do not attempt to install the A-4E-C module files directly into your DCS World installation folder. This will cause the A-4E-C to fail, and your client will fail any file integrity checks made by multiplayer servers!
+- If you have multiple DCS-related folders in your `C:\Users\username\Saved Games`, for example, `DCS`, `DCS.openbeta` or `DCS.openalpha`, locate your DCS World installation folder and open the `dcs_variant.txt` file. If this file is present, it determines the folder structure your DCS World installation is actively using. Ensure the `A-4E-C` folder and its files are installed to the same folder structure the `dcs_variant.txt` file specifies.
 
 ## Frequently Asked Questions
 
