@@ -3,6 +3,14 @@
 
 @import 'jekyll-theme-cayman';
 
+.btn {
+    color: #ffffff;
+}
+
+.btn:hover {
+    color: #ffffff;
+}
+
 .btn-green {
 	background-color:#44c767;
 	border:1px solid #18ab29;
@@ -10,7 +18,7 @@
 }
 
 .btn-green:hover {
-	background-color:#5cbf2a;
+	background-color:#35da61;
 }
 
 .btn-red {
@@ -20,7 +28,7 @@
 }
 
 .btn-red:hover {
-	background-color:#e30404;
+	background-color:#ff0303;
 }
 
 .page-header {

@@ -41,7 +41,7 @@ SkateZilla, uboats, The Original HoggitDev Team
 - Fixed TrackIR issues
 - New menu music by Eric Haugen [http://erichaugen.bandcamp.com](http://erichaugen.bandcamp.com)
 
-[See full changelog](CHANGELOG.md)
+[See full changelog](../CHANGELOG.md)
 
 ### Known Bugs
 
