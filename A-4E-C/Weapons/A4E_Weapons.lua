@@ -1296,20 +1296,20 @@ local rack_data =
 
 local rocket_data = 
 {
-    ["LAU-3 FFAR WP156"]       = { name = "FFAR M156 WP", mass = 100 + 19 * (24.7 * POUNDS_TO_KG),  wstype = {4,7,33,147},  payload_CLSID = "{LAU3_FFAR_WP156}",                        shapename = "LAU-3",   pic = 'LAU61.png', count = 19,     cx = 0.00146484375},
-    ["LAU-3 FFAR Mk1 HE"]      = { name = "FFAR Mk1 HE",mass = 100 + 19 * (21.5 * POUNDS_TO_KG),  wstype = {4,7,33,147},  payload_CLSID = "{LAU3_FFAR_MK1HE}",                        shapename = "LAU-3",   pic = 'LAU61.png', count = 19,     cx = 0.00146484375},
-    ["LAU-3 FFAR Mk5 HEAT"]    = { name = "FFAR Mk5 HEAT",mass = 100 + 19 * (21.6 * POUNDS_TO_KG),  wstype = {4,7,33,147},  payload_CLSID = "{LAU3_FFAR_MK5HEAT}",                      shapename = "LAU-3",   pic = 'LAU61.png', count = 19,     cx = 0.00146484375},
-    ["LAU-68 FFAR WP156"]      = { name = "FFAR M156 WP",mass = 41.73 + 7 * (24.7 * POUNDS_TO_KG), wstype = {4,7,33,147},  payload_CLSID = "{LAU68_FFAR_WP156}",                       shapename = "LAU-68",  pic = 'LAU68.png', count = 7,      cx = 0.00146484375},
-    ["LAU-68 FFAR Mk1 HE"]     = { name = "FFAR Mk1 HE",mass = 41.73 + 7 * (21.5 * POUNDS_TO_KG), wstype = {4,7,33,147},  payload_CLSID = "{LAU68_FFAR_MK1HE}",                       shapename = "LAU-68",  pic = 'LAU68.png', count = 7,      cx = 0.00146484375},
-    ["LAU-68 FFAR Mk5 HEAT"]   = { name = "FFAR Mk5 HEAT",mass = 41.73 + 7 * (21.6 * POUNDS_TO_KG), wstype = {4,7,33,147},  payload_CLSID = "{LAU68_FFAR_MK5HEAT}",                     shapename = "LAU-68",  pic = 'LAU68.png', count = 7,      cx = 0.00146484375},
-    ["LAU-10 ZUNI"]            = { name = "ZUNI MK 71",mass = 440,                               wstype = {4,7,33,37},   payload_CLSID = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}",   shapename = "LAU-10",  pic = 'LAU10.png', count = 4,      cx = 0.001708984375},
+    ["LAU-3 FFAR WP156"]       = { name = "FFAR M156 WP", mass = 100 + 19 * (24.7 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_WP156}",                      shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    ["LAU-3 FFAR Mk1 HE"]      = { name = "FFAR Mk1 HE",  mass = 100 + 19 * (21.5 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_MK1HE}",                      shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    ["LAU-3 FFAR Mk5 HEAT"]    = { name = "FFAR Mk5 HEAT",mass = 100 + 19 * (21.6 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_MK5HEAT}",                    shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    ["LAU-68 FFAR WP156"]      = { name = "FFAR M156 WP", mass = 41.73 + 7 * (24.7 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{LAU68_FFAR_WP156}",                     shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
+    ["LAU-68 FFAR Mk1 HE"]     = { name = "FFAR Mk1 HE",  mass = 41.73 + 7 * (21.5 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{LAU68_FFAR_MK1HE}",                     shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
+    ["LAU-68 FFAR Mk5 HEAT"]   = { name = "FFAR Mk5 HEAT",mass = 41.73 + 7 * (21.6 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{LAU68_FFAR_MK5HEAT}",                   shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
+    ["LAU-10 ZUNI"]            = { name = "ZUNI MK 71",   mass = 440,                               wstype = {4,7,33,37},  payload_CLSID = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}", shapename = "LAU-10", pic = 'LAU10.png', count = 4,  cx = 0.001708984375},
 }
 
 local function bru_42_lau(element, count, side)
-    local lau_variant = rocket_data[element] or rocket_data["LAU3_FFAR_MK1HE"]
+    local lau_variant  = rocket_data[element] or rocket_data["LAU3_FFAR_MK1HE"]
     local rack_variant = rack_data["BRU_42"]
-    local sidestr = {"L","C","R"}
-    local data = {}
+    local sidestr      = {"L","C","R"}
+    local data         = {}
 
     data.category           = CAT_ROCKETS
     data.CLSID              = "{"..element.."_TER_"..tostring(count).."_"..sidestr[2+side].."}"
@@ -1331,11 +1331,10 @@ local function bru_42_lau(element, count, side)
         },
     }
 
-    local connectors = {"Point03", "Point02", "Point01"}
-
-    local rightorder2 = {2,1,3}
+    local connectors   = {"Point03", "Point02", "Point01"}
+    local rightorder2  = {2,1,3}
     local centerorder2 = {3,1,2}
-    local leftorder2 = {1,2,3}
+    local leftorder2   = {1,2,3}
 
     -- for center, mount up to 3 ... if 2, do left and right
     -- for left, mount up to 2 skipping front right
@@ -1376,8 +1375,8 @@ end
 function bru_41(element,count,side) -- build up to a 6x MER loadout of the specified bomb
     local bomb_variant = bomb_data[element] or bomb_data["Mk-81"]
     local rack_variant = rack_data["BRU_41"]
-    local sidestr = {"L","C","R"}
-    local data = {}
+    local sidestr      = {"L","C","R"}
+    local data         = {}
 
     data.category           = CAT_BOMBS
     data.CLSID              = "{"..element.."_MER_"..tostring(count).."_"..sidestr[2+side].."}"
@@ -1417,9 +1416,9 @@ function bru_41(element,count,side) -- build up to a 6x MER loadout of the speci
                         {  0,  0, 0}, -- center
                         {  0,  0, 0}}
 
-    local rightorder5 = {3,4,1,2,5,6}
+    local rightorder5  = {3,4,1,2,5,6}
     local centerorder4 = {5,6,1,2,3,4}
-    local normalorder = {1,2,3,4,5,6}
+    local normalorder  = {1,2,3,4,5,6}
 
     -- for center, mount up to 6 ... if 4, do left and right
     -- for left, mount up to 5 skipping front right
@@ -1449,8 +1448,8 @@ end
 function bru_42(element,count,side) -- build a TER setup for the specified bombs
     local bomb_variant = bomb_data[element] or bomb_data["Mk-82"]
     local rack_variant = rack_data["BRU_42"]
-    local sidestr = {"L","C","R"}
-    local data = {}
+    local sidestr      = {"L","C","R"}
+    local data         = {}
 
     data.category           = CAT_BOMBS
     data.CLSID              = "{"..element.."_TER_"..tostring(count).."_"..sidestr[2+side].."}"
@@ -1473,17 +1472,16 @@ function bru_42(element,count,side) -- build a TER setup for the specified bombs
         },
     }
 
-    local connectors = {"Point03", "Point02", "Point01"}
-
-    local rightorder2 = {2,1,3}
+    local connectors   = {"Point03", "Point02", "Point01"}
+    local rightorder2  = {2,1,3}
     local centerorder2 = {3,1,2}
-    local leftorder2 = {1,2,3}
+    local leftorder2   = {1,2,3}
 
     -- for center, mount up to 3 ... if 2, do left and right
     -- for left, mount up to 2 skipping front right
     -- for right, mount up to 2 skipping front left
 
-    local offset = 3-count
+    local offset = 3 - count
     local order = leftorder2 -- default, includes 3 bombs
 
     if count == 2 then
@@ -1521,10 +1519,10 @@ local dispenser_data =
 -- count = number of dispensers
 function make_cbu_a4e_multi(dispenser,count,side) -- assemble a rack of cluster dispensers
     local dispenser_variant = dispenser_data[dispenser] or dispenser_data["CBU-1/A"]
-    local bomb_variant = dispenser_variant.bomblet
-    local rack_variant = rack_data["BRU_42"]
-    local sidestr = {"L","C","R"}
-    local data = {}
+    local bomb_variant      = dispenser_variant.bomblet
+    local rack_variant      = rack_data["BRU_42"]
+    local sidestr           = {"L","C","R"}
+    local data              = {}
 
     data.category           = CAT_PODS
     data.CLSID              = "{"..dispenser.."_TER_"..tostring(count).."_"..sidestr[2+side].."}"
@@ -1544,11 +1542,10 @@ function make_cbu_a4e_multi(dispenser,count,side) -- assemble a rack of cluster 
         },
     }
 
-    local connectors = {"Point03", "Point02", "Point01"}
-
-    local rightorder2 = {2,1,3}
+    local connectors   = {"Point03", "Point02", "Point01"}
+    local rightorder2  = {2,1,3}
     local centerorder2 = {3,1,2}
-    local leftorder2 = {1,2,3}
+    local leftorder2   = {1,2,3}
 
     -- for center, mount up to 3 ... if 2, do left and right
     -- for left, mount up to 2 skipping front right
@@ -1582,88 +1579,88 @@ end
 
 
 
-declare_loadout(bru_42_lau("LAU-10 ZUNI", 3, 0)) -- {LAU-10 ZUNI_TER_3_C}
-declare_loadout(bru_42_lau("LAU-10 ZUNI", 2, 0)) -- {LAU-10 ZUNI_TER_2_C}
-declare_loadout(bru_42_lau("LAU-10 ZUNI", 2, -1)) -- {LAU-10 ZUNI_TER_2_L}
-declare_loadout(bru_42_lau("LAU-10 ZUNI", 2, 1)) -- {LAU-10 ZUNI_TER_2_R}
+declare_loadout(bru_42_lau("LAU-10 ZUNI", 3, 0))           -- {LAU-10 ZUNI_TER_3_C}
+declare_loadout(bru_42_lau("LAU-10 ZUNI", 2, 0))           -- {LAU-10 ZUNI_TER_2_C}
+declare_loadout(bru_42_lau("LAU-10 ZUNI", 2, -1))          -- {LAU-10 ZUNI_TER_2_L}
+declare_loadout(bru_42_lau("LAU-10 ZUNI", 2, 1))           -- {LAU-10 ZUNI_TER_2_R}
 
-declare_loadout(bru_42_lau("LAU-3 FFAR WP156", 3, 0)) -- {LAU-3 FFAR WP156_TER_3_C}
-declare_loadout(bru_42_lau("LAU-3 FFAR WP156", 2, 0)) -- {LAU-3 FFAR WP156_TER_2_C}
-declare_loadout(bru_42_lau("LAU-3 FFAR WP156", 2, -1)) -- {LAU-3 FFAR WP156_TER_2_L}
-declare_loadout(bru_42_lau("LAU-3 FFAR WP156", 2, 1)) -- {LAU-3 FFAR WP156_TER_2_R}
+declare_loadout(bru_42_lau("LAU-3 FFAR WP156", 3, 0))      -- {LAU-3 FFAR WP156_TER_3_C}
+declare_loadout(bru_42_lau("LAU-3 FFAR WP156", 2, 0))      -- {LAU-3 FFAR WP156_TER_2_C}
+declare_loadout(bru_42_lau("LAU-3 FFAR WP156", 2, -1))     -- {LAU-3 FFAR WP156_TER_2_L}
+declare_loadout(bru_42_lau("LAU-3 FFAR WP156", 2, 1))      -- {LAU-3 FFAR WP156_TER_2_R}
 
-declare_loadout(bru_42_lau("LAU-3 FFAR Mk1 HE", 3, 0)) -- {LAU-3 FFAR Mk1 HE_TER_3_C}
-declare_loadout(bru_42_lau("LAU-3 FFAR Mk1 HE", 2, 0)) -- {LAU-3 FFAR Mk1 HE_TER_2_C}
-declare_loadout(bru_42_lau("LAU-3 FFAR Mk1 HE", 2, -1)) -- {LAU-3 FFAR Mk1 HE_TER_2_L}
-declare_loadout(bru_42_lau("LAU-3 FFAR Mk1 HE", 2, 1)) -- {LAU-3 FFAR Mk1 HE_TER_2_R}
+declare_loadout(bru_42_lau("LAU-3 FFAR Mk1 HE", 3, 0))     -- {LAU-3 FFAR Mk1 HE_TER_3_C}
+declare_loadout(bru_42_lau("LAU-3 FFAR Mk1 HE", 2, 0))     -- {LAU-3 FFAR Mk1 HE_TER_2_C}
+declare_loadout(bru_42_lau("LAU-3 FFAR Mk1 HE", 2, -1))    -- {LAU-3 FFAR Mk1 HE_TER_2_L}
+declare_loadout(bru_42_lau("LAU-3 FFAR Mk1 HE", 2, 1))     -- {LAU-3 FFAR Mk1 HE_TER_2_R}
 
-declare_loadout(bru_42_lau("LAU-3 FFAR Mk5 HEAT", 3, 0)) -- {LAU-3 FFAR Mk5 HEAT_TER_3_C}
-declare_loadout(bru_42_lau("LAU-3 FFAR Mk5 HEAT", 2, 0)) -- {LAU-3 FFAR Mk5 HEAT_TER_2_C}
-declare_loadout(bru_42_lau("LAU-3 FFAR Mk5 HEAT", 2, -1)) -- {LAU-3 FFAR Mk5 HEAT_TER_2_L}
-declare_loadout(bru_42_lau("LAU-3 FFAR Mk5 HEAT", 2, 1)) -- {LAU-3 FFAR Mk5 HEAT_TER_2_R}
+declare_loadout(bru_42_lau("LAU-3 FFAR Mk5 HEAT", 3, 0))   -- {LAU-3 FFAR Mk5 HEAT_TER_3_C}
+declare_loadout(bru_42_lau("LAU-3 FFAR Mk5 HEAT", 2, 0))   -- {LAU-3 FFAR Mk5 HEAT_TER_2_C}
+declare_loadout(bru_42_lau("LAU-3 FFAR Mk5 HEAT", 2, -1))  -- {LAU-3 FFAR Mk5 HEAT_TER_2_L}
+declare_loadout(bru_42_lau("LAU-3 FFAR Mk5 HEAT", 2, 1))   -- {LAU-3 FFAR Mk5 HEAT_TER_2_R}
 
-declare_loadout(bru_42_lau("LAU-68 FFAR WP156", 3, 0)) -- {LAU-68 FFAR WP156_TER_3_C}
-declare_loadout(bru_42_lau("LAU-68 FFAR WP156", 2, 0)) -- {LAU-68 FFAR WP156_TER_2_C}
-declare_loadout(bru_42_lau("LAU-68 FFAR WP156", 2, -1)) -- {LAU-68 FFAR WP156_TER_2_L}
-declare_loadout(bru_42_lau("LAU-68 FFAR WP156", 2, 1)) -- {LAU-68 FFAR WP156_TER_2_R}
+declare_loadout(bru_42_lau("LAU-68 FFAR WP156", 3, 0))     -- {LAU-68 FFAR WP156_TER_3_C}
+declare_loadout(bru_42_lau("LAU-68 FFAR WP156", 2, 0))     -- {LAU-68 FFAR WP156_TER_2_C}
+declare_loadout(bru_42_lau("LAU-68 FFAR WP156", 2, -1))    -- {LAU-68 FFAR WP156_TER_2_L}
+declare_loadout(bru_42_lau("LAU-68 FFAR WP156", 2, 1))     -- {LAU-68 FFAR WP156_TER_2_R}
 
-declare_loadout(bru_42_lau("LAU-68 FFAR Mk1 HE", 3, 0)) -- {LAU-68 FFAR Mk1 HE_TER_3_C}
-declare_loadout(bru_42_lau("LAU-68 FFAR Mk1 HE", 2, 0)) -- {LAU-68 FFAR Mk1 HE_TER_2_C}
-declare_loadout(bru_42_lau("LAU-68 FFAR Mk1 HE", 2, -1)) -- {LAU-68 FFAR Mk1 HE_TER_2_L}
-declare_loadout(bru_42_lau("LAU-68 FFAR Mk1 HE", 2, 1)) -- {LAU-68 FFAR Mk1 HE_TER_2_R}
+declare_loadout(bru_42_lau("LAU-68 FFAR Mk1 HE", 3, 0))    -- {LAU-68 FFAR Mk1 HE_TER_3_C}
+declare_loadout(bru_42_lau("LAU-68 FFAR Mk1 HE", 2, 0))    -- {LAU-68 FFAR Mk1 HE_TER_2_C}
+declare_loadout(bru_42_lau("LAU-68 FFAR Mk1 HE", 2, -1))   -- {LAU-68 FFAR Mk1 HE_TER_2_L}
+declare_loadout(bru_42_lau("LAU-68 FFAR Mk1 HE", 2, 1))    -- {LAU-68 FFAR Mk1 HE_TER_2_R}
 
-declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 3, 0)) -- {LAU-68 FFAR Mk5 HEAT_TER_3_C}
-declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 2, 0)) -- {LAU-68 FFAR Mk5 HEAT_TER_2_C}
+declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 3, 0))  -- {LAU-68 FFAR Mk5 HEAT_TER_3_C}
+declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 2, 0))  -- {LAU-68 FFAR Mk5 HEAT_TER_2_C}
 declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 2, -1)) -- {LAU-68 FFAR Mk5 HEAT_TER_2_L}
-declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 2, 1)) -- {LAU-68 FFAR Mk5 HEAT_TER_2_R}
+declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 2, 1))  -- {LAU-68 FFAR Mk5 HEAT_TER_2_R}
 
-declare_loadout(rackme_a4e("AN-M57", 6,  0))      -- {AN-M57_MER_6_C}
-declare_loadout(rackme_a4e("AN-M57", 5, -1))      -- {AN-M57_MER_5_L}
-declare_loadout(rackme_a4e("AN-M57", 5,  1))      -- {AN-M57_MER_5_R}
-declare_loadout(rackme_a4e("AN-M57", 3,  0))      -- {AN-M57_TER_3_C}
-declare_loadout(rackme_a4e("AN-M57", 2, -1))      -- {AN-M57_TER_2_L}
-declare_loadout(rackme_a4e("AN-M57", 2,  1))      -- {AN-M57_TER_2_R}
+declare_loadout(rackme_a4e("AN-M57", 6,  0))               -- {AN-M57_MER_6_C}
+declare_loadout(rackme_a4e("AN-M57", 5, -1))               -- {AN-M57_MER_5_L}
+declare_loadout(rackme_a4e("AN-M57", 5,  1))               -- {AN-M57_MER_5_R}
+declare_loadout(rackme_a4e("AN-M57", 3,  0))               -- {AN-M57_TER_3_C}
+declare_loadout(rackme_a4e("AN-M57", 2, -1))               -- {AN-M57_TER_2_L}
+declare_loadout(rackme_a4e("AN-M57", 2,  1))               -- {AN-M57_TER_2_R}
 
-declare_loadout(rackme_a4e("AN-M81", 6,  0))        -- {AN-M81_MER_6_C}
-declare_loadout(rackme_a4e("AN-M81", 5, -1))        -- {AN-M81_MER_5_L}
-declare_loadout(rackme_a4e("AN-M81", 5,  1))        -- {AN-M81_MER_5_R}
+declare_loadout(rackme_a4e("AN-M81", 6,  0))               -- {AN-M81_MER_6_C}
+declare_loadout(rackme_a4e("AN-M81", 5, -1))               -- {AN-M81_MER_5_L}
+declare_loadout(rackme_a4e("AN-M81", 5,  1))               -- {AN-M81_MER_5_R}
 
-declare_loadout(rackme_a4e("AN-M88", 6,  0))        -- {AN-M88_MER_6_C}
-declare_loadout(rackme_a4e("AN-M88", 5, -1))        -- {AN-M88_MER_5_L}
-declare_loadout(rackme_a4e("AN-M88", 5,  1))        -- {AN-M88_MER_5_R}
+declare_loadout(rackme_a4e("AN-M88", 6,  0))               -- {AN-M88_MER_6_C}
+declare_loadout(rackme_a4e("AN-M88", 5, -1))               -- {AN-M88_MER_5_L}
+declare_loadout(rackme_a4e("AN-M88", 5,  1))               -- {AN-M88_MER_5_R}
 
-declare_loadout(rackme_a4e("Mk-81", 6, 0))          -- {Mk-81_MER_6_C}
-declare_loadout(rackme_a4e("Mk-81", 5,-1))          -- {Mk-81_MER_5_L}
-declare_loadout(rackme_a4e("Mk-81", 5, 1))          -- {Mk-81_MER_5_R}
+declare_loadout(rackme_a4e("Mk-81", 6, 0))                 -- {Mk-81_MER_6_C}
+declare_loadout(rackme_a4e("Mk-81", 5,-1))                 -- {Mk-81_MER_5_L}
+declare_loadout(rackme_a4e("Mk-81", 5, 1))                 -- {Mk-81_MER_5_R}
 
-declare_loadout(rackme_a4e("Mk-81SE", 6, 0))        -- {Mk-81SE_MER_6_C}
-declare_loadout(rackme_a4e("Mk-81SE", 5,-1))        -- {Mk-81SE_MER_5_L}
-declare_loadout(rackme_a4e("Mk-81SE", 5, 1))        -- {Mk-81SE_MER_5_R}
+declare_loadout(rackme_a4e("Mk-81SE", 6, 0))               -- {Mk-81SE_MER_6_C}
+declare_loadout(rackme_a4e("Mk-81SE", 5,-1))               -- {Mk-81SE_MER_5_L}
+declare_loadout(rackme_a4e("Mk-81SE", 5, 1))               -- {Mk-81SE_MER_5_R}
 
-declare_loadout(rackme_a4e("Mk-82", 6, 0))          -- {Mk-82_MER_6_C}
-declare_loadout(rackme_a4e("Mk-82", 4, 0))          -- {Mk-82_MER_4_C}
-declare_loadout(rackme_a4e("Mk-82", 3, 0))          -- {Mk-82_TER_3_C}
-declare_loadout(rackme_a4e("Mk-82", 2,-1))          -- {Mk-82_TER_2_L}
-declare_loadout(rackme_a4e("Mk-82", 2, 1))          -- {Mk-82_TER_2_R}
+declare_loadout(rackme_a4e("Mk-82", 6, 0))                 -- {Mk-82_MER_6_C}
+declare_loadout(rackme_a4e("Mk-82", 4, 0))                 -- {Mk-82_MER_4_C}
+declare_loadout(rackme_a4e("Mk-82", 3, 0))                 -- {Mk-82_TER_3_C}
+declare_loadout(rackme_a4e("Mk-82", 2,-1))                 -- {Mk-82_TER_2_L}
+declare_loadout(rackme_a4e("Mk-82", 2, 1))                 -- {Mk-82_TER_2_R}
 
-declare_loadout(rackme_a4e("Mk-82 Snakeye", 6, 0))  -- {Mk-82 Snakeye_MER_6_C}
-declare_loadout(rackme_a4e("Mk-82 Snakeye", 4, 0))  -- {Mk-82 Snakeye_MER_4_C}
-declare_loadout(rackme_a4e("Mk-82 Snakeye", 3, 0))  -- {Mk-82 Snakeye_TER_3_C}
-declare_loadout(rackme_a4e("Mk-82 Snakeye", 2,-1))  -- {Mk-82 Snakeye_TER_2_L}
-declare_loadout(rackme_a4e("Mk-82 Snakeye", 2, 1))  -- {Mk-82 Snakeye_TER_2_R}
+declare_loadout(rackme_a4e("Mk-82 Snakeye", 6, 0))         -- {Mk-82 Snakeye_MER_6_C}
+declare_loadout(rackme_a4e("Mk-82 Snakeye", 4, 0))         -- {Mk-82 Snakeye_MER_4_C}
+declare_loadout(rackme_a4e("Mk-82 Snakeye", 3, 0))         -- {Mk-82 Snakeye_TER_3_C}
+declare_loadout(rackme_a4e("Mk-82 Snakeye", 2,-1))         -- {Mk-82 Snakeye_TER_2_L}
+declare_loadout(rackme_a4e("Mk-82 Snakeye", 2, 1))         -- {Mk-82 Snakeye_TER_2_R}
 
-declare_loadout(rackme_a4e("Mk-83", 3, 0))          -- {Mk-83_TER_3_C}
-declare_loadout(rackme_a4e("Mk-83", 2, 0))          -- {Mk-83_TER_2_C}
+declare_loadout(rackme_a4e("Mk-83", 3, 0))                 -- {Mk-83_TER_3_C}
+declare_loadout(rackme_a4e("Mk-83", 2, 0))                 -- {Mk-83_TER_2_C}
 
-declare_loadout(rackme_a4e("Mk-77 mod 1", 4, 0))    -- {Mk-77 mod 1_MER_4_C}
-declare_loadout(rackme_a4e("Mk-77 mod 1", 2,-1))    -- {Mk-77 mod 1_TER_2_L}
-declare_loadout(rackme_a4e("Mk-77 mod 1", 2, 1))    -- {Mk-77 mod 1_TER_2_R}
-declare_loadout(rackme_a4e("Mk-77 mod 1", 2, 0))    -- {Mk-77 mod 1_TER_2_C}
+declare_loadout(rackme_a4e("Mk-77 mod 1", 4, 0))           -- {Mk-77 mod 1_MER_4_C}
+declare_loadout(rackme_a4e("Mk-77 mod 1", 2,-1))           -- {Mk-77 mod 1_TER_2_L}
+declare_loadout(rackme_a4e("Mk-77 mod 1", 2, 1))           -- {Mk-77 mod 1_TER_2_R}
+declare_loadout(rackme_a4e("Mk-77 mod 1", 2, 0))           -- {Mk-77 mod 1_TER_2_C}
 
-declare_loadout(rackme_a4e("Mk-20", 3, 0))          -- {Mk-20_TER_3_C}
-declare_loadout(rackme_a4e("Mk-20", 2,-1))          -- {Mk-20_TER_2_L}
-declare_loadout(rackme_a4e("Mk-20", 2, 1))          -- {Mk-20_TER_2_R}
-declare_loadout(rackme_a4e("Mk-20", 2, 0))          -- {Mk-20_TER_2_C}
+declare_loadout(rackme_a4e("Mk-20", 3, 0))                 -- {Mk-20_TER_3_C}
+declare_loadout(rackme_a4e("Mk-20", 2,-1))                 -- {Mk-20_TER_2_L}
+declare_loadout(rackme_a4e("Mk-20", 2, 1))                 -- {Mk-20_TER_2_R}
+declare_loadout(rackme_a4e("Mk-20", 2, 0))                 -- {Mk-20_TER_2_C}
 
 declare_loadout(make_cbu_a4e_multi("CBU-1/A",  2, -1))     -- {CBU-1/A_TER_2_L}
 declare_loadout(make_cbu_a4e_multi("CBU-1/A",  2,  1))     -- {CBU-1/A_TER_2_R}
