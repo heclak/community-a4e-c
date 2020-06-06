@@ -1290,8 +1290,8 @@ local bomb_data =
 
 local rack_data =
 {
-    ["BRU_41"]          = {mass = 99.8, shapename = "mer_a4e",      wstype = {4, 5, 32, WSTYPE_PLACEHOLDER} },
-    ["BRU_42"]          = {mass = 47.6, shapename = "BRU-42_LS",    wstype = {4, 5, 32, WSTYPE_PLACEHOLDER} },
+    ["BRU_41"]          = {mass = 99.8, shapename = "mer_a4e", wstype = {4, 5, 32, WSTYPE_PLACEHOLDER} },
+    ["BRU_42"]          = {mass = 47.6, shapename = "BRU_42A", wstype = {4, 5, 32, WSTYPE_PLACEHOLDER} },
 }
 
 local rocket_data = 
@@ -1331,14 +1331,7 @@ local function bru_42_lau(element, count, side)
         },
     }
 
-    local positions =  {{ 0,  -0.135,     0.135},  -- right
-                        { 0,  -0.135,    -0.135},  -- left
-                        { 0,  -0.357,     0}}      -- center
-
-
-    local rotations =  {{ -45, 0, 0}, -- right
-                        {  45, 0, 0}, -- left
-                        {  0,  0, 0}} -- center
+    local connectors = {"Point03", "Point02", "Point01"}
 
     local rightorder2 = {2,1,3}
     local centerorder2 = {3,1,2}
@@ -1361,11 +1354,12 @@ local function bru_42_lau(element, count, side)
 
     for i = 1,count do
         local j = order[i+offset]
-        data.Elements[#data.Elements + 1] = {DrawArgs	=	{{1,1},{2,1}},
-                                            Position	=	positions[j],
-                                            payload_CLSID = lau_variant.payload_CLSID,
-                                            ShapeName	=	lau_variant.shapename,
-                                            Rotation	=   rotations[j]}
+        data.Elements[#data.Elements + 1] = {
+                                                DrawArgs       = {{1,1},{2,1}},
+                                                connector_name = connectors[j],
+                                                payload_CLSID  = lau_variant.payload_CLSID,
+                                                ShapeName      = lau_variant.shapename,
+                                            }
     end
 
     return data
@@ -1476,13 +1470,7 @@ function bru_42(element,count,side) -- build a TER setup for the specified bombs
         },
     }
 
-    local positions =  {{ bomb_variant.ofs,  -0.135,     0.135},  -- right -- 0
-                        { bomb_variant.ofs,  -0.135,    -0.135},  -- left
-                        { bomb_variant.ofs,  -0.357,     0}}      -- center  -- -0.18
-
-    local rotations =  {{ -45, 0, 0}, -- right
-                        {  45, 0, 0}, -- left
-                        {  0,  0, 0}} -- center
+    local connectors = {"Point03", "Point02", "Point01"}
 
     local rightorder2 = {2,1,3}
     local centerorder2 = {3,1,2}
@@ -1505,10 +1493,11 @@ function bru_42(element,count,side) -- build a TER setup for the specified bombs
 
     for i = 1,count do
         local j = order[i+offset]
-        data.Elements[#data.Elements + 1] = {DrawArgs	=	{{1,1},{2,1}},
-                                            Position	=	positions[j],
-                                            ShapeName	=	element,
-                                            Rotation	=   rotations[j]}
+        data.Elements[#data.Elements + 1] = {
+                                                DrawArgs       = {{1,1},{2,1}},
+                                                connector_name = connectors[j],
+                                                ShapeName      = element,
+                                            }
     end
 
     return data
@@ -1552,13 +1541,7 @@ function make_cbu_a4e_multi(dispenser,count,side) -- assemble a rack of cluster 
         },
     }
 
-    local positions =  {{ 0,  -0.135,     0.135},  -- right -- 0
-                        { 0,  -0.135,    -0.135},  -- left
-                        { 0,  -0.357,     0}}      -- center  -- -0.18
-
-    local rotations =  {{ -45, 0, 0}, -- right
-                        {  45, 0, 0}, -- left
-                        {  0,  0, 0}} -- center
+    local connectors = {"Point03", "Point02", "Point01"}
 
     local rightorder2 = {2,1,3}
     local centerorder2 = {3,1,2}
@@ -1582,12 +1565,13 @@ function make_cbu_a4e_multi(dispenser,count,side) -- assemble a rack of cluster 
     -- now mount the dispensers
     for i = 1,count do
         local j = order[i+offset]
-        data.Elements[#data.Elements + 1] = {DrawArgs	=	{{1,1},{2,1}},
-                                            Position	=	positions[j],
-                                            payload_CLSID = "{"..dispenser.."}",
-                                            ShapeName	=	"suu-7",
-                                            Rotation	=   rotations[j],
-                                            IsAdapter   =   true}
+        data.Elements[#data.Elements + 1] = {
+                                                DrawArgs       = {{1,1},{2,1}},
+                                                connector_name = connectors[j],
+                                                payload_CLSID  = "{"..dispenser.."}",
+                                                ShapeName      = "suu-7",
+                                                IsAdapter      = true
+                                            }
     end
 
     return data
