@@ -193,6 +193,7 @@ local function get_inboard_weapons( side )
         { CLSID = "{Mk-82_TER_2_"..side.."}" },                 -- TER Mk-82 x2
         { CLSID = "{Mk-82 Snakeye_TER_2_"..side.."}" },         -- TER Mk-82 Snakeye x2
         { CLSID = "{AN-M57_MER_5_"..side.."}" },              -- AN-M57A1 x5 250 lb GP HE (129 lb TNT)
+        { CLSID = "{AN-M57_TER_2_"..side.."}" },              -- AN-M57A1 x2 250 lb GP HE (129 lb TNT)
         { CLSID = "{AN-M81_MER_5_"..side.."}" },                -- AN-M81 x5 260 lb Fragmentation (34.1 lb Comp B)
         { CLSID = "{AN-M88_MER_5_"..side.."}" },                -- AN-M88 x5 216 lb Fragmentation (47 lb Comp B)
 
@@ -287,7 +288,7 @@ local function get_centerline_weapons( side )
         { CLSID = "{Mk-83_TER_2_"..side.."}" },
         { CLSID = "{Mk-77 mod 1_TER_2_"..side.."}" },           -- Mk-77 mod 1 (500 lb) x2 petroleum oil bomb
         { CLSID = "{AN-M57_MER_6_"..side.."}" },              -- AN-M57A1 x6 250 lb GP HE (129 lb TNT)
-        { CLSID = "{AN-M57_MER_4_"..side.."}" },              -- AN-M57A1 x4 250 lb GP HE (129 lb TNT)
+        { CLSID = "{AN-M57_TER_3_"..side.."}" },              -- AN-M57A1 x3 250 lb GP HE (129 lb TNT)
         { CLSID = "{AN-M81_MER_6_"..side.."}" },                -- AN-M81 x6 260 lb Fragmentation (34.1 lb Comp B)
         { CLSID = "{AN-M88_MER_6_"..side.."}" },                -- AN-M88 x6 216 lb Fragmentation (47 lb Comp B)
 

@@ -1456,6 +1456,9 @@ function bru_42(element,count,side) -- build a TER setup for the specified bombs
     data.CLSID              = "{"..element.."_TER_"..tostring(count).."_"..sidestr[2+side].."}"
     data.attribute          = rack_variant.wstype
     data.Picture            = bomb_variant.pic
+    if bomb_variant.PictureBlendColor then
+        data.PictureBlendColor  = "0xffffffff"
+    end
     data.Count              = count
     data.displayName        = element.." *"..tostring(count).." (TER)"
     data.wsTypeOfWeapon     = bomb_variant.wstype
@@ -1617,6 +1620,9 @@ declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 2, 1)) -- {LAU-68 FFAR Mk5 HE
 declare_loadout(rackme_a4e("AN-M57", 6,  0))      -- {AN-M57_MER_6_C}
 declare_loadout(rackme_a4e("AN-M57", 5, -1))      -- {AN-M57_MER_5_L}
 declare_loadout(rackme_a4e("AN-M57", 5,  1))      -- {AN-M57_MER_5_R}
+declare_loadout(rackme_a4e("AN-M57", 3,  0))      -- {AN-M57_TER_3_C}
+declare_loadout(rackme_a4e("AN-M57", 2, -1))      -- {AN-M57_TER_2_L}
+declare_loadout(rackme_a4e("AN-M57", 2,  1))      -- {AN-M57_TER_2_R}
 
 declare_loadout(rackme_a4e("AN-M81", 6,  0))        -- {AN-M81_MER_6_C}
 declare_loadout(rackme_a4e("AN-M81", 5, -1))        -- {AN-M81_MER_5_L}
