@@ -833,237 +833,6 @@ declare_loadout({
 })
 
 
--- AN-M30A1   -- 100lb GP HE bomb, WW2 era
--- 115# total weight, 57# of TNT
-AN_M30A1 = {
-    category        = CAT_BOMBS,
-    name            = "AN-M30A1",
-    user_name       = _("AN-M30A1"),
-    model           = "an-m30",
-    wsTypeOfWeapon  = {wsType_Weapon, wsType_Bomb, wsType_Bomb_A, WSTYPE_PLACEHOLDER},
-    scheme          = "bomb-common",
-    type            = 0,
-    mass            = 115 * POUNDS_TO_KG,
-    hMin            = 300.0,
-    hMax            = 12000.0,
-    Cx              = 0.00124,
-    VyHold          = -100.0,
-    Ag              = -1.23,
-    fm              = {
-        mass        = 52.2,     -- Empty weight with warhead, W/O fuel, kg  (115 lb)
-        caliber     = 0.20828,  -- Calibre, meters (8.2")
-        cx_coeff    = {1.000000, 0.390000, 0.380000, 0.236000, 1.310000}, -- Cx
-        L           = 0.9144,   -- Length, meters (36")
-        I           = 3.6346,   -- kgm2 - moment of inertia - I = 1/12 ML2
-        Ma          = 2.746331,  -- dependence moment coefficient of  by  AoA angular acceleration  T / I   (??? can't solve for torque w/o knowing rotation)
-        Mw          = 2.146083, --  rad/s  - 57.3°/s - dependence moment coefficient by angular velocity (|V|*sin(?))/|r| -  Mw  =  Ma * t   (???)
-        wind_sigma  = 50, -- dispersion coefficient  mk81=80, mk82=80, mk83=150, mk84=220 ... heavier = harder to push with wind?
-        cx_factor   = 100,
-    },
-    warhead         = {
-        mass        = 115.0 * POUNDS_TO_KG;
-        expl_mass   = 57.0 * POUNDS_TO_KG;
-        other_factors = {1.0, 1.0, 1.0};
-        obj_factors = {1, 1};
-        concrete_factors = {1.0, 1.0, 1.0};
-        cumulative_factor = 1;
-        concrete_obj_factor = 1.0;
-        cumulative_thickness = 1.0;
-        piercing_mass = 1.0;
-        caliber     = 27.686;   -- centimeters
-    },
-    shape_table_data = {
-        {
-            name    = "AN_M30A1";
-            file    = "an-m30";
-            life    = 1;
-            fire    = {0, 1};
-            username = "AN-M30A1";
-            index   = WSTYPE_PLACEHOLDER;
-        },
-    },
-    targeting_data  = {
-        char_time   = 20.60, -- characteristic time for sights
-    },
-}
-
-declare_weapon(AN_M30A1)
-
-declare_loadout({
-	category 		= CAT_BOMBS,
-	CLSID	 		= "{AN-M30A1}",
-	attribute		= AN_M30A1.wsTypeOfWeapon,
-	Count 			= 1,
-	Cx_pil			= AN_M30A1.Cx,
-	Picture			= "an-m30a1.png",
-	displayName		= AN_M30A1.user_name,
-	Weight			= AN_M30A1.mass,
-	Elements  		=
-	{
-		{
-		Position	=	{0,	0,	0},
-		ShapeName = AN_M30A1.model
-		}
-	},
-})
-
--- end of AN-M30A1
-
-
-
--- AN-M57A1     -- 250lb GP HE bomb, WW2 era
--- 260.0# total weight, 129# TNT filler
-AN_M57A1 = {
-    category        = CAT_BOMBS,
-    name            = "AN-M57A1",
-    user_name       = _("AN-M57A1"),
-    model           = "an-m57",
-    wsTypeOfWeapon  = {wsType_Weapon, wsType_Bomb, wsType_Bomb_A, WSTYPE_PLACEHOLDER},
-    scheme          = "bomb-common",
-    type            = 0,
-    mass            = 260 * POUNDS_TO_KG,
-    hMin            = 300.0,
-    hMax            = 12000.0,
-    Cx              = 0.00124,
-    VyHold          = -100.0,
-    Ag              = -1.23,
-    fm              = {
-        mass        = 117.9,    -- Empty weight with warhead, W/O fuel, kg
-        caliber     = 0.27686,  -- Calibre, meters
-        cx_coeff    = {1.000000, 0.390000, 0.380000, 0.236000, 1.310000}, -- Cx
-        L           = 1.15316,  -- Length, meters
-        I           = 13.0688,  -- kgm2 - moment of inertia - I = 1/12 ML2
-        Ma          = 2.746331,  -- dependence moment coefficient of  by  AoA angular acceleration  T / I   (??? can't solve for torque w/o knowing rotation)
-        Mw          = 2.146083, --  rad/s  - 57.3°/s - dependence moment coefficient by angular velocity (|V|*sin(?))/|r| -  Mw  =  Ma * t   (???)
-        wind_sigma  = 80, -- dispersion coefficient  mk81=80, mk82=80, mk83=150, mk84=220 ... heavier = harder to push with wind?
-        cx_factor   = 100,
-    },
-    warhead         = {
-        mass        = 260.0 * POUNDS_TO_KG;
-        expl_mass   = 129.0 * POUNDS_TO_KG;
-        other_factors = {1.0, 1.0, 1.0};
-        obj_factors = {1, 1};
-        concrete_factors = {1.0, 1.0, 1.0};
-        cumulative_factor = 1;
-        concrete_obj_factor = 1.0;
-        cumulative_thickness = 1.0;
-        piercing_mass = 1.0;
-        caliber     = 27.686;   -- centimeters
-    },
-    shape_table_data = {
-        {
-            name    = "AN_M57A1";
-            file    = "an-m57";
-            life    = 1;
-            fire    = {0, 1};
-            username = "AN-M57A1";
-            index   = WSTYPE_PLACEHOLDER;
-        },
-    },
-    targeting_data  = {
-        char_time   = 20.60, -- characteristic time for sights
-    },
-}
-
-declare_weapon(AN_M57A1)
-
-declare_loadout({
-    category        = CAT_BOMBS,
-    CLSID           = "{AN-M57A1}",
-    attribute       = AN_M57A1.wsTypeOfWeapon,
-    Count           = 1,
-    Cx_pil          = AN_M57A1.Cx,
-    Picture         = "an-m57a1.png",
-    displayName     = AN_M57A1.user_name,
-    Weight          = AN_M57A1.mass,
-    Elements        =
-    {
-        {
-        Position  = {0, 0, 0},
-        ShapeName = AN_M57A1.model
-        }
-    },
-})
--- end of AN-M57A
-
-
-
--- AN-M65A1     -- 1000lb GP HE bomb, WW2 era
--- 1040.0# total weight, 595# Comp B. filler
-AN_M65A1 = {
-    category        = CAT_BOMBS,
-    name            = "AN-M65A1",
-    user_name       = _("AN-M65A1"),
-    model           = "an-m65",
-    wsTypeOfWeapon  = {wsType_Weapon, wsType_Bomb, wsType_Bomb_A, WSTYPE_PLACEHOLDER},
-    scheme          = "bomb-common",
-    type            = 0,
-    mass            = 1040.0 * POUNDS_TO_KG,
-    hMin            = 300.0,
-    hMax            = 12000.0,
-    Cx              = 0.00124,
-    VyHold          = -100.0,
-    Ag              = -1.23,
-    fm              = {
-        mass        = 471.7,    -- Empty weight with warhead, W/O fuel, kg
-        caliber     = 0.47752,  -- Calibre, meters
-        cx_coeff    = {1.000000, 0.390000, 0.380000, 0.236000, 1.310000}, -- Cx
-        L           = 1.70434,  -- Length, meters
-        I           = 114.1905, -- kgm2 - moment of inertia - I = 1/12 ML2
-        Ma          = 2.746331,  -- dependence moment coefficient of  by  AoA angular acceleration  T / I   (??? can't solve for torque w/o knowing rotation)
-        Mw          = 2.146083, --  rad/s  - 57.3°/s - dependence moment coefficient by angular velocity (|V|*sin(?))/|r| -  Mw  =  Ma * t   (???)
-        wind_sigma  = 150, -- dispersion coefficient  mk81=80, mk82=80, mk83=150, mk84=220 ... heavier = harder to push with wind?
-        cx_factor   = 100,
-    },
-    warhead         = {
-        mass        = 1040.0 * POUNDS_TO_KG;
-        expl_mass   = 595.0 * POUNDS_TO_KG;
-        other_factors = {1.0, 1.0, 1.0};
-        obj_factors = {1, 1};
-        concrete_factors = {1.0, 1.0, 1.0};
-        cumulative_factor = 1;
-        concrete_obj_factor = 1.0;
-        cumulative_thickness = 1.0;
-        piercing_mass = 1.0;
-        caliber     = 47.752;   -- centimeters
-    },
-    shape_table_data = {
-        {
-            name    = "AN_M65A1";
-            file    = "an-m65";
-            life    = 1;
-            fire    = {0, 1};
-            username = "AN-M65A1";
-            index   = WSTYPE_PLACEHOLDER;
-        },
-    },
-    targeting_data  = {
-        char_time   = 20.60, -- characteristic time for sights
-    },
-}
-
-declare_weapon(AN_M65A1)
-
-declare_loadout({
-    category        = CAT_BOMBS,
-    CLSID           = "{AN-M65A1}",
-    attribute       = AN_M65A1.wsTypeOfWeapon,
-    Count           = 1,
-    Cx_pil          = AN_M65A1.Cx,
-    Picture         = "an-m65a1.png",
-    displayName     = AN_M65A1.user_name,
-    Weight          = AN_M65A1.mass,
-    Elements        =
-    {
-        {
-        Position  = {0, 0, 0},
-        ShapeName = AN_M65A1.model
-        }
-    },
-})
--- end of AN-M65A1
-
-
 -- AN-M66A2     -- 2000lb GP HE bomb, WW2 era
 -- 2140.0# total weight, 1142# Comp. B filler
 AN_M66A2 = {
@@ -1507,17 +1276,16 @@ declare_loadout(make_cbu_a4e("CBU-2B/A", "BLU-3B", math.floor(409/cbu_mult))) --
 local bomb_data =
 {
     --use shapename,        mass,       wstype,                 image,                  drag,               offset (m)
-    ["Mk-81"]           = { mass = 118, wstype = {4,5,9,30},    pic = 'mk81.png',       cx = 0.00018,       ofs = -0.0508 },    -- 2" offset back
-    ["Mk-81SE"]         = { mass = 118, wstype = MK_81SE.wsTypeOfWeapon, pic = 'mk81SE.png', cx = 0.00018,  ofs =  0.0 },       -- 0" offset back
-    ["Mk-82"]           = { mass = 241, wstype = {4,5,9,31},    pic = 'mk82.png',       cx = 0.00025,       ofs = -0.0762 },    -- 3" offset back
-    ["Mk-82 Snakeye"]   = { mass = 241, wstype = {4,5,9,79},    pic = 'mk82air.png',    cx = 0.00025,       ofs = -0.2540 },    -- 10" offset back
-    ["Mk-83"]           = { mass = 447, wstype = {4,5,9,32},    pic = 'mk83.png',       cx = 0.00035,       ofs =  0.0    },    -- 0" offset, hangars are in wrong place
-    ["Mk-77 mod 1"]     = { mass = 230, wstype = mk77mod1.wsTypeOfWeapon, pic = 'mk77mod1.png', cx = 0.001, ofs =  0.0    },    -- drag number is garbage
-    ["Mk-20"]           = { mass = 222, wstype = {4,5,38,45},   pic = 'mk20.png',       cx = 0.00070,       ofs =  0.0    },
-    ["AN-M57A1"]        = { mass = 117.9, wstype = AN_M57A1.wsTypeOfWeapon, pic = 'an-m57a1.png', cx = 0.00025, ofs = 0.0 },
-    ["AN-M81"]          = { mass = 117.9, wstype = AN_M81.wsTypeOfWeapon, pic = 'an-m81.png', cx = 0.00025, ofs =  0.0  },
-    ["AN-M88"]          = { mass = 98,  wstype = AN_M88.wsTypeOfWeapon, pic = 'an-m88.png', cx = 0.00025,   ofs =  0.0    },
-    --["M-117"]           = { mass = 340, wstype = {4,5,9,34},    pic = 'kmgu2.png',      cx = 0.00030},
+    ["Mk-81"]         = { mass = 118,   wstype = {4,5,9,30},              pic = 'mk81.png',      cx = 0.00018, ofs = -0.0508, PictureBlendColor = false },  -- 2" offset back
+    ["Mk-81SE"]       = { mass = 118,   wstype = MK_81SE.wsTypeOfWeapon,  pic = 'mk81SE.png',    cx = 0.00018, ofs = 0.0,     PictureBlendColor = false },  -- 0" offset back
+    ["Mk-82"]         = { mass = 241,   wstype = {4,5,9,31},              pic = 'mk82.png',      cx = 0.00025, ofs = -0.0762, PictureBlendColor = false },  -- 3" offset back
+    ["Mk-82 Snakeye"] = { mass = 241,   wstype = {4,5,9,79},              pic = 'mk82air.png',   cx = 0.00025, ofs = -0.2540, PictureBlendColor = false },  -- 10" offset back
+    ["Mk-83"]         = { mass = 447,   wstype = {4,5,9,32},              pic = 'mk83.png',      cx = 0.00035, ofs = 0.0,     PictureBlendColor = false },  -- 0" offset, hangars are in wrong place
+    ["Mk-77 mod 1"]   = { mass = 230,   wstype = mk77mod1.wsTypeOfWeapon, pic = 'mk77mod1.png',  cx = 0.001,   ofs = 0.0,     PictureBlendColor = false },  -- drag number is garbage
+    ["Mk-20"]         = { mass = 222,   wstype = {4,5,38,45},             pic = 'mk20.png',      cx = 0.00070, ofs = 0.0,     PictureBlendColor = false },
+    ["AN-M57"]        = { mass = 113.0, wstype = {4,5,9,271},             pic = 'us_AN-M57.png', cx = 0.00035, ofs = 0.0,     PictureBlendColor = true  },
+    ["AN-M81"]        = { mass = 117.9, wstype = AN_M81.wsTypeOfWeapon,   pic = 'an-m81.png',    cx = 0.00025, ofs = 0.0,     PictureBlendColor = false },
+    ["AN-M88"]        = { mass = 98,    wstype = AN_M88.wsTypeOfWeapon,   pic = 'an-m88.png',    cx = 0.00025, ofs = 0.0,     PictureBlendColor = false },
 }
 
 local rack_data =
@@ -1621,6 +1389,9 @@ function bru_41(element,count,side) -- build up to a 6x MER loadout of the speci
     data.CLSID              = "{"..element.."_MER_"..tostring(count).."_"..sidestr[2+side].."}"
     data.attribute          = rack_variant.wstype
     data.Picture            = bomb_variant.pic
+    if bomb_variant.PictureBlendColor then
+        data.PictureBlendColor  = "0xffffffff"
+    end
     data.Count              = count
     data.displayName        = element.." *"..tostring(count).." (MER)"
     data.wsTypeOfWeapon     = bomb_variant.wstype
@@ -1859,9 +1630,9 @@ declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 2, 0)) -- {LAU-68 FFAR Mk5 HE
 declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 2, -1)) -- {LAU-68 FFAR Mk5 HEAT_TER_2_L}
 declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 2, 1)) -- {LAU-68 FFAR Mk5 HEAT_TER_2_R}
 
-declare_loadout(rackme_a4e("AN-M57A1", 6,  0))      -- {AN-M57A1_MER_6_C}
-declare_loadout(rackme_a4e("AN-M57A1", 5, -1))      -- {AN-M57A1_MER_5_L}
-declare_loadout(rackme_a4e("AN-M57A1", 5,  1))      -- {AN-M57A1_MER_5_R}
+declare_loadout(rackme_a4e("AN-M57", 6,  0))      -- {AN-M57_MER_6_C}
+declare_loadout(rackme_a4e("AN-M57", 5, -1))      -- {AN-M57_MER_5_L}
+declare_loadout(rackme_a4e("AN-M57", 5,  1))      -- {AN-M57_MER_5_R}
 
 declare_loadout(rackme_a4e("AN-M81", 6,  0))        -- {AN-M81_MER_6_C}
 declare_loadout(rackme_a4e("AN-M81", 5, -1))        -- {AN-M81_MER_5_L}
