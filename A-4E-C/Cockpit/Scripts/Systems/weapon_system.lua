@@ -435,7 +435,7 @@ function update()
         --     once=true
         --     for i=1, num_stations, 1 do
         --         local station = WeaponSystem:get_station_info(i-1)
-        --         print_message_to_user("station "..tostring(i)..": count="..tostring(station.count)..",state="..tostring(station_states[i])..",l2="..tostring(station.weapon.level2)..",l3="..tostring(station.weapon.level3))
+        --         print_message_to_user("station "..tostring(i)..": count="..tostring(station.count)..",state="..tostring(station_states[i])..",l2="..tostring(station.weapon.level2)..",l3="..tostring(station.weapon.level3)..",l4="..tostring(station.weapon.level4))
         --     end
         -- end
 
