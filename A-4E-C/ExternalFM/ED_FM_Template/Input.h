@@ -66,6 +66,7 @@ public:
 		m_nosewheelSteering = false;
 		m_throttleState = ThrottleState::CUTOFF;
 		m_starter = false;
+		m_flaps = 1.0;
 	}
 
 	void hotInit()
@@ -75,6 +76,7 @@ public:
 		m_nosewheelSteering = false;
 		m_throttleState = ThrottleState::IDLE;
 		m_starter = false;
+		m_flaps = 0.0;
 	}
 
 	void airbornInit()
@@ -84,6 +86,7 @@ public:
 		m_nosewheelSteering = false;
 		m_throttleState = ThrottleState::IDLE;
 		m_starter = false;
+		m_flaps = 0.0;
 	}
 
 	inline double normalise(double value)
