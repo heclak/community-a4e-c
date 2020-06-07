@@ -67,6 +67,9 @@ public:
 		m_throttleState = ThrottleState::CUTOFF;
 		m_starter = false;
 		m_flaps = 1.0;
+		m_pitchTrim = 0.0;
+		m_rollTrim = 0.0;
+		m_yawTrim = 0.0;
 	}
 
 	void hotInit()
@@ -77,6 +80,9 @@ public:
 		m_throttleState = ThrottleState::IDLE;
 		m_starter = false;
 		m_flaps = 0.0;
+		m_pitchTrim = 0.0;
+		m_rollTrim = 0.0;
+		m_yawTrim = 0.0;
 	}
 
 	void airbornInit()
@@ -87,6 +93,9 @@ public:
 		m_throttleState = ThrottleState::IDLE;
 		m_starter = false;
 		m_flaps = 0.0;
+		m_pitchTrim = 0.0;
+		m_rollTrim = 0.0;
+		m_yawTrim = 0.0;
 	}
 
 	inline double normalise(double value)
@@ -119,6 +128,32 @@ public:
 	inline double& yaw()
 	{
 		return m_yaw;
+	}
+	inline const double& pitchTrim() const
+	{
+		return m_pitchTrim;
+	}
+	inline double& pitchTrim()
+	{
+		return m_pitchTrim;
+	}
+
+	inline const double& rollTrim() const
+	{
+		return m_rollTrim;
+	}
+	inline double& rollTrim()
+	{
+		return m_rollTrim;
+	}
+
+	inline const double& yawTrim() const
+	{
+		return m_yawTrim;
+	}
+	inline double& yawTrim()
+	{
+		return m_yawTrim;
 	}
 	inline const double& yawDamper() const
 	{
@@ -233,6 +268,11 @@ private:
 	double m_pitch = 0.0;
 	double m_roll = 0.0;
 	double m_yaw = 0.0;
+
+	double m_pitchTrim = 0.0;
+	double m_rollTrim = 0.0;
+	double m_yawTrim = 0.0;
+
 	double m_yawDamper = 0.0;
 	double m_throttle = 0.0;
 	double m_brakeLeft = 0.0;

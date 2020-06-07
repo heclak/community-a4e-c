@@ -70,7 +70,9 @@ void ed_fm_simulate(double dt)
 {
 	//Pre update
 	s_airframe.setFlapsPosition(s_interface.getFlaps());
-
+	s_input.pitchTrim() = s_interface.getPitchTrim();
+	s_input.rollTrim() = s_interface.getRollTrim();
+	s_input.yawTrim() = s_interface.getRudderTrim();
 
 	s_engine.updateEngine(dt);
 	s_airframe.airframeUpdate(dt);
@@ -81,9 +83,9 @@ void ed_fm_simulate(double dt)
 	//Post update
 	s_interface.setRPM(s_engine.getRPMNorm());
 	s_interface.setThrottlePosition(s_input.throttleNorm());
-	s_interface.setStickPitch(s_input.pitch());
-	s_interface.setStickRoll(s_input.roll());
-	s_interface.setRudderPedals(s_input.yaw());
+	s_interface.setStickPitch(s_input.pitch() + s_input.pitchTrim());
+	s_interface.setStickRoll(s_input.roll() + s_input.rollTrim());
+	s_interface.setRudderPedals(s_input.yaw() + s_input.yawTrim());
 
 	//printf("%x", s_interface.m_test);
 

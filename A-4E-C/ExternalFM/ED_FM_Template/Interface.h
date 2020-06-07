@@ -30,6 +30,10 @@ public:
 		m_stickRoll				= m_api.pfn_ed_cockpit_get_parameter_handle("STICK_ROLL");
 		m_rudderPedals			= m_api.pfn_ed_cockpit_get_parameter_handle("RUDDER_PEDALS");
 
+		m_pitchTrim = m_api.pfn_ed_cockpit_get_parameter_handle("PITCH_TRIM");
+		m_rollTrim = m_api.pfn_ed_cockpit_get_parameter_handle("ROLL_TRIM");
+		m_rudderTrim = m_api.pfn_ed_cockpit_get_parameter_handle("RUDDER_TRIM");
+
 	}
 
 	inline void coldInit()
@@ -60,7 +64,6 @@ public:
 	inline void setStickPitch(double number)
 	{
 		setParamNumber(m_stickPitch, number);
-		printf("%lf, %x", getParamNumber(m_stickPitch), m_stickPitch);
 	}
 
 	inline void setStickRoll(double number)
@@ -100,6 +103,21 @@ public:
 	{
 		return getParamNumber(m_spoiler);
 	}
+
+	inline double getPitchTrim()
+	{
+		return getParamNumber(m_pitchTrim);
+	}
+
+	inline double getRollTrim()
+	{
+		return getParamNumber(m_rollTrim);
+	}
+
+	inline double getRudderTrim()
+	{
+		return getParamNumber(m_rudderTrim);
+	}
 		 
 	void* m_test = NULL;
 private:
@@ -128,6 +146,7 @@ private:
 
 	cockpit_param_api m_api;
 
+	//void* because C isn't a typed language kek
 	void* m_RPM = NULL;
 	void* m_noseGear = NULL;
 	void* m_leftGear = NULL;
@@ -140,6 +159,10 @@ private:
 	void* m_stickRoll = NULL;
 	void* m_stickPitch = NULL;
 	void* m_throttlePosition = NULL;
+
+	void* m_rollTrim = NULL;
+	void* m_pitchTrim = NULL;
+	void* m_rudderTrim = NULL;
 };
 
 

@@ -119,10 +119,10 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 	m_fuel -= m_engine.getFuelFlow()*dt;
 	m_engine.setHasFuel(m_fuel > 50.0);
 	
-	m_elevator = m_controls.pitch();
-	m_aileronLeft = m_controls.roll();
+	m_elevator = m_controls.pitch() + m_controls.pitchTrim();
+	m_aileronLeft = m_controls.roll() + m_controls.rollTrim();
 	m_aileronRight = -m_aileronLeft;
-	m_rudder = m_controls.yaw() + m_controls.yawDamper();
+	m_rudder = m_controls.yaw() + m_controls.yawDamper() + m_controls.yawTrim();
 
 
 	if (m_catapultState == ON_CAT_NOT_READY && m_engine.getRPMNorm() > 0.9)

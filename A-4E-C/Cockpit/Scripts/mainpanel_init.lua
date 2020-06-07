@@ -51,25 +51,25 @@ CanopyLever.output  				= {1, 0.4, 0.0}
 CanopyLever.controller 				= controllers.base_gauge_CanopyPos
 
 StickPitch							= CreateGauge("parameter")
-StickPitch.arg_number				= 3
+StickPitch.arg_number				= 2
 StickPitch.input					= {-1, 1}
 StickPitch.output					= {-1, 1}
 --StickPitch.controller				= controllers.base_gauge_StickPitchPosition
-StickPitch.param_name				= "STICK_PITCH"
+StickPitch.parameter_name				= "STICK_PITCH"
 
 StickBank							= CreateGauge("parameter")
-StickBank.arg_number				= 2
+StickBank.arg_number				= 3
 StickBank.input						= {-1, 1}
 StickBank.output					= {-1, 1}
 --StickBank.controller				= controllers.base_gauge_StickRollPosition
-StickBank.param_name				= "STICK_ROLL"
+StickBank.parameter_name				= "STICK_ROLL"
 
 RudderPedals						= CreateGauge("parameter")
 RudderPedals.arg_number				= 4
 RudderPedals.input					= {-1,1}
 RudderPedals.output					= {-1,1}
 --RudderPedals.controller				= controllers.base_gauge_RudderPosition
-RudderPedals.param_name				= "RUDDER_PEDALS"
+RudderPedals.parameter_name				= "RUDDER_PEDALS"
 
 Throttle							= CreateGauge("parameter")
 Throttle.arg_number					= 80
