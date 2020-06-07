@@ -36,6 +36,7 @@ public:
 	inline void setCOM(const Vec3& com);
 	inline void setWorldVelocity(const Vec3& worldVelocity);
 	inline void setPhysicsParams(const double aoa, const double beta, const Vec3& angle, const Vec3& omega, const Vec3& omegaDot, const Vec3& airspeedLocal);
+	inline const Vec3 windAxisToBody(const Vec3& force, const double& alpha, const double& beta) const;
 	void calculateLocalPhysicsParams();
 
 	//Actually calculate something.
@@ -45,6 +46,7 @@ public:
 
 	inline void lift();
 	inline void drag();
+	void calculateElements();
 	inline void sideForce();
 	inline void thrustForce();
 
@@ -121,6 +123,8 @@ private:
 	double m_aoaDot; //aoa per unit time
 	double m_beta; //angle of slip
 
+	Vec3 m_LDwindAxesLW; //Lift and drag, calculated in wind axes
+	Vec3 m_LDwindAxesRW; //Lift and drag, calculated in wind axes
 	Vec3 m_airspeedLW; //local airspeed left wing (local)
 	Vec3 m_airspeedRW; //local airspeed right wing (local)
 	double m_scalarAirspeedLW;
@@ -253,6 +257,20 @@ const Vec3& FlightModel::getCOM() const
 	return m_com;
 }
 
+const Vec3 FlightModel::windAxisToBody(const Vec3& force, const double& alpha, const double& beta) const
+{
+	double sin_b = sin(beta);
+	double cos_b = cos(beta);
+	double sin_a = sin(alpha);
+	double cos_a = cos(alpha);
+
+	double res_x = cos_b * cos_a * force.x + sin_b * force.y - cos_b * sin_a;
+	double res_y = -cos_a * sin_b * force.x + cos_b * force.y + sin_a * sin_b * force.z;
+	double res_z = sin_a * force.x + cos_a * force.z;
+
+	return Vec3(res_x, res_y, res_z);
+}
+
 void FlightModel::addForce(const Vec3& force, const Vec3& pos)
 {
 	//Add the force to the overall force
@@ -327,8 +345,15 @@ void FlightModel::lift()
 	printf("vL: %lf, v: %lf, vR: %lf\n", m_liftVecRW.x, m_liftVecRW.y, m_liftVecRW.z);
 	//printf("CL: %lf\n", CLalpha(m_aoa, true));
 	addForce(Vec3(0.0, m_k*(CLde(m_mach)*elevator()), 0.0), getCOM());
-	addForceDir(m_kR / 4 * (CLalpha(m_aoaRW) + dCLslat(m_aoaRW) * m_airframe.getSlatRPosition() + dCLflap(m_aoaRW) * m_airframe.getFlapsPosition()) * m_liftVecRW, m_rRW);
-	addForceDir(m_kL / 4 * (CLalpha(m_aoaLW) + dCLslat(m_aoaLW) * m_airframe.getSlatLPosition() + dCLflap(m_aoaLW) * m_airframe.getFlapsPosition()) * m_liftVecLW, m_rLW);
+	
+	m_LDwindAxesLW.z = 0;
+	m_LDwindAxesRW.z = 0;
+
+	m_LDwindAxesRW.y = m_kR / 2 * (CLalpha(m_aoaRW) + dCLslat(m_aoaRW) * m_airframe.getSlatRPosition() + dCLflap(m_aoaRW) * m_airframe.getFlapsPosition());
+	m_LDwindAxesLW.y = m_kL / 2 * (CLalpha(m_aoaLW) + dCLslat(m_aoaLW) * m_airframe.getSlatLPosition() + dCLflap(m_aoaLW) * m_airframe.getFlapsPosition());
+
+	//addForceDir(m_kR / 2 * (CLalpha(m_aoaRW) + dCLslat(m_aoaRW) * m_airframe.getSlatRPosition() + dCLflap(m_aoaRW) * m_airframe.getFlapsPosition()) * m_liftVecRW, m_rRW);
+	//addForceDir(m_kL / 2 * (CLalpha(m_aoaLW) + dCLslat(m_aoaLW) * m_airframe.getSlatLPosition() + dCLflap(m_aoaLW) * m_airframe.getFlapsPosition()) * m_liftVecLW, m_rLW);
 	
 	//printf("CLde: %lf\n", CLde(m_mach) * elevator());
 }
@@ -337,8 +362,12 @@ void FlightModel::drag()
 {
 	double CD = CDi(0.0)*CLalpha(m_aoa) * CLalpha(m_aoa) + CDbeta(m_beta) + CDde(0.0)*elevator() + CDmach(m_mach);
 	addForce(Vec3(-m_k * CD, 0.0, 0.0), getCOM());
-	addForceDir(m_k / 2 * CDalpha(m_aoaLW) * m_dragVecLW, m_rLW);
-	addForceDir(m_k / 2 * CDalpha(m_aoaRW) * m_dragVecRW, m_rRW);
+
+	m_LDwindAxesLW.x = -m_k / 2 * CDalpha(m_aoaLW);
+	m_LDwindAxesRW.x = -m_k / 2 * CDalpha(m_aoaRW);
+
+	// addForceDir(m_k / 2 * CDalpha(m_aoaLW) * m_dragVecLW, m_rLW);
+	// addForceDir(m_k / 2 * CDalpha(m_aoaRW) * m_dragVecRW, m_rRW);
 }
 
 void FlightModel::sideForce()
