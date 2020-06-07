@@ -185,13 +185,13 @@ public:
 	{
 		return m_slatL;
 	}
-	inline const double& slatR() const
-	{
-		return m_slatR;
-	}
 	inline double& slatL()
 	{
 		return m_slatL;
+	}
+	inline const double& slatR() const
+	{
+		return m_slatR;
 	}
 	inline double& slatR()
 	{

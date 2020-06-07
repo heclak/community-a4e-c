@@ -324,13 +324,13 @@ double FlightModel::thrust()
 
 void FlightModel::lift()
 {
+	printf("vL: %lf, v: %lf, vR: %lf\n", m_liftVecRW.x, m_liftVecRW.y, m_liftVecRW.z);
 	//printf("CL: %lf\n", CLalpha(m_aoa, true));
 	addForce(Vec3(0.0, m_k*(CLde(m_mach)*elevator()), 0.0), getCOM());
-	addForceDir(m_kR / 2 * (CLalpha(m_aoaRW) + dCLslat(m_aoaRW) * m_airframe.getSlatRPosition() + dCLflap(m_aoaRW) * m_airframe.getFlapsPosition()) * m_liftVecRW, m_rRW);
-	addForceDir(m_kL / 2 * (CLalpha(m_aoaLW) + dCLslat(m_aoaLW) * m_airframe.getSlatLPosition() + dCLflap(m_aoaLW) * m_airframe.getFlapsPosition()) * m_liftVecLW, m_rLW);
+	addForceDir(m_kR / 4 * (CLalpha(m_aoaRW) + dCLslat(m_aoaRW) * m_airframe.getSlatRPosition() + dCLflap(m_aoaRW) * m_airframe.getFlapsPosition()) * m_liftVecRW, m_rRW);
+	addForceDir(m_kL / 4 * (CLalpha(m_aoaLW) + dCLslat(m_aoaLW) * m_airframe.getSlatLPosition() + dCLflap(m_aoaLW) * m_airframe.getFlapsPosition()) * m_liftVecLW, m_rLW);
 	
 	//printf("CLde: %lf\n", CLde(m_mach) * elevator());
-	printf("vL: %lf, v: %lf, vR: %lf\n", pow(m_scalarAirspeedLW, 2), m_scalarVSquared, pow(m_scalarAirspeedRW, 2));
 }
 
 void FlightModel::drag()
