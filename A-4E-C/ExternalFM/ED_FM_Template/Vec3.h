@@ -11,13 +11,13 @@ struct Vec3
 	double z;
 
 	//Overloaded Operators for ED's silly vector struct.
-	Vec3& operator- ()
-
+	Vec3 operator -() const
 	{
-		this->x = -this->x;
-		this->y = -this->y;
-		this->z = -this->z;
-		return *this;
+		Vec3 result;
+		result.x = -this->x;
+		result.y = -this->y;
+		result.z = -this->z;
+		return result;
 	}
 
 	Vec3& operator+= (const Vec3& v)
@@ -85,6 +85,14 @@ struct Vec3
 		result.z = this->z / s;
 		return result;
 	}
+
+	double operator* (const Vec3& v) const
+
+	{
+		double result;
+		result = this->x * v.x + this->y * v.y + this->z * v.z;
+		return result;
+	}
 };
 
 //Overloaded Operators for ED's silly vector struct.
@@ -108,6 +116,11 @@ inline Vec3 operator* (const Vec3& v, const double& s)
 	return result;
 }
 
+//inline Vec3 operator* (const Vec3& v1, const Vec3& v2)
+//{
+//	double res = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+//	return res;
+//}
 
 inline Vec3 cross(const Vec3& a, const Vec3& b)
 {
@@ -115,5 +128,16 @@ inline Vec3 cross(const Vec3& a, const Vec3& b)
 		a.z * b.x - a.x * b.z,
 		a.x * b.y - a.y * b.x);
 }
+
+inline Vec3 normalize(const Vec3& a)
+{
+	double scalar{ sqrt(a.x * a.x + a.y * a.y + a.z * a.z) };
+	Vec3 result;
+	result.x = a.x / scalar;
+	result.y = a.y / scalar;
+	result.z = a.z / scalar;
+	return result;
+}
+
 #endif
 

@@ -247,7 +247,7 @@ void ed_fm_set_current_state_body_axis(double ax,//linear acceleration component
 	double common_angle_of_slide   //AoS radians
 	)
 {
-	s_fm.setPhysicsParams(common_angle_of_attack, common_angle_of_slide, Vec3(yaw, pitch, roll), Vec3(omegax, omegay, omegaz), Vec3(omegadotx, omegadoty, omegadoty));
+	s_fm.setPhysicsParams(common_angle_of_attack, common_angle_of_slide, Vec3(yaw, pitch, roll), Vec3(omegax, omegay, omegaz), Vec3(omegadotx, omegadoty, omegadoty), Vec3(vx, vy, vz));
 
 
 	//aoa = common_angle_of_attack;
@@ -437,8 +437,8 @@ void ed_fm_set_draw_args (EdDrawArgument * drawargs,size_t size)
 	drawargs[LEFT_FLAP].f = s_airframe.getFlapsPosition();
 	drawargs[RIGHT_FLAP].f = s_airframe.getFlapsPosition();
 
-	drawargs[LEFT_SLAT].f = s_airframe.getSlatsPosition();
-	drawargs[RIGHT_SLAT].f = s_airframe.getSlatsPosition();
+	drawargs[LEFT_SLAT].f = s_airframe.getSlatLPosition();
+	drawargs[RIGHT_SLAT].f = s_airframe.getSlatRPosition();
 
 	drawargs[AIRBRAKE].f = s_airframe.getSpeedBrakePosition();
 
