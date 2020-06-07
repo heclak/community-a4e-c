@@ -324,7 +324,7 @@ double FlightModel::thrust()
 
 void FlightModel::lift()
 {
-	printf("vL: %lf, v: %lf, vR: %lf\n", m_liftVecRW.x, m_liftVecRW.y, m_liftVecRW.z);
+	//printf("vL: %lf, v: %lf, vR: %lf\n", m_liftVecRW.x, m_liftVecRW.y, m_liftVecRW.z);
 	//printf("CL: %lf\n", CLalpha(m_aoa, true));
 	addForce(Vec3(0.0, m_k*(CLde(m_mach)*elevator()), 0.0), getCOM());
 	addForceDir(m_kR / 4 * (CLalpha(m_aoaRW) + dCLslat(m_aoaRW) * m_airframe.getSlatRPosition() + dCLflap(m_aoaRW) * m_airframe.getFlapsPosition()) * m_liftVecRW, m_rRW);
@@ -337,6 +337,7 @@ void FlightModel::drag()
 {
 	double CD = CDi(0.0)*CLalpha(m_aoa) * CLalpha(m_aoa) + CDbeta(m_beta) + CDde(0.0)*elevator() + CDmach(m_mach);
 	addForce(Vec3(-m_k * CD, 0.0, 0.0), getCOM());
+	//printf("")
 	addForceDir(m_k / 2 * CDalpha(m_aoaLW) * m_dragVecLW, m_rLW);
 	addForceDir(m_k / 2 * CDalpha(m_aoaRW) * m_dragVecRW, m_rRW);
 }

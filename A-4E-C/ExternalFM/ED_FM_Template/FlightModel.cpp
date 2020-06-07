@@ -170,7 +170,7 @@ void Skyhawk::FlightModel::calculateForcesAndMoments(double dt)
 	m_kL = pow(m_scalarAirspeedLW, 2) * m_density * 0.5 * m_totalWingArea;
 	m_kR = pow(m_scalarAirspeedRW, 2) * m_density * 0.5 * m_totalWingArea;
 	m_q = m_k * m_totalWingSpan;
-	m_p = sqrt(m_scalarVSquared) * m_density * 0.25 * m_totalWingArea * m_totalWingSpan * m_totalWingSpan;
+	m_p = m_scalarV * m_density * 0.25 * m_totalWingArea * m_totalWingSpan * m_totalWingSpan;
 
 	calculateLocalPhysicsParams();
 
