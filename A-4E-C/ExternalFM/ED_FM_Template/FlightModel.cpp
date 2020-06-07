@@ -131,6 +131,7 @@ void Skyhawk::FlightModel::calculateLocalPhysicsParams()
 	m_scalarAirspeedRW = sqrt(m_airspeedRW.x * m_airspeedRW.x + m_airspeedRW.y * m_airspeedRW.y + m_airspeedRW.z * m_airspeedRW.z);
 	m_aoaLW = atan2(cross(m_nLW, m_liftVecLW) * tmpNormalLW, m_liftVecLW * m_nLW);
 	m_aoaRW = atan2(cross(m_nRW, m_liftVecRW) * tmpNormalRW, m_liftVecRW * m_nRW);
+
 }
 
 
@@ -140,6 +141,7 @@ void Skyhawk::FlightModel::calculateAero()
 
 	lift();
 	drag();
+	calculateElements();
 	sideForce();
 	thrustForce();
 
@@ -150,12 +152,23 @@ void Skyhawk::FlightModel::calculateAero()
 		//m_moment.z, m_beta, m_q, m_p, m_omega.x, m_omega.y, Cla(m_mach));
 }
 
+void Skyhawk::FlightModel::calculateElements()
+{
+	Vec3 LiftLW = windAxisToBody(m_LDwindAxesLW, m_aoaLW, m_beta);
+	Vec3 LiftRW = windAxisToBody(m_LDwindAxesRW, m_aoaRW, m_beta);
+
+	addForceDir(LiftLW, m_rLW);
+	addForceDir(LiftRW, m_rRW);
+}
+
 //This calculates all forces and moments. Including landing gear.
 void Skyhawk::FlightModel::calculateForcesAndMoments(double dt)
 {
 	//Reset at the start of the frame.
 	m_force = Vec3();
 	m_moment = Vec3();
+	
+	calculateLocalPhysicsParams();
 
 	m_aoaDot = (m_aoa - m_aoaPrevious) / dt;
 
@@ -171,8 +184,6 @@ void Skyhawk::FlightModel::calculateForcesAndMoments(double dt)
 	m_kR = pow(m_scalarAirspeedRW, 2) * m_density * 0.5 * m_totalWingArea;
 	m_q = m_k * m_totalWingSpan;
 	m_p = m_scalarV * m_density * 0.25 * m_totalWingArea * m_totalWingSpan * m_totalWingSpan;
-
-	calculateLocalPhysicsParams();
 
 	//Slats logic
 	double slatPositionL = (m_aoaLW - 0.2268)/0.069813; //full actuation ~17 deg, onset ~13 deg aoa
