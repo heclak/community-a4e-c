@@ -1,11 +1,13 @@
 #ifndef FLIGHTMODEL_H
 #define FLIGHTMODEL_H
 #pragma once
+#include <iostream>
 #include "Vec3.h"
 #include "Table.h"
 #include "Input.h"
 #include "Airframe.h"
 #include "Engine.h"
+#include <fstream>
 namespace Skyhawk
 {//begin namespace
 
@@ -27,14 +29,14 @@ public:
 	//Adds a force (and moment caused by it)
 	//in the local reference frame of the aircraft.
 	inline void addForce(const Vec3& force, const Vec3& pos);
-	
+	inline void addForceDir(const Vec3& force, const Vec3& dir);
 
 	//Setup parameters before calculation.
 	inline void setAtmosphericParams(const double density, const double speedOfSound, const Vec3& wind);
 	inline void setCOM(const Vec3& com);
 	inline void setWorldVelocity(const Vec3& worldVelocity);
-	inline void setPhysicsParams(const double aoa, const double beta, const Vec3& angle, const Vec3& omega, const Vec3& omegaDot);
-
+	inline void setPhysicsParams(const double aoa, const double beta, const Vec3& angle, const Vec3& omega, const Vec3& omegaDot, const Vec3& airspeedLocal);
+	void calculateLocalPhysicsParams();
 
 	//Actually calculate something.
 	inline void L_stab();
@@ -65,6 +67,10 @@ public:
 	inline double yawRate();
 	inline double mach();
 
+	//other
+	inline double toDegrees(double angle);
+	inline double toRad(double angle);
+
 private:
 
 	//=====================BIG WARNING=====================//
@@ -85,7 +91,7 @@ private:
 	const double m_verticalTailArea = 2.9;
 	const double m_verticalTailArm = 5.1;
 
-	const double m_wingIncidence = 0.035;
+	const double m_wingIncidence = 0.0;
 				 
 	const double m_thrust = 38000;
 
@@ -98,12 +104,15 @@ private:
 	double m_q; //0.5*V^2 * s * b
 	double m_p; //0.25*V * s * b^2
 	double m_k; //0.5V^2 * s
+	double m_kL;
+	double m_kR;
 
 	//Aircraft Parameters
 	Vec3 m_com; //Centre of mass
 
 	Vec3 m_worldVelocity; //velocity in the world frame
-	Vec3 m_airspeed; //speed through the air
+	Vec3 m_airspeed; //speed through the air (world frame)
+	Vec3 m_airspeedLocal; //speed through the air (local aircraft frame)
 	double m_mach;
 	double m_scalarVSquared;
 	double m_scalarV;
@@ -111,6 +120,22 @@ private:
 	double m_aoaPrevious; //previous frame angle of attack
 	double m_aoaDot; //aoa per unit time
 	double m_beta; //angle of slip
+
+	Vec3 m_airspeedLW; //local airspeed left wing (local)
+	Vec3 m_airspeedRW; //local airspeed right wing (local)
+	double m_scalarAirspeedLW;
+	double m_scalarAirspeedRW;
+	Vec3 m_liftVecLW; //Direction of lift from LW
+	Vec3 m_liftVecRW; //Direction of lift from RW
+	Vec3 m_dragVecLW;
+	Vec3 m_dragVecRW;
+	Vec3 m_nLW;
+	Vec3 m_nRW;
+	Vec3 m_rLW;	//directional vector from CG to CP of aerodynamic element (LW)
+	Vec3 m_rRW;	//directional vector from CG to CP of aerodynamic element (RW)
+	double m_aoaLW;
+	double m_aoaRW;
+
 
 	Vec3 m_omegaDot;
 	Vec3 m_omega;
@@ -162,6 +187,7 @@ private:
 	Table Cmde; //pitch moment due to elevator (RADIANS)
 	Table Cmq; //pitch moment due to pitch rate (RADIANS per Second) [MACH]
 	Table Cmadot; //pitch moment due to alpha rate (MACH)
+	Table CmM; //pitch moment due to mach number (-)
 
 	//Yaw
 	Table Cnb; //yaw moment due to beta (RADIANS)
@@ -200,7 +226,8 @@ void FlightModel::setPhysicsParams
 	const double beta,
 	const Vec3& angle, //angle
 	const Vec3& omega, //angular velocity
-	const Vec3& omegaDot //angular acceleration
+	const Vec3& omegaDot, //angular acceleration
+	const Vec3& localAirspeed //
 )
 {
 	m_aoa = aoa;
@@ -208,6 +235,7 @@ void FlightModel::setPhysicsParams
 	m_angle = angle;
 	m_omega = omega;
 	m_omegaDot = omegaDot;
+	m_airspeedLocal = localAirspeed;
 }
 
 const Vec3& FlightModel::getForce() const
@@ -240,6 +268,19 @@ void FlightModel::addForce(const Vec3& force, const Vec3& pos)
 	m_moment += moment;
 }
 
+void FlightModel::addForceDir(const Vec3& force, const Vec3& dir)
+{
+	//Add the force to the overall force
+	m_force += force;
+
+	//Calculate the "moment" (actually torque)
+	Vec3 moment = cross(dir, force);
+
+	//Add it on
+	m_moment += moment;
+}
+
+
 void FlightModel::L_stab()
 {
 	//m_moment.x
@@ -249,8 +290,8 @@ void FlightModel::L_stab()
 void FlightModel::M_stab()
 {
 	//m_moment.z
-	m_moment.z += m_k * m_chord * (Cmalpha(m_mach) * m_aoa + Cmde(m_mach) * elevator()) + 0.25 * m_scalarV * m_totalWingArea * m_chord * m_chord * (Cmq(m_mach)*m_omega.z + Cmadot(m_mach)*m_aoaDot);
-	//printf("elevator: %lf\n", elevator());
+	m_moment.z += m_k * m_chord * (Cmalpha(m_mach) * m_aoa + Cmde(m_mach)*elevator() + CmM(m_mach)*0.2) + 0.25 * m_scalarV * m_totalWingArea * m_chord * m_chord * (Cmq(m_mach)*m_omega.z + Cmadot(m_mach)*m_aoaDot);
+	//printf("Mz: %lf, mach: %lf\n", elevator(), m_mach);
 }
 
 void FlightModel::N_stab()
@@ -284,15 +325,20 @@ double FlightModel::thrust()
 void FlightModel::lift()
 {
 	//printf("CL: %lf\n", CLalpha(m_aoa, true));
-	addForce(Vec3(0.0, m_k*(CLalpha(m_aoa) + CLde(m_mach)*elevator() + dCLflap(m_aoa)*m_airframe.getFlapsPosition() + dCLslat(m_aoa)*m_airframe.getSlatsPosition()), 0.0), getCOM());
-	printf("CLde: %lf\n", CLde(m_mach) * elevator());
-	//printf("CLflap: %lf, flap-pos: %lf\n", dCLflap(m_aoa) * m_airframe.getFlapsPosition(), m_airframe.getSlatsPosition());
+	addForce(Vec3(0.0, m_k*(CLde(m_mach)*elevator()), 0.0), getCOM());
+	addForceDir(m_kR / 2 * (CLalpha(m_aoaRW) + dCLslat(m_aoaRW) * m_airframe.getSlatRPosition() + dCLflap(m_aoaRW) * m_airframe.getFlapsPosition()) * m_liftVecRW, m_rRW);
+	addForceDir(m_kL / 2 * (CLalpha(m_aoaLW) + dCLslat(m_aoaLW) * m_airframe.getSlatLPosition() + dCLflap(m_aoaLW) * m_airframe.getFlapsPosition()) * m_liftVecLW, m_rLW);
+	
+	//printf("CLde: %lf\n", CLde(m_mach) * elevator());
+	printf("vL: %lf, v: %lf, vR: %lf\n", pow(m_scalarAirspeedLW, 2), m_scalarVSquared, pow(m_scalarAirspeedRW, 2));
 }
 
 void FlightModel::drag()
 {
-	double CD = CDi(0.0)*CLalpha(m_aoa) * CLalpha(m_aoa) + CDalpha(m_aoa) + CDbeta(m_beta) + CDde(0.0)*elevator() + CDmach(m_mach);
+	double CD = CDi(0.0)*CLalpha(m_aoa) * CLalpha(m_aoa) + CDbeta(m_beta) + CDde(0.0)*elevator() + CDmach(m_mach);
 	addForce(Vec3(-m_k * CD, 0.0, 0.0), getCOM());
+	addForceDir(m_k / 2 * CDalpha(m_aoaLW) * m_dragVecLW, m_rLW);
+	addForceDir(m_k / 2 * CDalpha(m_aoaRW) * m_dragVecRW, m_rRW);
 }
 
 void FlightModel::sideForce()
@@ -314,6 +360,16 @@ double FlightModel::yawRate()
 double FlightModel::mach()
 {
 	return m_mach;
+}
+
+double FlightModel::toDegrees(double angle)
+{
+	return 360 * angle / (2 * PI);
+}
+
+double FlightModel::toRad(double angle)
+{
+	return (2 * PI) * angle / 360;
 }
 
 }//end namespace

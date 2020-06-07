@@ -101,7 +101,7 @@ local FM =
 	[2] = 'A-4E-C',
 	center_of_mass		=	{ 0.183 , 0.261 , 0.0},
 	
-	moment_of_inertia  	= 	{11904, 38641, 35116, -1500}, -- xy = -5518
+	moment_of_inertia  	= 	{11904, 38641, 35116, -5518}, -- xy = -5518
 	suspension = suspension
 }
 

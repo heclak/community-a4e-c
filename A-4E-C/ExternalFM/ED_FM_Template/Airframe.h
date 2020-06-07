@@ -52,7 +52,8 @@ public:
 	inline void setGearPosition(double position); //for airstart or ground start
 	inline void setFlapsPosition(double position);
 	inline void setSpoilerPosition(double position);
-	inline void setSlatsPosition(double position);
+	inline void setSlatLPosition(double position);
+	inline void setSlatRPosition(double position);
 	inline void setFuelState(double fuel);
 	inline void setFuelStateNorm(double fuel);
 
@@ -61,7 +62,8 @@ public:
 	inline double getSpoilerPosition();
 	inline double getSpeedBrakePosition();
 	inline double getHookPosition();
-	inline double getSlatsPosition();
+	inline double getSlatLPosition();
+	inline double getSlatRPosition();
 	inline double getFuelState();
 	inline double getPrevFuelState();
 	inline double getFuelStateNorm();
@@ -91,6 +93,7 @@ private:
 	const double m_flapsExtendTime = 5.0;
 	const double m_airbrakesExtendTime = 3.0;
 	const double m_hookExtendTime = 1.5;
+	const double m_slatsExtendTime = 0.25;
 
 
 	//Airframe Variables
@@ -99,7 +102,8 @@ private:
 	double m_spoilerPosition = 0.0;
 	double m_speedBrakePosition = 0.0;
 	double m_hookPosition = 0.0;
-	double m_slatsPosition = 0.0;
+	double m_slatLPosition = 0.0;
+	double m_slatRPosition = 0.0;
 
 	double m_aileronLeft = 0.0;
 	double m_aileronRight = 0.0;
@@ -169,9 +173,14 @@ double Airframe::getHookPosition()
 	return m_hookPosition;
 }
 
-double Airframe::getSlatsPosition()
+double Airframe::getSlatLPosition()
 {
-	return m_slatsPosition;
+	return m_slatLPosition;
+}
+
+double Airframe::getSlatRPosition()
+{
+	return m_slatRPosition;
 }
 
 double Airframe::aileron()
@@ -202,6 +211,16 @@ double Airframe::elevatorAngle()
 double Airframe::rudderAngle()
 {
 	return m_rudder > 0.0 ? c_rudderRight * m_rudder : -c_rudderLeft * m_rudder;
+}
+
+void Airframe::setSlatLPosition(double position)
+{
+	m_slatLPosition = position;
+}
+
+void Airframe::setSlatRPosition(double position)
+{
+	m_slatRPosition = position;
 }
 
 void Airframe::setSpoilerPosition(double position)

@@ -181,13 +181,21 @@ public:
 	{
 		return m_flaps;
 	}
-	inline const double& slats() const
+	inline const double& slatL() const
 	{
-		return m_slats;
+		return m_slatL;
 	}
-	inline double& slats()
+	inline const double& slatR() const
 	{
-		return m_slats;
+		return m_slatR;
+	}
+	inline double& slatL()
+	{
+		return m_slatL;
+	}
+	inline double& slatR()
+	{
+		return m_slatR;
 	}
 	inline const bool& hook() const
 	{
@@ -231,7 +239,8 @@ private:
 	double m_brakeRight = 0.0;
 	double m_airbrake = 0.0;
 	double m_flaps = 0.0;
-	double m_slats = 0.0; //desired by fm
+	double m_slatL = 0.0; //desired by fm
+	double m_slatR = 0.0; //desired by fm
 	GearPos m_gear = GearPos::UP;
 	ThrottleState m_throttleState = ThrottleState::CUTOFF;
 	bool m_hook = false;
