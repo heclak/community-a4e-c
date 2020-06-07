@@ -154,7 +154,9 @@
     <ClInclude Include="Airframe.h" />
     <ClInclude Include="Avionics.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="Globals.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Interface.h" />
     <ClInclude Include="Skyhawk.h" />
     <ClInclude Include="ED_FM_API.h" />
     <ClInclude Include="ED_FM_Utility.h" />

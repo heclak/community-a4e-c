@@ -50,6 +50,7 @@ public:
 
 	//Utility
 	inline void setGearPosition(double position); //for airstart or ground start
+	inline void setFlapsPosition(double position);
 	inline void setSpoilerPosition(double position);
 	inline void setSlatsPosition(double position);
 	inline void setFuelState(double fuel);
@@ -125,6 +126,11 @@ void Airframe::setFuelState(double fuel)
 	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFUEL: %lf, this: %p\n", fuel, this);
 	m_fuel = fuel;
 	m_fuelPrevious = fuel;
+}
+
+void Airframe::setFlapsPosition(double position)
+{
+	m_flapsPosition = position;
 }
 
 void Airframe::setFuelStateNorm(double fuel)

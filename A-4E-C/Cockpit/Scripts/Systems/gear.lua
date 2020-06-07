@@ -54,6 +54,8 @@ local GEAR_LEFT_STATE =	0 -- 0 = retracted, 1.0 = extended -- "current" main lef
 local GEAR_RIGHT_STATE = 0 -- 0 = retracted, 1.0 = extended -- "current" main right gear position
 local GEAR_TARGET =     0 -- 0 = retracted, 1.0 = extended -- "future" gear position
 
+
+
 local GEAR_ERR   = 0
 
 -- HOOK constants/definitions/configuration

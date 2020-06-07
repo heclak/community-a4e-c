@@ -12,7 +12,9 @@
 #include "Airframe.h"
 #include "Engine.h"
 #include "Avionics.h"
+#include "Interface.h"
 //============================ Skyhawk Statics ============================//
+static Skyhawk::Interface s_interface;
 static Skyhawk::Input s_input;
 static Skyhawk::Engine s_engine(s_input);
 static Skyhawk::Airframe s_airframe(s_input, s_engine);
@@ -66,10 +68,25 @@ void ed_fm_add_local_moment(double & x,double &y,double &z)
 
 void ed_fm_simulate(double dt)
 {
+	//Pre update
+	s_airframe.setFlapsPosition(s_interface.getFlaps());
+
+
 	s_engine.updateEngine(dt);
 	s_airframe.airframeUpdate(dt);
 	s_avionics.updateAvionics(dt);
 	s_fm.calculateForcesAndMoments(dt);
+
+
+	//Post update
+	s_interface.setRPM(s_engine.getRPMNorm());
+	s_interface.setThrottlePosition(s_input.throttleNorm());
+	s_interface.setStickPitch(s_input.pitch());
+	s_interface.setStickRoll(s_input.roll());
+	s_interface.setRudderPedals(s_input.yaw());
+
+	//printf("%x", s_interface.m_test);
+
 	/*common_force = Vec3();
 	common_moment = Vec3();
 
@@ -467,7 +484,7 @@ double ed_fm_get_param(unsigned index)
 
 
 	switch (index)
-	{
+	{/*
 	case ED_FM_SUSPENSION_0_GEAR_POST_STATE:
 	case ED_FM_SUSPENSION_1_GEAR_POST_STATE:
 	case ED_FM_SUSPENSION_2_GEAR_POST_STATE:
@@ -477,7 +494,22 @@ double ed_fm_get_param(unsigned index)
 	case ED_FM_SUSPENSION_0_UP_LOCK:
 	case ED_FM_SUSPENSION_1_UP_LOCK:
 	case ED_FM_SUSPENSION_2_UP_LOCK:
-		return s_airframe.getGearPosition();
+		return s_airframe.getGearPosition();*/
+
+
+	case ED_FM_SUSPENSION_0_GEAR_POST_STATE:
+	case ED_FM_SUSPENSION_0_DOWN_LOCK:
+	case ED_FM_SUSPENSION_0_UP_LOCK:
+		return s_interface.getGearNose();
+	case ED_FM_SUSPENSION_1_GEAR_POST_STATE:
+	case ED_FM_SUSPENSION_1_DOWN_LOCK:
+	case ED_FM_SUSPENSION_1_UP_LOCK:
+		return s_interface.getGearLeft();
+	case ED_FM_SUSPENSION_2_GEAR_POST_STATE:
+	case ED_FM_SUSPENSION_2_DOWN_LOCK:
+	case ED_FM_SUSPENSION_2_UP_LOCK:
+		return s_interface.getGearRight();
+
 	case ED_FM_ANTI_SKID_ENABLE:
 	case ED_FM_CAN_ACCEPT_FUEL_FROM_TANKER:
 		return 1.0;

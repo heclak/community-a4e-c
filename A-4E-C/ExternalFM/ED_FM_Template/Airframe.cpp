@@ -47,7 +47,7 @@ void Skyhawk::Airframe::airborneInit()
 
 void Skyhawk::Airframe::airframeUpdate(double dt)
 {
-	if (m_controls.gear() == Skyhawk::Input::GearPos::UP)
+	/*if (m_controls.gear() == Skyhawk::Input::GearPos::UP)
 	{
 		m_gearPosition -= dt / m_gearExtendTime;
 		m_gearPosition = std::max(m_gearPosition, 0.0);
@@ -56,7 +56,7 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 	{
 		m_gearPosition += dt / m_gearExtendTime;
 		m_gearPosition = std::min(m_gearPosition, 1.0);
-	}
+	}*/
 
 	if (m_controls.airbrake() >= m_speedBrakePosition)
 	{
@@ -69,7 +69,7 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 		m_speedBrakePosition = std::max(m_speedBrakePosition, m_controls.airbrake());
 	}
 
-	if (m_controls.flaps() >= m_flapsPosition)
+	/*if (m_controls.flaps() >= m_flapsPosition)
 	{
 		m_flapsPosition += dt / m_flapsExtendTime;
 		m_flapsPosition = std::min(m_flapsPosition, m_controls.flaps());
@@ -78,7 +78,7 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 	{
 		m_flapsPosition -= dt / m_flapsExtendTime;
 		m_flapsPosition = std::max(m_flapsPosition, m_controls.flaps());
-	}
+	}*/
 
 	if (m_controls.hook())
 	{

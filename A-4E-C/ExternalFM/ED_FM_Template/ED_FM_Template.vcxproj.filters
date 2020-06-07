@@ -54,6 +54,10 @@
     <ClInclude Include="Avionics.h">
       <Filter>A4-Skyhawk</Filter>
     </ClInclude>
+    <ClInclude Include="Interface.h">
+      <Filter>A4-Skyhawk</Filter>
+    </ClInclude>
+    <ClInclude Include="Globals.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />

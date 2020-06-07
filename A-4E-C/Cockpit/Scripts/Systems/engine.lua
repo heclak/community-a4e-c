@@ -30,6 +30,7 @@ local egt_c = get_param_handle("EGT_C")
 local engine_heat_stress = get_param_handle("ENGINE_HEAT_STRESS")
 
 local throttle_position = get_param_handle("THROTTLE_POSITION")
+local fm_throttle_position = get_param_handle("FM_THROTTLE_POSITION")
 local throttle_position_wma = WMA(0.15, 0)
 local iCommandPlaneThrustCommon = 2004
 
@@ -202,17 +203,10 @@ local rpm_deci = get_param_handle("RPM_DECI")
 function update_rpm()
     -- idle at 55% internal, max 103%
     -- draw .534 at 55%, draw 1.0 at 100%
-    local rpm=sensor_data.getEngineLeftRPM()
+    --local rpm=sensor_data.getEngineLeftRPM()
 
-    if rpm < 55 then
-        rpm_main:set(rpm/1.03)
-    else
-        rpm = rpm - 55
-        rpm = (rpm * 1.0667) + 55 -- scale 55 to 100 input to 102.9% reporting maximum
-        rpm_main:set(rpm)
-    end
-
-    rpm=rpm/10.0
+	rpm=rpm_main:get()
+    rpm=rpm*10.0
     rpm=rpm-math.floor(rpm)
     rpm_deci:set(rpm)
 end
@@ -331,7 +325,7 @@ local prev_throttle_pos=0
 local once_per_sec = 1/update_rate
 function update()
 	local rpm = sensor_data.getEngineLeftRPM()
-    local throttle = sensor_data.getThrottleLeftPosition()
+    local throttle = fm_throttle_position:get()
     local gear = get_aircraft_draw_argument_value(0) -- nose gear
   
     update_rpm()

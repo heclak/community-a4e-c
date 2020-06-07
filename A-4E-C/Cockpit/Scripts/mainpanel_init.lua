@@ -50,23 +50,26 @@ CanopyLever.input   				= {0, 0.1, 0.9}
 CanopyLever.output  				= {1, 0.4, 0.0}
 CanopyLever.controller 				= controllers.base_gauge_CanopyPos
 
-StickPitch							= CreateGauge()
+StickPitch							= CreateGauge("parameter")
 StickPitch.arg_number				= 3
-StickPitch.input					= {-100, 100}
+StickPitch.input					= {-1, 1}
 StickPitch.output					= {-1, 1}
-StickPitch.controller				= controllers.base_gauge_StickPitchPosition
+--StickPitch.controller				= controllers.base_gauge_StickPitchPosition
+StickPitch.param_name				= "STICK_PITCH"
 
-StickBank							= CreateGauge()
+StickBank							= CreateGauge("parameter")
 StickBank.arg_number				= 2
-StickBank.input						= {-100, 100}
+StickBank.input						= {-1, 1}
 StickBank.output					= {-1, 1}
-StickBank.controller				= controllers.base_gauge_StickRollPosition
+--StickBank.controller				= controllers.base_gauge_StickRollPosition
+StickBank.param_name				= "STICK_ROLL"
 
-RudderPedals						= CreateGauge()
+RudderPedals						= CreateGauge("parameter")
 RudderPedals.arg_number				= 4
-RudderPedals.input					= {-100,100}
+RudderPedals.input					= {-1,1}
 RudderPedals.output					= {-1,1}
-RudderPedals.controller				= controllers.base_gauge_RudderPosition
+--RudderPedals.controller				= controllers.base_gauge_RudderPosition
+RudderPedals.param_name				= "RUDDER_PEDALS"
 
 Throttle							= CreateGauge("parameter")
 Throttle.arg_number					= 80
@@ -110,7 +113,7 @@ RollTrimKnob.parameter_name				= "ROLL_TRIM_KNOB"
 ---------------------------------------------------------------
 Engine_RPM                          = CreateGauge("parameter")
 Engine_RPM.arg_number               = 520
-Engine_RPM.input                    = {0.0, 103}
+Engine_RPM.input                    = {0.0, 1.03}
 Engine_RPM.output                   = {0.0, 1.0}
 Engine_RPM.parameter_name           = "RPM"
 

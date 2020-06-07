@@ -36,6 +36,8 @@ local fromKeyboard = false
 local FLAP_MAX_DEFLECTION = 50
 local FLAP_BLOWBACK_PSI = 3650
 
+local flaps_ind = get_param_handle("D_FLAPS_IND")
+
 dev:listen_command(Keys.PlaneFlaps)
 dev:listen_command(Keys.PlaneFlapsOn)
 dev:listen_command(Keys.PlaneFlapsOff)
@@ -73,12 +75,12 @@ end
 
 function SetCommand(command,value)
     if command == device_commands.flaps then
-        if value == 1 then
+        if value == -1 then
             -- target: retraction
             MOVING = 1
             FLAPS_TARGET = 0
             FLAPS_TARGET_LAST= 1
-        elseif value == -1 then
+        elseif value == 1 then
             -- target: extension
             MOVING = 1
             FLAPS_TARGET = 1
@@ -119,7 +121,6 @@ end
 local flaps_increment = update_time_step / FlapExtensionTimeSeconds -- sets the speed of flap animation
 function update()
     local delta
-    
     -- first test for velocity limit which triggers at ~230kts IAS
     if RelativePressureOnFlaps(FLAPS_STATE) > FLAP_BLOWBACK_PSI then
         FLAPS_STATE = FLAPS_STATE - flaps_increment -- force flaps in if too much pressure on them
@@ -158,6 +159,8 @@ function update()
     elseif FLAPS_STATE > 1 then
         FLAPS_STATE = 1
     end
+	
+	flaps_ind:set(FLAPS_STATE)
             
 	--set_aircraft_draw_argument_value(9,FLAPS_STATE)
 	--set_aircraft_draw_argument_value(10,FLAPS_STATE)

@@ -8,6 +8,7 @@
 #include <fstream>
 
 FILE* stream;
+FILE* g_log = NULL;
 
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
@@ -28,11 +29,15 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 			SetConsoleTitle((L"DCS A-4 Debug Console"));
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_BLUE);
 		}
+
+		fopen_s(&g_log, "C:/tmp/log.txt", "w");
 #endif
 		break;
 	case DLL_THREAD_ATTACH:
+		break;
 	case DLL_THREAD_DETACH:
 	case DLL_PROCESS_DETACH:
+		fclose(g_log);
 		break;
 	}
 	return TRUE;
