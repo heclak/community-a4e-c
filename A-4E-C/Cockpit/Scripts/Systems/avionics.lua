@@ -166,10 +166,10 @@ local accel_val_min = 1.0
 
 -----------------------------------------------------------------------------
 -- Cockpit Lighting
-lights_int_floodwhite = get_param_handle("LIGHTS-FLOOD-WHITE")
-lights_int_floodred = get_param_handle("LIGHTS-FLOOD-RED")
-lights_int_instruments = get_param_handle("LIGHTS-INST")
-lights_int_console = get_param_handle("LIGHTS-CONSOLE")
+local lights_int_floodwhite = get_param_handle("LIGHTS-FLOOD-WHITE")
+local lights_int_floodred = get_param_handle("LIGHTS-FLOOD-RED")
+local lights_int_instruments = get_param_handle("LIGHTS-INST")
+local lights_int_console = get_param_handle("LIGHTS-CONSOLE")
 
 local FLOODRED_DIM = 0.4
 local FLOODRED_MED = 0.48
@@ -180,25 +180,25 @@ local lights_floodred_val = FLOODRED_DIM
 local lights_instruments_val = 0
 local lights_console_val = 0
 
-inst_lights_first_on_time = 0
-inst_lights_warmup_time = 1.5 -- time it takes for the incandescent light bulbs to warm up
-inst_lights_max_brightness_multiplier = 0
-inst_lights_are_cold = true
+local inst_lights_first_on_time = 0
+local inst_lights_warmup_time = 1.5 -- time it takes for the incandescent light bulbs to warm up
+local inst_lights_max_brightness_multiplier = 0
+local inst_lights_are_cold = true
 
-console_lights_first_on_time = 0
-console_lights_warmup_time = 2 -- time it takes for the incandescent light bulbs to warm up
-console_lights_max_brightness_multiplier = 0
-console_lights_are_cold = true
+local console_lights_first_on_time = 0
+local console_lights_warmup_time = 2 -- time it takes for the incandescent light bulbs to warm up
+local console_lights_max_brightness_multiplier = 0
+local console_lights_are_cold = true
 
-red_floodlights_first_on_time = 0
-red_floodlights_warmup_time = 2.8 -- time it takes for the incandescent light bulbs to warm up
-red_floodlights_max_brightness_multiplier = 0
-red_floodlights_are_cold = true
+local red_floodlights_first_on_time = 0
+local red_floodlights_warmup_time = 2.8 -- time it takes for the incandescent light bulbs to warm up
+local red_floodlights_max_brightness_multiplier = 0
+local red_floodlights_are_cold = true
 
-white_floodlights_first_on_time = 0
-white_floodlights_warmup_time = 2.8 -- time it takes for the incandescent light bulbs to warm up
-white_floodlights_max_brightness_multiplier = 0
-white_floodlights_are_cold = true
+local white_floodlights_first_on_time = 0
+local white_floodlights_warmup_time = 2.8 -- time it takes for the incandescent light bulbs to warm up
+local white_floodlights_max_brightness_multiplier = 0
+local white_floodlights_are_cold = true
 -----------------------------------------------------------------------------
 -- Vertical Velocity Indicator
 vvi = get_param_handle("VVI")
@@ -839,24 +839,20 @@ function update_wheels_light()
 end
 
 -- temporary functions to deal with master test of lights that aren't handled elsewhere yet
-local test_glare_labs=get_param_handle("D_GLARE_LABS")
-local test_glare_iff=get_param_handle("D_GLARE_IFF")
-local test_glare_fire=get_param_handle("D_GLARE_FIRE")
-local test_ladder_fuelboost=get_param_handle("D_FUELBOOST_CAUTION")
-local test_ladder_conthyd=get_param_handle("D_CONTHYD_CAUTION")
-local test_ladder_utilhyd=get_param_handle("D_UTILHYD_CAUTION")
-local test_ladder_fueltrans=get_param_handle("D_FUELTRANS_CAUTION")
-local test_oil_low=get_param_handle("D_OIL_LOW")
-local test_advisory_inrange=get_param_handle("D_ADVISORY_INRANGE")
-local test_advisory_setrange=get_param_handle("D_ADVISORY_SETRANGE")
-local test_advisory_dive=get_param_handle("D_ADVISORY_DIVE")
-
-local test_glare_rwr_param=get_param_handle("D_GLARE_RWR")
-
-local rwr_status_light_param=get_param_handle("RWR_STATUS_LIGHT")
+local test_glare_labs       = get_param_handle("D_GLARE_LABS")
+local test_glare_iff        = get_param_handle("D_GLARE_IFF")
+local test_glare_fire       = get_param_handle("D_GLARE_FIRE")
+local test_ladder_fuelboost = get_param_handle("D_FUELBOOST_CAUTION")
+local test_ladder_conthyd   = get_param_handle("D_CONTHYD_CAUTION")
+local test_ladder_utilhyd   = get_param_handle("D_UTILHYD_CAUTION")
+local test_ladder_fueltrans = get_param_handle("D_FUELTRANS_CAUTION")
+local test_oil_low          = get_param_handle("D_OIL_LOW")
+local test_advisory_inrange = get_param_handle("D_ADVISORY_INRANGE")
+local test_advisory_setrange= get_param_handle("D_ADVISORY_SETRANGE")
+local test_advisory_dive    = get_param_handle("D_ADVISORY_DIVE")
 
 function update_test()
-    if master_test_param:get()==1 and get_elec_primary_ac_ok() then
+    if master_test_param:get() == 1 and get_elec_primary_ac_ok() then
         test_glare_labs:set(1)
         test_glare_iff:set(1)
         test_glare_fire:set(1)
@@ -867,12 +863,10 @@ function update_test()
         test_advisory_inrange:set(1)
         test_advisory_setrange:set(1)
         test_advisory_dive:set(1)
-		test_glare_rwr_param:set(1)
 		
     else
         test_glare_labs:set(0)
 	    test_glare_iff:set(0)
-		test_glare_rwr_param:set(rwr_status_light_param:get())
         test_glare_fire:set(0)
         glareshield_WHEELS:set(glareshield_wheels_value)
         test_ladder_fuelboost:set(0)
