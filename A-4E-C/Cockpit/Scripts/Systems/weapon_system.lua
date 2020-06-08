@@ -320,7 +320,7 @@ end
 
 -- update visual state of the LABS annunciator
 function update_labs_annunciator()
-    if MASTER_TEST_BTN:get() == 1 or glare_labs_annun_state then
+    if get_elec_primary_ac_ok() and (MASTER_TEST_BTN:get() == 1 or glare_labs_annun_state) then
         GLARE_LABS_ANNUN:set(1)
     else
         GLARE_LABS_ANNUN:set(0)

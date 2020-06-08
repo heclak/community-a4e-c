@@ -78,10 +78,6 @@ local Launch_played=false
 local Lock_played=false
 
 local master_test_param 			= get_param_handle("D_MASTER_TEST")
---local glare_rwr_light=get_param_handle("D_GLARE_RWR")	-- glare_rwr_light:set(rwr_val)
-local glare_rwr_light					= get_param_handle("D_GLARE_OBST")	--glare_obst_light:set(obst_val) --USED ONLY UNTIL PROPPER LIGHT IS IN
-
-local glare_rwr_param					= get_param_handle("D_GLARE_RWR")
 local rwr_status_light_param	= get_param_handle("RWR_STATUS_LIGHT")
 local rwr_status_signal_param	= get_param_handle("RWR_STATUS_SIGNAL")
 rwr_status_light_param:set(0)
@@ -341,17 +337,14 @@ function update()
 		
 		if tmp_rwr_signal == 2 then
 			rwr_status_light_param:set(1)
-			glare_rwr_param:set(1)
 			if rwrLaunch:is_playing() then
 				rwrLaunch:stop()
 			end
 		elseif tmp_rwr_signal == 3 then
 			if rwr_status_light_param:get()==0 then
 				rwr_status_light_param:set(1)
-				glare_rwr_param:set(1)
 			else
 				rwr_status_light_param:set(0)
-				glare_rwr_param:set(0)
 			end
 				if not rwrLaunch:is_playing()  then
 					rwrLaunch:play_continue()
@@ -362,7 +355,6 @@ function update()
 			
 		elseif tmp_rwr_signal < 2 then
 			rwr_status_light_param:set(0)
-			glare_rwr_param:set(0)
 			
 			if rwrLaunch:is_playing() then
 				rwrLaunch:stop()

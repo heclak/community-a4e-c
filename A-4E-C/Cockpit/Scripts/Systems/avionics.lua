@@ -871,8 +871,7 @@ function update_test()
 		
     else
         test_glare_labs:set(0)
-       -- test_glare_iff:set(0)
-	    test_glare_iff:set(rwr_status_light_param:get())
+	    test_glare_iff:set(0)
 		test_glare_rwr_param:set(rwr_status_light_param:get())
         test_glare_fire:set(0)
         glareshield_WHEELS:set(glareshield_wheels_value)
