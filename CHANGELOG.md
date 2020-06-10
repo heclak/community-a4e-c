@@ -56,6 +56,8 @@ Please list the changes you've made in this file. We should try to follow the gu
 - added option to remove ECM control panel from cockpit via mission editor
 - added option to choose between MIL Power or Manual catapult launch in A-4E options menu
 - added ability to map two axis to the brake axis. Both axis still function as one combined brake axis and does not perform differential braking.
+- added payload options for 2 x AN-M57A1 and 3 x AN-M57A1 with the TER
+- added PictureBlenderColor property which is required for newer ME icons
 - Liveries:
   - added Trainer USMC VMAT-102
   - added Trainer USN Bare Metal 1956
@@ -87,8 +89,13 @@ Please list the changes you've made in this file. We should try to follow the gu
 - rewrite more accurate simulation of APN-153 warmup time. Change APN-153 TEST sequence.
 - changed brightness of lights to match lighting changes in 2.5.6
 - renamed radio in mission editor to ARC-51A
+- turbine fan blade is now an opaque texture instead of translucent
 - updated hydraulic system pressurization to occur when engine startup has reached idle rpm. (#189)
   - Although idle rpm is set at 55%, the sim approaches but does not reach 55.0 or greater upon startup. Lower the hydraulic checks to 54.9 will guarantee the trigger to occur for engine startups.
+- changed AN-M30, AN-M57, and AN-M65 to use models and weapon definitions in DCS Core
+- updated weapon payloads to use newer TER model in DCS Core
+- THREAT light on glareshield has been returned to the original IFF light. RHWS warnings are available on the ECM panel as per aircraft.
+- increased IR emission coefficient to 0.5 to be more inline with other modules.
 - 3D/External model
   - updated navigation lights
   - fixed uv for pylons, bypass fan, fuselage bottom
@@ -127,6 +134,8 @@ Please list the changes you've made in this file. We should try to follow the gu
 
 ### Removed
 
+- removed custom models and weapon definitions for AN-M30, AN-M-57, AN-M65
+
 ### Fixed
 
 - ECM panel indicators will now work with master test light button
@@ -150,6 +159,8 @@ Please list the changes you've made in this file. We should try to follow the gu
 - fixed issue where ECM panel still functions without power
 - fixed issue with missing shrike pylons in multiplayer
 - fixed issue where pylon cannot be removed from AI aircraft
+- added back engine exhaust smoke
+- fixed issue where engine compressor fan does not rotate for AI and multiplayer (#219)
 - 3D/Cockpit Model
   - fixed canopy uv mapping
   - fixed white floodlight canopy glare
