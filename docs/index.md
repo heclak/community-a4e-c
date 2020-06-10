@@ -34,7 +34,7 @@ SkateZilla, uboats, The Original HoggitDev Team, LevelPulse, Cubeboy, Luciano, M
 
 ### Version 1.4 Changelog: Featured Items
 
-- Updated carrier launch procedures to support more carriers (partial DCS: Supercarrier functionality)
+- Updated carrier launch procedures to support more carriers (DCS:Supercarrier workarounds included)
 - More catapult launch options. Configuration for catapult behavior added to module options in the DCS main menu. From the DCS World main menu, see Options > Special > A-4E-C
 - Updated cockpit model, interior and exterior lighting
 - Updated collision model, critical damage, and IR profile
