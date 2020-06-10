@@ -64,7 +64,7 @@ Find a bug? [Let us know!](https://github.com/heclak/community-a4e-c/issues)
 
 Failure to perform these steps will result in DCS World not recognizing the module, inability to use the module, input errors when using the module, or client integrity check failures on multiplayer servers that require them. Never install the A-4E-C files directly into your DCS World installation files!
 
-STEP 1: Upgrading from an older release
+### STEP 1: Upgrading from an older release
 
 If you are upgrading from an older version of the A4-E-C, perform these following actions. You must delete the currently installed A-4E-C files before installing the new version, as some important files have been removed for this release, and your input binding must be reset and rebound in order to accommodate this release’s enhanced control scheme. If this is a new installation, skip this step and move on to Step 2.
 
@@ -72,7 +72,7 @@ If you are upgrading from an older version of the A4-E-C, perform these followin
 - Delete your A4-E-C input settings by opening the following folder: `C:\Users\username\Saved Games\DCS\Input\A4-E-C`
 - Delete the joystick, keyboard, mouse and trackir folders.
 
-STEP 2: Installing the module files.
+### STEP 2: Installing the module files.
 
 - Download the latest official A4-E-C release package. Do not download directly from the Github repository.
 - Unzip the contents of the `A4-E-C` folder in the zip into the following folder: `C:\Users\username\Saved Games\DCS`
@@ -82,14 +82,11 @@ Your correctly installed files should look something like the following image, s
 
 ![Image of A-4E-C installation](https://user-images.githubusercontent.com/46121009/84217257-3b358600-aafe-11ea-9203-20d787b09662.png)
 
-STEP 3: Launch DCS World and verify installation
+### STEP 3: Launch DCS World and verify installation
 
 When you are confident your files are correctly installed, launch DCS World. If your installation was successful, the A4-E-C’s theme icon appears as a option in the main menu:
 
 ![Image of DCS World Menu with A-4E installed](https://cdn.discordapp.com/attachments/518815071858589697/720094260699070464/unknown.png)
-### Updating to the latest version
-
-To update your A-4E-C to the latest version. You **must delete** the currently installed A-4E-C folder before placing the new version in its place. This is to remove any old files that are no longer used in the updated version. Not doing so will cause problems with your installation.
 
 ## Installation Troubleshooting
 
