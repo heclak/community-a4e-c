@@ -425,8 +425,8 @@ A_4E_C =  {
     has_speedbrake              =  true,
 
     RCS                         =  3.4,                   -- Radar Cross Section m2.  Proportionally scaled RCS of F-16's 4.0.
-    IR_emission_coeff           =  0.275,                 -- Normal engine -- IR_emission_coeff = 1 is Su-27 without afterburner. It is reference. 33,820 lbf dry for Su-27. 9300 lbf dry A-4 = 0.275
-    IR_emission_coeff_ab        =  0.275,                 -- With afterburner
+    IR_emission_coeff           =  0.5,                   -- Normal engine -- IR_emission_coeff = 1 is Su-27 without afterburner. It is reference.
+    IR_emission_coeff_ab        =  0.5,                   -- With afterburner
 
     stores_number               =  5,                     -- Amount of pylons.
 
