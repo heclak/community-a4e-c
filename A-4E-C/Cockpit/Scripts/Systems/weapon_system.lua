@@ -181,6 +181,7 @@ WeaponSystem:listen_command(Keys.ArmsFuncSelectorCCW)
 WeaponSystem:listen_command(Keys.ArmsFuncSelectorCW)
 WeaponSystem:listen_command(Keys.GunsReadyToggle)
 WeaponSystem:listen_command(device_commands.shrike_sidewinder_volume)
+WeaponSystem:listen_command(device_commands.shrike_selector)
 
 WeaponSystem:listen_command(device_commands.AWRS_quantity)
 WeaponSystem:listen_command(device_commands.AWRS_drop_interval)
@@ -211,8 +212,8 @@ local cbu2ba_quantity_array_pos = 0
 function post_initialize()
     startup_print("weapon_system: postinit start")
 
-    sndhost = create_sound_host("COCKPIT_ARMS","2D",0,0,0)
-    labs_tone = sndhost:create_sound("bombtone") -- refers to sdef file, and sdef file content refers to sound file, see DCSWorld/Sounds/sdef/_example.sdef
+    sndhost = create_sound_host("COCKPIT_ARMS","HEADPHONES",0,0,0)
+    labs_tone = sndhost:create_sound("Aircrafts/A-4E-C/bombtone") -- refers to sdef file, and sdef file content refers to sound file, see DCSWorld/Sounds/sdef/_example.sdef
     aim9seek = sndhost:create_sound("Aircrafts/Cockpits/AIM9")
     aim9lock = sndhost:create_sound("Aircrafts/Cockpits/SidewinderLow")
     --aim9lock2 = sndhost:create_sound("Aircrafts/Cockpits/SidewinderLowQuiet")
@@ -319,7 +320,7 @@ end
 
 -- update visual state of the LABS annunciator
 function update_labs_annunciator()
-    if MASTER_TEST_BTN:get() == 1 or glare_labs_annun_state then
+    if get_elec_primary_ac_ok() and (MASTER_TEST_BTN:get() == 1 or glare_labs_annun_state) then
         GLARE_LABS_ANNUN:set(1)
     else
         GLARE_LABS_ANNUN:set(0)
@@ -434,7 +435,7 @@ function update()
         --     once=true
         --     for i=1, num_stations, 1 do
         --         local station = WeaponSystem:get_station_info(i-1)
-        --         print_message_to_user("station "..tostring(i)..": count="..tostring(station.count)..",state="..tostring(station_states[i])..",l2="..tostring(station.weapon.level2)..",l3="..tostring(station.weapon.level3))
+        --         print_message_to_user("station "..tostring(i)..": count="..tostring(station.count)..",state="..tostring(station_states[i])..",l2="..tostring(station.weapon.level2)..",l3="..tostring(station.weapon.level3)..",l4="..tostring(station.weapon.level4))
         --     end
         -- end
 
@@ -1170,6 +1171,8 @@ function SetCommand(command,value)
         debug_print("shrike_sidewinder_volume: "..value)
         shrike_sidewinder_volume:set(value)
         aim9seek:update(nil, LinearTodB(shrike_sidewinder_volume:get()), nil)
+    elseif command == device_commands.shrike_selector then
+        -- print_message_to_user(value)
     end
 end
 

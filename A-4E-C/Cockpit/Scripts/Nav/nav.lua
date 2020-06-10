@@ -2,6 +2,7 @@ dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.script_path.."Systems/mission.lua")
+dofile(LockOn_Options.script_path.."Nav/NAV_util.lua")
 
 startup_print("nav: load")
 
@@ -40,14 +41,17 @@ local tacan_channel_param = get_param_handle("TACAN_CHANNEL")
 apn153_inputlist = {"OFF", "STBY", "LAND", "SEA", "TEST"}
 local apn153_input = "OFF"
 local apn153_state = "apn153-off"
-local apn153_warm = false
+local apn153_tempcondition = 0
 local apn153_warmup_timer = 0
 local apn153_test_timer = 99999
 local apn153_memorylight_test = 0
+local apn153_test_running = false -- check if test is running
 
 -- apn-153 shared output data
 local apn153_gs = get_param_handle("APN153-GS")
 local apn153_drift = get_param_handle("APN153-DRIFT")
+local apn153_wind_speed = get_param_handle("APN153-WIND-SPEED")
+local apn153_wind_dir = get_param_handle("APN153-WIND-DIR")
 
 -- apn-153 indicators
 local apn153_speed_Xnn = get_param_handle("APN153-SPEED-Xnn")
@@ -56,6 +60,11 @@ local apn153_speed_nnX = get_param_handle("APN153-SPEED-nnX")
 local apn153_drift_gauge = get_param_handle("APN153-DRIFT-GAUGE")
 local apn153_memorylight = get_param_handle("APN153-MEMORYLIGHT")
 
+-- apn-153 constants
+local APN153_WARMUP_TIME = 300 -- warmup time duration in seconds
+local APN153_COOLDOWN_TIME = 900 -- cooldown time duration in seconds. This number is an arbitrary number
+local APN153_WARMUP_DELTA = 100 / (APN153_WARMUP_TIME / update_time_step) -- calculate percentage warmup per simulation time step
+local APN153_COOLDOWN_DELTA = 100 / (APN153_COOLDOWN_TIME / update_time_step) -- calculate percentage cooldown per simulation time step
 
 -----------------------------------------------------------------------
 -----------------------------------------------------------------------
@@ -86,6 +95,14 @@ local asn41_d2_lon_offset = 0
 local asn41_magvar_offset = 0
 local asn41_winddir_offset = 0
 local asn41_windspeed_offset = 0
+
+local ppos_lat_push_state = 0
+local ppos_lon_push_state = 0
+local dest_lat_push_state = 0
+local dest_lon_push_state = 0
+local asn41_magvar_push_state = 0
+local asn41_windspeed_push_state = 0
+local asn41_winddir_push_state = 0
 
 -- asn-41 shared output data
 local asn41_valid = get_param_handle("ASN41-VALID")
@@ -287,8 +304,8 @@ local tacan_audio_active = false
 function post_initialize()
     startup_print("nav: postinit")
     sndhost = create_sound_host("COCKPIT_TACAN","HEADPHONES",0,0,0)
-    morse_dot_snd = sndhost:create_sound("MorzeDot") -- refers to sdef file, and sdef file content refers to sound file, see DCSWorld/Sounds/sdef/_example.sdef
-    morse_dash_snd = sndhost:create_sound("MorzeDash")
+    morse_dot_snd = sndhost:create_sound("Aircrafts/A-4E-C/MorzeDot") -- refers to sdef file, and sdef file content refers to sound file, see DCSWorld/Sounds/sdef/_example.sdef
+    morse_dash_snd = sndhost:create_sound("Aircrafts/A-4E-C/MorzeDash")
 
     local mhdg = get_magnetic()
   
@@ -344,7 +361,7 @@ function post_initialize()
         -- setup doppler
         apn153_state = "apn153-mem-stby"
         apn153_input = "STBY"
-        apn153_warm = true
+        apn153_tempcondition = 100
         apn153_warmup_timer = 0
         apn153_test_timer = 0
         dev:performClickableAction(device_commands.doppler_select, 0.1, true)   -- STBY by default for warm starts
@@ -357,7 +374,7 @@ function post_initialize()
         -- setup doppler
         apn153_state = "apn153-off"
         apn153_input = "OFF"
-        apn153_warm = false
+        apn153_tempcondition = 0
         apn153_warmup_timer = 99999
         apn153_test_timer = 99999
         dev:performClickableAction(device_commands.doppler_select, 0.0, true)   -- OFF by default for cold starts
@@ -393,41 +410,78 @@ function SetCommand(command,value)
         asn41_input = asn41_inputlist[ round((value*10)+1,0) ]
     elseif command == device_commands.bdhi_mode then
         bdhi_mode = bdhi_modelist[ value+2 ]   -- -1,0,1
+
+
+    ----------------------------------
+    -- NAV panel knob pushstates
+    ----------------------------------
+    elseif command == device_commands.ppos_lat_push then
+        if value == 1 or value == 0 then
+            ppos_lat_push_state = value
+        end
+    elseif command == device_commands.ppos_lon_push then
+        if value == 1 or value == 0 then
+            ppos_lon_push_state = value
+        end
+    elseif command == device_commands.dest_lat_push then
+        if value == 1 or value == 0 then
+            dest_lat_push_state = value
+        end
+    elseif command == device_commands.dest_lon_push then
+        if value == 1 or value == 0 then
+            dest_lon_push_state = value
+        end
+    elseif command == device_commands.asn41_magvar_push then
+        if value == 1 or value == 0 then
+            asn41_magvar_push_state = value
+        end
+    elseif command == device_commands.asn41_windspeed_push then
+        if value == 1 or value == 0 then
+            asn41_windspeed_push_state = value
+        end
+    elseif command == device_commands.asn41_winddir_push then
+        if value == 1 or value == 0 then
+            asn41_winddir_push_state = value
+        end
+
+    ----------------------------------
+    -- NAV panel knobs
+    ----------------------------------
     elseif command == device_commands.ppos_lat then
-        if asn41_state ~= "asn41-test" then
+        if asn41_state ~= "asn41-test" and ppos_lat_push_state == 1 then
             -- gain 0.1 so 0.015 per "tick", we want increments of 0.01 or less
             -- divide by 15 = 0.001 per tick, then multiply by 10
             asn41_ppos_lat_offset = asn41_ppos_lat_offset + (value*10/15)
         end
     elseif command == device_commands.ppos_lon then
-        if asn41_state ~= "asn41-test" then
+        if asn41_state ~= "asn41-test" and ppos_lon_push_state == 1 then
             asn41_ppos_lon_offset = asn41_ppos_lon_offset - (value*10/15) -- "positive" input = west which is negative lon
         end
     elseif command == device_commands.dest_lat then
-        if asn41_state == "asn41-off" or asn41_state == "asn41-stby" or asn41_state == "asn41-d1" then
+        if dest_lat_push_state == 1 and asn41_state == "asn41-off" or asn41_state == "asn41-stby" or asn41_state == "asn41-d1" then
             asn41_d1_lat_offset = asn41_d1_lat_offset + (value*10/15)
-        elseif asn41_state == "asn41-d2" then
+        elseif asn41_state == "asn41-d2" and dest_lat_push_state == 1 then
             asn41_d2_lat_offset = asn41_d2_lat_offset + (value*10/15)
         end
     elseif command == device_commands.dest_lon then
-        if asn41_state == "asn41-off" or asn41_state == "asn41-stby" or asn41_state == "asn41-d1" then
+        if dest_lon_push_state == 1 and asn41_state == "asn41-off" or asn41_state == "asn41-stby" or asn41_state == "asn41-d1" then
             asn41_d1_lon_offset = asn41_d1_lon_offset - (value*10/15) -- "positive" input = west which is negative lon
-        elseif asn41_state == "asn41-d2" then
+        elseif asn41_state == "asn41-d2" and dest_lon_push_state == 1 then
             asn41_d2_lon_offset = asn41_d2_lon_offset - (value*10/15) -- "positive" input = west which is negative lon
         end
     elseif command == device_commands.asn41_magvar then
-        if asn41_state ~= "asn41-test" then
+        if asn41_state ~= "asn41-test" and asn41_magvar_push_state == 1 then
             asn41_magvar_offset = asn41_magvar_offset + (value*100/15) -- 0.015 per click * 100/15 = ~0.1
             asn41_magvar_offset = asn41_magvar_offset % 360
         end
     elseif command == device_commands.asn41_windspeed then
-        if asn41_state ~= "asn41-test" then
+        if asn41_state ~= "asn41-test" and asn41_windspeed_push_state == 1 then
             asn41_windspeed_offset = asn41_windspeed_offset + (value*1000/15) -- 0.015 per click * 1000/15 = ~1
             if asn41_windspeed_offset < 0 then asn41_windspeed_offset = 0 end
             if asn41_windspeed_offset > 300 then asn41_windspeed_offset = 300 end
         end
     elseif command == device_commands.asn41_winddir then
-        if asn41_state ~= "asn41-test" then
+        if asn41_state ~= "asn41-test" and asn41_winddir_push_state == 1 then
             asn41_winddir_offset = asn41_winddir_offset + (value*1000/15) -- 0.015 per click * 1000/15 = ~1
             asn41_winddir_offset = asn41_winddir_offset % 360
         end
@@ -562,58 +616,6 @@ local function evalSrc(data_src, data_idx, navchnidx, tgt_brn, cur_hdg)
   
   return ct, tgt_brn
 end
-
-
--- extracts the digits from an XXX.YY lua number, returning them in reverse order using degree:minutes
--- first entry is "true" if number is positive
-function get_digits_LL123(x)
-    local y = {false, 0, 0, 0, 0, 0}
-    local n = 2
-
-    if x >= 0 then
-        y[1] = true
-    else
-        y[1] = false
-        x = math.abs(x)
-    end
-
-    local a,b = math.modf(x)
-    x = (a * 100) + (b * 60)
-
-    while x > 0 and n <= 6 do
-        y[n] = x % 10
-        x = math.floor(x/10)
-        n = n + 1
-    end
-
-    return y
-end
-
--- extracts the digits from an XX.YY lua number, returning them in reverse order using degree:minutes
--- first entry is "true" if number is positive
-function get_digits_LL122(x)
-    local y = {false, 0, 0, 0, 0}
-    local n = 2
-
-    if x >= 0 then
-        y[1] = true
-    else
-        y[1] = false
-        x = math.abs(x)
-    end
-
-    local a,b = math.modf(x)
-    x = (a * 100) + (b * 60)
-
-    while x > 0 and n <= 5 do
-        y[n] = x % 10
-        x = math.floor(x/10)
-        n = n + 1
-    end
-
-    return y
-end
-
 
 -- utility function to update nav display
 function draw_speed(x)
@@ -885,6 +887,9 @@ function update_asn41()
         else
             draw_ppos(-1, 1)
             draw_dest(0,0)
+            asn41_draw_windspeed(223.6)
+            asn41_draw_winddir(091)
+            asn41_valid:set(1)
             asn41_range:set(0)
             asn41_bearing:set( 120 )
             asn41_track:set( 30 )
@@ -944,8 +949,10 @@ function update_asn41()
             -- asn41-d1 output
             asn41_update_range_and_bearing(1)
             -- asn41-d1 draw
-            asn41_draw_windspeed( asn41_windspeed_offset )
-            asn41_draw_winddir( asn41_winddir_offset )
+            -- asn41_draw_windspeed( asn41_windspeed_offset )
+            -- asn41_draw_winddir( asn41_winddir_offset )
+            asn41_draw_windspeed(apn153_wind_speed:get())
+            asn41_draw_winddir(apn153_wind_dir:get())
             asn41_draw_magvar( asn41_magvar_offset )
             update_and_draw_ppos(asn41_ppos_lat_offset, asn41_ppos_lon_offset)  -- fully tracks present position
             draw_dest(asn41_d1_lat+asn41_d1_lat_offset, asn41_d1_lon+asn41_d1_lon_offset)
@@ -961,8 +968,10 @@ function update_asn41()
             -- asn41-d2 output
             asn41_update_range_and_bearing(2)
             -- asn41-d2 draw
-            asn41_draw_windspeed( asn41_windspeed_offset )
-            asn41_draw_winddir( asn41_winddir_offset )
+            -- asn41_draw_windspeed( asn41_windspeed_offset )
+            -- asn41_draw_winddir( asn41_winddir_offset )
+            asn41_draw_windspeed(apn153_wind_speed:get())
+            asn41_draw_winddir(apn153_wind_dir:get())
             asn41_draw_magvar( asn41_magvar_offset )
             update_and_draw_ppos(asn41_ppos_lat_offset, asn41_ppos_lon_offset)
             draw_dest(asn41_d2_lat+asn41_d2_lat_offset, asn41_d2_lon+asn41_d2_lon_offset)
@@ -982,8 +991,8 @@ performance:
     accurate from -40 to +40 degrees of drift
     uses variable-PRF narrow-beam microwave pulses
 
-    5 minutes to execute test mode
-    1 minute warmup
+    1 minutes to execute test mode
+    5 minute warmup
     first signal acquision "within 30 seconds of reaching 150 knots of ground speed and greater than 40 feet of altitude"
     bank limited to 30 degrees relative to terrain below, or else memory mode "may" trigger
 
@@ -1003,8 +1012,8 @@ states:
     apn153-off [0]:
         output: GS=0, drift=0
         set: "warm" = false
-        set: "warmup" timer = 1 minute in the future
-        set: "test" timer = 5 minutes in the future
+        set: "warmup" timer = 5 minute in the future
+        set: "test" timer = 1 minutes in the future
         
         transition: if switch == off, stay here
         transition: if switch == stby goto apn153-mem-stby
@@ -1013,7 +1022,7 @@ states:
         transition: if switch == test goto apn153-testrun
 
     apn153-testrun [1]:
-        upon entry, begin 5 minute "test" timer
+        upon entry, begin 1 minute "test" timer
         if "warmup" timer < now(), set "warm" = true
         output: GS=0, drift=0
 
@@ -1036,7 +1045,7 @@ states:
         transition: if switch == test, stay here
     
     apn153-mem-stby [3]:
-        set: "test" timer = 5 minutes in the future
+        set: "test" timer = 1 minutes in the future
         if "warmup" timer < now(), set "warm" = true
 
         output: memory light = on
@@ -1130,6 +1139,51 @@ function apn153_get_signal_ok()
     return true
 end
 
+-- Used to calculate the wind vector from the data provided by the AN/APN-153
+-- @return wind direction and wind speed
+function apn153_calculate_wind_vector(true_heading, true_airspeed, ground_track, ground_speed)
+    -- print_message_to_user("true heading: "..true_heading.." true airspeed: "..true_airspeed.." ground track: "..ground_track.." ground speed: "..ground_speed)
+
+    -- this function uses the air vector as the beginning of the vector path
+    -- flip the air vector in preparation for vector addition
+    local air_vector_heading_rad = math.rad((true_heading + 180) % 360)
+    -- convert to radians
+    local ground_track_rad = math.rad(ground_track)
+
+    -- calculate the wind vector
+    local air_vector = {
+        x = true_airspeed * math.cos(air_vector_heading_rad),
+        y = true_airspeed * math.sin(air_vector_heading_rad)
+    }
+    local ground_vector = {
+        x = ground_speed * math.cos(ground_track_rad),
+        y = ground_speed * math.sin(ground_track_rad)
+    }
+    local wind_vector = {
+        x = air_vector.x + ground_vector.x,
+        y = air_vector.y + ground_vector.y
+    }
+    wind_vector.magnitude = math.sqrt((wind_vector.x * wind_vector.x) + (wind_vector.y * wind_vector.y))
+
+    -- check which quadrant is the wind vector in and adjust the direction
+    -- this wind direction indicates the direction the wind is blowing towards
+    if wind_vector.x >= 0 and wind_vector.y >= 0 then -- quadrant 1
+        wind_vector.direction = math.deg(math.atan(wind_vector.y, wind_vector.x))
+    elseif wind_vector.x < 0 and wind_vector.y >= 0 then -- quadrant 2
+        wind_vector.direction = math.rad(math.atan(wind_vector.y, wind_vector.x)) + 180
+    elseif wind_vector.x < 0 and wind_vector.y < 0 then -- quadrant 3
+        wind_vector.direction = math.rad(math.atan(wind_vector.y, wind_vector.x)) + 180
+    elseif wind_vector.x >= 0 and wind_vector.y < 0 then -- quadrant 4
+        wind_vector.direction = math.rad(math.atan(wind_vector.y, wind_vector.x)) + 360
+    end
+
+    -- invert the wind direction to remain consistent with ATIS wind reporting
+    -- wind direction will indicate the direction the wind is coming FROM
+    wind_vector.direction = (wind_vector.direction + 180) % 360
+
+    return wind_vector.magnitude, wind_vector.direction
+end
+
 -- This function is executed by the AN/APN-153 for purposes of preventing large impluses in
 -- speed when the sensor transitions from inactive to active.  We run it on every pass through
 -- the update_apn153() function where apn153_speed_and_drift() does not execute.
@@ -1157,6 +1211,11 @@ function apn153_speed_and_drift(land)
     speed = speed * 72000 / knot2meter                          -- speed in knots = delta meters * (3600/update_time_step) * (1 / knot2meter)
 
     local angle = math.deg( math.atan2(curz-lastz, curx-lastx) ) % 360
+
+    -- calculate wind data and share
+    local wind_speed, wind_direction = apn153_calculate_wind_vector(heading, sensor_data.getTrueAirSpeed() * 1.94384, angle, speed)
+    apn153_wind_speed:set(wind_speed)
+    apn153_wind_dir:set(wind_direction)
 
     drift = (angle-heading)
     
@@ -1198,29 +1257,36 @@ function apn153_speed_and_drift(land)
     return speed,drift
 end
 
-    
+local function apn153_update_tempcondition()
+    -- warm up unit if power if applied but apply cooldown function if power is removed.
+    if apn153_state ~= "apn153-off" and apn153_tempcondition < 100 then
+        -- warmup unit
+        apn153_tempcondition = apn153_tempcondition + APN153_WARMUP_DELTA
+        if apn153_tempcondition > 100 then
+            apn153_tempcondition = 100
+        end
+    elseif apn153_state == "apn153-off" and apn153_tempcondition > 0 then
+        -- apply cooldown
+        apn153_tempcondition = apn153_tempcondition - APN153_COOLDOWN_DELTA
+        if apn153_tempcondition < 0 then
+            apn153_tempcondition = 0
+        end
+    end
 
-function update_apn153()
+    -- print_message_to_user("APN-153 Temp Condition: "..apn153_tempcondition)
+end
+
+local function update_apn153()
     local timenow = get_model_time() -- time since spawn in seconds
     local signalok = apn153_get_signal_ok()
     local updated = false
 
-    if not apn153_warm and timenow >= apn153_warmup_timer and apn153_state ~= "apn153-off" then
-        apn153_warm = true
-        print_message_to_user("AN/APN-153: warmup complete, time:"..timenow)
-    end
-
     if apn153_state == "apn153-off" then
         apn153_gs:set(0)
         apn153_drift:set(0)
-        apn153_memorylight:set( apn153_memorylight_test==1 and 1 or 0 )
-        apn153_warm = false
+        set_apn153_memorylight( apn153_memorylight_test==1 and 1 or 0 )
 
         if apn153_input ~= "OFF" then
-            print_message_to_user("AN/APN-153: warmup starting, time:"..timenow)
-            apn153_warmup_timer = timenow+60
-            apn153_test_timer = timenow+300
-
             if apn153_input == "STBY" then apn153_state = "apn153-mem-stby"
             elseif apn153_input == "LAND" then apn153_state = "apn153-mem-land"
             elseif apn153_input == "SEA" then apn153_state = "apn153-mem-sea"
@@ -1230,7 +1296,7 @@ function update_apn153()
 
     elseif apn153_state == "apn153-mem-stby" then
         -- speed and drift do not update in standby modes
-        apn153_memorylight:set(1)
+        set_apn153_memorylight(1)
 
         if apn153_input ~= "STBY" then
             if apn153_input == "OFF" then apn153_state = "apn153-off"
@@ -1242,7 +1308,7 @@ function update_apn153()
 
     elseif apn153_state == "apn153-mem-land" then
         -- speed and drift do not update in standby modes
-        apn153_memorylight:set(1)
+        set_apn153_memorylight(1)
 
         if apn153_input ~= "LAND" then
             if apn153_input == "OFF" then apn153_state = "apn153-off"
@@ -1251,14 +1317,14 @@ function update_apn153()
             elseif apn153_input == "TEST" then apn153_state = "apn153-test"
             end
         else
-            if apn153_warm and signalok then
+            if apn153_tempcondition == 100 and signalok then
                 apn153_state = "apn153-land"
             end
         end
 
     elseif apn153_state == "apn153-mem-sea" then
         -- speed and drift do not update in standby modes
-        apn153_memorylight:set(1)
+        set_apn153_memorylight(1)
 
         if apn153_input ~= "SEA" then
             if apn153_input == "OFF" then apn153_state = "apn153-off"
@@ -1267,13 +1333,13 @@ function update_apn153()
             elseif apn153_input == "TEST" then apn153_state = "apn153-test"
             end
         else
-            if apn153_warm and signalok then
+            if apn153_tempcondition == 100 and signalok then
                 apn153_state = "apn153-sea"
             end
         end
 
     elseif apn153_state == "apn153-land" then
-        apn153_memorylight:set( apn153_memorylight_test==1 and 1 or 0 )
+        set_apn153_memorylight( apn153_memorylight_test==1 and 1 or 0 )
 
         if apn153_input ~= "LAND" then
             if apn153_input == "OFF" then apn153_state = "apn153-off"
@@ -1296,7 +1362,7 @@ function update_apn153()
 
 
     elseif apn153_state == "apn153-sea" then
-        apn153_memorylight:set( apn153_memorylight_test==1 and 1 or 0 )
+        set_apn153_memorylight( apn153_memorylight_test==1 and 1 or 0 )
 
         if apn153_input ~= "SEA" then
             if apn153_input == "OFF" then apn153_state = "apn153-off"
@@ -1320,19 +1386,27 @@ function update_apn153()
     elseif apn153_state == "apn153-test" then
 
         if apn153_input ~= "TEST" then
-            if apn153_input == "OFF" then apn153_state = "apn153-off"
-            elseif apn153_input == "STBY" then apn153_state = "apn153-mem-stby"
-            elseif apn153_input == "LAND" then apn153_state = "apn153-mem-land"
-            elseif apn153_input == "SEA" then apn153_state = "apn153-mem-sea"
+            if apn153_input == "OFF" then 
+                apn153_test_running = false
+                apn153_state = "apn153-off"
+            elseif apn153_input == "STBY" then
+                apn153_test_running = false
+                apn153_state = "apn153-mem-stby"
+            elseif apn153_input == "LAND" then
+                apn153_test_running = false
+                apn153_state = "apn153-mem-land"
+            elseif apn153_input == "SEA" then
+                apn153_test_running = false
+                apn153_state = "apn153-mem-sea"
             end
         else
-            if timenow >= apn153_test_timer then
-                apn153_memorylight:set( apn153_memorylight_test==1 and 1 or 0 )
+            if apn153_tempcondition == 100 then
+                set_apn153_memorylight( apn153_memorylight_test==1 and 1 or 0 )
                 -- set the "test OK" values once upon entry
                 apn153_gs:set(121)
                 apn153_drift:set(0)
             else
-                apn153_memorylight:set(1)
+                set_apn153_memorylight(1)
             end
         end
 
@@ -1346,6 +1420,22 @@ function update_apn153()
 
     if not updated then
         apn153_speed_and_drift_dummy()  -- don't let lastx/lastz get far away, to prevent impulses in speed
+    end
+
+    apn153_update_tempcondition()
+end
+
+-- setter function for apn153 memory light
+-- do not set param directly to allow for electrical supply checks
+function set_apn153_memorylight(state)
+    if state ~= 0 and state ~= 1 then
+        return false
+    end
+
+    if get_elec_fwd_mon_ac_ok() and state == 1 then
+        apn153_memorylight:set(1)
+    else
+        apn153_memorylight:set(0)
     end
 end
 
@@ -1578,18 +1668,26 @@ end
 function update()
 	model_time = get_model_time()
 	get_base_sensor_data()
-    if not get_elec_26V_ac_ok() then
-        return
-    end
     
 	update_carrier_pos()
 	update_carrier_tcn()	
 	
-	  
-    update_apn153() -- AN/APN-153(V) RADAR NAVIGATION SET (DOPPLER)
-    update_asn41()  -- AN/ASN-41 NAVIGATION COMPUTER SYSTEM
-    update_tacan()  -- AN/ARN-52(V) TACAN BEARING-DISTANCE EQUIPMENT
-    update_bdhi()
+	if get_elec_fwd_mon_ac_ok() then
+        update_apn153() -- AN/APN-153(V) RADAR NAVIGATION SET (DOPPLER)
+        update_asn41()  -- AN/ASN-41 NAVIGATION COMPUTER SYSTEM
+    else
+        set_apn153_memorylight(0)
+        apn153_state = "apn153-off"
+        apn153_update_tempcondition()
+    end
+
+    if get_elec_mon_primary_ac_ok() then
+        update_tacan()  -- AN/ARN-52(V) TACAN BEARING-DISTANCE EQUIPMENT
+    end
+
+    if get_elec_26V_ac_ok() then
+        update_bdhi()
+    end
     if tacan_audio_active then
         update_morse_playback()
     end

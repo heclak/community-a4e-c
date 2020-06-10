@@ -13,8 +13,13 @@ end
 local ExtLight_LeftNav_arg = 190
 local ExtLight_RightNav_arg = 191
 local ExtLight_Tail_arg = 192
+local ExtLight_FuelProbe_arg = 193
 local ExtLight_TopCollision_arg = 198
 local ExtLight_BottomCollision_arg = 199
+local ExtLight_TopCollisionBrightness_arg = 200
+local ExtLight_BottomCollisionBrightness_arg = 202
+local ExtLight_TopCollisionRotation_arg = 201
+local ExtLight_BottomCollisionRotation_arg = 203
 local ExtLight_Taxi_arg = 208
 
 --[[
@@ -183,7 +188,7 @@ function SetCommand(command,value)
         if value == 1 or value == 0 then
             extlight_probe = value
         elseif value == -1 then
-            extlight_probe = 0.5
+            extlight_probe = 0.6
         end
     elseif command == Keys.ExtLightProbe then
         dev:performClickableAction(device_commands.extlight_probe, value, false)
@@ -207,7 +212,6 @@ function SetCommand(command,value)
 
     -- ANTI-COLLISION LIGHTING (ON/OFF)
     elseif command == device_commands.extlight_anticoll then
-        debug_print("Anti-Col: "..value)
         extlight_anticoll = value
     elseif command == Keys.ExtLightAnticollision then
         dev:performClickableAction(device_commands.extlight_anticoll, value, false)
@@ -286,19 +290,25 @@ local anticoll_inc = 1
 
 -- returns linear movement from 0.0 to 1.0 at 85 cycles per minute
 function update_anticoll_value()
-    if anticoll_inc == 1 then
-        flashcounter = flashcounter + (update_time_step*(flashperminute/60) * 0.5)
-    else
-        flashcounter = flashcounter - (update_time_step*(flashperminute/60) * 0.5)
-    end
+    -- if anticoll_inc == 1 then
+    --     flashcounter = flashcounter + (update_time_step*(flashperminute/60) * 0.5)
+    -- else
+    --     flashcounter = flashcounter - (update_time_step*(flashperminute/60) * 0.5)
+    -- end
 
-    if flashcounter > 1 or flashcounter < 0.075 then
-        anticoll_inc = 1 - anticoll_inc
-    end
+    -- if flashcounter > 1 or flashcounter < 0.075 then
+    --     anticoll_inc = 1 - anticoll_inc
+    -- end
 
-    -- set flashing duty cycle here
-    local a,b = math.modf(flashcounter) -- extract the decimal part
-    return b
+    -- -- set flashing duty cycle here
+    -- local a,b = math.modf(flashcounter) -- extract the decimal part
+    -- return b
+
+    local increase = math.pi * 2 / 2 * ((1/update_time_step) * (60/flashperminute))
+    local y = math.sin( flashcounter ) / 2 + 0.5
+    flashcounter = flashcounter + increase
+    return y
+
 end
 
 
@@ -342,13 +352,23 @@ function update()
         end
 
         set_aircraft_draw_argument_value(ExtLight_Taxi_arg, (gear > 0) and extlight_taxi or 0)
+        set_aircraft_draw_argument_value(ExtLight_FuelProbe_arg, extlight_probe)
 
         if extlight_anticoll == 1 then
-            set_aircraft_draw_argument_value(ExtLight_TopCollision_arg, anticoll)
-            set_aircraft_draw_argument_value(ExtLight_BottomCollision_arg, anticoll)
+            set_aircraft_draw_argument_value(ExtLight_TopCollision_arg, extlight_anticoll)
+            set_aircraft_draw_argument_value(ExtLight_BottomCollision_arg, extlight_anticoll)
+
+            set_aircraft_draw_argument_value(ExtLight_TopCollisionBrightness_arg, extlight_anticoll)
+            set_aircraft_draw_argument_value(ExtLight_BottomCollisionBrightness_arg, extlight_anticoll)
+
+            set_aircraft_draw_argument_value(ExtLight_TopCollisionRotation_arg, anticoll)
+            set_aircraft_draw_argument_value(ExtLight_BottomCollisionRotation_arg, anticoll)
         else
             set_aircraft_draw_argument_value(ExtLight_TopCollision_arg, 0)
             set_aircraft_draw_argument_value(ExtLight_BottomCollision_arg, 0)
+
+            set_aircraft_draw_argument_value(ExtLight_TopCollisionBrightness_arg, 0)
+            set_aircraft_draw_argument_value(ExtLight_BottomCollisionBrightness_arg, 0)
         end
 
     else
@@ -361,6 +381,11 @@ function update()
 
         set_aircraft_draw_argument_value(ExtLight_TopCollision_arg, 0)
         set_aircraft_draw_argument_value(ExtLight_BottomCollision_arg, 0)
+
+        set_aircraft_draw_argument_value(ExtLight_TopCollisionBrightness_arg, 0)
+        set_aircraft_draw_argument_value(ExtLight_BottomCollisionBrightness_arg, 0)
+
+        set_aircraft_draw_argument_value(ExtLight_FuelProbe_arg, 0)
     end
 
 end

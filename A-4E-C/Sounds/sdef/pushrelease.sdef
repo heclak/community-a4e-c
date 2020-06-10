@@ -1,6 +1,0 @@
-wave = "Effects/pushrelease.wav"
-
-inner_radius = 1
-outer_radius = 4
-
-detached = true

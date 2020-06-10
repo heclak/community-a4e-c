@@ -21,13 +21,16 @@ sensor_data.mod_fuel_flow = function()
 	return org_fuel_flow
 end
 
-local iCommandEnginesStart=309
-local iCommandEnginesStop=310
+local iCommandEnginesStart  = 309
+local iCommandEnginesStop   = 310
+local iCommandPlaneFuelOff  = 80
+local iCommandPlaneFuelOn   = 79
 
 local pressure_ratio = get_param_handle("PRESSURE_RATIO")
 local oil_pressure = get_param_handle("OIL_PRESSURE")
 local egt_c = get_param_handle("EGT_C")
 local engine_heat_stress = get_param_handle("ENGINE_HEAT_STRESS")
+local manual_fuel_control_warn_param = get_param_handle("MANUAL_FUEL_CONTROL_WARN")
 
 local throttle_position = get_param_handle("THROTTLE_POSITION")
 local throttle_position_wma = WMA(0.15, 0)
@@ -38,11 +41,16 @@ local ENGINE_IGN = 1
 local ENGINE_STARTING = 2
 local ENGINE_RUNNING = 3
 local engine_state = ENGINE_OFF
+local EMER_FUEL_SHUTOFF = false -- state of emergency fuel shutoff control 
+local EMER_FUEL_SHUTOFF_CATCH = false -- state of emergency fuel shutoff catch 
 
 local THROTTLE_OFF = 0
 local THROTTLE_IGN = 1
 local THROTTLE_ADJUST = 2
 local throttle_state = THROTTLE_ADJUST
+
+local manual_fuel_control_mode = 1
+local manual_fuel_control_mode_sw = 0
 
 ------------------------------------------------
 ----------------  CONSTANTS  -------------------
@@ -55,15 +63,17 @@ local throttle_state = THROTTLE_ADJUST
 Engine:listen_command(device_commands.push_starter_switch)
 Engine:listen_command(Keys.Engine_Start)
 Engine:listen_command(Keys.Engine_Stop)
+Engine:listen_command(device_commands.ENGINE_manual_fuel_shutoff)
 --Engine:listen_command(device_commands.throttle_axis)
 
 function post_initialize()
-	
-	local dev = GetSelf()
+
     dev:performClickableAction(device_commands.push_starter_switch,0,false)
     local throttle_clickable_ref = get_clickable_element_reference("PNT_80")
     local sensor_data = get_base_data()
     local throttle = sensor_data.getThrottleLeftPosition()
+    local manual_fuel_shutoff_clickable_ref = get_clickable_element_reference("PNT_130")
+    manual_fuel_shutoff_clickable_ref:hide(true)
 
     local birth = LockOn_Options.init_conditions.birth_place
     if birth=="GROUND_HOT" then
@@ -71,6 +81,7 @@ function post_initialize()
         throttle_state = THROTTLE_ADJUST
         throttle_clickable_ref:hide(throttle>0.01)
         dev:performClickableAction(device_commands.throttle_click,1,false)
+        dev:performClickableAction(device_commands.ENGINE_manual_fuel_shutoff,0,false)
     elseif birth=="AIR_HOT" then
         engine_state = ENGINE_RUNNING
         throttle_state = THROTTLE_ADJUST
@@ -102,9 +113,9 @@ function SetCommand(command,value)
 
     if command==device_commands.push_starter_switch then
         if value==1 then
-            if (engine_state==ENGINE_OFF) and rpm<5 and get_elec_external_power() then -- initiate ground start procedure
+            if (engine_state==ENGINE_OFF) and rpm<5 and get_elec_external_power() and EMER_FUEL_SHUTOFF == false then -- initiate ground start procedure
                 dispatch_action(nil,iCommandEnginesStart)
-            elseif (engine_state==ENGINE_OFF) and rpm<50 and rpm>10 and get_elec_primary_ac_ok() and get_elec_primary_dc_ok() and throttle_state==THROTTLE_IGN then -- initiate air start
+            elseif (engine_state==ENGINE_OFF) and rpm<50 and rpm>10 and get_elec_primary_ac_ok() and get_elec_primary_dc_ok() and throttle_state==THROTTLE_IGN  and EMER_FUEL_SHUTOFF == false  then -- initiate air start
                 engine_state = ENGINE_STARTING
                 dispatch_action(nil,iCommandEnginesStart)
             else
@@ -133,6 +144,10 @@ function SetCommand(command,value)
 --        --print_message_to_user("throt"..string.format("%.2f",throt))
 --        dispatch_action(nil, iCommandPlaneThrustCommon, throt)
     elseif command==device_commands.throttle_click then
+        -- validate that throttle is not in adjust range
+        if sensor_data.getThrottleLeftPosition() > 0.01 then 
+            return
+        end
         if value==0 and throttle_state==THROTTLE_ADJUST and throttle<=0.01 then
             -- click to IGN from adjust
             throttle_state = THROTTLE_IGN
@@ -151,8 +166,87 @@ function SetCommand(command,value)
             -- click to ADJUST from IGN
             throttle_state = THROTTLE_ADJUST
         end
+    elseif command == device_commands.throttle_click_ITER then
+        -- validate that throttle is not in adjust range else cancel action
+        if sensor_data.getThrottleLeftPosition() > 0.01 then
+            return
+        end
+        -- value should be +1 or -1
+        if value == -1 or value == 1 then
+
+            -- get current throttle state to iterate over
+            local current_throttle_click_position = 0
+            if throttle_state == THROTTLE_OFF then current_throttle_click_position = -1
+            elseif throttle_state == THROTTLE_IGN then current_throttle_click_position = 0
+            elseif throttle_state == THROTTLE_ADJUST then current_throttle_click_position = 1 end
+
+            -- iterate value of click position
+            local new_throttle_click_value = current_throttle_click_position + value
+            -- print_message_to_user("new.."..new_throttle_click_value)
+
+            -- validate throttle click value is within range
+            if new_throttle_click_value > 1 then new_throttle_click_value = 1
+            elseif new_throttle_click_value < -1 then new_throttle_click_value = -1
+            end
+            
+            dev:performClickableAction(device_commands.throttle_click, new_throttle_click_value, false)
+        end
+    elseif command==device_commands.ENGINE_manual_fuel_shutoff then
+        local manual_fuel_shutoff_catch_clickable_ref = get_clickable_element_reference("PNT_131")
+        -- if fuel is cut off, shutdown engines and prevent engines from restarting until lever is reset.
+        if value == 1 then
+            dispatch_action(nil,iCommandEnginesStop)
+            engine_state = ENGINE_OFF
+            Engine:performClickableAction(device_commands.push_starter_switch,0,false) -- pop up start button
+            EMER_FUEL_SHUTOFF = true
+            manual_fuel_shutoff_catch_clickable_ref:hide(true)
+        else
+            EMER_FUEL_SHUTOFF = false
+            manual_fuel_shutoff_catch_clickable_ref:hide(false)
+        end
+    elseif command==device_commands.ENGINE_manual_fuel_shutoff_catch then
+        -- catch needs to in the raise position before the manual fuel cutoff lever is allowed to be pulled.
+        local manual_fuel_shutoff_clickable_ref = get_clickable_element_reference("PNT_130")
+        if value == 1 then 
+            manual_fuel_shutoff_clickable_ref:hide(false)
+        else
+            manual_fuel_shutoff_clickable_ref:hide(true)
+        end
+    elseif command == device_commands.ENGINE_wing_fuel_sw then
+        -- print_message_to_user("Fuel Dump "..value)
+        if value == 1 then
+            -- activate fuel dump
+            dispatch_action(nil, iCommandPlaneFuelOn)
+        elseif value == -1 then
+            -- position: emer trans
+            -- TODO implement logic
+        elseif value == 0 then
+            -- position: off
+            dispatch_action(nil, iCommandPlaneFuelOff)
+        end
+    elseif command == device_commands.ENGINE_fuel_control_sw then
+        -- print_message_to_user("Fuel Control Switch: "..value)
+        if value == 1 then
+            -- position: manual
+            manual_fuel_control_mode_sw = 1
+        elseif value == 0 then
+            -- position: primary
+            manual_fuel_control_mode_sw = 0
+        end
+    elseif command == device_commands.ENGINE_drop_tanks_sw then
+        -- print_message_to_user("Drop Tanks Switch: "..value)
+        if value == 1 then
+            -- position: off
+            -- TODO implement logic
+        elseif value == 0 then
+            -- position: press
+            -- TODO implement logic
+        elseif value == -1 then
+            -- position: flight refuel
+            -- TODO implement logic
+        end
     else
-        print_message_to_user("engine unknown cmd: "..command.."="..tostring(value))
+        -- print_message_to_user("engine unknown cmd: "..command.."="..tostring(value))
     end
 end
 
@@ -326,6 +420,29 @@ function accumulate_temp()
     engine_heat_stress:set(life_s_accum)
 end
 
+function update_fuel_control_mode()
+    -- check fuel control switch state
+    if manual_fuel_control_mode_sw == 1 then
+        manual_fuel_control_mode = 1
+    elseif manual_fuel_control_mode_sw == 0 then
+        -- check if engine conditions allow for primary fuel control
+        -- fuel system switches to PRIMARY when engine rpm approximately 5 to 10 percent rpm
+        local engine_rpm = sensor_data.getEngineLeftRPM()
+        if engine_rpm > 8 then
+            manual_fuel_control_mode = 0
+        else
+            manual_fuel_control_mode = 1
+        end
+    end
+
+    -- update indicator
+    if manual_fuel_control_mode == 1 and get_elec_primary_ac_ok() then
+        manual_fuel_control_warn_param:set(1)
+    else
+        manual_fuel_control_warn_param:set(0)
+    end
+end
+
 local prev_rpm=0
 local prev_throttle_pos=0
 local once_per_sec = 1/update_rate
@@ -338,6 +455,7 @@ function update()
     update_oil_pressure()
     update_pressure_ratio()
     update_egt()
+    update_fuel_control_mode()
 
     once_per_sec = once_per_sec - 1
     if once_per_sec <= 0 then

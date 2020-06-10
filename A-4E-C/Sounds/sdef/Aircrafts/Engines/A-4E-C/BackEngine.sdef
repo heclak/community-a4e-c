@@ -1,0 +1,3 @@
+inherit = "Aircrafts/Engines/PlaneBackEngine"
+wave = "Effects/Aircrafts/Engines/Su25BackEngine"
+gain = 2.0

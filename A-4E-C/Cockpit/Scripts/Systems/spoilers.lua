@@ -1,5 +1,6 @@
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
+dofile(LockOn_Options.script_path.."Systems/hydraulic_system_api.lua")
 
 -- spoilers behavior / modeling
 --
@@ -74,16 +75,18 @@ function update()
 
 
     -- make primary adjustment if needed
-    if SPOILER_TARGET == 1 and SPOILER_STATE < 1 then
-        SPOILER_STATE = SPOILER_STATE + spoiler_extend_increment
-        if SPOILER_STATE > 1 then
-            SPOILER_STATE = 1
+    if get_hyd_utility_ok() then
+        if SPOILER_TARGET == 1 and SPOILER_STATE < 1 then
+            SPOILER_STATE = SPOILER_STATE + spoiler_extend_increment
+            if SPOILER_STATE > 1 then
+                SPOILER_STATE = 1
+            end
         end
-    end
-    if SPOILER_TARGET == 0 and SPOILER_STATE > 0 then
-        SPOILER_STATE = SPOILER_STATE - spoiler_retract_increment
-        if SPOILER_STATE < 0 then
-            SPOILER_STATE = 0
+        if SPOILER_TARGET == 0 and SPOILER_STATE > 0 then
+            SPOILER_STATE = SPOILER_STATE - spoiler_retract_increment
+            if SPOILER_STATE < 0 then
+                SPOILER_STATE = 0
+            end
         end
     end
 

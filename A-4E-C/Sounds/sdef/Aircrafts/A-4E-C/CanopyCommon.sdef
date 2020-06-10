@@ -1,0 +1,4 @@
+wave = "Effects/Aircrafts/CanopyCommon"
+inner_radius = 10
+outer_radius = 100
+gain = 0

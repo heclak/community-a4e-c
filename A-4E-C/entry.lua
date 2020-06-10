@@ -1,6 +1,11 @@
 -- set FM_dll to name of DLL with EFM, or nil to use SFM
-local FM_dll=nil
---local FM_dll='ED_FM_Template'
+local AFMenabled = false
+
+local bin = {}
+
+if AFMenabled == true then
+ bin = {'A4E_FM'}
+end
 
 local self_ID="A-4E-C"
 declare_plugin(self_ID,
@@ -11,14 +16,11 @@ displayName  = _("A-4E-C"),
 
 fileMenuName = _("A-4E-C"),
 update_id        = "A-4E-C",
-version		 = "1.3.1",	-- increment this number on the release branch. Use semantic versioning https://semver.org
+version		 = "1.4.0-beta-12",	-- increment this number on the release branch. Use semantic versioning https://semver.org
 state		 = "installed",
 info		 = _("A-4E-C aka \"Community A-4E\"\n\nThe A-4 is a lightweight, subsonic, single-engine attack aircraft. Entering service in 1956, it was designed to deliver conventional and nuclear weapons in daytime visual flight conditions.  However, using the APG-53(A) radar first installed on the A-4C, the A-4 is capable of all-weather navigation at low altitudes, as well as limited computer-assisted weapon delivery."),
 encyclopedia_path = current_mod_path..'/Encyclopedia',
-binaries   =
-{
-    FM_dll
-},
+binaries	 = bin,
 
 Skins	=
 	{
@@ -54,8 +56,8 @@ Options =
             dir			= "Options",
             CLSID		= "{A-4E-C options}"
         },
-    },		
-	
+    },
+
 })---------------------------------------------------------------------------------------
 
 -- mounting 3d model paths and texture paths
@@ -85,14 +87,13 @@ mount_vfs_texture_path  (current_mod_path.."/Textures/a4e_blueangels")
 --mount_vfs_sound_path    (current_mod_path.."/Sounds")
 
 -- Option Cockpit operationnel, HUD partiel
-local FM
-if FM_dll then
-    FM={self_ID,FM_dll}
+if AFMenabled == true then
+	local FM = {self_ID, 'A4E_FM'}
+	make_flyable('A-4E-C'	, current_mod_path..'/Cockpit/Scripts/', FM, current_mod_path..'/comm.lua')
 else
-    FM=nil
+	make_flyable('A-4E-C'	, current_mod_path..'/Cockpit/Scripts/', nil, current_mod_path..'/comm.lua')
 end
 
-make_flyable('A-4E-C'	, current_mod_path..'/Cockpit/Scripts/', FM, current_mod_path..'/comm.lua')
 
 dofile(current_mod_path..'/Weapons/A4E_Weapons.lua')
 dofile(current_mod_path..'/A-4E-C.lua')

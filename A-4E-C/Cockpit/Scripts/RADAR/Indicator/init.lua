@@ -46,4 +46,6 @@ night_color  = {243/255, 116/255, 13/255, 255/255}
 update_screenspace_diplacement(SelfWidth/SelfHeight,false)
 dedicated_viewport_arcade = dedicated_viewport
 
+try_find_assigned_viewport("A4E_RADAR")
+
 startup_print("radar HUD: load end")

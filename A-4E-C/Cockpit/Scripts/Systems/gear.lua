@@ -124,7 +124,7 @@ function SetCommand(command,value)
             if GEAR_ERR==0 then -- necessary to differentiate from gear error?
                 if gear_handle_pos == 1 then  -- gear handle down
                     if not get_hyd_utility_ok() then
-                        print_message_to_user("Emergency gear release")
+                        -- print_message_to_user("Emergency gear release")
                         GEAR_ERR = 1 -- necessary to differentiate from gear error?
                         GEAR_TARGET = 1
                     end
@@ -196,47 +196,52 @@ function update_gear()
         end
     end
 
-    -- make primary nosegear adjustments if needed
-    if GEAR_TARGET ~= GEAR_NOSE_STATE then
-        if GEAR_NOSE_STATE < GEAR_TARGET or GEAR_ERR==1 then
-            GEAR_NOSE_STATE = GEAR_NOSE_STATE + gear_nose_extend_increment
-            if GEAR_ERR == 1 then -- extend more quickly (drop by gravity and ram air pressure)
-                GEAR_NOSE_STATE = GEAR_NOSE_STATE + 2*gear_nose_extend_increment
-            end
-        else
-            if GEAR_ERR == 0 and allowRetract then
-                GEAR_NOSE_STATE = GEAR_NOSE_STATE - gear_nose_retract_increment
-            end
-        end
-    end
+    -- gear movement is dependent on operational utility hydraulics.
+    -- gear will be stuck in transit if hydraulic fails during transit.
+    if get_hyd_utility_ok() or GEAR_ERR == 1 then
 
-    -- make primary main gear adjustments if needed
-    if GEAR_TARGET ~= GEAR_LEFT_STATE or GEAR_TARGET ~= GEAR_RIGHT_STATE then
-        -- left gear moves first, both up and down
-        if GEAR_LEFT_STATE < GEAR_TARGET or GEAR_ERR==1 then
-            -- extending
-            GEAR_LEFT_STATE = GEAR_LEFT_STATE + gear_main_increment
-            if GEAR_ERR == 1 then -- extend more quickly (drop by gravity and ram air pressure)
-                GEAR_LEFT_STATE = GEAR_LEFT_STATE + 2*gear_main_increment
-            end
-        else
-            if GEAR_ERR == 0 and allowRetract then
-                GEAR_LEFT_STATE = GEAR_LEFT_STATE - gear_main_increment
-            end
-        end
-
-        -- right gear lags left gear by LeftSideLead seconds
-        if GEAR_RIGHT_STATE < GEAR_TARGET or GEAR_ERR==1 then
-            if GEAR_LEFT_STATE > LeftSideLead then
-                GEAR_RIGHT_STATE = GEAR_RIGHT_STATE + gear_main_increment
+        -- make primary nosegear adjustments if needed
+        if GEAR_TARGET ~= GEAR_NOSE_STATE then
+            if GEAR_NOSE_STATE < GEAR_TARGET or GEAR_ERR==1 then
+                GEAR_NOSE_STATE = GEAR_NOSE_STATE + gear_nose_extend_increment
                 if GEAR_ERR == 1 then -- extend more quickly (drop by gravity and ram air pressure)
-                    GEAR_RIGHT_STATE = GEAR_RIGHT_STATE + 2*gear_main_increment
+                    GEAR_NOSE_STATE = GEAR_NOSE_STATE + 2*gear_nose_extend_increment
+                end
+            else
+                if GEAR_ERR == 0 and allowRetract then
+                    GEAR_NOSE_STATE = GEAR_NOSE_STATE - gear_nose_retract_increment
                 end
             end
-        else
-            if GEAR_LEFT_STATE < (1-LeftSideLead) then
+        end
+
+        -- make primary main gear adjustments if needed
+        if GEAR_TARGET ~= GEAR_LEFT_STATE or GEAR_TARGET ~= GEAR_RIGHT_STATE then
+            -- left gear moves first, both up and down
+            if GEAR_LEFT_STATE < GEAR_TARGET or GEAR_ERR==1 then
+                -- extending
+                GEAR_LEFT_STATE = GEAR_LEFT_STATE + gear_main_increment
+                if GEAR_ERR == 1 then -- extend more quickly (drop by gravity and ram air pressure)
+                    GEAR_LEFT_STATE = GEAR_LEFT_STATE + 2*gear_main_increment
+                end
+            else
                 if GEAR_ERR == 0 and allowRetract then
-                    GEAR_RIGHT_STATE = GEAR_RIGHT_STATE - gear_main_increment
+                    GEAR_LEFT_STATE = GEAR_LEFT_STATE - gear_main_increment
+                end
+            end
+
+            -- right gear lags left gear by LeftSideLead seconds
+            if GEAR_RIGHT_STATE < GEAR_TARGET or GEAR_ERR==1 then
+                if GEAR_LEFT_STATE > LeftSideLead then
+                    GEAR_RIGHT_STATE = GEAR_RIGHT_STATE + gear_main_increment
+                    if GEAR_ERR == 1 then -- extend more quickly (drop by gravity and ram air pressure)
+                        GEAR_RIGHT_STATE = GEAR_RIGHT_STATE + 2*gear_main_increment
+                    end
+                end
+            else
+                if GEAR_LEFT_STATE < (1-LeftSideLead) then
+                    if GEAR_ERR == 0 and allowRetract then
+                        GEAR_RIGHT_STATE = GEAR_RIGHT_STATE - gear_main_increment
+                    end
                 end
             end
         end
@@ -301,7 +306,7 @@ function update_gear()
         end
     end
 
-    if ( ((GEAR_NOSE_STATE+GEAR_LEFT_STATE+GEAR_RIGHT_STATE)/3) ~= gear_handle_pos) then
+    if ( ((GEAR_NOSE_STATE+GEAR_LEFT_STATE+GEAR_RIGHT_STATE)/3) ~= gear_handle_pos) and get_elec_primary_ac_ok() then
         gear_light_param:set(1.0)
     else
         gear_light_param:set(0.0)
@@ -358,6 +363,21 @@ landing gear handle.
     have power on emergency generator.
 
 pg 1-30
+A warning light in the wheel-shaped handle of the
+control comes on when the handle is moved to either
+of its two positions. The light remains on until the
+wheels are locked in either the up or down position.
+The position of the wheels is shown on the wheels
+and flaps position indicator on the left console. A
+flasher-type wheels warning light (figures 1-5 and
+1-6) i s installed beneath the upper left side of the
+glareshield adjacent to the LABS light. With the
+wing flap handle at any position other than the UP
+detent and the landing gear up or unsafe, retarding
+the throttle below approximately 92 percent rpm
+causes the WHEELS warning light to flash, informing
+the pilot of a possible unsafe condition.
+
 In the event of utility hydraulic system failure, the
 landing gear may be lowered manually by means of
 the emergency landing gear release T -handle (figures

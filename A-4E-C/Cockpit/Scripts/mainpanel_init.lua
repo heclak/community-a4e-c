@@ -1,4 +1,4 @@
-shape_name   	   = "Cockpit_A-4E" --"Cockpit_A4F
+shape_name   	   = "Cockpit_A-4E"
 is_EDM			   = true
 new_model_format   = true
 ambient_light    = {255,255,255}
@@ -67,6 +67,18 @@ RudderPedals.arg_number				= 4
 RudderPedals.input					= {-100,100}
 RudderPedals.output					= {-1,1}
 RudderPedals.controller				= controllers.base_gauge_RudderPosition
+
+LeftBrakePedal						= CreateGauge("parameter")
+LeftBrakePedal.arg_number			= 5
+LeftBrakePedal.input				= {-1,1}
+LeftBrakePedal.output				= {0,1}
+LeftBrakePedal.parameter_name		= "LEFT_BRAKE_PEDAL"
+
+RightBrakePedal						= CreateGauge("parameter")
+RightBrakePedal.arg_number			= 6
+RightBrakePedal.input				= {-1,1}
+RightBrakePedal.output				= {0,1}
+RightBrakePedal.parameter_name		= "RIGHT_BRAKE_PEDAL"
 
 Throttle							= CreateGauge("parameter")
 Throttle.arg_number					= 80
@@ -170,6 +182,12 @@ PressureRatio.arg_number            = 151
 PressureRatio.input                 = {1.2, 3.4}
 PressureRatio.output                = {0.0, 1.0}
 PressureRatio.parameter_name        = "PRESSURE_RATIO"
+
+ManualFuelControl_Warn                       = CreateGauge("parameter")
+ManualFuelControl_Warn.arg_number            = 105
+ManualFuelControl_Warn.input                 = {0.0, 1.0}
+ManualFuelControl_Warn.output                = {0.0, 1.0}
+ManualFuelControl_Warn.parameter_name        = "MANUAL_FUEL_CONTROL_WARN"
 
 ---------------------------------------------------------------
 -- INSTRUMENTS
@@ -276,7 +294,7 @@ LAWS_OFF.parameter_name   = "D_RADAR_OFF"
 LAWS_light_gauge					= CreateGauge("parameter")
 LAWS_light_gauge.arg_number		= 605
 LAWS_light_gauge.input			= { 0.0, 1.0}
-LAWS_light_gauge.output			= {0.0, 1.0}
+LAWS_light_gauge.output			= {0.0, 0.6}
 LAWS_light_gauge.parameter_name   = "D_RADAR_WARN"
 
 Oil_light_gauge                      = CreateGauge("parameter")
@@ -309,24 +327,17 @@ Glareshield_OBST.input                  = {0.0, 1.0}
 Glareshield_OBST.output                 = {0.0, 1.0}
 Glareshield_OBST.parameter_name         = "D_GLARE_OBST"
 
---[[ -- Replace by THREAT light
 Glareshield_IFF                         = CreateGauge("parameter")
 Glareshield_IFF.arg_number              = 158
 Glareshield_IFF.input                   = {0.0, 1.0}
 Glareshield_IFF.output                  = {0.0, 1.0}
-Glareshield_IFF.parameter_name          = "D_GLARE_IFF"]]--
+Glareshield_IFF.parameter_name          = "D_GLARE_IFF"
 
 Glareshield_FIRE                        = CreateGauge("parameter")
 Glareshield_FIRE.arg_number             = 159
 Glareshield_FIRE.input                  = {0.0, 1.0}
 Glareshield_FIRE.output                 = {0.0, 1.0}
 Glareshield_FIRE.parameter_name         = "D_GLARE_FIRE"
-
-Glareshield_RWR                         = CreateGauge("parameter")
-Glareshield_RWR.arg_number              = 373
-Glareshield_RWR.input                   = {0.0, 1.0}
-Glareshield_RWR.output                  = {0.0, 1.0}
-Glareshield_RWR.parameter_name          = "D_GLARE_RWR"
 
 BDHI_Heading                        = CreateGauge("parameter")
 BDHI_Heading.parameter_name         = "BDHI_HDG"
@@ -665,6 +676,12 @@ AFCS_HDG_1s.input                = {0.0, 1.0}
 AFCS_HDG_1s.output               = {0.0, 1.0}
 AFCS_HDG_1s.parameter_name       = "AFCS_HDG_1s"
 
+APG53A_Glow								= CreateGauge("parameter")
+APG53A_Glow.arg_number					= 115
+APG53A_Glow.input						= {0.0, 1.0}
+APG53A_Glow.output						= {0.0, 1.0}
+APG53A_Glow.parameter_name				= "APG53A_GLOW"
+
 
 -- APN-153 Doppler Radar
 
@@ -930,7 +947,7 @@ ARC51_Freq_Preset.parameter_name     = "ARC51-FREQ-PRESET"
 FloodWhite                          = CreateGauge("parameter")
 FloodWhite.arg_number               = 111
 FloodWhite.input                    = {0.0, 1.0}
-FloodWhite.output                   = {0.0, 1.0}
+FloodWhite.output                   = {0.0, 0.75}
 FloodWhite.parameter_name           = "LIGHTS-FLOOD-WHITE"
 
 FloodRed                            = CreateGauge("parameter")
@@ -985,49 +1002,55 @@ Stopwatch_secs.parameter_name      = "STOPWATCH_SECS"
 
 --------------------ECM panel
 
-ECM_Test_Upper_U		                    = CreateGauge("parameter")
-ECM_Test_Upper_U.arg_number                 = 514
-ECM_Test_Upper_U.input                      = {0.0, 1.0}
-ECM_Test_Upper_U.output                     = {0.0, 1.0}
-ECM_Test_Upper_U.parameter_name             = "ECM_TEST_UPPER_U"
+ECM_TEST		                    = CreateGauge("parameter")
+ECM_TEST.arg_number                 = 514
+ECM_TEST.input                      = {0.0, 1.0}
+ECM_TEST.output                     = {0.0, 1.0}
+ECM_TEST.parameter_name             = "ECM_TEST"
 
-ECM_Test_Upper_LL		                    = CreateGauge("parameter")
-ECM_Test_Upper_LL.arg_number                = 515
-ECM_Test_Upper_LL.input                     = {0.0, 1.0}
-ECM_Test_Upper_LL.output                    = {0.0, 1.0}
-ECM_Test_Upper_LL.parameter_name            = "ECM_TEST_UPPER_LL"
+ECM_GO		                    	= CreateGauge("parameter")
+ECM_GO.arg_number                	= 515
+ECM_GO.input                     	= {0.0, 1.0}
+ECM_GO.output                    	= {0.0, 1.0}
+ECM_GO.parameter_name            	= "ECM_GO"
 
-ECM_Test_Upper_LR		                    = CreateGauge("parameter")
-ECM_Test_Upper_LR.arg_number                 = 516
-ECM_Test_Upper_LR.input                      = {0.0, 1.0}
-ECM_Test_Upper_LR.output                     = {0.0, 1.0}
-ECM_Test_Upper_LR.parameter_name             = "ECM_TEST_UPPER_LR"
+ECM_NO_GO		                    = CreateGauge("parameter")
+ECM_NO_GO.arg_number                = 516
+ECM_NO_GO.input                    	= {0.0, 1.0}
+ECM_NO_GO.output                   	= {0.0, 1.0}
+ECM_NO_GO.parameter_name         	= "ECM_NO_GO"
 
 
 
-ECM_Test_Lower_UL		                    = CreateGauge("parameter")
-ECM_Test_Lower_UL.arg_number                = 517
-ECM_Test_Lower_UL.input                     = {0.0, 1.0}
-ECM_Test_Lower_UL.output                    = {0.0, 1.0}
-ECM_Test_Lower_UL.parameter_name            = "ECM_TEST_LOWER_UL"
+ECM_SAM		                    	= CreateGauge("parameter")
+ECM_SAM.arg_number                	= 517
+ECM_SAM.input                     	= {0.0, 1.0}
+ECM_SAM.output                    	= {0.0, 1.0}
+ECM_SAM.parameter_name            	= "ECM_SAM"
 
-ECM_Test_Lower_UR		                    = CreateGauge("parameter")
-ECM_Test_Lower_UR.arg_number                 = 518
-ECM_Test_Lower_UR.input                      = {0.0, 1.0}
-ECM_Test_Lower_UR.output                     = {0.0, 1.0}
-ECM_Test_Lower_UR.parameter_name             = "ECM_TEST_LOWER_UR"
+ECM_RPT		                    	= CreateGauge("parameter")
+ECM_RPT.arg_number                 	= 518
+ECM_RPT.input                      	= {0.0, 1.0}
+ECM_RPT.output                     	= {0.0, 1.0}
+ECM_RPT.parameter_name             	= "ECM_RPT"
 
-ECM_Test_Lower_LL		                    = CreateGauge("parameter")
-ECM_Test_Lower_LL.arg_number                = 519
-ECM_Test_Lower_LL.input                     = {0.0, 1.0}
-ECM_Test_Lower_LL.output                    = {0.0, 1.0}
-ECM_Test_Lower_LL.parameter_name            = "ECM_TEST_LOWER_LL"
+ECM_STBY		                   	= CreateGauge("parameter")
+ECM_STBY.arg_number                	= 519
+ECM_STBY.input                     	= {0.0, 1.0}
+ECM_STBY.output                    	= {0.0, 1.0}
+ECM_STBY.parameter_name            	= "ECM_STBY"
 
-ECM_Test_Lower_LR		                    = CreateGauge("parameter")
-ECM_Test_Lower_LR.arg_number                 = 500
-ECM_Test_Lower_LR.input                      = {0.0, 1.0}
-ECM_Test_Lower_LR.output                     = {0.0, 1.0}
-ECM_Test_Lower_LR.parameter_name             = "ECM_TEST_LOWER_LR"
+ECM_REC								= CreateGauge("parameter")
+ECM_REC.arg_number					= 500
+ECM_REC.input						= {0.0, 1.0}
+ECM_REC.output						= {0.0, 1.0}
+ECM_REC.parameter_name				= "ECM_REC"
+
+ECM_Visibilty						= CreateGauge("parameter")
+ECM_Visibilty.arg_number			= 531
+ECM_Visibilty.input					= {0.0, 1.0}
+ECM_Visibilty.output				= {0.0, 1.0}
+ECM_Visibilty.parameter_name		= "ECM_VIS"
 
 --TEST_PARAM_GAUGE      			  = CreateGauge("parameter")
 --TEST_PARAM_GAUGE.parameter_name   = "TEST"

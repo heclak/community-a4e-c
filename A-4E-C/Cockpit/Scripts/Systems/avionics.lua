@@ -40,6 +40,8 @@ local refueling_rate_upper_limit = refueling_rate * 1.2
 local refueling_rate_lower_limit = refueling_rate * 0.8
 local refueling_rate_tank_change = refueling_rate_upper_limit * 2
 
+local iCommandPlaneEject = 83
+
 -- Variables
 --local ias = get_param_handle("D_IAS")
 
@@ -164,35 +166,39 @@ local accel_val_min = 1.0
 
 -----------------------------------------------------------------------------
 -- Cockpit Lighting
-lights_int_floodwhite = get_param_handle("LIGHTS-FLOOD-WHITE")
-lights_int_floodred = get_param_handle("LIGHTS-FLOOD-RED")
-lights_int_instruments = get_param_handle("LIGHTS-INST")
-lights_int_console = get_param_handle("LIGHTS-CONSOLE")
+local lights_int_floodwhite = get_param_handle("LIGHTS-FLOOD-WHITE")
+local lights_int_floodred = get_param_handle("LIGHTS-FLOOD-RED")
+local lights_int_instruments = get_param_handle("LIGHTS-INST")
+local lights_int_console = get_param_handle("LIGHTS-CONSOLE")
+
+local FLOODRED_DIM = 0.4
+local FLOODRED_MED = 0.48
+local FLOODRED_BRIGHT = 0.55
 
 local lights_floodwhite_val = 0
-local lights_floodred_val = 0.5
+local lights_floodred_val = FLOODRED_DIM
 local lights_instruments_val = 0
 local lights_console_val = 0
 
-inst_lights_first_on_time = 0
-inst_lights_warmup_time = 1.5 -- time it takes for the incandescent light bulbs to warm up
-inst_lights_max_brightness_multiplier = 0
-inst_lights_are_cold = true
+local inst_lights_first_on_time = 0
+local inst_lights_warmup_time = 1.5 -- time it takes for the incandescent light bulbs to warm up
+local inst_lights_max_brightness_multiplier = 0
+local inst_lights_are_cold = true
 
-console_lights_first_on_time = 0
-console_lights_warmup_time = 2 -- time it takes for the incandescent light bulbs to warm up
-console_lights_max_brightness_multiplier = 0
-console_lights_are_cold = true
+local console_lights_first_on_time = 0
+local console_lights_warmup_time = 2 -- time it takes for the incandescent light bulbs to warm up
+local console_lights_max_brightness_multiplier = 0
+local console_lights_are_cold = true
 
-red_floodlights_first_on_time = 0
-red_floodlights_warmup_time = 2.8 -- time it takes for the incandescent light bulbs to warm up
-red_floodlights_max_brightness_multiplier = 0
-red_floodlights_are_cold = true
+local red_floodlights_first_on_time = 0
+local red_floodlights_warmup_time = 2.8 -- time it takes for the incandescent light bulbs to warm up
+local red_floodlights_max_brightness_multiplier = 0
+local red_floodlights_are_cold = true
 
-white_floodlights_first_on_time = 0
-white_floodlights_warmup_time = 2.8 -- time it takes for the incandescent light bulbs to warm up
-white_floodlights_max_brightness_multiplier = 0
-white_floodlights_are_cold = true
+local white_floodlights_first_on_time = 0
+local white_floodlights_warmup_time = 2.8 -- time it takes for the incandescent light bulbs to warm up
+local white_floodlights_max_brightness_multiplier = 0
+local white_floodlights_are_cold = true
 -----------------------------------------------------------------------------
 -- Vertical Velocity Indicator
 vvi = get_param_handle("VVI")
@@ -399,15 +405,14 @@ function SetCommand(command,value)
     elseif command == device_commands.intlight_brightness then
         local x = value
         if x == 1.0 then
-            lights_floodred_val = 0.8
+            lights_floodred_val = FLOODRED_BRIGHT
         elseif x == 0 then
-            lights_floodred_val = 0.5
+            lights_floodred_val = FLOODRED_DIM
         elseif x == -1 then
-            lights_floodred_val = 0.65
+            lights_floodred_val = FLOODRED_MED
         end
     elseif command == device_commands.intlight_whiteflood then
-        local whiteflood = value
-        lights_floodwhite_val = whiteflood
+        lights_floodwhite_val = value
         -- print_message_to_user("flood value: "..value)
 
     elseif command == device_commands.intlight_whiteflood_CHANGE then
@@ -419,7 +424,7 @@ function SetCommand(command,value)
         end
         lights_floodwhite_val = newValue
         dev:performClickableAction(device_commands.intlight_whiteflood, lights_floodwhite_val, false)  -- pass through to clickable device
-        
+
     elseif command == device_commands.intlight_whiteflood_AXIS then
         local normalisedValue = ( ( value + 1 ) / 2 ) * 1.0 -- normalised {-1 to 1} to {0 - 1.0}
         dev:performClickableAction(device_commands.intlight_whiteflood, normalisedValue, false)
@@ -429,6 +434,12 @@ function SetCommand(command,value)
     elseif command == device_commands.accel_reset then
         accel_val_max = 1.0
         accel_val_min = 1.0
+    elseif command == device_commands.CPT_secondary_ejection_handle then
+        for i = 0, 2, 1 do
+            dispatch_action(nil, iCommandPlaneEject)
+        end
+    else
+        print("Unknown command:"..command.." Value:"..value)
     end
 end
 
@@ -828,24 +839,20 @@ function update_wheels_light()
 end
 
 -- temporary functions to deal with master test of lights that aren't handled elsewhere yet
-local test_glare_labs=get_param_handle("D_GLARE_LABS")
-local test_glare_iff=get_param_handle("D_GLARE_IFF")
-local test_glare_fire=get_param_handle("D_GLARE_FIRE")
-local test_ladder_fuelboost=get_param_handle("D_FUELBOOST_CAUTION")
-local test_ladder_conthyd=get_param_handle("D_CONTHYD_CAUTION")
-local test_ladder_utilhyd=get_param_handle("D_UTILHYD_CAUTION")
-local test_ladder_fueltrans=get_param_handle("D_FUELTRANS_CAUTION")
-local test_oil_low=get_param_handle("D_OIL_LOW")
-local test_advisory_inrange=get_param_handle("D_ADVISORY_INRANGE")
-local test_advisory_setrange=get_param_handle("D_ADVISORY_SETRANGE")
-local test_advisory_dive=get_param_handle("D_ADVISORY_DIVE")
-
-local test_glare_rwr_param=get_param_handle("D_GLARE_RWR")
-
-local rwr_status_light_param=get_param_handle("RWR_STATUS_LIGHT")
+local test_glare_labs       = get_param_handle("D_GLARE_LABS")
+local test_glare_iff        = get_param_handle("D_GLARE_IFF")
+local test_glare_fire       = get_param_handle("D_GLARE_FIRE")
+local test_ladder_fuelboost = get_param_handle("D_FUELBOOST_CAUTION")
+local test_ladder_conthyd   = get_param_handle("D_CONTHYD_CAUTION")
+local test_ladder_utilhyd   = get_param_handle("D_UTILHYD_CAUTION")
+local test_ladder_fueltrans = get_param_handle("D_FUELTRANS_CAUTION")
+local test_oil_low          = get_param_handle("D_OIL_LOW")
+local test_advisory_inrange = get_param_handle("D_ADVISORY_INRANGE")
+local test_advisory_setrange= get_param_handle("D_ADVISORY_SETRANGE")
+local test_advisory_dive    = get_param_handle("D_ADVISORY_DIVE")
 
 function update_test()
-    if master_test_param:get()==1 and get_elec_primary_ac_ok() then
+    if master_test_param:get() == 1 and get_elec_primary_ac_ok() then
         test_glare_labs:set(1)
         test_glare_iff:set(1)
         test_glare_fire:set(1)
@@ -856,13 +863,10 @@ function update_test()
         test_advisory_inrange:set(1)
         test_advisory_setrange:set(1)
         test_advisory_dive:set(1)
-		test_glare_rwr_param:set(1)
 		
     else
         test_glare_labs:set(0)
-       -- test_glare_iff:set(0)
-	    test_glare_iff:set(rwr_status_light_param:get())
-		test_glare_rwr_param:set(rwr_status_light_param:get())
+	    test_glare_iff:set(0)
         test_glare_fire:set(0)
         glareshield_WHEELS:set(glareshield_wheels_value)
         test_ladder_fuelboost:set(0)
@@ -1005,7 +1009,9 @@ function update_int_lights()
         if lights_console_val > 0 then
             lights_int_floodred:set(lights_floodred_val * red_floodlights_max_brightness_multiplier)
         else
-            lights_int_floodred:set(0)
+            if get_cockpit_draw_argument_value(114) > 0 then
+                lights_int_floodred:set(0)
+            end
         end
     else
         lights_int_instruments:set(0)

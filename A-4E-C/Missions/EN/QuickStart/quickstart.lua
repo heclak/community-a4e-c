@@ -36,7 +36,19 @@ planes = {
         file = "Persian Gulf A-4E-C Free Flight.miz"
     },
 
-
+    -- Nevada
+    {
+        name = _("Cold Start"),
+        file = "Nevada A-4E-C Cold Start.miz"
+    },
+    {
+        name = _("Takeoff"),
+        file = "Nevada A-4E-C Takeoff.miz"
+    },
+    {
+        name = _("Free Flight"),
+        file = "Nevada A-4E-C Free Flight.miz"
+    },
 
     -- Possible future missions
     -- {

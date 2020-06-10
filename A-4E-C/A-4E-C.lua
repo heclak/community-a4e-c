@@ -71,17 +71,17 @@ local function get_outboard_weapons( side )
         --{ CLSID =   "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}" }, -- LAU-61, M151 HE
         --{ CLSID =   "{174C6E6D-0C3D-42ff-BCB3-0853CB371F5C}" }, -- LAU 68, MK5 HE
         { CLSID = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}", connector = rocketConnector, arg_value = 0.2 }, -- LAU-10 Zuni
-        { CLSID = "{LAU3_FFAR_WP156}", connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR WP156
-        { CLSID = "{LAU3_FFAR_MK1HE}", connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR Mk1 HE
-        { CLSID = "{LAU3_FFAR_MK5HEAT}", connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR Mk5 HEAT
+        { CLSID = "{LAU3_FFAR_WP156}",                      connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR WP156
+        { CLSID = "{LAU3_FFAR_MK1HE}",                      connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR Mk1 HE
+        { CLSID = "{LAU3_FFAR_MK5HEAT}",                    connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR Mk5 HEAT
 
-        { CLSID = "{LAU68_FFAR_WP156}", connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR WP156
-        { CLSID = "{LAU68_FFAR_MK1HE}", connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk1 HE
-        { CLSID = "{LAU68_FFAR_MK5HEAT}", connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk5 HEAT
+        { CLSID = "{LAU68_FFAR_WP156}",                     connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR WP156
+        { CLSID = "{LAU68_FFAR_MK1HE}",                     connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk1 HE
+        { CLSID = "{LAU68_FFAR_MK5HEAT}",                   connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk5 HEAT
 
         --MISSILES--
         { CLSID = "{AGM_45A}", connector = shrikeConnector, arg_value = 0.1 }, -- AGM-45 SHRIKE
-        { CLSID = "{AGM12_B}" }, -- AGM-12B
+        { CLSID = "{AGM12_B}" },                                               -- AGM-12B
 
         --BOMBS--
         { CLSID = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}" },   -- Mk-20 Rockeye cluster bomb
@@ -90,8 +90,8 @@ local function get_outboard_weapons( side )
         { CLSID = "{BCE4E030-38E9-423E-98ED-24BE3DA87C32}" },   -- MK-82
         { CLSID = "{Mk82SNAKEYE}" },                            -- MK-82 Snakeye
         { CLSID = "{mk77mod1}" },                               -- Mk-77mod1 500 lb petroleum oil bomb
-        { CLSID = "{AN-M30A1}" },                               -- AN-M30A1 100 lb GP HE (57 lb TNT)
-        { CLSID = "{AN-M57A1}" },                               -- AN-M57A1 250 lb GP HE (129 lb TNT)
+        { CLSID = "{AN_M30A1}" },                               -- AN-M30A1 100 lb GP HE (57 lb TNT)
+        { CLSID = "{AN_M57}" },                                 -- AN-M57A1 250 lb GP HE (129 lb TNT)
         { CLSID = "{AN-M64}" },                                 -- AN-M64 500 lb GP HE (274 lb Comp B)
         { CLSID = "{AN-M81}" },                                 -- AN-M81 260 lb Fragmentation (34.1 lb Comp B)
         { CLSID = "{AN-M88}" },                                 -- AN-M88 216 lb Fragmentation (47 lb Comp B)
@@ -100,12 +100,12 @@ local function get_outboard_weapons( side )
         { CLSID = "{647C5F26-BDD1-41e6-A371-8DE1E4CC0E94}"}, -- temporarily add M257 parachute flares until we can add: Mk-5 mod 7, Mk-6 mod 5, Mk-24 mod 2A, SUU-40/44
 
 		-- SMOKE PODS --
-		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E741}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Red
-		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E742}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Green
-		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E743}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Blue
-		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E744}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod White
-		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E745}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Yellow
-		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E746}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Orange
+		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E741}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Red
+		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E742}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Green
+		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E743}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Blue
+		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E744}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod White
+		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E745}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Yellow
+		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E746}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Orange
 
 		-- CLEAN --
 		{ CLSID = "<CLEAN>", arg_value = 1 },
@@ -133,24 +133,24 @@ local function get_inboard_weapons( side )
         { CLSID = "{DFT-150gal}" },
 
         --AIR AIR--
-        { CLSID = "{GAR-8}", connector = rocketConnector, arg_value = 0.2 },  -- AIM-9B, aligned to -3deg armament datum
-	{ CLSID = "{AIM-9P-ON-ADAPTER}", connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P
-	{ CLSID = "{AIM-9P5-ON-ADAPTER}", connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P5
+        { CLSID = "{GAR-8}",                                 connector = rocketConnector, arg_value = 0.2 },  -- AIM-9B, aligned to -3deg armament datum
+        { CLSID = "{AIM-9P-ON-ADAPTER}",                     connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P
+        { CLSID = "{AIM-9P5-ON-ADAPTER}",                    connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P5
 
         --ROCKETS--
-        { CLSID = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}", connector = rocketConnector, arg_value = 0.2 }, -- LAU-10 Zuni
-        { CLSID = "{LAU-10 ZUNI_TER_2_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-10 Zuni
-        { CLSID = "{LAU3_FFAR_WP156}", connector = rocketConnector, arg_value = 0.2 },
-        { CLSID = "{LAU3_FFAR_MK1HE}", connector = rocketConnector, arg_value = 0.2 },
-        { CLSID = "{LAU3_FFAR_MK5HEAT}", connector = rocketConnector, arg_value = 0.2 },
-        { CLSID = "{LAU-3 FFAR WP156_TER_2_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR WP156
-        { CLSID = "{LAU-3 FFAR Mk1 HE_TER_2_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR Mk1 HE
-        { CLSID = "{LAU-3 FFAR Mk5 HEAT_TER_2_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR Mk5 HEAT
-        { CLSID = "{LAU68_FFAR_WP156}", connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR WP156
-        { CLSID = "{LAU68_FFAR_MK1HE}", connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk1 HE
-        { CLSID = "{LAU68_FFAR_MK5HEAT}", connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk5 HEAT
-        { CLSID = "{LAU-68 FFAR WP156_TER_2_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR WP156
-        { CLSID = "{LAU-68 FFAR Mk1 HE_TER_2_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR Mk1 HE
+        { CLSID = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}",  connector = rocketConnector, arg_value = 0.2 }, -- LAU-10 Zuni
+        { CLSID = "{LAU-10 ZUNI_TER_2_"..side.."}",          connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-10 Zuni
+        { CLSID = "{LAU3_FFAR_WP156}",                       connector = rocketConnector, arg_value = 0.2 },
+        { CLSID = "{LAU3_FFAR_MK1HE}",                       connector = rocketConnector, arg_value = 0.2 },
+        { CLSID = "{LAU3_FFAR_MK5HEAT}",                     connector = rocketConnector, arg_value = 0.2 },
+        { CLSID = "{LAU-3 FFAR WP156_TER_2_"..side.."}",     connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR WP156
+        { CLSID = "{LAU-3 FFAR Mk1 HE_TER_2_"..side.."}",    connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR Mk1 HE
+        { CLSID = "{LAU-3 FFAR Mk5 HEAT_TER_2_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR Mk5 HEAT
+        { CLSID = "{LAU68_FFAR_WP156}",                      connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR WP156
+        { CLSID = "{LAU68_FFAR_MK1HE}",                      connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk1 HE
+        { CLSID = "{LAU68_FFAR_MK5HEAT}",                    connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk5 HEAT
+        { CLSID = "{LAU-68 FFAR WP156_TER_2_"..side.."}",    connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR WP156
+        { CLSID = "{LAU-68 FFAR Mk1 HE_TER_2_"..side.."}",   connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR Mk1 HE
         { CLSID = "{LAU-68 FFAR Mk5 HEAT_TER_2_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR Mk5 HEAT
 
         --MISSILES--
@@ -159,42 +159,43 @@ local function get_inboard_weapons( side )
         { CLSID = "{AGM12_B}" }, -- AGM-12B
 
         --BOMBS--
-        { CLSID = "{C40A1E3A-DD05-40D9-85A4-217729E37FAE}" },   -- AGM-62 WALLEYE
-        { CLSID = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}" },   -- Mk-20 Rockeye cluster bomb
-        { CLSID = "{90321C8E-7ED1-47D4-A160-E074D5ABD902}" },   -- MK-81
-        { CLSID = "{MK-81SE}" },                                -- Mk-81 Snakeye
-        { CLSID = "{BCE4E030-38E9-423E-98ED-24BE3DA87C32}" },   -- MK-82
-        { CLSID = "{Mk82SNAKEYE}" },                            -- MK-82 Snakeye
-        { CLSID = "{7A44FF09-527C-4B7E-B42B-3F111CFE50FB}" },   -- MK-83
-        { CLSID = "{AB8B8299-F1CC-4359-89B5-2172E0CF4A5A}" },   -- MK-84
-        { CLSID = "{00F5DAC4-0466-4122-998F-B1A298E34113}" },   -- M-117
-        { CLSID = "{mk77mod0}" },                               -- Mk-77mod0 750 lb petroleum oil bomb
-        { CLSID = "{mk77mod1}" },                               -- Mk-77mod1 500 lb petroleum oil bomb
-        { CLSID = "{AN-M30A1}" },                               -- AN-M30A1 100 lb GP HE (57 lb TNT)
-        { CLSID = "{AN-M57A1}" },                               -- AN-M57A1 250 lb GP HE (129 lb TNT)
-        { CLSID = "{AN-M64}" },                                 -- AN-M64 500 lb GP HE (274 lb Comp B)
-        { CLSID = "{AN-M65A1}" },                               -- AN-M65A1 1000 lb GP HE (595 lb Comp B)
-        { CLSID = "{AN-M81}" },                                 -- AN-M81 260 lb Fragmentation (34.1 lb Comp B)
-        { CLSID = "{AN-M88}" },                                 -- AN-M88 216 lb Fragmentation (47 lb Comp B)
+        { CLSID = "{C40A1E3A-DD05-40D9-85A4-217729E37FAE}" }, -- AGM-62 WALLEYE
+        { CLSID = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}" }, -- Mk-20 Rockeye cluster bomb
+        { CLSID = "{90321C8E-7ED1-47D4-A160-E074D5ABD902}" }, -- MK-81
+        { CLSID = "{MK-81SE}" },                              -- Mk-81 Snakeye
+        { CLSID = "{BCE4E030-38E9-423E-98ED-24BE3DA87C32}" }, -- MK-82
+        { CLSID = "{Mk82SNAKEYE}" },                          -- MK-82 Snakeye
+        { CLSID = "{7A44FF09-527C-4B7E-B42B-3F111CFE50FB}" }, -- MK-83
+        { CLSID = "{AB8B8299-F1CC-4359-89B5-2172E0CF4A5A}" }, -- MK-84
+        { CLSID = "{00F5DAC4-0466-4122-998F-B1A298E34113}" }, -- M-117
+        { CLSID = "{mk77mod0}" },                             -- Mk-77mod0 750 lb petroleum oil bomb
+        { CLSID = "{mk77mod1}" },                             -- Mk-77mod1 500 lb petroleum oil bomb
+        { CLSID = "{AN_M30A1}" },                             -- AN-M30A1 100 lb GP HE (57 lb TNT)
+        { CLSID = "{AN_M57}" },                               -- AN-M57A1 250 lb GP HE (129 lb TNT)
+        { CLSID = "{AN-M64}" },                               -- AN-M64 500 lb GP HE (274 lb Comp B)
+        { CLSID = "{AN_M65}" },                               -- AN-M65A1 1000 lb GP HE (595 lb Comp B)
+        { CLSID = "{AN-M81}" },                               -- AN-M81 260 lb Fragmentation (34.1 lb Comp B)
+        { CLSID = "{AN-M88}" },                               -- AN-M88 216 lb Fragmentation (47 lb Comp B)
 
-        --CLUSTER MUNITIONS--
-        { CLSID = "{CBU-1/A}" },                                -- CBU-1/A Cluster Dispenser (509x BLU-4/B anti-personnel cluster bomblets)
-        { CLSID = "{CBU-2/A}" },                                -- CBU-2/A Cluster Dispenser (360x BLU-3/B cluster bomblets)
-        { CLSID = "{CBU-2B/A}" },                               -- CBU-2B/A Cluster Dispenser (409x BLU-3/B cluster bomblets)
+                                                              --CLUSTER MUNITIONS                                                           --
+        { CLSID = "{CBU-1/A}" },                              -- CBU-1/A Cluster Dispenser (509x BLU-4/B anti-personnel cluster bomblets)
+        { CLSID = "{CBU-2/A}" },                              -- CBU-2/A Cluster Dispenser (360x BLU-3/B cluster bomblets)
+        { CLSID = "{CBU-2B/A}" },                             -- CBU-2B/A Cluster Dispenser (409x BLU-3/B cluster bomblets)
 
-        { CLSID = "{CBU-1/A_TER_2_"..side.."}" },               -- CBU-1/A Cluster Dispenser x2 (509x BLU-4/B anti-personnel cluster bomblets)
-        { CLSID = "{CBU-2/A_TER_2_"..side.."}" },               -- CBU-2/A Cluster Dispenser x2 (360x BLU-3/B cluster bomblets)
-        { CLSID = "{CBU-2B/A_TER_2_"..side.."}" },              -- CBU-2B/A Cluster Dispenser x2 (409x BLU-3/B cluster bomblets)
+        { CLSID = "{CBU-1/A_TER_2_"..side.."}" },             -- CBU-1/A Cluster Dispenser x2 (509x BLU-4/B anti-personnel cluster bomblets)
+        { CLSID = "{CBU-2/A_TER_2_"..side.."}" },             -- CBU-2/A Cluster Dispenser x2 (360x BLU-3/B cluster bomblets)
+        { CLSID = "{CBU-2B/A_TER_2_"..side.."}" },            -- CBU-2B/A Cluster Dispenser x2 (409x BLU-3/B cluster bomblets)
 
-        -- BOMB RACKS --
-        { CLSID = "{Mk-20_TER_2_"..side.."}" },                 -- Mk-20 Rockeye cluster bomb x2
-        { CLSID = "{Mk-81_MER_5_"..side.."}" },                 -- MER Mk-81 x5
-        { CLSID = "{Mk-81SE_MER_5_"..side.."}" },               -- MER Mk-81 Snakeye x5
-        { CLSID = "{Mk-82_TER_2_"..side.."}" },                 -- TER Mk-82 x2
-        { CLSID = "{Mk-82 Snakeye_TER_2_"..side.."}" },         -- TER Mk-82 Snakeye x2
-        { CLSID = "{AN-M57A1_MER_5_"..side.."}" },              -- AN-M57A1 x5 250 lb GP HE (129 lb TNT)
-        { CLSID = "{AN-M81_MER_5_"..side.."}" },                -- AN-M81 x5 260 lb Fragmentation (34.1 lb Comp B)
-        { CLSID = "{AN-M88_MER_5_"..side.."}" },                -- AN-M88 x5 216 lb Fragmentation (47 lb Comp B)
+                                                              -- BOMB RACKS                                                                 --
+        { CLSID = "{Mk-20_TER_2_"..side.."}" },               -- Mk-20 Rockeye cluster bomb x2
+        { CLSID = "{Mk-81_MER_5_"..side.."}" },               -- MER Mk-81 x5
+        { CLSID = "{Mk-81SE_MER_5_"..side.."}" },             -- MER Mk-81 Snakeye x5
+        { CLSID = "{Mk-82_TER_2_"..side.."}" },               -- TER Mk-82 x2
+        { CLSID = "{Mk-82 Snakeye_TER_2_"..side.."}" },       -- TER Mk-82 Snakeye x2
+        { CLSID = "{AN-M57_MER_5_"..side.."}" },              -- AN-M57A1 x5 250 lb GP HE (129 lb TNT)
+        { CLSID = "{AN-M57_TER_2_"..side.."}" },              -- AN-M57A1 x2 250 lb GP HE (129 lb TNT)
+        { CLSID = "{AN-M81_MER_5_"..side.."}" },              -- AN-M81 x5 260 lb Fragmentation (34.1 lb Comp B)
+        { CLSID = "{AN-M88_MER_5_"..side.."}" },              -- AN-M88 x5 216 lb Fragmentation (47 lb Comp B)
 
         -- GUN PODS --
         {CLSID = "{Mk4 HIPEG}", connector = rocketConnector, arg_value = 0.2 },  -- Mk 4 Mod 0 HIPEG gun pod
@@ -224,28 +225,28 @@ local function get_centerline_weapons( side )
         { CLSID = "{D-704_BUDDY_POD}" },
 
         --ROCKETS--
-        { CLSID = "{3*LAU-61}", connector = rocketConnector, arg_value = 0.2 },
-        { CLSID = "{9BC82B3D-FE70-4910-B2B7-3E54EFE73262}", connector = rocketConnector, arg_value = 0.2 },   --3*LAU 68, MK5 HE
-        { CLSID = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}", connector = rocketConnector, arg_value = 0.2 }, -- LAU-10 Zuni
-        { CLSID = "{LAU-10 ZUNI_TER_2_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-10 Zuni
-        { CLSID = "{LAU-10 ZUNI_TER_3_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-10 Zuni
-        { CLSID = "{LAU3_FFAR_WP156}", connector = rocketConnector, arg_value = 0.2 },
-        { CLSID = "{LAU3_FFAR_MK1HE}", connector = rocketConnector, arg_value = 0.2 },
-        { CLSID = "{LAU3_FFAR_MK5HEAT}", connector = rocketConnector, arg_value = 0.2 },
-        { CLSID = "{LAU-3 FFAR WP156_TER_2_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR WP156
-        { CLSID = "{LAU-3 FFAR Mk1 HE_TER_2_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR Mk1 HE
-        { CLSID = "{LAU-3 FFAR Mk5 HEAT_TER_2_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR Mk5 HEAT
-        { CLSID = "{LAU-3 FFAR WP156_TER_3_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-3 FFAR WP156
-        { CLSID = "{LAU-3 FFAR Mk1 HE_TER_3_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-3 FFAR Mk1 HE
-        { CLSID = "{LAU-3 FFAR Mk5 HEAT_TER_3_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-3 FFAR Mk5 HEAT
-        { CLSID = "{LAU68_FFAR_WP156}", connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR WP156
-        { CLSID = "{LAU68_FFAR_MK1HE}", connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk1 HE
-        { CLSID = "{LAU68_FFAR_MK5HEAT}", connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk5 HEAT
-        { CLSID = "{LAU-68 FFAR WP156_TER_2_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR WP156
-        { CLSID = "{LAU-68 FFAR Mk1 HE_TER_2_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR Mk1 HE
+        { CLSID = "{3*LAU-61}",                              connector = rocketConnector, arg_value = 0.2 },
+        { CLSID = "{9BC82B3D-FE70-4910-B2B7-3E54EFE73262}",  connector = rocketConnector, arg_value = 0.2 },   --3*LAU 68, MK5 HE
+        { CLSID = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}",  connector = rocketConnector, arg_value = 0.2 }, -- LAU-10 Zuni
+        { CLSID = "{LAU-10 ZUNI_TER_2_"..side.."}",          connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-10 Zuni
+        { CLSID = "{LAU-10 ZUNI_TER_3_"..side.."}",          connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-10 Zuni
+        { CLSID = "{LAU3_FFAR_WP156}",                       connector = rocketConnector, arg_value = 0.2 },
+        { CLSID = "{LAU3_FFAR_MK1HE}",                       connector = rocketConnector, arg_value = 0.2 },
+        { CLSID = "{LAU3_FFAR_MK5HEAT}",                     connector = rocketConnector, arg_value = 0.2 },
+        { CLSID = "{LAU-3 FFAR WP156_TER_2_"..side.."}",     connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR WP156
+        { CLSID = "{LAU-3 FFAR Mk1 HE_TER_2_"..side.."}",    connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR Mk1 HE
+        { CLSID = "{LAU-3 FFAR Mk5 HEAT_TER_2_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR Mk5 HEAT
+        { CLSID = "{LAU-3 FFAR WP156_TER_3_"..side.."}",     connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-3 FFAR WP156
+        { CLSID = "{LAU-3 FFAR Mk1 HE_TER_3_"..side.."}",    connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-3 FFAR Mk1 HE
+        { CLSID = "{LAU-3 FFAR Mk5 HEAT_TER_3_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-3 FFAR Mk5 HEAT
+        { CLSID = "{LAU68_FFAR_WP156}",                      connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR WP156
+        { CLSID = "{LAU68_FFAR_MK1HE}",                      connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk1 HE
+        { CLSID = "{LAU68_FFAR_MK5HEAT}",                    connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk5 HEAT
+        { CLSID = "{LAU-68 FFAR WP156_TER_2_"..side.."}",    connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR WP156
+        { CLSID = "{LAU-68 FFAR Mk1 HE_TER_2_"..side.."}",   connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR Mk1 HE
         { CLSID = "{LAU-68 FFAR Mk5 HEAT_TER_2_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR Mk5 HEAT
-        { CLSID = "{LAU-68 FFAR WP156_TER_3_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 FFAR WP156
-        { CLSID = "{LAU-68 FFAR Mk1 HE_TER_3_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 FFAR Mk1 HE
+        { CLSID = "{LAU-68 FFAR WP156_TER_3_"..side.."}",    connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 FFAR WP156
+        { CLSID = "{LAU-68 FFAR Mk1 HE_TER_3_"..side.."}",   connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 FFAR Mk1 HE
         { CLSID = "{LAU-68 FFAR Mk5 HEAT_TER_3_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 FFAR Mk5 HEAT
 
 
@@ -264,10 +265,10 @@ local function get_centerline_weapons( side )
         { CLSID = "{00F5DAC4-0466-4122-998F-B1A298E34113}" },   -- M117
         { CLSID = "{mk77mod0}" },                               -- Mk-77mod0 750 lb petroleum oil bomb
         { CLSID = "{mk77mod1}" },                               -- Mk-77mod1 500 lb petroleum oil bomb
-        { CLSID = "{AN-M30A1}" },                               -- AN-M30A1 100 lb GP HE (57 lbs TNT)
-        { CLSID = "{AN-M57A1}" },                               -- AN-M57A1 250 lb GP HE (129 lbs TNT)
+        { CLSID = "{AN_M30A1}" },                               -- AN-M30A1 100 lb GP HE (57 lbs TNT)
+        { CLSID = "{AN_M57}" },                                 -- AN-M57A1 250 lb GP HE (129 lbs TNT)
         { CLSID = "{AN-M64}" },                                 -- AN-M64 500 lb GP HE (274 lbs Comp B)
-        { CLSID = "{AN-M65A1}" },                               -- AN-M65A1 1000 lb GP HE (595 lb Comp B)
+        { CLSID = "{AN_M65}" },                                 -- AN-M65A1 1000 lb GP HE (595 lb Comp B)
         { CLSID = "{AN-M66A2}" },                               -- AN-M66A2 2000 lb GP HE (1142 lb Comp B)
         { CLSID = "{AN-M81}" },                                 -- AN-M81 260 lb Fragmentation (34.1 lb Comp B)
         { CLSID = "{AN-M88}" },                                 -- AN-M88 216 lb Fragmentation (47 lb Comp B)
@@ -286,21 +287,21 @@ local function get_centerline_weapons( side )
         { CLSID = "{Mk-83_TER_3_"..side.."}" },
         { CLSID = "{Mk-83_TER_2_"..side.."}" },
         { CLSID = "{Mk-77 mod 1_TER_2_"..side.."}" },           -- Mk-77 mod 1 (500 lb) x2 petroleum oil bomb
-        { CLSID = "{AN-M57A1_MER_6_"..side.."}" },              -- AN-M57A1 x6 250 lb GP HE (129 lb TNT)
-        { CLSID = "{AN-M57A1_MER_4_"..side.."}" },              -- AN-M57A1 x4 250 lb GP HE (129 lb TNT)
+        { CLSID = "{AN-M57_MER_6_"..side.."}" },                -- AN-M57A1 x6 250 lb GP HE (129 lb TNT)
+        { CLSID = "{AN-M57_TER_3_"..side.."}" },                -- AN-M57A1 x3 250 lb GP HE (129 lb TNT)
         { CLSID = "{AN-M81_MER_6_"..side.."}" },                -- AN-M81 x6 260 lb Fragmentation (34.1 lb Comp B)
         { CLSID = "{AN-M88_MER_6_"..side.."}" },                -- AN-M88 x6 216 lb Fragmentation (47 lb Comp B)
 
         -- GUN PODS --
-        {CLSID = "{Mk4 HIPEG}", connector = rocketConnector, arg_value = 0.2 },  -- Mk 4 Mod 0 HIPEG gun pod
+        { CLSID = "{Mk4 HIPEG}", connector = rocketConnector, arg_value = 0.2 },  -- Mk 4 Mod 0 HIPEG gun pod
 
 		-- SMOKE PODS --
-		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E741}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Red
-		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E742}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Green
-		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E743}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Blue
-		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E744}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod White
-		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E745}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Yellow
-		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E746}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Orange
+		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E741}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Red
+		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E742}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Green
+		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E743}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Blue
+		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E744}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod White
+		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E745}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Yellow
+		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E746}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Orange
 
 
 		-- CLEAN --
@@ -339,7 +340,7 @@ A_4E_C =  {
     {
         {
             file       = 'A-4E';
-            life       = 18; -- lifebar
+            life       = 16; -- lifebar
             vis        = 3;  -- visibility gain.
             desrt    = 'Fighter-2-crush'; -- Name of destroyed object file name Alphajet-destr. This is a placeholder.
             fire       = {300, 3}; -- Fire on the ground after destoyed: 300sec 2m
@@ -369,8 +370,8 @@ A_4E_C =  {
         15, -- right elevator
         16, -- left elevator
         17, -- rudder
-        2,  -- nose wheel steering
 
+        2,  -- nose wheel steering
         21, -- SFM air brake
         13, -- right slat
         14, -- left slat
@@ -385,7 +386,7 @@ A_4E_C =  {
         198, -- anticollision (flashing red) top light
         199, -- anticollision (flashing red) bottom light
         208, -- taxi light (white) right main gear door
-        402, --huffer
+        402, -- huffer
         500, -- model air brake
         501, -- RAT
         499, -- wheel chocks
@@ -408,69 +409,69 @@ A_4E_C =  {
     --        ------
     -- TOTAL: 11,589 lbs with no ammo, no gas, and empty pylons
 
-    M_empty             = 11589*POUNDS_TO_KG,   -- see above calculation
-    M_nominal           = 17180*POUNDS_TO_KG,   -- combat weight per NATOPS
-    M_max               = 24500*POUNDS_TO_KG,   -- (Maximum Take Off Weight)
-    M_fuel_max          = 5440*POUNDS_TO_KG,    -- (Internal Fuel Only)             : 800G * ~6.8 lbs/gal for JP-5
-    H_max               = 43900*FEET_TO_M,      -- m  (Maximum Operational Ceiling) : Combat ceiling @ 14,500 lbs w/ 500 fpm climb max
+    M_empty                     =  11589*POUNDS_TO_KG,    -- see above calculation
+    M_nominal                   =  17180*POUNDS_TO_KG,    -- combat weight per NATOPS
+    M_max                       =  24500*POUNDS_TO_KG,    -- (Maximum Take Off Weight)
+    M_fuel_max                  =  5440*POUNDS_TO_KG,     -- (Internal Fuel Only)             : 800G * ~6.8 lbs/gal for JP-5
+    H_max                       =  43900*FEET_TO_M,       -- m  (Maximum Operational Ceiling) : Combat ceiling @ 14,500 lbs w/ 500 fpm climb max
     -------------------------
-    length              = 12.22, -- full lenght in m
-    height              = 4.57, -- height in m
-    wing_area           = 24.16, -- wing area in m2         **
-    wing_span           = 8.38 , -- wing span in m
-    wing_tip_pos        = {-2.5, -0.38,    4.2}, -- wingtip coords for visual effects
-    wing_type           = 0,    -- FIXED_WING = 0 /VARIABLE_GEOMETRY = 1 /FOLDED_WING = 2 /ARIABLE_GEOMETRY_FOLDED = 3
-    flaps_maneuver      = 0.5, -- Max flaps in take-off and maneuver (0.5 = 1st stage; 1.0 = 2nd stage) (for AI)
-    has_speedbrake      = true,
+    length                      =  12.22,                 -- full lenght in m
+    height                      =  4.57,                  -- height in m
+    wing_area                   =  24.16,                 -- wing area in m2**
+    wing_span                   =  8.38 ,                 -- wing span in m
+    wing_tip_pos                =  {-2.5, -0.38,    4.2}, -- wingtip coords for visual effects
+    wing_type                   =  0,                     -- FIXED_WING = 0 / VARIABLE_GEOMETRY = 1 / FOLDED_WING = 2 / ARIABLE_GEOMETRY_FOLDED = 3
+    flaps_maneuver              =  0.5,                   -- Max flaps in take-off and maneuver (0.5 = 1st stage; 1.0 = 2nd stage) (for AI)
+    has_speedbrake              =  true,
 
-    RCS                     = 3.4, -- Radar Cross Section m2.  Proportionally scaled RCS of F-16's 4.0.
-    IR_emission_coeff       = 0.275, -- Normal engine -- IR_emission_coeff = 1 is Su-27 without afterburner. It is reference.  33,820 lbf dry for Su-27.  9300 lbf dry A-4 = 0.275
-    IR_emission_coeff_ab    = 0.275, -- With afterburner
+    RCS                         =  3.4,                   -- Radar Cross Section m2.  Proportionally scaled RCS of F-16's 4.0.
+    IR_emission_coeff           =  0.5,                   -- Normal engine -- IR_emission_coeff = 1 is Su-27 without afterburner. It is reference.
+    IR_emission_coeff_ab        =  0.5,                   -- With afterburner
 
-    stores_number       = 5, -- Amount of pylons.
+    stores_number               =  5,                     -- Amount of pylons.
 
-    CAS_min             = 25.7, -- minimal indicated airspeed  m/s?  (50 knots per NATOPS)
-    V_opt               = 200, -- Cruise speed (for AI)
-    V_take_off          = 82.3, -- Take off speed in m/s (for AI - 150kts)
-    V_land              = 64.3, -- Land speed in m/s (for AI) (110 kn)
-    V_max_sea_level     = 300.83, -- Max speed at sea level in m/s (for AI)
-    V_max_h             = 300.8, -- Max speed at max altitude in m/s (for AI)
-    Vy_max              = 102.9, -- Max climb speed in m/s (for AI - 200 kts)
-    Mach_max            = 0.88, -- Max speed in Mach (for AI)
-    Ny_min              = -3.0, -- Min G (for AI)
-    Ny_max              = 8.0, -- Max G (for AI)
-    Ny_max_e            = 8.0, -- Max G (for AI)
-    --AOA_take_off      = 0.27, -- AoA in take off radians (for AI)   16 degrees
-    bank_angle_max      = 60, -- Max bank angle (for AI)
-    range               = 3200, -- Max range in km (for AI)
+    CAS_min                     =  25.7,                  -- minimal indicated airspeed  m/s?  (50 knots per NATOPS)
+    V_opt                       =  200,                   -- Cruise speed (for AI)
+    V_take_off                  =  82.3,                  -- Take off speed in m/s (for AI - 150kts)
+    V_land                      =  64.3,                  -- Land speed in m/s (for AI) (110 kn)
+    V_max_sea_level             =  300.83,                -- Max speed at sea level in m/s (for AI)
+    V_max_h                     =  300.8,                 -- Max speed at max altitude in m/s (for AI)
+    Vy_max                      =  102.9,                 -- Max climb speed in m/s (for AI - 200 kts)
+    Mach_max                    =  0.88,                  -- Max speed in Mach (for AI)
+    Ny_min                      =  -3.0,                  -- Min G (for AI)
+    Ny_max                      =  8.0,                   -- Max G (for AI)
+    Ny_max_e                    =  8.0,                   -- Max G (for AI)
+    -- AOA_take_off             =  0.27,                  -- AoA in take off radians (for AI) 16 degrees
+    bank_angle_max              =  60,                    -- Max bank angle (for AI)
+    range                       =  3200,                  -- Max range in km (for AI)
 
-    thrust_sum_max      = 9300*POUNDS_TO_KG, -- thrust in kg (J52 P8A: 9300 lb)    **
-    has_afteburner      = true,
-    has_differential_stabilizer     = false,
-    thrust_sum_ab       = 9300*POUNDS_TO_KG, -- thrust in kg (kN)    **
-    average_fuel_consumption = 0.86,   -- 0.86 TSFC
-    is_tanker           = false,
-    tanker_type         = 2, -- Tanker type if the plane is tanker
-    air_refuel_receptacle_pos = {6.966, -0.366, 0.486},
+    thrust_sum_max              =  9300*POUNDS_TO_KG,     -- thrust in kg (J52 P8A: 9300 lb)**
+    has_afteburner              =  true,
+    has_differential_stabilizer =  false,
+    thrust_sum_ab               =  9300*POUNDS_TO_KG,     -- thrust in kg (kN)**
+    average_fuel_consumption    =  0.86,                  -- 0.86 TSFC
+    is_tanker                   =  false,
+    tanker_type                 =  2,                     -- Tanker type if the plane is tanker
+    air_refuel_receptacle_pos   =  {6.966, -0.366, 0.486},
 
 	-----------------------------------------------------------------------
 	----------------- SUSPENSION CODE BEGINS
 	-----------------------------------------------------------------------
-    nose_gear_pos = {2.72, -2.38, 0}, --{2.72, -2.37, 0},    --      2.72,       -2.28,    0
-    main_gear_pos = {-0.79, -2.46, 1.18}, --{-0.79, -2.42, 1.18},    --  0.79,   -2.35,    1.18
-    tand_gear_max = 0.554, -- // tangent on maximum yaw angle of front wheel
+    nose_gear_pos                            = {2.72, -2.38, 0}, -- {2.72, -2.37, 0},    --      2.72,       -2.28,    0
+    main_gear_pos                            = {-0.79, -2.46, 1.18}, -- {-0.79, -2.42, 1.18},    --  0.79,   -2.35,    1.18
+    tand_gear_max                            = 0.554,   -- // tangent on maximum yaw angle of front wheel
 
-    nose_gear_amortizer_direct_stroke    = 0.0, --1.878 - 1.878,  -- down from nose_gear_pos !!!
-    nose_gear_amortizer_reversal_stroke  = -0.32, --1.348 - 1.878,  -- up
-    main_gear_amortizer_direct_stroke     = 0.0, --1.592 - 1.592, --  down from main_gear_pos !!!
-    main_gear_amortizer_reversal_stroke  = -0.43, --1.192 - 1.592, --  up
+    nose_gear_amortizer_direct_stroke        = 0.05,    -- 1.878 - 1.878, -- down from nose_gear_pos !!!
+    nose_gear_amortizer_reversal_stroke      = -0.32,   -- 1.348 - 1.878, -- up
+    main_gear_amortizer_direct_stroke        = 0.0,     -- 1.592 - 1.592, -- down from main_gear_pos !!!
+    main_gear_amortizer_reversal_stroke      = -0.43,   -- 1.192 - 1.592, -- up
 
-    nose_gear_amortizer_normal_weight_stroke = -0.18, -- 0.144
-    main_gear_amortizer_normal_weight_stroke = -0.51, --
+    nose_gear_amortizer_normal_weight_stroke = -0.20,   -- 0.144
+    main_gear_amortizer_normal_weight_stroke = -0.51,   --
 
-    nose_gear_wheel_diameter    =   0.441, --0.441, --*
-    main_gear_wheel_diameter    =   0.609, --0.609, --*
-    brakeshute_name    = 0, -- Landing - brake chute visual shape after separation
+    nose_gear_wheel_diameter                 = 0.441,   -- 0.441, --*
+    main_gear_wheel_diameter                 = 0.609,   -- 0.609, --*
+    brakeshute_name                          = 0,       -- Landing - brake chute visual shape after separation
 
 	-----------------------------------------------------------------------
 	----------------- SUSPENSION CODE ENDS
@@ -481,12 +482,17 @@ A_4E_C =  {
     {
         [1] =
         {
-            pos =     {-5.9,    0.163,    0}, -- nozzle coords
+            pos =     {-5.62,    0.163,    0}, -- nozzle coords
             elevation    =    0.0, -- AFB cone elevation
-            diameter    =    0.0, -- AFB cone diameter
-            exhaust_length_ab    =    0, -- lenght in m
+
+            -- Diameter is 0 to hide AB for AI. AB is used for catapult simulation.
+            -- If AB is no longer used for catapult then diameter can be set for exhaust smoke.
+            -- diameter    =    0.0, -- AFB cone diameter.
+            diameter    =    0.675, -- AFB cone diameter
+            exhaust_length_ab    =    0.01, -- lenght in m
             exhaust_length_ab_K    =    0.707, -- AB animation
-            smokiness_level     =     0.15,
+            smokiness_level     =     0.2,
+            afterburner_circles_count = 0,
         }, -- end of [1]
     }, -- end of engines_nozzles
 
@@ -593,7 +599,7 @@ A_4E_C =  {
 
     panelRadio = {
         [1] = {
-            name = _("AN/ARC-27A"),
+            name = _("AN/ARC-51A"),
             range = {
                 {min = 225.0, max = 399.9}
             },
@@ -667,6 +673,13 @@ A_4E_C =  {
     },
     -- Aircraft Additional Properties
     AddPropAircraft = {
+        {
+			id = "HideECMPanel",
+			control = "checkbox",
+			label = _("Remove ECM control panel"),
+			defValue = false,
+			weightWhenOn = -80
+		},
         { id = "CBU2ATPP",			control = 'comboList', label = _('CBU-2/A Tubes Per Pulse'),
             values = {
                 {id =  0, dispName = _("1 tube")},
@@ -769,31 +782,31 @@ A_4E_C =  {
     Pylons =     {
         pylon(1, 0, -0.609, -0.762, -2.845, --
             {
-               use_full_connector_position = true, connector = "Pylon1", arg = 341, arg_value = 0,
+               use_full_connector_position = true, connector = "Pylon1", arg = 308, arg_value = 0,
             },
             get_outboard_weapons("L")
         ),
         pylon(2, 0, -0.047, -0.97, -1.899,
             {
-               use_full_connector_position = true, connector = "Pylon2", arg = 342, arg_value = 0,
+               use_full_connector_position = true, connector = "Pylon2", arg = 309, arg_value = 0,
             },
             get_inboard_weapons("L")
         ),
         pylon(3, 0, 0.11, -0.90, 0,
             {
-               use_full_connector_position = true, connector = "Pylon3", arg = 343, arg_value = 0,
+               use_full_connector_position = true, connector = "Pylon3", arg = 310, arg_value = 0,
             },
             get_centerline_weapons("C")
         ),
         pylon(4, 0, -0.047, -0.97, 1.899,
             {
-               use_full_connector_position = true, connector = "Pylon4", arg = 344, arg_value = 0,
+               use_full_connector_position = true, connector = "Pylon4", arg = 311, arg_value = 0,
             },
             get_inboard_weapons("R")
         ),
         pylon(5, 0, -0.609, -0.762, 2.845,
             {
-               use_full_connector_position = true, connector = "Pylon5", arg = 345, arg_value = 0,
+               use_full_connector_position = true, connector = "Pylon5", arg = 312, arg_value = 0,
             },
             get_outboard_weapons("R")
         ),
@@ -1036,16 +1049,10 @@ A_4E_C =  {
                     H       =   {0, 19, 20, 23, 24, 250, 4572, 7620, 10668, 13716, 16764, 19812},
                     thrust  =  {-- M    0     0.1    0.225   0.23,   0.3    0.5     0.7     0.8     0.9     1.1
                                 {   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 0 (sea level)
-                        -- SFM BOOST BORDER -->
                                 {   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 19 (~62.3 feet)
-                            -- SFM BOOST REGION ----------|
-                            --    {   85000,  85000,  85000,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 20 (~66.6 feet)		--More Cleanup?--
-                            --    {   85000,  85000,  85000,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 23 (~75.5 feet)
-								{   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 19 (~62.3 feet)
-							    {   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 19 (~62.3 feet)
-                            -- END SFM BOOST REGION-------|
+								{   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 20 (~66.6 feet)
+							    {   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 23 (~75.5 feet)
                                 {   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 24 (~78.7 feet)
-                        -- SFM BOOST BORDER -->
                                 {   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 250 (820 feet)
                                 {   27254,  25799,  24765,  24761,  24203,  24599,  26227,  27254,  28353,  29785 },--H = 4572 (15kft)
                                 {   20818,  19203,  18130,  18127,  17548,  17473,  18638,  19608,  20684,  22873 },--H = 7620 (25kft)
@@ -1061,15 +1068,15 @@ A_4E_C =  {
 				  thrust_afterburner = -- afterburning thrust interpolation table by altitude and mach number, 2d table
 				 {
 					 M 		 = {0,	0.20,	0.21,	1.0},
-					 H       =   {0, 19, 20, 23, 24, 250, 19812},
-					 thrust	 = {-- M 0  0.3 0.5  0.7  1.0
-								 {   41370,   	41370,  41370,   41370,},--H = 0
-								 {   41370,   	41370,  41370,   41370,},--H = 19
-								 {   250000,   	250000,  41370,   41370,},--H = 20	<-----------250000
-								 {   250000,   	250000,  41370,   41370,},--H = 23	<-----------250000
-								 {   41370,   	38060,  38060,   36813,}, --h=24
-								 {   41370,   	38060,  38060,   36813,},
-								 {   1904,   	2296,  2296,   3639,},
+					 H       =   {0, 15, 16, 23, 24, 250, 19812},
+					 thrust	 = { -- M 0  0.3 0.5  0.7  1.0
+								 {   41370,   	41370,  41370,   41370,},  -- H = 0
+								 {   41370,   	41370,  41370,   41370,},  -- H = 15
+								 {   250000,   	250000,  41370,   41370,}, -- H = 16
+								 {   250000,   	250000,  41370,   41370,}, -- H = 23
+								 {   41370,   	38060,  38060,   36813,},  -- H = 24
+								 {   41370,   	38060,  38060,   36813,},  -- H = 250
+								 {   1904,   	2296,  2296,   3639,},     -- H= 19812
 					 }
 				 },
 
@@ -1130,26 +1137,26 @@ A_4E_C =  {
 
     Damage = verbose_to_dmg_properties(
 	{
-        -- ["NOSE_CENTER"]             = {critical_damage = 1}, -- 0
-        ["NOSE_LEFT_SIDE"]          = {critical_damage = 1}, -- 1
-        ["NOSE_RIGHT_SIDE"]         = {critical_damage = 1}, -- 2
-        -- ["NOSE_BOTTOM"]             = {critical_damage = 1}, -- 59
+        ["NOSE_CENTER"]             = {critical_damage = 3}, -- 0
+        ["NOSE_LEFT_SIDE"]          = {critical_damage = 3}, -- 1
+        ["NOSE_RIGHT_SIDE"]         = {critical_damage = 3}, -- 2
+        ["NOSE_BOTTOM"]             = {critical_damage = 3}, -- 59
 
-        ["COCKPIT"]                 = {critical_damage = 5}, -- 3
-        -- ["CABIN_LEFT_SIDE"]         = {critical_damage = 2}, -- 4
-        -- ["CABIN_RIGHT_SIDE"]        = {critical_damage = 2}, -- 5
-        -- ["CABIN_BOTTOM"]            = {critical_damage = 3}, -- 6
+        ["COCKPIT"]                 = {critical_damage = 1}, -- 3
+        ["CABIN_LEFT_SIDE"]         = {critical_damage = 3}, -- 4
+        ["CABIN_RIGHT_SIDE"]        = {critical_damage = 3}, -- 5
+        ["CABIN_BOTTOM"]            = {critical_damage = 3}, -- 6
 
         ["GUN"]                     = {critical_damage = 2}, -- 7 refuelling probe?
-        -- ["PITOT"]                   = {critical_damage = 2}, -- 60
+        ["PITOT"]                   = {critical_damage = 1}, -- 60
 
         ["WHEEL_F"]                 = {critical_damage = 3}, -- 83
 
-        ["FUSELAGE_LEFT_SIDE"]      = {critical_damage = 3}, -- 9
+        ["FUSELAGE_LEFT_SIDE"]      = {critical_damage = 3, args = {600}}, -- 9
         ["FUSELAGE_RIGHT_SIDE"]     = {critical_damage = 3}, --10
         ["FUSELAGE_TOP"]            = {critical_damage = 3}, -- 99 avionics hump?
         ["FUSELAGE_BOTTOM"]         = {critical_damage = 4}, --82
-        ["ENGINE"]                  = {critical_damage = 3},-- 11
+        ["ENGINE"]                  = {critical_damage = 2},-- 11
 
         -- ["MTG_L"]                   = {critical_damage = 3}, -- 17 left engine nacelle
         -- ["MTG_R"]                   = {critical_damage = 3}, -- 18 right engine nacelle
@@ -1157,30 +1164,34 @@ A_4E_C =  {
         ["AIR_BRAKE_L"]             = {critical_damage = 1}, -- 19
         ["AIR_BRAKE_R"]             = {critical_damage = 1}, -- 20
 
-        ["WING_L_IN"]               = {critical_damage = 4, deps_cells = {"WING_L_OUT", "FLAP_L", "AILERON_L"}}, -- 35
-        ["WING_L_OUT"]              = {critical_damage = 3}, -- 23
+        ["WING_L_IN"]               = {critical_damage = 5, deps_cells = {"WING_L_CENTER"}}, -- 35
+        ["WING_L_CENTER"]           = {critical_damage = 4, deps_cells = {"WING_L_PART_CENTER", "FLAP_L", "WING_L_OUT"}}, -- 29
+        ["WING_L_PART_CENTER"]      = {critical_damage = 1.5}, -- 27 -- spoiler
+        ["WING_L_OUT"]              = {critical_damage = 3, deps_cells = {"AILERON_L"}}, -- 23
         ["FLAP_L"]                  = {critical_damage = 2}, -- 37
-        -- ["FLAP_L_CENTER"]           = {critical_damage = 2}, -- 101 spoilers?
         ["AILERON_L"]               = {critical_damage = 1}, --25
         ["WHEEL_L"]                 = {critical_damage = 3}, -- 84
 
-        ["WING_R_IN"]               = {critical_damage = 4, deps_cells = {"WING_R_OUT", "FLAP_R", "AILERON_R"}}, -- 36
-        ["WING_R_OUT"]              = {critical_damage = 3}, --24
+        ["WING_R_IN"]               = {critical_damage = 5, deps_cells = {"WING_R_CENTER"}}, -- 36
+        ["WING_R_CENTER"]           = {critical_damage = 4, deps_cells = {"WING_R_PART_CENTER", "FLAP_R", "WING_R_OUT"}}, -- 30
+        ["WING_R_PART_CENTER"]      = {critical_damage = 1.5}, -- 28 -- spoiler
+        ["WING_R_OUT"]              = {critical_damage = 3, deps_cells = {"AILERON_R"}}, -- 24
         ["FLAP_R"]                  = {critical_damage = 2}, -- 38
-        -- ["FLAP_R_CENTER"]           = {critical_damage = 2}, -- 102 spoilers?
         ["AILERON_R"]               = {critical_damage = 1}, --26
         ["WHEEL_R"]                 = {critical_damage = 3}, -- 85
 
-        ["TAIL"]                    = {critical_damage = 5, deps_cells = {"RUDDER"}}, -- 55
-        ["TAIL_LEFT_SIDE"]          = {critical_damage = 5}, -- 56
-        ["TAIL_RIGHT_SIDE"]         = {critical_damage = 5}, -- 57
-        ["TAIL_BOTTOM"]             = {critical_damage = 3}, --58
-        ["STABILIZATOR_L"]          = {critical_damage = 3, deps_cells = {"ELEVATOR_L"}}, -- 47
+        ["TAIL"]                    = {critical_damage = 2}, -- 55
+        ["TAIL_LEFT_SIDE"]          = {critical_damage = 3}, -- 56
+        ["TAIL_RIGHT_SIDE"]         = {critical_damage = 3}, -- 57
+        -- ["TAIL_BOTTOM"]             = {critical_damage = 3}, --58
+        ["STABILIZATOR_L"]          = {critical_damage = 2, deps_cells = {"ELEVATOR_L"}}, -- 47
         ["ELEVATOR_L"]              = {critical_damage = 1}, -- 51
-        ["STABILIZATOR_R"]          = {critical_damage = 3, deps_cells = {"ELEVATOR_R"}}, -- 48
+        ["STABILIZATOR_R"]          = {critical_damage = 2, deps_cells = {"ELEVATOR_R"}}, -- 48
         ["ELEVATOR_R"]              = {critical_damage = 1}, -- 52
         ["RUDDER"]                  = {critical_damage = 1}, --53
 
+        ["FIN_L_TOP"]               = {critical_damage = 4}, --53
+        ["FIN_L_BOTTOM"]            = {critical_damage = 4, deps_cells = {"RUDDER", "FIN_L_TOP"}}, --53
         -- ["HOOK"]                    = {critical_damage = 2}, -- 98
 
     }),
@@ -1197,41 +1208,42 @@ A_4E_C =  {
     lights_data = {
         typename = "collection",
         lights = {
-        [1] = { typename = "collection",
+            -- STROBES
+            [1] = {
+                typename = "collection",
                 lights = {
-                    -- Top Anticollision Light (red)
-                    --[1] = { typename = "strobelight", connector = "RED_BEACON_T", argument = 198, color = {1, 0, 0}, period = 1.2, phase_shift = 0 },
-                    [1] = { typename = "strobelight", connector = "RED_BEACON_T", color = {1, 0, 0}, period = 1.2, phase_shift = 0 },
-                    -- Bottom Anticollision Light (red)
-                    --[2] = { typename = "strobelight", connector = "RED_BEACON_B", argument = 199, color = {1, 0, 0}, period = 1.2, phase_shift = 0 },
-                    [2] = { typename = "strobelight", connector = "RED_BEACON_B", color = {1, 0, 0}, period = 1.2, phase_shift = 0 },
-                    }
-              },
-        [2] = { typename = "collection",
-                lights = {
-                    -- Taxi Light
-                    --[1] = { typename = "spotlight", connector = "MAIN_SPOT_PTR_01", argument = 208, dir_correction = {elevation = math.rad( 3)} },
-                    [1] = { typename = "spotlight", connector = "MAIN_SPOT_PTR_01", dir_correction = {elevation = math.rad( 3)} },
-                    }
-              },
-        [3] = { typename = "collection",
-                lights = { --[[
-                    -- Left Position Light (red)
-                    [1] = { typename = "omnilight", connector = "RED_NAV_L", color = {1, 0, 0}, pos_correction  = {0.0, 0, -0.2}, argument  = 190 },
-                    -- Right Position Light (green)
-                    [2] = { typename = "omnilight", connector = "GREEN_NAV_R", color = {0, 1, 0}, pos_correction = {0.0, 0, 0.2}, argument  = 191 },
-                    -- Tail Position Light (white)
-                    [3] = { typename = "omnilight", connector = "WHITE_NAV_T", color = {1, 1, 1}, pos_correction  = {0, 0, 0}, argument  = 192 },   --]]
-                    -- Left Position Light (red)
-                    [1] = { typename = "omnilight", connector = "RED_NAV_L", color = {1, 0, 0}, pos_correction  = {0.0, 0, -0.2} },
-                    -- Right Position Light (green)
-                    [2] = { typename = "omnilight", connector = "GREEN_NAV_R", color = {0, 1, 0}, pos_correction = {0.0, 0, 0.2} },
-                    -- Tail Position Light (white)
-                    [3] = { typename = "omnilight", connector = "WHITE_NAV_T", color = {1, 1, 1}, pos_correction  = {0, 0, 0} },
-                    }
-              },
-        }
-    },
+                            {typename = "argnatostrobelight", argument = 204, period = 1.2, phase_shift = 0},
+                            {typename = "argnatostrobelight", argument = 205, period = 1.2, phase_shift = 0.5},
+                },
+            },
+            -- SPOTS / TAXI & LANDING
+            [2] = {
+                typename = "collection",
+                lights = {  {typename  = "argumentlight", argument  = 208},	-- taxi light
+                },
+            },
+            -- NAVLIGHTS
+            [3] = {
+                typename = "collection",
+                lights = {  {typename  = "argumentlight", argument  = 190},	-- red
+                            {typename  = "argumentlight", argument  = 191},	-- green
+                            {typename  = "argumentlight", argument  = 192},	-- white
+                },
+            },
+            -- FORMATION
+            [4] = {},
+            -- TIPS
+            [5] = {},
+            -- REFUEL
+            [6] = {
+                typename = "collection",
+                lights = {  {typename  = "argumentlight", argument  = 193},	-- probe light
+                },
+            },
+            -- ANTI-COLLISION
+            [7] = {},
+        }, -- end of lights
+    }, -- end of lights_data
 }
 
 add_aircraft(A_4E_C)

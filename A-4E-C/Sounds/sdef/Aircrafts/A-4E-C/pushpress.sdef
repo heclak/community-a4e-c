@@ -1,0 +1,6 @@
+wave = "Effects/Aircrafts/A-4E-C/pushpress.wav"
+
+inner_radius = 1
+outer_radius = 4
+
+detached = true

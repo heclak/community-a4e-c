@@ -1,6 +1,8 @@
 livery = {
     {"Bottom", 0, "a4e-aggr-usn-topgun-bot", true};
     {"Top", 0, "a4e-aggr-usn-topgun-top", true};
+    {"Bottom", ROUGHNESS_METALLIC, "fus_bot_v472_RoughMet_lo", true};
+    {"Top", ROUGHNESS_METALLIC, "fus_top_v494_RoughMet_lo", true};
 
     -- flaps, used on most liveries
     {"flaps_001", 0, "a4e_bort_black", true};
@@ -43,6 +45,9 @@ livery = {
 
     -- custom fuel tank: 300 gallon center
     {"fuel_300c_a4e", 0, "a4e-aggr-usn-topgun-ft", true};
+
+    -- custom MER rack
+    {"a4e_mer", 0, "a4e_mer_topgun", true};
 
 }
 

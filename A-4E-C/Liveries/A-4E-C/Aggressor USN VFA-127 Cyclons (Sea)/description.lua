@@ -1,6 +1,8 @@
 livery = {
     {"Bottom", 0, "a4e-aggr-usn-vfa-127-cyclons-sea-bot", true};
     {"Top", 0, "a4e-aggr-usn-vfa-127-cyclons-sea-top", true};
+    {"Bottom", ROUGHNESS_METALLIC, "fus_bot_v472_RoughMet_lo", true};
+    {"Top", ROUGHNESS_METALLIC, "fus_top_v494_RoughMet_lo", true};
 
     -- flaps, used on most liveries
     {"flaps_001", 0, "a4e_bort_grey-dark", true};
