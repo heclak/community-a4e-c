@@ -1,11 +1,12 @@
 -- set FM_dll to name of DLL with EFM, or nil to use SFM
-local AFMenabled = false
+local AFMenabled = true
 
-local bin = {}
+bin = {}
 
 if AFMenabled == true then
- bin = {'A4E_FM'}
+	bin = {'A-4E-C'} 
 end
+
 
 local self_ID="A-4E-C"
 declare_plugin(self_ID,
@@ -88,13 +89,13 @@ mount_vfs_texture_path  (current_mod_path.."/Textures/a4e_blueangels")
 
 -- Option Cockpit operationnel, HUD partiel
 if AFMenabled == true then
-	dofile(current_mod_path .. "/Entry/Suspension.lua")
+	dofile(current_mod_path.."/Entry/Suspension.lua")
 	local FM = 
 	{
 		[1] = self_ID,
-		[2] = 'A4E_FM',
+		[2] = 'A-4E-C',
 		center_of_mass = {0.183, 0.261, 0.0},
-		moment_of_inertia = {11904, 38641, 35116, -5518} --xy = -5518
+		moment_of_inertia = {11904, 38641, 35116, -5518}, --xy = -5518
 		suspension = suspension
 	}
 	make_flyable('A-4E-C'	, current_mod_path..'/Cockpit/Scripts/', FM, current_mod_path..'/comm.lua')

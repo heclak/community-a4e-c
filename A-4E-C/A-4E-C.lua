@@ -457,21 +457,21 @@ A_4E_C =  {
 	-----------------------------------------------------------------------
 	----------------- SUSPENSION CODE BEGINS
 	-----------------------------------------------------------------------
-    --nose_gear_pos                            = {2.72, -2.38, 0}, -- {2.72, -2.37, 0},    --      2.72,       -2.28,    0
-    --main_gear_pos                            = {-0.79, -2.46, 1.18}, -- {-0.79, -2.42, 1.18},    --  0.79,   -2.35,    1.18
-    --tand_gear_max                            = 0.554,   -- // tangent on maximum yaw angle of front wheel
+    nose_gear_pos                            = {2.72, -2.38, 0}, -- {2.72, -2.37, 0},    --      2.72,       -2.28,    0
+    main_gear_pos                            = {-0.79, -2.46, 1.18}, -- {-0.79, -2.42, 1.18},    --  0.79,   -2.35,    1.18
+    tand_gear_max                            = 0.554,   -- // tangent on maximum yaw angle of front wheel
 
-    --nose_gear_amortizer_direct_stroke        = 0.05,    -- 1.878 - 1.878, -- down from nose_gear_pos !!!
-    --nose_gear_amortizer_reversal_stroke      = -0.32,   -- 1.348 - 1.878, -- up
-    --main_gear_amortizer_direct_stroke        = 0.0,     -- 1.592 - 1.592, -- down from main_gear_pos !!!
-    --main_gear_amortizer_reversal_stroke      = -0.43,   -- 1.192 - 1.592, -- up
+    nose_gear_amortizer_direct_stroke        = 0.05,    -- 1.878 - 1.878, -- down from nose_gear_pos !!!
+    nose_gear_amortizer_reversal_stroke      = -0.32,   -- 1.348 - 1.878, -- up
+    main_gear_amortizer_direct_stroke        = 0.0,     -- 1.592 - 1.592, -- down from main_gear_pos !!!
+    main_gear_amortizer_reversal_stroke      = -0.43,   -- 1.192 - 1.592, -- up
 
-    --nose_gear_amortizer_normal_weight_stroke = -0.20,   -- 0.144
-    --main_gear_amortizer_normal_weight_stroke = -0.51,   --
+    nose_gear_amortizer_normal_weight_stroke = -0.20,   -- 0.144
+    main_gear_amortizer_normal_weight_stroke = -0.51,   --
 
-    --nose_gear_wheel_diameter                 = 0.441,   -- 0.441, --*
-    --main_gear_wheel_diameter                 = 0.609,   -- 0.609, --*
-    --brakeshute_name                          = 0,       -- Landing - brake chute visual shape after separation
+    nose_gear_wheel_diameter                 = 0.441,   -- 0.441, --*
+    main_gear_wheel_diameter                 = 0.609,   -- 0.609, --*
+    brakeshute_name                          = 0,       -- Landing - brake chute visual shape after separation
 
 	-----------------------------------------------------------------------
 	----------------- SUSPENSION CODE ENDS
