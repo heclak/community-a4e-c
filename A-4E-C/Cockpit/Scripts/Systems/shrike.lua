@@ -63,10 +63,10 @@ function post_initialize()
     -- RWR:set_power(true)
 
     -- initialise sounds
-    sndhost             = create_sound_host("SHRIKE","2D",0,0,0) -- TODO: look into defining this sound host for HEADPHONES/HELMET
-    snd_shrike_tone     = sndhost:create_sound("agm-45a-shrike-tone")
-    snd_shrike_search   = sndhost:create_sound("agm-45a-shrike-search")
-    snd_shrike_lock     = sndhost:create_sound("agm-45a-shrike-lock")
+    sndhost             = create_sound_host("SHRIKE","HEADPHONES",0,0,0) -- TODO: look into defining this sound host for HEADPHONES/HELMET
+    snd_shrike_tone     = sndhost:create_sound("Aircrafts/A-4E-C/agm-45a-shrike-tone")
+    snd_shrike_search   = sndhost:create_sound("Aircrafts/A-4E-C/agm-45a-shrike-search")
+    snd_shrike_lock     = sndhost:create_sound("Aircrafts/A-4E-C/agm-45a-shrike-lock")
 end
 
 function update()

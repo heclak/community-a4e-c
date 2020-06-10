@@ -22,25 +22,13 @@ local tblCPLocalList = oms.getTblCPLocalList(modulelocation)
 
 
 return {
-
-	rwrType					= DbOption.new():setValue(0):combo({DbOption.Item(_('AN/APR-23 (Sound only)')):Value(0),
-																DbOption.Item(_('AN/APR-25 (Display)')):Value(1),
-																--[[DbOption.Item(_('ON')):Value(2),
-																DbOption.Item(_('DISMOUNTED')):Value(3),]]--
-																}),
-	hideControlStick		= DbOption.new():setValue(0):combo({DbOption.Item(_('show')):Value(0),
-																DbOption.Item(_('hide')):Value(1),																
-																}),
 	trimSpeed				= DbOption.new():setValue(0):combo({DbOption.Item(_('100% (default)')):Value(0),
-																DbOption.Item(_('50%')):Value(1),																
-																}),																
-	--hideControlStick		= DbOption.new():setValue(1):checkbox(),
---[[
-	sarpp					= DbOption.new():setValue(1):combo({DbOption.Item(_('OFF')):Value(0),
-																DbOption.Item(_('ONLY FOR TRACKS')):Value(1),
-																DbOption.Item(_('ON')):Value(2),
+																DbOption.Item(_('50%')):Value(1),
 																}),
-	dismountGunSight		= DbOption.new():setValue(false):checkbox(),
-    CPLocalList				= tblCPLocalList["Cockpit_L-39C"],	
-	CPLocalZAList			= tblCPLocalList["Cockpit_L-39ZA"],]]--
+
+	catapultLaunchMode		= DbOption.new():setValue(0):combo({DbOption.Item(_('MIL Power')):Value(0),
+																DbOption.Item(_('Manual')):Value(1),
+																}),
+
+	catapultAlignmentCheck	= DbOption.new():setValue(true):checkbox(),
 }

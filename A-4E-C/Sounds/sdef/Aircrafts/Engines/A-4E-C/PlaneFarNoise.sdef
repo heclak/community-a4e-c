@@ -1,0 +1,10 @@
+wave = "Effects/Aircrafts/Engines/PlaneFarNoise"
+auto_width = false
+position = {-3.0, 0, 0}
+inner_radius = 600
+outer_radius = 2100
+cone_inner_angle = 70
+cone_outer_angle = 130
+cone_outer_gain = 0
+direction = {-1, 0, 0}
+gain = 0.0

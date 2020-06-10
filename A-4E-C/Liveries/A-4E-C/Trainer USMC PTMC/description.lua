@@ -38,7 +38,7 @@ livery =
     {"tail_100", 0, "empty", true};
 }
 
-name = "Trainer USMC Pacific Missile Test Center"
+name = "USMC Pacific Missile Test Center"
 --name_xx = ""
 --[[ assign the countries ]]
 countries = {"USA"}

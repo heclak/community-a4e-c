@@ -89,6 +89,7 @@ local iCommandPlaneTrimPitchAbs=2022
 local iCommandPlaneTrimRollAbs=2023
 local iCommandPlaneTrimRudderAbs=2024
 local iCommandPlaneTrimCancel=97
+local iCommandPlaneTrimRoll	= 2020
 
 function SetCommand(command,value)
     -- "primary" control is the clickable device, key commands trigger the clickable actions...
@@ -215,7 +216,7 @@ function update()
             roll_trim=-1
         end
         roll_trim_handle:set(roll_trim)
-        dispatch_action(nil, iCommandPlaneTrimRollAbs, roll_trim*roll_trim_scale)
+        dispatch_action(nil, iCommandPlaneTrimRoll, trimming_leftright * roll_trim_scale * 0.05)
     end
     if trimming_rudder_leftright ~= 0 then
         rudder_trim = rudder_trim + trimming_rudder_leftright * trim_update * trimspeedfactor

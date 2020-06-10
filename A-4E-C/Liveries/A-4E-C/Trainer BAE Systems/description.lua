@@ -2,6 +2,8 @@ livery =
 {
     {"Bottom", 0, "fus_bot_v472", true};
     {"Top", 0, "a4e-trn-bae-top", true};
+    {"Bottom", ROUGHNESS_METALLIC, "fus_bot_v472_RoughMet_hi", true};
+    {"Top", ROUGHNESS_METALLIC, "fus_top_v494_RoughMet_hi", true};
 
         -- flaps, used on most liveries
     {"flaps_001", 0, "empty", true};
@@ -18,9 +20,9 @@ livery =
     {"tail_aggressor_010", 0, "empty", true};
 
     -- three digit top-of-rudder, used on most USN liveries
-    {"rudder_001", 0, "a4e_bort_black", true};
-    {"rudder_010", 0, "a4e_bort_black", true};
-    {"rudder_100", 0, "a4e_bort_black", true};
+    {"rudder_001", 0, "a4e_bort_black_smooth", true};
+    {"rudder_010", 0, "a4e_bort_black_smooth", true};
+    {"rudder_100", 0, "a4e_bort_black_smooth", true};
 
     -- wing bort used on most USN liveries
     {"wing_001", 0, "empty", true};
@@ -37,7 +39,7 @@ livery =
     {"tail_100", 0, "empty", true};
 }
 
-name = "Trainer: BAE Systems"
+name = "BAE Systems"
 --name_xx = ""
 --[[ assign the countries ]]
-countries = {"USA", "UK"}
+countries = {"USA", "UK", "GER"}

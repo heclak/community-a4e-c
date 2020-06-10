@@ -2,6 +2,8 @@
 {
     {"Bottom", 0, "a4e-kwt-bot", true};
     {"Top", 0, "a4e-kwt-top", true};
+    {"Bottom", ROUGHNESS_METALLIC, "fus_bot_v472_RoughMet_lo", true};
+    {"Top", ROUGHNESS_METALLIC, "fus_top_v494_RoughMet_lo", true};
 
         -- flaps, used on most liveries
     {"flaps_001", 0, "a4e_bort_white", true};

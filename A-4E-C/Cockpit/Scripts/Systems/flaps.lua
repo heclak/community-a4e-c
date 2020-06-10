@@ -1,5 +1,6 @@
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
+dofile(LockOn_Options.script_path.."Systems/hydraulic_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 
 -- "continuous" flaps behavior
@@ -96,12 +97,12 @@ function SetCommand(command,value)
         fromKeyboard = true
         dev:performClickableAction(device_commands.flaps, -1, false)    -- target: extension
     elseif command == Keys.PlaneFlapsUpHotas then
-        dev:performClickableAction(device_commands.flaps, -1, false)    -- target: extension
+        dev:performClickableAction(device_commands.flaps, 1, false)    -- target: extension
     elseif command == Keys.PlaneFlapsOff then
         fromKeyboard = true
         dev:performClickableAction(device_commands.flaps, 1, false)     -- target: retraction
     elseif command == Keys.PlaneFlapsDownHotas then
-        dev:performClickableAction(device_commands.flaps, 1, false)     -- target: retraction
+        dev:performClickableAction(device_commands.flaps, -1, false)     -- target: retraction
     elseif command == Keys.PlaneFlaps then
         if MOVING == 1 then
             fromKeyboard = false
@@ -126,19 +127,21 @@ function update()
         FLAPS_STATE = FLAPS_STATE - flaps_increment -- force flaps in if too much pressure on them
     -- make primary adjustment if needed
     elseif FLAPS_STATE ~= FLAPS_TARGET then
-        if MOVING == 1 then
-            -- we intended to move the flaps, and they're out of position...
-            if FLAPS_STATE < FLAPS_TARGET then
-                FLAPS_STATE = FLAPS_STATE + flaps_increment
+        if get_hyd_utility_ok() then
+            if MOVING == 1 then
+                -- we intended to move the flaps, and they're out of position...
+                if FLAPS_STATE < FLAPS_TARGET then
+                    FLAPS_STATE = FLAPS_STATE + flaps_increment
+                else
+                    FLAPS_STATE = FLAPS_STATE - flaps_increment
+                end
             else
-                FLAPS_STATE = FLAPS_STATE - flaps_increment
-            end
-        else
-            -- moving == 0 because we reached our endpoint BUT high velocity retracted the flaps, so re-enable
-            -- the intent to move because we still have more extension as our target.  Only triggers when desiring
-            -- more extension and when last command wasn't an explicit halt
-            if FLAPS_TARGET > FLAPS_STATE and FLAPS_TARGET_LAST ~= -1 then
-                MOVING = 1
+                -- moving == 0 because we reached our endpoint BUT high velocity retracted the flaps, so re-enable
+                -- the intent to move because we still have more extension as our target.  Only triggers when desiring
+                -- more extension and when last command wasn't an explicit halt
+                if FLAPS_TARGET > FLAPS_STATE and FLAPS_TARGET_LAST ~= -1 then
+                    MOVING = 1
+                end
             end
         end
     else

@@ -44,7 +44,7 @@ local CMSHintsPosX = 0.8
 
 txt_BoardTitle				= CreateElement "ceStringPoly"
 txt_BoardTitle.name			= "txt_BoardTitle"
-txt_BoardTitle.material		= "font_kneeboard"
+txt_BoardTitle.material		= "font_kneeboard_white"
 txt_BoardTitle.init_pos		= {0.0, getLineY(0), 0}
 txt_BoardTitle.value		= "WEAPONS"
 txt_BoardTitle.alignment	= "CenterBottom"

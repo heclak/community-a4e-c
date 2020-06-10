@@ -102,6 +102,9 @@ CMS:listen_command(Keys.ChangeCmsBurstInterval)
 CMS:listen_command(Keys.ChangeCmsSalvos)
 CMS:listen_command(Keys.ChangeSalvoInterval)
 
+CMS:listen_event("WeaponRearmComplete")
+CMS:listen_event("UnlimitedWeaponStationRestore")
+
 local cm_bank1_Xx = get_param_handle("CM_BANK1_Xx")
 local cm_bank1_xX = get_param_handle("CM_BANK1_xX")
 local cm_bank2_Xx = get_param_handle("CM_BANK2_Xx")
@@ -179,6 +182,11 @@ function release_countermeasure()
             cm_bank2_show = (cm_bank2_show - 1) % 100
         end -- cm_bank2_count > 0
     end -- if cm_banksel
+
+    if LockOn_Options.flight.unlimited_weapons == true then
+        update_countermeasure_quantity()
+    end
+    
     debug_print("Countermeasures remaining: Bank 1 = "..cm_bank1_count.." Bank 2 = "..cm_bank2_count)
     debug_print("Countermeasures remaining: Flares = "..tostring(CMS:get_flare_count()).." Chaff = "..tostring(CMS:get_chaff_count()))
 end -- release_countermeasure()
@@ -224,9 +232,7 @@ function update_cms_params()
     cms_salvo_interval_param:set(cms_salvo_interval_setting)
 end -- update_cms_params()
 
-function post_initialize()
-    cm_banksel      = "both"
-    
+function update_countermeasure_quantity()
     -- fill dispensers with chaff
     chaff_count     = CMS:get_chaff_count()
     if chaff_count > 0 then
@@ -257,6 +263,13 @@ function post_initialize()
 
     cm_bank1_show   = cm_bank1_count
     cm_bank2_show   = cm_bank2_count
+    
+end -- update_countermeasure_quantity()
+
+function post_initialize()
+    cm_banksel      = "both"
+    
+    update_countermeasure_quantity()
     
     -- init values from mission options
     cms_bursts_setting_array_pos          = get_aircraft_property("CMS_BURSTS")
@@ -356,7 +369,7 @@ function update()
 
     end -- get_elec_mon_dc_ok() and        
 
-    update_countermeasures_display()
+        update_countermeasures_display()
 
 end -- update()
 
@@ -403,11 +416,11 @@ function SetCommand(command, value)
 
     elseif command == Keys.CmBankSelectRotate then
         --up goes to middle (0), middle goes to down (+1), down goes to up (-1)
-        if cm_banksel == 1 then
+        if cm_banksel == "bank_1" then
             CMS:performClickableAction(device_commands.cm_bank, 0, false)
-        elseif cm_banksel == 2 then
+        elseif cm_banksel == "bank_2" then
             CMS:performClickableAction(device_commands.cm_bank, -1, false)
-        elseif cm_banksel == 3 then
+        elseif cm_banksel == "both" then
             CMS:performClickableAction(device_commands.cm_bank, 1, false)
         end
 
@@ -475,6 +488,12 @@ function SetCommand(command, value)
 
     end
 end -- setCommand()
+
+function CockpitEvent(event, val)
+    if event == "WeaponRearmComplete" or event == "UnlimitedWeaponStationRestore" then
+        update_countermeasure_quantity()
+    end
+end
 
 function next(value_to_increment, increment_by, modulus)
     return ((value_to_increment + increment_by - 1) % modulus) + 1
