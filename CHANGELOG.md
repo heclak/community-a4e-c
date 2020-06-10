@@ -2,7 +2,7 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
-## Unreleased
+## Version 1.4 - 10 June 2020
 
 ### Added
 
