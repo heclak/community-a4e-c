@@ -69,7 +69,7 @@ Failure to perform these steps will result in DCS World not recognizing the modu
 If you are upgrading from an older version of the A-4E-C, perform these following actions. You must delete the currently installed A-4E-C files before installing the new version, as some important files have been removed for this release, and your input binding must be reset and rebound in order to accommodate this release’s enhanced control scheme. If this is a new installation, skip this step and move on to Step 2.
 
 - Delete the contents of your old A-4E-C installation folder: `C:\Users\username\Saved Games\DCS\Mods\aircraft\A-4E-C`
-- Delete your A-4E-C input settings by opening the following folder: `C:\Users\username\Saved Games\DCS\Input\A-4E-C`
+- Delete your A-4E-C input settings by opening the following folder: `C:\Users\username\Saved Games\DCS\Config\Input\A-4E-C`
 - Delete the joystick, keyboard, mouse and trackir folders.
 
 ### STEP 2: Installing the module files.
