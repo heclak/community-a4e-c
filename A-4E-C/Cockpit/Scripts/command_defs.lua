@@ -280,6 +280,8 @@ Keys =
     AWRSModeSelCCW                  = __custom_counter(),
     AWRSModeSelCW                   = __custom_counter(),
 	
+	nws_engage						 = __custom_counter(),
+	nws_disengage					 = __custom_counter(),
 }
 
 start_command   = 3000

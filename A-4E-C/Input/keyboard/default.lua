@@ -54,7 +54,7 @@ join(res.keyCommands,{
     {down = Keys.AFCSOverride,                                                                                           name = _('AFCS Override Button'),             category = {_('Stick')}},
 
     {down = Keys.ToggleStick,                                                                                            name = _('Control Stick - HIDE/SHOW'),        category = {_('Stick')}},
-
+	  {down = Keys.nws_engage, up = Keys.nws_disengage,                                              name = _('Nose Wheel Steering'),              category = {_('Stick')}},
     ---------------------------------------------
     -- Throttle Quadrant ------------------------
     ---------------------------------------------

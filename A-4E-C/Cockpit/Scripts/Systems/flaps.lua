@@ -38,6 +38,7 @@ local FLAP_MAX_DEFLECTION = 50
 local FLAP_BLOWBACK_PSI = 3650
 
 local flaps_ind = get_param_handle("D_FLAPS_IND")
+local fm_flaps = get_param_handle("FM_FLAPS")
 
 dev:listen_command(Keys.PlaneFlaps)
 dev:listen_command(Keys.PlaneFlapsOn)
@@ -76,12 +77,12 @@ end
 
 function SetCommand(command,value)
     if command == device_commands.flaps then
-        if value == -1 then
+        if value == 1 then
             -- target: retraction
             MOVING = 1
             FLAPS_TARGET = 0
             FLAPS_TARGET_LAST= 1
-        elseif value == 1 then
+        elseif value == -1 then
             -- target: extension
             MOVING = 1
             FLAPS_TARGET = 1
@@ -164,7 +165,7 @@ function update()
     end
 	
 	flaps_ind:set(FLAPS_STATE)
-            
+    fm_flaps:set(FLAPS_STATE)      
 	--set_aircraft_draw_argument_value(9,FLAPS_STATE)
 	--set_aircraft_draw_argument_value(10,FLAPS_STATE)
 	

@@ -70,10 +70,18 @@ void ed_fm_simulate(double dt)
 {
 	//Pre update
 	s_airframe.setFlapsPosition(s_interface.getFlaps());
+	s_airframe.setSpoilerPosition(s_interface.getSpoilers());
+	s_airframe.setAirbrakePosition(s_interface.getSpeedBrakes());
+
 	s_input.pitchTrim() = s_interface.getPitchTrim();
 	s_input.rollTrim() = s_interface.getRollTrim();
 	s_input.yawTrim() = s_interface.getRudderTrim();
 
+	s_engine.setThrottle(s_interface.getEngineThrottlePosition());
+	s_engine.setBleedAir(s_interface.getBleedAir() > 0.1);
+	s_engine.setIgnitors(s_interface.getIgnition() > 0.1);
+
+	//Update
 	s_engine.updateEngine(dt);
 	s_airframe.airframeUpdate(dt);
 	s_avionics.updateAvionics(dt);
@@ -81,95 +89,11 @@ void ed_fm_simulate(double dt)
 
 
 	//Post update
-	s_interface.setRPM(s_engine.getRPMNorm());
+	s_interface.setRPM(s_engine.getRPMNorm()*100.0);
 	s_interface.setThrottlePosition(s_input.throttleNorm());
 	s_interface.setStickPitch(s_input.pitch() + s_input.pitchTrim());
 	s_interface.setStickRoll(s_input.roll() + s_input.rollTrim());
 	s_interface.setRudderPedals(s_input.yaw() + s_input.yawTrim());
-
-	//printf("%x", s_interface.m_test);
-
-	/*common_force = Vec3();
-	common_moment = Vec3();
-
-	
-
-	Vec3 airspeed = velocity_world_cs - wind;
-	printf("vx: %lf vy: %lf vz: %lf\n", airspeed.x, airspeed.y, airspeed.z);
-
-	double V_scalar = sqrt(airspeed.x * airspeed.x + airspeed.y * airspeed.y + airspeed.z * airspeed.z);
-	double q = (0.5 * atmosphere_density * V_scalar * V_scalar) * 1.0;
-	Skyhawk::APars params(q, aoa, beta, 0.0, rx);
-	Skyhawk::calculate(params, 0.0, stick_roll, stick_pitch, 0.0, throttle, center_of_gravity);
-
-	common_force = Skyhawk::netForce;
-	common_moment = Skyhawk::netMoment;*/
-	
-
-	//common_force  = Vec3();
-	//common_moment = Vec3();
-
-	////common_moment -= Vec3(rx*10000.0, 0, 0);
-
-	//Vec3 airspeed;
-
-	//airspeed.x = velocity_world_cs.x - wind.x;
-	//airspeed.y = velocity_world_cs.y - wind.y;
-	//airspeed.z = velocity_world_cs.z - wind.z;
-
-	//
-	//Vec3 thrust_pos(-5.0,0,0);
-	//Vec3 thrust(throttle * 38000, 0 , 0);
-
-	//double V_scalar =  sqrt(airspeed.x * airspeed.x + airspeed.y * airspeed.y + airspeed.z * airspeed.z);
-
-	//double Mach		= V_scalar/ speed_of_sound;
-
-	//double CyAlpha_ = lerp(mach_table,Cya  ,sizeof(mach_table)/sizeof(double),Mach);
-	//double Cx0_     = lerp(mach_table,cx0  ,sizeof(mach_table)/sizeof(double),Mach);
-	//double CyMax_   = lerp(mach_table,CyMax,sizeof(mach_table)/sizeof(double),Mach);
-	//double B_	    = lerp(mach_table,B    ,sizeof(mach_table)/sizeof(double),Mach);
-	//double B4_	    = lerp(mach_table,B4   ,sizeof(mach_table)/sizeof(double),Mach);
-
-
-	//double Cy  = (CyAlpha_ * 57.3) * aoa;
-	//if (fabs(aoa) > 90/57.3)
-	//	Cy = 0;
-	//if (Cy > CyMax_)
-	//	Cy = CyMax_;
-
-	//double Cx  = 0.05 + B_ * Cy * Cy + B4_ * Cy * Cy * Cy * Cy;
-
-	//double q	   =  0.5 * atmosphere_density * V_scalar * V_scalar;
-	//const double S = 25;
-	//double Lift =  Cy * q * S;
-	//double Drag =  Cx * q * S;
-	//
-	//Vec3 aerodynamic_force(-Drag , Lift , 0 );
-	//Vec3 aerodynamic_force_pos(0.0,0,0);
-
-	//add_local_force(aerodynamic_force,aerodynamic_force_pos);
-	//add_local_force(thrust			 ,thrust_pos);
-
-	//Vec3 rudder(0, 0, -0.5*beta * CyAlpha_ * 57.3 * q * S);
-	//Vec3 rudderPos(-5, 0, 0);
-
-	//Vec3 elevator(0, - 0.2 * stick_pitch * CyAlpha_ * q * S, 0);
-	//Vec3 elevatorPos(-5, 0, 0);
-
-	//Vec3 aileron_left (0 , 0.1 * 0.05 * (CyAlpha_ * 57.3) * (stick_roll) * q * S , 0 );
-	//Vec3 aileron_right(0 ,-0.1 * 0.05 * (CyAlpha_ * 57.3) * (stick_roll) * q * S , 0 );
-
-	//Vec3 aileron_left_pos(0,0,-5.0);
-	//Vec3 aileron_right_pos(0,0, 5.0);
-
-
-	//add_local_force(aileron_left ,aileron_left_pos);
-	//add_local_force(aileron_right,aileron_right_pos);
-	//add_local_force(rudder, rudderPos);
-	//add_local_force(elevator, elevatorPos);
-
-	//simulate_fuel_consumption(dt);
 }
 
 void ed_fm_set_atmosphere(double h,//altitude above sea level
@@ -339,24 +263,24 @@ void ed_fm_set_command
 		s_airframe.setCatStateFromKey();
 		break;
 	case Skyhawk::Control::NOSEWHEEL_STEERING_ENGAGE:
-		s_input.nosewheelSteering() = true;
+		//s_input.nosewheelSteering() = true;
 		break;
 	case Skyhawk::Control::NOSEWHEEL_STEERING_DISENGAGE:
-		s_input.nosewheelSteering() = false;
+		//s_input.nosewheelSteering() = false;
 		break;
 	case Skyhawk::Control::STARTER_BUTTON:
-		s_input.starter() = value > 17.26;
+		//s_input.starter() = value > 17.26;
 		break;
 	case Skyhawk::Control::THROTTLE_DETEND:
-		if (value < 17.24)
-			s_input.throttleState() = Skyhawk::Input::ThrottleState::CUTOFF;
-		else if (value > 17.26)
-			s_input.throttleState() = Skyhawk::Input::ThrottleState::IDLE;
-		else
-			s_input.throttleState() = Skyhawk::Input::ThrottleState::START;
+		//if (value < 17.24)
+			//s_input.throttleState() = Skyhawk::Input::ThrottleState::CUTOFF;
+		//else if (value > 17.26)
+			//s_input.throttleState() = Skyhawk::Input::ThrottleState::IDLE;
+		//else
+			//s_input.throttleState() = Skyhawk::Input::ThrottleState::START;
 		break;
-	//default:
-		//printf("number %d: %lf\n", command, value);
+	default:
+		printf("number %d: %lf\n", command, value);
 	}
 }
 /*
@@ -461,7 +385,9 @@ void ed_fm_set_draw_args (EdDrawArgument * drawargs,size_t size)
 
 	drawargs[AIRBRAKE].f = s_airframe.getSpeedBrakePosition();
 
-	s_airframe.setSpoilerPosition((drawargs[LEFT_SPOILER].f + drawargs[RIGHT_SPOILER].f)/2.0);
+
+
+	//s_airframe.setSpoilerPosition((drawargs[LEFT_SPOILER].f + drawargs[RIGHT_SPOILER].f)/2.0);
 
 	drawargs[HOOK].f = s_airframe.getHookPosition();
 
@@ -546,9 +472,9 @@ double ed_fm_get_param(unsigned index)
 		//printf("BrakeRight: %lf\n", s_input.normalise(s_input.brakeRight()));
 		return s_input.normalise(s_input.brakeRight());
 	case ED_FM_SUSPENSION_0_WHEEL_SELF_ATTITUDE:
-		return !s_input.nosewheelSteering();
+		return s_interface.getNWS() > 0.5 ? -1.0 : 1.0;
 	case ED_FM_SUSPENSION_0_WHEEL_YAW:
-		return -s_input.yaw()/2.0;
+		return s_interface.getNWS() > 0.5 ? -s_input.yaw()/2.0 : 0.0;
 	}
 
 	return 0;

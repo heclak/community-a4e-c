@@ -62,6 +62,7 @@ local tmax = 1.00
 local current_spoiler=get_param_handle("D_SPOILERS")
 local spoiler_caution=get_param_handle("D_SPOILER_CAUTION")
 local master_test_param = get_param_handle("D_MASTER_TEST")
+local fm_spoiler = get_param_handle("FM_SPOILERS")
 
 function update()
     local throttle = sensor_data.getThrottleLeftPosition()
@@ -102,6 +103,9 @@ function update()
     else
         spoiler_caution:set(0)
     end
+	
+	fm_spoiler:set(SPOILER_STATE)
+	
 end
 
 need_to_be_closed = false -- close lua state after initialization

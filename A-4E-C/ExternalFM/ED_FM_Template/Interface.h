@@ -15,24 +15,30 @@ public:
 		m_api					= ed_get_cockpit_param_api();
 		m_RPM					= m_api.pfn_ed_cockpit_get_parameter_handle("RPM");
 
-		m_noseGear				= m_api.pfn_ed_cockpit_get_parameter_handle("GEAR_NOSE");
-		m_leftGear				= m_api.pfn_ed_cockpit_get_parameter_handle("GEAR_LEFT");
-		m_rightGear				= m_api.pfn_ed_cockpit_get_parameter_handle("GEAR_RIGHT");
+		m_noseGear				= m_api.pfn_ed_cockpit_get_parameter_handle("FM_GEAR_NOSE");
+		m_leftGear				= m_api.pfn_ed_cockpit_get_parameter_handle("FM_GEAR_LEFT");
+		m_rightGear				= m_api.pfn_ed_cockpit_get_parameter_handle("FM_GEAR_RIGHT");
 
-		m_flaps					= m_api.pfn_ed_cockpit_get_parameter_handle("D_FLAPS_IND");
-		m_airbrakes				= m_api.pfn_ed_cockpit_get_parameter_handle("BRAKE_EFF");
-		m_spoiler				= m_api.pfn_ed_cockpit_get_parameter_handle("D_SPOILERS");
+		m_flaps					= m_api.pfn_ed_cockpit_get_parameter_handle("FM_FLAPS");
+		m_airbrakes				= m_api.pfn_ed_cockpit_get_parameter_handle("FM_BRAKES");
+		m_spoiler				= m_api.pfn_ed_cockpit_get_parameter_handle("FM_SPOILERS");
 
 		m_test					= m_api.pfn_ed_cockpit_get_parameter_handle("TEST_TEST");
 		m_throttlePosition		= m_api.pfn_ed_cockpit_get_parameter_handle("FM_THROTTLE_POSITION");
+
+		m_engineThrottlePosition = m_api.pfn_ed_cockpit_get_parameter_handle("FM_ENGINE_THROTTLE_POSITION");
+		m_engineIgnition		= m_api.pfn_ed_cockpit_get_parameter_handle("FM_IGNITION");
+		m_engineBleedAir		= m_api.pfn_ed_cockpit_get_parameter_handle("FM_BLEED_AIR");
 
 		m_stickPitch			= m_api.pfn_ed_cockpit_get_parameter_handle("STICK_PITCH");
 		m_stickRoll				= m_api.pfn_ed_cockpit_get_parameter_handle("STICK_ROLL");
 		m_rudderPedals			= m_api.pfn_ed_cockpit_get_parameter_handle("RUDDER_PEDALS");
 
-		m_pitchTrim = m_api.pfn_ed_cockpit_get_parameter_handle("PITCH_TRIM");
-		m_rollTrim = m_api.pfn_ed_cockpit_get_parameter_handle("ROLL_TRIM");
-		m_rudderTrim = m_api.pfn_ed_cockpit_get_parameter_handle("RUDDER_TRIM");
+		m_pitchTrim				= m_api.pfn_ed_cockpit_get_parameter_handle("PITCH_TRIM");
+		m_rollTrim				= m_api.pfn_ed_cockpit_get_parameter_handle("ROLL_TRIM");
+		m_rudderTrim			= m_api.pfn_ed_cockpit_get_parameter_handle("RUDDER_TRIM");
+
+		m_nws					= m_api.pfn_ed_cockpit_get_parameter_handle("FM_NWS");
 
 	}
 
@@ -118,6 +124,26 @@ public:
 	{
 		return getParamNumber(m_rudderTrim);
 	}
+
+	inline double getEngineThrottlePosition()
+	{
+		return getParamNumber(m_engineThrottlePosition);
+	}
+
+	inline double getBleedAir()
+	{
+		return getParamNumber(m_engineBleedAir);
+	}
+
+	inline double getIgnition()
+	{
+		return getParamNumber(m_engineIgnition);
+	}
+
+	inline double getNWS()
+	{
+		return getParamNumber(m_nws);
+	}
 		 
 	void* m_test = NULL;
 private:
@@ -160,9 +186,15 @@ private:
 	void* m_stickPitch = NULL;
 	void* m_throttlePosition = NULL;
 
+	void* m_engineThrottlePosition = NULL;
+	void* m_engineIgnition = NULL;
+	void* m_engineBleedAir = NULL;
+
 	void* m_rollTrim = NULL;
 	void* m_pitchTrim = NULL;
 	void* m_rudderTrim = NULL;
+
+	void* m_nws = NULL;
 };
 
 

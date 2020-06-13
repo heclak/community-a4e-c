@@ -40,6 +40,9 @@ local HookUp = Keys.PlaneHookUp
 local HookDown = Keys.PlaneHookDown
 local HookHandle = device_commands.Hook
 
+local NWS_Engage = Keys.nws_engage
+local NWS_Disengage = Keys.nws_disengage
+local fm_nws = get_param_handle("FM_NWS")
 
 -- GEAR constants/definitions/configuration
 local GearNoseRetractTimeSec = 8    -- 8 seconds to retract
@@ -71,6 +74,8 @@ dev:listen_command(GearUp)
 dev:listen_command(GearDown)
 dev:listen_command(GearHandle)
 dev:listen_command(device_commands.emer_gear_release)
+dev:listen_command(NWS_Engage)
+dev:listen_command(NWS_Disengage)
 
 --[[
 dev:listen_command(Hook)
@@ -96,6 +101,7 @@ function SetCommand(command,value)
         end
     end
 --]]
+	--print_message_to_user("Command: ".. command)
     local retraction_release_solenoid = get_elec_primary_ac_ok()
     local gear_handle_pos = get_cockpit_draw_argument_value(8)  -- 1==down, 0==up
     -- TODO: prevent gear handle being moved if retraction_release_solenoid is false
@@ -133,6 +139,16 @@ function SetCommand(command,value)
                 end
             end
         end
+	elseif command == NWS_Engage then
+		--print_message_to_user("Engage")
+		if get_hyd_utility_ok() then
+			fm_nws:set(1.0)
+		else
+			fm_nws:set(0.0)
+		end
+	elseif command == NWS_Disengage then
+		--print_message_to_user("Disengage")
+		fm_nws:set(0.0)
     end
 end
 
@@ -162,6 +178,14 @@ local gear_nose_extend_increment = update_time_step / GearNoseExtendTimeSec
 local gear_main_increment = update_time_step / GearMainTimeSec
 local prev_retraction_release_airborne=get_elec_retraction_release_airborne()
 local gear_light_param = get_param_handle("GEAR_LIGHT")
+local dev_gear_nose = get_param_handle("GEAR_NOSE")
+local dev_gear_left = get_param_handle("GEAR_LEFT")
+local dev_gear_right = get_param_handle("GEAR_RIGHT")
+
+local fm_gear_nose = get_param_handle("FM_GEAR_NOSE")
+local fm_gear_left = get_param_handle("FM_GEAR_LEFT")
+local fm_gear_right = get_param_handle("FM_GEAR_RIGHT")
+
 
 function update_gear()
     local gear_handle_pos = get_cockpit_draw_argument_value(8)  -- 1==down, 0==up
@@ -197,11 +221,10 @@ function update_gear()
             print_message_to_user("Landing gear overspeed damage!") -- delete me once we have a sound effect or other notification
         end
     end
-
+	
     -- gear movement is dependent on operational utility hydraulics.
     -- gear will be stuck in transit if hydraulic fails during transit.
     if get_hyd_utility_ok() or GEAR_ERR == 1 then
-
         -- make primary nosegear adjustments if needed
         if GEAR_TARGET ~= GEAR_NOSE_STATE then
             if GEAR_NOSE_STATE < GEAR_TARGET or GEAR_ERR==1 then
@@ -267,15 +290,19 @@ function update_gear()
     elseif GEAR_RIGHT_STATE > 1 then
         GEAR_RIGHT_STATE = 1
     end
+	
+	fm_gear_nose:set(GEAR_NOSE_STATE)
+	fm_gear_left:set(GEAR_LEFT_STATE)
+	fm_gear_right:set(GEAR_RIGHT_STATE)
 
     --set_aircraft_draw_argument_value(0,GEAR_NOSE_STATE) -- nose gear draw angle
     --set_aircraft_draw_argument_value(3,GEAR_RIGHT_STATE) -- right gear draw angle
     --set_aircraft_draw_argument_value(5,GEAR_LEFT_STATE) -- left gear draw angle
 
     -- reflect gear state on gear-flaps indicator panel
-    local dev_gear_nose = get_param_handle("GEAR_NOSE")
-    local dev_gear_left = get_param_handle("GEAR_LEFT")
-    local dev_gear_right = get_param_handle("GEAR_RIGHT")
+    
+
+	
 
     if get_elec_primary_dc_ok() then
         --[[if GEAR_NOSE_STATE == 0 or GEAR_NOSE_STATE == 1 then

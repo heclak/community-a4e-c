@@ -824,8 +824,10 @@ end
 -- assuming 0.5s toggle
 --
 -- TODO: Connect to flaps lever and flap position, once flap lever is implemented
+local rpm_main = get_param_handle("RPM")
+
 function update_wheels_light()
-    local rpm=sensor_data.getEngineLeftRPM()
+    local rpm=rpm_main:get()
     local flaps=get_aircraft_draw_argument_value(9)
     local gear=get_aircraft_draw_argument_value(0)
     local x = wheels_light_flash()

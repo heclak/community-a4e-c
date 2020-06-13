@@ -54,6 +54,7 @@ public:
 	inline void setSpoilerPosition(double position);
 	inline void setSlatLPosition(double position);
 	inline void setSlatRPosition(double position);
+	inline void setAirbrakePosition(double position);
 	inline void setFuelState(double fuel);
 	inline void setFuelStateNorm(double fuel);
 
@@ -146,6 +147,11 @@ void Airframe::setFuelStateNorm(double fuel)
 void Airframe::setGearPosition(double position)
 {
 	m_gearPosition = position;
+}
+
+void Airframe::setAirbrakePosition(double position)
+{
+	m_speedBrakePosition = position;
 }
 
 double Airframe::getGearPosition()

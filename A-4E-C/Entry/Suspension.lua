@@ -78,9 +78,9 @@ suspension =
     {
         anti_skid_installed = false,	
 		
-		mass = 200,
+		mass = 50,
 		damage_element = 83,
-		moment_of_inertia = {10.0,30.0,10.0},--leg
+		moment_of_inertia = {10.0,1.0,10.0},--leg
 		wheel_axle_offset = 0.00,
 		self_attitude = true,
 		yaw_limit = math.rad(90.0),
@@ -121,7 +121,7 @@ suspension =
 	
 		mass = 200.0,
 		damage_element = 84,
-		moment_of_inertia = {100.0,50.0,100.0},--leg
+		moment_of_inertia = {100.0,10.0,100.0},--leg
 		wheel_axle_offset 	= 0.0,
 		yaw_limit	 = 0.0,
 		self_attitude	 = false,
@@ -162,7 +162,7 @@ suspension =
 		
 		mass = 200.0,
 		damage_element = 84,--?
-		moment_of_inertia = {100.0,50.0,100.0},--leg
+		moment_of_inertia = {100.0,10.0,100.0},--leg
 		wheel_axle_offset 	= 0.0,
 		yaw_limit	 = 0.0,
 		self_attitude	 = false,

@@ -50,14 +50,14 @@ void Skyhawk::Engine::airbornInit()
 
 void Skyhawk::Engine::updateEngine(double dt)
 {
-	m_startAir = m_input.starter() && getRPMNorm() < 0.5 ? 1.0 : 0.0;
+	//m_startAir = m_input.starter() && getRPMNorm() < 0.5 ? 1.0 : 0.0;
 
-	if (m_input.starter() && getRPMNorm() < 0.15 && m_input.throttleState() == Input::ThrottleState::IDLE)
+	/*if (m_input.starter() && getRPMNorm() < 0.15 && m_input.throttleState() == Input::ThrottleState::IDLE)
 	{
 		m_startAir = 0.2;
-	}
+	}*/
 
-	switch (m_input.throttleState())
+	/*switch (m_input.throttleState())
 	{
 	case Input::ThrottleState::CUTOFF:
 		m_ignitors = false;
@@ -72,7 +72,15 @@ void Skyhawk::Engine::updateEngine(double dt)
 		double correctedThrottle = (m_input.throttleNorm() + 0.55) / 1.55;
 		m_desiredFuelFlow = std::max(m_pGain*(correctedThrottle - getRPMNorm()) + c_maxFuelFlow * correctedThrottle, 0.25);
 		break;
-	}
+	}*/
+
+	double correctedThrottle = ((m_throttle + 1.0)/2.0);
+
+	if (m_throttle >= 0.0)
+		m_desiredFuelFlow = std::max(m_pGain * (correctedThrottle - getRPMNorm()) + c_maxFuelFlow * correctedThrottle, 0.25);
+	else
+		m_desiredFuelFlow = c_maxFuelFlow * correctedThrottle;
+
 
 	if (m_fuelFlow >= m_desiredFuelFlow)
 	{
@@ -90,7 +98,9 @@ void Skyhawk::Engine::updateEngine(double dt)
 	//double cutoffValue = m_cutoff ? 0.0 : 1.0;
 	//m_fuelFlow = cutoffValue*c_maxFuelFlow*(m_input.throttleNorm() + 0.4)/1.4;
 
-	m_nozzle = m_input.throttleNorm() > 0.1 ? 1.0 : 0.4;
+	//m_nozzle = m_input.throttleNorm() > 0.1 ? 1.0 : 0.4;
+	m_nozzle = 1.0;
+
 
 	//double combustionTorque = m_omega > 0.4 * c_maxOmega ? c_combustionCoeff * m_fuelFlow : c_combustionCoeff * m_fuelFlow*0.2;
 	double combustionTorque = c_combustionCoeff * m_fuelFlow;

@@ -16,7 +16,7 @@ namespace Skyhawk
 #define c_combustionCoeff 306400.0
 #define c_engineDragCoeff 100.0
 #define c_constantEngineDragCoeff 2000.0
-#define c_starterTorque 30000.0
+#define c_starterTorque 10000.0
 
 #define c_maxFuelFlow 0.8779
 #define c_maxOmega 1152.0
@@ -38,6 +38,9 @@ public:
 	inline double getTemperature();
 	inline double getFuelFlow();
 	inline void setHasFuel(bool fuel);
+	inline void setThrottle(double throttle);
+	inline void setIgnitors(bool ignitors);
+	inline void setBleedAir(bool bleedAir);
 
 private:
 	//Constants
@@ -60,7 +63,7 @@ private:
 	bool m_ignitors = false;
 	bool m_haveFuel = true;
 	double m_startAir = 0.0;
-
+	double m_throttle = 0.0;
 
 };
 
@@ -92,6 +95,21 @@ double Engine::getFuelFlow()
 void Engine::setHasFuel(bool fuel)
 {
 	m_haveFuel = fuel;
+}
+
+void Engine::setThrottle(double throttle)
+{
+	m_throttle = throttle;
+}
+
+void Engine::setIgnitors(bool ignitors)
+{
+	m_ignitors = ignitors;
+}
+
+void Engine::setBleedAir(bool bleedAir)
+{
+	m_startAir = bleedAir ? 1.0 : 0.0;
 }
 
 }//end namespace

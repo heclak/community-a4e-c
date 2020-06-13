@@ -132,6 +132,8 @@ local master_test_param = get_param_handle("D_MASTER_TEST")
 local left_brake_pedal_param = get_param_handle("LEFT_BRAKE_PEDAL")
 local right_brake_pedal_param = get_param_handle("RIGHT_BRAKE_PEDAL")
 
+local fm_brakes = get_param_handle("FM_BRAKES")
+
 function post_initialize()
     startup_print("airbrake: postinit")
 
@@ -322,6 +324,7 @@ function update()
     --set_aircraft_draw_argument_value(21,effective_airbrake)
     --set_aircraft_draw_argument_value(500,ABRAKE_STATE)
     set_aircraft_draw_argument_value(WHEELCHOCKS_ANIM_ARG, WHEELCHOCKS_STATE) -- draw wheel chocks if state is 1. 
+	fm_brakes:set(ABRAKE_STATE)
 end
 
 function update_birth()

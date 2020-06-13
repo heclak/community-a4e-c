@@ -125,7 +125,7 @@ RollTrimKnob.parameter_name				= "ROLL_TRIM_KNOB"
 ---------------------------------------------------------------
 Engine_RPM                          = CreateGauge("parameter")
 Engine_RPM.arg_number               = 520
-Engine_RPM.input                    = {0.0, 1.03}
+Engine_RPM.input                    = {0.0, 103.0}
 Engine_RPM.output                   = {0.0, 1.0}
 Engine_RPM.parameter_name           = "RPM"
 

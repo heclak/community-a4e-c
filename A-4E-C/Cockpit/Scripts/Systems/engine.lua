@@ -53,6 +53,11 @@ local throttle_state = THROTTLE_ADJUST
 local manual_fuel_control_mode = 1
 local manual_fuel_control_mode_sw = 0
 
+local fm_bleed_air = get_param_handle("FM_BLEED_AIR") --whether there is external bleed air being delivered.
+local fm_ignition = get_param_handle("FM_IGNITION") --whether there is a spark for turbine to combust.
+local fm_engine_throttle_position = get_param_handle("FM_ENGINE_THROTTLE_POSITION") --throttle position sent to the engine simulation
+local rpm_main = get_param_handle("RPM")
+
 ------------------------------------------------
 ----------------  CONSTANTS  -------------------
 ------------------------------------------------
@@ -107,23 +112,29 @@ pilot controlled ground start sequence:
 6. When RPM gets to 55%, request ground power OFF
 --]]
 
+
+
 local start_button_popup_timer = 0
 function SetCommand(command,value)
-	local rpm = sensor_data.getEngineLeftRPM()
-    local throttle = sensor_data.getThrottleLeftPosition()
+	local rpm = rpm_main:get()
+    local throttle = fm_throttle_position:get()
 
     if command==device_commands.push_starter_switch then
         if value==1 then
-            if (engine_state==ENGINE_OFF) and rpm<5 and get_elec_external_power() and EMER_FUEL_SHUTOFF == false then -- initiate ground start procedure
-                dispatch_action(nil,iCommandEnginesStart)
+            if (engine_state==ENGINE_OFF) and get_elec_external_power() and EMER_FUEL_SHUTOFF == false then -- initiate ground start procedure 
+				--dispatch_action(nil,iCommandEnginesStart)
+				 fm_bleed_air:set(1.0)
+				 --print_message_to_user("Set")
             elseif (engine_state==ENGINE_OFF) and rpm<50 and rpm>10 and get_elec_primary_ac_ok() and get_elec_primary_dc_ok() and throttle_state==THROTTLE_IGN  and EMER_FUEL_SHUTOFF == false  then -- initiate air start
                 engine_state = ENGINE_STARTING
                 dispatch_action(nil,iCommandEnginesStart)
+				fm_bleed_air:set(1.0)
             else
                 start_button_popup_timer = 0.3
             end
         end
         if value==0 then
+			fm_bleed_air:set(0.0)
             if (engine_state==ENGINE_IGN or engine_state==ENGINE_STARTING) and rpm<50 and get_elec_external_power() then -- abort ground start procedure
                 engine_state=ENGINE_OFF
                 dispatch_action(nil,iCommandEnginesStop)
@@ -152,12 +163,15 @@ function SetCommand(command,value)
         if value==0 and throttle_state==THROTTLE_ADJUST and throttle<=0.01 then
             -- click to IGN from adjust
             throttle_state = THROTTLE_IGN
+			fm_ignition:set(1.0)
         elseif value==0 and throttle_state==THROTTLE_OFF then
             -- click to IGN from OFF
             throttle_state = THROTTLE_IGN
+			fm_ignition:set(1.0)
         elseif value==-1 and throttle_state==THROTTLE_IGN then
             -- click to OFF from IGN
             throttle_state = THROTTLE_OFF
+			fm_ignition:set(0.0)
             if rpm>=55 and engine_state == ENGINE_RUNNING then
                 debug_print("engine has been turned off")
                 dispatch_action(nil,iCommandEnginesStop)
@@ -166,6 +180,7 @@ function SetCommand(command,value)
         elseif value==1 and throttle_state==THROTTLE_IGN then
             -- click to ADJUST from IGN
             throttle_state = THROTTLE_ADJUST
+			fm_ignition:set(1.0)
         end
     elseif command == device_commands.throttle_click_ITER then
         -- validate that throttle is not in adjust range else cancel action
@@ -198,6 +213,7 @@ function SetCommand(command,value)
         if value == 1 then
             dispatch_action(nil,iCommandEnginesStop)
             engine_state = ENGINE_OFF
+			fm_ignition:set(0.0)
             Engine:performClickableAction(device_commands.push_starter_switch,0,false) -- pop up start button
             EMER_FUEL_SHUTOFF = true
             manual_fuel_shutoff_catch_clickable_ref:hide(true)
@@ -291,7 +307,7 @@ end
 
 
 
-local rpm_main = get_param_handle("RPM")
+
 local rpm_deci = get_param_handle("RPM_DECI")
 
 function update_rpm()
@@ -300,7 +316,7 @@ function update_rpm()
     --local rpm=sensor_data.getEngineLeftRPM()
 
 	rpm=rpm_main:get()
-    rpm=rpm*10.0
+    rpm=rpm/10.0
     rpm=rpm-math.floor(rpm)
     rpm_deci:set(rpm)
 end
@@ -348,7 +364,7 @@ During starting and initial runup, the maximum
 allowable oil pressure is 50 psi.
 --]]
 function update_oil_pressure()
-    local rpm = sensor_data.getEngineLeftRPM()
+    local rpm = rpm_main:get()
     
     local oil_pressure_nominal
     if get_elec_26V_ac_ok() then -- will have power on main and emergency generator
@@ -421,7 +437,7 @@ function update_fuel_control_mode()
     elseif manual_fuel_control_mode_sw == 0 then
         -- check if engine conditions allow for primary fuel control
         -- fuel system switches to PRIMARY when engine rpm approximately 5 to 10 percent rpm
-        local engine_rpm = sensor_data.getEngineLeftRPM()
+        local engine_rpm = rpm_main:get()
         if engine_rpm > 8 then
             manual_fuel_control_mode = 0
         else
@@ -441,7 +457,7 @@ local prev_rpm=0
 local prev_throttle_pos=0
 local once_per_sec = 1/update_rate
 function update()
-	local rpm = sensor_data.getEngineLeftRPM()
+	local rpm = rpm_main:get()
     local throttle = fm_throttle_position:get()
     local gear = get_aircraft_draw_argument_value(0) -- nose gear
   
@@ -518,7 +534,7 @@ function update()
     if throttle_state == THROTTLE_OFF then
         throttle = -1
     elseif throttle_state == THROTTLE_IGN then
-        throttle = -0.2
+        throttle = -0.7
     elseif throttle_state == THROTTLE_ADJUST then
         local throttle_clickable_ref = get_clickable_element_reference("PNT_80")
         throttle_clickable_ref:hide(throttle>0.01)
@@ -532,6 +548,7 @@ function update()
         end
         prev_throttle_pos = throttle_pos
     end
+	fm_engine_throttle_position:set(throttle_pos)
     throttle_position:set(throttle_pos)
 end
 

@@ -135,6 +135,7 @@ local glare_labs_annun_state = false
 
 local shrike_armed_param = get_param_handle("SHRIKE_ARMED")
 
+local main_rpm = get_param_handle("RPM")
 
 ------------------------------------------------
 -----------  AIRCRAFT DEFINITION  --------------
@@ -1150,7 +1151,7 @@ function SetCommand(command,value)
         
     elseif command == Keys.ChangeCBU2AQuantity then
         -- check for weight on wheels and engine off
-        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (sensor_data.getEngineLeftRPM() == 0) then
+        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (main_rpm:get() < 2) then
             -- increment position
             cbu2a_quantity_array_pos = (cbu2a_quantity_array_pos + 1) % table.getn(cbu2a_quantity_array)
             debug_print("CBU-2/A quantity changed to "..tostring(cbu2a_quantity_array_pos))
@@ -1160,7 +1161,7 @@ function SetCommand(command,value)
 
     elseif command == Keys.ChangeCBU2BAQuantity then
         -- check for weight on wheels and engine off
-        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (sensor_data.getEngineLeftRPM() == 0) then
+        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (main_rpm:get() < 2) then
             -- increment position
             cbu2ba_quantity_array_pos = (cbu2ba_quantity_array_pos + 1) % table.getn(cbu2ba_quantity_array)
             debug_print("CBU-2B/A quantity changed to "..tostring(cbu2ba_quantity_array_pos))

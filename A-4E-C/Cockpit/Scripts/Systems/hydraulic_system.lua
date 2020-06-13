@@ -25,11 +25,13 @@ function SetCommand(command, value)
     end
 end
 
+local main_rpm = get_param_handle("RPM")
+
 function update_hydraulic_state()
     -- only enable hydraulics when engine is running
     -- hydraulic system is powered if engine is turning at IDLE RPM (55%) or greater
     -- Informed by 1-26A
-    engine_rpm = sensor_data.getEngineLeftRPM()
+	engine_rpm = main_rpm:get()
     -- print_message_to_user(engine_rpm)
     if engine_rpm >= 54.9 then
         hyd_flight_control_ok:set(1)
