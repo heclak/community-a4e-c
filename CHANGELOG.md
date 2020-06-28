@@ -2,6 +2,32 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
+## Unreleased
+
+### Added
+
+- added dimming wheel on angle of attack indexer
+- ladder lights will now dim when INST LIGHT knob is in any position other than the OFF position for night operations
+- glareshield lights will now dim when INST LIGHT knob is turned up past the first 20% (approximately)
+
+### Changed
+
+- changed warning lights to use `additive_self_illuminated` shader as `transparent_self_illum` has been deprecated in DCS 2.5.6.50321
+- updated brightness range for the gunsight
+- updated cockpit lighting brightness for DCS lighting changes
+- gunsight brightness is now a logarithmic function to allow for better brightness control
+
+### Deprecated
+
+### Removed
+
+- removed payload option to load incomplete buddy pod
+
+### Fixed
+
+- fixed clickspots on throttle where they do not track the position of the throttle
+- fixed incorrect spelling for `TRIMMER SWITCH - LEFT WING DOWN`
+
 ## Version 1.4 - 10 June 2020
 
 ### Added
