@@ -451,6 +451,12 @@ double ed_fm_get_param(unsigned index)
 	case ED_FM_ENGINE_1_OIL_PRESSURE:
 		return 600.0;
 
+	case ED_FM_OXYGEN_SUPPLY:
+		return 101000.0;
+
+	case ED_FM_FLOW_VELOCITY:
+		return 1.0;
+
 	case ED_FM_ENGINE_1_FUEL_FLOW:
 		return s_engine.getFuelFlow();
 
