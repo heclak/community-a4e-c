@@ -365,7 +365,7 @@ void FlightModel::lift()
 
 void FlightModel::drag()
 {
-	double CD = CDi(0.0)*CLalpha(m_aoa) * CLalpha(m_aoa) + CDbeta(m_beta) + CDde(0.0)*elevator() + CDmach(m_mach);
+	double CD = /* CDi(0.0)*CLalpha(m_aoa) * CLalpha(m_aoa)  + */ CDbeta(m_beta) + CDde(0.0)*elevator() + CDmach(m_mach);
 	addForce(Vec3(-m_k * CD, 0.0, 0.0), getCOM());
 
 	m_LDwindAxesLW.x = -m_k / 2 * (CDalpha(m_aoaLW) + CDflap(m_aoaLW) * m_airframe.getFlapsPosition() + CDslat(m_aoaLW) * m_airframe.getSlatLPosition());
