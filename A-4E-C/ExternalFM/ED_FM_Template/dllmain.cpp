@@ -6,6 +6,7 @@
 #include <io.h>
 #include <windows.h>
 #include <fstream>
+#include "Globals.h"
 
 FILE* stream;
 FILE* g_log = NULL;
@@ -29,7 +30,9 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 			SetConsoleTitle((L"DCS A-4 Debug Console"));
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_BLUE);
 		}
+#endif
 
+#ifdef LOGGING
 		fopen_s(&g_log, "C:/tmp/log.txt", "w");
 #endif
 		break;
@@ -37,7 +40,9 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 		break;
 	case DLL_THREAD_DETACH:
 	case DLL_PROCESS_DETACH:
+#ifdef LOGGING
 		fclose(g_log);
+#endif
 		break;
 	}
 	return TRUE;
