@@ -128,7 +128,7 @@ void Airframe::fuelUpdate(double dt)
 
 void Airframe::setFuelState(double fuel)
 {
-	printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFUEL: %lf, this: %p\n", fuel, this);
+	// printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFUEL: %lf, this: %p\n", fuel, this);
 	m_fuel = fuel;
 	m_fuelPrevious = fuel;
 }
