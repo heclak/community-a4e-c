@@ -472,9 +472,10 @@ double ed_fm_get_param(unsigned index)
 		//printf("BrakeRight: %lf\n", s_input.normalise(s_input.brakeRight()));
 		return s_input.normalise(s_input.brakeRight());
 	case ED_FM_SUSPENSION_0_WHEEL_SELF_ATTITUDE:
-		return s_interface.getNWS() > 0.5 ? -1.0 : 1.0;
+		//return 1.0;
+		return s_interface.getNWS() > 0.5 ? 0.0 : 1.0;
 	case ED_FM_SUSPENSION_0_WHEEL_YAW:
-		return s_interface.getNWS() > 0.5 ? -s_input.yaw()/2.0 : 0.0;
+		return s_interface.getNWS() > 0.5 ? -s_input.yaw()/4.0 : 0.0;
 	}
 
 	return 0;

@@ -33,7 +33,7 @@ function update_hydraulic_state()
     -- Informed by 1-26A
 	engine_rpm = main_rpm:get()
     -- print_message_to_user(engine_rpm)
-    if engine_rpm >= 54.9 then
+    if engine_rpm >= 52.0 then
         hyd_flight_control_ok:set(1)
         hyd_utility_ok:set(1)
         hyd_brakes_ok:set(1)
