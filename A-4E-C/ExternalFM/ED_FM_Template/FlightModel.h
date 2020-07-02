@@ -105,9 +105,9 @@ private:
 	Vec3 m_wind; //
 
 	//
-	double m_q; //0.5*V^2 * s * b
-	double m_p; //0.25*V * s * b^2
-	double m_k; //0.5V^2 * s
+	double m_q; //0.5*p*V^2 * s * b
+	double m_p; //0.25*p*V * s * b^2
+	double m_k; //0.5*p*V^2 * s
 	double m_kL;
 	double m_kR;
 
