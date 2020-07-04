@@ -57,6 +57,18 @@ public:
 
 	}
 
+	inline void testFnc()
+	{
+		m_api.pfn_ed_cockpit_set_action_digital(10);
+	}
+
+	inline void setRadioPower(bool value)
+	{
+		//printf("Radio Power Pointer: %p", m_api.setRadioPowerFncPtr);
+		//__asm {MOV ECX, m_radio}
+		m_api.setRadioPowerFncPtr(value);
+	}
+
 	inline void setRPM(double number)
 	{
 		setParamNumber(m_RPM, number);
@@ -195,6 +207,9 @@ private:
 	void* m_rudderTrim = NULL;
 
 	void* m_nws = NULL;
+
+	//Radio Pointer for the Radio Device.
+	void* m_radio = NULL;
 };
 
 

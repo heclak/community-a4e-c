@@ -68,6 +68,7 @@ void ed_fm_add_local_moment(double & x,double &y,double &z)
 
 void ed_fm_simulate(double dt)
 {
+	s_interface.testFnc();
 	//Pre update
 	s_airframe.setFlapsPosition(s_interface.getFlaps());
 	s_airframe.setSpoilerPosition(s_interface.getSpoilers());

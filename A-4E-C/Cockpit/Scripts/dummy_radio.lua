@@ -18,6 +18,11 @@ function update()
 end
 
 function post_initialize()
+	
+	
+	--print_message_to_user("Power before "..dev:get_power())
+	--dev:set_power(true)
+	--print_message_to_user("Power after "..dev:get_power())
 end
 
 function SetCommand(command,value)

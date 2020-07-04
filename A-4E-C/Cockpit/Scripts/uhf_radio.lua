@@ -37,6 +37,72 @@ GUI = {
 local update_time_step = 1 --update will be called once per second
 device_timer_dt = update_time_step
 
+function recursively_print(table_to_print, max_depth, max_number_tables, filepath)
+	file = io.open(filepath, "w")
+	file:write("Key,Value\n")
+	
+	stack = {}
+	
+	table.insert(stack, {key = "start", value = table_to_print, level = 0})
+	
+	total = 0
+	
+	hash_table = {}
+
+	hash_table[tostring(hash_table)] = 2
+	hash_table[tostring(stack)] = 2
+	
+	item = true
+	while (item) do
+		item = table.remove(stack)
+		
+		if (item == nil) then
+			break
+		end
+		key = item.key
+		value = item.value
+		level = item.level
+		
+		file:write(string.rep("\t", level)..tostring(key).." = "..tostring(value).."\n")
+		
+		hash = hash_table[tostring(value)]
+		valid_table = (hash == nil or hash < 2)
+		
+		if (type(value) == "table" and valid_table) then
+			for k,v in pairs(value) do
+				if (v ~= nil and level <= max_depth and total < max_number_tables) then
+					table.insert(stack, {key = k, value = v, level = level+1})
+					if (type(v) == "table") then
+						if (hash_table[tostring(v)] == nil) then
+							hash_table[tostring(v)] = 1
+						elseif (hash_table[tostring(v)] < 2) then
+							hash_table[tostring(v)] = 2
+						end
+						total = total + 1
+					end
+				end
+			end
+		end
+		
+		if (getmetatable(value) and valid_table) then
+			for k,v in pairs(getmetatable(value)) do
+				if (v ~= nil and level <= max_depth and total < max_number_tables) then
+					table.insert(stack, {key = k, value = v, level = level+1})
+					if (type(v) == "table") then
+						if (hash_table[tostring(v)] == nil) then
+							hash_table[tostring(v)] = 1
+						elseif (hash_table[tostring(v)] < 2) then
+							hash_table[tostring(v)] = 2
+						end
+						total = total + 1
+					end
+				end
+			end
+		end
+	end
+	
+	file:close()
+end
 
 function post_initialize()
   local dev = GetSelf()
@@ -44,7 +110,54 @@ function post_initialize()
   dev:set_modulation(MODULATION_AM) -- gives DCS.log INFO msg:  COCKPITBASE: avBaseRadio::ext_set_modulation not implemented, used direct set
   local intercom = GetDevice(devices.INTERCOM)
   intercom:set_communicator(devices.UHF_RADIO)
-
+  intercom:easy_comm_override(true)
+  --print_message_to_user("Power before "..dev:get_power())
+  
+  
+  
+  --[[
+  for k,v in pairs(getmetatable(dev)["__index"]) do
+	print_message_to_user(tostring(k).." : "..tostring(v).."\n")
+  end
+  ]]--
+  
+  thing = {
+	hello = 1,
+	thing1 = 2,
+	anothertable = {morehello = 10, table2 = {anotherthing = 10, hello = {are = 10}}} ,
+  }
+  
+  recursively_print(_G, 30, 100, "C:/tmp/stuff.txt")
+  
+  --print_message_to_user(string.sub(dev["link"],10))
+  
+  print_message_to_user("Start")
+	--print_message_to_user(GetDevice(devices.RADIO))
+	
+	--[[
+	dev = GetDevice(devices.UHF_RADIO)
+	print_message_to_user(tostring(dev))
+	for k,v in pairs(getmetatable(dev)) do
+		print_message_to_user(tostring(k).." : "..tostring(v))
+	end
+	
+	for k,v in pairs(getmetatable(dev)["__index"]) do
+		print_message_to_user(tostring(k).." : "..tostring(v))
+	end
+	--]]
+	
+	file = io.open("C:/tmp/stuff.txt", "w")
+	file:write("Key : Value")
+	for k,v in pairs(WMA) do
+		file:write(tostring(k).." : "..tostring(v).."\n")
+	end
+	file:close(file)
+	
+	dev:is_on(true)
+	print_message_to_user("Is on: "..tostring(dev:is_on()))
+	
+	print_message_to_user("End")
+  --print_message_to_user("Power after "..dev:get_power())
 --[[
   GetSelf meta["__index"]["listen_command"] = function: 00000000CC631830
 GetSelf meta["__index"]["is_frequency_in_range"] = function: 00000000CC632290
@@ -82,6 +195,9 @@ dev:listen_command(device_commands.GunsightDayNight) -- test
 local iCommandPlaneIntercomUHFPress=1172
 dev:listen_command(iCommandPlaneIntercomUHFPress)
 
+function update()
+	print_message_to_user("Hello")
+end
 
 function SetCommand(command,value)
     print_message_to_user("SetCommand in uhf_radio: "..tostring(command).."="..tostring(value))

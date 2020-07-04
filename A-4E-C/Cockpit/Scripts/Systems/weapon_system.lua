@@ -134,6 +134,7 @@ local GLARE_LABS_ANNUN = get_param_handle("D_GLARE_LABS")
 local glare_labs_annun_state = false
 
 local shrike_armed_param = get_param_handle("SHRIKE_ARMED")
+local jato_armed_and_full_param = get_param_handle("JATO_ARMED_AND_FULL")
 
 local main_rpm = get_param_handle("RPM")
 
@@ -197,6 +198,10 @@ WeaponSystem:listen_command(device_commands.AWRS_drop_interval_AXIS)
 
 WeaponSystem:listen_command(Keys.ChangeCBU2AQuantity)
 WeaponSystem:listen_command(Keys.ChangeCBU2BAQuantity)
+
+WeaponSystem:listen_command(device_commands.JATO_arm)
+WeaponSystem:listen_command(device_commands.JATO_jettison)
+WeaponSystem:listen_command(Keys.JATOFiringButton)
 
 local shrike_sidewinder_volume = get_param_handle("SHRIKE_SIDEWINDER_VOLUME")
 
@@ -741,6 +746,13 @@ function check_sidewinder(_master_arm)
     end
 end
 
+function check_jato_armed_and_full(_jato_arm)
+	if (_jato_arm) then
+		jato_armed_and_full_param:set(1.0)
+	else
+		jato_armed_and_full_param:set(0.0)
+	end
+end
 
 function check_shrike(_master_arm)
 
@@ -1174,6 +1186,12 @@ function SetCommand(command,value)
         aim9seek:update(nil, LinearTodB(shrike_sidewinder_volume:get()), nil)
     elseif command == device_commands.shrike_selector then
         -- print_message_to_user(value)
+	elseif command == Keys.JATOFiringButton then
+		
+	elseif command == device_commands.JATO_arm then
+		check_jato_armed_and_full(value)
+	elseif command == device_commands.JATO_jettison then
+		
     end
 end
 

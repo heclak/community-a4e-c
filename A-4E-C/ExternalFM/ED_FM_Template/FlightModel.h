@@ -264,12 +264,12 @@ const Vec3 FlightModel::windAxisToBody(const Vec3& force, const double& alpha, c
 {
 	double sin_b = sin(beta);
 	double cos_b = cos(beta);
-	double sin_a = sin(alpha);
-	double cos_a = cos(alpha);
+	double sin_a = sin(-alpha);
+	double cos_a = cos(-alpha);
 
-	double res_x = cos_b * cos_a * force.x + sin_b * force.y - cos_b * sin_a;
-	double res_y = -cos_a * sin_b * force.x + cos_b * force.y + sin_a * sin_b * force.z;
-	double res_z = sin_a * force.x + cos_a * force.z;
+	double res_x = cos_b * cos_a * force.x + sin_b * force.z - cos_b * sin_a * force.y;
+	double res_z = -cos_a * sin_b * force.x + cos_b * force.z + sin_a * sin_b * force.y;
+	double res_y = sin_a * force.x + cos_a * force.y;
 
 	return Vec3(res_x, res_y, res_z);
 }
@@ -355,7 +355,7 @@ void FlightModel::lift()
 	m_LDwindAxesRW.y = m_kR / 2 * (CLalpha(m_aoaRW) + dCLslat(m_aoaRW) * m_airframe.getSlatRPosition() + dCLflap(m_aoaRW) * m_airframe.getFlapsPosition());
 	m_LDwindAxesLW.y = m_kL / 2 * (CLalpha(m_aoaLW) + dCLslat(m_aoaLW) * m_airframe.getSlatLPosition() + dCLflap(m_aoaLW) * m_airframe.getFlapsPosition());
 
-	printf("%lf, %lf\n", m_LDwindAxesRW.y / (m_kR / 2 * (CLalpha(m_aoa) + dCLslat(m_aoa) * m_airframe.getSlatRPosition() + dCLflap(m_aoa) * m_airframe.getFlapsPosition())), m_LDwindAxesLW.y / (m_kR / 2 * (CLalpha(m_aoa) + dCLslat(m_aoa) * m_airframe.getSlatRPosition() + dCLflap(m_aoa) * m_airframe.getFlapsPosition())));
+	//printf("%lf, %lf\n", m_LDwindAxesRW.y / (m_kR / 2 * (CLalpha(m_aoa) + dCLslat(m_aoa) * m_airframe.getSlatRPosition() + dCLflap(m_aoa) * m_airframe.getFlapsPosition())), m_LDwindAxesLW.y / (m_kR / 2 * (CLalpha(m_aoa) + dCLslat(m_aoa) * m_airframe.getSlatRPosition() + dCLflap(m_aoa) * m_airframe.getFlapsPosition())));
 
 	//addForceDir(m_kR / 2 * (CLalpha(m_aoaRW) + dCLslat(m_aoaRW) * m_airframe.getSlatRPosition() + dCLflap(m_aoaRW) * m_airframe.getFlapsPosition()) * m_liftVecRW, m_rRW);
 	//addForceDir(m_kL / 2 * (CLalpha(m_aoaLW) + dCLslat(m_aoaLW) * m_airframe.getSlatLPosition() + dCLflap(m_aoaLW) * m_airframe.getFlapsPosition()) * m_liftVecLW, m_rLW);
@@ -365,11 +365,11 @@ void FlightModel::lift()
 
 void FlightModel::drag()
 {
-	double CD = /* CDi(0.0)*CLalpha(m_aoa) * CLalpha(m_aoa)  + */ CDbeta(m_beta) + CDde(0.0)*elevator() + CDmach(m_mach);
-	addForce(Vec3(-m_k * CD, 0.0, 0.0), getCOM());
+	double CD = CDi(0.0)*CLalpha(m_aoa) * CLalpha(m_aoa)  + CDbeta(m_beta) + CDde(0.0)*elevator() + CDmach(m_mach);
+	//addForce(Vec3(-m_k * CD, 0.0, 0.0), getCOM());
 
-	m_LDwindAxesLW.x = -m_k / 2 * (CDalpha(m_aoaLW) + CDflap(m_aoaLW) * m_airframe.getFlapsPosition() + CDslat(m_aoaLW) * m_airframe.getSlatLPosition());
-	m_LDwindAxesRW.x = -m_k / 2 * (CDalpha(m_aoaRW) + CDflap(m_aoaRW) * m_airframe.getFlapsPosition() + CDslat(m_aoaRW) * m_airframe.getSlatRPosition());
+	m_LDwindAxesLW.x = (-m_k / 2) * (CDalpha(m_aoaLW) + CDflap(m_aoaLW) * m_airframe.getFlapsPosition() + CDslat(m_aoaLW) * m_airframe.getSlatLPosition() + CD);
+	m_LDwindAxesRW.x = (-m_k / 2) * (CDalpha(m_aoaRW) + CDflap(m_aoaRW) * m_airframe.getFlapsPosition() + CDslat(m_aoaRW) * m_airframe.getSlatRPosition() + CD);
 }
 
 void FlightModel::sideForce()

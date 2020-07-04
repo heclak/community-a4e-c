@@ -458,7 +458,7 @@ function SetCommand(command, value)
     -- bindings for kneeboard command changes
     elseif command == Keys.ChangeCmsBursts then
         -- check for weight on wheels and engine off
-        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (rpm_main:get() < 2.0) then
+        if (sensor_data.getWOW_LeftMainLandingGear() > 0 and rpm_main:get() < 2.0) then
             -- cycle to next value in array
             cms_bursts_setting_array_pos = next(cms_bursts_setting_array_pos, 1, table.getn(cms_bursts_setting_array))
             update_cms_params()
@@ -466,7 +466,7 @@ function SetCommand(command, value)
         
     elseif command == Keys.ChangeCmsBurstInterval then
         -- check for weight on wheels and engine off
-        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (rpm_main:get() < 2.0) then
+        if (sensor_data.getWOW_LeftMainLandingGear() > 0 and rpm_main:get() < 2.0) then
             -- cycle to next value in array
             cms_burst_interval_setting_array_pos = next(cms_burst_interval_setting_array_pos, 1, table.getn(cms_burst_interval_setting_array))
             update_cms_params()
@@ -474,7 +474,7 @@ function SetCommand(command, value)
 
     elseif command == Keys.ChangeCmsSalvos then
         -- check for weight on wheels and engine off
-        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (rpm_main:get() < 2.0) then
+        if (sensor_data.getWOW_LeftMainLandingGear() > 0 and rpm_main:get() < 2.0) then
             -- cycle to next value in array
             cms_salvos_setting_array_pos = next(cms_salvos_setting_array_pos, 1, table.getn(cms_salvos_setting_array))
             update_cms_params()
@@ -482,7 +482,7 @@ function SetCommand(command, value)
 
     elseif command == Keys.ChangeSalvoInterval then
         -- check for weight on wheels and engine off
-        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and rpm_main:get() < 2.0) then
+        if (sensor_data.getWOW_LeftMainLandingGear() > 0 and rpm_main:get() < 2.0) then
             -- cycle to next value in array
             cms_salvo_interval_setting_array_pos = next(cms_salvo_interval_setting_array_pos, 1, table.getn(cms_salvo_interval_setting_array))
             update_cms_params()
