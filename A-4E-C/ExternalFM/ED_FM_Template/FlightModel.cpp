@@ -47,7 +47,6 @@ Skyhawk::FlightModel::FlightModel(Input& controls, Airframe& airframe, Engine& e
 	m_mach(0.0),
 	m_aoaDot(0.0),
 	m_aoaPrevious(0.0),
-
 	m_scalarAirspeedLW(0.0),
 	m_scalarAirspeedRW(0.0),
 
@@ -60,13 +59,14 @@ Skyhawk::FlightModel::FlightModel(Input& controls, Airframe& airframe, Engine& e
 	CLalpha(d_CLalpha, -0.26981317, 1.57079633),
 	dCLflap(d_CLflap, -0.26981317, 1.57079633),
 	dCLslat(d_CLslat, -0.26981317, 1.57079633),
+	dCLspoiler({-0.35}, 0, 1),
 	CLde(d_CLde, 0.157982, 1.000377),
-
 	CDalpha(d_CDalpha, -1.57079633, 1.57079633),
 	CDi({0.09}, 0, 1),
 	CDmach(d_CDmach,0.0, 1.8),
 	CDflap(d_CDflap, -1.57079633, 1.57079633),
 	CDslat(d_CDslat, -1.57079633, 1.57079633),
+	dCDspoiler({ 0.1 }, 0, 1),
 	CDspeedBrake({0.021}, 0.0, 1.0),
 	CDbeta(d_CDbeta,-1.57, 1.57),
 	CDde({0.12}, c_elevatorDown, c_elevatorUp),
@@ -117,12 +117,13 @@ void Skyhawk::FlightModel::calculateLocalPhysicsParams()
 {
 	double m_wingDihedral = 0.046774824; // 2.68 deg
 
+	
 	m_nRW = Vec3(0.0, cos(m_wingDihedral), -sin(m_wingDihedral));
 	m_nLW = Vec3(0.0, cos(m_wingDihedral), sin(m_wingDihedral));
 
 	m_airspeedLW = m_airspeedLocal + cross(m_omega, m_rLW);
 	m_airspeedRW = m_airspeedLocal + cross(m_omega, m_rRW);
-
+	
 	m_dragVecLW = -normalize(m_airspeedLW);
 	m_dragVecRW = -normalize(m_airspeedRW);
 
@@ -162,9 +163,11 @@ void Skyhawk::FlightModel::calculateElements()
 	printf("LEFT X: %lf Y: %lf Z: %lf\n", m_LDwindAxesLW.x, m_LDwindAxesLW.y, m_LDwindAxesLW.z);
 	Vec3 LiftRW = windAxisToBody(m_LDwindAxesRW, m_aoaRW, m_beta);
 	printf("RIGHT X: %lf Y: %lf Z: %lf\n", m_LDwindAxesRW.x, m_LDwindAxesRW.y, m_LDwindAxesRW.z);
-
+	Vec3 dragElem = windAxisToBody(m_CDwindAxesComp, m_aoa, m_beta);
+	
 	addForceDir(LiftLW, m_rLW);
 	addForceDir(LiftRW, m_rRW);
+	addForce(dragElem, getCOM());
 }
 
 //This calculates all forces and moments. Including landing gear.
