@@ -67,7 +67,7 @@ Skyhawk::FlightModel::FlightModel(Input& controls, Airframe& airframe, Engine& e
 	CDflap(d_CDflap, -1.57079633, 1.57079633),
 	CDslat(d_CDslat, -1.57079633, 1.57079633),
 	dCDspoiler({ 0.1 }, 0, 1),
-	CDspeedBrake({0.021}, 0.0, 1.0),
+	dCDspeedBrake({0.021}, 0.0, 1.0),
 	CDbeta(d_CDbeta,-1.57, 1.57),
 	CDde({0.12}, c_elevatorDown, c_elevatorUp),
 

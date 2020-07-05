@@ -177,7 +177,7 @@ private:
 	Table CDflap; //drag with angle of flap (RADIANS)
 	Table CDslat;
 	Table dCDspoiler;
-	Table CDspeedBrake; //drag with position of speedbrake normalised 0 - 1
+	Table dCDspeedBrake; //drag with position of speedbrake normalised 0 - 1
 	Table CDbeta; //drag with beta (RADIANS)
 	Table CDde; //drag due to elevator deflection
 
@@ -368,7 +368,7 @@ void FlightModel::lift()
 
 void FlightModel::drag()
 {
-	double CD = CDi(0.0)*CLalpha(m_aoa) * CLalpha(m_aoa)  + CDbeta(m_beta) + CDde(0.0)*elevator() + CDmach(m_mach);
+	double CD = CDi(0.0)*CLalpha(m_aoa) * CLalpha(m_aoa)  + CDbeta(m_beta) + CDde(0.0)*elevator() + dCDspeedBrake(0.0)*m_airframe.getSpeedBrakePosition() + CDmach(m_mach);
 	
 	m_CDwindAxesComp.y = 0;
 	m_CDwindAxesComp.z = 0;
