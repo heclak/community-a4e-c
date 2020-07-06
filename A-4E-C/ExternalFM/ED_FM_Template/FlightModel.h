@@ -205,6 +205,8 @@ private:
 	Table Cndr; //yaw moment due to rudder (RADIANS)
 	Table Cnda; //yaw moment due to aileron deflection (Adverse Yaw) (RADIANS)
 
+	Table Cmde_a;
+
 	Input& m_controls; //for now
 };
 
@@ -314,7 +316,7 @@ void FlightModel::L_stab()
 void FlightModel::M_stab()
 {
 	//m_moment.z
-	m_moment.z += m_k * m_chord * (Cmalpha(m_mach) * m_aoa + Cmde(m_mach)*elevator()*1.5 + CmM(m_mach)*0.2) + 0.25 * m_scalarV * m_totalWingArea * m_chord * m_chord * (Cmq(m_mach)*m_omega.z + Cmadot(m_mach)*m_aoaDot);
+	m_moment.z += m_k * m_chord * (Cmalpha(m_mach) * m_aoa + Cmde(m_mach)*elevator()*Cmde_a(std::abs(m_aoa)) + CmM(m_mach)*0.2) + 0.25 * m_scalarV * m_totalWingArea * m_chord * m_chord * (Cmq(m_mach)*m_omega.z + Cmadot(m_mach)*m_aoaDot);
 	//printf("Mz: %lf, mach: %lf\n", elevator(), m_mach);
 }
 

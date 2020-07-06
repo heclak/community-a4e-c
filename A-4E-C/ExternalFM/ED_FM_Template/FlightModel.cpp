@@ -84,6 +84,7 @@ Skyhawk::FlightModel::FlightModel(Input& controls, Airframe& airframe, Engine& e
 	Cmq(d_Cmq, 0.13176098, 1.0006616),
 	Cmadot(d_Cmadot, 0.1618916, 0.99790229),
 	CmM(d_CmM, 0.06761245, 1.0),
+	Cmde_a({1, 0}, 0.174532925, 0.785398163),
 
 	Cnb({0.12}, 0.0, 1.0),
 	Cnr({-0.15}, 0.0, 1.0),
