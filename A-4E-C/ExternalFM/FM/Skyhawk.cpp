@@ -588,7 +588,7 @@ bool ed_fm_add_global_moment_component( double & x,double &y,double &z )
 
 double ed_fm_get_shake_amplitude()
 {
-	return 100.0;
+	return 0.0;
 }
 
 void ed_fm_suspension_feedback(int idx, const ed_fm_suspension_info* info)
