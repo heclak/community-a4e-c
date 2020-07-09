@@ -22,6 +22,7 @@ void Skyhawk::Airframe::zeroInit()
 	m_slatLPosition = 0.0;
 	m_slatRPosition = 0.0;
 	m_flapsPosition = 0.0;
+	m_catapultState = CatapultState::OFF_CAT;
 	//m_fuel = 0.0;
 	//m_fuelPrevious = 0.0;
 }
@@ -129,6 +130,17 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 	{
 		m_catapultState = ON_CAT_READY;
 	}
+
+	if (m_catapultState != OFF_CAT)
+	{
+		m_catMoment = pow((c_catAngle - m_angle)*60.0, 3.0) * c_catConstrainingForce;
+		m_catMoment = m_catMoment < 0.0 ? m_catMoment : 0.0;
+	}
+	else
+	{
+		m_catMoment = 0.0;
+	}
+	printf("Cat Moment: %lf\n", m_catMoment);
 
 	m_catStateSent = false;
 }

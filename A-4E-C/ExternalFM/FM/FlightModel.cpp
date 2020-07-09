@@ -29,8 +29,8 @@ Skyhawk::FlightModel::FlightModel(Input& controls, Airframe& airframe, Engine& e
 	m_controls(controls),
 	m_airframe(airframe),
 	m_engine(engine),
-	m_density(0.0),
-	m_speedOfSound(0.0),
+	m_density(1.0),
+	m_speedOfSound(340.0),
 	m_aoa(0.0),
 	m_beta(0.0),
 	m_scalarVSquared(0.0),
@@ -99,19 +99,26 @@ Skyhawk::FlightModel::~FlightModel()
 
 }
 
+void Skyhawk::FlightModel::zeroInit()
+{
+	m_moment = Vec3();
+	m_force = Vec3();
+
+}
+
 void Skyhawk::FlightModel::coldInit()
 {
-
+	zeroInit();
 }
 
 void Skyhawk::FlightModel::hotInit()
 {
-
+	zeroInit();
 }
 
 void Skyhawk::FlightModel::airbornInit()
 {
-
+	zeroInit();
 }
 
 void Skyhawk::FlightModel::calculateLocalPhysicsParams()

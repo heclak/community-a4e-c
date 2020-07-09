@@ -63,7 +63,7 @@ void ed_fm_add_local_moment(double & x,double &y,double &z)
 {
 	x = s_fm.getMoment().x;
 	y = s_fm.getMoment().y;
-	z = s_fm.getMoment().z;
+	z = s_fm.getMoment().z + s_airframe.getCatMoment();
 }
 
 void ed_fm_simulate(double dt)
@@ -77,6 +77,7 @@ void ed_fm_simulate(double dt)
 	s_input.rollTrim() = s_interface.getRollTrim();
 	s_input.yawTrim() = s_interface.getRudderTrim();
 
+	printf("Throttle: %lf\n", s_interface.getEngineThrottlePosition());
 	s_engine.setThrottle(s_interface.getEngineThrottlePosition());
 	s_engine.setBleedAir(s_interface.getBleedAir() > 0.1);
 	s_engine.setIgnitors(s_interface.getIgnition() > 0.1);
@@ -191,7 +192,7 @@ void ed_fm_set_current_state_body_axis(double ax,//linear acceleration component
 	)
 {
 	s_fm.setPhysicsParams(common_angle_of_attack, common_angle_of_slide, Vec3(yaw, pitch, roll), Vec3(omegax, omegay, omegaz), Vec3(omegadotx, omegadoty, omegadoty), Vec3(vx, vy, vz));
-
+	s_airframe.setAngle(pitch);
 
 	//aoa = common_angle_of_attack;
 	//beta = common_angle_of_slide;
@@ -222,15 +223,6 @@ void ed_fm_set_command
 	case Skyhawk::Control::THROTTLE:
 		s_input.throttle() = value;
 		break;
-	case Skyhawk::Control::GEAR_DOWN:
-		s_input.gear() = Skyhawk::Input::GearPos::DOWN;
-		break;
-	case Skyhawk::Control::GEAR_UP:
-		s_input.gear() = Skyhawk::Input::GearPos::UP;
-		break;
-	case Skyhawk::Control::GEAR_TOGGLE:
-		s_input.gear() = s_input.gear() == Skyhawk::Input::GearPos::DOWN ? Skyhawk::Input::GearPos::UP : Skyhawk::Input::GearPos::DOWN;
-		break;
 	case Skyhawk::Control::BRAKE:
 		s_input.brakeLeft() = value;
 		s_input.brakeRight() = value;
@@ -241,26 +233,8 @@ void ed_fm_set_command
 	case Skyhawk::Control::RIGHT_BRAKE:
 		s_input.brakeRight() = value;
 		break;
-	case Skyhawk::Control::FLAPS_UP:
-		s_input.flaps() = 0.0;
-		break;
-	case Skyhawk::Control::FLAPS_DOWN:
-		s_input.flaps() = 1.0;
-		break;
-	case Skyhawk::Control::FLAPS_TOGGLE:
-		s_input.flaps() = s_input.flaps() > 0.5 ? 0.0: 1.0;
-		break;
-	case Skyhawk::Control::AIRBRAKE_EXTEND:
-		s_input.airbrake() = 1.0;
-		break;
-	case Skyhawk::Control::AIRBRAKE_RETRACT:
-		s_input.airbrake() = 0.0;
-		break;
 	case Skyhawk::Control::HOOK_TOGGLE:
 		s_input.hook() = !s_input.hook();
-		break;
-	case Skyhawk::Control::CONNECT_TO_CAT:
-		s_airframe.setCatStateFromKey();
 		break;
 	case Skyhawk::Control::NOSEWHEEL_STEERING_ENGAGE:
 		//s_input.nosewheelSteering() = true;
@@ -268,19 +242,8 @@ void ed_fm_set_command
 	case Skyhawk::Control::NOSEWHEEL_STEERING_DISENGAGE:
 		//s_input.nosewheelSteering() = false;
 		break;
-	case Skyhawk::Control::STARTER_BUTTON:
-		//s_input.starter() = value > 17.26;
-		break;
-	case Skyhawk::Control::THROTTLE_DETEND:
-		//if (value < 17.24)
-			//s_input.throttleState() = Skyhawk::Input::ThrottleState::CUTOFF;
-		//else if (value > 17.26)
-			//s_input.throttleState() = Skyhawk::Input::ThrottleState::IDLE;
-		//else
-			//s_input.throttleState() = Skyhawk::Input::ThrottleState::START;
-		break;
-	default:
-		printf("number %d: %lf\n", command, value);
+	default:;
+		//printf("number %d: %lf\n", command, value);
 	}
 }
 /*

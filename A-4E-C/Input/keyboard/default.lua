@@ -318,9 +318,9 @@ join(res.keyCommands,{
 		---------------------------------------------
     -- Carrier Catapult -------------------------
     ---------------------------------------------
-	  {combos = {{key = 'U', reformers = {}}},                  down = Keys.catapult_ready, value_down = 1.0, value_up = 0.0, name = _('Catapult Hook-up'), category = _('Flight Control')},
-    {combos = {{key = 'U', reformers = {'LShift'}}},          down = Keys.catapult_shoot, value_down = 1.0, value_up = 0.0, name = _('Catapult Shoot'),     category = _('Flight Control')},
-    {combos = {{key = 'S', reformers = {'LCtrl', 'LShift'}}}, down = device_commands.pilot_salute, cockpit_device_id = devices.CARRIER, value_down = 1.0, value_up = 0.0, name = _('Pilot Salute'),     category = _('Communications')},
+	  --{combos = {{key = 'U', reformers = {}}},                  down = Keys.catapult_ready, value_down = 1.0, value_up = 0.0, name = _('Catapult Hook-up'), category = _('Flight Control')},
+    --{combos = {{key = 'U', reformers = {'LShift'}}},          down = Keys.catapult_shoot, value_down = 1.0, value_up = 0.0, name = _('Catapult Shoot'),     category = _('Flight Control')},
+    {combos = {{key = 'S', reformers = {'LCtrl', 'LShift'}}}, down = iCommandPilotGestureSalute, name = _('Pilot Salute'),     category = _('Communications')},
   
     -- Weapon/CMDS Adjustment
     {combos = {{key = '2', reformers = {'RShift','RAlt'}}},		down = Keys.ChangeCBU2AQuantity,    value_down = 1, name = _('ALE-29A Programmer CBU-2/A Release Quantity - 1/2/3'),            category = {_('Kneeboard'), _('ALE-29A Programmer')}},

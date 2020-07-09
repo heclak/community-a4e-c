@@ -18,6 +18,7 @@ public:
 	FlightModel(Input& controls, Airframe& airframe, Engine& engine);
 	~FlightModel();
 
+	void zeroInit();
 	void coldInit();
 	void hotInit();
 	void airbornInit();

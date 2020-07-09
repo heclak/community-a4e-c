@@ -52,10 +52,10 @@ local GearMainTimeSec = 5           -- 5 seconds to retract and extend main gear
 
 local LeftSideLead = 0.4 / (GearMainTimeSec) -- left side main gear leads right side, both opening and closing, by 0.7 seconds
 
-local GEAR_NOSE_STATE = 0 -- 0 = retracted, 1.0 = extended -- "current" nose gear position
-local GEAR_LEFT_STATE =	0 -- 0 = retracted, 1.0 = extended -- "current" main left gear position
-local GEAR_RIGHT_STATE = 0 -- 0 = retracted, 1.0 = extended -- "current" main right gear position
-local GEAR_TARGET =     0 -- 0 = retracted, 1.0 = extended -- "future" gear position
+local GEAR_NOSE_STATE = 1.0 -- 0 = retracted, 1.0 = extended -- "current" nose gear position
+local GEAR_LEFT_STATE =	1.0 -- 0 = retracted, 1.0 = extended -- "current" main left gear position
+local GEAR_RIGHT_STATE = 1.0 -- 0 = retracted, 1.0 = extended -- "current" main right gear position
+local GEAR_TARGET =     1.0 -- 0 = retracted, 1.0 = extended -- "future" gear position
 
 
 
@@ -155,12 +155,19 @@ end
 function post_initialize()
     local wowml = sensor_data.getWOW_LeftMainLandingGear()
     local gear_clickable_ref = get_clickable_element_reference("PNT_8")
-    if wowml > 0 then
+	
+	local birth = LockOn_Options.init_conditions.birth_place
+	if birth=="GROUND_HOT" or birth=="GROUND_COLD" then
         GEAR_NOSE_STATE = 1
         GEAR_RIGHT_STATE = 1
         GEAR_LEFT_STATE = 1
         GEAR_TARGET = 1
-    end
+	elseif birth=="AIR_HOT" then
+		GEAR_NOSE_STATE = 0
+       GEAR_RIGHT_STATE = 0
+       GEAR_LEFT_STATE = 0
+       GEAR_TARGET = 0
+	end
 
     dev:performClickableAction(device_commands.Gear,GEAR_TARGET,true)   -- sync handle to gear state
     gear_clickable_ref:hide(GEAR_TARGET==1)
