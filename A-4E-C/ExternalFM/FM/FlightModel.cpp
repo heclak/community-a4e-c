@@ -161,9 +161,9 @@ void Skyhawk::FlightModel::calculateAero()
 void Skyhawk::FlightModel::calculateElements()
 {
 	Vec3 LiftLW = windAxisToBody(m_LDwindAxesLW, m_aoaLW, m_beta);
-	printf("LEFT X: %lf Y: %lf Z: %lf\n", m_LDwindAxesLW.x, m_LDwindAxesLW.y, m_LDwindAxesLW.z);
+	//printf("LEFT X: %lf Y: %lf Z: %lf\n", m_LDwindAxesLW.x, m_LDwindAxesLW.y, m_LDwindAxesLW.z);
 	Vec3 LiftRW = windAxisToBody(m_LDwindAxesRW, m_aoaRW, m_beta);
-	printf("RIGHT X: %lf Y: %lf Z: %lf\n", m_LDwindAxesRW.x, m_LDwindAxesRW.y, m_LDwindAxesRW.z);
+	//printf("RIGHT X: %lf Y: %lf Z: %lf\n", m_LDwindAxesRW.x, m_LDwindAxesRW.y, m_LDwindAxesRW.z);
 	Vec3 dragElem = windAxisToBody(m_CDwindAxesComp, m_aoa, m_beta);
 	
 	addForceDir(LiftLW, m_rLW);

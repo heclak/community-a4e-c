@@ -53,7 +53,7 @@ public:
 		if (lower == upper)
 			upper++;
 
-		printf("lower %d, upper %d\n", lower, upper);
+		//printf("lower %d, upper %d\n", lower, upper);
 
 		if (lower < 0)
 			return m_table.front();
