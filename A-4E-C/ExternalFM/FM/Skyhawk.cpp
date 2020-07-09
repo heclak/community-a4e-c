@@ -129,6 +129,7 @@ void ed_fm_set_current_mass_state (double mass,
 									)
 {
 	s_mass = mass;
+	s_airframe.setMass(mass);
 	s_fm.setCOM(Vec3(center_of_mass_x, center_of_mass_y, center_of_mass_z));
 
 	/*center_of_gravity.x  = center_of_mass_x;
@@ -466,8 +467,8 @@ bool ed_fm_pop_simulation_event(ed_fm_simulation_event& out)
 		out.event_type = ED_FM_EVENT_CARRIER_CATAPULT;
 		out.event_params[0] = 1;
 		out.event_params[1] = 3.0f;
-		out.event_params[2] = 70.0f;
-		out.event_params[3] = 100000.0f;
+		out.event_params[2] = 55.0f;
+		out.event_params[3] = s_airframe.getMass()*9.81*0.5;
 		//out.event_params[3] = 300000.0f; //fucking lol
 		s_airframe.catapultState() = Skyhawk::Airframe::ON_CAT_WAITING;
 		return true;

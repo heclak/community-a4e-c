@@ -27,7 +27,7 @@ namespace Skyhawk
 #define c_maxfuel 2137.8
 
 #define c_catAngle 0.0 //6 degrees
-#define	c_catConstrainingForce 3000.0
+#define	c_catConstrainingForce 4000.0
 
 class Airframe
 {
@@ -61,6 +61,7 @@ public:
 	inline void setFuelState(double fuel);
 	inline void setFuelStateNorm(double fuel);
 	inline void setAngle(double angle);
+	inline void setMass(double angle);
 
 	inline double getGearPosition(); //returns gear pos
 	inline double getFlapsPosition();
@@ -73,6 +74,7 @@ public:
 	inline double getPrevFuelState();
 	inline double getFuelStateNorm();
 	inline double getCatMoment();
+	inline double getMass();
 	inline double aileron();
 	inline double elevator();
 	inline double rudder();
@@ -119,6 +121,8 @@ private:
 	double m_fuel = 0.0;
 	double m_fuelPrevious = 0.0;
 
+	double m_mass = 1.0;
+
 	CatapultState m_catapultState = OFF_CAT;
 	bool m_catStateSent = false;
 	double m_catMoment = 0.0;
@@ -164,6 +168,11 @@ void Airframe::setAirbrakePosition(double position)
 void Airframe::setAngle(double angle)
 {
 	m_angle = angle;
+}
+
+void Airframe::setMass(double mass)
+{
+	m_mass = mass;
 }
 
 double Airframe::getGearPosition()
@@ -301,6 +310,11 @@ double Airframe::getFuelStateNorm()
 double Airframe::getCatMoment()
 {
 	return m_catMoment;
+}
+
+double Airframe::getMass()
+{
+	return m_mass;
 }
 
 }//end namespace

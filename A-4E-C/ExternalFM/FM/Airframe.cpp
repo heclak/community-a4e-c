@@ -23,6 +23,7 @@ void Skyhawk::Airframe::zeroInit()
 	m_slatRPosition = 0.0;
 	m_flapsPosition = 0.0;
 	m_catapultState = CatapultState::OFF_CAT;
+	m_mass = 1.0;
 	//m_fuel = 0.0;
 	//m_fuelPrevious = 0.0;
 }
