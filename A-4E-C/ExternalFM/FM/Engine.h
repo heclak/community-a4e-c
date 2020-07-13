@@ -3,6 +3,9 @@
 #pragma once
 #include "Table.h"
 #include "Input.h"
+#include <algorithm>
+
+#undef max
 namespace Skyhawk
 {//begin namespace
 
@@ -20,6 +23,8 @@ namespace Skyhawk
 
 #define c_maxFuelFlow 0.8779
 #define c_maxOmega 1152.0
+
+#define c_maxAirflow 50.0
 
 class Engine
 {
@@ -41,6 +46,7 @@ public:
 	inline void setThrottle(double throttle);
 	inline void setIgnitors(bool ignitors);
 	inline void setBleedAir(bool bleedAir);
+	inline void setAirspeed(double airspeed);
 
 private:
 	//Constants
@@ -64,12 +70,13 @@ private:
 	bool m_haveFuel = true;
 	double m_startAir = 0.0;
 	double m_throttle = 0.0;
+	double m_airspeed = 0.0;
 
 };
 
 double Engine::getThrust()
 {
-	return m_omegaVThrust(m_omega)*m_nozzle;
+	return std::max(m_omegaVThrust(m_omega)*m_nozzle - c_maxAirflow*m_airspeed, 0.0)/0.96;
 }
 
 double Engine::getRPM()
@@ -110,6 +117,11 @@ void Engine::setIgnitors(bool ignitors)
 void Engine::setBleedAir(bool bleedAir)
 {
 	m_startAir = bleedAir ? 1.0 : 0.0;
+}
+
+void Engine::setAirspeed(double airspeed)
+{
+	m_airspeed = airspeed;
 }
 
 }//end namespace

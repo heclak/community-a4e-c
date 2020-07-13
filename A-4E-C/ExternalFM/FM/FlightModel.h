@@ -388,6 +388,7 @@ void FlightModel::sideForce()
 
 void FlightModel::thrustForce()
 {
+	m_engine.setAirspeed(m_scalarV);
 	//addForce(Vec3(thrust(), 0.0, 0.0), getCOM());
 	addForce(Vec3(m_engine.getThrust(), 0.0, 0.0), getCOM());
 }
