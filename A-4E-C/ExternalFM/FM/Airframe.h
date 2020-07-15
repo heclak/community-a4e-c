@@ -4,6 +4,7 @@
 #include "Input.h"
 #include <stdio.h>
 #include "Engine.h"
+#include "Vec3.h"
 namespace Skyhawk
 {//begin namespace
 
@@ -42,6 +43,15 @@ public:
 		OFF_CAT
 	};
 
+	//Don't touch this it's order dependent you will break the tank code.
+	enum Tank
+	{
+		INTERNAL,
+		LEFT_EXT,
+		CENTRE_EXT,
+		RIGHT_EXT,
+		DONT_TOUCH //Seriously don't touch it.
+	};
 
 
 	Airframe(Input& controls, Engine& engine);
@@ -58,10 +68,33 @@ public:
 	inline void setSlatLPosition(double position);
 	inline void setSlatRPosition(double position);
 	inline void setAirbrakePosition(double position);
-	inline void setFuelState(double fuel);
+	inline void setFuelState(Tank tank, Vec3 pos, double fuel);
 	inline void setFuelStateNorm(double fuel);
 	inline void setAngle(double angle);
 	inline void setMass(double angle);
+
+	inline void setFuelStateLExt(double fuel);
+	inline void setFueCStateLExt(double fuel);
+	inline void setFueRStateLExt(double fuel);
+
+	inline void setLExtVec(Vec3 vec);
+	inline void setCExtVec(Vec3 vec);
+	inline void setRExtVec(Vec3 vec);
+
+	inline const Vec3& getLExtVec() const;
+	inline const Vec3& getCExtVec() const;
+	inline const Vec3& getRExtVec() const;
+
+	inline const Vec3& getLExtVecSqr() const;
+	inline const Vec3& getCExtVecSqr() const;
+	inline const Vec3& getRExtVecSqr() const;
+
+	inline void setSelectedTank(Tank selected);
+
+	inline const Vec3& getFuelPos(Tank tank) const;
+	inline const Vec3& getFuelPosSqr(Tank tank) const;
+	inline double getFuelQty(Tank tank) const;
+	inline double getFuelQtyDelta(Tank tank) const;
 
 	inline double getGearPosition(); //returns gear pos
 	inline double getFlapsPosition();
@@ -72,8 +105,12 @@ public:
 	inline double getSlatRPosition();
 	inline double getFuelState();
 	inline double getPrevFuelState();
+	inline double getLeftTankDelta();
+	inline double getCentreTankDelta();
+	inline double getRightTankDelta();
 	inline double getFuelStateNorm();
 	inline double getCatMoment();
+	inline Tank getSelectedTank();
 	inline double getMass();
 	inline double aileron();
 	inline double elevator();
@@ -118,8 +155,34 @@ private:
 	double m_elevator = 0.0;
 	double m_rudder = 0.0;
 
-	double m_fuel = 0.0;
-	double m_fuelPrevious = 0.0;
+
+
+	Tank m_selected;
+
+	double m_fuel[4] = { 0.0, 0.0, 0.0, 0.0 };
+	double m_fuelPrev[4] = { 0.0, 0.0, 0.0, 0.0 };
+	Vec3 m_fuelPos[4] = { Vec3(), Vec3(), Vec3(), Vec3() };
+	Vec3 m_fuelPosSqr[4] = { Vec3(), Vec3(), Vec3(), Vec3() };
+
+	//double m_fuel = 0.0;
+	//double m_fuelPrevious = 0.0;
+
+	double m_fuelExtL = 0.0;
+	double m_fuelExtLPrev = 0.0;
+	Vec3 m_fuelExtPosL;
+	Vec3 m_fuelExtPosLSqr;
+
+	double m_fuelExtC = 0.0;
+	double m_fuelExtCPrev = 0.0;
+	Vec3 m_fuelExtPosC;
+	Vec3 m_fuelExtPosCSqr;
+
+	double m_fuelExtR = 0.0;
+	double m_fuelExtRPrev = 0.0;
+	Vec3 m_fuelExtPosR;
+	Vec3 m_fuelExtPosRSqr;
+
+
 
 	double m_mass = 1.0;
 
@@ -132,27 +195,22 @@ private:
 	Input& m_controls;
 };
 
-void Airframe::fuelUpdate(double dt)
+void Airframe::setSelectedTank(Tank selected)
 {
-	m_fuel -= m_engine.getFuelFlow() * dt;
+	m_selected = selected;
 }
 
-void Airframe::setFuelState(double fuel)
+void Airframe::setFuelState(Tank tank, Vec3 pos, double fuel)
 {
-	// printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFUEL: %lf, this: %p\n", fuel, this);
-	m_fuel = fuel;
-	m_fuelPrevious = fuel;
+	m_fuel[tank] = fuel;
+	m_fuelPrev[tank] = fuel;
+	m_fuelPos[tank] = pos;
+	m_fuelPosSqr[tank] = Vec3(pos.x * pos.x, pos.y * pos.y, pos.z * pos.z);
 }
 
 void Airframe::setFlapsPosition(double position)
 {
 	m_flapsPosition = position;
-}
-
-void Airframe::setFuelStateNorm(double fuel)
-{
-	m_fuel = c_maxfuel * fuel;
-	m_fuelPrevious = c_maxfuel * fuel;
 }
 
 void Airframe::setGearPosition(double position)
@@ -292,19 +350,39 @@ void Airframe::setCatStateFromKey()
 	}
 }
 
-double Airframe::getFuelState()
+double Airframe::getLeftTankDelta()
 {
-	return m_fuel;
+	return m_fuelExtL - m_fuelExtLPrev;
 }
 
-double Airframe::getPrevFuelState()
+double Airframe::getCentreTankDelta()
 {
-	return m_fuelPrevious;
+	return m_fuelExtC - m_fuelExtCPrev;
 }
 
-double Airframe::getFuelStateNorm()
+double Airframe::getRightTankDelta()
 {
-	return m_fuel / c_maxfuel;
+	return m_fuelExtR - m_fuelExtRPrev;
+}
+
+const Vec3& Airframe::getFuelPos(Tank tank) const
+{
+	return m_fuelPos[tank];
+}
+
+const Vec3& Airframe::getFuelPosSqr(Tank tank) const
+{
+	return m_fuelPosSqr[tank];
+}
+
+double Airframe::getFuelQty(Tank tank) const
+{
+	return m_fuel[tank];
+}
+
+double Airframe::getFuelQtyDelta(Tank tank) const
+{
+	return m_fuel[tank] - m_fuelPrev[tank];
 }
 
 double Airframe::getCatMoment()
@@ -316,6 +394,64 @@ double Airframe::getMass()
 {
 	return m_mass;
 }
+
+inline Airframe::Tank Airframe::getSelectedTank()
+{
+	return m_selected;
+}
+
+inline void Airframe::setLExtVec(Vec3 vec)
+{
+	m_fuelExtPosL = vec;
+	m_fuelExtPosLSqr = Vec3(vec.x*vec.x, vec.y*vec.y, vec.z*vec.z);
+}
+
+inline void Airframe::setCExtVec(Vec3 vec)
+{
+	m_fuelExtPosC = vec;
+	m_fuelExtPosCSqr = Vec3(vec.x * vec.x, vec.y * vec.y, vec.z * vec.z);
+}
+
+inline void Airframe::setRExtVec(Vec3 vec)
+{
+	m_fuelExtPosR = vec;
+	m_fuelExtPosRSqr = Vec3(vec.x * vec.x, vec.y * vec.y, vec.z * vec.z);
+}
+
+inline const Vec3& Airframe::getLExtVec() const
+{
+	return m_fuelExtPosL;
+}
+
+inline const Vec3& Airframe::getCExtVec() const
+{
+	return m_fuelExtPosC;
+}
+
+inline const Vec3& Airframe::getRExtVec() const
+{
+	return m_fuelExtPosR;
+}
+
+inline const Vec3& Airframe::getLExtVecSqr() const
+{
+	return m_fuelExtPosLSqr;
+}
+
+inline const Vec3& Airframe::getCExtVecSqr() const
+{
+	return m_fuelExtPosCSqr;
+}
+
+inline const Vec3& Airframe::getRExtVecSqr() const
+{
+	return m_fuelExtPosRSqr;
+}
+
+inline void setFuelStateLExt(double fuel);
+inline void setFueCStateLExt(double fuel);
+inline void setFueRStateLExt(double fuel);
+
 
 }//end namespace
 
