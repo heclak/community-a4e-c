@@ -290,10 +290,6 @@ bool ed_fm_change_mass  (double & delta_mass,
 
 	delta_mass = s_airframe.getFuelQtyDelta(tank);
 
-	delta_mass_moment_of_inertia_x = delta_mass * r.x * r.x;
-	delta_mass_moment_of_inertia_y = delta_mass * r.y * r.y;
-	delta_mass_moment_of_inertia_z = delta_mass * r.z * r.z;
-
 	delta_mass_pos_x = pos.x;
 	delta_mass_pos_y = pos.y;
 	delta_mass_pos_z = pos.z;
