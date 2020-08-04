@@ -318,7 +318,7 @@ AOA_BRIGHTNESS.parameter_name       = "D_AOA_BRIGHTNESS"
 Glareshield_BRIGHTNESS                      = CreateGauge("parameter")
 Glareshield_BRIGHTNESS.arg_number           = 858
 Glareshield_BRIGHTNESS.input                = {0.0, 1.0}
-Glareshield_BRIGHTNESS.output               = {0.0, 0.35}
+Glareshield_BRIGHTNESS.output               = {0.0, 0.1}
 Glareshield_BRIGHTNESS.parameter_name       = "D_GLARE_BRIGHTNESS"
 
 Glareshield_WHEELS                      = CreateGauge("parameter")
@@ -578,7 +578,7 @@ GunsightReflector.parameter_name   = "D_GUNSIGHT_REFLECTOR"
 Ladder_Brightness					= CreateGauge("parameter")
 Ladder_Brightness.arg_number		= 859
 Ladder_Brightness.input			= {0.0, 1.0}
-Ladder_Brightness.output			= {0.0, 1.0}
+Ladder_Brightness.output			= {0.0, 0.5}
 Ladder_Brightness.parameter_name   = "D_LADDER_BRIGHTNESS"
 
 Ladder_FuelBoostCaution					= CreateGauge("parameter")

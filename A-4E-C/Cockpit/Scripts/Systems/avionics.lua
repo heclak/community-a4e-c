@@ -1081,10 +1081,10 @@ function update_vvi()
     vvi:set(vvi_wma:get_WMA(v))
 end
 
-local LADDER_BRIGHTNESS_HIGH = 0.7
-local LADDER_BRIGHTNESS_LOW = 0.025
-local GLARESHIELD_BRIGHTNESS_HIGH = 0.7
-local GLARESHIELD_BRIGHTNESS_LOW = 0.025
+local LADDER_BRIGHTNESS_HIGH = 1.0
+local LADDER_BRIGHTNESS_LOW = 0.2
+local GLARESHIELD_BRIGHTNESS_HIGH = 1.0
+local GLARESHIELD_BRIGHTNESS_LOW = 0.5
 --
 -- master update function for all avionics
 ---
