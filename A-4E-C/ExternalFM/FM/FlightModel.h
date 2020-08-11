@@ -340,7 +340,7 @@ void FlightModel::M_stab()
 void FlightModel::N_stab()
 {
 	//m_moment.y
-	m_moment.y += m_q * (-Cnb(m_mach)*m_beta + Cndr(0.0)*rudder() ) + m_p * (Cnr(0.0)*m_omega.y);
+	m_moment.y += m_q * (-Cnb(m_beta) + Cndr(0.0)*rudder() ) + m_p * (Cnr(0.0)*m_omega.y);
 	//printf("m_moment.y: %lf, m_beta: %lf, Cnb(mach)*m_beta: %lf, Cndr*rudder: %lf, Cnr*m_omega.y: %lf\n",
 		//m_moment.y, m_beta, Cnb(m_mach)*m_beta, Cndr(0.0)*rudder(), Cnr(0.0)*m_omega.y);
 }
