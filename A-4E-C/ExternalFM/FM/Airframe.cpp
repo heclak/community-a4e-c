@@ -116,10 +116,40 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 		m_hookPosition = std::max(m_hookPosition, 0.0);
 	}
 
-	m_fuelPrevious = m_fuel;
+	//m_fuelPrevious = m_fuel;
 	//printf("FUEL: %lf\n", m_fuel);
-	m_fuel -= m_engine.getFuelFlow()*dt;
-	m_engine.setHasFuel(m_fuel > 50.0);
+	double dm = m_engine.getFuelFlow()*dt;
+
+	int totalExt = 0;
+	for (int i = Tank::INTERNAL; i < Tank::DONT_TOUCH; i++)
+	{
+		m_fuelPrev[i] = m_fuel[i];
+		if (m_fuel[i] > 10.0 && i > Tank::INTERNAL)
+		{
+			totalExt++;
+		}
+	}
+
+	double sub_dm = totalExt > 0 ? dm / (double)totalExt : dm;
+	for (int i = Tank::INTERNAL; i < Tank::DONT_TOUCH; i++)
+	{
+		if (i == Tank::INTERNAL)
+		{
+			if (!totalExt)
+			{
+				m_fuel[i] -= dm;
+				break;
+			}
+		}
+		else if (m_fuel[i] > 10.0)
+		{
+			m_fuel[i] -= sub_dm;
+		}
+	}
+
+	//printf("LEFT: %lf, CENTRE: %lf, RIGHT: %lf, INTERNAL: %lf\n", m_fuel[Tank::LEFT_EXT], m_fuel[Tank::CENTRE_EXT], m_fuel[Tank::RIGHT_EXT], m_fuel[Tank::INTERNAL]);
+
+	m_engine.setHasFuel(m_fuel[Tank::INTERNAL] > 50.0);
 	
 	m_elevator = m_controls.pitch() + m_controls.pitchTrim();
 	m_aileronLeft = m_controls.roll() + m_controls.rollTrim();

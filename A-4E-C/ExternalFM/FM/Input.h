@@ -59,43 +59,45 @@ public:
 
 	}
 
+	void zeroInit()
+	{
+		m_flaps = 0.0;
+		m_pitchTrim = 0.0;
+		m_rollTrim = 0.0;
+		m_yawTrim = 0.0;
+		m_pitch = 0.0;
+		m_roll = 0.0;
+		m_yaw = 0.0;
+	}
+
 	void coldInit()
 	{
+		zeroInit();
 		m_gear = GearPos::DOWN;
 		m_hook = false;
 		m_nosewheelSteering = false;
 		m_throttleState = ThrottleState::CUTOFF;
 		m_starter = false;
-		m_flaps = 1.0;
-		m_pitchTrim = 0.0;
-		m_rollTrim = 0.0;
-		m_yawTrim = 0.0;
 	}
 
 	void hotInit()
 	{
+		zeroInit();
 		m_gear = GearPos::DOWN;
 		m_hook = false;
 		m_nosewheelSteering = false;
 		m_throttleState = ThrottleState::IDLE;
 		m_starter = false;
-		m_flaps = 0.0;
-		m_pitchTrim = 0.0;
-		m_rollTrim = 0.0;
-		m_yawTrim = 0.0;
 	}
 
 	void airbornInit()
 	{
+		zeroInit();
 		m_gear = GearPos::UP;
 		m_hook = false;
 		m_nosewheelSteering = false;
 		m_throttleState = ThrottleState::IDLE;
 		m_starter = false;
-		m_flaps = 0.0;
-		m_pitchTrim = 0.0;
-		m_rollTrim = 0.0;
-		m_yawTrim = 0.0;
 	}
 
 	inline double normalise(double value)

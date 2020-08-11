@@ -77,6 +77,7 @@ void ed_fm_simulate(double dt)
 	s_input.rollTrim() = s_interface.getRollTrim();
 	s_input.yawTrim() = s_interface.getRudderTrim();
 
+
 	//printf("Throttle: %lf\n", s_interface.getEngineThrottlePosition());
 	s_engine.setThrottle(s_interface.getEngineThrottlePosition());
 	s_engine.setBleedAir(s_interface.getBleedAir() > 0.1);
@@ -97,7 +98,8 @@ void ed_fm_simulate(double dt)
 	s_interface.setRudderPedals(s_input.yaw() + s_input.yawTrim());
 }
 
-void ed_fm_set_atmosphere(double h,//altitude above sea level
+void ed_fm_set_atmosphere(
+							double h,//altitude above sea level
 							double t,//current atmosphere temperature , Kelwins
 							double a,//speed of sound
 							double ro,// atmosphere density
@@ -119,14 +121,16 @@ void ed_fm_set_atmosphere(double h,//altitude above sea level
 /*
 called before simulation to set up your environment for the next step
 */
-void ed_fm_set_current_mass_state (double mass,
-									double center_of_mass_x,
-									double center_of_mass_y,
-									double center_of_mass_z,
-									double moment_of_inertia_x,
-									double moment_of_inertia_y,
-									double moment_of_inertia_z
-									)
+void ed_fm_set_current_mass_state 
+(
+	double mass,
+	double center_of_mass_x,
+	double center_of_mass_y,
+	double center_of_mass_z,
+	double moment_of_inertia_x,
+	double moment_of_inertia_y,
+	double moment_of_inertia_z
+)
 {
 	s_mass = mass;
 	s_airframe.setMass(mass);
@@ -139,26 +143,28 @@ void ed_fm_set_current_mass_state (double mass,
 /*
 called before simulation to set up your environment for the next step
 */
-void ed_fm_set_current_state (double ax,//linear acceleration component in world coordinate system
-							double ay,//linear acceleration component in world coordinate system
-							double az,//linear acceleration component in world coordinate system
-							double vx,//linear velocity component in world coordinate system
-							double vy,//linear velocity component in world coordinate system
-							double vz,//linear velocity component in world coordinate system
-							double px,//center of the body position in world coordinate system
-							double py,//center of the body position in world coordinate system
-							double pz,//center of the body position in world coordinate system
-							double omegadotx,//angular accelearation components in world coordinate system
-							double omegadoty,//angular accelearation components in world coordinate system
-							double omegadotz,//angular accelearation components in world coordinate system
-							double omegax,//angular velocity components in world coordinate system
-							double omegay,//angular velocity components in world coordinate system
-							double omegaz,//angular velocity components in world coordinate system
-							double quaternion_x,//orientation quaternion components in world coordinate system
-							double quaternion_y,//orientation quaternion components in world coordinate system
-							double quaternion_z,//orientation quaternion components in world coordinate system
-							double quaternion_w //orientation quaternion components in world coordinate system
-							)
+void ed_fm_set_current_state
+(
+	double ax,//linear acceleration component in world coordinate system
+	double ay,//linear acceleration component in world coordinate system
+	double az,//linear acceleration component in world coordinate system
+	double vx,//linear velocity component in world coordinate system
+	double vy,//linear velocity component in world coordinate system
+	double vz,//linear velocity component in world coordinate system
+	double px,//center of the body position in world coordinate system
+	double py,//center of the body position in world coordinate system
+	double pz,//center of the body position in world coordinate system
+	double omegadotx,//angular accelearation components in world coordinate system
+	double omegadoty,//angular accelearation components in world coordinate system
+	double omegadotz,//angular accelearation components in world coordinate system
+	double omegax,//angular velocity components in world coordinate system
+	double omegay,//angular velocity components in world coordinate system
+	double omegaz,//angular velocity components in world coordinate system
+	double quaternion_x,//orientation quaternion components in world coordinate system
+	double quaternion_y,//orientation quaternion components in world coordinate system
+	double quaternion_z,//orientation quaternion components in world coordinate system
+	double quaternion_w //orientation quaternion components in world coordinate system
+)
 {
 	s_fm.setWorldVelocity(Vec3(vx, vy, vz));
 	s_pos = Vec3(px, py, pz);
@@ -169,7 +175,9 @@ void ed_fm_set_current_state (double ax,//linear acceleration component in world
 }
 
 
-void ed_fm_set_current_state_body_axis(double ax,//linear acceleration component in body coordinate system
+void ed_fm_set_current_state_body_axis
+(
+	double ax,//linear acceleration component in body coordinate system
 	double ay,//linear acceleration component in body coordinate system
 	double az,//linear acceleration component in body coordinate system
 	double vx,//linear velocity component in body coordinate system
@@ -190,9 +198,9 @@ void ed_fm_set_current_state_body_axis(double ax,//linear acceleration component
 	double roll, //radians
 	double common_angle_of_attack, //AoA radians
 	double common_angle_of_slide   //AoS radians
-	)
+)
 {
-	s_fm.setPhysicsParams(common_angle_of_attack, common_angle_of_slide, Vec3(yaw, pitch, roll), Vec3(omegax, omegay, omegaz), Vec3(omegadotx, omegadoty, omegadoty), Vec3(vx, vy, vz), Vec3(ax, ay, az));
+	s_fm.setPhysicsParams(common_angle_of_attack, common_angle_of_slide, Vec3(yaw, pitch, roll), Vec3(omegax, omegay, omegaz), Vec3(omegadotx, omegadoty, omegadoty), Vec3(vx - wind_vx, vy - wind_vy, vz - wind_vz), Vec3(ax, ay, az));
 	s_airframe.setAngle(pitch);
 
 	//aoa = common_angle_of_attack;
@@ -247,6 +255,7 @@ void ed_fm_set_command
 		//printf("number %d: %lf\n", command, value);
 	}
 }
+
 /*
 	Mass handling 
 
@@ -267,6 +276,7 @@ void ed_fm_set_command
 	//internal DCS calculations for changing mass, center of gravity,  and moments of inertia
 	}
 */
+
 bool ed_fm_change_mass  (double & delta_mass,
 						double & delta_mass_pos_x,
 						double & delta_mass_pos_y,
@@ -276,31 +286,41 @@ bool ed_fm_change_mass  (double & delta_mass,
 						double & delta_mass_moment_of_inertia_z
 						)
 {
-	delta_mass_moment_of_inertia_x = 0.0;
-	delta_mass_moment_of_inertia_y = 0.0;
-	delta_mass_moment_of_inertia_z = 0.0;
+	Skyhawk::Airframe::Tank tank = s_airframe.getSelectedTank();
+	Vec3 pos = s_airframe.getFuelPos(tank);
+	Vec3 r = pos - s_fm.getCOM();
 
-	delta_mass_pos_x = s_fm.getCOM().x;
-	delta_mass_pos_y = s_fm.getCOM().y;
-	delta_mass_pos_z = s_fm.getCOM().z;
+	delta_mass = s_airframe.getFuelQtyDelta(tank);
 
-	delta_mass = s_airframe.getFuelState() - s_airframe.getPrevFuelState();
-	return false;
+	delta_mass_pos_x = pos.x;
+	delta_mass_pos_y = pos.y;
+	delta_mass_pos_z = pos.z;
+
+	if (tank == Skyhawk::Airframe::Tank::RIGHT_EXT)
+	{
+		s_airframe.setSelectedTank(Skyhawk::Airframe::Tank::INTERNAL);
+		return false;
+	}
+	else
+	{
+		s_airframe.setSelectedTank((Skyhawk::Airframe::Tank)((int)tank + 1));
+		return true;
+	}
 }
 /*
 	set internal fuel volume , init function, called on object creation and for refueling , 
 	you should distribute it inside at different fuel tanks
 */
-void   ed_fm_set_internal_fuel(double fuel)
+void ed_fm_set_internal_fuel(double fuel)
 {
-	s_airframe.setFuelState(fuel);
+	s_airframe.setFuelState(Skyhawk::Airframe::Tank::INTERNAL, s_fm.getCOM(), fuel);
 }
 /*
 	get internal fuel volume 
 */
 double ed_fm_get_internal_fuel()
 {
-	return s_airframe.getFuelState();
+	return s_airframe.getFuelQty(Skyhawk::Airframe::Tank::INTERNAL);
 }
 /*
 	set external fuel volume for each payload station , called for weapon init and on reload
@@ -311,14 +331,15 @@ void  ed_fm_set_external_fuel (int	 station,
 								double y,
 								double z)
 {
-
+	s_airframe.setFuelState((Skyhawk::Airframe::Tank)station, Vec3(x, y, z), fuel);
+	//printf("Station: %d, Fuel: %lf, x: %lf y: %lf z: %lf", station, fuel, x, y, z);
 }
 /*
 	get external fuel volume 
 */
 double ed_fm_get_external_fuel ()
 {
-	return 0;
+	return s_airframe.getFuelQty(Skyhawk::Airframe::Tank::LEFT_EXT) + s_airframe.getFuelQty(Skyhawk::Airframe::Tank::CENTRE_EXT) + s_airframe.getFuelQty(Skyhawk::Airframe::Tank::RIGHT_EXT);
 }
 
 void ed_fm_set_draw_args (EdDrawArgument * drawargs,size_t size)
