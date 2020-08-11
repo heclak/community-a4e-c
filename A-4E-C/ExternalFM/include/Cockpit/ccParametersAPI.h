@@ -13,7 +13,8 @@ typedef bool   (*PFN_ED_COCKPIT_PARAMETER_VALUE_TO_NUMBER   )  (const void * han
 typedef bool   (*PFN_ED_COCKPIT_PARAMETER_VALUE_TO_STRING   )  (const void * handle	,char * buffer	,unsigned buffer_size);
 typedef int    (*PFN_ED_COCKPIT_COMPARE_PARAMETERS			)  (void		  * handle_1,void * handle_2);
 typedef void   (cockpit::avBaseRadio::*MemberFncBool)		   (bool value);
-typedef void   (*RADIO_POWER_FUNC)							   (bool value);
+typedef void   (*RADIO_POWER_FUNC)							   (void* value);
+typedef bool  (*GET_RADIO_POWER_FUNC)							(void);
 typedef void* (*PFN_ED_COCKPIT_SET_ACTION_DIGITAL)(int value);
 
 /* usage
@@ -41,6 +42,8 @@ struct cockpit_param_api
 	PFN_ED_COCKPIT_PARAMETER_VALUE_TO_NUMBER		 pfn_ed_cockpit_parameter_value_to_number;   
 	PFN_ED_COCKPIT_PARAMETER_VALUE_TO_STRING		 pfn_ed_cockpit_parameter_value_to_string;
 	RADIO_POWER_FUNC								 setRadioPowerFncPtr;
+	GET_RADIO_POWER_FUNC								 getRadioPowerFncPtr;
+	GET_RADIO_POWER_FUNC								 switchRadioPowerFncPtr;
 	PFN_ED_COCKPIT_SET_ACTION_DIGITAL				 pfn_ed_cockpit_set_action_digital;
 };
 
@@ -53,7 +56,13 @@ inline cockpit_param_api  ed_get_cockpit_param_api()
 	ret.pfn_ed_cockpit_update_parameter_with_string = (PFN_ED_COCKPIT_UPDATE_PARAMETER_WITH_STRING)GetProcAddress(cockpit_dll,"ed_cockpit_update_parameter_with_string");
 	ret.pfn_ed_cockpit_parameter_value_to_number    = (PFN_ED_COCKPIT_PARAMETER_VALUE_TO_NUMBER)   GetProcAddress(cockpit_dll,"ed_cockpit_parameter_value_to_number");
 	ret.pfn_ed_cockpit_parameter_value_to_string	= (PFN_ED_COCKPIT_PARAMETER_VALUE_TO_STRING)   GetProcAddress(cockpit_dll,"ed_cockpit_parameter_value_to_string");
-	ret.setRadioPowerFncPtr = (RADIO_POWER_FUNC)GetProcAddress(cockpit_dll, "?setElecPower@avBaseRadio@cockpit@@UEAAX_N@Z");
+	//base: ?setElecPower@avBaseRadio@cockpit@@UEAAX_N@Z
+	//?setElecPower@avBaseRadio@cockpit@@UEAAX_N@Z
+	//?setElecPower@avBasicElectric@cockpit@@UEAAX_N@Z
+	//?getElecPower@avBasicElectric@cockpit@@UEBA_NXZ
+	ret.setRadioPowerFncPtr = (RADIO_POWER_FUNC)GetProcAddress(cockpit_dll, "?setElecPower@avRadio_MAC@cockpit@@UEAAX_N@Z");
+	ret.getRadioPowerFncPtr = (GET_RADIO_POWER_FUNC)GetProcAddress(cockpit_dll, "?getElecPower@avBasicElectric@cockpit@@UEBA_NXZ");
+	ret.switchRadioPowerFncPtr = (GET_RADIO_POWER_FUNC)GetProcAddress(cockpit_dll, "?switchElecOnOff@avBasicElectric@cockpit@@UEAAXXZ");
 	ret.pfn_ed_cockpit_set_action_digital = (PFN_ED_COCKPIT_SET_ACTION_DIGITAL)GetProcAddress(cockpit_dll, "ed_cockpit_set_action_digital");
 	return ret;
 }

@@ -81,4 +81,9 @@
       <UniqueIdentifier>{ebceb1d7-3713-46b0-bb34-91067244d0b2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <MASM Include="RCX_Hack.asm">
+      <Filter>A4-Skyhawk</Filter>
+    </MASM>
+  </ItemGroup>
 </Project>

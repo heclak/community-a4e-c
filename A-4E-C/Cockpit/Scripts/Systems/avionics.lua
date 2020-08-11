@@ -78,6 +78,8 @@ local alt_setting = ALT_PRESSURE_STD
 -- fuel gauge (gauge #29)
 
 local fuelgauge = get_param_handle("D_FUEL") -- 0 to 6800 lbs
+local fm_internalFuel = get_param_handle("FM_INTERNAL_FUEL")
+local fm_externalFuel = get_param_handle("FM_EXTERNAL_FUEL")
 local fuelflowgauge = get_param_handle("D_FUEL_FLOW")
 local gauge_fuel_flow = WMA(0.15, 0)
 
@@ -499,7 +501,13 @@ function update_fuel_gauge()
         end
     end
     -- establish the fuel amount we want to display
-    fuelQty = showingInternal and fuelQtyInternal or fuelQtyExternal
+    --fuelQty = showingInternal and fuelQtyInternal or fuelQtyExternal
+	
+	fuelQty = fm_internalFuel:get()*KG_TO_POUNDS
+	
+	if (showingInternal == false) then
+		fuelQty = fm_externalFuel:get()*KG_TO_POUNDS
+	end
 
     -- move needle towards value we're trying to show
     if master_test_param:get()==0 then

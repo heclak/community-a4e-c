@@ -8,6 +8,8 @@ dofile(LockOn_Options.script_path.."devices.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 
+local this_radio_ptr = get_param_handle("THIS_RADIO_PTR")
+
 local dev 	    = GetSelf()
 
 innerNoise 			= getInnerNoise(2.5E-6, 10.0)--V/m (dB S+N/N)
@@ -127,7 +129,10 @@ function post_initialize()
 	anothertable = {morehello = 10, table2 = {anotherthing = 10, hello = {are = 10}}} ,
   }
   
-  recursively_print(_G, 30, 100, "C:/tmp/stuff.txt")
+  recursively_print(dev, 30, 100, "C:/tmp/stuff1.txt")
+  
+  --radio_ptr = strsub(tostring(dev:link()), 10)
+  this_radio_ptr:set(string.sub(tostring(dev.link),10))
   
   --print_message_to_user(string.sub(dev["link"],10))
   

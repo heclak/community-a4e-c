@@ -4,6 +4,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "../include/Cockpit/ccParametersAPI.h"
+
+extern "C"
+{
+	void _set_radio(void* ptr, void* fnc, bool on);
+	bool _get_radio(void* ptr, void* fnc);
+	void _switch_radio(void* ptr, void* fnc);
+}
+
 namespace Skyhawk
 {//namespace begin
 
@@ -40,6 +48,11 @@ public:
 
 		m_nws					= m_api.pfn_ed_cockpit_get_parameter_handle("FM_NWS");
 
+		m_internalFuel = m_api.pfn_ed_cockpit_get_parameter_handle("FM_INTERNAL_FUEL");
+		m_externalFuel = m_api.pfn_ed_cockpit_get_parameter_handle("FM_EXTERNAL_FUEL");
+
+		m_radio                 = m_api.pfn_ed_cockpit_get_parameter_handle("THIS_RADIO_PTR");
+
 	}
 
 	inline void coldInit()
@@ -66,7 +79,43 @@ public:
 	{
 		//printf("Radio Power Pointer: %p", m_api.setRadioPowerFncPtr);
 		//__asm {MOV ECX, m_radio}
-		m_api.setRadioPowerFncPtr(value);
+		void* ptr = nullptr;
+		char buffer[100];
+		getParamString(m_radio, buffer, 100);
+		sscanf(buffer, "%p", &ptr);
+		
+
+		printf("Pointer is: %p\n", ptr);
+
+		static int x = 0;
+		x++;
+		if (ptr && x > 10)
+		{
+			//_set_radio(ptr, m_api.setRadioPowerFncPtr, true);
+			if (_get_radio(ptr, m_api.getRadioPowerFncPtr))
+			{
+				printf("Radio On\n");
+				//_set_radio(ptr, m_api.setRadioPowerFncPtr, false);
+				//_switch_radio(ptr, m_api.switchRadioPowerFncPtr);
+			}
+			else
+			{
+				printf("Radio Off\n");
+				//_switch_radio(ptr, m_api.switchRadioPowerFncPtr);
+				//_set_radio(ptr, m_api.setRadioPowerFncPtr, true);
+			}
+			//m_api.setRadioPowerFncPtr(ptr);
+		}
+	}
+
+	inline void setInternalFuel(double number)
+	{
+		setParamNumber(m_internalFuel, number);
+	}
+
+	inline void setExternalFuel(double number)
+	{
+		setParamNumber(m_externalFuel, number);
 	}
 
 	inline void setRPM(double number)
@@ -207,6 +256,10 @@ private:
 	void* m_rudderTrim = NULL;
 
 	void* m_nws = NULL;
+
+	void* m_internalFuel = NULL;
+	void* m_externalFuel = NULL;
+
 
 	//Radio Pointer for the Radio Device.
 	void* m_radio = NULL;

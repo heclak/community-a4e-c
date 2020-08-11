@@ -94,6 +94,7 @@ public:
 	inline const Vec3& getFuelPos(Tank tank) const;
 	inline const Vec3& getFuelPosSqr(Tank tank) const;
 	inline double getFuelQty(Tank tank) const;
+	inline double getFuelQtyExternal() const;
 	inline double getFuelQtyDelta(Tank tank) const;
 
 	inline double getGearPosition(); //returns gear pos
@@ -378,6 +379,11 @@ const Vec3& Airframe::getFuelPosSqr(Tank tank) const
 double Airframe::getFuelQty(Tank tank) const
 {
 	return m_fuel[tank];
+}
+
+double Airframe::getFuelQtyExternal() const
+{
+	return m_fuel[Tank::LEFT_EXT] + m_fuel[Tank::CENTRE_EXT] + m_fuel[Tank::RIGHT_EXT];
 }
 
 double Airframe::getFuelQtyDelta(Tank tank) const
