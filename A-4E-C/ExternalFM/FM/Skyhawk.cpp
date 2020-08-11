@@ -77,6 +77,8 @@ void ed_fm_simulate(double dt)
 	s_input.rollTrim() = s_interface.getRollTrim();
 	s_input.yawTrim() = s_interface.getRudderTrim();
 
+
+	//printf("Throttle: %lf\n", s_interface.getEngineThrottlePosition());
 	s_engine.setThrottle(s_interface.getEngineThrottlePosition());
 	s_engine.setBleedAir(s_interface.getBleedAir() > 0.1);
 	s_engine.setIgnitors(s_interface.getIgnition() > 0.1);
@@ -201,7 +203,7 @@ void ed_fm_set_current_state_body_axis
 	double common_angle_of_slide   //AoS radians
 )
 {
-	s_fm.setPhysicsParams(common_angle_of_attack, common_angle_of_slide, Vec3(yaw, pitch, roll), Vec3(omegax, omegay, omegaz), Vec3(omegadotx, omegadoty, omegadoty), Vec3(vx - wind_vx, vy - wind_vy, vz - wind_vz));
+	s_fm.setPhysicsParams(common_angle_of_attack, common_angle_of_slide, Vec3(yaw, pitch, roll), Vec3(omegax, omegay, omegaz), Vec3(omegadotx, omegadoty, omegadoty), Vec3(vx - wind_vx, vy - wind_vy, vz - wind_vz), Vec3(ax, ay, az));
 	s_airframe.setAngle(pitch);
 
 	//aoa = common_angle_of_attack;
@@ -580,6 +582,11 @@ bool ed_fm_add_global_moment_component( double & x,double &y,double &z )
 double ed_fm_get_shake_amplitude()
 {
 	return 0.0;
+}
+
+bool ed_fm_enable_debug_info()
+{
+	return true;
 }
 
 void ed_fm_suspension_feedback(int idx, const ed_fm_suspension_info* info)
