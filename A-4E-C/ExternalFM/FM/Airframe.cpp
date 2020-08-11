@@ -141,7 +141,7 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 	{
 		m_catMoment = 0.0;
 	}
-	printf("Cat Moment: %lf\n", m_catMoment);
+	//printf("Cat Moment: %lf\n", m_catMoment);
 
 	m_catStateSent = false;
 }

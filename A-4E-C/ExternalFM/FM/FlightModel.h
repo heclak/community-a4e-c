@@ -37,7 +37,7 @@ public:
 	inline void setAtmosphericParams(const double density, const double speedOfSound, const Vec3& wind);
 	inline void setCOM(const Vec3& com);
 	inline void setWorldVelocity(const Vec3& worldVelocity);
-	inline void setPhysicsParams(const double aoa, const double beta, const Vec3& angle, const Vec3& omega, const Vec3& omegaDot, const Vec3& airspeedLocal);
+	inline void setPhysicsParams(const double aoa, const double beta, const Vec3& angle, const Vec3& omega, const Vec3& omegaDot, const Vec3& airspeedLocal, const Vec3& accLocal);
 	inline const Vec3 windAxisToBody(const Vec3& force, const double& alpha, const double& beta) const;
 	void calculateLocalPhysicsParams();
 
@@ -55,6 +55,7 @@ public:
 	inline double elevator();
 	inline double aileron();
 	inline double rudder();
+	void slats(double& dt);
 	inline double thrust();
 
 	void calculateAero();
@@ -75,6 +76,7 @@ public:
 	void csvData(std::vector<double>& data);
 	inline double toDegrees(double angle);
 	inline double toRad(double angle);
+	inline int getRandomNumber(int min, int max);
 
 private:
 
@@ -115,6 +117,7 @@ private:
 	//Aircraft Parameters
 	Vec3 m_com; //Centre of mass
 
+	Vec3 m_localAcc;
 	Vec3 m_worldVelocity; //velocity in the world frame
 	Vec3 m_airspeed; //speed through the air (world frame)
 	Vec3 m_airspeedLocal; //speed through the air (local aircraft frame)
@@ -144,6 +147,15 @@ private:
 	double m_aoaLW;
 	double m_aoaRW;
 
+	//slats
+	const double m_slatMass = 10; //mass (kg)
+	const double m_slatDamping = 0; //damping (-)
+	const double m_slatSpring = 1000; //spring (-)
+	const double m_slatArea = 3; //flat plate
+	const double m_aoaZero = 0.261799388;//0.261799; //aoa in body frame at which slat has zero lift (rad)
+	double m_LslatVel; //speed of slat (m/s)
+	double m_RslatVel;
+	Table slatCL; //lift coefficient for slat airfoil
 
 	Vec3 m_omegaDot;
 	Vec3 m_omega;
@@ -192,6 +204,7 @@ private:
 	Table Clr; //roll moment due to yaw rate (RADIANS per Second)
 	Table Cla; //roll moment due to aileron (RADIANS)
 	Table Cldr; //roll moment due to rudder (RADIANS)
+	Table Cla_a;
 
 	//Pitch
 	Table Cmalpha; //pitch moment with alpha (MACH)
@@ -207,6 +220,7 @@ private:
 	Table Cnda; //yaw moment due to aileron deflection (Adverse Yaw) (RADIANS)
 
 	Table Cmde_a;
+	Table rnd_aoa;
 
 	Input& m_controls; //for now
 };
@@ -240,7 +254,8 @@ void FlightModel::setPhysicsParams
 	const Vec3& angle, //angle
 	const Vec3& omega, //angular velocity
 	const Vec3& omegaDot, //angular acceleration
-	const Vec3& localAirspeed //
+	const Vec3& localAirspeed, //
+	const Vec3& localAcc
 )
 {
 	m_aoa = aoa;
@@ -249,6 +264,7 @@ void FlightModel::setPhysicsParams
 	m_omega = omega;
 	m_omegaDot = omegaDot;
 	m_airspeedLocal = localAirspeed;
+	m_localAcc = localAcc;
 }
 
 const Vec3& FlightModel::getForce() const
@@ -311,7 +327,7 @@ void FlightModel::addForceDir(const Vec3& force, const Vec3& dir)
 void FlightModel::L_stab()
 {
 	//m_moment.x
-	m_moment.x += m_q * (Clb(0.0)*m_beta + Cla(m_mach)*aileron() + Cldr(0.0)*rudder()) + m_p * (Clp(0.0)*m_omega.x + Clr(0.0)*m_omega.y);
+	m_moment.x += m_q * (Clb(0.0)*m_beta + Cla(m_mach)*Cla_a(std::abs(m_aoa))*aileron() + Cldr(0.0)*rudder()) + m_p * (Clp(0.0)*m_omega.x + Clr(0.0)*m_omega.y);
 }
 
 void FlightModel::M_stab()
@@ -411,6 +427,13 @@ double FlightModel::toDegrees(double angle)
 double FlightModel::toRad(double angle)
 {
 	return (2 * PI) * angle / 360;
+}
+
+int FlightModel::getRandomNumber(int min, int max)
+{
+	static constexpr double fraction{ 1.0 / (RAND_MAX + 1.0) };
+	
+	return min + static_cast<int>((max - min + 1) * (std::rand() * fraction));
 }
 
 }//end namespace
