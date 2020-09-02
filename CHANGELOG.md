@@ -1,5 +1,7 @@
 # Changelog
 
+## Version 1.4.1 - 2 September 2020
+
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
 ## Unreleased
@@ -16,6 +18,8 @@ Please list the changes you've made in this file. We should try to follow the gu
 - updated brightness range for the gunsight
 - updated cockpit lighting brightness for DCS lighting changes
 - gunsight brightness is now a logarithmic function to allow for better brightness control
+- tweaked glareshield annunciator textures for night lighting (a-4e_lights_1, a-4e_instr_details_1)
+- updated texture for gear handle (a-4e_instr_bckgd_3)
 
 ### Deprecated
 
@@ -27,6 +31,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 
 - fixed clickspots on throttle where they do not track the position of the throttle
 - fixed incorrect spelling for `TRIMMER SWITCH - LEFT WING DOWN`
+- updated carrier detection code for MIZ file version 18
 
 ## Version 1.4 - 10 June 2020
 
