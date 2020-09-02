@@ -303,6 +303,24 @@ Oil_light_gauge.input                = {0.0, 1.0}
 Oil_light_gauge.output               = {0.0, 1.0}
 Oil_light_gauge.parameter_name       = "D_OIL_LOW"
 
+INDICATOR_BRIGHTNESS                      = CreateGauge("parameter")
+INDICATOR_BRIGHTNESS.arg_number           = 856
+INDICATOR_BRIGHTNESS.input                = {0.0, 1.0}
+INDICATOR_BRIGHTNESS.output               = {0.0, 1.0}
+INDICATOR_BRIGHTNESS.parameter_name       = "D_INDICATOR_BRIGHTNESS"
+
+AOA_BRIGHTNESS                      = CreateGauge("parameter")
+AOA_BRIGHTNESS.arg_number           = 857
+AOA_BRIGHTNESS.input                = {0.0, 1.0}
+AOA_BRIGHTNESS.output               = {0.001, 0.6}
+AOA_BRIGHTNESS.parameter_name       = "D_AOA_BRIGHTNESS"
+
+Glareshield_BRIGHTNESS                      = CreateGauge("parameter")
+Glareshield_BRIGHTNESS.arg_number           = 858
+Glareshield_BRIGHTNESS.input                = {0.0, 1.0}
+Glareshield_BRIGHTNESS.output               = {0.0, 0.1}
+Glareshield_BRIGHTNESS.parameter_name       = "D_GLARE_BRIGHTNESS"
+
 Glareshield_WHEELS                      = CreateGauge("parameter")
 Glareshield_WHEELS.arg_number           = 154
 Glareshield_WHEELS.input                = {0.0, 1.0}
@@ -556,6 +574,12 @@ GunsightReflector.arg_number		= 894 -- 1 is upright, 0 is lowered
 GunsightReflector.input			= {0.0, 1.0}
 GunsightReflector.output			= {0.0, 1.0}
 GunsightReflector.parameter_name   = "D_GUNSIGHT_REFLECTOR"
+
+Ladder_Brightness					= CreateGauge("parameter")
+Ladder_Brightness.arg_number		= 859
+Ladder_Brightness.input			= {0.0, 1.0}
+Ladder_Brightness.output			= {0.0, 0.5}
+Ladder_Brightness.parameter_name   = "D_LADDER_BRIGHTNESS"
 
 Ladder_FuelBoostCaution					= CreateGauge("parameter")
 Ladder_FuelBoostCaution.arg_number		= 860

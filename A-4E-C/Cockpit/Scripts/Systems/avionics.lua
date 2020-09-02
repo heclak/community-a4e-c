@@ -171,9 +171,9 @@ local lights_int_floodred = get_param_handle("LIGHTS-FLOOD-RED")
 local lights_int_instruments = get_param_handle("LIGHTS-INST")
 local lights_int_console = get_param_handle("LIGHTS-CONSOLE")
 
-local FLOODRED_DIM = 0.4
-local FLOODRED_MED = 0.48
-local FLOODRED_BRIGHT = 0.55
+local FLOODRED_DIM = 0.2
+local FLOODRED_MED = 0.35
+local FLOODRED_BRIGHT = 0.48
 
 local lights_floodwhite_val = 0
 local lights_floodred_val = FLOODRED_DIM
@@ -199,6 +199,8 @@ local white_floodlights_first_on_time = 0
 local white_floodlights_warmup_time = 2.8 -- time it takes for the incandescent light bulbs to warm up
 local white_floodlights_max_brightness_multiplier = 0
 local white_floodlights_are_cold = true
+
+local AOA_indexer_brightness = 1.0
 -----------------------------------------------------------------------------
 -- Vertical Velocity Indicator
 vvi = get_param_handle("VVI")
@@ -274,6 +276,7 @@ function post_initialize()
     reset_oxygen(oxygen)
     rearmingInProgress = false
     dev:performClickableAction(device_commands.stby_att_index_knob, standby_val, false)
+    dev:performClickableAction(device_commands.AOA_dimming_wheel_AXIS, AOA_indexer_brightness, false)
 
     startup_print("avionics: postinit end")
 end
@@ -438,6 +441,8 @@ function SetCommand(command,value)
         for i = 0, 2, 1 do
             dispatch_action(nil, iCommandPlaneEject)
         end
+    elseif command == device_commands.AOA_dimming_wheel_AXIS then
+        AOA_indexer_brightness = LinearTodB((value + 1) / 2)
     else
         print("Unknown command:"..command.." Value:"..value)
     end
@@ -850,6 +855,10 @@ local test_oil_low          = get_param_handle("D_OIL_LOW")
 local test_advisory_inrange = get_param_handle("D_ADVISORY_INRANGE")
 local test_advisory_setrange= get_param_handle("D_ADVISORY_SETRANGE")
 local test_advisory_dive    = get_param_handle("D_ADVISORY_DIVE")
+local ladder_brightness_param = get_param_handle("D_LADDER_BRIGHTNESS")
+local glareshield_brightness_param = get_param_handle("D_GLARE_BRIGHTNESS")
+local indicator_brightness_param = get_param_handle("D_INDICATOR_BRIGHTNESS")
+local AoA_brightness_param = get_param_handle("D_AOA_BRIGHTNESS")
 
 function update_test()
     if master_test_param:get() == 1 and get_elec_primary_ac_ok() then
@@ -1072,7 +1081,10 @@ function update_vvi()
     vvi:set(vvi_wma:get_WMA(v))
 end
 
-
+local LADDER_BRIGHTNESS_HIGH = 1.0
+local LADDER_BRIGHTNESS_LOW = 0.2
+local GLARESHIELD_BRIGHTNESS_HIGH = 1.0
+local GLARESHIELD_BRIGHTNESS_LOW = 0.5
 --
 -- master update function for all avionics
 ---
@@ -1090,6 +1102,22 @@ function update()
     update_wheels_light()
     update_aoa_ladder()
     update_int_lights()
+
+    indicator_brightness_param:set(1.0)
+    AoA_brightness_param:set(AOA_indexer_brightness)
+    
+    -- setup ladder light brightness
+    if lights_instruments_val > 0.02 then
+        ladder_brightness_param:set(LADDER_BRIGHTNESS_LOW)
+    else
+        ladder_brightness_param:set(LADDER_BRIGHTNESS_HIGH)
+    end
+
+    if lights_instruments_val > 0.1 then
+        glareshield_brightness_param:set(GLARESHIELD_BRIGHTNESS_LOW)
+    else
+        glareshield_brightness_param:set(GLARESHIELD_BRIGHTNESS_HIGH)
+    end
 
     -- group once-per-second updates into a single call conditional for efficiency, to be used for slowly-updating gauges
     once_per_second = once_per_second - 1

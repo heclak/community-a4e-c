@@ -1,6 +1,5 @@
 
 dofile(LockOn_Options.common_script_path.."tools.lua")
-	
 
 local mdir      = lfs.tempdir()
 local cfile     = lfs.writedir()..'Data\\tempMission.lua'
@@ -62,6 +61,7 @@ function load_tempmission_file()
 
 	dofile(userPath..'tempMission.lua')
 
+	log.info("Temp mission file loaded")
 end
 
 
@@ -85,10 +85,9 @@ function decode_mission()
 	--    for key, value in ipairs(mission) do
 	--		print_message_to_user(key .." / "..dir(value))
 	 --   end
-	 
-	 
-		local num_blue_countries = #mission.coalitions.blue
-		for i = 1,#mission.coalitions.blue do
+
+		local num_blue_countries = #mission.coalition.blue.country
+		for i = 1,num_blue_countries do
 			if mission.coalition.blue.country[i].ship then
 				--num_blue_groups = num_blue_groups + #mission.coalition.blue.country[i].vehicle.group
 			--	print_message_to_user("country")
@@ -129,7 +128,8 @@ function decode_mission()
 			end
 		end
 ---------------------------------------
-		for i = 1,#mission.coalitions.red do
+		local num_red_countries = #mission.coalition.red.country
+		for i = 1,num_red_countries do
 			if mission.coalition.red.country[i].ship then
 				--num_red_groups = num_red_groups + #mission.coalition.red.country[i].vehicle.group
 			--	print_message_to_user("country")

@@ -77,6 +77,9 @@ elements["PNT_139"] = default_button("Reset Accelerometer", devices.AVIONICS, de
 
 elements["PNT_146"] = default_button("Stopwatch", devices.CLOCK, device_commands.clock_stopwatch, 146)
 
+-- ANGLE OF ANGLE INDEXER
+elements["PNT_853"] = default_axis_limited( "AOA Indexer Dimming Wheel", devices.AVIONICS, device_commands.AOA_dimming_wheel_AXIS, 853, 1.0, 0.2, false, false, {-1,1} )
+
 -- AFCS PANEL #8  (Aircraft Flight Control System)
 elements["PNT_160"] = default_2_position_tumb("AFCS standby",devices.AFCS, device_commands.afcs_standby,160, TOGGLECLICK_LEFT_AFT)
 elements["PNT_161"] = default_2_position_tumb("AFCS engage",devices.AFCS, device_commands.afcs_engage,161, TOGGLECLICK_LEFT_AFT)
@@ -178,7 +181,7 @@ elements["PNT_884"].relative = {false,true}
 elements["PNT_884"].gain = {1.0, 0.2}
 
 -- GUNSIGHT
-elements["PNT_895"] = default_axis("Gunsight Light Control",devices.GUNSIGHT, device_commands.GunsightBrightness,895,0,0.1,false,false)
+elements["PNT_895"] = default_axis("Gunsight Light Control",devices.GUNSIGHT, device_commands.GunsightBrightness,895,0,0.05,false,false)
 elements["PNT_891"] = default_2_position_tumb("Gunsight Day/Night Switch",devices.GUNSIGHT, device_commands.GunsightDayNight,891,TOGGLECLICK_MID_FWD)
 elements["PNT_892"] = default_movable_axis("Gunsight Elevation Control", devices.GUNSIGHT, device_commands.GunsightKnob, 892, 1.0, 0.05, false, false)
 
