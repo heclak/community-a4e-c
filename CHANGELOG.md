@@ -1,10 +1,8 @@
 # Changelog
 
-## Version 1.4.1 - 2 September 2020
-
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
-## Unreleased
+## Version 1.4.1 - 2 September 2020
 
 ### Added
 
