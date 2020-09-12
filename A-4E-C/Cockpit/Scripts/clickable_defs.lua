@@ -140,7 +140,6 @@ function default_axis(hint_, device_, command_, arg_, default_, gain_, updatable
 end
 
 function default_axis_limited(hint_, device_, command_, arg_, default_, gain_, updatable_, relative_, arg_lim_)
-    local relative = false
     local default = default_ or 0
     local updatable = updatable_ or false
     local relative = relative_ or false
