@@ -76,7 +76,7 @@ private:
 
 double Engine::getThrust()
 {
-	return std::max(m_omegaVThrust(m_omega)*m_nozzle - c_maxAirflow*m_airspeed, 0.0)/0.96;
+	return std::max(m_omegaVThrust(m_omega)*m_nozzle - 0.0*c_maxAirflow*(m_airspeed)*0.2, 0.0);
 }
 
 double Engine::getRPM()

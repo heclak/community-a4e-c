@@ -7,9 +7,13 @@
 
 extern "C"
 {
-	void _set_radio(void* ptr, void* fnc, bool on);
-	bool _get_radio(void* ptr, void* fnc);
+	void _set_radio(void* ptr, bool on);
+	bool _get_radio(void* ptr);
+	bool _get_intercom(void* ptr);
+	bool _is_on_intercom(void* ptr, void* fooPtr);
 	void _switch_radio(void* ptr, void* fnc);
+	int _get_gun_shells(void* ptr, void* fnc);
+	bool _ext_is_on(void* ptr, void* fnc);
 }
 
 namespace Skyhawk
@@ -52,6 +56,8 @@ public:
 		m_externalFuel = m_api.pfn_ed_cockpit_get_parameter_handle("FM_EXTERNAL_FUEL");
 
 		m_radio                 = m_api.pfn_ed_cockpit_get_parameter_handle("THIS_RADIO_PTR");
+		m_intercom                 = m_api.pfn_ed_cockpit_get_parameter_handle("THIS_INTERCOM_PTR");
+		m_weapon                 = m_api.pfn_ed_cockpit_get_parameter_handle("THIS_WEAPON_PTR");
 
 	}
 
@@ -75,6 +81,47 @@ public:
 		m_api.pfn_ed_cockpit_set_action_digital(10);
 	}
 
+	inline int getGunShells()
+	{
+		void* ptr = NULL;
+		static char buffer[100];
+		getParamString(m_intercom, buffer, 100);
+		sscanf(buffer, "%p", &ptr);
+		printf("Weapon Pointer is: %p\n", ptr);
+		int shells = 0;
+		if (ptr)
+		{
+
+		}
+			//shells = _get_gun_shells(ptr,)
+		return shells;
+	}
+
+	inline void setIntercomPower(bool value)
+	{
+		void* ptr = nullptr;
+		char buffer[100];
+		getParamString(m_intercom, buffer, 100);
+		sscanf(buffer, "%p", &ptr);
+		printf("Intercom Pointer is: %p\n", ptr);
+		static int x = 0;
+		x++;
+		if (ptr && x > 10)
+		{
+			//_set_radio(ptr, m_api.setRadioPowerFncPtr, true);
+			if (_is_on_intercom(ptr, m_api.isOnIntercom))
+			{
+				printf("Intercom On\n");
+				//_set_radio(ptr,false);
+			}
+			else
+			{
+				printf("Intercom Off\n");
+				//_set_radio(ptr, true);
+			}
+		}
+	}
+
 	inline void setRadioPower(bool value)
 	{
 		//printf("Radio Power Pointer: %p", m_api.setRadioPowerFncPtr);
@@ -85,6 +132,8 @@ public:
 		sscanf(buffer, "%p", &ptr);
 		
 
+		void* deref = *((void**)ptr);
+		void* deref2 = *((void**)deref);
 		printf("Pointer is: %p\n", ptr);
 
 		static int x = 0;
@@ -92,19 +141,16 @@ public:
 		if (ptr && x > 10)
 		{
 			//_set_radio(ptr, m_api.setRadioPowerFncPtr, true);
-			if (_get_radio(ptr, m_api.getRadioPowerFncPtr))
+			if (_ext_is_on(ptr, m_api.getRadioPowerFncPtr))
 			{
 				printf("Radio On\n");
-				//_set_radio(ptr, m_api.setRadioPowerFncPtr, false);
-				//_switch_radio(ptr, m_api.switchRadioPowerFncPtr);
+				//_set_radio(ptr,false);
 			}
 			else
 			{
 				printf("Radio Off\n");
-				//_switch_radio(ptr, m_api.switchRadioPowerFncPtr);
-				//_set_radio(ptr, m_api.setRadioPowerFncPtr, true);
+				//_set_radio(ptr, true);
 			}
-			//m_api.setRadioPowerFncPtr(ptr);
 		}
 	}
 
@@ -263,6 +309,8 @@ private:
 
 	//Radio Pointer for the Radio Device.
 	void* m_radio = NULL;
+	void* m_intercom = NULL;
+	void* m_weapon = NULL;
 };
 
 

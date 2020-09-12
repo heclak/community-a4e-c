@@ -15,6 +15,8 @@ typedef int    (*PFN_ED_COCKPIT_COMPARE_PARAMETERS			)  (void		  * handle_1,void
 typedef void   (cockpit::avBaseRadio::*MemberFncBool)		   (bool value);
 typedef void   (*RADIO_POWER_FUNC)							   (void* value);
 typedef bool  (*GET_RADIO_POWER_FUNC)							(void);
+typedef bool  (*GET_SOMETHING)									(void);
+typedef int   (*GET_SOMETHING_INT)								(void);
 typedef void* (*PFN_ED_COCKPIT_SET_ACTION_DIGITAL)(int value);
 
 /* usage
@@ -44,6 +46,8 @@ struct cockpit_param_api
 	RADIO_POWER_FUNC								 setRadioPowerFncPtr;
 	GET_RADIO_POWER_FUNC								 getRadioPowerFncPtr;
 	GET_RADIO_POWER_FUNC								 switchRadioPowerFncPtr;
+	GET_SOMETHING	isOnIntercom;
+	GET_SOMETHING_INT getGunShells;
 	PFN_ED_COCKPIT_SET_ACTION_DIGITAL				 pfn_ed_cockpit_set_action_digital;
 };
 
@@ -61,8 +65,12 @@ inline cockpit_param_api  ed_get_cockpit_param_api()
 	//?setElecPower@avBasicElectric@cockpit@@UEAAX_N@Z
 	//?getElecPower@avBasicElectric@cockpit@@UEBA_NXZ
 	ret.setRadioPowerFncPtr = (RADIO_POWER_FUNC)GetProcAddress(cockpit_dll, "?setElecPower@avRadio_MAC@cockpit@@UEAAX_N@Z");
-	ret.getRadioPowerFncPtr = (GET_RADIO_POWER_FUNC)GetProcAddress(cockpit_dll, "?getElecPower@avBasicElectric@cockpit@@UEBA_NXZ");
-	ret.switchRadioPowerFncPtr = (GET_RADIO_POWER_FUNC)GetProcAddress(cockpit_dll, "?switchElecOnOff@avBasicElectric@cockpit@@UEAAXXZ");
+	//?get_set_frequency@avRadio_MAC@cockpit@@MEBAHXZ
+	//?getElecPower@avRadio_MAC@cockpit@@UEBA_NXZ
+	ret.getRadioPowerFncPtr = (GET_RADIO_POWER_FUNC)GetProcAddress(cockpit_dll, "?ext_is_on@avBaseRadio@cockpit@@MEBA_NXZ");
+	ret.switchRadioPowerFncPtr = (GET_RADIO_POWER_FUNC)GetProcAddress(cockpit_dll, "?perform_init_state@avRadio_MAC@cockpit@@MEAAXXZ");
 	ret.pfn_ed_cockpit_set_action_digital = (PFN_ED_COCKPIT_SET_ACTION_DIGITAL)GetProcAddress(cockpit_dll, "ed_cockpit_set_action_digital");
+	ret.isOnIntercom = (GET_SOMETHING)GetProcAddress(cockpit_dll, "?isOn@avIntercom@cockpit@@UEBA_NXZ");
+	//ret.getGunShells = (GET_SOMETHING_INT)GetProcAddress(cockpit_dll, "")
 	return ret;
 }
