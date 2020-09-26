@@ -575,13 +575,13 @@ bool ed_fm_add_global_moment_component( double & x,double &y,double &z )
 
 double ed_fm_get_shake_amplitude()
 {
-	return 0.0;
+	return s_fm.m_cockpitShake;
 }
 
-bool ed_fm_enable_debug_info()
-{
-	return true;
-}
+//bool ed_fm_enable_debug_info()
+//{
+//	return true;
+//}
 
 void ed_fm_suspension_feedback(int idx, const ed_fm_suspension_info* info)
 {

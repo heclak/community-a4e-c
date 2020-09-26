@@ -39,7 +39,7 @@ void Skyhawk::Avionics::updateAvionics(double dt)
 {
 	double f = washoutFilter(m_flightModel.yawRate(), dt)*m_baseGain*(1.0/(m_flightModel.mach() + 1));
 
-	m_input.yawDamper() = f;
+	m_input.yawDamper() = 0; //f
 
 	//printf("Filter: %lf, Rudder: %lf\n", f, m_flightModel.yawRate());
 }

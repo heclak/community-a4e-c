@@ -60,6 +60,8 @@ public:
 
 	void calculateAero();
 	void calculateForcesAndMoments(double dt);
+	void calculateShake();
+	void structuralIntegrity(Vec3& liftLW, Vec3& liftRW);
 
 	//Get forces for ED physics engine.
 	inline const Vec3& getForce() const;
@@ -77,6 +79,7 @@ public:
 	inline double toDegrees(double angle);
 	inline double toRad(double angle);
 	inline int getRandomNumber(int min, int max);
+	double m_cockpitShake;
 
 private:
 
@@ -128,6 +131,8 @@ private:
 	double m_aoaPrevious; //previous frame angle of attack
 	double m_aoaDot; //aoa per unit time
 	double m_beta; //angle of slip
+	double m_betaPrevious;
+	double m_betaDot;
 
 	Vec3 m_LDwindAxesLW; //Lift and drag, calculated in wind axes
 	Vec3 m_LDwindAxesRW; //Lift and drag, calculated in wind axes
@@ -146,6 +151,8 @@ private:
 	Vec3 m_rRW;	//directional vector from CG to CP of aerodynamic element (RW)
 	double m_aoaLW;
 	double m_aoaRW;
+	double m_integrityLW;
+	double m_integrityRW;
 
 	//slats
 	const double m_slatMass = 10; //mass (kg)
@@ -333,14 +340,16 @@ void FlightModel::L_stab()
 void FlightModel::M_stab()
 {
 	//m_moment.z
-	m_moment.z += m_k * m_chord * (Cmalpha(m_mach) * m_aoa + Cmde(m_mach)*Cmde_a(std::abs(m_aoa))*elevator() + CmM(m_mach)*0.2) + 0.25 * m_scalarV * m_totalWingArea * m_chord * m_chord * (Cmq(m_mach)*m_omega.z + Cmadot(m_mach)*m_aoaDot);
+	m_moment.z += m_k * m_chord * (Cmalpha(m_mach) * m_aoa * 1.5 + Cmde(m_mach)*Cmde_a(std::abs(m_aoa))*elevator() + CmM(m_mach)*0.2) + 0.25 * m_scalarV * m_totalWingArea * m_chord * m_chord * (Cmq(m_mach)*m_omega.z + Cmadot(m_mach)*m_aoaDot);
 	//printf("Mz: %lf, mach: %lf\n", elevator(), m_mach);
 }
 
 void FlightModel::N_stab()
 {
 	//m_moment.y
-	m_moment.y += m_q * (-Cnb(m_beta) + Cndr(0.0)*rudder() ) + m_p * (Cnr(0.0)*m_omega.y);
+	m_moment.y += m_q * (-Cnb(m_beta) * 0.8 + Cndr(0.0) * rudder()) + m_p * (Cnr(0.0) * m_betaDot);//(Cnr(0.0)*m_omega.y); //This needs to be fixed, constants like 0.8 are temporary!!!
+	
+	//printf("beta: %lf, betaDot: %lf\n", m_q * (-Cnb(m_beta) * 0.8), m_p * (Cnr(0.0) * m_betaDot));
 	//printf("m_moment.y: %lf, m_beta: %lf, Cnb(mach)*m_beta: %lf, Cndr*rudder: %lf, Cnr*m_omega.y: %lf\n",
 		//m_moment.y, m_beta, Cnb(m_mach)*m_beta, Cndr(0.0)*rudder(), Cnr(0.0)*m_omega.y);
 }
@@ -387,14 +396,14 @@ void FlightModel::lift()
 
 void FlightModel::drag()
 {
-	double CD = CDi(0.0)*CLalpha(m_aoa) * CLalpha(m_aoa)  + CDbeta(m_beta) + CDde(0.0)*elevator() + dCDspeedBrake(0.0)*m_airframe.getSpeedBrakePosition() + CDmach(m_mach);
+	double CD = dCDspeedBrake(0.0) * m_airframe.getSpeedBrakePosition();//CDi(0.0)*CLalpha(m_aoa) * CLalpha(m_aoa)  + CDbeta(m_beta) + CDde(0.0)*elevator() + dCDspeedBrake(0.0)*m_airframe.getSpeedBrakePosition() + CDmach(m_mach);
 	
 	m_CDwindAxesComp.y = 0;
 	m_CDwindAxesComp.z = 0;
 	m_CDwindAxesComp.x = -m_k * CD;
 
-	m_LDwindAxesLW.x = -m_k / 2 * (CDalpha(m_aoaLW) + CDflap(m_aoaLW) * m_airframe.getFlapsPosition() + CDslat(m_aoaLW) * m_airframe.getSlatLPosition() + dCDspoiler(0.0) * m_airframe.getSpoilerPosition());
-	m_LDwindAxesRW.x = -m_k / 2 * (CDalpha(m_aoaRW) + CDflap(m_aoaRW) * m_airframe.getFlapsPosition() + CDslat(m_aoaRW) * m_airframe.getSlatRPosition() + dCDspoiler(0.0) * m_airframe.getSpoilerPosition());
+	m_LDwindAxesLW.x = -m_k / 2 * (CDalpha(m_aoaLW) * 0.7 + CDflap(m_aoaLW) * m_airframe.getFlapsPosition() + CDslat(m_aoaLW) * m_airframe.getSlatLPosition() + dCDspoiler(0.0) * m_airframe.getSpoilerPosition());
+	m_LDwindAxesRW.x = -m_k / 2 * (CDalpha(m_aoaRW) * 0.7 + CDflap(m_aoaRW) * m_airframe.getFlapsPosition() + CDslat(m_aoaRW) * m_airframe.getSlatRPosition() + dCDspoiler(0.0) * m_airframe.getSpoilerPosition());
 }
 
 void FlightModel::sideForce()
