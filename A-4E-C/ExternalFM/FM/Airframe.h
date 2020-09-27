@@ -30,6 +30,8 @@ namespace Skyhawk
 #define c_catAngle 0.0 //6 degrees
 #define	c_catConstrainingForce 4000.0
 
+#define NUM_ELEM 111
+
 class Airframe
 {
 public:
@@ -127,6 +129,9 @@ public:
 	inline bool& catapultStateSent();
 	inline void setCatStateFromKey();
 
+	inline void setIntegrityElement(int element, float integrity);
+	inline float getIntegrityElement(int element);
+
 	//Update
 	void airframeUpdate(double dt); //performs calculations and updates
 	inline void fuelUpdate(double dt);
@@ -164,6 +169,8 @@ private:
 	double m_fuelPrev[4] = { 0.0, 0.0, 0.0, 0.0 };
 	Vec3 m_fuelPos[4] = { Vec3(), Vec3(), Vec3(), Vec3() };
 	Vec3 m_fuelPosSqr[4] = { Vec3(), Vec3(), Vec3(), Vec3() };
+
+	float* m_integrityElement;
 
 	//double m_fuel = 0.0;
 	//double m_fuelPrevious = 0.0;
@@ -454,9 +461,20 @@ inline const Vec3& Airframe::getRExtVecSqr() const
 	return m_fuelExtPosRSqr;
 }
 
+inline void Airframe::setIntegrityElement(int element, float integrity)
+{
+	m_integrityElement[element] = integrity;
+}
+
+inline float Airframe::getIntegrityElement(int element)
+{
+	return m_integrityElement[element];
+}
+
 inline void setFuelStateLExt(double fuel);
 inline void setFueCStateLExt(double fuel);
 inline void setFueRStateLExt(double fuel);
+
 
 
 }//end namespace

@@ -153,6 +153,7 @@ private:
 	double m_aoaRW;
 	double m_integrityLW;
 	double m_integrityRW;
+	double m_integrityRud;
 
 	//slats
 	const double m_slatMass = 10; //mass (kg)
@@ -347,7 +348,7 @@ void FlightModel::M_stab()
 void FlightModel::N_stab()
 {
 	//m_moment.y
-	m_moment.y += m_q * (-Cnb(m_beta) * 0.8 + Cndr(0.0) * rudder()) + m_p * (Cnr(0.0) * m_betaDot);//(Cnr(0.0)*m_omega.y); //This needs to be fixed, constants like 0.8 are temporary!!!
+	m_moment.y += m_q * m_integrityRud * (-Cnb(m_beta) * 0.8 + Cndr(0.0) * rudder()) + m_p * (Cnr(0.0) * m_betaDot);//(Cnr(0.0)*m_omega.y); //This needs to be fixed, constants like 0.8 are temporary!!!
 	
 	//printf("beta: %lf, betaDot: %lf\n", m_q * (-Cnb(m_beta) * 0.8), m_p * (Cnr(0.0) * m_betaDot));
 	//printf("m_moment.y: %lf, m_beta: %lf, Cnb(mach)*m_beta: %lf, Cndr*rudder: %lf, Cnr*m_omega.y: %lf\n",

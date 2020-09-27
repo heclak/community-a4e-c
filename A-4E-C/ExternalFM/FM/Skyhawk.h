@@ -145,6 +145,9 @@ extern "C"
 		double common_angle_of_attack, //AoA radians
 		double common_angle_of_slide   //AoS radians
 	);
+
+	ED_FM_API void ed_fm_on_damage(int Element, double element_integrity_factor);
+
 	/*
 	input handling
 	*/

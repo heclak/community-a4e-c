@@ -58,6 +58,7 @@ Skyhawk::FlightModel::FlightModel(Input& controls, Airframe& airframe, Engine& e
 	m_RslatVel(0.0),
 	m_integrityLW(1.0),
 	m_integrityRW(1.0),
+	m_integrityRud(1.0),
 
 	//Setup tables
 	CLalpha(d_CLalpha, -0.26981317, 1.57079633),
@@ -118,6 +119,7 @@ void Skyhawk::FlightModel::zeroInit()
 	m_force = Vec3();
 	m_integrityLW = 1.0;
 	m_integrityRW = 1.0;
+	m_integrityRud = 1.0;
 
 }
 
@@ -293,6 +295,29 @@ void Skyhawk::FlightModel::slats(double& dt)
 void Skyhawk::FlightModel::structuralIntegrity(Vec3& liftLW, Vec3& liftRW)
 {
 
+	std::vector<int> LW{ 35, 29, 23 };
+	std::vector<int> RW{ 36, 30, 24 };
+
+	for (int i = 0; i < LW.size(); i++)
+	{
+		int elemL = LW[i];
+		int elemR = RW[i];
+
+		if (m_airframe.getIntegrityElement(elemL) <= 0.0f)
+		{
+			m_integrityLW = 0.0;
+		}
+		if (m_airframe.getIntegrityElement(elemR) <= 0.0f)
+		{
+			m_integrityRW = 0.0;
+		}
+	}
+
+	if (m_airframe.getIntegrityElement(53) <= 0.0f)
+	{
+		m_integrityRud = 0.0;
+	}
+
 	if (std::abs(liftLW.y) > 320000)
 	{
 		m_integrityLW = 0.0;
@@ -302,7 +327,13 @@ void Skyhawk::FlightModel::structuralIntegrity(Vec3& liftLW, Vec3& liftRW)
 		m_integrityRW = 0.0;
 	}
 
-
+	/*-- 23 - wing out left
+	-- 24 - wing out right
+	-- 29 - wing centre left
+	-- 30 - wing centre right
+	-- 35 - wing in left
+	-- 36 - wing in right
+	-- 53 - rudder*/
 }
 
 void Skyhawk::FlightModel::calculateShake()

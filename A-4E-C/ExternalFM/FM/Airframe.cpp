@@ -4,12 +4,12 @@ Skyhawk::Airframe::Airframe(Input& controls, Engine& engine):
 	m_controls(controls),
 	m_engine(engine)
 {
-
+	m_integrityElement = new float[NUM_ELEM];
 }
 
 Skyhawk::Airframe::~Airframe()
 {
-
+	delete[] m_integrityElement;
 }
 
 void Skyhawk::Airframe::zeroInit()
@@ -26,6 +26,11 @@ void Skyhawk::Airframe::zeroInit()
 	m_mass = 1.0;
 	//m_fuel = 0.0;
 	//m_fuelPrevious = 0.0;
+
+	for (int i = 0; i < NUM_ELEM; i++)
+	{
+		m_integrityElement[i] = 1.0f;
+	}
 }
 
 void Skyhawk::Airframe::coldInit()

@@ -213,6 +213,13 @@ void ed_fm_set_current_state_body_axis
 	//ry = omegay;
 	//rz = omegaz;
 }
+
+void ed_fm_on_damage(int Element, double element_integrity_factor)
+{
+	//printf("Element: %d, integrity: %lf\n", Element, element_integrity_factor);
+	s_airframe.setIntegrityElement(Element, element_integrity_factor);
+}
+
 /*
 input handling
 */
