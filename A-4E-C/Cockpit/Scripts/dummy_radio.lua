@@ -6,27 +6,15 @@ local dev 	    = GetSelf()
 GUI = {
 }
 
--- device which just dumps _G via log.alert
-
 local update_time_step = 1 --update will be called once per second
-
-if make_default_activity then
-    make_default_activity(update_time_step)
-end
-
-function update()
-end
+--local this_radio_ptr = get_param_handle("THIS_RADIO_PTR")
 
 function post_initialize()
-	
-	
-	--print_message_to_user("Power before "..dev:get_power())
-	--dev:set_power(true)
-	--print_message_to_user("Power after "..dev:get_power())
+	--print_message_to_user("Init intercom")
 end
 
 function SetCommand(command,value)
-    -- print_message_to_user("SetCommand in dummy_radio: "..tostring(command).."="..tostring(value))
+    --print_message_to_user(tostring(command).." : "..tostring(value))
 end
 
 

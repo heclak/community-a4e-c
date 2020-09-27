@@ -89,6 +89,8 @@ void ed_fm_simulate(double dt)
 	s_avionics.updateAvionics(dt);
 	s_fm.calculateForcesAndMoments(dt);
 
+	//s_interface.setRadioPower(true);
+	//s_interface.setIntercomPower(true);
 
 	//Post update
 	s_interface.setRPM(s_engine.getRPMNorm()*100.0);
@@ -96,6 +98,8 @@ void ed_fm_simulate(double dt)
 	s_interface.setStickPitch(s_input.pitch() + s_input.pitchTrim());
 	s_interface.setStickRoll(s_input.roll() + s_input.rollTrim());
 	s_interface.setRudderPedals(s_input.yaw() + s_input.yawTrim());
+	s_interface.setInternalFuel(s_airframe.getFuelQty(Skyhawk::Airframe::Tank::INTERNAL));
+	s_interface.setExternalFuel(s_airframe.getFuelQtyExternal());
 }
 
 void ed_fm_set_atmosphere(
@@ -251,8 +255,8 @@ void ed_fm_set_command
 	case Skyhawk::Control::NOSEWHEEL_STEERING_DISENGAGE:
 		//s_input.nosewheelSteering() = false;
 		break;
-	default:;
-		//printf("number %d: %lf\n", command, value);
+	default:
+		printf("number %d: %lf\n", command, value);
 	}
 }
 
@@ -314,6 +318,7 @@ bool ed_fm_change_mass  (double & delta_mass,
 void ed_fm_set_internal_fuel(double fuel)
 {
 	s_airframe.setFuelState(Skyhawk::Airframe::Tank::INTERNAL, s_fm.getCOM(), fuel);
+	printf("INTERNAL: %lf\n", s_airframe.getFuelQty(Skyhawk::Airframe::Tank::INTERNAL));
 }
 /*
 	get internal fuel volume 
@@ -321,6 +326,7 @@ void ed_fm_set_internal_fuel(double fuel)
 double ed_fm_get_internal_fuel()
 {
 	return s_airframe.getFuelQty(Skyhawk::Airframe::Tank::INTERNAL);
+
 }
 /*
 	set external fuel volume for each payload station , called for weapon init and on reload
@@ -332,7 +338,8 @@ void  ed_fm_set_external_fuel (int	 station,
 								double z)
 {
 	s_airframe.setFuelState((Skyhawk::Airframe::Tank)station, Vec3(x, y, z), fuel);
-	//printf("Station: %d, Fuel: %lf, x: %lf y: %lf z: %lf", station, fuel, x, y, z);
+	//printf("Station: %d, Fuel: %lf, x: %lf y: %lf z: %lf\n", station, fuel, x, y, z);
+	//printf("EXTERNAL TOTAL: %lf\n", ed_fm_get_external_fuel());
 }
 /*
 	get external fuel volume 
@@ -578,10 +585,10 @@ double ed_fm_get_shake_amplitude()
 	return s_fm.m_cockpitShake;
 }
 
-//bool ed_fm_enable_debug_info()
-//{
-//	return true;
-//}
+bool ed_fm_enable_debug_info()
+{
+	return false;
+}
 
 void ed_fm_suspension_feedback(int idx, const ed_fm_suspension_info* info)
 {

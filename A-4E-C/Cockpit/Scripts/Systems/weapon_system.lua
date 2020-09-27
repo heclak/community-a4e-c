@@ -214,8 +214,10 @@ local cbu2a_quantity_array = {1,2,3,4,6,17}
 local cbu2ba_quantity_array = {2,4,6}
 local cbu2a_quantity_array_pos = 0
 local cbu2ba_quantity_array_pos = 0
+local this_weapon_ptr = get_param_handle("THIS_WEAPON_PTR")
 
 function post_initialize()
+	this_weapon_ptr:set(string.sub(tostring(WeaponSystem.link),10))
     startup_print("weapon_system: postinit start")
 
     sndhost = create_sound_host("COCKPIT_ARMS","HEADPHONES",0,0,0)

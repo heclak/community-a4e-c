@@ -108,7 +108,7 @@ function update()
             bright_modifier = (timenow - power_on_time)/5
         end
         
-        gunsight_daynight_param:set(adjusted_brightness * bright_modifier)
+        gunsight_daynight_param:set(LinearTodB(adjusted_brightness * bright_modifier))
     else
         gunsight_visible:set(0)
         power_on = false

@@ -3,7 +3,6 @@
 #pragma once //globals r bad
 #include <stdio.h>
 
-
 extern FILE* g_log;
 
 //Uncomment this to enable logging make sure this is commited with this commented out!!!!!!
@@ -14,6 +13,5 @@ extern FILE* g_log;
 #else
 #define LOG(s, ...) /*nothing*/
 #endif
-
 
 #endif

@@ -222,7 +222,7 @@ local function get_centerline_weapons( side )
         { CLSID = "{DFT-400gal}" },
         { CLSID = "{DFT-300gal}" },
         { CLSID = "{DFT-150gal}" },
-        { CLSID = "{D-704_BUDDY_POD}" },
+        -- { CLSID = "{D-704_BUDDY_POD}" },
 
         --ROCKETS--
         { CLSID = "{3*LAU-61}",                              connector = rocketConnector, arg_value = 0.2 },

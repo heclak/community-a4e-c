@@ -104,7 +104,9 @@ void Skyhawk::Engine::updateEngine(double dt)
 
 	//double combustionTorque = m_omega > 0.4 * c_maxOmega ? c_combustionCoeff * m_fuelFlow : c_combustionCoeff * m_fuelFlow*0.2;
 	double combustionTorque = c_combustionCoeff * m_fuelFlow;
-	combustionTorque *= m_ignitors ? 1.0 : 0.0;
+	
+	if ( m_ignitors == false )
+		combustionTorque = 0.0;
 
 	double engineDrag = getRPMNorm() > 0.15 ? 1.0 : 0.0;
 
