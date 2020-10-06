@@ -103,12 +103,13 @@ else
 	make_flyable('A-4E-C'	, current_mod_path..'/Cockpit/Scripts/', nil, current_mod_path..'/comm.lua')
 end
 
-
 dofile(current_mod_path..'/Weapons/A4E_Weapons.lua')
 dofile(current_mod_path..'/A-4E-C.lua')
 dofile(current_mod_path..'/UnitPayloads/A-4E-C.lua')
 
 dofile(current_mod_path.."/Views.lua")
 make_view_settings('A-4E-C', ViewSettings, SnapViews)
+
+
 
 plugin_done()-- finish declaration , clear temporal data

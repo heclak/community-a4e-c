@@ -47,8 +47,6 @@ function post_initialize()
   dev:set_modulation(MODULATION_AM) -- gives DCS.log INFO msg:  COCKPITBASE: avBaseRadio::ext_set_modulation not implemented, used direct set
   --print_message_to_user("Power before "..dev:get_power())
   
-  
-  
   --[[
   for k,v in pairs(getmetatable(dev)["__index"]) do
 	print_message_to_user(tostring(k).." : "..tostring(v).."\n")

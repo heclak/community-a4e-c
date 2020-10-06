@@ -214,10 +214,9 @@ void ed_fm_set_current_state_body_axis
 	//rz = omegaz;
 }
 
-void ed_fm_on_damage(int Element, double element_integrity_factor)
+void ed_fm_on_damage( int element, double element_integrity_factor )
 {
-	//printf("Element: %d, integrity: %lf\n", Element, element_integrity_factor);
-	s_airframe.setIntegrityElement(Element, element_integrity_factor);
+	s_airframe.setIntegrityElement((Skyhawk::Airframe::Damage)element, (float)element_integrity_factor);
 }
 
 /*
@@ -263,7 +262,7 @@ void ed_fm_set_command
 		//s_input.nosewheelSteering() = false;
 		break;
 	default:
-		printf("number %d: %lf\n", command, value);
+		;// printf( "number %d: %lf\n", command, value );
 	}
 }
 
@@ -325,7 +324,7 @@ bool ed_fm_change_mass  (double & delta_mass,
 void ed_fm_set_internal_fuel(double fuel)
 {
 	s_airframe.setFuelState(Skyhawk::Airframe::Tank::INTERNAL, s_fm.getCOM(), fuel);
-	printf("INTERNAL: %lf\n", s_airframe.getFuelQty(Skyhawk::Airframe::Tank::INTERNAL));
+	//printf("INTERNAL: %lf\n", s_airframe.getFuelQty(Skyhawk::Airframe::Tank::INTERNAL));
 }
 /*
 	get internal fuel volume 
@@ -508,6 +507,19 @@ bool ed_fm_pop_simulation_event(ed_fm_simulation_event& out)
 		s_airframe.catapultState() = Skyhawk::Airframe::ON_CAT_WAITING;
 		return true;
 	}
+	else
+	{
+		Skyhawk::Airframe::Damage damage;
+		float integrity;
+		if ( s_airframe.processDamageStack( damage, integrity ) )
+		{
+			out.event_type = ED_FM_EVENT_STRUCTURE_DAMAGE;
+			out.event_params[0] = (float)damage;
+			out.event_params[1] = integrity;
+
+			return true;
+		}
+	}
 
 	return false;
 }
@@ -589,7 +601,7 @@ bool ed_fm_add_global_moment_component( double & x,double &y,double &z )
 
 double ed_fm_get_shake_amplitude()
 {
-	return s_fm.m_cockpitShake;
+	return s_fm.getCockpitShake();
 }
 
 bool ed_fm_enable_debug_info()

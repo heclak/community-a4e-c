@@ -117,9 +117,6 @@ void Skyhawk::FlightModel::zeroInit()
 {
 	m_moment = Vec3();
 	m_force = Vec3();
-	m_integrityLW = 1.0;
-	m_integrityRW = 1.0;
-	m_integrityRud = 1.0;
 
 }
 
@@ -190,9 +187,9 @@ void Skyhawk::FlightModel::calculateAero()
 
 void Skyhawk::FlightModel::calculateElements()
 {
-	Vec3 LiftLW = m_integrityLW * windAxisToBody(m_LDwindAxesLW, m_aoaLW, m_beta);
+	Vec3 LiftLW =  windAxisToBody(m_LDwindAxesLW, m_aoaLW, m_beta);
 	//printf("LEFT X: %lf Y: %lf Z: %lf\n", m_LDwindAxesLW.x, m_LDwindAxesLW.y, m_LDwindAxesLW.z);
-	Vec3 LiftRW = m_integrityRW * windAxisToBody(m_LDwindAxesRW, m_aoaRW, m_beta);
+	Vec3 LiftRW =  windAxisToBody(m_LDwindAxesRW, m_aoaRW, m_beta);
 	//printf("RIGHT X: %lf Y: %lf Z: %lf\n", m_LDwindAxesRW.x, m_LDwindAxesRW.y, m_LDwindAxesRW.z);
 	Vec3 dragElem = windAxisToBody(m_CDwindAxesComp, m_aoa, m_beta);
 	
@@ -203,8 +200,6 @@ void Skyhawk::FlightModel::calculateElements()
 	//{
 	//	printf("acc: %lf, force: %lf", m_localAcc.y / 9.81, LiftLW.y); // 320 000
 	//}
-
-	structuralIntegrity(LiftLW, LiftRW);
 
 	addForceDir(LiftLW, m_rLW);
 	addForceDir(LiftRW, m_rRW);
@@ -295,45 +290,6 @@ void Skyhawk::FlightModel::slats(double& dt)
 void Skyhawk::FlightModel::structuralIntegrity(Vec3& liftLW, Vec3& liftRW)
 {
 
-	std::vector<int> LW{ 35, 29, 23 };
-	std::vector<int> RW{ 36, 30, 24 };
-
-	for (int i = 0; i < LW.size(); i++)
-	{
-		int elemL = LW[i];
-		int elemR = RW[i];
-
-		if (m_airframe.getIntegrityElement(elemL) <= 0.0f)
-		{
-			m_integrityLW = 0.0;
-		}
-		if (m_airframe.getIntegrityElement(elemR) <= 0.0f)
-		{
-			m_integrityRW = 0.0;
-		}
-	}
-
-	if (m_airframe.getIntegrityElement(53) <= 0.0f)
-	{
-		m_integrityRud = 0.0;
-	}
-
-	if (std::abs(liftLW.y) > 320000)
-	{
-		m_integrityLW = 0.0;
-	}
-	else if (std::abs(liftRW.y) > 320000)
-	{
-		m_integrityRW = 0.0;
-	}
-
-	/*-- 23 - wing out left
-	-- 24 - wing out right
-	-- 29 - wing centre left
-	-- 30 - wing centre right
-	-- 35 - wing in left
-	-- 36 - wing in right
-	-- 53 - rudder*/
 }
 
 void Skyhawk::FlightModel::calculateShake()

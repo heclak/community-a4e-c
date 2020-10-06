@@ -4,12 +4,34 @@ Skyhawk::Airframe::Airframe(Input& controls, Engine& engine):
 	m_controls(controls),
 	m_engine(engine)
 {
-	m_integrityElement = new float[NUM_ELEM];
+	m_integrityElement = new float[(int)Damage::COUNT];
 }
 
 Skyhawk::Airframe::~Airframe()
 {
 	delete[] m_integrityElement;
+}
+
+void Skyhawk::Airframe::printDamageState()
+{
+	printf( "===========================================\n" );
+
+	printf( "            ||\n" );
+	printf( "            ||\n" );
+	printf( "%.1lf %.1lf %.1lf || %.1lf %.1lf %.1lf\n", 
+		DMG_ELEM(Damage::WING_L_OUT), 
+		DMG_ELEM(Damage::WING_L_CENTER), 
+		DMG_ELEM(Damage::WING_L_IN),
+		DMG_ELEM( Damage::WING_R_IN ),
+		DMG_ELEM( Damage::WING_R_CENTER ),
+		DMG_ELEM( Damage::WING_R_OUT ) );
+
+	printf( "        %.1f || %.1f\n", DMG_ELEM(Damage::AILERON_L), DMG_ELEM(Damage::AILERON_R) );
+	printf( "            ||\n" );
+	printf( "        %.1f || %.1f\n", DMG_ELEM( Damage::STABILIZATOR_L ), DMG_ELEM( Damage::STABILIZATOR_R ) );
+	printf( "        %.1f || %.1f\n", DMG_ELEM( Damage::ELEVATOR_L ), DMG_ELEM( Damage::ELEVATOR_R ) );
+	printf( "            %.1f\n", getVertStabDamage() );
+	printf( "            %.1f\n", getRudderDamage() );
 }
 
 void Skyhawk::Airframe::zeroInit()
@@ -27,7 +49,7 @@ void Skyhawk::Airframe::zeroInit()
 	//m_fuel = 0.0;
 	//m_fuelPrevious = 0.0;
 
-	for (int i = 0; i < NUM_ELEM; i++)
+	for (int i = 0; i < (int)Damage::COUNT; i++)
 	{
 		m_integrityElement[i] = 1.0f;
 	}
@@ -55,17 +77,6 @@ void Skyhawk::Airframe::airborneInit()
 
 void Skyhawk::Airframe::airframeUpdate(double dt)
 {
-	/*if (m_controls.gear() == Skyhawk::Input::GearPos::UP)
-	{
-		m_gearPosition -= dt / m_gearExtendTime;
-		m_gearPosition = std::max(m_gearPosition, 0.0);
-	}
-	else
-	{
-		m_gearPosition += dt / m_gearExtendTime;
-		m_gearPosition = std::min(m_gearPosition, 1.0);
-	}*/
-
 	if (m_controls.slatL() >= m_slatLPosition)
 	{
 		m_slatLPosition += dt / m_slatsExtendTime;
@@ -99,17 +110,6 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 		m_speedBrakePosition = std::max(m_speedBrakePosition, m_controls.airbrake());
 	}
 
-	/*if (m_controls.flaps() >= m_flapsPosition)
-	{
-		m_flapsPosition += dt / m_flapsExtendTime;
-		m_flapsPosition = std::min(m_flapsPosition, m_controls.flaps());
-	}
-	else
-	{
-		m_flapsPosition -= dt / m_flapsExtendTime;
-		m_flapsPosition = std::max(m_flapsPosition, m_controls.flaps());
-	}*/
-
 	if (m_controls.hook())
 	{
 		m_hookPosition += dt / m_hookExtendTime;
@@ -121,8 +121,6 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 		m_hookPosition = std::max(m_hookPosition, 0.0);
 	}
 
-	//m_fuelPrevious = m_fuel;
-	//printf("FUEL: %lf\n", m_fuel);
 	double dm = m_engine.getFuelFlow()*dt;
 
 	int totalExt = 0;
@@ -179,4 +177,6 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 	//printf("Cat Moment: %lf\n", m_catMoment);
 
 	m_catStateSent = false;
+
+	printDamageState();
 }

@@ -1137,6 +1137,7 @@ A_4E_C =  {
     --             [85]    = {critical_damage = 3, args = {135}}, 						-- right wheel
     -- },
 
+
     Damage = verbose_to_dmg_properties(
 	{
         ["NOSE_CENTER"]             = {critical_damage = 3}, -- 0
@@ -1197,7 +1198,8 @@ A_4E_C =  {
         -- ["HOOK"]                    = {critical_damage = 2}, -- 98
 
     }),
-
+	
+	
 
     DamageParts =
     {

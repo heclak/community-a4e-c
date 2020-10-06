@@ -5,6 +5,10 @@
 #include <stdio.h>
 #include "Engine.h"
 #include "Vec3.h"
+
+//Macro police don't hurt me
+#define DMG_ELEM(v) m_integrityElement[(int)v]
+
 namespace Skyhawk
 {//begin namespace
 
@@ -30,7 +34,7 @@ namespace Skyhawk
 #define c_catAngle 0.0 //6 degrees
 #define	c_catConstrainingForce 4000.0
 
-#define NUM_ELEM 111
+
 
 class Airframe
 {
@@ -43,6 +47,199 @@ public:
 		ON_CAT_WAITING,
 		ON_CAT_LAUNCHING,
 		OFF_CAT
+	};
+
+	enum class Damage
+	{
+		NOSE_CENTER = 0,
+		FRONT = 0,
+		Line_NOSE = 0,
+		NOSE_LEFT_SIDE = 1,
+		NOSE_RIGHT_SIDE = 2,
+		COCKPIT = 3,
+		CABINA = 3,
+		CABIN_LEFT_SIDE = 4,
+		CABIN_RIGHT_SIDE = 5,
+		CABIN_BOTTOM = 6,
+		GUN = 7,
+		FRONT_GEAR_BOX = 8,
+		GEAR_REAR = 8,
+		GEAR_C = 8,
+		GEAR_F = 8,
+		STOIKA_F = 8,
+		FUSELAGE_LEFT_SIDE = 9,
+		FUSELAGE_RIGHT_SIDE = 10,
+		MAIN = 10,
+		LINE_MAIN = 10,
+		ENGINE = 11,
+		ENGINE_L = 11,
+		ENGINE_L_VNUTR = 11,
+		ENGINE_L_IN = 11,
+		ENGINE_R = 12,
+		ENGINE_R_VNUTR = 12,
+		ENGINE_R_IN = 12,
+		MTG_L_BOTTOM = 13,
+		MTG_R_BOTTOM = 14,
+		LEFT_GEAR_BOX = 15,
+		GEAR_L = 15,
+		STOIKA_L = 15,
+		RIGHT_GEAR_BOX = 16,
+		GEAR_R = 16,
+		STOIKA_R = 16,
+		MTG_L = 17,
+		ENGINE_L_VNESHN = 17,
+		ENGINE_L_OUT = 17,
+		EWU_L = 17,
+		MTG_R = 18,
+		ENGINE_R_VNESHN = 18,
+		ENGINE_R_OUT = 18,
+		EWU_R = 18,
+		AIR_BRAKE_L = 19,
+		AIR_BRAKE_R = 20,
+		WING_L_PART_OUT = 21,
+		WING_R_PART_OUT = 22,
+		WING_L_OUT = 23,
+		WING_R_OUT = 24,
+		ELERON_L = 25,
+		AILERON_L = 25,
+		ELERON_R = 26,
+		AILERON_R = 26,
+		WING_L_PART_CENTER = 27,
+		WING_R_PART_CENTER = 28,
+		WING_L_CENTER = 29,
+		WING_R_CENTER = 30,
+		FLAP_L_OUT = 31,
+		FLAP_R_OUT = 32,
+		WING_L_PART_IN = 33,
+		WING_R_PART_IN = 34,
+		WING_L_IN = 35,
+		WING_L = 35,
+		Line_WING_L = 35,
+		WING_R_IN = 36,
+		WING_R = 36,
+		Line_WING_R = 36,
+		FLAP_L_IN = 37,
+		FLAP_L = 37,
+		FLAP_R_IN = 38,
+		FLAP_R = 38,
+		FIN_L_TOP = 39,
+		KEEL_L_OUT = 39,
+		KEEL_OUT = 39,
+		FIN_R_TOP = 40,
+		KEEL_R_OUT = 40,
+		FIN_L_CENTER = 41,
+		KEEL_L_CENTER = 41,
+		KEEL_CENTER = 41,
+		FIN_R_CENTER = 42,
+		KEEL_R_CENTER = 42,
+		FIN_L_BOTTOM = 43,
+		KIL_L = 43,
+		Line_KIL_L = 43,
+		KEEL = 43,
+		KEEL_IN = 43,
+		KEEL_L = 43,
+		KEEL_L_IN = 43,
+		FIN_R_BOTTOM = 44,
+		KIL_R = 44,
+		Line_KIL_R = 44,
+		KEEL_R = 44,
+		KEEL_R_IN = 44,
+		STABILIZER_L_OUT = 45,
+		STABILIZATOR_L_OUT = 45,
+		STABILIZER_R_OUT = 46,
+		STABILIZATOR_R_OUT = 46,
+		STABILIZER_L_IN = 47,
+		STABILIZATOR_L = 47,
+		STABILIZATOR_L01 = 47,
+		Line_STABIL_L = 47,
+		STABILIZER_R_IN = 48,
+		STABILIZATOR_R = 48,
+		STABILIZATOR_R01 = 48,
+		Line_STABIL_R = 48,
+		ELEVATOR_L_OUT = 49,
+		ELEVATOR_R_OUT = 50,
+		ELEVATOR_L_IN = 51,
+		ELEVATOR_L = 51,
+		RV_L = 51,
+		ELEVATOR_R_IN = 52,
+		ELEVATOR_R = 52,
+		RV_R = 52,
+		RUDDER_L = 53,
+		RN_L = 53,
+		RUDDER = 53,
+		RUDDER_R = 54,
+		RN_R = 54,
+		TAIL = 55,
+		TAIL_LEFT_SIDE = 56,
+		TAIL_RIGHT_SIDE = 57,
+		TAIL_BOTTOM = 58,
+		NOSE_BOTTOM = 59,
+		PWD = 60,
+		PITOT = 60,
+		FUEL_TANK_F = 61,
+		FUEL_TANK_LEFT_SIDE = 61,
+		FUEL_TANK_B = 62,
+		FUEL_TANK_RIGHT_SIDE = 62,
+		ROTOR = 63,
+		BLADE_1_IN = 64,
+		BLADE_1_CENTER = 65,
+		BLADE_1_OUT = 66,
+		BLADE_2_IN = 67,
+		BLADE_2_CENTER = 68,
+		BLADE_2_OUT = 69,
+		BLADE_3_IN = 70,
+		BLADE_3_CENTER = 71,
+		BLADE_3_OUT = 72,
+		BLADE_4_IN = 73,
+		BLADE_4_CENTER = 74,
+		BLADE_4_OUT = 75,
+		BLADE_5_IN = 76,
+		BLADE_5_CENTER = 77,
+		BLADE_5_OUT = 78,
+		BLADE_6_IN = 79,
+		BLADE_6_CENTER = 80,
+		BLADE_6_OUT = 81,
+		FUSELAGE_BOTTOM = 82,
+		WHEEL_F = 83,
+		WHEEL_C = 83,
+		WHEEL_REAR = 83,
+		WHEEL_L = 84,
+		WHEEL_R = 85,
+		PYLON1 = 86,
+		PYLONL = 86,
+		PYLON2 = 87,
+		PYLONR = 87,
+		PYLON3 = 88,
+		PYLON4 = 89,
+		CREW_1 = 90,
+		CREW_2 = 91,
+		CREW_3 = 92,
+		CREW_4 = 93,
+		ARMOR_NOSE_PLATE_LEFT = 94,
+		ARMOR_NOSE_PLATE_RIGHT = 95,
+		ARMOR_PLATE_LEFT = 96,
+		ARMOR_PLATE_RIGHT = 97,
+		HOOK = 98,			
+		FUSELAGE_TOP = 99,
+		TAIL_TOP = 100,
+		FLAP_L_CENTER = 101,
+		FLAP_R_CENTER = 102	,
+		ENGINE_1 = 103,
+		ENGINE_2 = 104,
+		ENGINE_3 = 105,
+		ENGINE_4 = 106,
+		ENGINE_5 = 107,
+		ENGINE_6 = 108,
+		ENGINE_7 = 109,
+		ENGINE_8 = 110,
+		COUNT = 111,
+	};
+
+
+	struct DamageDelta
+	{
+		Damage m_element;
+		float m_delta;
 	};
 
 	//Don't touch this it's order dependent you will break the tank code.
@@ -71,25 +268,12 @@ public:
 	inline void setSlatRPosition(double position);
 	inline void setAirbrakePosition(double position);
 	inline void setFuelState(Tank tank, Vec3 pos, double fuel);
-	inline void setFuelStateNorm(double fuel);
 	inline void setAngle(double angle);
 	inline void setMass(double angle);
-
-	inline void setFuelStateLExt(double fuel);
-	inline void setFueCStateLExt(double fuel);
-	inline void setFueRStateLExt(double fuel);
 
 	inline void setLExtVec(Vec3 vec);
 	inline void setCExtVec(Vec3 vec);
 	inline void setRExtVec(Vec3 vec);
-
-	inline const Vec3& getLExtVec() const;
-	inline const Vec3& getCExtVec() const;
-	inline const Vec3& getRExtVec() const;
-
-	inline const Vec3& getLExtVecSqr() const;
-	inline const Vec3& getCExtVecSqr() const;
-	inline const Vec3& getRExtVecSqr() const;
 
 	inline void setSelectedTank(Tank selected);
 
@@ -129,13 +313,38 @@ public:
 	inline bool& catapultStateSent();
 	inline void setCatStateFromKey();
 
-	inline void setIntegrityElement(int element, float integrity);
-	inline float getIntegrityElement(int element);
+	inline void setIntegrityElement(Damage element, float integrity);
+	inline float getIntegrityElement(Damage element);
+	inline void setDamageDelta( Damage element, float delta );
+	inline bool processDamageStack( Damage& element, float& damage );
+
+
+	void printDamageState();
 
 	//Update
 	void airframeUpdate(double dt); //performs calculations and updates
 	inline void fuelUpdate(double dt);
 	//Airframe Angles
+
+
+
+	//Damage
+	inline float getLWingDamage() const;
+	inline float getRWingDamage() const;
+
+	inline float getAileronDamage() const;
+
+	inline float getVertStabDamage() const;
+	inline float getRudderDamage() const;
+
+	inline float getHoriStabDamage() const;
+	inline float getElevatorDamage() const;
+
+	inline float getCompressorDamage() const;
+	inline float getTurbineDamage() const;
+	inline float getSpoilerDamage() const;
+	inline float getSpeedbrakeDamage() const;
+	inline float getFlapDamage() const;
 
 private:
 
@@ -201,6 +410,7 @@ private:
 
 	Engine& m_engine;
 	Input& m_controls;
+	std::vector<DamageDelta> m_damageStack;
 };
 
 void Airframe::setSelectedTank(Tank selected)
@@ -431,51 +641,97 @@ inline void Airframe::setRExtVec(Vec3 vec)
 	m_fuelExtPosRSqr = Vec3(vec.x * vec.x, vec.y * vec.y, vec.z * vec.z);
 }
 
-inline const Vec3& Airframe::getLExtVec() const
+inline void Airframe::setIntegrityElement(Damage element, float integrity)
 {
-	return m_fuelExtPosL;
+	m_integrityElement[(int)element] = integrity;
 }
 
-inline const Vec3& Airframe::getCExtVec() const
+inline float Airframe::getIntegrityElement(Damage element)
 {
-	return m_fuelExtPosC;
+	return m_integrityElement[(int)element];
 }
 
-inline const Vec3& Airframe::getRExtVec() const
+void Airframe::setDamageDelta( Damage element, float delta )
 {
-	return m_fuelExtPosR;
+	DamageDelta d;
+	d.m_delta = delta;
+	d.m_element = element;
+	m_damageStack.push_back( d );
 }
 
-inline const Vec3& Airframe::getLExtVecSqr() const
+bool Airframe::processDamageStack( Damage& element, float& damage )
 {
-	return m_fuelExtPosLSqr;
+	if ( m_damageStack.empty() )
+		return false;
+
+	DamageDelta delta = m_damageStack.back();
+	m_damageStack.pop_back();
+
+
+	m_integrityElement[(int)delta.m_element] -= delta.m_delta;
+	
+	element = delta.m_element;
+	damage = m_integrityElement[(int)delta.m_element];
+
+	return true;
 }
 
-inline const Vec3& Airframe::getCExtVecSqr() const
+inline float Airframe::getLWingDamage() const
 {
-	return m_fuelExtPosCSqr;
+	return (DMG_ELEM( Damage::WING_L_IN) + DMG_ELEM( Damage::WING_L_CENTER) + DMG_ELEM( Damage::WING_L_OUT)) / 3.0;
 }
 
-inline const Vec3& Airframe::getRExtVecSqr() const
+inline float Airframe::getRWingDamage() const
 {
-	return m_fuelExtPosRSqr;
+	return (DMG_ELEM( Damage::WING_R_IN) + DMG_ELEM( Damage::WING_R_CENTER) + DMG_ELEM( Damage::WING_R_OUT)) / 3.0;
 }
 
-inline void Airframe::setIntegrityElement(int element, float integrity)
+inline float Airframe::getAileronDamage() const
 {
-	m_integrityElement[element] = integrity;
+	return (DMG_ELEM(Damage::AILERON_L) + DMG_ELEM(Damage::AILERON_R)) / 2.0;
 }
 
-inline float Airframe::getIntegrityElement(int element)
+inline float Airframe::getVertStabDamage() const
 {
-	return m_integrityElement[element];
+	return (DMG_ELEM( Damage::FIN_L_TOP ) + DMG_ELEM( Damage::FIN_L_BOTTOM )) / 2.0;
 }
 
-inline void setFuelStateLExt(double fuel);
-inline void setFueCStateLExt(double fuel);
-inline void setFueRStateLExt(double fuel);
+inline float Airframe::getRudderDamage() const
+{
+	return DMG_ELEM( Damage::RUDDER );
+}
 
+inline float Airframe::getHoriStabDamage() const
+{
+	return (DMG_ELEM(Damage::STABILIZATOR_L) + DMG_ELEM(Damage::STABILIZATOR_R)) / 2.0;
+}
 
+inline float Airframe::getElevatorDamage() const
+{
+	return (DMG_ELEM( Damage::ELEVATOR_L ) + DMG_ELEM( Damage::ELEVATOR_R )) / 2.0;
+}
+
+inline float Airframe::getCompressorDamage() const
+{
+	return 1.0; //stub for now
+}
+inline float Airframe::getTurbineDamage() const
+{
+	return 1.0; //stub for now
+}
+
+inline float Airframe::getSpoilerDamage() const
+{
+	return (DMG_ELEM( Damage::WING_L_PART_CENTER ) + DMG_ELEM( Damage::WING_R_PART_CENTER )) / 2.0;
+}
+inline float Airframe::getSpeedbrakeDamage() const
+{
+	return (DMG_ELEM( Damage::AIR_BRAKE_L ) + DMG_ELEM( Damage::AIR_BRAKE_R )) / 2.0;
+}
+inline float Airframe::getFlapDamage() const
+{
+	return (DMG_ELEM( Damage::FLAP_L ) + DMG_ELEM( Damage::FLAP_R )) / 2.0;
+}
 
 }//end namespace
 

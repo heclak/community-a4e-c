@@ -79,7 +79,7 @@ public:
 	inline double toDegrees(double angle);
 	inline double toRad(double angle);
 	inline int getRandomNumber(int min, int max);
-	double m_cockpitShake;
+	inline double getCockpitShake();
 
 private:
 
@@ -231,6 +231,9 @@ private:
 	Table rnd_aoa;
 
 	Input& m_controls; //for now
+
+	//Misc
+	double m_cockpitShake;
 };
 
 void FlightModel::setAtmosphericParams
@@ -335,20 +338,23 @@ void FlightModel::addForceDir(const Vec3& force, const Vec3& dir)
 void FlightModel::L_stab()
 {
 	//m_moment.x
-	m_moment.x += m_q * (Clb(0.0)*m_beta + Cla(m_mach)*Cla_a(std::abs(m_aoa))*aileron() + Cldr(0.0)*rudder()) + m_p * (Clp(0.0)*m_omega.x + Clr(0.0)*m_omega.y);
+	m_moment.x += m_q * (Clb(0.0)*m_beta*m_airframe.getVertStabDamage() + Cla(m_mach)*Cla_a(std::abs(m_aoa))*aileron() * m_airframe.getAileronDamage() + Cldr(0.0)*rudder() * m_airframe.getRudderDamage()) + m_p * (Clp(0.0)*m_omega.x + Clr(0.0)*m_omega.y);
 }
 
 void FlightModel::M_stab()
 {
 	//m_moment.z
-	m_moment.z += m_k * m_chord * (Cmalpha(m_mach) * m_aoa * 1.5 + Cmde(m_mach)*Cmde_a(std::abs(m_aoa))*elevator() + CmM(m_mach)*0.2) + 0.25 * m_scalarV * m_totalWingArea * m_chord * m_chord * (Cmq(m_mach)*m_omega.z + Cmadot(m_mach)*m_aoaDot);
+	double horizDamage = m_airframe.getHoriStabDamage();
+	double wingDamage = (m_airframe.getLWingDamage() + m_airframe.getRWingDamage())/2.0;
+	m_moment.z += m_k * m_chord * (Cmalpha(m_mach) * m_aoa * wingDamage * 1.5 + Cmde(m_mach)*Cmde_a(std::abs(m_aoa))*elevator()*m_airframe.getElevatorDamage() + CmM(m_mach)*0.2) + 0.25 * m_scalarV * m_totalWingArea * m_chord * m_chord * horizDamage * (Cmq(m_mach)*m_omega.z + Cmadot(m_mach)*m_aoaDot);
 	//printf("Mz: %lf, mach: %lf\n", elevator(), m_mach);
 }
 
 void FlightModel::N_stab()
 {
 	//m_moment.y
-	m_moment.y += m_q * m_integrityRud * (-Cnb(m_beta) * 0.8 + Cndr(0.0) * rudder()) + m_p * (Cnr(0.0) * m_betaDot);//(Cnr(0.0)*m_omega.y); //This needs to be fixed, constants like 0.8 are temporary!!!
+	double vertDamage = m_airframe.getVertStabDamage();
+	m_moment.y += m_q * m_integrityRud * (-Cnb(m_beta) * vertDamage * 0.8 + Cndr(0.0) * rudder() * m_airframe.getRudderDamage()) + m_p * (Cnr(0.0) * m_betaDot * vertDamage);//(Cnr(0.0)*m_omega.y); //This needs to be fixed, constants like 0.8 are temporary!!!
 	
 	//printf("beta: %lf, betaDot: %lf\n", m_q * (-Cnb(m_beta) * 0.8), m_p * (Cnr(0.0) * m_betaDot));
 	//printf("m_moment.y: %lf, m_beta: %lf, Cnb(mach)*m_beta: %lf, Cndr*rudder: %lf, Cnr*m_omega.y: %lf\n",
@@ -384,8 +390,10 @@ void FlightModel::lift()
 	m_LDwindAxesLW.z = 0;
 	m_LDwindAxesRW.z = 0;
 
-	m_LDwindAxesRW.y = m_kR / 2 * (CLalpha(m_aoaRW) + dCLslat(m_aoaRW) * m_airframe.getSlatRPosition() + dCLflap(m_aoaRW) * m_airframe.getFlapsPosition() + dCLspoiler(0.0) * m_airframe.getSpoilerPosition());
-	m_LDwindAxesLW.y = m_kL / 2 * (CLalpha(m_aoaLW) + dCLslat(m_aoaLW) * m_airframe.getSlatLPosition() + dCLflap(m_aoaLW) * m_airframe.getFlapsPosition() + dCLspoiler(0.0) * m_airframe.getSpoilerPosition());
+	double flapsDamage = m_airframe.getFlapDamage();
+
+	m_LDwindAxesRW.y = m_kR / 2 * (m_airframe.getRWingDamage() * CLalpha(m_aoaRW) + dCLslat(m_aoaRW) * m_airframe.getSlatRPosition() + dCLflap(m_aoaRW) * m_airframe.getFlapsPosition()*flapsDamage + dCLspoiler(0.0) * m_airframe.getSpoilerPosition());
+	m_LDwindAxesLW.y = m_kL / 2 * (m_airframe.getLWingDamage() * CLalpha(m_aoaLW) + dCLslat(m_aoaLW) * m_airframe.getSlatLPosition() + dCLflap(m_aoaLW) * m_airframe.getFlapsPosition()* flapsDamage + dCLspoiler(0.0) * m_airframe.getSpoilerPosition());
 
 	//printf("%lf, %lf\n", m_LDwindAxesRW.y / (m_kR / 2 * (CLalpha(m_aoa) + dCLslat(m_aoa) * m_airframe.getSlatRPosition() + dCLflap(m_aoa) * m_airframe.getFlapsPosition())), m_LDwindAxesLW.y / (m_kR / 2 * (CLalpha(m_aoa) + dCLslat(m_aoa) * m_airframe.getSlatRPosition() + dCLflap(m_aoa) * m_airframe.getFlapsPosition())));
 
@@ -444,6 +452,11 @@ int FlightModel::getRandomNumber(int min, int max)
 	static constexpr double fraction{ 1.0 / (RAND_MAX + 1.0) };
 	
 	return min + static_cast<int>((max - min + 1) * (std::rand() * fraction));
+}
+
+double FlightModel::getCockpitShake()
+{
+	return m_cockpitShake;
 }
 
 }//end namespace
