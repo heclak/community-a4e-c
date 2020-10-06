@@ -2,6 +2,31 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
+## Version 1.4.2 - 4 October 2020
+
+### Added
+
+### Changed
+
+- refactor weapon model names and code to remove IC conflicts. Affected weapons:
+  - AN-M66
+  - AN-M81
+  - AN-M88
+  - BLU-3B
+  - BLU-4B
+  - Mk4 HIPEG
+  - Mk77mod0
+  - Mk77mod1
+  - Mk-81SE
+  - SUU-7
+- update FOV limits to from 30, 120 to 20, 140
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
 ## Version 1.4.1 - 2 September 2020
 
 ### Added
