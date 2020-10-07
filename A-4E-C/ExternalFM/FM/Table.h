@@ -11,7 +11,7 @@ public:
 		m_min(min),
 		m_max(max)
 	{
-		m_dx = (max - min) / (double)table.size();
+		m_dx = (max - min) / ((double)table.size()-1);
 		m_minIndex = min / m_dx;
 	}
 

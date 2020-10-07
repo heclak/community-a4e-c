@@ -156,10 +156,10 @@ private:
 	double m_integrityRud;
 
 	//slats
-	const double m_slatMass = 10; //mass (kg)
-	const double m_slatDamping = 0; //damping (-)
-	const double m_slatSpring = 1000; //spring (-)
-	const double m_slatArea = 3; //flat plate
+	const double m_slatMass = 20.0; //mass (kg)
+	const double m_slatDamping = 10.0; //damping (-)
+	const double m_slatSpring = 1000.0; //spring (-)
+	const double m_slatArea = 3.0; //flat plate
 	const double m_aoaZero = 0.261799388;//0.261799; //aoa in body frame at which slat has zero lift (rad)
 	double m_LslatVel; //speed of slat (m/s)
 	double m_RslatVel;
@@ -405,8 +405,8 @@ void FlightModel::lift()
 
 void FlightModel::drag()
 {
-	double CD = dCDspeedBrake(0.0) * m_airframe.getSpeedBrakePosition();//CDi(0.0)*CLalpha(m_aoa) * CLalpha(m_aoa)  + CDbeta(m_beta) + CDde(0.0)*elevator() + dCDspeedBrake(0.0)*m_airframe.getSpeedBrakePosition() + CDmach(m_mach);
-	
+	//printf( "Mach %lf, drag %lf\n", m_mach, CDmach( m_mach ) );
+	double CD = dCDspeedBrake(0.0) * m_airframe.getSpeedBrakePosition() + CDbeta(m_beta) + CDde( 0.0 ) * abs(elevator()) + CDmach(m_mach); //CDi(0.0)*CLalpha(m_aoa) * CLalpha(m_aoa) + 
 	m_CDwindAxesComp.y = 0;
 	m_CDwindAxesComp.z = 0;
 	m_CDwindAxesComp.x = -m_k * CD;

@@ -63,12 +63,13 @@ local current_spoiler=get_param_handle("D_SPOILERS")
 local spoiler_caution=get_param_handle("D_SPOILER_CAUTION")
 local master_test_param = get_param_handle("D_MASTER_TEST")
 local fm_spoiler = get_param_handle("FM_SPOILERS")
+local fm_throttle = get_param_handle("FM_THROTTLE_POSITION")
 
 function update()
-    local throttle = sensor_data.getThrottleLeftPosition()
+    local throttle = fm_throttle:get()
 
 
-    if get_elec_retraction_release_ground() and throttle < ( (0.7 - tmin)/(tmax-tmin) ) and SPOILER_ARMED and get_elec_mon_dc_ok() then
+    if get_elec_retraction_release_ground() and throttle < 0.7 and SPOILER_ARMED and get_elec_mon_dc_ok() then
         SPOILER_TARGET = 1
     else
         SPOILER_TARGET = 0

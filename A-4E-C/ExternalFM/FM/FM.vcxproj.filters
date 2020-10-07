@@ -57,6 +57,9 @@
       <Filter>A4-Skyhawk</Filter>
     </ClInclude>
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="Data.h">
+      <Filter>A4-Skyhawk</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />

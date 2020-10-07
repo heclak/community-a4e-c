@@ -157,6 +157,7 @@
     <ClInclude Include="..\include\FM\wHumanCustomPhysicsAPI_ImplementationDeclare.h" />
     <ClInclude Include="Airframe.h" />
     <ClInclude Include="Avionics.h" />
+    <ClInclude Include="Data.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Input.h" />

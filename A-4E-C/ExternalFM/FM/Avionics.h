@@ -19,7 +19,6 @@ public:
 
 
 	void updateAvionics(double dt);
-	void yawCAS();
 
 private:
 

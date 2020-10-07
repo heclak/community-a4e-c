@@ -66,14 +66,14 @@ main_amortizer_direct_damper_force_factor = main_damper_force * 1.2
 main_amortizer_back_damper_force_factor = main_damper_force * 1.0
 ]]--
 
-wheel_static_friction_factor_COMMON = 2.50
-wheel_side_friction_factor_COMMON = 1.50
-wheel_roll_friction_factor_COMMON = 0.08
+wheel_static_friction_factor_COMMON = 1.50
+wheel_side_friction_factor_COMMON = 1.00
+wheel_roll_friction_factor_COMMON = 0.04
 wheel_glide_friction_factor_COMMON = 0.40
 
 brake_moment_main = 10000.0
 
-wheel_radius_factor = 1.0
+wheel_radius_factor = 1.2
 
 suspension = 
 {
