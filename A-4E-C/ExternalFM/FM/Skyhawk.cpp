@@ -239,7 +239,7 @@ void ed_fm_set_command
 		break;
 	case Skyhawk::Control::YAW:
 		s_input.yaw() = value;
-		printf( "Rudder %lf\n", value );
+		//printf( "Rudder %lf\n", value );
 		break;
 	case Skyhawk::Control::THROTTLE:
 		s_input.throttle() = value;
@@ -264,7 +264,7 @@ void ed_fm_set_command
 		//s_input.nosewheelSteering() = false;
 		break;
 	default:
-		printf( "number %d: %lf\n", command, value );
+		;// printf( "number %d: %lf\n", command, value );
 	}
 }
 

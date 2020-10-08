@@ -419,6 +419,7 @@ void FlightModel::drag()
 {
 	//printf( "Mach %lf, drag %lf\n", m_mach, CDmach( m_mach ) );
 	double CD = dCDspeedBrake( 0.0 ) * m_airframe.getSpeedBrakePosition() + CDbeta( m_beta ) + CDde( 0.0 ) * abs( elevator() ) + CDmach( m_mach ) + CDi( 0.0 ) * pow( CLalpha( m_aoa ), 2.0 ) + m_airframe.getGearPosition() * CDgear;
+	
 	m_CDwindAxesComp.y = 0;
 	m_CDwindAxesComp.z = 0;
 	m_CDwindAxesComp.x = -m_k * CD;
