@@ -61,7 +61,6 @@ public:
 	void calculateAero();
 	void calculateForcesAndMoments(double dt);
 	void calculateShake();
-	void structuralIntegrity(Vec3& liftLW, Vec3& liftRW);
 
 	//Get forces for ED physics engine.
 	inline const Vec3& getForce() const;
@@ -154,6 +153,12 @@ private:
 	double m_integrityLW;
 	double m_integrityRW;
 	double m_integrityRud;
+	double m_integrityAil;
+	double m_integrityElev;
+	double m_integrityHStab;
+	double m_integrityHstab;
+	double m_integrityFlapL;
+	double m_integrityFlapR;
 
 	//slats
 	const double m_slatMass = 20.0; //mass (kg)
@@ -339,6 +344,7 @@ void FlightModel::L_stab()
 {
 	//m_moment.x
 	m_moment.x += m_q * (Clb(0.0)*m_beta*m_airframe.getVertStabDamage() + Cla(m_mach)*Cla_a(std::abs(m_aoa))*aileron() * m_airframe.getAileronDamage() + Cldr(0.0)*rudder() * m_airframe.getRudderDamage()) + m_p * (Clp(0.0)*m_omega.x + Clr(0.0)*m_omega.y);
+
 }
 
 void FlightModel::M_stab()
@@ -347,7 +353,7 @@ void FlightModel::M_stab()
 	double horizDamage = m_airframe.getHoriStabDamage();
 	double wingDamage = (m_airframe.getLWingDamage() + m_airframe.getRWingDamage())/2.0;
 	m_moment.z += m_k * m_chord * (Cmalpha(m_mach) * m_aoa * wingDamage * 1.5 + Cmde(m_mach)*Cmde_a(std::abs(m_aoa))*elevator()*m_airframe.getElevatorDamage() + CmM(m_mach)*0.2) + 0.25 * m_scalarV * m_totalWingArea * m_chord * m_chord * horizDamage * (Cmq(m_mach)*m_omega.z + Cmadot(m_mach)*m_aoaDot);
-	//printf("Mz: %lf, mach: %lf\n", elevator(), m_mach);
+
 }
 
 void FlightModel::N_stab()
@@ -392,8 +398,9 @@ void FlightModel::lift()
 
 	double flapsDamage = m_airframe.getFlapDamage();
 
-	m_LDwindAxesRW.y = m_kR / 2 * (m_airframe.getRWingDamage() * CLalpha(m_aoaRW) + dCLslat(m_aoaRW) * m_airframe.getSlatRPosition() + dCLflap(m_aoaRW) * m_airframe.getFlapsPosition()*flapsDamage + dCLspoiler(0.0) * m_airframe.getSpoilerPosition());
-	m_LDwindAxesLW.y = m_kL / 2 * (m_airframe.getLWingDamage() * CLalpha(m_aoaLW) + dCLslat(m_aoaLW) * m_airframe.getSlatLPosition() + dCLflap(m_aoaLW) * m_airframe.getFlapsPosition()* flapsDamage + dCLspoiler(0.0) * m_airframe.getSpoilerPosition());
+	m_LDwindAxesRW.y = m_kR / 2 * (m_airframe.getRWingDamage() * CLalpha(m_aoaRW) + dCLslat(m_aoaRW) * m_airframe.getSlatRPosition() + dCLflap(m_aoaRW) * m_airframe.getFlapsPosition() * flapsDamage + dCLspoiler(0.0) * m_airframe.getSpoilerPosition());
+	m_LDwindAxesLW.y = m_kL / 2 * (m_airframe.getLWingDamage() * CLalpha(m_aoaLW) + dCLslat(m_aoaLW) * m_airframe.getSlatLPosition() + dCLflap(m_aoaLW) * m_airframe.getFlapsPosition() * flapsDamage + dCLspoiler(0.0) * m_airframe.getSpoilerPosition());
+
 
 	//printf("%lf, %lf\n", m_LDwindAxesRW.y / (m_kR / 2 * (CLalpha(m_aoa) + dCLslat(m_aoa) * m_airframe.getSlatRPosition() + dCLflap(m_aoa) * m_airframe.getFlapsPosition())), m_LDwindAxesLW.y / (m_kR / 2 * (CLalpha(m_aoa) + dCLslat(m_aoa) * m_airframe.getSlatRPosition() + dCLflap(m_aoa) * m_airframe.getFlapsPosition())));
 
