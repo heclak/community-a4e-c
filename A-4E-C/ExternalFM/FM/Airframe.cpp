@@ -34,6 +34,14 @@ void Skyhawk::Airframe::printDamageState()
 	printf( "            %.1f\n", getRudderDamage() );
 }
 
+void Skyhawk::Airframe::resetDamage()
+{
+	for ( int i = 0; i < (int)Damage::COUNT; i++ )
+	{
+		m_integrityElement[i] = 1.0f;
+	}
+}
+
 void Skyhawk::Airframe::zeroInit()
 {
 	m_gearPosition = 0.0;
@@ -49,10 +57,7 @@ void Skyhawk::Airframe::zeroInit()
 	//m_fuel = 0.0;
 	//m_fuelPrevious = 0.0;
 
-	for (int i = 0; i < (int)Damage::COUNT; i++)
-	{
-		m_integrityElement[i] = 1.0f;
-	}
+	resetDamage();
 }
 
 void Skyhawk::Airframe::coldInit()

@@ -1,0 +1,9 @@
+wave = "Effects/Aircrafts/Engines/A-4E-C/FrontEngine"
+inner_radius = 100
+outer_radius = 1000
+cone_inner_angle = 90
+cone_outer_angle = 120
+cone_outer_gain = 0.3
+direction = {1, 0, 0}
+gain = 4.0
+pitch = 1.5

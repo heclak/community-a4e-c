@@ -32,6 +32,12 @@ local CheckBoxSkin = {
 	},
 }
 
+local SliderSkin = {
+	["params"] = {
+		["name"] = "horzSliderSkin_options",
+	},
+}
+
 -- Content
 
 dialog = {
@@ -234,6 +240,135 @@ dialog = {
 						}
 					},
 					["type"] = "ComboList"
+				},
+
+				
+
+				--------------------------------------------
+				-- EFM Check Option
+				--------------------------------------------
+
+				["efmEnabledOptionCheckBox"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 300,
+							["x"] = LeftColumnX,
+							["y"] = 253,
+						},
+						["enabled"] = true,
+						["state"] = true,
+						["tabOrder"] = 0,
+						["text"] = "$A4E_EXPERIMENTAL_EFM_CHECK_TEXT",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = CheckBoxSkin,
+					["type"] = "CheckBox",
+				},
+				["efmEnabledOptionHelpLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 500,
+							["x"] = LeftColumnX,
+							["y"] = 253 + 20,
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_EXPERIMENTAL_EFM_CHECK_HELP",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = HelpSkin,
+					["type"] = "Static",
+				},
+
+				--------------------------------------------
+				-- Cockpit Shake Slider
+				--------------------------------------------
+				["cockpitShakeLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 100,
+							["x"] = LeftColumnX,
+							["y"] = 300,
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_COCKPIT_SHAKE_SLIDER_TEXT",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsCaptionSkin",
+						},
+					},
+					["type"] = "Static",
+				},
+				["cockpitShakeSlider"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 300,
+							["x"] = LeftColumnX + 100,
+							["y"] = 300,
+						},
+						["enabled"] = true,
+						["step"] = 1,
+						["range"] = {
+							["max"] = 200,
+							["min"] = 0,
+						},
+						["tabOrder"] = 0,
+						["text"] = "",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = SliderSkin,
+					["type"] = "HorzSlider",
+				},
+				["cockpitShakeWidget"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 50,
+							["x"] = LeftColumnX + 400,
+							["y"] = 300,
+						},
+						["enabled"] = true,
+						["text"] = "0",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsSliderValueSkin",
+						},
+					},
+					["type"] = "Static",
+				},
+				["cockpitShakeHelpLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 500,
+							["x"] = LeftColumnX,
+							["y"] = 300 + 20,
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_COCKPIT_SHAKE_SLIDER_HELP",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = HelpSkin,
+					["type"] = "Static",
 				},
 				
 				--------------------------------

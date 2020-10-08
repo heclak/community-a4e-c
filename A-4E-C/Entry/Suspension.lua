@@ -18,9 +18,13 @@ nose_amortizer_back_damper_force_factor =  nose_damper_force * 1.0
 
 --MAINGEAR2
 main_amortizer_min_length = 0.00
-main_amortizer_max_length = 0.60
-main_amortizer_basic_length = 0.60
-main_amortizer_reduce_length = 0.60
+main_amortizer_max_length = 0.70
+main_amortizer_basic_length = 0.70
+main_amortizer_reduce_length = 0.70
+
+--main_amortizer_max_length = 0.60
+--main_amortizer_basic_length = 0.60
+--main_amortizer_reduce_length = 0.60
 
 
 main_amortizer_spring_force_factor = 1.2e+6

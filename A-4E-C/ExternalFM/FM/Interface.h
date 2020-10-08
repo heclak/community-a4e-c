@@ -59,6 +59,8 @@ public:
 		m_intercom                 = m_api.pfn_ed_cockpit_get_parameter_handle("THIS_INTERCOM_PTR");
 		m_weapon                 = m_api.pfn_ed_cockpit_get_parameter_handle("THIS_WEAPON_PTR");
 
+		m_cockpitShake = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_COCKPIT_SHAKE" );
+
 	}
 
 	inline void coldInit()
@@ -251,6 +253,11 @@ public:
 	{
 		return getParamNumber(m_nws);
 	}
+
+	inline double getCockpitShake()
+	{
+		return getParamNumber( m_cockpitShake );
+	}
 		 
 	void* m_test = NULL;
 private:
@@ -311,6 +318,7 @@ private:
 	void* m_radio = NULL;
 	void* m_intercom = NULL;
 	void* m_weapon = NULL;
+	void* m_cockpitShake = NULL;
 };
 
 

@@ -318,6 +318,7 @@ public:
 	inline void setDamageDelta( Damage element, float delta );
 	inline bool processDamageStack( Damage& element, float& damage );
 
+	void resetDamage();
 
 	void printDamageState();
 

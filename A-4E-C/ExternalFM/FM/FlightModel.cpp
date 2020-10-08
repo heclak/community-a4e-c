@@ -6,13 +6,21 @@
 #include "Globals.h"
 #include "Data.h"
 
+#undef min
 
 //Set everything to zero.
 //Vectors already constructor to zero vector.
-Skyhawk::FlightModel::FlightModel(Input& controls, Airframe& airframe, Engine& engine):
+Skyhawk::FlightModel::FlightModel
+(
+	Input& controls,
+	Airframe& airframe,
+	Engine& engine,
+	Interface& inter
+):
 	m_controls(controls),
 	m_airframe(airframe),
 	m_engine(engine),
+	m_interface( inter ),
 	m_density(1.0),
 	m_speedOfSound(340.0),
 	m_aoa(0.0),
@@ -54,8 +62,8 @@ Skyhawk::FlightModel::FlightModel(Input& controls, Airframe& airframe, Engine& e
 	CDmach(d_CDmach,0.0, 1.8),
 	CDflap(d_CDflap, -1.57079633, 1.57079633),
 	CDslat(d_CDslat, -1.57079633, 1.57079633),
-	dCDspoiler({ 0.1 }, 0, 1),
-	dCDspeedBrake({0.021}, 0.0, 1.0),
+	dCDspoiler({ 0.05 }, 0, 1),
+	dCDspeedBrake({0.10}, 0.0, 1.0),
 	CDbeta(d_CDbeta,-1.57, 1.57),
 	CDde({0.12}, c_elevatorDown, c_elevatorUp),
 
@@ -100,7 +108,6 @@ void Skyhawk::FlightModel::zeroInit()
 {
 	m_moment = Vec3();
 	m_force = Vec3();
-
 }
 
 void Skyhawk::FlightModel::coldInit()
@@ -301,7 +308,7 @@ void Skyhawk::FlightModel::structuralIntegrity(Vec3& liftLW, Vec3& liftRW)
 void Skyhawk::FlightModel::calculateShake()
 {
 	double shakeAmplitude{ 0.0 };
-	double buffetAmplitude{ 0.3 };
+	double buffetAmplitude = 0.3 * m_cockpitShakeModifier;
 	double x{ 0.0 };
 
 	// 19 - 28

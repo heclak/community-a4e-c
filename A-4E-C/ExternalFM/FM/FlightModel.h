@@ -7,6 +7,7 @@
 #include "Input.h"
 #include "Airframe.h"
 #include "Engine.h"
+#include "Interface.h"
 #include <fstream>
 
 namespace Skyhawk
@@ -15,7 +16,7 @@ namespace Skyhawk
 class FlightModel
 {
 public:
-	FlightModel(Input& controls, Airframe& airframe, Engine& engine);
+	FlightModel(Input& controls, Airframe& airframe, Engine& engine, Interface& inter);
 	~FlightModel();
 
 	void zeroInit();
@@ -80,6 +81,7 @@ public:
 	inline double toRad(double angle);
 	inline int getRandomNumber(int min, int max);
 	inline double getCockpitShake();
+	inline void setCockpitShakeModifier( double mod );
 
 private:
 
@@ -201,6 +203,7 @@ private:
 	Table dCDspeedBrake; //drag with position of speedbrake normalised 0 - 1
 	Table CDbeta; //drag with beta (RADIANS)
 	Table CDde; //drag due to elevator deflection
+	double CDgear = 0.03;
 
 	//Side Force
 	Table CYb; //side force with beta
@@ -234,6 +237,8 @@ private:
 
 	//Misc
 	double m_cockpitShake;
+	double m_cockpitShakeModifier = 0.0;
+	Interface m_interface;
 };
 
 void FlightModel::setAtmosphericParams
@@ -406,7 +411,7 @@ void FlightModel::lift()
 void FlightModel::drag()
 {
 	//printf( "Mach %lf, drag %lf\n", m_mach, CDmach( m_mach ) );
-	double CD = dCDspeedBrake(0.0) * m_airframe.getSpeedBrakePosition() + CDbeta(m_beta) + CDde( 0.0 ) * abs(elevator()) + CDmach(m_mach); //CDi(0.0)*CLalpha(m_aoa) * CLalpha(m_aoa) + 
+	double CD = dCDspeedBrake( 0.0 ) * m_airframe.getSpeedBrakePosition() + CDbeta( m_beta ) + CDde( 0.0 ) * abs( elevator() ) + CDmach( m_mach ) + CDi( 0.0 ) * pow( CLalpha( m_aoa ), 2.0 ) + m_airframe.getGearPosition() * CDgear;
 	m_CDwindAxesComp.y = 0;
 	m_CDwindAxesComp.z = 0;
 	m_CDwindAxesComp.x = -m_k * CD;
@@ -457,6 +462,11 @@ int FlightModel::getRandomNumber(int min, int max)
 double FlightModel::getCockpitShake()
 {
 	return m_cockpitShake;
+}
+
+void FlightModel::setCockpitShakeModifier( double mod )
+{
+	m_cockpitShakeModifier = mod;
 }
 
 }//end namespace

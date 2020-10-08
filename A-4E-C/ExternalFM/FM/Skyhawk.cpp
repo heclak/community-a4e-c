@@ -18,7 +18,7 @@ static Skyhawk::Interface s_interface;
 static Skyhawk::Input s_input;
 static Skyhawk::Engine s_engine(s_input);
 static Skyhawk::Airframe s_airframe(s_input, s_engine);
-static Skyhawk::FlightModel s_fm(s_input, s_airframe, s_engine);
+static Skyhawk::FlightModel s_fm(s_input, s_airframe, s_engine, s_interface);
 static Skyhawk::Avionics s_avionics(s_input, s_fm, s_engine, s_airframe);
 
 
@@ -69,6 +69,7 @@ void ed_fm_add_local_moment(double & x,double &y,double &z)
 void ed_fm_simulate(double dt)
 {
 	//Pre update
+	s_fm.setCockpitShakeModifier( s_interface.getCockpitShake() );
 	s_airframe.setFlapsPosition(s_interface.getFlaps());
 	s_airframe.setSpoilerPosition(s_interface.getSpoilers());
 	s_airframe.setAirbrakePosition(s_interface.getSpeedBrakes());
@@ -578,6 +579,11 @@ void ed_fm_hot_start_in_air()
 	s_airframe.airborneInit();
 	s_engine.airbornInit();
 	s_avionics.airbornInit();
+}
+
+void ed_fm_repair ()
+{
+	s_airframe.resetDamage();
 }
 
 bool ed_fm_add_local_force_component( double & x,double &y,double &z,double & pos_x,double & pos_y,double & pos_z )
