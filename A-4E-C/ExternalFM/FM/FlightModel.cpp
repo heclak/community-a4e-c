@@ -50,6 +50,11 @@ Skyhawk::FlightModel::FlightModel
 	m_integrityLW(1.0),
 	m_integrityRW(1.0),
 	m_integrityRud(1.0),
+	m_integrityAil(1.0),
+	m_integrityElev(1.0),
+	m_integrityHstab(1.0),
+	m_integrityFlapL(1.0),
+	m_integrityFlapR(1.0),
 
 	//Setup tables
 	CLalpha(d_CLalpha, -0.26981317, 1.57079633),
@@ -298,11 +303,6 @@ void Skyhawk::FlightModel::slats(double& dt)
 
 	//printf("acc: %lf, f: %lf\n", accAircraft, slatCL(m_aoaLW));
 	//printf("force: %lf, x: %lf, a: %lf, vel: %lf, dt: %lf\n", forceL, x_L, a_L, m_LslatVel, dt);
-}
-
-void Skyhawk::FlightModel::structuralIntegrity(Vec3& liftLW, Vec3& liftRW)
-{
-
 }
 
 void Skyhawk::FlightModel::calculateShake()
