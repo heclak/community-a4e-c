@@ -16,8 +16,7 @@ join(res.keyCommands,{
     ---------------------------------------------
     {down = iCommandPlaneShipTakeOff,                                                name = _('Ship Take Off Position'),           category = {_('General')}},
     -- {down = iCommandCockpitShowPilotOnOff,                                        name = _('Show Pilot Body'),                  category = _('General')},
-    {down = iCommandPlaneWingtipSmokeOnOff,                                          name = _('Smoke - ON/OFF'),                   category = {_('General')}},
-	{down = iCommandPlane_ShowControls, name = _('Show controls indicator') , category = _('General')},
+    {down = iCommandPlaneWingtipSmokeOnOff,                                          name = _('Smoke - ON/OFF'), category = {_('General')}},
 
     ---------------------------------------------
     -- View Cockpit -----------------------------
@@ -360,9 +359,9 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- Carrier Catapult -------------------------
     --------------------------------------------- 
-    {down = Keys.catapult_ready, value_down = 1.0, value_up = 0.0, name = _('Catapult Hook-up'), category = _('Flight Control')},
-    {down = Keys.catapult_shoot, value_down = 1.0, value_up = 0.0, name = _('Catapult Shoot'),     category = _('Flight Control')},
-    {down = device_commands.pilot_salute, cockpit_device_id = devices.CARRIER, value_down = 1.0, value_up = 0.0, name = _('Pilot Salute'),     category = _('Communications')},
+    --{down = Keys.catapult_ready, value_down = 1.0, value_up = 0.0, name = _('Catapult Hook-up'), category = _('Flight Control')},
+    --{down = Keys.catapult_shoot, value_down = 1.0, value_up = 0.0, name = _('Catapult Shoot'),     category = _('Flight Control')},
+    {down = iCommandPilotGestureSalute, name = _('Pilot Salute'),     category = _('Communications')},
     
     -- Weapon/CMDS Adjustment
     {down = Keys.ChangeCBU2AQuantity,    value_down = 1, name = _('ALE-29A Programmer CBU-2/A Release Quantity - 1/2/3'),            category = {_('Kneeboard'), _('ALE-29A Programmer')}},
