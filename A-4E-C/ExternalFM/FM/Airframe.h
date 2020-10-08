@@ -734,6 +734,6 @@ inline float Airframe::getFlapDamage() const
 	return (DMG_ELEM( Damage::FLAP_L ) + DMG_ELEM( Damage::FLAP_R )) / 2.0;
 }
 
-}//end namespace
+} // end namespace
 
 #endif
