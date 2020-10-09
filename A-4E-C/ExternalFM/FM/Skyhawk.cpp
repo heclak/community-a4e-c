@@ -16,7 +16,7 @@
 //============================ Skyhawk Statics ============================//
 static Skyhawk::Interface s_interface;
 static Skyhawk::Input s_input;
-static Skyhawk::Engine s_engine(s_input);
+static Skyhawk::Engine2 s_engine;
 static Skyhawk::Airframe s_airframe(s_input, s_engine);
 static Skyhawk::FlightModel s_fm(s_input, s_airframe, s_engine, s_interface);
 static Skyhawk::Avionics s_avionics(s_input, s_fm, s_engine, s_airframe);
@@ -73,6 +73,10 @@ void ed_fm_simulate(double dt)
 	s_airframe.setFlapsPosition(s_interface.getFlaps());
 	s_airframe.setSpoilerPosition(s_interface.getSpoilers());
 	s_airframe.setAirbrakePosition(s_interface.getSpeedBrakes());
+	s_airframe.setGearLPosition( s_interface.getGearLeft() );
+	s_airframe.setGearRPosition( s_interface.getGearRight() );
+	s_airframe.setGearNPosition( s_interface.getGearNose() );
+
 
 	s_input.pitchTrim() = s_interface.getPitchTrim();
 	s_input.rollTrim() = s_interface.getRollTrim();
@@ -140,7 +144,7 @@ void ed_fm_set_current_mass_state
 	s_mass = mass;
 	s_airframe.setMass(mass);
 	s_fm.setCOM(Vec3(center_of_mass_x, center_of_mass_y, center_of_mass_z));
-	printf( "Mass= %lf, Mass - Empty Mass = %lf\n", mass, mass - 5256.682 );
+	//printf( "Mass= %lf, Mass - Empty Mass = %lf\n", mass, mass - 5256.682 );
 	/*center_of_gravity.x  = center_of_mass_x;
 	center_of_gravity.y  = center_of_mass_y;
 	center_of_gravity.z  = center_of_mass_z;*/
@@ -304,7 +308,7 @@ bool ed_fm_change_mass  (double & delta_mass,
 
 	delta_mass = s_airframe.getFuelQtyDelta(tank);
 	s_airframe.setFuelPrevious( tank );
-	printf( "dm = %lf\n", delta_mass );
+	//printf( "dm = %lf\n", delta_mass );
 	delta_mass_pos_x = pos.x;
 	delta_mass_pos_y = pos.y;
 	delta_mass_pos_z = pos.z;
@@ -430,15 +434,15 @@ double ed_fm_get_param(unsigned index)
 	case ED_FM_SUSPENSION_0_GEAR_POST_STATE:
 	case ED_FM_SUSPENSION_0_DOWN_LOCK:
 	case ED_FM_SUSPENSION_0_UP_LOCK:
-		return s_interface.getGearNose();
+		return s_airframe.getGearNPosition();
 	case ED_FM_SUSPENSION_1_GEAR_POST_STATE:
 	case ED_FM_SUSPENSION_1_DOWN_LOCK:
 	case ED_FM_SUSPENSION_1_UP_LOCK:
-		return s_interface.getGearLeft();
+		return s_airframe.getGearLPosition();
 	case ED_FM_SUSPENSION_2_GEAR_POST_STATE:
 	case ED_FM_SUSPENSION_2_DOWN_LOCK:
 	case ED_FM_SUSPENSION_2_UP_LOCK:
-		return s_interface.getGearRight();
+		return s_airframe.getGearRPosition();
 
 	case ED_FM_ANTI_SKID_ENABLE:
 	case ED_FM_CAN_ACCEPT_FUEL_FROM_TANKER:

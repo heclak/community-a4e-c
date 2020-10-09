@@ -16,6 +16,9 @@
     <ClCompile Include="Avionics.cpp">
       <Filter>A4-Skyhawk</Filter>
     </ClCompile>
+    <ClCompile Include="Engine2.cpp">
+      <Filter>A4-Skyhawk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ED_FM_Utility.h" />
@@ -58,6 +61,15 @@
     </ClInclude>
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Data.h">
+      <Filter>A4-Skyhawk</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine2.h">
+      <Filter>A4-Skyhawk</Filter>
+    </ClInclude>
+    <ClInclude Include="AircraftPhysicsState.h">
+      <Filter>A4-Skyhawk</Filter>
+    </ClInclude>
+    <ClInclude Include="AtmosphereState.h">
       <Filter>A4-Skyhawk</Filter>
     </ClInclude>
   </ItemGroup>

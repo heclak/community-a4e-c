@@ -1,6 +1,6 @@
 #include "Airframe.h"
 #include <algorithm>
-Skyhawk::Airframe::Airframe(Input& controls, Engine& engine):
+Skyhawk::Airframe::Airframe(Input& controls, Engine2& engine):
 	m_controls(controls),
 	m_engine(engine)
 {
@@ -44,7 +44,9 @@ void Skyhawk::Airframe::resetDamage()
 
 void Skyhawk::Airframe::zeroInit()
 {
-	m_gearPosition = 0.0;
+	m_gearLPosition = 0.0;
+	m_gearRPosition = 0.0;
+	m_gearNPosition = 0.0;
 	m_flapsPosition = 0.0;
 	m_spoilerPosition = 0.0;
 	m_speedBrakePosition = 0.0;
@@ -63,21 +65,16 @@ void Skyhawk::Airframe::zeroInit()
 void Skyhawk::Airframe::coldInit()
 {
 	zeroInit();
-	m_controls.gear() = Input::GearPos::DOWN;
-	m_gearPosition = 1.0;
 }
 
 void Skyhawk::Airframe::hotInit()
 {
 	zeroInit();
-	m_controls.gear() = Input::GearPos::DOWN;
-	m_gearPosition = 1.0;
 }
 
 void Skyhawk::Airframe::airborneInit()
 {
 	zeroInit();
-	m_controls.gear() = Input::GearPos::UP;
 }
 
 void Skyhawk::Airframe::airframeUpdate(double dt)

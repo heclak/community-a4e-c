@@ -6,7 +6,7 @@
 #include "Table.h"
 #include "Input.h"
 #include "Airframe.h"
-#include "Engine.h"
+#include "Engine2.h"
 #include "Interface.h"
 #include <fstream>
 
@@ -16,7 +16,7 @@ namespace Skyhawk
 class FlightModel
 {
 public:
-	FlightModel(Input& controls, Airframe& airframe, Engine& engine, Interface& inter);
+	FlightModel(Input& controls, Airframe& airframe, Engine2& engine, Interface& inter);
 	~FlightModel();
 
 	void zeroInit();
@@ -180,7 +180,7 @@ private:
 	Vec3 m_force; //total force on the aircraft
 
 	//Aircraft Settings
-	Engine& m_engine;
+	Engine2& m_engine;
 	Airframe& m_airframe;
 	double m_aileronLeft;
 	double m_aileronRight;
@@ -208,7 +208,8 @@ private:
 	Table dCDspeedBrake; //drag with position of speedbrake normalised 0 - 1
 	Table CDbeta; //drag with beta (RADIANS)
 	Table CDde; //drag due to elevator deflection
-	double CDgear = 0.03;
+	double CDNoseGear = 0.0075;
+	double CDMainGear = 0.01125;
 
 	//Side Force
 	Table CYb; //side force with beta
@@ -418,7 +419,12 @@ void FlightModel::lift()
 void FlightModel::drag()
 {
 	//printf( "Mach %lf, drag %lf\n", m_mach, CDmach( m_mach ) );
-	double CD = dCDspeedBrake( 0.0 ) * m_airframe.getSpeedBrakePosition() + CDbeta( m_beta ) + CDde( 0.0 ) * abs( elevator() ) + CDmach( m_mach ) + CDi( 0.0 ) * pow( CLalpha( m_aoa ), 2.0 ) + m_airframe.getGearPosition() * CDgear;
+	double CD = dCDspeedBrake( 0.0 ) * m_airframe.getSpeedBrakePosition() + 
+				CDbeta( m_beta ) + CDde( 0.0 ) * abs( elevator() ) + 
+				CDmach( m_mach ) + CDi( 0.0 ) * pow( CLalpha( m_aoa ), 2.0 ) + 
+				m_airframe.getGearLPosition() * CDMainGear + 
+				m_airframe.getGearRPosition() * CDMainGear + 
+				m_airframe.getGearNPosition() * CDNoseGear;
 	
 	m_CDwindAxesComp.y = 0;
 	m_CDwindAxesComp.z = 0;

@@ -4,7 +4,7 @@ Skyhawk::Avionics::Avionics
 (
 	Input& input,
 	FlightModel& flightModel,
-	Engine& engine,
+	Engine2& engine,
 	Airframe& airframe
 ) :
 	m_input(input),

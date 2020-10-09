@@ -11,7 +11,7 @@ namespace Skyhawk
 class Avionics
 {
 public:
-	Avionics(Input& input, FlightModel& flightModel, Engine& engine, Airframe& airframe);
+	Avionics(Input& input, FlightModel& flightModel, Engine2& engine, Airframe& airframe);
 	~Avionics();
 	void coldInit();
 	void hotInit();
@@ -32,7 +32,7 @@ private:
 	//Ties to all other systems
 	Input& m_input;
 	FlightModel& m_flightModel;
-	Engine& m_engine;
+	Engine2& m_engine;
 	Airframe& m_airframe;
 
 };

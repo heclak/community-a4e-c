@@ -3,7 +3,7 @@
 #pragma once
 #include "Input.h"
 #include <stdio.h>
-#include "Engine.h"
+#include "Engine2.h"
 #include "Vec3.h"
 
 //Macro police don't hurt me
@@ -253,7 +253,7 @@ public:
 	};
 
 
-	Airframe(Input& controls, Engine& engine);
+	Airframe(Input& controls, Engine2& engine);
 	~Airframe();
 	void zeroInit();
 	void coldInit();
@@ -261,7 +261,9 @@ public:
 	void airborneInit();
 
 	//Utility
-	inline void setGearPosition(double position); //for airstart or ground start
+	inline void setGearLPosition(double position); //for airstart or ground start
+	inline void setGearRPosition(double position); //for airstart or ground start
+	inline void setGearNPosition(double position); //for airstart or ground start
 	inline void setFlapsPosition(double position);
 	inline void setSpoilerPosition(double position);
 	inline void setSlatLPosition(double position);
@@ -284,7 +286,10 @@ public:
 	inline double getFuelQtyExternal() const;
 	inline double getFuelQtyDelta(Tank tank) const;
 
-	inline double getGearPosition(); //returns gear pos
+	inline double getGearLPosition(); //returns gear pos
+	inline double getGearRPosition(); //returns gear pos
+	inline double getGearNPosition(); //returns gear pos
+
 	inline double getFlapsPosition();
 	inline double getSpoilerPosition();
 	inline double getSpeedBrakePosition();
@@ -362,7 +367,10 @@ private:
 
 
 	//Airframe Variables
-	double m_gearPosition = 0.0; //0 -> 1
+	double m_gearLPosition = 0.0; //0 -> 1
+	double m_gearRPosition = 0.0;
+	double m_gearNPosition = 0.0;
+
 	double m_flapsPosition = 0.0;
 	double m_spoilerPosition = 0.0;
 	double m_speedBrakePosition = 0.0;
@@ -414,7 +422,7 @@ private:
 	double m_catMoment = 0.0;
 	double m_angle = 0.0;
 
-	Engine& m_engine;
+	Engine2& m_engine;
 	Input& m_controls;
 	std::vector<DamageDelta> m_damageStack;
 };
@@ -441,9 +449,19 @@ void Airframe::setFlapsPosition(double position)
 	m_flapsPosition = position;
 }
 
-void Airframe::setGearPosition(double position)
+void Airframe::setGearLPosition(double position)
 {
-	m_gearPosition = position;
+	m_gearLPosition = position;
+}
+
+void Airframe::setGearRPosition( double position )
+{
+	m_gearRPosition = position;
+}
+
+void Airframe::setGearNPosition( double position )
+{
+	m_gearNPosition = position;
 }
 
 void Airframe::setAirbrakePosition(double position)
@@ -461,9 +479,19 @@ void Airframe::setMass(double mass)
 	m_mass = mass;
 }
 
-double Airframe::getGearPosition()
+double Airframe::getGearLPosition()
 {
-	return m_gearPosition;
+	return m_gearLPosition;
+}
+
+double Airframe::getGearRPosition()
+{
+	return m_gearRPosition;
+}
+
+double Airframe::getGearNPosition()
+{
+	return m_gearNPosition;
 }
 
 double Airframe::getFlapsPosition()

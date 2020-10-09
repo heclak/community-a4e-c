@@ -14,7 +14,7 @@ Skyhawk::FlightModel::FlightModel
 (
 	Input& controls,
 	Airframe& airframe,
-	Engine& engine,
+	Engine2& engine,
 	Interface& inter
 ):
 	m_controls(controls),
@@ -218,6 +218,7 @@ void Skyhawk::FlightModel::calculateForcesAndMoments(double dt)
 	m_scalarVSquared = m_airspeed.x * m_airspeed.x + m_airspeed.y * m_airspeed.y + m_airspeed.z * m_airspeed.z;
 
 	m_scalarV = sqrt(m_scalarVSquared);
+	m_engine.setAirspeed( m_scalarV );
 	m_interface.setAirspeed( m_scalarV );
 	m_mach = m_scalarV / m_speedOfSound;
 
