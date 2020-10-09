@@ -366,8 +366,6 @@ void FlightModel::N_stab()
 	//m_moment.y
 	double vertDamage = m_airframe.getVertStabDamage();
 	m_moment.y += m_q * m_integrityRud * (-Cnb(m_beta) * vertDamage * 0.8 + Cndr(0.0) * rudder() * m_airframe.getRudderDamage()) + m_p * (Cnr(0.0) * m_omega.y * vertDamage);//(Cnr(0.0)*m_omega.y); //This needs to be fixed, constants like 0.8 are temporary!!!
-	
-	printf("beta: %lf, Cnb: %lf\n", toDegrees(m_beta), -Cnb(m_beta));
 
 	//printf("beta: %lf, betaDot: %lf\n", m_q * (-Cnb(m_beta) * 0.8), m_p * (Cnr(0.0) * m_betaDot));
 	//printf("m_moment.y: %lf, m_beta: %lf, Cnb(mach)*m_beta: %lf, Cndr*rudder: %lf, Cnr*m_omega.y: %lf\n",

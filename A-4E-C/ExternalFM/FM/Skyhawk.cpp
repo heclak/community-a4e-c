@@ -140,7 +140,7 @@ void ed_fm_set_current_mass_state
 	s_mass = mass;
 	s_airframe.setMass(mass);
 	s_fm.setCOM(Vec3(center_of_mass_x, center_of_mass_y, center_of_mass_z));
-
+	printf( "Mass= %lf, Mass - Empty Mass = %lf\n", mass, mass - 5256.682 );
 	/*center_of_gravity.x  = center_of_mass_x;
 	center_of_gravity.y  = center_of_mass_y;
 	center_of_gravity.z  = center_of_mass_z;*/
@@ -303,7 +303,8 @@ bool ed_fm_change_mass  (double & delta_mass,
 	Vec3 r = pos - s_fm.getCOM();
 
 	delta_mass = s_airframe.getFuelQtyDelta(tank);
-
+	s_airframe.setFuelPrevious( tank );
+	printf( "dm = %lf\n", delta_mass );
 	delta_mass_pos_x = pos.x;
 	delta_mass_pos_y = pos.y;
 	delta_mass_pos_z = pos.z;
@@ -346,8 +347,8 @@ void  ed_fm_set_external_fuel (int	 station,
 								double z)
 {
 	s_airframe.setFuelState((Skyhawk::Airframe::Tank)station, Vec3(x, y, z), fuel);
-	//printf("Station: %d, Fuel: %lf, x: %lf y: %lf z: %lf\n", station, fuel, x, y, z);
-	//printf("EXTERNAL TOTAL: %lf\n", ed_fm_get_external_fuel());
+	printf("Station: %d, Fuel: %lf, x: %lf y: %lf z: %lf\n", station, fuel, x, y, z);
+	printf("EXTERNAL TOTAL: %lf\n", ed_fm_get_external_fuel());
 }
 /*
 	get external fuel volume 

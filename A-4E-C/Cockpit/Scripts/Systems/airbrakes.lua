@@ -133,6 +133,7 @@ local left_brake_pedal_param = get_param_handle("LEFT_BRAKE_PEDAL")
 local right_brake_pedal_param = get_param_handle("RIGHT_BRAKE_PEDAL")
 
 local fm_brakes = get_param_handle("FM_BRAKES")
+local fm_airspeed = get_param_handle("FM_AIRSPEED")
 
 function post_initialize()
     startup_print("airbrake: postinit")
@@ -256,7 +257,7 @@ end
 
 function update()
     update_birth()
-    update_brakes()
+    --update_brakes()
     		
 	if (ABRAKE_COMMAND == 0 and ABRAKE_STATE > 0) then
 		ABRAKE_STATE = ABRAKE_STATE - 0.01 -- lower airbrake in increments of 0.01 (50x per second)
@@ -265,7 +266,7 @@ function update()
         end
 	else
 		if (ABRAKE_COMMAND == 1) then
-            local knots = sensor_data.getIndicatedAirSpeed()*1.9438444924574
+            local knots = fm_airspeed:get()*1.9438444924574
             if knots > speedbrake_max_effective_knots then
                 if knots > speedbrake_blowback_knots then
                     -- blowback pressure relief valve opens

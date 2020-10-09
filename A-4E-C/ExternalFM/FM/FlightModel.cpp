@@ -218,6 +218,7 @@ void Skyhawk::FlightModel::calculateForcesAndMoments(double dt)
 	m_scalarVSquared = m_airspeed.x * m_airspeed.x + m_airspeed.y * m_airspeed.y + m_airspeed.z * m_airspeed.z;
 
 	m_scalarV = sqrt(m_scalarVSquared);
+	m_interface.setAirspeed( m_scalarV );
 	m_mach = m_scalarV / m_speedOfSound;
 
 	m_k = m_scalarVSquared * m_density * 0.5 * m_totalWingArea;

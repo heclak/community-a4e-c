@@ -39,6 +39,7 @@ local FLAP_BLOWBACK_PSI = 3650
 
 local flaps_ind = get_param_handle("D_FLAPS_IND")
 local fm_flaps = get_param_handle("FM_FLAPS")
+local fm_airspeed = get_param_handle("FM_AIRSPEED")
 
 dev:listen_command(Keys.PlaneFlaps)
 dev:listen_command(Keys.PlaneFlapsOn)
@@ -66,7 +67,7 @@ function RelativePressureOnFlaps(flap_state)
     local k = 8.504932 -- calculated ratio of v^2*a to 3650 (valve pressure limit) that initiates valve relief in A4 flap actuator
     local valve_pressure = 0
 
-    ias_knots = sensor_data.getIndicatedAirSpeed() * 3.6 * rate_met2knot
+    ias_knots = fm_airspeed:get() * 3.6 * rate_met2knot
     valve_pressure = ias_knots * ias_knots * a / k
     return valve_pressure
 end

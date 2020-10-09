@@ -275,7 +275,8 @@ public:
 	inline void setCExtVec(Vec3 vec);
 	inline void setRExtVec(Vec3 vec);
 
-	inline void setSelectedTank(Tank selected);
+	inline void setSelectedTank( Tank selected );
+	inline void setFuelPrevious( Tank tank );
 
 	inline const Vec3& getFuelPos(Tank tank) const;
 	inline const Vec3& getFuelPosSqr(Tank tank) const;
@@ -347,6 +348,9 @@ public:
 	inline float getSpeedbrakeDamage() const;
 	inline float getFlapDamage() const;
 
+	inline bool fuelAdded() const;
+	inline void setFuelAdded(bool fuelAdded);
+
 private:
 
 	//Airframe Constants
@@ -379,6 +383,7 @@ private:
 	double m_fuelPrev[4] = { 0.0, 0.0, 0.0, 0.0 };
 	Vec3 m_fuelPos[4] = { Vec3(), Vec3(), Vec3(), Vec3() };
 	Vec3 m_fuelPosSqr[4] = { Vec3(), Vec3(), Vec3(), Vec3() };
+	double m_fuelDelta[4] = { 0.0, 0.0, 0.0, 0.0 };
 
 	float* m_integrityElement;
 
@@ -400,7 +405,7 @@ private:
 	Vec3 m_fuelExtPosR;
 	Vec3 m_fuelExtPosRSqr;
 
-
+	bool m_addedFuel = false;
 
 	double m_mass = 1.0;
 
@@ -419,10 +424,14 @@ void Airframe::setSelectedTank(Tank selected)
 	m_selected = selected;
 }
 
+void Airframe::setFuelPrevious( Tank tank )
+{
+	m_fuelPrev[tank] = m_fuel[tank];
+}
+
 void Airframe::setFuelState(Tank tank, Vec3 pos, double fuel)
 {
 	m_fuel[tank] = fuel;
-	m_fuelPrev[tank] = fuel;
 	m_fuelPos[tank] = pos;
 	m_fuelPosSqr[tank] = Vec3(pos.x * pos.x, pos.y * pos.y, pos.z * pos.z);
 }
@@ -732,6 +741,16 @@ inline float Airframe::getSpeedbrakeDamage() const
 inline float Airframe::getFlapDamage() const
 {
 	return (DMG_ELEM( Damage::FLAP_L ) + DMG_ELEM( Damage::FLAP_R )) / 2.0;
+}
+
+inline bool Airframe::fuelAdded() const
+{
+	return m_addedFuel;
+}
+
+inline void Airframe::setFuelAdded( bool fuelAdded )
+{
+	m_addedFuel = fuelAdded;
 }
 
 } // end namespace

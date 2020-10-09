@@ -61,6 +61,7 @@ public:
 
 		m_cockpitShake = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_COCKPIT_SHAKE" );
 
+		m_airspeed = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_AIRSPEED" );
 	}
 
 	inline void coldInit()
@@ -191,6 +192,11 @@ public:
 		setParamNumber(m_rudderPedals, number);
 	}
 
+	inline void setAirspeed( double number )
+	{
+		setParamNumber( m_airspeed, number );
+	}
+
 	inline double getGearNose()
 	{
 		return getParamNumber(m_noseGear);
@@ -313,6 +319,7 @@ private:
 	void* m_internalFuel = NULL;
 	void* m_externalFuel = NULL;
 
+	void* m_airspeed = NULL;
 
 	//Radio Pointer for the Radio Device.
 	void* m_radio = NULL;

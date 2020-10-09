@@ -134,7 +134,7 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 	int totalExt = 0;
 	for (int i = Tank::INTERNAL; i < Tank::DONT_TOUCH; i++)
 	{
-		m_fuelPrev[i] = m_fuel[i];
+		//m_fuelPrev[i] = m_fuel[i];
 		if (m_fuel[i] > 10.0 && i > Tank::INTERNAL)
 		{
 			totalExt++;
