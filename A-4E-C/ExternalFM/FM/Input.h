@@ -68,6 +68,7 @@ public:
 		m_pitch = 0.0;
 		m_roll = 0.0;
 		m_yaw = 0.0;
+		m_throttle = 1.0;
 	}
 
 	void coldInit()

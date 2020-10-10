@@ -83,20 +83,25 @@ function post_initialize()
 
     local birth = LockOn_Options.init_conditions.birth_place
     if birth=="GROUND_HOT" then
-		 fm_ignition:set(1.0)
+        fm_ignition:set(1.0)
+        fm_throttle_position:set(0.0)
         engine_state = ENGINE_RUNNING
         throttle_state = THROTTLE_ADJUST
         throttle_clickable_ref:hide(throttle>0.01)
         dev:performClickableAction(device_commands.throttle_click,1,false)
         dev:performClickableAction(device_commands.ENGINE_manual_fuel_shutoff,0,false)
+        throttle_position:set(0)
     elseif birth=="AIR_HOT" then
-		 fm_ignition:set(1.0)
+        fm_ignition:set(1.0)
+        fm_throttle_position:set(0.0)
         engine_state = ENGINE_RUNNING
         throttle_state = THROTTLE_ADJUST
         dev:performClickableAction(device_commands.throttle_click,1,false)
         throttle_clickable_ref:hide(throttle>0.01)
+        throttle_position:set(0)
     elseif birth=="GROUND_COLD" then
-		 fm_ignition:set(0.0)
+        fm_ignition:set(0.0)
+        fm_throttle_position:set(0.0)
         engine_state = ENGINE_OFF
         throttle_state = THROTTLE_OFF
         throttle_clickable_ref:hide(false)
@@ -463,7 +468,8 @@ function update()
 	local rpm = rpm_main:get()
     local throttle = fm_throttle_position:get()
     local gear = get_aircraft_draw_argument_value(0) -- nose gear
-  
+
+
     update_rpm()
     update_oil_pressure()
     update_pressure_ratio()

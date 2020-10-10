@@ -16,17 +16,31 @@ Skyhawk::Engine2::~Engine2()
 
 void Skyhawk::Engine2::zeroInit()
 {
-
+	m_lpOmega = 0.0;
+	m_hpOmega = 0.0;
+	m_fuelFlow = 0.0;
+	m_massFlow = 0.0;
+	m_hasFuel = true;
+	m_ignitors = false;
+	m_bleedAir = false;
+	m_airspeed = 0.0;
+	m_temperature = 23.0;
 }
 
 void Skyhawk::Engine2::coldInit()
 {
 	zeroInit();
+	m_hpOmega = c_maxHPOmega * 0.55;
+	m_lpOmega = hpOmegaToLPOmega( m_hpOmega );
+	m_ignitors = true;
 }
 
 void Skyhawk::Engine2::hotInit()
 {
 	zeroInit();
+	m_hpOmega = c_maxHPOmega * 0.55;
+	m_lpOmega = hpOmegaToLPOmega( m_hpOmega );
+	m_ignitors = true;
 }
 
 void Skyhawk::Engine2::airbornInit()
