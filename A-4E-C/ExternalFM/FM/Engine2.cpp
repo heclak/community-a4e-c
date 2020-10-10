@@ -43,6 +43,9 @@ void Skyhawk::Engine2::hotInit()
 void Skyhawk::Engine2::airbornInit()
 {
 	zeroInit();
+	m_hpOmega = c_maxHPOmega * 0.55;
+	m_lpOmega = hpOmegaToLPOmega( m_hpOmega );
+	m_ignitors = true;
 }
 
 void Skyhawk::Engine2::updateEngine( double dt )

@@ -31,7 +31,7 @@ main_amortizer_spring_force_factor = 1.2e+6
 main_amortizer_spring_force_factor_rate = 2.5
 
 main_amortizer_static_force = 1.0e+3
-main_damper_force = 4.5e+4 --3e+4
+main_damper_force = 5.5e+4 --3e+4
 main_amortizer_direct_damper_force_factor = main_damper_force * 1.2
 main_amortizer_back_damper_force_factor = main_damper_force * 1.0
 
