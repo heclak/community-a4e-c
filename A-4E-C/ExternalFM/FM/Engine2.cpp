@@ -30,9 +30,6 @@ void Skyhawk::Engine2::zeroInit()
 void Skyhawk::Engine2::coldInit()
 {
 	zeroInit();
-	m_hpOmega = c_maxHPOmega * 0.55;
-	m_lpOmega = hpOmegaToLPOmega( m_hpOmega );
-	m_ignitors = true;
 }
 
 void Skyhawk::Engine2::hotInit()
