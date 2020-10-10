@@ -163,6 +163,7 @@
     <ClInclude Include="Engine2.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="Hashes.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="Skyhawk.h" />
@@ -193,6 +194,7 @@
     </ClCompile>
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Engine2.cpp" />
+    <ClCompile Include="Safe.cpp" />
     <ClCompile Include="Skyhawk.cpp" />
     <ClCompile Include="FlightModel.cpp" />
     <ClCompile Include="stdafx.cpp">

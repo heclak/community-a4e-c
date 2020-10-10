@@ -2,6 +2,7 @@
 //#include "ED_FM_Utility.h"
 #include "stdafx.h"
 //#include "A-4_Aero.h"
+#include "Globals.h"
 #include "Skyhawk.h"
 #include <Math.h>
 #include <stdio.h>
@@ -68,6 +69,9 @@ void ed_fm_add_local_moment(double & x,double &y,double &z)
 
 void ed_fm_simulate(double dt)
 {
+	if ( ! g_safeToRun )
+		return;
+
 	//Pre update
 	s_fm.setCockpitShakeModifier( s_interface.getCockpitShake() );
 	s_airframe.setFlapsPosition(s_interface.getFlaps());
@@ -119,7 +123,7 @@ void ed_fm_set_atmosphere(
 						)
 {
 	s_fm.setAtmosphericParams(ro, a, Vec3(wind_vx, wind_vy, wind_vz));
-
+	s_engine.setTemperature( t );
 	/*wind.x = wind_vx;
 	wind.y = wind_vy;
 	wind.z = wind_vz;
@@ -452,7 +456,7 @@ double ed_fm_get_param(unsigned index)
 		return s_engine.getRPM();
 
 	case ED_FM_ENGINE_1_TEMPERATURE:
-		return s_engine.getTemperature();
+		return 23.0;
 
 	case ED_FM_ENGINE_1_OIL_PRESSURE:
 		return 600.0;

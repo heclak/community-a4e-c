@@ -10,6 +10,7 @@
 
 FILE* stream;
 FILE* g_log = NULL;
+int g_safeToRun = 0;
 
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
@@ -35,6 +36,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 #ifdef LOGGING
 		fopen_s(&g_log, "C:/tmp/log.txt", "w");
 #endif
+		g_safeToRun = isSafeContext();
 		break;
 	case DLL_THREAD_ATTACH:
 		break;

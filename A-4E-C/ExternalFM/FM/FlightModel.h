@@ -164,7 +164,7 @@ private:
 
 	//slats
 	const double m_slatMass = 20.0; //mass (kg)
-	const double m_slatDamping = 10.0; //damping (-)
+	const double m_slatDamping = 15.0; //damping (-)
 	const double m_slatSpring = 1000.0; //spring (-)
 	const double m_slatArea = 3.0; //flat plate
 	const double m_aoaZero = 0.261799388;//0.261799; //aoa in body frame at which slat has zero lift (rad)

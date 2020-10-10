@@ -1,9 +1,12 @@
+#pragma once //globals r bad
 #ifndef GLOBALS_H
 #define GLOBALS_H
-#pragma once //globals r bad
 #include <stdio.h>
 
 extern FILE* g_log;
+extern int g_safeToRun;
+
+extern int isSafeContext();
 
 //Uncomment this to enable logging make sure this is commited with this commented out!!!!!!
 //#define LOGGING
