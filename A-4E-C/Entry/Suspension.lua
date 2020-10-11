@@ -45,8 +45,8 @@ main_damper_coeff 							= 100.0
 
 main_wheel_moment_of_inertia 				= 2.65
 
-wheel_static_friction_factor_COMMON 		= 0.85
-wheel_side_friction_factor_COMMON 			= 0.45
+wheel_static_friction_factor_COMMON 		= 1.0
+wheel_side_friction_factor_COMMON 			= 0.6
 wheel_roll_friction_factor_COMMON 			= 0.04
 wheel_glide_friction_factor_COMMON 			= 0.20 --this needs to be low to go from standstill to moving smoothly
 
