@@ -79,41 +79,6 @@ void Skyhawk::Airframe::airborneInit()
 
 void Skyhawk::Airframe::airframeUpdate(double dt)
 {
-	//m_slatLPosition = m_controls.slatL();
-	//m_slatRPosition = m_controls.slatR();
-
-	/*if (m_controls.slatL() >= m_slatLPosition)
-	{
-		m_slatLPosition += dt / m_slatsExtendTime;
-		m_slatLPosition = std::min(m_slatLPosition, m_controls.slatL());
-	}
-	else
-	{
-		m_slatLPosition -= dt / m_slatsExtendTime;
-		m_slatLPosition = std::max(m_slatLPosition, m_controls.slatL());
-	}
-
-	if (m_controls.slatR() >= m_slatRPosition)
-	{
-		m_slatRPosition += dt / m_slatsExtendTime;
-		m_slatRPosition = std::min(m_slatRPosition, m_controls.slatR());
-	}
-	else
-	{
-		m_slatRPosition -= dt / m_slatsExtendTime;
-		m_slatRPosition = std::max(m_slatRPosition, m_controls.slatR());
-	}*/
-
-	/*if (m_controls.airbrake() >= m_speedBrakePosition)
-	{
-		m_speedBrakePosition += dt / m_airbrakesExtendTime;
-		m_speedBrakePosition = std::min(m_speedBrakePosition, m_controls.airbrake());
-	}
-	else
-	{
-		m_speedBrakePosition -= dt / m_airbrakesExtendTime;
-		m_speedBrakePosition = std::max(m_speedBrakePosition, m_controls.airbrake());
-	}*/
 
 	if (m_controls.hook())
 	{

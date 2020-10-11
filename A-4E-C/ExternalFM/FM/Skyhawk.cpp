@@ -98,9 +98,6 @@ void ed_fm_simulate(double dt)
 	s_avionics.updateAvionics(dt);
 	s_fm.calculateForcesAndMoments(dt);
 
-	//s_interface.setRadioPower(true);
-	//s_interface.setIntercomPower(true);
-
 	//Post update
 	s_interface.setRPM(s_engine.getRPMNorm()*100.0);
 	s_interface.setThrottlePosition(s_input.throttleNorm());
@@ -124,12 +121,6 @@ void ed_fm_set_atmosphere(
 {
 	s_fm.setAtmosphericParams(ro, a, Vec3(wind_vx, wind_vy, wind_vz));
 	s_engine.setTemperature( t );
-	/*wind.x = wind_vx;
-	wind.y = wind_vy;
-	wind.z = wind_vz;
-
-	atmosphere_density = ro;
-	speed_of_sound     = a;*/
 }
 /*
 called before simulation to set up your environment for the next step
@@ -148,10 +139,6 @@ void ed_fm_set_current_mass_state
 	s_mass = mass;
 	s_airframe.setMass(mass);
 	s_fm.setCOM(Vec3(center_of_mass_x, center_of_mass_y, center_of_mass_z));
-	//printf( "Mass= %lf, Mass - Empty Mass = %lf\n", mass, mass - 5256.682 );
-	/*center_of_gravity.x  = center_of_mass_x;
-	center_of_gravity.y  = center_of_mass_y;
-	center_of_gravity.z  = center_of_mass_z;*/
 }
 /*
 called before simulation to set up your environment for the next step
@@ -181,10 +168,6 @@ void ed_fm_set_current_state
 {
 	s_fm.setWorldVelocity(Vec3(vx, vy, vz));
 	s_pos = Vec3(px, py, pz);
-	/*
-	velocity_world_cs.x = vx;
-	velocity_world_cs.y = vy;
-	velocity_world_cs.z = vz;*/
 }
 
 
@@ -247,7 +230,6 @@ void ed_fm_set_command
 		break;
 	case Skyhawk::Control::YAW:
 		s_input.yaw() = value;
-		//printf( "Rudder %lf\n", value );
 		break;
 	case Skyhawk::Control::THROTTLE:
 		s_input.throttle() = value;

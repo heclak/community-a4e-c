@@ -1,8 +1,8 @@
 
 --NOSEGEAR
 nose_amortizer_min_length 					= 0.00
-nose_amortizer_max_length 					= 0.32
-nose_amortizer_basic_length 				= 0.32
+nose_amortizer_max_length 					= 0.3 --0.32
+nose_amortizer_basic_length 				= 0.3
 nose_amortizer_reduce_length 				= 0.01
 
 
@@ -17,31 +17,46 @@ nose_amortizer_back_damper_force_factor 	=  nose_damper_force
 
 nose_wheel_moment_of_inertia 				= 0.6
 
+--Absolutely no idea what these do but they might be helpful, turns out it breaks everything.
+--nose_wheel_kz_factor					= 0.52,
+--nose_noise_k							= 0.4,
+
 --MAINGEAR2
 main_amortizer_min_length 					= 0.00
 main_amortizer_max_length 					= 0.70 --0.7
 main_amortizer_basic_length 				= 0.70 --0.7
-main_amortizer_reduce_length 				= 28.0
+--This is the length over which the amortizer will reduce. Smaller values mean higher ride height, larger values lower ride height.
+main_amortizer_reduce_length 				= 28.0 
 
+-- F = kx^y, where x is the displacement from the default position (determined by the reduce length)
+--This is k in the above equation
 main_amortizer_spring_force_factor 			= 7.0e+7
+--This is y in the above equation
 main_amortizer_spring_force_factor_rate 	= 3.5
 
+--A static force that is there for countering gravity.
 main_amortizer_static_force 				= 5256.0 * 9.81 * 1.08
+
 main_damper_force 							= 7.0e+4 --3e+4
-main_amortizer_direct_damper_force_factor 	= main_damper_force * 0.75
-main_amortizer_back_damper_force_factor 	= main_damper_force 
+main_amortizer_direct_damper_force_factor 	= main_damper_force * 0.75 --Damping force in the compress direction.
+main_amortizer_back_damper_force_factor 	= main_damper_force --Damping force in the extend direction
 
 main_damper_coeff 							= 100.0
+
 main_wheel_moment_of_inertia 				= 2.65
 
-wheel_static_friction_factor_COMMON 		= 0.90
-wheel_side_friction_factor_COMMON 			= 0.85
-wheel_roll_friction_factor_COMMON 			= 0.02
-wheel_glide_friction_factor_COMMON 			= 0.65
+wheel_static_friction_factor_COMMON 		= 0.85
+wheel_side_friction_factor_COMMON 			= 0.45
+wheel_roll_friction_factor_COMMON 			= 0.04
+wheel_glide_friction_factor_COMMON 			= 0.20 --this needs to be low to go from standstill to moving smoothly
 
-brake_moment_main 							= 5000.0
+brake_moment_main 							= 7000.0
 
 wheel_radius_factor 						= 1.0
+
+--Absolutely no idea what these do but they might be helpful.
+main_wheel_kz_factor					= 0.52
+main_noise_k							= 0.4
 
 suspension = 
 {
@@ -68,7 +83,7 @@ suspension =
 		amortizer_direct_damper_force_factor 	= nose_amortizer_direct_damper_force_factor,
 		amortizer_back_damper_force_factor 		= nose_amortizer_back_damper_force_factor,
 	
-		wheel_radius = 0.221,
+		wheel_radius = 0.441,
 		wheel_static_friction_factor 			= wheel_static_friction_factor_COMMON,
 		wheel_side_friction_factor 				= wheel_side_friction_factor_COMMON,--affects the abillity to slide in turns - decrease for better turning
 		wheel_roll_friction_factor 				= wheel_roll_friction_factor_COMMON,
@@ -77,6 +92,8 @@ suspension =
 		wheel_damage_speed 						= 200.0,
 		wheel_brake_moment_max 					= 0.0,
 		wheel_moment_of_inertia					= nose_wheel_moment_of_inertia,
+		wheel_kz_factor							= nose_wheel_kz_factor,
+		noise_k									= nose_noise_k,
 
 		damper_coeff 							= main_damper_coeff,
 
@@ -111,7 +128,7 @@ suspension =
 		amortizer_direct_damper_force_factor 	= main_amortizer_direct_damper_force_factor,
 		amortizer_back_damper_force_factor 		= main_amortizer_back_damper_force_factor,
 	
-		wheel_radius 							= 0.304,
+		wheel_radius 							= 0.609,
 		wheel_static_friction_factor 			= wheel_static_friction_factor_COMMON,
 		wheel_side_friction_factor 				= wheel_side_friction_factor_COMMON,
 		wheel_roll_friction_factor 				= wheel_roll_friction_factor_COMMON,
@@ -120,6 +137,8 @@ suspension =
 		wheel_damage_speed 						= 200.0, 
 		wheel_brake_moment_max 					= brake_moment_main,
 		wheel_moment_of_inertia 				= main_wheel_moment_of_inertia,
+		wheel_kz_factor							= main_wheel_kz_factor,
+		noise_k									= main_noise_k,
 
 		damper_coeff 							= main_damper_coeff,
 
@@ -154,7 +173,7 @@ suspension =
 		amortizer_direct_damper_force_factor 	= main_amortizer_direct_damper_force_factor/2.0,
 		amortizer_back_damper_force_factor 		= main_amortizer_back_damper_force_factor,
 		
-		wheel_radius 							= 0.304,
+		wheel_radius 							= 0.609,
 		wheel_static_friction_factor 			= wheel_static_friction_factor_COMMON,
 		wheel_side_friction_factor 				= wheel_side_friction_factor_COMMON,
 		wheel_roll_friction_factor 				= wheel_roll_friction_factor_COMMON,
@@ -163,6 +182,8 @@ suspension =
 		wheel_damage_speed 						= 200.0, 
 		wheel_brake_moment_max 					= brake_moment_main,
 		wheel_moment_of_inertia 				= main_wheel_moment_of_inertia,
+		wheel_kz_factor							= main_wheel_kz_factor,
+		noise_k									= main_noise_k,
 
 		damper_coeff 							= main_damper_coeff,
 

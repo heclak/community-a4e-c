@@ -71,6 +71,10 @@ function post_initialize()
     conthyd_light_param:set(0)
     utilhyd_light_param:set(0)
     startup_print("hydraulic_system: postinit end")
+	
+	--This is a dirty hack for the rudder not initialising to zero in the EFM for some reason.
+	--2003 is the rudder enum, we just set it to zero for init.
+	dispatch_action(nil, 2003, 0.0)
 end
 
 startup_print("hydraulic_system: load end")
