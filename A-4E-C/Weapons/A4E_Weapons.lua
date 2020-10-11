@@ -532,7 +532,7 @@ mk4hipeg = {
     displayName     = _("Mk4 HIPEG"),
     Weight          = 612.35,      -- 1350lb/612.35kg loaded (incl. 201kg of ammunition)
     Cx_pil          = 0.001220703125,
-    Elements        = {{ShapeName = "mk4"}},
+    Elements        = {{ShapeName = "A4E_Mk4_HIPEG"}},
     kind_of_shipping = 2,   -- SOLID_MUNITION
     gun_mounts      = {
         Mk11mod0({
@@ -543,7 +543,7 @@ mk4hipeg = {
             elevation_initial = 0,
             supply_position = {2, -0.3, -0.4}})
     },
-    shape_table_data = {{file = 'mk4'; username = 'MK4 HIPEG'; index = WSTYPE_PLACEHOLDER;}}
+    shape_table_data = {{file = 'A4E_Mk4_HIPEG'; username = 'MK4 HIPEG'; index = WSTYPE_PLACEHOLDER;}}
 }
 declare_loadout(mk4hipeg)
 
@@ -552,7 +552,7 @@ mk77mod0 =
 {
 	category  		= CAT_BOMBS,
 	name      		= "MK77mod0-WPN",
-	model     		= "mk77mod0",
+	model     		= "A4E_Mk77mod0",
 	user_name 		= _("Mk-77 mod 0"),
 	wsTypeOfWeapon  = {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, WSTYPE_PLACEHOLDER},
 	scheme    		= "bomb-common",
@@ -584,7 +584,7 @@ mk77mod0 =
 	shape_table_data =
 	{
 		{
-			file     = "mk77mod0",
+			file     = "A4E_Mk77mod0",
 			index    = WSTYPE_PLACEHOLDER,
 		},
 	},
@@ -660,7 +660,7 @@ mk77mod1 =
 {
     category  		= CAT_BOMBS,
     name      		= "MK77mod1-WPN",
-    model     		= "mk77mod1",
+    model     		= "A4E_Mk77mod1",
     user_name 		= _("Mk-77 mod 1"),
     wsTypeOfWeapon  = {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, WSTYPE_PLACEHOLDER},
     scheme    		= "bomb-common",
@@ -692,7 +692,7 @@ mk77mod1 =
     shape_table_data =
     {
         {
-            file     = "mk77mod1",
+            file     = "A4E_Mk77mod1",
             index    = WSTYPE_PLACEHOLDER,
         },
     },
@@ -770,7 +770,7 @@ MK_81SE = {
     category        = CAT_BOMBS,
     name            = "MK-81SE",
     user_name       = _("Mk-81SE"),
-    model           = "mk-81se",
+    model           = "A4E_MK-81SE",
     wsTypeOfWeapon  = {wsType_Weapon, wsType_Bomb, wsType_Bomb_A, WSTYPE_PLACEHOLDER},
     scheme          = "bomb-parashute",
     class_name      = "wAmmunitionBallute",
@@ -800,7 +800,7 @@ MK_81SE = {
     shape_table_data = {
         {
             name    = "MK-81SE";
-            file    = "mk-81se";
+            file    = "A4E_MK-81SE";
             life    = 1;
             fire    = {0, 1};
             username = "Mk-81SE";
@@ -839,7 +839,7 @@ AN_M66A2 = {
     category        = CAT_BOMBS,
     name            = "AN-M66A2",
     user_name       = _("AN-M66A2"),
-    model           = "an-m66",
+    model           = "A4E_AN-M66",
     wsTypeOfWeapon  = {wsType_Weapon, wsType_Bomb, wsType_Bomb_A, WSTYPE_PLACEHOLDER},
     scheme          = "bomb-common",
     type            = 0,
@@ -875,7 +875,7 @@ AN_M66A2 = {
     shape_table_data = {
         {
             name    = "AN_M66A2";
-            file    = "an-m66";
+            file    = "A4E_AN-M66";
             life    = 1;
             fire    = {0, 1};
             username = "AN-M66A2";
@@ -914,7 +914,7 @@ AN_M81 = {
     category        = CAT_BOMBS,
     name            = "AN-M81",
     user_name       = _("AN-M81"),
-    model           = "an-m81",
+    model           = "A4E_AN-M81",
     wsTypeOfWeapon  = {wsType_Weapon, wsType_Bomb, wsType_Bomb_A, WSTYPE_PLACEHOLDER},
     scheme          = "bomb-common",
     type            = 0,
@@ -950,7 +950,7 @@ AN_M81 = {
     shape_table_data = {
         {
             name    = "AN_M81";
-            file    = "an-m81";
+            file    = "A4E_AN-M81";
             life    = 1;
             fire    = {0, 1};
             username = "AN-M81";
@@ -989,7 +989,7 @@ AN_M88 = {
     category        = CAT_BOMBS,
     name            = "AN-M88",
     user_name       = _("AN-M88"),
-    model           = "an-m88",
+    model           = "A4E_AN-M88",
     wsTypeOfWeapon  = {wsType_Weapon, wsType_Bomb, wsType_Bomb_A, WSTYPE_PLACEHOLDER},
     scheme          = "bomb-common",
     type            = 0,
@@ -1025,7 +1025,7 @@ AN_M88 = {
     shape_table_data = {
         {
             name    = "AN_M88";
-            file    = "an-m88";
+            file    = "A4E_AN-M88";
             life    = 1;
             fire    = {0, 1};
             username = "AN-M88";
@@ -1065,7 +1065,7 @@ BLU_3B = {
     category        = CAT_BOMBS,
     name            = "BLU-3B",
     user_name       = _("BLU-3B"),
-    model           = "blu-3b",
+    model           = "A4E_BLU-3B",
     wsTypeOfWeapon  = {wsType_Weapon, wsType_Bomb, wsType_Bomb_Cluster, WSTYPE_PLACEHOLDER},
     scheme          = "bomb-parashute",
     class_name      = "wAmmunitionBallute",
@@ -1106,7 +1106,7 @@ BLU_3B = {
     shape_table_data = {
         {
             name    = "BLU-3B";
-            file    = "blu-3b";
+            file    = "A4E_BLU-3B";
             life    = 1;
             fire    = {0, 1};
             username = "BLU-3B";
@@ -1131,7 +1131,7 @@ BLU_4B = {
     category        = CAT_BOMBS,
     name            = "BLU-4B",
     user_name       = _("BLU-4B"),
-    model           = "blu-4b",
+    model           = "A4E_BLU-4B",
     wsTypeOfWeapon  = {wsType_Weapon, wsType_Bomb, wsType_Bomb_Cluster, WSTYPE_PLACEHOLDER},
     scheme          = "bomb-parashute",
     class_name      = "wAmmunitionBallute",
@@ -1172,7 +1172,7 @@ BLU_4B = {
     shape_table_data = {
         {
             name    = "BLU-4B";
-            file    = "blu-4b";
+            file    = "A4E_BLU-4B";
             life    = 1;
             fire    = {0, 1};
             username = "BLU-4B";
@@ -1192,9 +1192,9 @@ declare_weapon(BLU_4B)
 
 local bomblet_data =
 {
-    --use shapename,        mass,               wstype,                         drag,
-    ["BLU-3B"]          = { mass = BLU_3B.mass, wstype = BLU_3B.wsTypeOfWeapon, cx = 0.0001, len = 0.095+0.05 },
-    ["BLU-4B"]          = { mass = BLU_3B.mass, wstype = BLU_4B.wsTypeOfWeapon, cx = 0.0001, len = 0.095+0.05 },
+    --use shapename,        mass,               wstype,                                                drag,
+    ["BLU-3B"]          = { mass = BLU_3B.mass, wstype = BLU_3B.wsTypeOfWeapon, model = BLU_3B.model, cx = 0.0001, len = 0.095+0.05 },
+    ["BLU-4B"]          = { mass = BLU_3B.mass, wstype = BLU_4B.wsTypeOfWeapon, model = BLU_4B.model, cx = 0.0001, len = 0.095+0.05 },
 }
 
 function make_cbu_a4e(dispenser,element,count) -- assemble a cluster dispenser
@@ -1215,7 +1215,7 @@ function make_cbu_a4e(dispenser,element,count) -- assemble a cluster dispenser
     {
         {
             Position	=	{0,	0,	0},
-            ShapeName	=	"suu-7",
+            ShapeName	=	"A4E_SUU-7",
             IsAdapter   =   true,
         },
     }
@@ -1250,7 +1250,7 @@ function make_cbu_a4e(dispenser,element,count) -- assemble a cluster dispenser
         data.Elements[#data.Elements + 1] = {
             DrawArgs	=	{{1,1},{2,1}},
             Position	=	pos_bomblets[(i%19)+1],
-            ShapeName	=	element,
+            ShapeName	=	bomblet.model,
             Rotation	=   {0,0,0}
         }
     end
@@ -1569,7 +1569,7 @@ function make_cbu_a4e_multi(dispenser,count,side) -- assemble a rack of cluster 
                                                 DrawArgs       = {{1,1},{2,1}},
                                                 connector_name = connectors[j],
                                                 payload_CLSID  = "{"..dispenser.."}",
-                                                ShapeName      = "suu-7",
+                                                ShapeName      = "A4E_SUU-7",
                                                 IsAdapter      = true
                                             }
     end

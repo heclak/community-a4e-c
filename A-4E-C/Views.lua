@@ -3,7 +3,7 @@ ViewSettings = {
 	Cockpit = {
 
 	[1] = {-- player slot 1
-		CameraViewAngleLimits  = {30,120}, -- FOV Mini Maxi
+		CameraViewAngleLimits  = {20,140}, -- FOV Mini Maxi
 		CockpitLocalPoint      = {3.065, 0.585, 0.000000},
 		CameraAngleRestriction = {false,90,0.4},
 		CameraAngleLimits      = {200,-90,90}, -- max wiew right/left, max view down, max view up
