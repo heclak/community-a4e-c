@@ -11,16 +11,17 @@
 #include "Input.h"
 #include "FlightModel.h"
 #include "Airframe.h"
-#include "Engine.h"
 #include "Avionics.h"
 #include "Interface.h"
+#include "AircraftMotionState.h"
 //============================ Skyhawk Statics ============================//
+static Skyhawk::AircraftMotionState s_state;
 static Skyhawk::Interface s_interface;
 static Skyhawk::Input s_input;
 static Skyhawk::Engine2 s_engine;
 static Skyhawk::Airframe s_airframe(s_input, s_engine);
-static Skyhawk::FlightModel s_fm(s_input, s_airframe, s_engine, s_interface);
-static Skyhawk::Avionics s_avionics(s_input, s_fm, s_engine, s_airframe);
+static Skyhawk::FlightModel s_fm(s_state, s_input, s_airframe, s_engine, s_interface);
+static Skyhawk::Avionics s_avionics(s_input, s_state);
 
 
 //========================================================================//
@@ -166,8 +167,7 @@ void ed_fm_set_current_state
 	double quaternion_w //orientation quaternion components in world coordinate system
 )
 {
-	s_fm.setWorldVelocity(Vec3(vx, vy, vz));
-	s_pos = Vec3(px, py, pz);
+	s_state.setCurrentStateWorldAxis(Vec3(vx, vy, vz));
 }
 
 
@@ -196,14 +196,8 @@ void ed_fm_set_current_state_body_axis
 	double common_angle_of_slide   //AoS radians
 )
 {
-	s_fm.setPhysicsParams(common_angle_of_attack, common_angle_of_slide, Vec3(yaw, pitch, roll), Vec3(omegax, omegay, omegaz), Vec3(omegadotx, omegadoty, omegadoty), Vec3(vx - wind_vx, vy - wind_vy, vz - wind_vz), Vec3(ax, ay, az));
-	s_airframe.setAngle(pitch);
-
-	//aoa = common_angle_of_attack;
-	//beta = common_angle_of_slide;
-	//rx = omegax;
-	//ry = omegay;
-	//rz = omegaz;
+	s_state.setCurrentStateBodyAxis(common_angle_of_attack, common_angle_of_slide, Vec3(yaw, pitch, roll), Vec3(omegax, omegay, omegaz), Vec3(omegadotx, omegadoty, omegadoty), Vec3(vx - wind_vx, vy - wind_vy, vz - wind_vz), Vec3(ax, ay, az));
+	//s_airframe.setAngle(pitch);
 }
 
 void ed_fm_on_damage( int element, double element_integrity_factor )
@@ -247,12 +241,6 @@ void ed_fm_set_command
 	case Skyhawk::Control::HOOK_TOGGLE:
 		s_input.hook() = !s_input.hook();
 		break;
-	case Skyhawk::Control::NOSEWHEEL_STEERING_ENGAGE:
-		//s_input.nosewheelSteering() = true;
-		break;
-	case Skyhawk::Control::NOSEWHEEL_STEERING_DISENGAGE:
-		//s_input.nosewheelSteering() = false;
-		break;
 	default:
 		;// printf( "number %d: %lf\n", command, value );
 	}
@@ -294,7 +282,6 @@ bool ed_fm_change_mass  (double & delta_mass,
 
 	delta_mass = s_airframe.getFuelQtyDelta(tank);
 	s_airframe.setFuelPrevious( tank );
-	//printf( "dm = %lf\n", delta_mass );
 	delta_mass_pos_x = pos.x;
 	delta_mass_pos_y = pos.y;
 	delta_mass_pos_z = pos.z;
@@ -317,7 +304,6 @@ bool ed_fm_change_mass  (double & delta_mass,
 void ed_fm_set_internal_fuel(double fuel)
 {
 	s_airframe.setFuelState(Skyhawk::Airframe::Tank::INTERNAL, s_fm.getCOM(), fuel);
-	//printf("INTERNAL: %lf\n", s_airframe.getFuelQty(Skyhawk::Airframe::Tank::INTERNAL));
 }
 /*
 	get internal fuel volume 
@@ -325,7 +311,6 @@ void ed_fm_set_internal_fuel(double fuel)
 double ed_fm_get_internal_fuel()
 {
 	return s_airframe.getFuelQty(Skyhawk::Airframe::Tank::INTERNAL);
-
 }
 /*
 	set external fuel volume for each payload station , called for weapon init and on reload
@@ -337,8 +322,6 @@ void  ed_fm_set_external_fuel (int	 station,
 								double z)
 {
 	s_airframe.setFuelState((Skyhawk::Airframe::Tank)station, Vec3(x, y, z), fuel);
-	printf("Station: %d, Fuel: %lf, x: %lf y: %lf z: %lf\n", station, fuel, x, y, z);
-	printf("EXTERNAL TOTAL: %lf\n", ed_fm_get_external_fuel());
 }
 /*
 	get external fuel volume 
@@ -382,7 +365,9 @@ void ed_fm_set_draw_args (EdDrawArgument * drawargs,size_t size)
 
 	drawargs[HOOK].f = s_airframe.getHookPosition();
 
+	//This is the launch bar argument.
 	drawargs[85].f = 1.0;
+
 	/*drawargs[LEFT_GEAR].f = s_airframe.getGearPosition();
 	drawargs[RIGHT_GEAR].f = s_airframe.getGearPosition();
 	drawargs[NOSE_GEAR].f = s_airframe.getGearPosition();
@@ -398,25 +383,10 @@ void ed_fm_configure(const char * cfg_path)
 
 }
 
-double test_gear_state = 0;
 double ed_fm_get_param(unsigned index)
 {
-
-
 	switch (index)
-	{/*
-	case ED_FM_SUSPENSION_0_GEAR_POST_STATE:
-	case ED_FM_SUSPENSION_1_GEAR_POST_STATE:
-	case ED_FM_SUSPENSION_2_GEAR_POST_STATE:
-	case ED_FM_SUSPENSION_0_DOWN_LOCK:
-	case ED_FM_SUSPENSION_1_DOWN_LOCK:
-	case ED_FM_SUSPENSION_2_DOWN_LOCK:
-	case ED_FM_SUSPENSION_0_UP_LOCK:
-	case ED_FM_SUSPENSION_1_UP_LOCK:
-	case ED_FM_SUSPENSION_2_UP_LOCK:
-		return s_airframe.getGearPosition();*/
-
-
+	{
 	case ED_FM_SUSPENSION_0_GEAR_POST_STATE:
 	case ED_FM_SUSPENSION_0_DOWN_LOCK:
 	case ED_FM_SUSPENSION_0_UP_LOCK:
@@ -462,15 +432,12 @@ double ed_fm_get_param(unsigned index)
 	case ED_FM_ENGINE_1_THRUST:
 		return s_fm.thrust();
 	case ED_FM_ENGINE_1_COMBUSTION:
-		return s_engine.getFuelFlow() / c_maxFuelFlow;
+		return s_engine.getFuelFlow() / c_fuelFlowMax;
 	case ED_FM_SUSPENSION_1_RELATIVE_BRAKE_MOMENT:
-		//printf("BrakeLeft: %lf\n", s_input.normalise(s_input.brakeLeft()));
-		return s_input.normalise(s_input.brakeLeft());
+		return Skyhawk::Input::normalise(s_input.brakeLeft());
 	case ED_FM_SUSPENSION_2_RELATIVE_BRAKE_MOMENT:
-		//printf("BrakeRight: %lf\n", s_input.normalise(s_input.brakeRight()));
-		return s_input.normalise(s_input.brakeRight());
+		return Skyhawk::Input::normalise(s_input.brakeRight());
 	case ED_FM_SUSPENSION_0_WHEEL_SELF_ATTITUDE:
-		//return 1.0;
 		return s_interface.getNWS() > 0.5 ? 0.0 : 1.0;
 	case ED_FM_SUSPENSION_0_WHEEL_YAW:
 		return s_interface.getNWS() > 0.5 ? -s_input.yaw()/4.0 : 0.0;
@@ -496,7 +463,6 @@ bool ed_fm_pop_simulation_event(ed_fm_simulation_event& out)
 		out.event_params[1] = 3.0f;
 		out.event_params[2] = 70.0f;
 		out.event_params[3] = s_airframe.getMass()*9.81*0.5;
-		//out.event_params[3] = 300000.0f; //fucking lol
 		s_airframe.catapultState() = Skyhawk::Airframe::ON_CAT_WAITING;
 		return true;
 	}
@@ -552,6 +518,7 @@ void ed_fm_cold_start()
 	s_airframe.coldInit();
 	s_engine.coldInit();
 	s_avionics.coldInit();
+	s_state.coldInit();
 }
 
 void ed_fm_hot_start()
@@ -561,18 +528,20 @@ void ed_fm_hot_start()
 	s_airframe.hotInit();
 	s_engine.hotInit();
 	s_avionics.hotInit();
+	s_state.hotInit();
 }
 
 void ed_fm_hot_start_in_air()
 {
-	s_input.airbornInit();
-	s_fm.airbornInit();
+	s_input.airborneInit();
+	s_fm.airborneInit();
 	s_airframe.airborneInit();
-	s_engine.airbornInit();
-	s_avionics.airbornInit();
+	s_engine.airborneInit();
+	s_avionics.airborneInit();
+	s_state.airborneInit();
 }
 
-void ed_fm_repair ()
+void ed_fm_repair()
 {
 	s_airframe.resetDamage();
 }

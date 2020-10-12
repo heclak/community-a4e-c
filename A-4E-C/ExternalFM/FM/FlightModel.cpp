@@ -12,31 +12,26 @@
 //Vectors already constructor to zero vector.
 Skyhawk::FlightModel::FlightModel
 (
+	AircraftMotionState& state,
 	Input& controls,
 	Airframe& airframe,
 	Engine2& engine,
 	Interface& inter
 ):
+	m_state(state),
 	m_controls(controls),
 	m_airframe(airframe),
 	m_engine(engine),
 	m_interface( inter ),
 	m_density(1.0),
 	m_speedOfSound(340.0),
-	m_aoa(0.0),
-	m_beta(0.0),
 	m_scalarVSquared(0.0),
 	m_scalarV(0.0),
-	m_aileronLeft(0.0),
-	m_aileronRight(0.0),
-	m_elevator(0.0),
-	m_rudder(0.0),
 	m_q(0.0),
 	m_p(0.0),
 	m_k(0.0),
 	m_kL(0.0),
 	m_kR(0.0),
-	m_mach(0.0),
 	m_aoaDot(0.0),
 	m_aoaPrevious(0.0),
 	m_scalarAirspeedLW(0.0),
@@ -47,14 +42,7 @@ Skyhawk::FlightModel::FlightModel
 	m_aoaRW(0.0),
 	m_LslatVel(0.0),
 	m_RslatVel(0.0),
-	m_integrityLW(1.0),
-	m_integrityRW(1.0),
-	m_integrityRud(1.0),
-	m_integrityAil(1.0),
-	m_integrityElev(1.0),
-	m_integrityHstab(1.0),
-	m_integrityFlapL(1.0),
-	m_integrityFlapR(1.0),
+	m_cockpitShake(0.0),
 
 	//Setup tables
 	CLalpha(d_CLalpha, -0.26981317, 1.57079633),
@@ -109,10 +97,55 @@ Skyhawk::FlightModel::~FlightModel()
 
 }
 
+//Seriously need to set EVERY VARIABLE to zero (or approriate value if zero causes singularity) in the constructor and 
+//in this function. Otherwise Track's become unusable because of the butterfly effect.
 void Skyhawk::FlightModel::zeroInit()
 {
+	m_density = 1.0;
+	m_speedOfSound = 340.0;
+	m_q = 0.0;
+	m_p = 0.0;
+	m_k = 0.0;
+	m_kL = 0.0;
+	m_kR = 0.0;
+
+	m_scalarVSquared = 0.0;
+	m_scalarV = 0.0;
+	m_aoaPrevious = 0.0;
+	m_betaPrevious = 0.0;
+	m_betaDot = 0.0;
+
+	m_scalarAirspeedLW = 0.0;
+	m_scalarAirspeedRW = 0.0;
+
+	m_aoaLW = 0.0;
+	m_aoaRW = 0.0;
+
+	m_LslatVel = 0.0;
+	m_RslatVel = 0.0;
+
 	m_moment = Vec3();
 	m_force = Vec3();
+
+	m_wind = Vec3();
+	m_com = Vec3();
+	m_airspeed = Vec3();
+
+	m_LDwindAxesLW = Vec3();
+	m_LDwindAxesRW = Vec3();
+	m_CDwindAxesComp = Vec3();
+
+	m_airspeedLW = Vec3();
+	m_airspeedRW = Vec3();
+
+	m_liftVecLW = Vec3();
+	m_liftVecRW = Vec3();
+
+	m_dragVecLW = Vec3();
+	m_dragVecRW = Vec3();
+
+	m_nLW = Vec3();
+	m_nRW = Vec3();
 }
 
 void Skyhawk::FlightModel::coldInit()
@@ -125,7 +158,7 @@ void Skyhawk::FlightModel::hotInit()
 	zeroInit();
 }
 
-void Skyhawk::FlightModel::airbornInit()
+void Skyhawk::FlightModel::airborneInit()
 {
 	zeroInit();
 }
@@ -138,8 +171,8 @@ void Skyhawk::FlightModel::calculateLocalPhysicsParams()
 	m_nRW = Vec3(0.0, cos(m_wingDihedral), -sin(m_wingDihedral));
 	m_nLW = Vec3(0.0, cos(m_wingDihedral), sin(m_wingDihedral));
 
-	m_airspeedLW = m_airspeedLocal + cross(m_omega, m_rLW);
-	m_airspeedRW = m_airspeedLocal + cross(m_omega, m_rRW);
+	m_airspeedLW = m_state.getLocalAirspeed() + cross(m_state.getOmega(), m_rLW);
+	m_airspeedRW = m_state.getLocalAirspeed() + cross( m_state.getOmega(), m_rRW);
 	
 	m_dragVecLW = -normalize(m_airspeedLW);
 	m_dragVecRW = -normalize(m_airspeedRW);
@@ -182,11 +215,11 @@ void Skyhawk::FlightModel::calculateAero()
 
 void Skyhawk::FlightModel::calculateElements()
 {
-	Vec3 LiftLW =  windAxisToBody(m_LDwindAxesLW, m_aoaLW, m_beta);
+	Vec3 LiftLW =  windAxisToBody(m_LDwindAxesLW, m_aoaLW, m_state.getBeta());
 	//printf("LEFT X: %lf Y: %lf Z: %lf\n", m_LDwindAxesLW.x, m_LDwindAxesLW.y, m_LDwindAxesLW.z);
-	Vec3 LiftRW =  windAxisToBody(m_LDwindAxesRW, m_aoaRW, m_beta);
+	Vec3 LiftRW =  windAxisToBody(m_LDwindAxesRW, m_aoaRW, m_state.getBeta() );
 	//printf("RIGHT X: %lf Y: %lf Z: %lf\n", m_LDwindAxesRW.x, m_LDwindAxesRW.y, m_LDwindAxesRW.z);
-	Vec3 dragElem = windAxisToBody(m_CDwindAxesComp, m_aoa, m_beta);
+	Vec3 dragElem = windAxisToBody(m_CDwindAxesComp, m_state.getAOA(), m_state.getBeta() );
 	
 	//printf("lw: %lf, rw: %lf\n", m_aoaLW, m_aoaRW);
 	//printf("lw: %lf, %lf, %lf rw: %lf, %lf, %lf\n", LiftLW.x, LiftLW.y, LiftLW.z, LiftRW.x, LiftRW.y, LiftRW.z);
@@ -210,17 +243,17 @@ void Skyhawk::FlightModel::calculateForcesAndMoments(double dt)
 	
 	calculateLocalPhysicsParams();
 
-	m_aoaDot = (m_aoa - m_aoaPrevious) / dt;
-	m_betaDot = (m_beta - m_betaPrevious) / dt;
+	m_aoaDot = (m_state.getAOA() - m_aoaPrevious) / dt;
+	m_betaDot = (m_state.getBeta() - m_betaPrevious) / dt;
 
 	//Get airspeed and scalar speed squared.
-	m_airspeed = m_worldVelocity - m_wind;
+	m_airspeed = m_state.getWorldVelocity() - m_wind;
 	m_scalarVSquared = m_airspeed.x * m_airspeed.x + m_airspeed.y * m_airspeed.y + m_airspeed.z * m_airspeed.z;
 
 	m_scalarV = sqrt(m_scalarVSquared);
 	m_engine.setAirspeed( m_scalarV );
 	m_interface.setAirspeed( m_scalarV );
-	m_mach = m_scalarV / m_speedOfSound;
+	m_state.setMach( m_scalarV / m_speedOfSound );
 
 	m_k = m_scalarVSquared * m_density * 0.5 * m_totalWingArea;
 	m_kL = pow(m_scalarAirspeedLW, 2) * m_density * 0.5 * m_totalWingArea;
@@ -243,8 +276,8 @@ void Skyhawk::FlightModel::calculateForcesAndMoments(double dt)
 	slats(dt);
 
 	calculateAero();
-	m_aoaPrevious = m_aoa;
-	m_betaPrevious = m_beta;
+	m_aoaPrevious = m_state.getAOA();
+	m_betaPrevious = m_state.getAOA();
 }
 
 void Skyhawk::FlightModel::slats(double& dt)
@@ -253,7 +286,7 @@ void Skyhawk::FlightModel::slats(double& dt)
 	double forceR = (m_kR / m_totalWingArea) * m_slatArea * slatCL(m_aoaRW);
 
 	Vec3 accDirection = (0.94, 0.34, 0.0);
-	double accAircraft = accDirection * m_localAcc;
+	double accAircraft = accDirection * m_state.getLocalAcceleration();
 
 	double x_L = m_airframe.getSlatLPosition();
 	double x_R = m_airframe.getSlatRPosition();
@@ -314,7 +347,7 @@ void Skyhawk::FlightModel::calculateShake()
 	double x{ 0.0 };
 
 	// 19 - 28
-	double aoa = std::abs(m_aoa);
+	double aoa = std::abs(m_state.getAOA());
 	if (aoa >= 0.332 && m_scalarV > 30.0)
 	{
 		x = std::min(aoa - 0.332, 0.157)/0.157;

@@ -3,16 +3,12 @@
 Skyhawk::Avionics::Avionics
 (
 	Input& input,
-	FlightModel& flightModel,
-	Engine2& engine,
-	Airframe& airframe
+	AircraftMotionState& state
 ) :
 	m_input(input),
-	m_flightModel(flightModel),
-	m_engine(engine),
-	m_airframe(airframe)
+	m_state(state)
 {
-
+	zeroInit();
 }
 
 Skyhawk::Avionics::~Avionics()
@@ -20,24 +16,31 @@ Skyhawk::Avionics::~Avionics()
 
 }
 
+//Seriously need to set EVERY VARIABLE to zero (or approriate value if zero causes singularity) in the constructor and 
+//in this function. Otherwise Track's become unusable because of the butterfly effect.
+void Skyhawk::Avionics::zeroInit()
+{
+	m_x = 0.0;
+}
+
 void Skyhawk::Avionics::coldInit()
 {
-
+	zeroInit();
 }
 
 void Skyhawk::Avionics::hotInit()
 {
-
+	zeroInit();
 }
 
-void Skyhawk::Avionics::airbornInit()
+void Skyhawk::Avionics::airborneInit()
 {
-
+	zeroInit();
 }
 
 void Skyhawk::Avionics::updateAvionics(double dt)
 {
-	double f = washoutFilter(m_flightModel.yawRate(), dt)*m_baseGain*(1.0/(m_flightModel.mach() + 1));
+	double f = washoutFilter(m_state.getOmega().y, dt)*m_baseGain*(1.0/(m_state.getMach() + 1));
 
 	m_input.yawDamper() = f; //f
 

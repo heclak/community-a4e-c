@@ -1,6 +1,7 @@
 #ifndef CONTROL_H
 #define CONTROL_H
 #pragma once
+#include "BaseComponent.h"
 namespace Skyhawk
 {//begin namespace
 
@@ -32,79 +33,58 @@ enum Control
 	THROTTLE_DETEND = 3087,
 };
 
-class Input
+class Input : public BaseComponent
 {
 public:
-
-	enum class GearPos
-	{
-		DOWN,
-		UP
-	};
-
-	enum class ThrottleState
-	{
-		CUTOFF,
-		START,
-		IDLE
-	};
-
 
 	Input()
 	{
 
 	}
-	~Input()
-	{
 
-	}
-
-	void zeroInit()
+	virtual void zeroInit()
 	{
-		m_flaps = 0.0;
-		m_pitchTrim = 0.0;
-		m_rollTrim = 0.0;
-		m_yawTrim = 0.0;
 		m_pitch = 0.0;
 		m_roll = 0.0;
 		m_yaw = 0.0;
-		m_throttle = 1.0;
+
+		m_pitchTrim = 0.0;
+		m_rollTrim = 0.0;
+		m_yawTrim = 0.0;
+
 		m_yawDamper = 0.0;
-	}
+		m_throttle = 0.0;
+		m_brakeLeft = 0.0;
+		m_brakeRight = 0.0;
 
-	void coldInit()
-	{
-		zeroInit();
-		m_gear = GearPos::DOWN;
 		m_hook = false;
 		m_nosewheelSteering = false;
-		m_throttleState = ThrottleState::CUTOFF;
 		m_starter = false;
 	}
 
-	void hotInit()
+	virtual void coldInit()
 	{
 		zeroInit();
-		m_gear = GearPos::DOWN;
-		m_hook = false;
-		m_nosewheelSteering = false;
-		m_throttleState = ThrottleState::IDLE;
-		m_starter = false;
 	}
 
-	void airbornInit()
+	virtual void hotInit()
 	{
 		zeroInit();
-		m_gear = GearPos::UP;
-		m_hook = false;
-		m_nosewheelSteering = false;
-		m_throttleState = ThrottleState::IDLE;
-		m_starter = false;
 	}
 
-	inline double normalise(double value)
+	virtual void airborneInit()
+	{
+		zeroInit();
+	}
+
+	static inline double normalise(double value)
 	{
 		return (value + 1.0) / 2.0;
+	}
+
+	inline const double throttleNorm() const
+	{
+		return normalise( -m_throttle );
 	}
 
 	inline const double& pitch() const
@@ -175,19 +155,6 @@ public:
 	{
 		return m_throttle;
 	}
-
-	inline const double& throttleNorm() const
-	{
-		return (-throttle() + 1)/2.0;
-	}
-	inline const GearPos& gear() const
-	{
-		return m_gear;
-	}
-	inline GearPos& gear()
-	{
-		return m_gear;
-	}
 	inline const double& brakeLeft() const
 	{
 		return m_brakeLeft;
@@ -204,38 +171,6 @@ public:
 	{
 		return m_brakeRight;
 	}
-	inline const double& airbrake() const
-	{
-		return m_airbrake;
-	}
-	inline double& airbrake()
-	{
-		return m_airbrake;
-	}
-	inline const double& flaps() const
-	{
-		return m_flaps;
-	}
-	inline double& flaps()
-	{
-		return m_flaps;
-	}
-	inline const double& slatL() const
-	{
-		return m_slatL;
-	}
-	inline double& slatL()
-	{
-		return m_slatL;
-	}
-	inline const double& slatR() const
-	{
-		return m_slatR;
-	}
-	inline double& slatR()
-	{
-		return m_slatR;
-	}
 	inline const bool& hook() const
 	{
 		return m_hook;
@@ -251,14 +186,6 @@ public:
 	inline bool& nosewheelSteering()
 	{
 		return m_nosewheelSteering;
-	}
-	inline const ThrottleState& throttleState() const
-	{
-		return m_throttleState;
-	}
-	inline ThrottleState& throttleState()
-	{
-		return m_throttleState;
 	}
 	inline const bool& starter() const
 	{
@@ -281,12 +208,7 @@ private:
 	double m_throttle = 0.0;
 	double m_brakeLeft = 0.0;
 	double m_brakeRight = 0.0;
-	double m_airbrake = 0.0;
-	double m_flaps = 0.0;
-	double m_slatL = 0.0; //desired by fm
-	double m_slatR = 0.0; //desired by fm
-	GearPos m_gear = GearPos::UP;
-	ThrottleState m_throttleState = ThrottleState::CUTOFF;
+
 	bool m_hook = false;
 	bool m_nosewheelSteering = false;
 	bool m_starter = false;

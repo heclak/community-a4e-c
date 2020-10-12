@@ -1,7 +1,7 @@
 #pragma once
 #ifndef ENGINE_2_H
 #define ENGINE_2_H
-
+#include "BaseComponent.h"
 #include "Table.h"
 #include "Input.h"
 #include "Data.h"
@@ -20,16 +20,16 @@
 namespace Skyhawk
 {
 
-class Engine2
+class Engine2 : public BaseComponent
 {
 public:
 	Engine2();
 	~Engine2();
 
-	void zeroInit();
-	void coldInit();
-	void hotInit();
-	void airbornInit();
+	virtual void zeroInit();
+	virtual void coldInit();
+	virtual void hotInit();
+	virtual void airborneInit();
 
 	inline void setThrottle(double throttle);
 	inline void setHasFuel( bool hasFuel );

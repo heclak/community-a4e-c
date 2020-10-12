@@ -1,6 +1,7 @@
 #ifndef AIRFRAME_H
 #define AIRFRAME_H
 #pragma once
+#include "BaseComponent.h"
 #include "Input.h"
 #include <stdio.h>
 #include "Engine2.h"
@@ -36,7 +37,7 @@ namespace Skyhawk
 
 
 
-class Airframe
+class Airframe : public BaseComponent
 {
 public:
 
@@ -255,10 +256,10 @@ public:
 
 	Airframe(Input& controls, Engine2& engine);
 	~Airframe();
-	void zeroInit();
-	void coldInit();
-	void hotInit();
-	void airborneInit();
+	virtual void zeroInit();
+	virtual void coldInit();
+	virtual void hotInit();
+	virtual void airborneInit();
 
 	//Utility
 	inline void setGearLPosition(double position); //for airstart or ground start
@@ -273,15 +274,10 @@ public:
 	inline void setAngle(double angle);
 	inline void setMass(double angle);
 
-	inline void setLExtVec(Vec3 vec);
-	inline void setCExtVec(Vec3 vec);
-	inline void setRExtVec(Vec3 vec);
-
 	inline void setSelectedTank( Tank selected );
 	inline void setFuelPrevious( Tank tank );
 
 	inline const Vec3& getFuelPos(Tank tank) const;
-	inline const Vec3& getFuelPosSqr(Tank tank) const;
 	inline double getFuelQty(Tank tank) const;
 	inline double getFuelQtyExternal() const;
 	inline double getFuelQtyDelta(Tank tank) const;
@@ -296,12 +292,6 @@ public:
 	inline double getHookPosition();
 	inline double getSlatLPosition();
 	inline double getSlatRPosition();
-	inline double getFuelState();
-	inline double getPrevFuelState();
-	inline double getLeftTankDelta();
-	inline double getCentreTankDelta();
-	inline double getRightTankDelta();
-	inline double getFuelStateNorm();
 	inline double getCatMoment();
 	inline Tank getSelectedTank();
 	inline double getMass();
@@ -330,10 +320,6 @@ public:
 
 	//Update
 	void airframeUpdate(double dt); //performs calculations and updates
-	inline void fuelUpdate(double dt);
-	//Airframe Angles
-
-
 
 	//Damage
 	inline float getLWingDamage() const;
@@ -353,18 +339,10 @@ public:
 	inline float getSpeedbrakeDamage() const;
 	inline float getFlapDamage() const;
 
-	inline bool fuelAdded() const;
-	inline void setFuelAdded(bool fuelAdded);
-
 private:
 
 	//Airframe Constants
-	const double m_gearExtendTime = 3.0;
-	const double m_flapsExtendTime = 5.0;
-	const double m_airbrakesExtendTime = 3.0;
 	const double m_hookExtendTime = 1.5;
-	const double m_slatsExtendTime = 0.25;
-
 
 	//Airframe Variables
 	double m_gearLPosition = 0.0; //0 -> 1
@@ -383,37 +361,13 @@ private:
 	double m_elevator = 0.0;
 	double m_rudder = 0.0;
 
-
-
-	Tank m_selected;
+	Tank m_selected = Tank::INTERNAL;
 
 	double m_fuel[4] = { 0.0, 0.0, 0.0, 0.0 };
 	double m_fuelPrev[4] = { 0.0, 0.0, 0.0, 0.0 };
 	Vec3 m_fuelPos[4] = { Vec3(), Vec3(), Vec3(), Vec3() };
-	Vec3 m_fuelPosSqr[4] = { Vec3(), Vec3(), Vec3(), Vec3() };
-	double m_fuelDelta[4] = { 0.0, 0.0, 0.0, 0.0 };
 
 	float* m_integrityElement;
-
-	//double m_fuel = 0.0;
-	//double m_fuelPrevious = 0.0;
-
-	double m_fuelExtL = 0.0;
-	double m_fuelExtLPrev = 0.0;
-	Vec3 m_fuelExtPosL;
-	Vec3 m_fuelExtPosLSqr;
-
-	double m_fuelExtC = 0.0;
-	double m_fuelExtCPrev = 0.0;
-	Vec3 m_fuelExtPosC;
-	Vec3 m_fuelExtPosCSqr;
-
-	double m_fuelExtR = 0.0;
-	double m_fuelExtRPrev = 0.0;
-	Vec3 m_fuelExtPosR;
-	Vec3 m_fuelExtPosRSqr;
-
-	bool m_addedFuel = false;
 
 	double m_mass = 1.0;
 
@@ -441,7 +395,6 @@ void Airframe::setFuelState(Tank tank, Vec3 pos, double fuel)
 {
 	m_fuel[tank] = fuel;
 	m_fuelPos[tank] = pos;
-	m_fuelPosSqr[tank] = Vec3(pos.x * pos.x, pos.y * pos.y, pos.z * pos.z);
 }
 
 void Airframe::setFlapsPosition(double position)
@@ -606,29 +559,9 @@ void Airframe::setCatStateFromKey()
 	}
 }
 
-double Airframe::getLeftTankDelta()
-{
-	return m_fuelExtL - m_fuelExtLPrev;
-}
-
-double Airframe::getCentreTankDelta()
-{
-	return m_fuelExtC - m_fuelExtCPrev;
-}
-
-double Airframe::getRightTankDelta()
-{
-	return m_fuelExtR - m_fuelExtRPrev;
-}
-
 const Vec3& Airframe::getFuelPos(Tank tank) const
 {
 	return m_fuelPos[tank];
-}
-
-const Vec3& Airframe::getFuelPosSqr(Tank tank) const
-{
-	return m_fuelPosSqr[tank];
 }
 
 double Airframe::getFuelQty(Tank tank) const
@@ -659,24 +592,6 @@ double Airframe::getMass()
 inline Airframe::Tank Airframe::getSelectedTank()
 {
 	return m_selected;
-}
-
-inline void Airframe::setLExtVec(Vec3 vec)
-{
-	m_fuelExtPosL = vec;
-	m_fuelExtPosLSqr = Vec3(vec.x*vec.x, vec.y*vec.y, vec.z*vec.z);
-}
-
-inline void Airframe::setCExtVec(Vec3 vec)
-{
-	m_fuelExtPosC = vec;
-	m_fuelExtPosCSqr = Vec3(vec.x * vec.x, vec.y * vec.y, vec.z * vec.z);
-}
-
-inline void Airframe::setRExtVec(Vec3 vec)
-{
-	m_fuelExtPosR = vec;
-	m_fuelExtPosRSqr = Vec3(vec.x * vec.x, vec.y * vec.y, vec.z * vec.z);
 }
 
 inline void Airframe::setIntegrityElement(Damage element, float integrity)
@@ -769,16 +684,6 @@ inline float Airframe::getSpeedbrakeDamage() const
 inline float Airframe::getFlapDamage() const
 {
 	return (DMG_ELEM( Damage::FLAP_L ) + DMG_ELEM( Damage::FLAP_R )) / 2.0;
-}
-
-inline bool Airframe::fuelAdded() const
-{
-	return m_addedFuel;
-}
-
-inline void Airframe::setFuelAdded( bool fuelAdded )
-{
-	m_addedFuel = fuelAdded;
 }
 
 } // end namespace

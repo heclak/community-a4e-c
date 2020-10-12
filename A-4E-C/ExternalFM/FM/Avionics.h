@@ -1,25 +1,23 @@
 #ifndef AVIONICS_H
 #define AVIONICS_H
 #pragma once
+#include "BaseComponent.h"
 #include "Input.h"
-#include "Airframe.h"
-#include "Engine.h"
-#include "FlightModel.h"
+#include "AircraftMotionState.h"
 namespace Skyhawk
 {//begin namespace
 
-class Avionics
+class Avionics : public BaseComponent
 {
 public:
-	Avionics(Input& input, FlightModel& flightModel, Engine2& engine, Airframe& airframe);
+	Avionics(Input& input, AircraftMotionState& state);
 	~Avionics();
-	void coldInit();
-	void hotInit();
-	void airbornInit();
-
+	virtual void zeroInit();
+	virtual void coldInit();
+	virtual void hotInit();
+	virtual void airborneInit();
 
 	void updateAvionics(double dt);
-
 private:
 
 	//constants
@@ -29,12 +27,8 @@ private:
 	inline double washoutFilter(double input, double dt);
 	double m_x = 0.0;
 
-	//Ties to all other systems
 	Input& m_input;
-	FlightModel& m_flightModel;
-	Engine2& m_engine;
-	Airframe& m_airframe;
-
+	AircraftMotionState& m_state;
 };
 
 double Avionics::washoutFilter(double input, double dt)

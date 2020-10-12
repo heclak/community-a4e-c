@@ -156,13 +156,13 @@
     <ClInclude Include="..\include\Cockpit\ccParametersAPI.h" />
     <ClInclude Include="..\include\FM\wHumanCustomPhysicsAPI.h" />
     <ClInclude Include="..\include\FM\wHumanCustomPhysicsAPI_ImplementationDeclare.h" />
-    <ClInclude Include="AircraftPhysicsState.h" />
+    <ClInclude Include="AircraftMotionState.h" />
     <ClInclude Include="Airframe.h" />
     <ClInclude Include="AtmosphereState.h" />
     <ClInclude Include="Avionics.h" />
+    <ClInclude Include="BaseComponent.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="Engine2.h" />
-    <ClInclude Include="Engine.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Hashes.h" />
     <ClInclude Include="Input.h" />
@@ -177,6 +177,7 @@
     <ClInclude Include="Vec3.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AircraftMotionState.cpp" />
     <ClCompile Include="Airframe.cpp" />
     <ClCompile Include="Avionics.cpp" />
     <ClCompile Include="dllmain.cpp">
@@ -193,7 +194,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Engine2.cpp" />
     <ClCompile Include="Safe.cpp" />
     <ClCompile Include="Skyhawk.cpp" />

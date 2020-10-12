@@ -5,6 +5,7 @@ Skyhawk::Airframe::Airframe(Input& controls, Engine2& engine):
 	m_engine(engine)
 {
 	m_integrityElement = new float[(int)Damage::COUNT];
+	zeroInit();
 }
 
 Skyhawk::Airframe::~Airframe()
@@ -42,24 +43,43 @@ void Skyhawk::Airframe::resetDamage()
 	}
 }
 
+//Seriously need to set EVERY VARIABLE to zero (or approriate value if zero causes singularity) in the constructor and 
+//in this function. Otherwise Track's become unusable because of the butterfly effect.
 void Skyhawk::Airframe::zeroInit()
 {
 	m_gearLPosition = 0.0;
 	m_gearRPosition = 0.0;
 	m_gearNPosition = 0.0;
+
 	m_flapsPosition = 0.0;
 	m_spoilerPosition = 0.0;
 	m_speedBrakePosition = 0.0;
 	m_hookPosition = 0.0;
 	m_slatLPosition = 0.0;
 	m_slatRPosition = 0.0;
-	m_flapsPosition = 0.0;
-	m_catapultState = CatapultState::OFF_CAT;
-	m_mass = 1.0;
-	//m_fuel = 0.0;
-	//m_fuelPrevious = 0.0;
+
+	m_aileronLeft = 0.0;
+	m_aileronRight = 0.0;
+	m_elevator = 0.0;
+	m_rudder = 0.0;
+
+	m_selected = Tank::INTERNAL;
+
+	for ( int i = 0; i < Tank::DONT_TOUCH; i++ )
+	{
+		m_fuelPrev[i] = 0.0;
+	}
 
 	resetDamage();
+
+	m_mass = 1.0;
+
+
+	m_catapultState = CatapultState::OFF_CAT;
+	m_catStateSent = false;
+	m_catMoment = 0.0;
+	m_angle = 0.0;
+	m_damageStack.clear();
 }
 
 void Skyhawk::Airframe::coldInit()
@@ -103,6 +123,8 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 		}
 	}
 
+	printf( "Internal: %lf\n", m_fuel[0] );
+
 	double sub_dm = totalExt > 0 ? dm / (double)totalExt : dm;
 	for (int i = Tank::INTERNAL; i < Tank::DONT_TOUCH; i++)
 	{
@@ -121,7 +143,6 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 	}
 
 	//printf("LEFT: %lf, CENTRE: %lf, RIGHT: %lf, INTERNAL: %lf\n", m_fuel[Tank::LEFT_EXT], m_fuel[Tank::CENTRE_EXT], m_fuel[Tank::RIGHT_EXT], m_fuel[Tank::INTERNAL]);
-
 	m_engine.setHasFuel(m_fuel[Tank::INTERNAL] > 50.0);
 	
 	m_elevator = m_controls.pitch() + m_controls.pitchTrim();
