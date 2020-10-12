@@ -5,6 +5,7 @@
 
 extern FILE* g_log;
 extern int g_safeToRun;
+extern bool g_logging;
 
 extern int isSafeContext();
 
@@ -14,7 +15,7 @@ extern int isSafeContext();
 //#define LOGGING
 
 #ifdef LOGGING
-#define LOG(s, ...) fprintf(g_log, s, __VA_ARGS__);
+#define LOG(s, ...) if (g_logging) fprintf(g_log, s, __VA_ARGS__);
 #else
 #define LOG(s, ...) /*nothing*/
 #endif

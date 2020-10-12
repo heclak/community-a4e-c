@@ -11,6 +11,7 @@
 FILE* stream;
 FILE* g_log = NULL;
 int g_safeToRun = 0;
+bool g_logging = false;
 
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
@@ -34,7 +35,18 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 #endif
 
 #ifdef LOGGING
-		fopen_s(&g_log, "C:/tmp/log.txt", "w");
+		size_t size;
+		getenv_s( &size, NULL, 0, "A4E_EFM_LOGGING" );
+		if ( size )
+		{
+			g_logging = true;
+		}
+
+		getenv_s( &size, NULL, 0, "ENV_DISABLE_COPY_PROTECTION" );
+		if ( g_logging )
+		{
+			fopen_s( &g_log, "C:/tmp/log.txt", "w" );
+		}
 #endif
 		g_safeToRun = isSafeContext();
 		break;
@@ -43,7 +55,8 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 	case DLL_THREAD_DETACH:
 	case DLL_PROCESS_DETACH:
 #ifdef LOGGING
-		fclose(g_log);
+		if ( g_logging )
+			fclose(g_log);
 #endif
 		break;
 	}
