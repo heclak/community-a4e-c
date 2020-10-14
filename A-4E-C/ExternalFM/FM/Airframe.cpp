@@ -1,6 +1,7 @@
 #include "Airframe.h"
 #include <algorithm>
-Skyhawk::Airframe::Airframe(Input& controls, Engine2& engine):
+Skyhawk::Airframe::Airframe( AircraftMotionState& state, Input& controls, Engine2& engine):
+	m_state(state),
 	m_controls(controls),
 	m_engine(engine)
 {
@@ -123,8 +124,6 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 		}
 	}
 
-	printf( "Internal: %lf\n", m_fuel[0] );
-
 	double sub_dm = totalExt > 0 ? dm / (double)totalExt : dm;
 	for (int i = Tank::INTERNAL; i < Tank::DONT_TOUCH; i++)
 	{
@@ -158,7 +157,7 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 
 	if (m_catapultState != OFF_CAT)
 	{
-		m_catMoment = pow((c_catAngle - m_angle)*60.0, 3.0) * c_catConstrainingForce;
+		m_catMoment = pow((c_catAngle - m_state.getAngle().z)*60.0, 3.0) * c_catConstrainingForce;
 		m_catMoment = m_catMoment < 0.0 ? m_catMoment : 0.0;
 	}
 	else

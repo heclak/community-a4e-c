@@ -62,6 +62,8 @@ public:
 		m_cockpitShake = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_COCKPIT_SHAKE" );
 
 		m_airspeed = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_AIRSPEED" );
+
+		m_yawDamper = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_YAW_DAMPER" );
 	}
 
 	inline void coldInit()
@@ -264,6 +266,11 @@ public:
 	{
 		return getParamNumber( m_cockpitShake );
 	}
+
+	inline double getYawDamper()
+	{
+		return getParamNumber( m_yawDamper );
+	}
 		 
 	void* m_test = NULL;
 private:
@@ -326,6 +333,8 @@ private:
 	void* m_intercom = NULL;
 	void* m_weapon = NULL;
 	void* m_cockpitShake = NULL;
+
+	void* m_yawDamper = NULL;
 };
 
 

@@ -6,7 +6,9 @@ dofile(LockOn_Options.script_path.."devices.lua")
 dofile(LockOn_Options.script_path.."Systems/stores_config.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
+dofile(LockOn_Options.script_path.."Systems/hydraulic_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
+dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 
 startup_print("afcs: load")
 
@@ -31,7 +33,8 @@ end
 local update_time_step = 0.02
 make_default_activity(update_time_step) --update will be called 50 times per second
 
-local sensor_data = get_base_data()
+local sensor_data = get_efm_sensor_data_overrides()
+local efm_data_bus = get_efm_data_bus()
 
 local ThrottleUp = 1032
 local ThrottleDown = 1033
@@ -125,20 +128,23 @@ local Ki_handle = get_param_handle("Ki_DEBUG")
 local Kd_handle = get_param_handle("Kd_DEBUG")
 local debug_pid = apc_pid
 
+local fm_stab_aug = get_param_handle("FM_YAW_DAMPER")
+
 function post_initialize()
     startup_print("afcs: postinit")
-
+	
     local dev = GetSelf()
-    local sensor_data = get_base_data()
     local birth = LockOn_Options.init_conditions.birth_place
     if birth=="GROUND_HOT" or birth=="AIR_HOT" then --"GROUND_COLD","GROUND_HOT","AIR_HOT"
         -- set AFCS to standby
         dev:performClickableAction(device_commands.afcs_standby,1,false)
+		 dev:performClickableAction(device_commands.afcs_stab_aug, 1, false)
         afcs_standby_enabled = true
         afcs_state = "afcs-stby"
     elseif birth=="GROUND_COLD" then
         dev:performClickableAction(device_commands.afcs_standby,0,false)
         afcs_state = "afcs-off"
+		 dev:performClickableAction(device_commands.afcs_stab_aug, 0, false)
     end
 
     dev:performClickableAction(device_commands.apc_engagestbyoff,-1,true)    -- disable APC by default
@@ -240,7 +246,22 @@ local iCommandPlaneStabHbarHeading = 636
 local iCommandPlaneStabPathHold = 637
 --]]
 
+function SetCommand(command, value)
+	local current_afcs_state = afcs_state
+	
+	if command == device_commands.afcs_hdg_set then
+		afcs_heading_set(value)
+	elseif command == Keys.AFCSHeadingInc then
+		dev:performClickableAction(device_commands.afcs_hdg_set, 1, false)
+    elseif command == Keys.AFCSHeadingDec then
+		dev:performClickableAction(device_commands.afcs_hdg_set, -1, false)
+    elseif command == Keys.AFCSOverride then
+		dev:performClickableAction(device_commands.afcs_engage, 0, false)
+		
 
+
+
+end
 
 function SetCommand(command,value)
     -- "primary" control is the clickable device, key commands trigger the clickable actions...
@@ -435,39 +456,15 @@ function SetCommand(command,value)
         end
     elseif command == device_commands.afcs_stab_aug then
         if value == 1 then
-            if not afcs_stab_aug_enabled then
-                debug_print_afcs("Stab aug not yet implemented")
-                afcs_stab_aug_enabled = true
-            end
-            --dev:performClickableAction(device_commands.afcs_stab_aug,0,false)
-            --[[
-            Yaw damping action is provided when the engage
-            switch is in the ENGAGE position or the stability
-            augmentation switch is in the STAB AUG position.
-            TODO:
-            This sounds like it is supposed to counter Dutch roll, which can
-            occur at slow airspeeds and high altitude. It doesn't seem like the SFM
-            simulates this (or automatically counters it), so instead we may need
-            to _induce_ something that seems like Dutch roll when stab aug
-            is disabled, e.g. maybe oscillate the rudder a bit, depending
-            on airspeed and altitude
-            --]]
-            --[[
-            TODO:
-            "The AFCS will maintain heading, altitude
-            and pitch and bank angles, and perform a coordinated
-            turn to a preselected heading without use of the pilot
-            control stick."
-            Based on above, in particular "coordinated turn", as well as
-            http://aviation.stackexchange.com/questions/6391/what-is-the-yaw-damper
-            the rudder should probably also be automatically controlled to ensure
-            a coordinated turn
-            --]]
-        else
-            if afcs_stab_aug_enabled then
-                afcs_stab_aug_enabled = false
-            end
-        end
+			if afcs_standby_enabled then
+				afcs_stab_aug_enabled = true
+			else
+				dev:performClickableAction(device_commands.afcs_stab_aug,0,false)
+			end
+		 else
+			dev:performClickableAction(device_commands.afcs_stab_aug,0,false)
+			afcs_stab_aug_enabled = false
+	 	 end
     elseif command == device_commands.afcs_ail_trim then
         if value == 1 then
             if not afcs_ail_trim_enabled then
@@ -868,6 +865,13 @@ function update_afcs()
         except when operating in CSS mode
         --]]
     end
+	
+	if afcs_stab_aug_enabled and get_hyd_utility_ok() and get_elec_primary_dc_ok() and get_elec_primary_ac_ok() then
+		efm_data_bus.fm_setYawDamper(1.0)
+	else
+		efm_data_bus.fm_setYawDamper(0.0)
+	end
+	
 end
 
 local prev_throttle_lever=0

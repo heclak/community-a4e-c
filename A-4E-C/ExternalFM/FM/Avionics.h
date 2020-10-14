@@ -18,6 +18,7 @@ public:
 	virtual void airborneInit();
 
 	void updateAvionics(double dt);
+	inline void setYawDamperPower( bool power );
 private:
 
 	//constants
@@ -29,6 +30,8 @@ private:
 
 	Input& m_input;
 	AircraftMotionState& m_state;
+
+	bool m_damperEnabled = false;
 };
 
 double Avionics::washoutFilter(double input, double dt)
@@ -36,6 +39,11 @@ double Avionics::washoutFilter(double input, double dt)
 	double sampleRatio = dt / m_timeConstant;
 	m_x = (1.0 - (sampleRatio)) * m_x + sampleRatio * input;
 	return input - m_x;
+}
+
+void Avionics::setYawDamperPower( bool power )
+{
+	m_damperEnabled = power;
 }
 
 

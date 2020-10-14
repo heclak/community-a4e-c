@@ -5,6 +5,7 @@ dofile(LockOn_Options.script_path.."Systems/stores_config.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
+dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 
 local update_time_step = 0.05
 make_default_activity(update_time_step)--update will be called 20 times per second
@@ -14,7 +15,8 @@ startup_print("avionics: load")
 local once_per_second_refresh = 1/update_time_step
 local once_per_second = once_per_second_refresh
 
-local sensor_data = get_base_data()
+local sensor_data = get_efm_sensor_data_overrides()
+local efm_data_bus = get_efm_data_bus()
 
 
 sensor_data.mod_fuel_flow = function()
@@ -78,8 +80,6 @@ local alt_setting = ALT_PRESSURE_STD
 -- fuel gauge (gauge #29)
 
 local fuelgauge = get_param_handle("D_FUEL") -- 0 to 6800 lbs
-local fm_internalFuel = get_param_handle("FM_INTERNAL_FUEL")
-local fm_externalFuel = get_param_handle("FM_EXTERNAL_FUEL")
 local fuelflowgauge = get_param_handle("D_FUEL_FLOW")
 local gauge_fuel_flow = WMA(0.15, 0)
 
@@ -508,10 +508,10 @@ function update_fuel_gauge()
     -- establish the fuel amount we want to display
     --fuelQty = showingInternal and fuelQtyInternal or fuelQtyExternal
 	
-	fuelQty = fm_internalFuel:get()*KG_TO_POUNDS
+	fuelQty = efm_data_bus.fm_getInternalFuel()*KG_TO_POUNDS
 	
 	if (showingInternal == false) then
-		fuelQty = fm_externalFuel:get()*KG_TO_POUNDS
+		fuelQty = efm_data_bus.fm_getExternalFuel()*KG_TO_POUNDS
 	end
 
     -- move needle towards value we're trying to show
@@ -837,10 +837,9 @@ end
 -- assuming 0.5s toggle
 --
 -- TODO: Connect to flaps lever and flap position, once flap lever is implemented
-local rpm_main = get_param_handle("RPM")
 
 function update_wheels_light()
-    local rpm=rpm_main:get()
+    local rpm=sensor_data.getEngineLeftRPM()
     local flaps=get_aircraft_draw_argument_value(9)
     local gear=get_aircraft_draw_argument_value(0)
     local x = wheels_light_flash()

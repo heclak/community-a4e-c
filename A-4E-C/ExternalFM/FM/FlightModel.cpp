@@ -51,14 +51,14 @@ Skyhawk::FlightModel::FlightModel
 	dCLspoiler({-0.35}, 0, 1),
 	CLde(d_CLde, 0.157982, 1.000377),
 	CDalpha(d_CDalpha, -1.57079633, 1.57079633),
-	CDi({0.09}, 0, 1),
+	CDi({0.015}, 0, 1),
 	CDmach(d_CDmach,0.0, 1.8),
 	CDflap(d_CDflap, -1.57079633, 1.57079633),
 	CDslat(d_CDslat, -1.57079633, 1.57079633),
 	dCDspoiler({ 0.05 }, 0, 1),
-	dCDspeedBrake({0.10}, 0.0, 1.0),
+	dCDspeedBrake({0.08}, 0.0, 1.0),
 	CDbeta(d_CDbeta,-1.57, 1.57),
-	CDde({0.12}, c_elevatorDown, c_elevatorUp),
+	CDde({0.005}, c_elevatorDown, c_elevatorUp),
 
 	CYb({-1}, 0.0, 1.0),
 
@@ -186,11 +186,6 @@ void Skyhawk::FlightModel::calculateLocalPhysicsParams()
 	m_scalarAirspeedRW = sqrt(m_airspeedRW.x * m_airspeedRW.x + m_airspeedRW.y * m_airspeedRW.y + m_airspeedRW.z * m_airspeedRW.z);
 	m_aoaLW = atan2(cross(m_nLW, m_liftVecLW) * tmpNormalLW, m_liftVecLW * m_nLW);
 	m_aoaRW = atan2(cross(m_nRW, m_liftVecRW) * tmpNormalRW, m_liftVecRW * m_nRW);
-
-	//random-test
-	/*m_aoaLW = m_aoaLW + rnd_aoa(m_aoaLW) * getRandomNumber(-2, 2)/8.0;
-	m_aoaRW = m_aoaRW + rnd_aoa(m_aoaRW) * getRandomNumber(-2, 2)/8.0;*/
-
 }
 
 
@@ -231,7 +226,7 @@ void Skyhawk::FlightModel::calculateElements()
 
 	addForceDir(LiftLW, m_rLW);
 	addForceDir(LiftRW, m_rRW);
-	addForce(dragElem, getCOM());
+	addForce(dragElem);
 }
 
 //This calculates all forces and moments. Including landing gear.
@@ -285,22 +280,17 @@ void Skyhawk::FlightModel::slats(double& dt)
 	double forceL = (m_kL / m_totalWingArea) * m_slatArea * slatCL(m_aoaLW);
 	double forceR = (m_kR / m_totalWingArea) * m_slatArea * slatCL(m_aoaRW);
 
-	Vec3 accDirection = (0.94, 0.34, 0.0);
-	double accAircraft = accDirection * m_state.getLocalAcceleration();
+	Vec3 accDirection(-0.94, 0.34, 0.0);
+	double accAircraft = normalize(accDirection) * m_state.getLocalAcceleration();
 
 	double x_L = m_airframe.getSlatLPosition();
 	double x_R = m_airframe.getSlatRPosition();
 
-	double a_L = accAircraft + (forceL - m_slatDamping * m_LslatVel - m_slatSpring * (x_L-1.5) ) / m_slatMass;
-	double a_R = accAircraft + (forceR - m_slatDamping * m_RslatVel - m_slatSpring * (x_R-1.5) ) / m_slatMass;
+	double a_L = accAircraft + (0.09*forceL - m_slatDamping * m_LslatVel - 0.09 * m_slatSpring * (x_L-1.5) ) / m_slatMass;
+	double a_R = accAircraft + (0.09 * forceR - m_slatDamping * m_RslatVel - 0.09 * m_slatSpring * (x_R-1.5) ) / m_slatMass;
 
 	m_LslatVel += a_L * dt;
 	m_RslatVel += a_R * dt;
-
-	//if ( x_L < 0.00 ) { m_LslatVel = -m_LslatVel / 100); }
-	//if ( x_R < 0.00 ) { m_RslatVel = -m_RslatVel / 100); }
-	//if ( x_L > 1.00 ) { m_LslatVel = -abs(m_LslatVel / 100); }
-	//if ( x_R > 1.00 ) { m_RslatVel = -abs(m_RslatVel / 100); }
 
 	x_L += m_LslatVel * dt;
 	x_R += m_RslatVel * dt;
@@ -327,17 +317,8 @@ void Skyhawk::FlightModel::slats(double& dt)
 		m_RslatVel = -m_RslatVel*0.3;
 	}
 
-	//x_L = std::min(x_L, 1.0);
-	//x_L = std::max(x_L, 0.0);
-	//x_R = std::min(x_R, 1.0);
-	//x_R = std::max(x_R, 0.0);
-
-
 	m_airframe.setSlatLPosition( x_L );
 	m_airframe.setSlatRPosition( x_R );
-
-	//printf("acc: %lf, f: %lf\n", accAircraft, slatCL(m_aoaLW));
-	//printf("force: %lf, x: %lf, a: %lf, vel: %lf, dt: %lf\n", forceL, x_L, a_L, m_LslatVel, dt);
 }
 
 void Skyhawk::FlightModel::calculateShake()

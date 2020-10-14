@@ -2,6 +2,7 @@ dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."Systems/hydraulic_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
+dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 
 -- "continuous" flaps behavior
 --
@@ -19,7 +20,8 @@ local dev = GetSelf()
 local update_time_step = 0.006
 make_default_activity(update_time_step)
 
-local sensor_data = get_base_data()  
+local sensor_data = get_efm_sensor_data_overrides()
+local efm_data_bus = get_efm_data_bus()
 
 local rate_met2knot = 0.539956803456
 local ias_knots = 0 -- * rate_met2knot
@@ -38,8 +40,6 @@ local FLAP_MAX_DEFLECTION = 50
 local FLAP_BLOWBACK_PSI = 3650
 
 local flaps_ind = get_param_handle("D_FLAPS_IND")
-local fm_flaps = get_param_handle("FM_FLAPS")
-local fm_airspeed = get_param_handle("FM_AIRSPEED")
 
 dev:listen_command(Keys.PlaneFlaps)
 dev:listen_command(Keys.PlaneFlapsOn)
@@ -67,7 +67,7 @@ function RelativePressureOnFlaps(flap_state)
     local k = 8.504932 -- calculated ratio of v^2*a to 3650 (valve pressure limit) that initiates valve relief in A4 flap actuator
     local valve_pressure = 0
 
-    ias_knots = fm_airspeed:get() * 3.6 * rate_met2knot
+    ias_knots = sensor_data.getTrueAirSpeed() * 3.6 * rate_met2knot
     valve_pressure = ias_knots * ias_knots * a / k
     return valve_pressure
 end
@@ -166,7 +166,7 @@ function update()
     end
 	
 	flaps_ind:set(FLAPS_STATE)
-    fm_flaps:set(FLAPS_STATE)      
+	efm_data_bus.fm_setFlaps(FLAPS_STATE)
 	--set_aircraft_draw_argument_value(9,FLAPS_STATE)
 	--set_aircraft_draw_argument_value(10,FLAPS_STATE)
 	

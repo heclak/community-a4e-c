@@ -33,6 +33,7 @@ public:
 	//in the local reference frame of the aircraft.
 	inline void addForce(const Vec3& force, const Vec3& pos);
 	inline void addForceDir(const Vec3& force, const Vec3& dir);
+	inline void addForce( const Vec3& force );
 
 	//Setup parameters before calculation.
 	inline void setAtmosphericParams(const double density, const double speedOfSound, const Vec3& wind);
@@ -190,8 +191,8 @@ private:
 	Table dCDspeedBrake; //drag with position of speedbrake normalised 0 - 1
 	Table CDbeta; //drag with beta (RADIANS)
 	Table CDde; //drag due to elevator deflection
-	const double CDNoseGear = 0.0075;
-	const double CDMainGear = 0.01125;
+	const double CDNoseGear = 0.004;
+	const double CDMainGear = 0.0075;
 
 	//Side Force
 	Table CYb; //side force with beta
@@ -302,17 +303,19 @@ void FlightModel::addForceDir(const Vec3& force, const Vec3& dir)
 	m_moment += moment;
 }
 
+void FlightModel::addForce( const Vec3& force )
+{
+	m_force += force;
+}
 
 void FlightModel::L_stab()
 {
-	//m_moment.x
 	m_moment.x += m_q * (Clb( 0.0 ) * m_state.getBeta() * m_airframe.getVertStabDamage() + Cla( m_state.getMach() ) * Cla_a( std::abs( m_state.getAOA() ) ) * aileron() * m_airframe.getAileronDamage() + Cldr( 0.0 ) * rudder() * m_airframe.getRudderDamage()) + m_p * (Clp( 0.0 ) * m_state.getOmega().x + Clr( 0.0 ) * m_state.getOmega().y);
 
 }
 
 void FlightModel::M_stab()
 {
-	//m_moment.z
 	double horizDamage = m_airframe.getHoriStabDamage();
 	double wingDamage = (m_airframe.getLWingDamage() + m_airframe.getRWingDamage())/2.0;
 	m_moment.z += m_k * m_chord * (Cmalpha( m_state.getMach() ) * m_state.getAOA() * wingDamage * 1.5 + Cmde( m_state.getMach() ) * Cmde_a( std::abs( m_state.getAOA() ) ) * elevator() * m_airframe.getElevatorDamage() + CmM( m_state.getMach() ) * 0.2) + 0.25 * m_scalarV * m_totalWingArea * m_chord * m_chord * horizDamage * (Cmq( m_state.getMach() ) * m_state.getOmega().z + Cmadot( m_state.getMach() ) * m_aoaDot);
@@ -320,13 +323,8 @@ void FlightModel::M_stab()
 
 void FlightModel::N_stab()
 {
-	//m_moment.y
 	double vertDamage = m_airframe.getVertStabDamage();
 	m_moment.y += m_q * (-Cnb(m_state.getBeta()) * vertDamage * 0.8 + Cndr(0.0) * rudder() * m_airframe.getRudderDamage()) + m_p * (Cnr(0.0) * m_state.getOmega().y * vertDamage);//(Cnr(0.0)*m_omega.y); //This needs to be fixed, constants like 0.8 are temporary!!!
-
-	//printf("beta: %lf, betaDot: %lf\n", m_q * (-Cnb(m_beta) * 0.8), m_p * (Cnr(0.0) * m_betaDot));
-	//printf("m_moment.y: %lf, m_beta: %lf, Cnb(mach)*m_beta: %lf, Cndr*rudder: %lf, Cnr*m_omega.y: %lf\n",
-		//m_moment.y, m_beta, Cnb(m_mach)*m_beta, Cndr(0.0)*rudder(), Cnr(0.0)*m_omega.y);
 }
 
 double FlightModel::elevator()
@@ -351,9 +349,7 @@ double FlightModel::thrust()
 
 void FlightModel::lift()
 {
-	//printf("vL: %lf, v: %lf, vR: %lf\n", m_liftVecRW.x, m_liftVecRW.y, m_liftVecRW.z);
-	//printf("CL: %lf\n", CLalpha(m_aoa, true));
-	addForce(Vec3(0.0, m_k*(CLde( m_state.getMach() )*elevator()), 0.0), getCOM());
+	addForce(Vec3(0.0, m_k*(CLde( m_state.getMach() )*elevator()), 0.0));
 	
 	m_LDwindAxesLW.z = 0;
 	m_LDwindAxesRW.z = 0;
@@ -362,19 +358,11 @@ void FlightModel::lift()
 
 	m_LDwindAxesRW.y = m_kR / 2 * (m_airframe.getRWingDamage() * CLalpha(m_aoaRW) + dCLslat(m_aoaRW) * m_airframe.getSlatRPosition() + dCLflap(m_aoaRW) * m_airframe.getFlapsPosition() * flapsDamage + dCLspoiler(0.0) * m_airframe.getSpoilerPosition());
 	m_LDwindAxesLW.y = m_kL / 2 * (m_airframe.getLWingDamage() * CLalpha(m_aoaLW) + dCLslat(m_aoaLW) * m_airframe.getSlatLPosition() + dCLflap(m_aoaLW) * m_airframe.getFlapsPosition() * flapsDamage + dCLspoiler(0.0) * m_airframe.getSpoilerPosition());
-
-
-	//printf("%lf, %lf\n", m_LDwindAxesRW.y / (m_kR / 2 * (CLalpha(m_aoa) + dCLslat(m_aoa) * m_airframe.getSlatRPosition() + dCLflap(m_aoa) * m_airframe.getFlapsPosition())), m_LDwindAxesLW.y / (m_kR / 2 * (CLalpha(m_aoa) + dCLslat(m_aoa) * m_airframe.getSlatRPosition() + dCLflap(m_aoa) * m_airframe.getFlapsPosition())));
-
-	//addForceDir(m_kR / 2 * (CLalpha(m_aoaRW) + dCLslat(m_aoaRW) * m_airframe.getSlatRPosition() + dCLflap(m_aoaRW) * m_airframe.getFlapsPosition()) * m_liftVecRW, m_rRW);
-	//addForceDir(m_kL / 2 * (CLalpha(m_aoaLW) + dCLslat(m_aoaLW) * m_airframe.getSlatLPosition() + dCLflap(m_aoaLW) * m_airframe.getFlapsPosition()) * m_liftVecLW, m_rLW);
-	
-	//printf("CLde: %lf\n", CLde(m_mach) * elevator());
 }
 
 void FlightModel::drag()
 {
-	//printf( "Mach %lf, drag %lf\n", m_mach, CDmach( m_mach ) );
+	
 	double CD = dCDspeedBrake( 0.0 ) * m_airframe.getSpeedBrakePosition() + 
 				CDbeta( m_state.getBeta() ) + CDde( 0.0 ) * abs( elevator() ) + 
 				CDmach( m_state.getMach() ) + CDi( 0.0 ) * pow( CLalpha( m_state.getAOA() ), 2.0 ) +
@@ -392,14 +380,14 @@ void FlightModel::drag()
 
 void FlightModel::sideForce()
 {
-	addForce(Vec3(0.0, 0.0, m_k*CYb(0.0)*m_state.getBeta()), getCOM());
+	addForce(Vec3(0.0, 0.0, m_k*CYb(0.0)*m_state.getBeta()));
 }
 
 void FlightModel::thrustForce()
 {
 	m_engine.setAirspeed(m_scalarV);
 	//addForce(Vec3(thrust(), 0.0, 0.0), getCOM());
-	addForce(Vec3(m_engine.getThrust(), 0.0, 0.0), getCOM());
+	addForce(Vec3(m_engine.getThrust(), 0.0, 0.0));
 }
 
 double FlightModel::mach()

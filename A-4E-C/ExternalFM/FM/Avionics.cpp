@@ -40,9 +40,17 @@ void Skyhawk::Avionics::airborneInit()
 
 void Skyhawk::Avionics::updateAvionics(double dt)
 {
-	double f = washoutFilter(m_state.getOmega().y, dt)*m_baseGain*(1.0/(m_state.getMach() + 1));
-
-	m_input.yawDamper() = f; //f
+	if ( m_damperEnabled )
+	{
+		double f = washoutFilter( m_state.getOmega().y, dt ) * m_baseGain * (1.0 / (m_state.getMach() + 1));
+		m_input.yawDamper() = f; //f
+	}
+	else
+	{
+		m_x = 0.0;
+		m_input.yawDamper() = 0.0;
+	}
+	
 
 	//printf("Filter: %lf, Rudder: %lf\n", f, m_flightModel.yawRate());
 }

@@ -1,6 +1,7 @@
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
+dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 
 local debug_mode = false -- set to true for debug messages
 
@@ -16,7 +17,8 @@ local dev = GetSelf()
 local update_time_step = 0.02  --50 time per second
 make_default_activity(update_time_step)
 
-local sensor_data = get_base_data()
+local sensor_data = get_efm_sensor_data_overrides()
+local efm_data_bus = get_efm_data_bus()
 
 ---------------------------------
 -- ANIMATION CONSTANTS
@@ -131,9 +133,6 @@ local spdbrk_caution=get_param_handle("D_SPDBRK_CAUTION")
 local master_test_param = get_param_handle("D_MASTER_TEST")
 local left_brake_pedal_param = get_param_handle("LEFT_BRAKE_PEDAL")
 local right_brake_pedal_param = get_param_handle("RIGHT_BRAKE_PEDAL")
-
-local fm_brakes = get_param_handle("FM_BRAKES")
-local fm_airspeed = get_param_handle("FM_AIRSPEED")
 
 function post_initialize()
     startup_print("airbrake: postinit")
@@ -266,7 +265,7 @@ function update()
         end
 	else
 		if (ABRAKE_COMMAND == 1) then
-            local knots = fm_airspeed:get()*1.9438444924574
+            local knots = sensor_data.getTrueAirSpeed()*1.9438444924574
             if knots > speedbrake_max_effective_knots then
                 if knots > speedbrake_blowback_knots then
                     -- blowback pressure relief valve opens
@@ -325,7 +324,7 @@ function update()
     --set_aircraft_draw_argument_value(21,effective_airbrake)
     --set_aircraft_draw_argument_value(500,ABRAKE_STATE)
     set_aircraft_draw_argument_value(WHEELCHOCKS_ANIM_ARG, WHEELCHOCKS_STATE) -- draw wheel chocks if state is 1. 
-	fm_brakes:set(ABRAKE_STATE)
+	efm_data_bus.fm_setBrakes(ABRAKE_STATE)
 end
 
 function update_birth()

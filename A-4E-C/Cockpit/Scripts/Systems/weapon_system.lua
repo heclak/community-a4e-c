@@ -217,6 +217,7 @@ local cbu2ba_quantity_array_pos = 0
 local this_weapon_ptr = get_param_handle("THIS_WEAPON_PTR")
 
 function post_initialize()
+	recursively_print(WeaponSystem, 100, 100, "C:/tmp/weapons_table.txt")
 	this_weapon_ptr:set(string.sub(tostring(WeaponSystem.link),10))
     startup_print("weapon_system: postinit start")
 
@@ -385,7 +386,6 @@ function update()
 			end
 		end
 	end	--]]
-    
     
     time_ticker = time_ticker + update_rate
     local _master_arm = get_elec_mon_arms_dc_ok() -- check master arm status

@@ -1,6 +1,7 @@
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."Systems/hydraulic_system_api.lua")
+dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 
 -- spoilers behavior / modeling
 --
@@ -17,7 +18,8 @@ local update_time_step = 0.006
 make_default_activity(update_time_step)
 
     
-local sensor_data = get_base_data()
+local sensor_data = get_efm_sensor_data_overrides()
+local efm_data_bus = get_efm_data_bus()
 
 local SpoilerToggle  = Keys.SpoilersArmToggle
 local SpoilerOn  = Keys.SpoilersArmOn
@@ -62,11 +64,9 @@ local tmax = 1.00
 local current_spoiler=get_param_handle("D_SPOILERS")
 local spoiler_caution=get_param_handle("D_SPOILER_CAUTION")
 local master_test_param = get_param_handle("D_MASTER_TEST")
-local fm_spoiler = get_param_handle("FM_SPOILERS")
-local fm_throttle = get_param_handle("FM_THROTTLE_POSITION")
 
 function update()
-    local throttle = fm_throttle:get()
+    local throttle = sensor_data.getThrottleLeftPosition()
 
 
     if get_elec_retraction_release_ground() and throttle < 0.7 and SPOILER_ARMED and get_elec_mon_dc_ok() then
@@ -105,7 +105,7 @@ function update()
         spoiler_caution:set(0)
     end
 	
-	fm_spoiler:set(SPOILER_STATE)
+	efm_data_bus.fm_setSpoilers(SPOILER_STATE)
 	
 end
 

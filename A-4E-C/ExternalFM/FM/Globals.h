@@ -12,12 +12,14 @@ extern int isSafeContext();
 //#define DEBUG_CONSOLE
 
 //Uncomment this to enable logging make sure this is commited with this commented out!!!!!!
-//#define LOGGING
+#define LOGGING
 
 #ifdef LOGGING
-#define LOG(s, ...) if (g_logging) fprintf(g_log, s, __VA_ARGS__);
+#define LOG(s, ...) if ( g_log ) fprintf(g_log, s, __VA_ARGS__);
 #else
 #define LOG(s, ...) /*nothing*/
 #endif
+
+#define LOG_BREAK() LOG("===================\n")
 
 #endif

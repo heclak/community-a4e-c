@@ -12,8 +12,8 @@
 
 #define PI 3.14159
 
-#define c_lpInertia 3.0
-#define c_hpInertia 3.0
+#define c_lpInertia 2.0
+#define c_hpInertia 2.0
 
 #define c_fuelFlowInertia 1.0
 

@@ -1,6 +1,7 @@
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."Systems/hydraulic_system_api.lua")
+dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 
 -- This file includes both gear and tailhook behavior/systems
 --
@@ -20,7 +21,8 @@ local dev = GetSelf()
 
 local update_time_step = 0.01 --was 0.05
 make_default_activity(update_time_step)
-local sensor_data = get_base_data()
+local sensor_data = get_efm_sensor_data_overrides()
+local efm_data_bus = get_efm_data_bus()
 
 -- constants/conversion values
 
@@ -42,7 +44,6 @@ local HookHandle = device_commands.Hook
 
 local NWS_Engage = Keys.nws_engage
 local NWS_Disengage = Keys.nws_disengage
-local fm_nws = get_param_handle("FM_NWS")
 
 -- GEAR constants/definitions/configuration
 local GearNoseRetractTimeSec = 8    -- 8 seconds to retract
@@ -142,13 +143,13 @@ function SetCommand(command,value)
 	elseif command == NWS_Engage then
 		--print_message_to_user("Engage")
 		if get_hyd_utility_ok() then
-			fm_nws:set(1.0)
+			efm_data_bus.fm_setNWS(1.0)
 		else
-			fm_nws:set(0.0)
+			efm_data_bus.fm_setNWS(0.0)
 		end
 	elseif command == NWS_Disengage then
 		--print_message_to_user("Disengage")
-		fm_nws:set(0.0)
+		efm_data_bus.fm_setNWS(1.0)
     end
 end
 
@@ -188,10 +189,6 @@ local gear_light_param = get_param_handle("GEAR_LIGHT")
 local dev_gear_nose = get_param_handle("GEAR_NOSE")
 local dev_gear_left = get_param_handle("GEAR_LEFT")
 local dev_gear_right = get_param_handle("GEAR_RIGHT")
-
-local fm_gear_nose = get_param_handle("FM_GEAR_NOSE")
-local fm_gear_left = get_param_handle("FM_GEAR_LEFT")
-local fm_gear_right = get_param_handle("FM_GEAR_RIGHT")
 
 
 function update_gear()
@@ -298,9 +295,13 @@ function update_gear()
         GEAR_RIGHT_STATE = 1
     end
 	
-	fm_gear_nose:set(GEAR_NOSE_STATE)
-	fm_gear_left:set(GEAR_LEFT_STATE)
-	fm_gear_right:set(GEAR_RIGHT_STATE)
+	if not get_hyd_utility_ok() then
+		efm_data_bus.fm_setNWS(0.0)
+	end
+	
+	efm_data_bus.fm_setNoseGear(GEAR_NOSE_STATE)
+	efm_data_bus.fm_setLeftGear(GEAR_LEFT_STATE)
+	efm_data_bus.fm_setRightGear(GEAR_RIGHT_STATE)
 
     --set_aircraft_draw_argument_value(0,GEAR_NOSE_STATE) -- nose gear draw angle
     --set_aircraft_draw_argument_value(3,GEAR_RIGHT_STATE) -- right gear draw angle

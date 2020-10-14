@@ -34,7 +34,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 		}
 #endif
 
-#ifdef LOGGING
+#ifdef LOGGING_OLD
 		size_t size;
 		getenv_s( &size, NULL, 0, "A4E_EFM_LOGGING" );
 		if ( size )
@@ -48,13 +48,12 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 			fopen_s( &g_log, "C:/tmp/log.txt", "w" );
 		}
 #endif
-		g_safeToRun = isSafeContext();
 		break;
 	case DLL_THREAD_ATTACH:
 		break;
 	case DLL_THREAD_DETACH:
 	case DLL_PROCESS_DETACH:
-#ifdef LOGGING
+#ifdef LOGGING_OLD
 		if ( g_logging )
 			fclose(g_log);
 #endif

@@ -43,7 +43,7 @@ devices["COUNTERMEASURES"]  = counter()
 devices["SHRIKE"]           = counter()
 devices["SOUNDSYSTEM"]      = counter()
 devices["NVG"]              = counter()
-devices["EFM_OPTIONS"]		  = counter()
+devices["EFM_DATA_BUS"]	  = counter()
 
 -- temporary dummy devices
 devices["TEMP1"]            = counter()
