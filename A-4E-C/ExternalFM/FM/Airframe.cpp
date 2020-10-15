@@ -159,21 +159,35 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 
 	if (m_catapultState != OFF_CAT)
 	{
-		//m_catMoment = pow((c_catAngle - m_state.getAngle().z)*60.0, 3.0) * c_catConstrainingForce;
-		double desiredMoment = /*-500.0 * pow(8.0*std::max(1.0 - m_noseCompression, 0.0), 3.0)*/ - std::max( m_state.getLocalAcceleration().x * c_maxCatMoment * 0.03, 0.0 );
+		//double compression = (1.0 - m_noseCompression);
+		// m_catMoment = pow( (-compression) * 6.0, 3.0 ) * c_catConstrainingForce * 1.0;
+		//double catMoment = pow((c_catAngle - m_state.getAngle().z)*60.0, 3.0) * c_catConstrainingForce;
+		//printf( "New: %lf, Old: %lf\n", m_catMoment, catMoment );
 
-		m_catMomentVelocity += (desiredMoment - m_catMoment) * dt * 1.0;
+		double desiredMoment = -c_catConstrainingForce * 40.0 -std::max( m_state.getLocalAcceleration().x * c_maxCatMoment * 0.030, 0.0 );
+		
+		double error = (desiredMoment - m_catMoment);
 
-		m_catMoment += (desiredMoment - m_catMoment) * dt * 10.0 + m_catMomentVelocity * dt * 5.0 ;
+		double errorMoment = error * 1.0;
 
-		printf( "Desired Moment %lf, Moment %lf, Velocity: %lf\n", desiredMoment, m_catMoment, m_catMomentVelocity );
+		double instability = std::max(m_noseCompression - 0.2, 0.0) * m_state.getOmega().z * 0.0;
+
+		m_catMoment += (errorMoment + instability) * dt; //m_integral * 0.4 ;
+		double compression = (1.0 - m_noseCompression);
+
+		//m_catMoment = pow( -( compression - 0.5 ) * 2.0, 3.0 ) * c_catConstrainingForce * 200.0;
+
+		//printf( "Moment: %lf, %lf\n", m_catMoment, compression );
+
+		//printf( "Moment: %lf, %lf, %lf\n", m_catMoment, errorMoment, instability );
 
 		//m_catMoment = std::max( std::min(m_catMoment, 0.0), -c_maxCatMoment );
 	}
 	else
 	{
 		m_catMoment = 0.0;
-		m_catMomentVelocity = 0.0;
+		m_catMomentVelocity = 0.0; 
+		m_prevAccel = 0.0;
 	}
 	//printf("Cat Moment: %lf\n", m_catMoment);
 

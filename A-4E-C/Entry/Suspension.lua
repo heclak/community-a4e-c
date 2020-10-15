@@ -11,7 +11,7 @@ nose_amortizer_spring_force_factor_rate 	= 2.0
 
 --nose_amortizer_static_force = 5e+4
 nose_amortizer_static_force 				= 5256.0 * 9.81 * 0.2
-nose_damper_force 							= 3.0e+4
+nose_damper_force 							= 2.0e+4
 nose_amortizer_direct_damper_force_factor 	=  nose_damper_force * 0.75
 nose_amortizer_back_damper_force_factor 	=  nose_damper_force
 

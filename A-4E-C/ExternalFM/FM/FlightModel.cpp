@@ -286,7 +286,7 @@ void Skyhawk::FlightModel::slats(double& dt)
 	double x_L = m_airframe.getSlatLPosition();
 	double x_R = m_airframe.getSlatRPosition();
 
-	double a_L = accAircraft + (0.09*forceL - m_slatDamping * m_LslatVel - 0.09 * m_slatSpring * (x_L-1.5) ) / m_slatMass;
+	double a_L = accAircraft + (0.09 * forceL - m_slatDamping * m_LslatVel - 0.09 * m_slatSpring * (x_L-1.5) ) / m_slatMass;
 	double a_R = accAircraft + (0.09 * forceR - m_slatDamping * m_RslatVel - 0.09 * m_slatSpring * (x_R-1.5) ) / m_slatMass;
 
 	m_LslatVel += a_L * dt;

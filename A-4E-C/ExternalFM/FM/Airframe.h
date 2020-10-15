@@ -379,6 +379,8 @@ private:
 	double m_catMoment = 0.0;
 	double m_catMomentVelocity = 0.0;
 	double m_angle = 0.0;
+	double m_integral = 0.0;
+	double m_prevAccel = 0.0;
 	double m_noseCompression = 0.0;
 
 	Engine2& m_engine;
