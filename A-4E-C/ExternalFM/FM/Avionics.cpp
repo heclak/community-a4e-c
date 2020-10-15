@@ -3,7 +3,7 @@
 Skyhawk::Avionics::Avionics
 (
 	Input& input,
-	AircraftMotionState& state
+	AircraftState& state
 ) :
 	m_input(input),
 	m_state(state)

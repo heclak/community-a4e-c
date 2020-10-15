@@ -13,9 +13,9 @@
 #include "Airframe.h"
 #include "Avionics.h"
 #include "Interface.h"
-#include "AircraftMotionState.h"
+#include "AircraftState.h"
 //============================ Skyhawk Statics ============================//
-static Skyhawk::AircraftMotionState* s_state = NULL;
+static Skyhawk::AircraftState* s_state = NULL;
 static Skyhawk::Interface* s_interface = NULL;
 static Skyhawk::Input* s_input = NULL;
 static Skyhawk::Engine2* s_engine = NULL;
@@ -29,7 +29,7 @@ static void cleanup();
 
 void init()
 {
-	s_state = new Skyhawk::AircraftMotionState;
+	s_state = new Skyhawk::AircraftState;
 	s_interface = new Skyhawk::Interface;
 	s_input = new Skyhawk::Input;
 	s_engine = new Skyhawk::Engine2;

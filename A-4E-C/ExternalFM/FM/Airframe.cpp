@@ -1,6 +1,6 @@
 #include "Airframe.h"
 #include <algorithm>
-Skyhawk::Airframe::Airframe( AircraftMotionState& state, Input& controls, Engine2& engine):
+Skyhawk::Airframe::Airframe( AircraftState& state, Input& controls, Engine2& engine):
 	m_state(state),
 	m_controls(controls),
 	m_engine(engine)

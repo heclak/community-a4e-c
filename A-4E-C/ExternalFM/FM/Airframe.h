@@ -2,7 +2,7 @@
 #define AIRFRAME_H
 #pragma once
 #include "BaseComponent.h"
-#include "AircraftMotionState.h"
+#include "AircraftState.h"
 #include "Input.h"
 #include <stdio.h>
 #include "Engine2.h"
@@ -255,7 +255,7 @@ public:
 	};
 
 
-	Airframe(AircraftMotionState& state, Input& controls, Engine2& engine);
+	Airframe(AircraftState& state, Input& controls, Engine2& engine);
 	~Airframe();
 	virtual void zeroInit();
 	virtual void coldInit();
@@ -379,7 +379,7 @@ private:
 
 	Engine2& m_engine;
 	Input& m_controls;
-	AircraftMotionState& m_state;
+	AircraftState& m_state;
 	std::vector<DamageDelta> m_damageStack;
 };
 

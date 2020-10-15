@@ -8,10 +8,10 @@
 namespace Skyhawk
 {
 
-class AircraftMotionState : public BaseComponent
+class AircraftState : public BaseComponent
 {
 public:
-	AircraftMotionState();
+	AircraftState();
 	virtual void zeroInit();
 	virtual void coldInit();
 	virtual void hotInit();
@@ -30,6 +30,8 @@ public:
 	inline const double getAOA() const;
 	inline const double getBeta() const;
 	inline const double getMach() const;
+	inline const double getAirDensity() const;
+
 
 
 private:
@@ -42,10 +44,11 @@ private:
 	double m_aoa;
 	double m_beta;
 	double m_mach;
+	double m_airDensity;
 };
 
 	
-void AircraftMotionState::setCurrentStateBodyAxis( 
+void AircraftState::setCurrentStateBodyAxis( 
 	double aoa, 
 	double beta, 
 	const Vec3& angle, 
@@ -64,57 +67,63 @@ void AircraftMotionState::setCurrentStateBodyAxis(
 	m_localAcceleration = acceleration;
 }
 
-void AircraftMotionState::setCurrentStateWorldAxis( const Vec3& worldVelocity )
+void AircraftState::setCurrentStateWorldAxis( const Vec3& worldVelocity )
 {
 	m_worldVelocity = worldVelocity;
 }
 
-void AircraftMotionState::setMach( double mach )
+void AircraftState::setMach( double mach )
 {
 	m_mach = mach;
 }
 
-const double AircraftMotionState::getMach() const
+const double AircraftState::getMach() const
 {
 	return m_mach;
 }
 
-const Vec3& AircraftMotionState::getWorldVelocity() const
+const double AircraftState::getAirDensity() const
+{
+	return m_airDensity;
+}
+
+
+const Vec3& AircraftState::getWorldVelocity() const
 {
 	return m_worldVelocity;
 }
 
-const Vec3& AircraftMotionState::getAngle() const
+const Vec3& AircraftState::getAngle() const
 {
 	return m_angle;
 }
 
-const Vec3& AircraftMotionState::getOmega() const
+const Vec3& AircraftState::getOmega() const
 {
 	return m_omega;
 }
 
-const Vec3& AircraftMotionState::getOmegaDot() const
+const Vec3& AircraftState::getOmegaDot() const
 {
 	return m_omegaDot;
 }
 
-const Vec3& AircraftMotionState::getLocalAirspeed() const
+const Vec3& AircraftState::getLocalAirspeed() const
 {
 	return m_localAirspeed;
 }
 
-const Vec3& AircraftMotionState::getLocalAcceleration() const
+const Vec3& AircraftState::getLocalAcceleration() const
 {
 	return m_localAcceleration;
 }
 
-const double AircraftMotionState::getAOA() const
+const double AircraftState::getAOA() const
 {
 	return m_aoa;
 }
 
-const double AircraftMotionState::getBeta() const
+const double AircraftState::getBeta() const
 {
 	return m_beta;
 }
