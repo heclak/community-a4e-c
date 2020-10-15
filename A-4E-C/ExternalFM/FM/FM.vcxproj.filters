@@ -26,6 +26,9 @@
     <ClCompile Include="AircraftState.cpp">
       <Filter>A4-Skyhawk</Filter>
     </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>A4-Skyhawk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ED_FM_Utility.h" />

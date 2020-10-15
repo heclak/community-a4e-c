@@ -171,6 +171,30 @@ public:
 	{
 		return m_brakeRight;
 	}
+	inline double getFFBPitchFactor()
+	{
+		return m_FFBPitchFactor;
+	}
+	inline double getFFBPitchAmplitude()
+	{
+		return m_FFBPitchAmplitude;
+	}
+	inline double getFFBPitchFrequency()
+	{
+		return m_FFBPitchFrequency;
+	}
+	inline double getFFBRollFactor()
+	{
+		return m_FFBRollFactor;
+	}
+	inline double getFFBRollAmplitude()
+	{
+		return m_FFBRollAmplitude;
+	}
+	inline double getFFBRollFrequency()
+	{
+		return m_FFBRollFrequency;
+	}
 	inline const bool& hook() const
 	{
 		return m_hook;
@@ -208,6 +232,14 @@ private:
 	double m_throttle = 0.0;
 	double m_brakeLeft = 0.0;
 	double m_brakeRight = 0.0;
+
+	double m_FFBPitchFactor = 1.0;
+	double m_FFBPitchAmplitude = 0.0;
+	double m_FFBPitchFrequency = 0.0;
+	double m_FFBRollFactor = 1.0;
+	double m_FFBRollAmplitude = 0.0;
+	double m_FFBRollFrequency = 0.0;
+
 
 	bool m_hook = false;
 	bool m_nosewheelSteering = false;

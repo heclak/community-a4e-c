@@ -198,6 +198,7 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Engine2.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="Maths.cpp" />
     <ClCompile Include="Safe.cpp" />
     <ClCompile Include="Skyhawk.cpp" />
