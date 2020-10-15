@@ -12,7 +12,7 @@
 //Vectors already constructor to zero vector.
 Skyhawk::FlightModel::FlightModel
 (
-	AircraftMotionState& state,
+	AircraftState& state,
 	Input& controls,
 	Airframe& airframe,
 	Engine2& engine,

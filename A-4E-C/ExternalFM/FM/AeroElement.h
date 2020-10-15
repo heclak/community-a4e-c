@@ -12,45 +12,6 @@ namespace Skyhawk
 {//begin namespace
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class FlightModel;
 
 class AeroElement : public BaseComponent
@@ -75,8 +36,8 @@ private:
 	const Vec3 m_surfaceNormal;
 	const double m_MAC;
 	const double m_area;
-	const double m_liftFactor;
-	const double m_dragFactor;
+	double m_liftFactor;
+	double m_dragFactor;
 	Vec3 m_airspeed;
 	Vec3 m_liftVec;
 	Vec3 m_dragVec;

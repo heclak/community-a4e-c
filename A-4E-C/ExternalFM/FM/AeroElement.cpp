@@ -19,6 +19,8 @@ Skyhawk::AeroElement::AeroElement
 	m_MAC{ MAC },
 	m_area{ area },
 	m_damageElem{ 1.0 },
+	m_liftFactor{ 0.7 },
+	m_dragFactor{ 1.0 }
 {
 
 }
@@ -27,6 +29,24 @@ Skyhawk::AeroElement::~AeroElement()
 {
 
 }
+
+void Skyhawk::AeroElement::zeroInit()
+{
+
+}
+void Skyhawk::AeroElement::coldInit()
+{
+
+}
+void Skyhawk::AeroElement::hotInit()
+{
+
+}
+void Skyhawk::AeroElement::airborneInit()
+{
+
+}
+
 
 void Skyhawk::AeroElement::elementLift()
 {
