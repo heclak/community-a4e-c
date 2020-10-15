@@ -275,6 +275,8 @@ public:
 	inline void setAngle(double angle);
 	inline void setMass(double angle);
 
+	inline void setNoseCompression( double x );
+
 	inline void setSelectedTank( Tank selected );
 	inline void setFuelPrevious( Tank tank );
 
@@ -375,7 +377,9 @@ private:
 	CatapultState m_catapultState = OFF_CAT;
 	bool m_catStateSent = false;
 	double m_catMoment = 0.0;
+	double m_catMomentVelocity = 0.0;
 	double m_angle = 0.0;
+	double m_noseCompression = 0.0;
 
 	Engine2& m_engine;
 	Input& m_controls;
@@ -432,6 +436,11 @@ void Airframe::setAngle(double angle)
 void Airframe::setMass(double mass)
 {
 	m_mass = mass;
+}
+
+void Airframe::setNoseCompression( double x )
+{
+	m_noseCompression = x;
 }
 
 double Airframe::getGearLPosition()

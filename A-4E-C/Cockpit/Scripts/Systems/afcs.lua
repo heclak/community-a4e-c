@@ -246,23 +246,6 @@ local iCommandPlaneStabHbarHeading = 636
 local iCommandPlaneStabPathHold = 637
 --]]
 
-function SetCommand(command, value)
-	local current_afcs_state = afcs_state
-	
-	if command == device_commands.afcs_hdg_set then
-		afcs_heading_set(value)
-	elseif command == Keys.AFCSHeadingInc then
-		dev:performClickableAction(device_commands.afcs_hdg_set, 1, false)
-    elseif command == Keys.AFCSHeadingDec then
-		dev:performClickableAction(device_commands.afcs_hdg_set, -1, false)
-    elseif command == Keys.AFCSOverride then
-		dev:performClickableAction(device_commands.afcs_engage, 0, false)
-		
-
-
-
-end
-
 function SetCommand(command,value)
     -- "primary" control is the clickable device, key commands trigger the clickable actions...
     -- dev:performClickableAction(device_commands.xxx, value, false)
@@ -462,7 +445,6 @@ function SetCommand(command,value)
 				dev:performClickableAction(device_commands.afcs_stab_aug,0,false)
 			end
 		 else
-			dev:performClickableAction(device_commands.afcs_stab_aug,0,false)
 			afcs_stab_aug_enabled = false
 	 	 end
     elseif command == device_commands.afcs_ail_trim then
