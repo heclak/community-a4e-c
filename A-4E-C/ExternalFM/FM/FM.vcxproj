@@ -156,6 +156,7 @@
     <ClInclude Include="..\include\Cockpit\ccParametersAPI.h" />
     <ClInclude Include="..\include\FM\wHumanCustomPhysicsAPI.h" />
     <ClInclude Include="..\include\FM\wHumanCustomPhysicsAPI_ImplementationDeclare.h" />
+    <ClInclude Include="Actuator.h" />
     <ClInclude Include="AeroElement.h" />
     <ClInclude Include="AircraftState.h" />
     <ClInclude Include="Airframe.h" />
@@ -179,6 +180,7 @@
     <ClInclude Include="Vec3.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Actuator.cpp" />
     <ClCompile Include="AeroElement.cpp" />
     <ClCompile Include="AircraftState.cpp" />
     <ClCompile Include="Airframe.cpp" />

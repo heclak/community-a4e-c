@@ -124,9 +124,9 @@ void ed_fm_simulate(double dt)
 	//Post update
 	s_interface->setRPM(s_engine->getRPMNorm()*100.0);
 	s_interface->setThrottlePosition(s_input->throttleNorm());
-	s_interface->setStickPitch(s_input->pitch() + s_input->pitchTrim());
-	s_interface->setStickRoll(s_input->roll() + s_input->rollTrim());
-	s_interface->setRudderPedals(s_input->yaw() + s_input->yawTrim());
+	s_interface->setStickPitch(s_airframe->getElevator());
+	s_interface->setStickRoll(s_airframe->getAileron());
+	s_interface->setRudderPedals(s_airframe->getRudder());
 	s_interface->setInternalFuel(s_airframe->getFuelQty(Skyhawk::Airframe::Tank::INTERNAL));
 	s_interface->setExternalFuel(s_airframe->getFuelQtyExternal());
 }
@@ -362,13 +362,13 @@ void ed_fm_set_draw_args (EdDrawArgument * drawargs,size_t size)
 		drawargs[616].f = drawargs[5].f;
 	}
 
-	drawargs[LEFT_AILERON].f = -s_airframe->aileron();
-	drawargs[RIGHT_AILERON].f = s_airframe->aileron();
+	drawargs[LEFT_AILERON].f = -s_airframe->getAileron();
+	drawargs[RIGHT_AILERON].f = s_airframe->getAileron();
 
-	drawargs[LEFT_ELEVATOR].f = s_airframe->elevator();
-	drawargs[RIGHT_ELEVATOR].f = s_airframe->elevator();
+	drawargs[LEFT_ELEVATOR].f = s_airframe->getElevator();
+	drawargs[RIGHT_ELEVATOR].f = s_airframe->getElevator();
 
-	drawargs[RUDDER].f = -s_airframe->rudder();
+	drawargs[RUDDER].f = -s_airframe->getRudder();
 
 	drawargs[LEFT_FLAP].f = s_airframe->getFlapsPosition();
 	drawargs[RIGHT_FLAP].f = s_airframe->getFlapsPosition();

@@ -29,6 +29,7 @@
     <ClCompile Include="Input.cpp">
       <Filter>A4-Skyhawk</Filter>
     </ClCompile>
+    <ClCompile Include="Actuator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ED_FM_Utility.h" />
@@ -89,6 +90,7 @@
     <ClInclude Include="AircraftState.h">
       <Filter>A4-Skyhawk</Filter>
     </ClInclude>
+    <ClInclude Include="Actuator.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
