@@ -19,9 +19,17 @@
     <ClCompile Include="Safe.cpp">
       <Filter>A4-Skyhawk</Filter>
     </ClCompile>
-    <ClCompile Include="AircraftMotionState.cpp">
+    <ClCompile Include="AeroElement.cpp" />
+    <ClCompile Include="Maths.cpp">
       <Filter>A4-Skyhawk</Filter>
     </ClCompile>
+    <ClCompile Include="AircraftState.cpp">
+      <Filter>A4-Skyhawk</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>A4-Skyhawk</Filter>
+    </ClCompile>
+    <ClCompile Include="Actuator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ED_FM_Utility.h" />
@@ -75,9 +83,14 @@
     <ClInclude Include="BaseComponent.h">
       <Filter>A4-Skyhawk</Filter>
     </ClInclude>
-    <ClInclude Include="AircraftMotionState.h">
+    <ClInclude Include="AeroElement.h" />
+    <ClInclude Include="Maths.h">
       <Filter>A4-Skyhawk</Filter>
     </ClInclude>
+    <ClInclude Include="AircraftState.h">
+      <Filter>A4-Skyhawk</Filter>
+    </ClInclude>
+    <ClInclude Include="Actuator.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />

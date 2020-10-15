@@ -2,7 +2,8 @@
 #define AIRFRAME_H
 #pragma once
 #include "BaseComponent.h"
-#include "AircraftMotionState.h"
+#include "AircraftState.h"
+#include "Actuator.h"
 #include "Input.h"
 #include <stdio.h>
 #include "Engine2.h"
@@ -255,7 +256,7 @@ public:
 	};
 
 
-	Airframe(AircraftMotionState& state, Input& controls, Engine2& engine);
+	Airframe(AircraftState& state, Input& controls, Engine2& engine);
 	~Airframe();
 	virtual void zeroInit();
 	virtual void coldInit();
@@ -298,9 +299,14 @@ public:
 	inline double getCatMoment();
 	inline Tank getSelectedTank();
 	inline double getMass();
-	inline double aileron();
-	inline double elevator();
-	inline double rudder();
+	inline double setAileron(double dt);
+	inline double setElevator(double dt);
+	inline double setRudder(double dt);
+	inline double getAileron();
+	inline double getElevator();
+	inline double getRudder();
+
+
 
 	inline double aileronAngle();
 	inline double elevatorAngle();
@@ -364,6 +370,11 @@ private:
 	double m_elevator = 0.0;
 	double m_rudder = 0.0;
 
+	Actuator m_actuatorElev;
+	Actuator m_actuatorAil;
+	Actuator m_actuatorRud;
+
+
 	Tank m_selected = Tank::INTERNAL;
 
 	double m_fuel[4] = { 0.0, 0.0, 0.0, 0.0 };
@@ -385,7 +396,7 @@ private:
 
 	Engine2& m_engine;
 	Input& m_controls;
-	AircraftMotionState& m_state;
+	AircraftState& m_state;
 	std::vector<DamageDelta> m_damageStack;
 };
 
@@ -403,6 +414,24 @@ void Airframe::setFuelState(Tank tank, Vec3 pos, double fuel)
 {
 	m_fuel[tank] = fuel;
 	m_fuelPos[tank] = pos;
+}
+
+double Airframe::setAileron(double dt)
+{
+	double input = m_controls.roll() + m_controls.rollTrim();
+	return m_actuatorAil.inputUpdate(input, dt);
+}
+
+double Airframe::setElevator(double dt)
+{
+	double input = m_controls.pitch() + m_controls.pitchTrim();
+	return m_actuatorElev.inputUpdate(input, dt);
+}
+
+double Airframe::setRudder(double dt)
+{
+	double input = m_controls.yaw() + m_controls.yawDamper() + m_controls.yawTrim();
+	return m_actuatorRud.inputUpdate(input, dt);
 }
 
 void Airframe::setFlapsPosition(double position)
@@ -490,17 +519,17 @@ double Airframe::getSlatRPosition()
 	return m_slatRPosition;
 }
 
-double Airframe::aileron()
+double Airframe::getAileron()
 {
 	return m_aileronLeft;
 }
 
-double Airframe::elevator()
+double Airframe::getElevator()
 {
 	return m_elevator;
 }
 
-double Airframe::rudder()
+double Airframe::getRudder()
 {
 	return m_rudder;
 }

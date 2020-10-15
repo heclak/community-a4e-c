@@ -9,7 +9,7 @@
 #include "Airframe.h"
 #include "Engine2.h"
 #include "Interface.h"
-#include "AircraftMotionState.h"
+#include "AircraftState.h"
 #include <fstream>
 
 namespace Skyhawk
@@ -18,7 +18,7 @@ namespace Skyhawk
 class FlightModel : public BaseComponent
 {
 public:
-	FlightModel(AircraftMotionState& state, Input& controls, Airframe& airframe, Engine2& engine, Interface& inter);
+	FlightModel(AircraftState& state, Input& controls, Airframe& airframe, Engine2& engine, Interface& inter);
 	~FlightModel();
 
 	virtual void zeroInit();
@@ -168,7 +168,7 @@ private:
 	Vec3 m_force; //total force on the aircraft
 
 	//Aircraft Settings
-	AircraftMotionState& m_state;
+	AircraftState& m_state;
 	Engine2& m_engine;
 	Airframe& m_airframe;
 

@@ -13,9 +13,9 @@
 #include "Airframe.h"
 #include "Avionics.h"
 #include "Interface.h"
-#include "AircraftMotionState.h"
+#include "AircraftState.h"
 //============================ Skyhawk Statics ============================//
-static Skyhawk::AircraftMotionState* s_state = NULL;
+static Skyhawk::AircraftState* s_state = NULL;
 static Skyhawk::Interface* s_interface = NULL;
 static Skyhawk::Input* s_input = NULL;
 static Skyhawk::Engine2* s_engine = NULL;
@@ -29,7 +29,7 @@ static void cleanup();
 
 void init()
 {
-	s_state = new Skyhawk::AircraftMotionState;
+	s_state = new Skyhawk::AircraftState;
 	s_interface = new Skyhawk::Interface;
 	s_input = new Skyhawk::Input;
 	s_engine = new Skyhawk::Engine2;
@@ -124,9 +124,9 @@ void ed_fm_simulate(double dt)
 	//Post update
 	s_interface->setRPM(s_engine->getRPMNorm()*100.0);
 	s_interface->setThrottlePosition(s_input->throttleNorm());
-	s_interface->setStickPitch(s_input->pitch() + s_input->pitchTrim());
-	s_interface->setStickRoll(s_input->roll() + s_input->rollTrim());
-	s_interface->setRudderPedals(s_input->yaw() + s_input->yawTrim());
+	s_interface->setStickPitch(s_airframe->getElevator());
+	s_interface->setStickRoll(s_airframe->getAileron());
+	s_interface->setRudderPedals(s_airframe->getRudder());
 	s_interface->setInternalFuel(s_airframe->getFuelQty(Skyhawk::Airframe::Tank::INTERNAL));
 	s_interface->setExternalFuel(s_airframe->getFuelQtyExternal());
 }
@@ -362,13 +362,13 @@ void ed_fm_set_draw_args (EdDrawArgument * drawargs,size_t size)
 		drawargs[616].f = drawargs[5].f;
 	}
 
-	drawargs[LEFT_AILERON].f = -s_airframe->aileron();
-	drawargs[RIGHT_AILERON].f = s_airframe->aileron();
+	drawargs[LEFT_AILERON].f = -s_airframe->getAileron();
+	drawargs[RIGHT_AILERON].f = s_airframe->getAileron();
 
-	drawargs[LEFT_ELEVATOR].f = s_airframe->elevator();
-	drawargs[RIGHT_ELEVATOR].f = s_airframe->elevator();
+	drawargs[LEFT_ELEVATOR].f = s_airframe->getElevator();
+	drawargs[RIGHT_ELEVATOR].f = s_airframe->getElevator();
 
-	drawargs[RUDDER].f = -s_airframe->rudder();
+	drawargs[RUDDER].f = -s_airframe->getRudder();
 
 	drawargs[LEFT_FLAP].f = s_airframe->getFlapsPosition();
 	drawargs[RIGHT_FLAP].f = s_airframe->getFlapsPosition();
@@ -443,6 +443,19 @@ double ed_fm_get_param(unsigned index)
 		return s_interface->getNWS() > 0.5 ? 0.0 : 1.0;
 	case ED_FM_SUSPENSION_0_WHEEL_YAW:
 		return s_interface->getNWS() > 0.5 ? -s_input->yaw()/4.0 : 0.0;
+	case ED_FM_STICK_FORCE_CENTRAL_PITCH:  // i.e. trimmered position where force feeled by pilot is zero
+		return s_input->pitchTrim();
+	case ED_FM_STICK_FORCE_FACTOR_PITCH:
+		return s_input->getFFBPitchFactor();
+	//case ED_FM_STICK_FORCE_SHAKE_AMPLITUDE_PITCH:
+	//case ED_FM_STICK_FORCE_SHAKE_FREQUENCY_PITCH:
+
+	case ED_FM_STICK_FORCE_CENTRAL_ROLL:   // i.e. trimmered position where force feeled by pilot is zero
+		return s_input->rollTrim();
+	case ED_FM_STICK_FORCE_FACTOR_ROLL:
+		return s_input->getFFBRollFactor();
+	//case ED_FM_STICK_FORCE_SHAKE_AMPLITUDE_ROLL:
+	//case ED_FM_STICK_FORCE_SHAKE_FREQUENCY_ROLL:
 	}
 
 	return 0;

@@ -1,0 +1,22 @@
+#include <math.h>
+#include "Maths.h"
+
+namespace Skyhawk
+{	// start namespace
+
+const Vec3 windAxisToBody(const Vec3& force, const double& alpha, const double& beta)
+{
+	double sin_b = sin(beta);
+	double cos_b = cos(beta);
+	double sin_a = sin(-alpha);
+	double cos_a = cos(-alpha);
+
+	double res_x = cos_b * cos_a * force.x + sin_b * force.z - cos_b * sin_a * force.y;
+	double res_z = -cos_a * sin_b * force.x + cos_b * force.z + sin_a * sin_b * force.y;
+	double res_y = sin_a * force.x + cos_a * force.y;
+
+	return Vec3(res_x, res_y, res_z);
+}
+
+}	// end namespace
+

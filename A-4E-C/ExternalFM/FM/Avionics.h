@@ -3,14 +3,14 @@
 #pragma once
 #include "BaseComponent.h"
 #include "Input.h"
-#include "AircraftMotionState.h"
+#include "AircraftState.h"
 namespace Skyhawk
 {//begin namespace
 
 class Avionics : public BaseComponent
 {
 public:
-	Avionics(Input& input, AircraftMotionState& state);
+	Avionics(Input& input, AircraftState& state);
 	~Avionics();
 	virtual void zeroInit();
 	virtual void coldInit();
@@ -29,7 +29,7 @@ private:
 	double m_x = 0.0;
 
 	Input& m_input;
-	AircraftMotionState& m_state;
+	AircraftState& m_state;
 
 	bool m_damperEnabled = false;
 };
