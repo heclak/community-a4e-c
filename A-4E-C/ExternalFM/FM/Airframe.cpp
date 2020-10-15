@@ -80,6 +80,8 @@ void Skyhawk::Airframe::zeroInit()
 	m_catStateSent = false;
 	m_catMoment = 0.0;
 	m_angle = 0.0;
+	m_noseCompression = 0.0;
+
 	m_damageStack.clear();
 }
 
@@ -157,12 +159,21 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 
 	if (m_catapultState != OFF_CAT)
 	{
-		m_catMoment = pow((c_catAngle - m_state.getAngle().z)*60.0, 3.0) * c_catConstrainingForce;
-		m_catMoment = m_catMoment < 0.0 ? m_catMoment : 0.0;
+		//m_catMoment = pow((c_catAngle - m_state.getAngle().z)*60.0, 3.0) * c_catConstrainingForce;
+		double desiredMoment = /*-500.0 * pow(8.0*std::max(1.0 - m_noseCompression, 0.0), 3.0)*/ - std::max( m_state.getLocalAcceleration().x * c_maxCatMoment * 0.03, 0.0 );
+
+		m_catMomentVelocity += (desiredMoment - m_catMoment) * dt * 1.0;
+
+		m_catMoment += (desiredMoment - m_catMoment) * dt * 10.0 + m_catMomentVelocity * dt * 5.0 ;
+
+		printf( "Desired Moment %lf, Moment %lf, Velocity: %lf\n", desiredMoment, m_catMoment, m_catMomentVelocity );
+
+		//m_catMoment = std::max( std::min(m_catMoment, 0.0), -c_maxCatMoment );
 	}
 	else
 	{
 		m_catMoment = 0.0;
+		m_catMomentVelocity = 0.0;
 	}
 	//printf("Cat Moment: %lf\n", m_catMoment);
 

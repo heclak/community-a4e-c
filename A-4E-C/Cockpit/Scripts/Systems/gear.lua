@@ -141,15 +141,13 @@ function SetCommand(command,value)
             end
         end
 	elseif command == NWS_Engage then
-		--print_message_to_user("Engage")
 		if get_hyd_utility_ok() then
 			efm_data_bus.fm_setNWS(1.0)
 		else
 			efm_data_bus.fm_setNWS(0.0)
 		end
 	elseif command == NWS_Disengage then
-		--print_message_to_user("Disengage")
-		efm_data_bus.fm_setNWS(1.0)
+		efm_data_bus.fm_setNWS(0.0)
     end
 end
 

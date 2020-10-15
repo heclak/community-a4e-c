@@ -463,7 +463,7 @@ bool ed_fm_pop_simulation_event(ed_fm_simulation_event& out)
 		out.event_type = ED_FM_EVENT_CARRIER_CATAPULT;
 		out.event_params[0] = 1;
 		out.event_params[1] = 3.0f;
-		out.event_params[2] = 70.0f;
+		out.event_params[2] = 70.0f * ( 0.2*(s_airframe->getMass() / c_maxTakeoffMass) + 1.0 );
 		out.event_params[3] = s_airframe->getMass()*9.81*0.5;
 		s_airframe->catapultState() = Skyhawk::Airframe::ON_CAT_WAITING;
 		return true;
@@ -580,6 +580,8 @@ bool ed_fm_enable_debug_info()
 
 void ed_fm_suspension_feedback(int idx, const ed_fm_suspension_info* info)
 {
+	if ( idx == 0 )
+		s_airframe->setNoseCompression( info->struct_compression );
 	//printf("Force(%lf, %lf, %lf)\n", info->acting_force[0], info->acting_force[1], info->acting_force[2]);
 	//printf("Position(%lf, %lf, %lf)\n", info->acting_force_point[0], info->acting_force_point[1], info->acting_force_point[2]);
 	//printf("Struct Compression %d: %lf\n", idx, info->struct_compression);
