@@ -126,7 +126,7 @@ void ed_fm_simulate(double dt)
 	//Update
 	s_engine->updateEngine(dt);
 	s_airframe->airframeUpdate(dt);
-	//s_avionics->updateAvionics(dt);
+	s_avionics->updateAvionics(dt);
 	s_fm->calculateForcesAndMoments(dt);
 
 	//Post update

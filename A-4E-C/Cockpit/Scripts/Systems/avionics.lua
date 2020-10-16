@@ -612,7 +612,7 @@ function update_attitude_gyros()
     local pitch = sensor_data.getPitch()*RADIANS_TO_DEGREES
     local roll = sensor_data.getRoll()*RADIANS_TO_DEGREES
     local heading = sensor_data.getMagneticHeading()*RADIANS_TO_DEGREES
-    local slip = sensor_data.getAngleOfSlide()/18.5  -- 18.5 is about the max slide value when applying full rudder
+    local slip = math.deg(sensor_data.getAngleOfSlide())/18.5  -- 18.5 is about the max slide value when applying full rudder
     if slip>1 then
         slip=1
     elseif slip<-1 then
