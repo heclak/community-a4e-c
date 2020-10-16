@@ -139,6 +139,9 @@ function fm_getAOAUnits()
     return fm_aoa_units:get()
 end
 
+
+fm_setCockpitShake(optionsData_cockpitShake/100.0)
+
 function get_efm_data_bus()
     local efm_data_bus = {}
     --fm_cockpitShake:set(optionsData_cockpitShake/100.0)
@@ -163,9 +166,8 @@ function get_efm_data_bus()
     efm_data_bus.fm_getExternalFuel = fm_getExternalFuel
     efm_data_bus.fm_getIgnition = fm_getIgnition
     efm_data_bus.fm_getAOAUnits = fm_getAOAUnits
-
     return efm_data_bus
-    --efm_data_bus.setCockpitShake(optionsData_cockpitShake/100.0)
+   
 end
 
 local EFM_enabled = true
