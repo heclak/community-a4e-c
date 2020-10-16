@@ -2,6 +2,7 @@ dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.script_path.."Systems/radar_scope_api.lua")
+dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 
 local dev = GetSelf()
 
@@ -11,6 +12,7 @@ local update_time_step = 0.05
 make_default_activity(update_time_step)--update will be called 20 times per second
 
 local sensor_data = get_base_data()
+local efm_data_bus = get_efm_data_bus()
 local meter2mile = 0.000621371
 local meter2feet = 3.28084
 local nm2meter = 1852
@@ -831,6 +833,12 @@ function apg53a_draw_a2g()
             a2g_waslocked = true
         end
     end
+
+	if locked then
+		efm_data_bus.fm_setRadarSlantRange(r)
+	else
+		efm_data_bus.fm_setRadarSlantRange(-1.0)
+	end
 
     --map r to a height for the line (y)
     local y = ((r*2)/18288)-1 -- convert from meters of distance display position -1 to 1

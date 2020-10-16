@@ -4,6 +4,7 @@
 #include "BaseComponent.h"
 #include "Input.h"
 #include "AircraftState.h"
+#include "CP741.h"
 namespace Skyhawk
 {//begin namespace
 
@@ -19,6 +20,7 @@ public:
 
 	void updateAvionics(double dt);
 	inline void setYawDamperPower( bool power );
+	inline bool getValidBombingSolution();
 private:
 
 	//constants
@@ -30,6 +32,7 @@ private:
 
 	Input& m_input;
 	AircraftState& m_state;
+	//CP741 m_bombingComputer;
 
 	bool m_damperEnabled = false;
 };
@@ -46,6 +49,10 @@ void Avionics::setYawDamperPower( bool power )
 	m_damperEnabled = power;
 }
 
+bool Avionics::getValidBombingSolution()
+{
+
+}
 
 }//end namespace
 #endif

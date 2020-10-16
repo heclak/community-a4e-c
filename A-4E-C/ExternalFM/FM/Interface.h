@@ -64,6 +64,10 @@ public:
 		m_airspeed = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_AIRSPEED" );
 
 		m_yawDamper = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_YAW_DAMPER" );
+
+		m_beta = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_BETA" );
+		m_aoa = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_AOA" );
+		m_aoaUnits = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_AOA_UNITS" );
 	}
 
 	inline void coldInit()
@@ -197,6 +201,21 @@ public:
 	inline void setAirspeed( double number )
 	{
 		setParamNumber( m_airspeed, number );
+	}
+
+	inline void setAOA( double number )
+	{
+		setParamNumber( m_aoa, number );
+	}
+
+	inline void setBeta( double number )
+	{
+		setParamNumber( m_beta, number );
+	}
+
+	inline void setAOAUnits( double number )
+	{
+		setParamNumber( m_aoaUnits, number );
 	}
 
 	inline double getGearNose()
@@ -335,6 +354,10 @@ private:
 	void* m_cockpitShake = NULL;
 
 	void* m_yawDamper = NULL;
+
+	void* m_beta = NULL;
+	void* m_aoa = NULL;
+	void* m_aoaUnits = NULL;
 };
 
 

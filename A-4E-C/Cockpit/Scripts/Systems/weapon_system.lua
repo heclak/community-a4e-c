@@ -413,6 +413,14 @@ function update()
     else
         AWRS_power:set(0.0)
     end
+	
+	for i = 1, num_stations do
+           if station_states[i] == STATION_READY then
+				local station_info = WeaponSystem:get_station_info(i-1)
+				recursively_print(station_info, 100, 100, "C:/tmp/station_"..tostring(i)..".txt")
+			end
+    end
+	
 
     -- see NATOPS 8-3
     local released_weapon = false
@@ -454,6 +462,7 @@ function update()
         for i = 1, num_stations do
             if station_states[i] == STATION_READY then
                 local station_info = WeaponSystem:get_station_info(i-1)
+				  recursively_print(station_info, 100, 100, "C:/tmp/station_"..tostring(i))
                 debug_print("station "..tostring(i)..": CLSID="..tostring(station_info.CLSID)..": count="..tostring(station_info.count)..",state="..tostring(station_states[i])..",l2="..tostring(station_info.weapon.level2)..",l3="..tostring(station_info.weapon.level3))
                 if station_info.count > 0 then 
                     readied_stations_empty = false

@@ -36,6 +36,9 @@
     <ClCompile Include="Maths.cpp">
       <Filter>Utility</Filter>
     </ClCompile>
+    <ClCompile Include="CP741.cpp">
+      <Filter>A4-Skyhawk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ED_FM_Utility.h" />
@@ -102,6 +105,9 @@
     </ClInclude>
     <ClInclude Include="Maths.h">
       <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="CP741.h">
+      <Filter>A4-Skyhawk</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

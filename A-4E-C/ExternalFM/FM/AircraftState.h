@@ -18,9 +18,10 @@ public:
 	virtual void airborneInit();
 
 	inline void setCurrentStateBodyAxis(double aoa, double beta, const Vec3& angle, const Vec3& omega, const Vec3& omegaDot, const Vec3& airspeed, const Vec3& acceleration);
-	inline void setCurrentStateWorldAxis( const Vec3& worldVelocity );
+	inline void setCurrentStateWorldAxis( const Vec3& worldPosition, const Vec3& worldVelocity );
 	inline void setMach( double mach );
 
+	inline const Vec3& getWorldPosition() const;
 	inline const Vec3& getWorldVelocity() const;
 	inline const Vec3& getAngle() const;
 	inline const Vec3& getOmega() const;
@@ -35,6 +36,7 @@ public:
 
 
 private:
+	Vec3 m_worldPosition;
 	Vec3 m_worldVelocity;
 	Vec3 m_angle;
 	Vec3 m_omega;
@@ -67,8 +69,12 @@ void AircraftState::setCurrentStateBodyAxis(
 	m_localAcceleration = acceleration;
 }
 
-void AircraftState::setCurrentStateWorldAxis( const Vec3& worldVelocity )
+void AircraftState::setCurrentStateWorldAxis( 
+	const Vec3& worldPosition,
+	const Vec3& worldVelocity 
+)
 {
+	m_worldPosition = worldPosition;
 	m_worldVelocity = worldVelocity;
 }
 
@@ -87,6 +93,10 @@ const double AircraftState::getAirDensity() const
 	return m_airDensity;
 }
 
+const Vec3& AircraftState::getWorldPosition() const
+{
+	return m_worldPosition;
+}
 
 const Vec3& AircraftState::getWorldVelocity() const
 {

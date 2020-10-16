@@ -946,7 +946,7 @@ function update_aoa_ladder()
     -- TODO: external approach lights
     local gear = get_aircraft_draw_argument_value(0)
 
-    local aoa_tmp = aoa:get_WMA(math.deg(sensor_data.getAngleOfAttack()))
+    local aoa_tmp = aoa:get_WMA(math.deg(efm_data_bus.fm_getAOAUnits()))
 
     -- ideal AoA is 17-18 units
     --
@@ -962,9 +962,9 @@ function update_aoa_ladder()
             aoa_red:set(1)
         else
             if gear > 0 and get_elec_retraction_release_airborne() then
-                aoa_green:set(   (aoa_tmp*2 >= 18.0)                          and 1 or 0 )
-                aoa_yellow:set( ((aoa_tmp*2 >= 16.5) and (aoa_tmp*2 <= 18.5)) and 1 or 0 )
-                aoa_red:set(     (aoa_tmp*2 <= 17.0)                          and 1 or 0 )
+                aoa_green:set(   (aoa_tmp >= 18.0)                          and 1 or 0 )
+                aoa_yellow:set( ((aoa_tmp >= 16.5) and (aoa_tmp <= 18.5)) and 1 or 0 )
+                aoa_red:set(     (aoa_tmp <= 17.0)                          and 1 or 0 )
             else
                 aoa_green:set(0)
                 aoa_yellow:set(0)

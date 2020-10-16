@@ -52,5 +52,6 @@ void Skyhawk::Avionics::updateAvionics(double dt)
 	}
 	
 
+
 	//printf("Filter: %lf, Rudder: %lf\n", f, m_flightModel.yawRate());
 }

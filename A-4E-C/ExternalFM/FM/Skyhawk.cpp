@@ -14,6 +14,7 @@
 #include "Avionics.h"
 #include "Interface.h"
 #include "AircraftState.h"
+#include "Maths.h"
 //============================ Skyhawk Statics ============================//
 static Skyhawk::AircraftState* s_state = NULL;
 static Skyhawk::Interface* s_interface = NULL;
@@ -26,6 +27,8 @@ static Skyhawk::Avionics* s_avionics = NULL;
 
 static void init();
 static void cleanup();
+
+static inline double rawAOAToUnits( double rawAOA );
 
 void init()
 {
@@ -55,6 +58,11 @@ void cleanup()
 	s_airframe = NULL;
 	s_avionics = NULL;
 	s_fm = NULL;
+}
+
+double rawAOAToUnits( double rawAOA )
+{
+	return c_gradAOA* toDegrees(rawAOA) + c_constAOA;
 }
 
 void ed_fm_add_local_force(double & x,double &y,double &z,double & pos_x,double & pos_y,double & pos_z)
@@ -118,7 +126,7 @@ void ed_fm_simulate(double dt)
 	//Update
 	s_engine->updateEngine(dt);
 	s_airframe->airframeUpdate(dt);
-	s_avionics->updateAvionics(dt);
+	//s_avionics->updateAvionics(dt);
 	s_fm->calculateForcesAndMoments(dt);
 
 	//Post update
@@ -129,6 +137,9 @@ void ed_fm_simulate(double dt)
 	s_interface->setRudderPedals(s_airframe->getRudder());
 	s_interface->setInternalFuel(s_airframe->getFuelQty(Skyhawk::Airframe::Tank::INTERNAL));
 	s_interface->setExternalFuel(s_airframe->getFuelQtyExternal());
+	s_interface->setAOA( s_state->getAOA() );
+	s_interface->setBeta( s_state->getBeta() );
+	s_interface->setAOAUnits( rawAOAToUnits(s_state->getAOA()) );
 }
 
 void ed_fm_set_atmosphere(
@@ -188,7 +199,7 @@ void ed_fm_set_current_state
 	double quaternion_w //orientation quaternion components in world coordinate system
 )
 {
-	s_state->setCurrentStateWorldAxis(Vec3(vx, vy, vz));
+	s_state->setCurrentStateWorldAxis(Vec3(px, py, pz), Vec3(vx, vy, vz));
 }
 
 

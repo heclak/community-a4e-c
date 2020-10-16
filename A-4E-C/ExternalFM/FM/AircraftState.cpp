@@ -9,6 +9,7 @@ Skyhawk::AircraftState::AircraftState()
 //in this function. Otherwise Track's become unusable because of the butterfly effect.
 void Skyhawk::AircraftState::zeroInit()
 {
+	m_worldPosition = Vec3();
 	m_worldVelocity = Vec3();
 	m_angle = Vec3();
 	m_omega = Vec3();

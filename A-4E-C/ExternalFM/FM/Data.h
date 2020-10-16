@@ -58,3 +58,11 @@
 #define c_maxTakeoffMass 11113.0
 
 #define c_maxCatMoment 4.0e5
+
+#define c_aoaStallClean 27.5
+
+#define c_aoaZeroG 0.2
+
+#define c_gradAOA (27.0 / (c_aoaStallClean - c_aoaZeroG))
+
+#define c_constAOA -(c_aoaZeroG * c_gradAOA)
