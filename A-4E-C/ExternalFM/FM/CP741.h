@@ -17,23 +17,32 @@ public:
 	virtual void airborneInit();
 
 	inline void setPower( bool power );
-	void updateSolution(double slant, double dt);
-	void setTarget( double slant );
+	void updateSolution( double dt );
+	void setTarget( bool set, double slant );
 
-	double calculateHorizontalDistance( double slant );
+	inline bool getSolution();
 
+	double calculateHorizontalDistance();
+	double calculateImpactDistance(double dt);
 
 private:
 
 	AircraftState& m_state;
 	bool m_power = false;
 	bool m_solution = false;
+	bool m_targetSet = false;
+
 	Vec3 m_target;
 };
 
 void CP741::setPower( bool power )
 {
 	m_power = power;
+}
+
+bool CP741::getSolution()
+{
+	return m_solution;
 }
 
 }

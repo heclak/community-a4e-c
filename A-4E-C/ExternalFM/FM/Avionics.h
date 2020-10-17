@@ -21,6 +21,8 @@ public:
 	void updateAvionics(double dt);
 	inline void setYawDamperPower( bool power );
 	inline bool getValidBombingSolution();
+
+	inline CP741& getComputer();
 private:
 
 	//constants
@@ -32,7 +34,7 @@ private:
 
 	Input& m_input;
 	AircraftState& m_state;
-	//CP741 m_bombingComputer;
+	CP741 m_bombingComputer;
 
 	bool m_damperEnabled = false;
 };
@@ -52,6 +54,11 @@ void Avionics::setYawDamperPower( bool power )
 bool Avionics::getValidBombingSolution()
 {
 
+}
+
+CP741& Avionics::getComputer()
+{
+	return m_bombingComputer;
 }
 
 }//end namespace

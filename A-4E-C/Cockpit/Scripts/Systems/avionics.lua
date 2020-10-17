@@ -1098,6 +1098,8 @@ local GLARESHIELD_BRIGHTNESS_LOW = 0.5
 -- master update function for all avionics
 ---
 function update()
+	efm_data_bus.fm_setRadarAltitude(sensor_data.getRadarAltitude())
+
     update_altimeter()
     update_accelerometer()
     update_vvi()

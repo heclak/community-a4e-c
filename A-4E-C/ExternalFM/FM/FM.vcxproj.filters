@@ -39,6 +39,9 @@
     <ClCompile Include="CP741.cpp">
       <Filter>A4-Skyhawk</Filter>
     </ClCompile>
+    <ClCompile Include="Axis.cpp">
+      <Filter>A4-Skyhawk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ED_FM_Utility.h" />
@@ -107,6 +110,9 @@
       <Filter>Utility</Filter>
     </ClInclude>
     <ClInclude Include="CP741.h">
+      <Filter>A4-Skyhawk</Filter>
+    </ClInclude>
+    <ClInclude Include="Axis.h">
       <Filter>A4-Skyhawk</Filter>
     </ClInclude>
   </ItemGroup>

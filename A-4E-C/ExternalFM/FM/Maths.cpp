@@ -18,5 +18,21 @@ const Vec3 windAxisToBody(const Vec3& force, const double& alpha, const double& 
 	return Vec3(res_x, res_y, res_z);
 }
 
+
+const Vec3 directionVector( const double pitch, const double yaw )
+{
+	double cosPitch = cos( pitch );
+	double sinPitch = sin( pitch );
+	double cosYaw = cos( yaw );
+	double sinYaw = sin( -yaw );
+
+	Vec3 newV;
+	newV.x = cosYaw * cosPitch;
+	newV.z = sinYaw * cosPitch;
+	newV.y = sinPitch;
+
+	return normalize(newV);
+}
+
 }	// end namespace
 

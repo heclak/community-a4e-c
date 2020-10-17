@@ -17,20 +17,26 @@ public:
 	virtual void hotInit();
 	virtual void airborneInit();
 
-	inline void setCurrentStateBodyAxis(double aoa, double beta, const Vec3& angle, const Vec3& omega, const Vec3& omegaDot, const Vec3& airspeed, const Vec3& acceleration);
-	inline void setCurrentStateWorldAxis( const Vec3& worldPosition, const Vec3& worldVelocity );
+	inline void setCurrentStateBodyAxis(double aoa, double beta, const Vec3& angle, const Vec3& omega, const Vec3& omegaDot, const Vec3& speed, const Vec3& airspeed, const Vec3& acceleration);
+	inline void setCurrentStateWorldAxis( const Vec3& worldPosition, const Vec3& worldVelocity, const Vec3& worldDirection );
+	inline void setCurrentAtmosphere( double temperature, double speedOfSound, double density, double pressure, const Vec3& wind );
 	inline void setMach( double mach );
+	inline void setRadarAltitude( double altitude );
 
 	inline const Vec3& getWorldPosition() const;
 	inline const Vec3& getWorldVelocity() const;
+	inline const Vec3& getWorldDirection() const;
+	inline const Vec3& getWorldWind() const;
 	inline const Vec3& getAngle() const;
 	inline const Vec3& getOmega() const;
 	inline const Vec3& getOmegaDot() const;
+	inline const Vec3& getLocalSpeed() const;
 	inline const Vec3& getLocalAirspeed() const;
 	inline const Vec3& getLocalAcceleration() const;
 	inline const double getAOA() const;
 	inline const double getBeta() const;
 	inline const double getMach() const;
+	inline const double getRadarAltitude() const;
 	inline const double getAirDensity() const;
 
 
@@ -38,15 +44,22 @@ public:
 private:
 	Vec3 m_worldPosition;
 	Vec3 m_worldVelocity;
+	Vec3 m_worldDirection;
+	Vec3 m_worldWind;
 	Vec3 m_angle;
 	Vec3 m_omega;
 	Vec3 m_omegaDot;
+	Vec3 m_localSpeed;
 	Vec3 m_localAirspeed;
 	Vec3 m_localAcceleration;
 	double m_aoa;
 	double m_beta;
 	double m_mach;
 	double m_airDensity;
+	double m_pressure;
+	double m_temperature;
+	double m_speedOfSound;
+	double m_radarAltitude;
 };
 
 	
@@ -55,7 +68,8 @@ void AircraftState::setCurrentStateBodyAxis(
 	double beta, 
 	const Vec3& angle, 
 	const Vec3& omega, 
-	const Vec3& omegaDot, 
+	const Vec3& omegaDot,
+	const Vec3& localSpeed,
 	const Vec3& airspeed, 
 	const Vec3& acceleration 
 )
@@ -65,22 +79,45 @@ void AircraftState::setCurrentStateBodyAxis(
 	m_angle = angle;
 	m_omega = omega;
 	m_omegaDot = omegaDot;
+	m_localSpeed = localSpeed;
 	m_localAirspeed = airspeed;
 	m_localAcceleration = acceleration;
 }
 
 void AircraftState::setCurrentStateWorldAxis( 
 	const Vec3& worldPosition,
-	const Vec3& worldVelocity 
+	const Vec3& worldVelocity,
+	const Vec3& worldDirection
 )
 {
 	m_worldPosition = worldPosition;
 	m_worldVelocity = worldVelocity;
+	m_worldDirection = worldDirection;
+}
+
+void AircraftState::setCurrentAtmosphere( 
+	double temperature, 
+	double speedOfSound, 
+	double density, 
+	double pressure, 
+	const Vec3& wind 
+)
+{
+	m_temperature = temperature;
+	m_speedOfSound = speedOfSound;
+	m_airDensity = density;
+	m_pressure = pressure;
+	m_worldWind = wind;
 }
 
 void AircraftState::setMach( double mach )
 {
 	m_mach = mach;
+}
+
+void AircraftState::setRadarAltitude( double altitude )
+{
+	m_radarAltitude = altitude;
 }
 
 const double AircraftState::getMach() const
@@ -103,6 +140,16 @@ const Vec3& AircraftState::getWorldVelocity() const
 	return m_worldVelocity;
 }
 
+const Vec3& AircraftState::getWorldDirection() const
+{
+	return m_worldDirection;
+}
+
+const Vec3& AircraftState::getWorldWind() const
+{
+	return m_worldWind;
+}
+
 const Vec3& AircraftState::getAngle() const
 {
 	return m_angle;
@@ -116,6 +163,11 @@ const Vec3& AircraftState::getOmega() const
 const Vec3& AircraftState::getOmegaDot() const
 {
 	return m_omegaDot;
+}
+
+const Vec3& AircraftState::getLocalSpeed() const
+{
+	return m_localSpeed;
 }
 
 const Vec3& AircraftState::getLocalAirspeed() const
@@ -138,6 +190,10 @@ const double AircraftState::getBeta() const
 	return m_beta;
 }
 
+const double AircraftState::getRadarAltitude() const
+{
+	return m_radarAltitude;
+}
 
 }
 

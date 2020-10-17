@@ -833,7 +833,7 @@ function apg53a_draw_a2g()
             a2g_waslocked = true
         end
     end
-
+	
 	if locked then
 		efm_data_bus.fm_setRadarSlantRange(r)
 	else
@@ -1267,6 +1267,7 @@ function update_apg53a()
             apg53a_leftrange:set(0)
             apg53a_bottomrange:set(0)
             apg53a_scan_a2g(hdg,pitch-math.rad(3))  -- performs range array update[], always uses weapon datum
+			 --apg53a_scan_a2g(hdg,pitch)  -- performs range array update[], always uses weapon datum
             apg53a_draw_a2g()
         end
     end

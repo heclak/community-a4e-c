@@ -99,10 +99,11 @@ void ed_fm_add_local_moment(double & x,double &y,double &z)
 
 void ed_fm_simulate(double dt)
 {
-	//if ( ! g_safeToRun )
-		//return;
+	if ( ! g_safeToRun )
+		return;
 
 	//Pre update
+	s_state->setRadarAltitude( s_interface->getRadarAltitude() );
 	s_avionics->setYawDamperPower( s_interface->getYawDamper() > 0.5 );
 	s_fm->setCockpitShakeModifier( s_interface->getCockpitShake() );
 	s_airframe->setFlapsPosition(s_interface->getFlaps());
@@ -112,10 +113,14 @@ void ed_fm_simulate(double dt)
 	s_airframe->setGearRPosition( s_interface->getGearRight() );
 	s_airframe->setGearNPosition( s_interface->getGearNose() );
 
+	s_avionics->getComputer().setTarget( s_interface->getSetTarget(), s_interface->getSlantRange() );
+
 
 	s_input->pitchTrim() = s_interface->getPitchTrim();
 	s_input->rollTrim() = s_interface->getRollTrim();
 	s_input->yawTrim() = s_interface->getRudderTrim();
+
+	s_input->update();
 
 
 	//printf("Throttle: %lf\n", s_interface.getEngineThrottlePosition());
@@ -140,6 +145,7 @@ void ed_fm_simulate(double dt)
 	s_interface->setAOA( s_state->getAOA() );
 	s_interface->setBeta( s_state->getBeta() );
 	s_interface->setAOAUnits( rawAOAToUnits(s_state->getAOA()) );
+	s_interface->setValidSolution( s_avionics->getComputer().getSolution() );
 }
 
 void ed_fm_set_atmosphere(
@@ -153,6 +159,7 @@ void ed_fm_set_atmosphere(
 							double wind_vz //components of velocity vector, including turbulence in world coordinate system
 						)
 {
+	s_state->setCurrentAtmosphere( t, a, ro, p, Vec3( wind_vx, wind_vy, wind_vz ) );
 	s_fm->setAtmosphericParams(ro, a, Vec3(wind_vx, wind_vy, wind_vz));
 	s_engine->setTemperature( t );
 }
@@ -199,7 +206,31 @@ void ed_fm_set_current_state
 	double quaternion_w //orientation quaternion components in world coordinate system
 )
 {
-	s_state->setCurrentStateWorldAxis(Vec3(px, py, pz), Vec3(vx, vy, vz));
+	Vec3 direction;
+
+	double x = quaternion_x;
+	double y = quaternion_y;
+	double z = quaternion_z;
+	double w = quaternion_w;
+
+	double y2 = y + y;
+	double z2 = z + z;
+
+	double yy = y * y2;
+	double zz = z * z2;
+
+	double xy = x * y2;
+	double xz = x * z2;
+
+	double wz = w * z2;
+	double wy = w * y2;
+
+
+	direction.x = 1.0 - (yy + zz);
+	direction.y = xy + wz;
+	direction.z = xz - wy;
+
+	s_state->setCurrentStateWorldAxis(Vec3(px, py, pz), Vec3(vx, vy, vz), direction);
 }
 
 
@@ -228,8 +259,7 @@ void ed_fm_set_current_state_body_axis
 	double common_angle_of_slide   //AoS radians
 )
 {
-	s_state->setCurrentStateBodyAxis(common_angle_of_attack, common_angle_of_slide, Vec3(roll, yaw, pitch), Vec3(omegax, omegay, omegaz), Vec3(omegadotx, omegadoty, omegadoty), Vec3(vx - wind_vx, vy - wind_vy, vz - wind_vz), Vec3(ax, ay, az));
-	//s_airframe->setAngle(pitch);
+	s_state->setCurrentStateBodyAxis(common_angle_of_attack, common_angle_of_slide, Vec3(roll, yaw, pitch), Vec3(omegax, omegay, omegaz), Vec3(omegadotx, omegadoty, omegadoty), Vec3(vx, vy, vz), Vec3(vx - wind_vx, vy - wind_vy, vz - wind_vz), Vec3(ax, ay, az));
 }
 
 void ed_fm_on_damage( int element, double element_integrity_factor )
@@ -249,32 +279,86 @@ void ed_fm_set_command
 	switch (command)
 	{
 	case Skyhawk::Control::PITCH:
-		s_input->pitch() = value;
+		s_input->pitch( value );
 		break;
 	case Skyhawk::Control::ROLL:
-		s_input->roll() = value;
+		s_input->roll( value );
 		break;
 	case Skyhawk::Control::YAW:
-		s_input->yaw() = value;
+		s_input->yaw( value );
 		break;
 	case Skyhawk::Control::THROTTLE:
-		s_input->throttle() = value;
+		s_input->throttle( value );
 		break;
 	case Skyhawk::Control::BRAKE:
-		s_input->brakeLeft() = value;
-		s_input->brakeRight() = value;
+		s_input->brakeLeft( value );
+		s_input->brakeRight( value );
 		break;
 	case Skyhawk::Control::LEFT_BRAKE:
-		s_input->brakeLeft() = value;
+		s_input->brakeLeft( value );
 		break;
 	case Skyhawk::Control::RIGHT_BRAKE:
-		s_input->brakeRight() = value;
+		s_input->brakeRight( value );
 		break;
 	case Skyhawk::Control::HOOK_TOGGLE:
 		s_input->hook() = !s_input->hook();
 		break;
+	case Skyhawk::Control::RUDDER_LEFT_START:
+		s_input->yawAxis().keyDecrease();
+		break;
+	case Skyhawk::Control::RUDDER_LEFT_STOP:
+		s_input->yawAxis().reset();
+		break;
+	case Skyhawk::Control::RUDDER_RIGHT_START:
+		s_input->yawAxis().keyIncrease();
+		break;
+	case Skyhawk::Control::RUDDER_RIGHT_STOP:
+		s_input->yawAxis().reset();
+		break;
+	case Skyhawk::Control::ROLL_LEFT_START:
+		s_input->rollAxis().keyDecrease();
+		break;
+	case Skyhawk::Control::ROLL_LEFT_STOP:
+		s_input->rollAxis().reset();
+		break;
+	case Skyhawk::Control::ROLL_RIGHT_START:
+		s_input->rollAxis().keyIncrease();
+		break;
+	case Skyhawk::Control::ROLL_RIGHT_STOP:
+		s_input->rollAxis().reset();
+		break;
+	case Skyhawk::Control::PITCH_DOWN_START:
+		s_input->pitchAxis().keyDecrease();
+		break;
+	case Skyhawk::Control::PITCH_DOWN_STOP:
+		s_input->pitchAxis().reset();
+		break;
+	case Skyhawk::Control::PITCH_UP_START:
+		s_input->pitchAxis().keyIncrease();
+		break;
+	case Skyhawk::Control::PITCH_UP_STOP:
+		s_input->pitchAxis().reset();
+		break;
+	case Skyhawk::Control::THROTTLE_DOWN_START:
+		//Throttle is inverted for some reason in DCS
+		s_input->throttleAxis().keyIncrease();
+		break;
+	case Skyhawk::Control::THROTTLE_STOP:
+		s_input->throttleAxis().stop();
+		break;
+	case Skyhawk::Control::THROTTLE_UP_START:
+		s_input->throttleAxis().keyDecrease();
+		break;
+	case Skyhawk::Control::BRAKE_ALL_START:
+		s_input->leftBrakeAxis().keyIncrease();
+		s_input->rightBrakeAxis().keyIncrease();
+		break;
+	case Skyhawk::Control::BRAKE_ALL_STOP:
+		s_input->leftBrakeAxis().reset();
+		s_input->rightBrakeAxis().reset();
+		break;
 	default:
-		;// printf( "number %d: %lf\n", command, value );
+		; //printf( "number %d: %lf\n", command, value );
 	}
 }
 
