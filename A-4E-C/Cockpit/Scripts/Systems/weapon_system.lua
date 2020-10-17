@@ -953,7 +953,6 @@ function SetCommand(command,value)
         end
 
     elseif command == Keys.PickleOff then
-		 print_message_to_user("Target Unset")
 		 efm_data_bus.fm_setSetTarget(0.0)
         pickle_engaged = false
         labs_tone:stop() -- TODO also stop after last auto-release interval bomb is dropped

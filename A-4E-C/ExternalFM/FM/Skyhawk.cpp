@@ -531,9 +531,9 @@ double ed_fm_get_param(unsigned index)
 	case ED_FM_ENGINE_1_COMBUSTION:
 		return s_engine->getFuelFlow() / c_fuelFlowMax;
 	case ED_FM_SUSPENSION_1_RELATIVE_BRAKE_MOMENT:
-		return Skyhawk::Input::normalise(s_input->brakeLeft());
+		return s_input->brakeLeft();
 	case ED_FM_SUSPENSION_2_RELATIVE_BRAKE_MOMENT:
-		return Skyhawk::Input::normalise(s_input->brakeRight());
+		return s_input->brakeRight();
 	case ED_FM_SUSPENSION_0_WHEEL_SELF_ATTITUDE:
 		return s_interface->getNWS() > 0.5 ? 0.0 : 1.0;
 	case ED_FM_SUSPENSION_0_WHEEL_YAW:

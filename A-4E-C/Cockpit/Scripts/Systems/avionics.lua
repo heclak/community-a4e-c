@@ -946,8 +946,7 @@ function update_aoa_ladder()
     -- TODO: external approach lights
     local gear = get_aircraft_draw_argument_value(0)
 
-    local aoa_tmp = aoa:get_WMA(math.deg(efm_data_bus.fm_getAOAUnits()))
-
+    local aoa_tmp = aoa:get_WMA(efm_data_bus.fm_getAOAUnits())
     -- ideal AoA is 17-18 units
     --
     -- 18.5 - 30.0 units:   green only
