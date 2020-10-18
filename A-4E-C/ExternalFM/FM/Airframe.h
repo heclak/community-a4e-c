@@ -281,6 +281,8 @@ public:
 	inline void setSelectedTank( Tank selected );
 	inline void setFuelPrevious( Tank tank );
 
+	inline double getFuelPrevious( Tank tank );
+
 	inline const Vec3& getFuelPos(Tank tank) const;
 	inline double getFuelQty(Tank tank) const;
 	inline double getFuelQtyExternal() const;
@@ -407,6 +409,7 @@ void Airframe::setSelectedTank(Tank selected)
 
 void Airframe::setFuelPrevious( Tank tank )
 {
+
 	m_fuelPrev[tank] = m_fuel[tank];
 }
 
@@ -472,6 +475,11 @@ void Airframe::setMass(double mass)
 void Airframe::setNoseCompression( double x )
 {
 	m_noseCompression = x;
+}
+
+double Airframe::getFuelPrevious( Tank tank )
+{
+	return m_fuelPrev[tank];
 }
 
 double Airframe::getGearLPosition()

@@ -66,11 +66,6 @@ void Skyhawk::Airframe::zeroInit()
 
 	m_selected = Tank::INTERNAL;
 
-	for ( int i = 0; i < Tank::DONT_TOUCH; i++ )
-	{
-		m_fuelPrev[i] = 0.0;
-	}
-
 	resetDamage();
 
 	m_mass = 1.0;

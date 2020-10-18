@@ -20,6 +20,4 @@ void Skyhawk::Input::update()
 	m_throttleAxis.update();
 	m_leftBrakeAxis.update();
 	m_rightBrakeAxis.update();
-
-	printf( "Brake L: %lf, R: %lf\n", m_leftBrakeAxis.getValue(), m_rightBrakeAxis.getValue() );
 }
