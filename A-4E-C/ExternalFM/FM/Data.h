@@ -59,7 +59,7 @@
 
 #define c_maxCatMoment 4.0e5
 
-#define c_aoaStallClean 27.5
+#define c_aoaStallClean 25.0
 
 #define c_aoaZeroG 0.2
 
