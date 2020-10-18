@@ -31,7 +31,20 @@ Skyhawk::AeroElement::~AeroElement()
 
 void Skyhawk::AeroElement::zeroInit()
 {
+	m_dragFactor = 1.0;
+	m_liftFactor = 1.0;
+	m_scalarAirspeed = 0.0;
+	m_aoa = 0.0;
+	m_beta = 0.0;
+	m_kElem = 0.0;
+	m_damageElem = 1.0f;
 
+	m_airspeed = Vec3();
+	m_liftVec = Vec3();
+	m_dragVec = Vec3();
+	m_LDwindAxes = Vec3();
+	m_RForceElement = Vec3();
+	m_moment = Vec3();
 }
 void Skyhawk::AeroElement::coldInit()
 {

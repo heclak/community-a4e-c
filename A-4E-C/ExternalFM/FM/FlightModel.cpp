@@ -172,6 +172,16 @@ void Skyhawk::FlightModel::zeroInit()
 
 	m_nLW = Vec3();
 	m_nRW = Vec3();
+
+	m_elementLW.zeroInit();
+	m_elementRW.zeroInit();
+	m_elementLSlat.zeroInit();
+	m_elementRSlat.zeroInit();
+	m_elementLFlap.zeroInit();
+	m_elementRFlap.zeroInit();
+	m_elementLSpoiler.zeroInit();
+	m_elementRSpoiler.zeroInit();
+
 }
 
 void Skyhawk::FlightModel::coldInit()
@@ -253,13 +263,13 @@ void Skyhawk::FlightModel::calculateElements()
 
 	m_elementLSlat.setLDFactor(m_airframe.getSlatLPosition(), m_airframe.getSlatLPosition());
 	m_elementRSlat.setLDFactor(m_airframe.getSlatRPosition(), m_airframe.getSlatRPosition());
-	m_elementLFlap.setLDFactor(m_airframe.getFlapsPosition(), m_airframe.getFlapsPosition());
-	m_elementRFlap.setLDFactor(m_airframe.getFlapsPosition(), m_airframe.getFlapsPosition());
-	m_elementLSpoiler.setLDFactor(m_airframe.getSpoilerPosition(), m_airframe.getSpoilerPosition());
-	m_elementRSpoiler.setLDFactor(m_airframe.getSpoilerPosition(), m_airframe.getSpoilerPosition());
+	m_elementLFlap.setLDFactor(m_airframe.getFlapsPosition() * m_airframe.getFlapDamage(), m_airframe.getFlapsPosition());
+	m_elementRFlap.setLDFactor(m_airframe.getFlapsPosition() * m_airframe.getFlapDamage(), m_airframe.getFlapsPosition());
+	m_elementLSpoiler.setLDFactor(m_airframe.getSpoilerPosition() * m_airframe.getSpoilerDamage(), m_airframe.getSpoilerPosition());
+	m_elementRSpoiler.setLDFactor(m_airframe.getSpoilerPosition() * m_airframe.getSpoilerDamage(), m_airframe.getSpoilerPosition());
 
-	m_elementLW.setDFactor(0.7);
-	m_elementRW.setDFactor(0.7);
+	m_elementLW.setLDFactor(m_airframe.getLWingDamage(), 0.7);
+	m_elementRW.setLDFactor(m_airframe.getRWingDamage(), 0.7);
 
 	m_elementLSlat.calculateElementPhysics();
 	m_elementRSlat.calculateElementPhysics();
@@ -267,9 +277,8 @@ void Skyhawk::FlightModel::calculateElements()
 	m_elementRFlap.calculateElementPhysics();
 	m_elementLSpoiler.calculateElementPhysics();
 	m_elementRSpoiler.calculateElementPhysics();
-
-	//m_elementLW.calculateElementPhysics();
-	//m_elementRW.calculateElementPhysics();
+	m_elementLW.calculateElementPhysics();
+	m_elementRW.calculateElementPhysics();
 
 	//m_elementRW.calculateElementPhysics();
 
