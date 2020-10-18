@@ -4,6 +4,7 @@ dofile(LockOn_Options.script_path.."Systems/stores_config.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
+dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 
 local update_rate = 0.006
 make_default_activity(update_rate)
@@ -16,6 +17,7 @@ function debug_print(x)
 end
 
 local sensor_data = get_base_data()
+local efm_data_bus = get_efm_data_bus()
 ------------------------------------------------
 ----------------  CONSTANTS  -------------------
 ------------------------------------------------
@@ -45,6 +47,7 @@ local FUNC_GM_UNARM = 2
 local FUNC_SPRAY_TANK = 3
 local FUNC_LABS = 4
 local FUNC_BOMBS_GM_ARM = 5
+local FUNC_CMPTR = 4 --change to 6 when we its animated
 local selector_debug_text={"OFF","ROCKETS","GM UNARM","SPRAY TANK","LABS","BOMBS & GM ARM"}
 
 -- emergency selector switch constants
@@ -138,6 +141,8 @@ local jato_armed_and_full_param = get_param_handle("JATO_ARMED_AND_FULL")
 
 local main_rpm = get_param_handle("RPM")
 
+local bombing_computer_target_set = false
+
 ------------------------------------------------
 -----------  AIRCRAFT DEFINITION  --------------
 ------------------------------------------------
@@ -217,7 +222,6 @@ local cbu2ba_quantity_array_pos = 0
 local this_weapon_ptr = get_param_handle("THIS_WEAPON_PTR")
 
 function post_initialize()
-	recursively_print(WeaponSystem, 100, 100, "C:/tmp/weapons_table.txt")
 	this_weapon_ptr:set(string.sub(tostring(WeaponSystem.link),10))
     startup_print("weapon_system: postinit start")
 
@@ -417,8 +421,18 @@ function update()
     -- see NATOPS 8-3
     local released_weapon = false
 
-    if _master_arm and (pickle_engaged or trigger_engaged) then
-        
+	--Only restrict pickle if Computer is used. (COMPUTER is currently using LABS selector).
+	valid_solution = true
+	if (function_selector == FUNC_CMPTR) then
+		valid_solution = efm_data_bus.fm_getValidSolution()
+	end
+
+    if _master_arm and (pickle_engaged or trigger_engaged) and valid_solution then
+	
+		 if function_selector == FUNC_CMPTR then
+			 labs_tone:play_continue()
+		 end
+		
         local weap_release = false
         
         -- AWRS mode is in ripple single, ripple pairs, or ripple salvo
@@ -466,11 +480,12 @@ function update()
             ripple_sequence_end()
             -- break
         end
-
+		
         for py = 1, num_stations, 1 do
 
             if weapon_release_count >= max_weapon_release_count and function_selector ~= FUNC_OFF then
-                break
+				break
+				  
             end
 
             i = pylon_order[next_pylon]
@@ -506,7 +521,7 @@ function update()
                 if station.count > 0 and (
                 (station.weapon.level2 == wsType_NURS and ((trigger_engaged and function_selector == FUNC_ROCKETS) or (pickle_engaged and function_selector == FUNC_GM_UNARM)) and weap_release) or -- launch unguided rockets
                 ((station.weapon.level2 == wsType_Missile) and function_selector == FUNC_BOMBS_GM_ARM and weap_release) or -- launch missiles (pickle and fire trigger)
-                ((station.weapon.level2 == wsType_Bomb) and pickle_engaged and function_selector == FUNC_BOMBS_GM_ARM and weap_release) -- launch bombs
+                ((station.weapon.level2 == wsType_Bomb) and pickle_engaged and (function_selector == FUNC_BOMBS_GM_ARM or function_selector == FUNC_CMPTR) and weap_release) -- launch bombs
                 ) then
                     -- Bomb release logic
                     if (station.weapon.level2 == wsType_Bomb) then
@@ -908,6 +923,8 @@ function SetCommand(command,value)
         end
         
 	elseif command == Keys.PickleOn then
+		 efm_data_bus.fm_setSetTarget(1.0)
+			
         weapon_release_ticker = weapon_interval -- fire first batch immediately
         --prepare_weapon_release()
         if AWRS_mode >= AWRS_mode_ripple_single then -- AWRS is in ripple mode
@@ -936,6 +953,7 @@ function SetCommand(command,value)
         end
 
     elseif command == Keys.PickleOff then
+		 efm_data_bus.fm_setSetTarget(0.0)
         pickle_engaged = false
         labs_tone:stop() -- TODO also stop after last auto-release interval bomb is dropped
         glare_labs_annun_state = false -- turn on labs light

@@ -33,7 +33,14 @@ local fm_airspeed = get_param_handle("FM_AIRSPEED")
 
 local fm_RPM = get_param_handle("RPM")
 
-local EFM_enabled = true
+local fm_beta = get_param_handle("FM_BETA")
+local fm_aoa = get_param_handle("FM_AOA")
+local fm_aoa_units = get_param_handle("FM_AOA_UNITS")
+
+local fm_slantRange = get_param_handle("FM_SLANT_RANGE")
+local fm_validSolution = get_param_handle("FM_VALID_SOLUTION")
+local fm_setTarget = get_param_handle("FM_SET_TARGET")
+local fm_radarAltitude = get_param_handle("FM_RADAR_ALTITUDE")
 
 function fm_setNoseGear(value)
     fm_gear_nose:set(value)
@@ -95,6 +102,22 @@ function fm_setCockpitShake(value)
     fm_cockpitShake:set(value)
 end
 
+function fm_setRadarSlantRange(value)
+    fm_slantRange:set(value)
+end
+
+function fm_setSetTarget(value)
+    fm_setTarget:set(value)
+end
+
+function fm_setRadarAltitude(value)
+    fm_radarAltitude:set(value)
+end
+
+function fm_getValidSolution()
+    return fm_validSolution:get() > 0.5
+end
+
 function fm_getEngineRPM()
     return fm_RPM:get()
 end
@@ -119,6 +142,20 @@ function fm_getIgnition()
     return fm_ignition:get()
 end
 
+function fm_getBeta()
+    return fm_beta:get()
+end
+
+function fm_getAOA()
+    return fm_aoa:get()
+end
+
+function fm_getAOAUnits()
+    return fm_aoa_units:get()
+end
+
+
+fm_setCockpitShake(optionsData_cockpitShake/100.0)
 
 function get_efm_data_bus()
     local efm_data_bus = {}
@@ -138,14 +175,20 @@ function get_efm_data_bus()
     efm_data_bus.fm_setYawDamper = fm_setYawDamper
     efm_data_bus.fm_setNWS = fm_setNWS
     efm_data_bus.fm_setCockpitShake = fm_setCockpitShake
+    efm_data_bus.fm_setRadarSlantRange = fm_setRadarSlantRange
+    efm_data_bus.fm_setSetTarget = fm_setSetTarget
+    efm_data_bus.fm_setRadarAltitude = fm_setRadarAltitude
 
     efm_data_bus.fm_getInternalFuel = fm_getInternalFuel
     efm_data_bus.fm_getExternalFuel = fm_getExternalFuel
     efm_data_bus.fm_getIgnition = fm_getIgnition
-
+    efm_data_bus.fm_getAOAUnits = fm_getAOAUnits
+    efm_data_bus.fm_getValidSolution = fm_getValidSolution
     return efm_data_bus
-    --efm_data_bus.setCockpitShake(optionsData_cockpitShake/100.0)
+   
 end
+
+local EFM_enabled = true
 
 function get_efm_sensor_data_overrides()
     --Get the original data
@@ -155,6 +198,8 @@ function get_efm_sensor_data_overrides()
         data.getEngineLeftRPM = fm_getEngineRPM
         data.getThrottleLeftPosition = fm_getThrottle
         data.getTrueAirSpeed = fm_getAirspeed
+        data.getAngleOfSlide = fm_getBeta
+        data.getAngleOfAttack = fm_getAOA
     end
 
     return data

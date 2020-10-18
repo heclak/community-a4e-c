@@ -646,11 +646,11 @@ APCLight.output                     = {0.0, 1.0}
 APCLight.parameter_name             = "APC_LIGHT"
 
 -- AOA Indicator and Ladder Lights
-AngleOfAttack                       = CreateGauge()
+AngleOfAttack                       = CreateGauge("parameter")
 AngleOfAttack.arg_number            = 840
-AngleOfAttack.input                 = {0, (15/360)*2.0*math.pi} -- gauge shows arbitrary units up to 30 (not degrees or radians), optimum landing AoA should be 17.5units at 3oclock position. base_gauge_AngleOfAttack is in radians though... Need to tweak this input range on the gauge if we can figure out how the arbitrary units correspond to radians
+AngleOfAttack.input                 = {0, 30.0} -- gauge shows arbitrary units up to 30 (not degrees or radians), optimum landing AoA should be 17.5units at 3oclock position. base_gauge_AngleOfAttack is in radians though... Need to tweak this input range on the gauge if we can figure out how the arbitrary units correspond to radians
 AngleOfAttack.output                = {0.0, 1.0}
-AngleOfAttack.controller            = controllers.base_gauge_AngleOfAttack
+AngleOfAttack.parameter_name        = "FM_AOA_UNITS"
 
 AoA_Green                           = CreateGauge("parameter")
 AoA_Green.arg_number                = 850

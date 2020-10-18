@@ -2,6 +2,8 @@
 #define CONTROL_H
 #pragma once
 #include "BaseComponent.h"
+#include "Axis.h"
+
 namespace Skyhawk
 {//begin namespace
 
@@ -31,16 +33,38 @@ enum Control
 	NOSEWHEEL_STEERING_DISENGAGE = 3134,
 	STARTER_BUTTON = 3013,
 	THROTTLE_DETEND = 3087,
+
+	//Keyboard Stuff,
+	RUDDER_LEFT_START = 201,
+	RUDDER_LEFT_STOP = 202,
+	RUDDER_RIGHT_START = 203,
+	RUDDER_RIGHT_STOP = 204,
+
+	ROLL_LEFT_START = 197,
+	ROLL_LEFT_STOP = 198,
+	ROLL_RIGHT_START = 199,
+	ROLL_RIGHT_STOP = 200,
+
+	PITCH_DOWN_START = 193,
+	PITCH_DOWN_STOP = 194,
+	PITCH_UP_START = 195,
+	PITCH_UP_STOP = 196,
+
+	THROTTLE_UP_START = 1032,
+	THROTTLE_STOP = 1034,
+	THROTTLE_DOWN_START = 1033,
+
+	BRAKE_ALL_START = 10135,
+	BRAKE_ALL_STOP = 10136,
 };
 
 class Input : public BaseComponent
 {
 public:
 
-	Input()
-	{
+	Input();
 
-	}
+	void update();
 
 	virtual void zeroInit()
 	{
@@ -84,34 +108,34 @@ public:
 
 	inline const double throttleNorm() const
 	{
-		return normalise( -m_throttle );
+		return normalise( -m_throttleAxis.getValue() );
 	}
 
-	inline const double& pitch() const
+	inline const double pitch() const
 	{
-		return m_pitch;
+		return m_pitchAxis.getValue();
 	}
-	inline double& pitch()
+	inline void pitch(double value)
 	{
-		return m_pitch;
-	}
-
-	inline const double& roll() const
-	{
-		return m_roll;
-	}
-	inline double& roll()
-	{
-		return m_roll;
+		return m_pitchAxis.updateAxis(value);
 	}
 
-	inline const double& yaw() const
+	inline const double roll() const
 	{
-		return m_yaw;
+		return m_rollAxis.getValue();
 	}
-	inline double& yaw()
+	inline void roll(double value)
 	{
-		return m_yaw;
+		return m_rollAxis.updateAxis(value);
+	}
+
+	inline const double yaw() const
+	{
+		return m_yawAxis.getValue();
+	}
+	inline void yaw(double value)
+	{
+		return m_yawAxis.updateAxis(value);
 	}
 	inline const double& pitchTrim() const
 	{
@@ -149,27 +173,27 @@ public:
 	}
 	inline const double& throttle() const
 	{
-		return m_throttle;
+		return m_throttleAxis.getValue();
 	}
-	inline double& throttle()
+	inline void throttle(double value)
 	{
-		return m_throttle;
+		return m_throttleAxis.updateAxis(value);
 	}
 	inline const double& brakeLeft() const
 	{
-		return m_brakeLeft;
+		return m_leftBrakeAxis.getValue();
 	}
-	inline double& brakeLeft()
+	inline void brakeLeft(double value)
 	{
-		return m_brakeLeft;
+		return m_leftBrakeAxis.updateAxis(value);
 	}
 	inline const double& brakeRight() const
 	{
-		return m_brakeRight;
+		return m_rightBrakeAxis.getValue();
 	}
-	inline double& brakeRight()
+	inline void brakeRight(double value)
 	{
-		return m_brakeRight;
+		return m_rightBrakeAxis.updateAxis(value);
 	}
 	inline double getFFBPitchFactor()
 	{
@@ -219,7 +243,46 @@ public:
 	{
 		return m_starter;
 	}
+
+	inline Axis& pitchAxis()
+	{
+		return m_pitchAxis;
+	}
+
+	inline Axis& rollAxis()
+	{
+		return m_rollAxis;
+	}
+
+	inline Axis& yawAxis()
+	{
+		return m_yawAxis;
+	}
+
+	inline Axis& throttleAxis()
+	{
+		return m_throttleAxis;
+	}
+
+	inline Axis& leftBrakeAxis()
+	{
+		return m_leftBrakeAxis;
+	}
+
+	inline Axis& rightBrakeAxis()
+	{
+		return m_rightBrakeAxis;
+	}
+
 private:
+
+	Axis m_pitchAxis;
+	Axis m_rollAxis;
+	Axis m_yawAxis;
+	Axis m_throttleAxis;
+	Axis m_leftBrakeAxis;
+	Axis m_rightBrakeAxis;
+
 	double m_pitch = 0.0;
 	double m_roll = 0.0;
 	double m_yaw = 0.0;

@@ -162,7 +162,9 @@
     <ClInclude Include="Airframe.h" />
     <ClInclude Include="AtmosphereState.h" />
     <ClInclude Include="Avionics.h" />
+    <ClInclude Include="Axis.h" />
     <ClInclude Include="BaseComponent.h" />
+    <ClInclude Include="CP741.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="Engine2.h" />
     <ClInclude Include="Globals.h" />
@@ -185,6 +187,8 @@
     <ClCompile Include="AircraftState.cpp" />
     <ClCompile Include="Airframe.cpp" />
     <ClCompile Include="Avionics.cpp" />
+    <ClCompile Include="Axis.cpp" />
+    <ClCompile Include="CP741.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>

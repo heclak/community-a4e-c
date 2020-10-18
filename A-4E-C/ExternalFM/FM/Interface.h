@@ -64,6 +64,16 @@ public:
 		m_airspeed = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_AIRSPEED" );
 
 		m_yawDamper = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_YAW_DAMPER" );
+
+		m_beta = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_BETA" );
+		m_aoa = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_AOA" );
+		m_aoaUnits = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_AOA_UNITS" );
+
+		m_validSolution = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_VALID_SOLUTION" );
+		m_setTarget = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_SET_TARGET" );
+		m_slantRange = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_SLANT_RANGE" );
+
+		m_radarAltitude = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_RADAR_ALTITUDE" );
 	}
 
 	inline void coldInit()
@@ -199,6 +209,36 @@ public:
 		setParamNumber( m_airspeed, number );
 	}
 
+	inline void setAOA( double number )
+	{
+		setParamNumber( m_aoa, number );
+	}
+
+	inline void setBeta( double number )
+	{
+		setParamNumber( m_beta, number );
+	}
+
+	inline void setAOAUnits( double number )
+	{
+		setParamNumber( m_aoaUnits, number );
+	}
+
+	inline void setValidSolution( bool solution )
+	{
+		setParamNumber( m_validSolution, (double)solution );
+	}
+
+	inline double getSlantRange()
+	{
+		return getParamNumber( m_slantRange );
+	}
+
+	inline bool getSetTarget()
+	{
+		return getParamNumber( m_setTarget ) > 0.5;
+	}
+
 	inline double getGearNose()
 	{
 		return getParamNumber(m_noseGear);
@@ -271,6 +311,11 @@ public:
 	{
 		return getParamNumber( m_yawDamper );
 	}
+
+	inline double getRadarAltitude()
+	{
+		return getParamNumber( m_radarAltitude );
+	}
 		 
 	void* m_test = NULL;
 private:
@@ -335,6 +380,16 @@ private:
 	void* m_cockpitShake = NULL;
 
 	void* m_yawDamper = NULL;
+
+	void* m_beta = NULL;
+	void* m_aoa = NULL;
+	void* m_aoaUnits = NULL;
+
+	void* m_setTarget = NULL;
+	void* m_validSolution = NULL;
+	void* m_slantRange = NULL;
+
+	void* m_radarAltitude = NULL;
 };
 
 

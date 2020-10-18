@@ -6,7 +6,6 @@
     <ClCompile Include="FlightModel.cpp">
       <Filter>A4-Skyhawk</Filter>
     </ClCompile>
-    <ClCompile Include="Skyhawk.cpp" />
     <ClCompile Include="Airframe.cpp">
       <Filter>A4-Skyhawk</Filter>
     </ClCompile>
@@ -19,17 +18,30 @@
     <ClCompile Include="Safe.cpp">
       <Filter>A4-Skyhawk</Filter>
     </ClCompile>
-    <ClCompile Include="AeroElement.cpp" />
-    <ClCompile Include="Maths.cpp">
-      <Filter>A4-Skyhawk</Filter>
-    </ClCompile>
     <ClCompile Include="AircraftState.cpp">
       <Filter>A4-Skyhawk</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>A4-Skyhawk</Filter>
     </ClCompile>
-    <ClCompile Include="Actuator.cpp" />
+    <ClCompile Include="Actuator.cpp">
+      <Filter>A4-Skyhawk</Filter>
+    </ClCompile>
+    <ClCompile Include="AeroElement.cpp">
+      <Filter>A4-Skyhawk</Filter>
+    </ClCompile>
+    <ClCompile Include="Skyhawk.cpp">
+      <Filter>A4-Skyhawk</Filter>
+    </ClCompile>
+    <ClCompile Include="Maths.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="CP741.cpp">
+      <Filter>A4-Skyhawk</Filter>
+    </ClCompile>
+    <ClCompile Include="Axis.cpp">
+      <Filter>A4-Skyhawk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ED_FM_Utility.h" />
@@ -38,7 +50,6 @@
     <ClInclude Include="FlightModel.h">
       <Filter>A4-Skyhawk</Filter>
     </ClInclude>
-    <ClInclude Include="Skyhawk.h" />
     <ClInclude Include="ED_FM_API.h" />
     <ClInclude Include="Input.h">
       <Filter>A4-Skyhawk</Filter>
@@ -83,14 +94,27 @@
     <ClInclude Include="BaseComponent.h">
       <Filter>A4-Skyhawk</Filter>
     </ClInclude>
-    <ClInclude Include="AeroElement.h" />
-    <ClInclude Include="Maths.h">
-      <Filter>A4-Skyhawk</Filter>
-    </ClInclude>
     <ClInclude Include="AircraftState.h">
       <Filter>A4-Skyhawk</Filter>
     </ClInclude>
-    <ClInclude Include="Actuator.h" />
+    <ClInclude Include="AeroElement.h">
+      <Filter>A4-Skyhawk</Filter>
+    </ClInclude>
+    <ClInclude Include="Actuator.h">
+      <Filter>A4-Skyhawk</Filter>
+    </ClInclude>
+    <ClInclude Include="Skyhawk.h">
+      <Filter>A4-Skyhawk</Filter>
+    </ClInclude>
+    <ClInclude Include="Maths.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="CP741.h">
+      <Filter>A4-Skyhawk</Filter>
+    </ClInclude>
+    <ClInclude Include="Axis.h">
+      <Filter>A4-Skyhawk</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />

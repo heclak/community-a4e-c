@@ -66,11 +66,6 @@ void Skyhawk::Airframe::zeroInit()
 
 	m_selected = Tank::INTERNAL;
 
-	for ( int i = 0; i < Tank::DONT_TOUCH; i++ )
-	{
-		m_fuelPrev[i] = 0.0;
-	}
-
 	resetDamage();
 
 	m_mass = 1.0;
@@ -164,20 +159,17 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 		//double catMoment = pow((c_catAngle - m_state.getAngle().z)*60.0, 3.0) * c_catConstrainingForce;
 		//printf( "New: %lf, Old: %lf\n", m_catMoment, catMoment );
 
-		double desiredMoment = -c_catConstrainingForce * 40.0 -std::max( m_state.getLocalAcceleration().x * c_maxCatMoment * 0.030, 0.0 );
+		double desiredMoment = -c_catConstrainingForce * 1.0 - std::max( m_state.getLocalAcceleration().x * c_maxCatMoment * 0.05, 0.0 );
 		
-		double error = (desiredMoment - m_catMoment);
+		//double error = (desiredMoment - m_catMoment);
 
-		double errorMoment = error * 1.0;
-
-		double instability = std::max(m_noseCompression - 0.2, 0.0) * m_state.getOmega().z * 0.0;
-
-		m_catMoment += (errorMoment + instability) * dt; //m_integral * 0.4 ;
-		double compression = (1.0 - m_noseCompression);
+		//double errorMoment = error * 200.0;
+		m_catMoment = desiredMoment;
+		//m_catMoment += errorMoment * dt; //m_integral * 0.4 ;
 
 		//m_catMoment = pow( -( compression - 0.5 ) * 2.0, 3.0 ) * c_catConstrainingForce * 200.0;
 
-		//printf( "Moment: %lf, %lf\n", m_catMoment, compression );
+		//printf( "Desired: %lf, Moment: %lf\n", desiredMoment, m_catMoment );
 
 		//printf( "Moment: %lf, %lf, %lf\n", m_catMoment, errorMoment, instability );
 

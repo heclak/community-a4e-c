@@ -42,6 +42,7 @@ local update_time_step = 1 --update will be called once per second
 device_timer_dt = update_time_step
 
 function post_initialize()
+
   dev:set_frequency(256E6) -- Sochi
   --print_message_to_user(tostring(dev:get_frequency()))
   dev:set_modulation(MODULATION_AM) -- gives DCS.log INFO msg:  COCKPITBASE: avBaseRadio::ext_set_modulation not implemented, used direct set
