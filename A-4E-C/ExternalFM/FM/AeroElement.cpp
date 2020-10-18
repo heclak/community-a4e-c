@@ -1,5 +1,5 @@
+#pragma once
 #include "AeroElement.h"
-#include "Maths.h"
 
 Skyhawk::AeroElement::AeroElement
 (
@@ -18,9 +18,8 @@ Skyhawk::AeroElement::AeroElement
 	m_surfaceNormal{ surfaceNormal },
 	m_MAC{ MAC },
 	m_area{ area },
-	m_damageElem{ 1.0 },
-	m_liftFactor{ 0.7 },
-	m_dragFactor{ 1.0 }
+	m_dragFactor{ 1.0 },
+	m_liftFactor{ 1.0 }
 {
 
 }
@@ -47,7 +46,6 @@ void Skyhawk::AeroElement::airborneInit()
 
 }
 
-
 void Skyhawk::AeroElement::elementLift()
 {
 	m_LDwindAxes.y = m_kElem * ( m_CLalpha(m_aoa) * m_liftFactor * m_damageElem );
@@ -55,14 +53,13 @@ void Skyhawk::AeroElement::elementLift()
 
 void Skyhawk::AeroElement::elementDrag()
 {
-	m_LDwindAxes.x = -m_kElem * (m_CDalpha(m_aoa) * m_dragFactor );
+	m_LDwindAxes.x = -m_kElem * ( m_CDalpha(m_aoa) * m_dragFactor );
 }
 
 void Skyhawk::AeroElement::calculateElementPhysics()
 {
 
 	m_airspeed = m_state.getLocalAirspeed() + cross(m_state.getOmega(), m_cp);
-
 	m_dragVec = -normalize(m_airspeed);
 
 	Vec3 tmpNormal{ normalize(cross(m_dragVec, m_surfaceNormal)) };
@@ -75,6 +72,10 @@ void Skyhawk::AeroElement::calculateElementPhysics()
 	
 	elementLift();
 	elementDrag();
+	
+	//printf("new: LDVec = %lf, %lf, %lf\n", m_LDwindAxes.x, m_LDwindAxes.y, m_LDwindAxes.z);
 
 	m_RForceElement = windAxisToBody(m_LDwindAxes, m_aoa, m_state.getBeta());
+	m_moment = cross(m_cp, m_RForceElement);
+	
 }

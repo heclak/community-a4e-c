@@ -142,8 +142,8 @@ void ed_fm_set_atmosphere(
 							double wind_vz //components of velocity vector, including turbulence in world coordinate system
 						)
 {
-	s_fm->setAtmosphericParams(ro, a, Vec3(wind_vx, wind_vy, wind_vz));
 	s_engine->setTemperature( t );
+	s_state->setAtmosphericState(a, ro, t, p, Vec3(wind_vx, wind_vy, wind_vz));
 }
 /*
 called before simulation to set up your environment for the next step

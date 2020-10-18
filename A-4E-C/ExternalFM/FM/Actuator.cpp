@@ -44,7 +44,7 @@ void Actuator::physicsUpdate(double dt)
 {
 	double speedToTarget = (m_actuatorTargetPos - m_actuatorPos)/dt;
 
-	if (speedToTarget <= m_actuatorSpeed)
+	if (abs(speedToTarget) <= m_actuatorSpeed)
 	{
 		m_actuatorPos = m_actuatorTargetPos;
 	}

@@ -19,6 +19,7 @@ public:
 
 	inline void setCurrentStateBodyAxis(double aoa, double beta, const Vec3& angle, const Vec3& omega, const Vec3& omegaDot, const Vec3& airspeed, const Vec3& acceleration);
 	inline void setCurrentStateWorldAxis( const Vec3& worldVelocity );
+	inline void setAtmosphericState(double speedOfSound, double airDensity, double temperature, double pressure, const Vec3& worldWind);
 	inline void setMach( double mach );
 
 	inline const Vec3& getWorldVelocity() const;
@@ -27,10 +28,16 @@ public:
 	inline const Vec3& getOmegaDot() const;
 	inline const Vec3& getLocalAirspeed() const;
 	inline const Vec3& getLocalAcceleration() const;
+
+	inline const Vec3& getWorldWindVelocity() const;
+	inline const double getPressure() const;
+	inline const double getSpeedOfSound() const;
+	inline const double getTemperature() const;
+	inline const double getAirDensity() const;
+
 	inline const double getAOA() const;
 	inline const double getBeta() const;
 	inline const double getMach() const;
-	inline const double getAirDensity() const;
 
 
 
@@ -41,10 +48,14 @@ private:
 	Vec3 m_omegaDot;
 	Vec3 m_localAirspeed;
 	Vec3 m_localAcceleration;
+	Vec3 m_worldWind;
 	double m_aoa;
 	double m_beta;
 	double m_mach;
+	double m_speedOfSound;
 	double m_airDensity;
+	double m_temperature;
+	double m_pressure;
 };
 
 	
@@ -72,9 +83,37 @@ void AircraftState::setCurrentStateWorldAxis( const Vec3& worldVelocity )
 	m_worldVelocity = worldVelocity;
 }
 
+void AircraftState::setAtmosphericState(double speedOfSound, double airDensity, double temperature, double pressure, const Vec3& worldWind)
+{
+	m_worldWind = worldWind;
+	m_speedOfSound = speedOfSound;
+	m_airDensity = airDensity;
+	m_temperature = temperature;
+	m_pressure = pressure;
+}
+
 void AircraftState::setMach( double mach )
 {
 	m_mach = mach;
+}
+
+const Vec3& AircraftState::getWorldWindVelocity() const
+{
+	return m_worldWind;
+}
+
+const double AircraftState::getPressure() const
+{
+	return m_pressure;
+}
+
+const double AircraftState::getSpeedOfSound() const
+{
+	return m_speedOfSound;
+}
+const double AircraftState::getTemperature() const
+{
+	return m_temperature;
 }
 
 const double AircraftState::getMach() const

@@ -6,6 +6,7 @@
 #include "Table.h"
 #include "Interface.h"
 #include "AircraftState.h"
+#include "Maths.h"
 #include <fstream>
 
 namespace Skyhawk
@@ -29,6 +30,11 @@ public:
 	void elementDrag();
 	void calculateElementPhysics();
 	Vec3 getForce() { return m_RForceElement; }
+	Vec3 getMoment() { return m_moment; }
+
+	inline void setLDFactor(double liftFactor, double dragFactor);
+	inline void setLFactor(double liftFactor);
+	inline void setDFactor(double dragFactor);
 	
 
 private:
@@ -43,13 +49,13 @@ private:
 	Vec3 m_dragVec;
 	Vec3 m_LDwindAxes;
 	Vec3 m_RForceElement;
-	double m_scalarAirspeed;
-	double m_aoa;
-	double m_beta;
-	double m_kElem; // m_k
-	double m_damageElem;
-
-
+	Vec3 m_moment;
+	double m_scalarAirspeed = 0.0;
+	double m_aoa = 0.0;
+	double m_beta = 0.0;
+	double m_kElem = 0.0; // m_k
+	
+	float m_damageElem = 1.0f;
 	Table& m_CLalpha;
 	Table& m_CDalpha;
 
@@ -57,5 +63,20 @@ private:
 	AircraftState& m_state;
 };
 
+void AeroElement::setLDFactor(double liftFactor, double dragFactor)
+{
+	m_liftFactor = liftFactor;
+	m_dragFactor = dragFactor;
+}
+
+void AeroElement::setLFactor(double liftFactor)
+{
+	m_liftFactor = liftFactor;
+}
+
+void AeroElement::setDFactor(double dragFactor)
+{
+	m_dragFactor = dragFactor;
+}
 
 } //end namespace
