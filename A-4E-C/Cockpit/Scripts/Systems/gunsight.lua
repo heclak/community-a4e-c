@@ -1,6 +1,8 @@
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
+dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
+
 
 local dev = GetSelf()
 
@@ -8,6 +10,7 @@ local update_time_step = 0.05  --20 time per second
 make_default_activity(update_time_step)
 
 local sensor_data = get_base_data()
+local efm_data_bus = get_efm_data_bus()
 
 dev:listen_command(device_commands.GunsightKnob)
 dev:listen_command(device_commands.GunsightDayNight)
@@ -28,6 +31,14 @@ local gunsight_visible = get_param_handle("D_GUNSIGHT_VISIBLE")
 
 gunsight_reflector_param:set(reflector_pos_wma:get_current_val())
 gunsight_reflector_rot_param:set(1-reflector_pos_wma:get_current_val())
+
+local maximum_gunsight_angle = 360 --In mils
+local MIL_TO_RADIAN = 9.817477042e-4
+
+function gunsightAngleToRads()
+	--print_message_to_user(maximum_gunsight_angle * reflector_pos * MIL_TO_RADIAN)
+	return maximum_gunsight_angle * reflector_pos * MIL_TO_RADIAN
+end
 
 function post_initialize()
     local dev=GetSelf()
@@ -113,6 +124,8 @@ function update()
         gunsight_visible:set(0)
         power_on = false
     end
+	
+	efm_data_bus.fm_setGunsightAngle(gunsightAngleToRads())
 end
 
 need_to_be_closed = false -- close lua state after initialization

@@ -3,7 +3,8 @@
 #include <math.h>
 #include "Maths.h"
 
-#define c_weaponDatum 0.0523599
+//             angle from weapons dataum + fudge factor
+#define c_weaponDatum (0.05235987756 + 0.01)
 
 Skyhawk::CP741::CP741( AircraftState& state ):
 	m_state(state)
@@ -17,6 +18,7 @@ void Skyhawk::CP741::zeroInit()
 	m_power = false;
 	m_targetSet = false;
 	m_target = Vec3();
+	m_gunsightAngle = 0.0;
 }
 
 void Skyhawk::CP741::coldInit()
@@ -65,14 +67,18 @@ double Skyhawk::CP741::calculateHorizontalDistance()
 {
 	Vec3 distance = m_target - m_state.getWorldPosition();
 	distance.y = 0.0;
+	Vec3 velocity = m_state.getWorldVelocity();
+	velocity.y = 0.0;
+
+	double sign = distance * velocity > 0.0 ? 1.0 : -1.0;
 	//Horizontal component
-	return magnitude( distance );
+	return sign*magnitude( distance );
 }
 
 void Skyhawk::CP741::setTarget( bool set, double slant )
 {
 	//Pitch - weapon datum
-	double weaponAngle = m_state.getAngle().z - c_weaponDatum;
+	double weaponAngle = m_state.getAngle().z - c_weaponDatum - m_gunsightAngle;
 
 	//If there is no radar data and we are not going to create a singularity
 	//then use the radar altimiter.

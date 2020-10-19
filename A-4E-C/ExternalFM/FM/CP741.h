@@ -19,6 +19,7 @@ public:
 	inline void setPower( bool power );
 	void updateSolution( double dt );
 	void setTarget( bool set, double slant );
+	inline void setGunsightAngle( double angle );
 
 	inline bool getSolution();
 
@@ -31,6 +32,7 @@ private:
 	bool m_power = false;
 	bool m_solution = false;
 	bool m_targetSet = false;
+	double m_gunsightAngle = 0.0;
 
 	Vec3 m_target;
 };
@@ -38,6 +40,11 @@ private:
 void CP741::setPower( bool power )
 {
 	m_power = power;
+}
+
+void CP741::setGunsightAngle( double angle )
+{
+	m_gunsightAngle = angle;
 }
 
 bool CP741::getSolution()

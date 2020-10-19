@@ -41,6 +41,7 @@ local fm_slantRange = get_param_handle("FM_SLANT_RANGE")
 local fm_validSolution = get_param_handle("FM_VALID_SOLUTION")
 local fm_setTarget = get_param_handle("FM_SET_TARGET")
 local fm_radarAltitude = get_param_handle("FM_RADAR_ALTITUDE")
+local fm_gunsightAngle = get_param_handle("FM_GUNSIGHT_ANGLE")
 
 function fm_setNoseGear(value)
     fm_gear_nose:set(value)
@@ -114,6 +115,14 @@ function fm_setRadarAltitude(value)
     fm_radarAltitude:set(value)
 end
 
+function fm_setGunsightAngle(value)
+    fm_gunsightAngle:set(value)
+end
+
+function fm_getGunsightAngle()
+    return fm_gunsightAngle:get()
+end
+
 function fm_getValidSolution()
     return fm_validSolution:get() > 0.5
 end
@@ -178,7 +187,10 @@ function get_efm_data_bus()
     efm_data_bus.fm_setRadarSlantRange = fm_setRadarSlantRange
     efm_data_bus.fm_setSetTarget = fm_setSetTarget
     efm_data_bus.fm_setRadarAltitude = fm_setRadarAltitude
+    efm_data_bus.fm_setGunsightAngle = fm_setGunsightAngle
 
+
+    efm_data_bus.fm_getGunsightAngle = fm_getGunsightAngle
     efm_data_bus.fm_getInternalFuel = fm_getInternalFuel
     efm_data_bus.fm_getExternalFuel = fm_getExternalFuel
     efm_data_bus.fm_getIgnition = fm_getIgnition

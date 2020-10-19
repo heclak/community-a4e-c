@@ -113,6 +113,7 @@ void ed_fm_simulate(double dt)
 	s_airframe->setGearRPosition( s_interface->getGearRight() );
 	s_airframe->setGearNPosition( s_interface->getGearNose() );
 
+	s_avionics->getComputer().setGunsightAngle( s_interface->getGunsightAngle() );
 	s_avionics->getComputer().setTarget( s_interface->getSetTarget(), s_interface->getSlantRange() );
 
 
@@ -122,8 +123,6 @@ void ed_fm_simulate(double dt)
 
 	s_input->update();
 
-
-	//printf("Throttle: %lf\n", s_interface.getEngineThrottlePosition());
 	s_engine->setThrottle(s_interface->getEngineThrottlePosition());
 	s_engine->setBleedAir(s_interface->getBleedAir() > 0.1);
 	s_engine->setIgnitors(s_interface->getIgnition() > 0.1);
