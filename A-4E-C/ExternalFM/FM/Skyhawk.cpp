@@ -570,7 +570,7 @@ bool ed_fm_pop_simulation_event(ed_fm_simulation_event& out)
 		out.event_type = ED_FM_EVENT_CARRIER_CATAPULT;
 		out.event_params[0] = 1;
 		out.event_params[1] = 3.0f;
-		out.event_params[2] = 70.0f + 20.0 * std::min(s_airframe->getMass() / c_maxTakeoffMass, 1.0);
+		out.event_params[2] = 60.0f + 20.0 * std::min(s_airframe->getMass() / c_maxTakeoffMass, 1.0);
 		out.event_params[3] = s_engine->getThrust();
 		s_airframe->catapultState() = Skyhawk::Airframe::ON_CAT_WAITING;
 		return true;

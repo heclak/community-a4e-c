@@ -155,16 +155,16 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 	if (m_catapultState != OFF_CAT)
 	{
 		//double compression = (1.0 - m_noseCompression);
-		// m_catMoment = pow( (-compression) * 6.0, 3.0 ) * c_catConstrainingForce * 1.0;
-		//double catMoment = pow((c_catAngle - m_state.getAngle().z)*60.0, 3.0) * c_catConstrainingForce;
+		//m_catMoment = pow( (-compression) * 6.0, 3.0 ) * c_catConstrainingForce * 1.0;
+		m_catMoment = pow((c_catAngle - m_state.getAngle().z)*60.0, 3.0) * c_catConstrainingForce;
 		//printf( "New: %lf, Old: %lf\n", m_catMoment, catMoment );
 
-		double desiredMoment = -c_catConstrainingForce * 1.0 - std::max( m_state.getLocalAcceleration().x * c_maxCatMoment * 0.05, 0.0 );
+		//double desiredMoment = -c_catConstrainingForce * 1.0 - std::max( m_state.getLocalAcceleration().x * c_maxCatMoment * 0.05, 0.0 );
 		
 		//double error = (desiredMoment - m_catMoment);
 
 		//double errorMoment = error * 200.0;
-		m_catMoment = desiredMoment;
+		//m_catMoment = desiredMoment;
 		//m_catMoment += errorMoment * dt; //m_integral * 0.4 ;
 
 		//m_catMoment = pow( -( compression - 0.5 ) * 2.0, 3.0 ) * c_catConstrainingForce * 200.0;

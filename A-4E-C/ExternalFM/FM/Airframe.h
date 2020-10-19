@@ -35,7 +35,7 @@ namespace Skyhawk
 #define c_maxfuel 2137.8
 
 #define c_catAngle 0.0
-#define	c_catConstrainingForce 4000.0
+#define	c_catConstrainingForce 4500.0
 
 
 
