@@ -89,6 +89,9 @@ void Skyhawk::AeroElement::calculateElementPhysics()
 	//printf("new: LDVec = %lf, %lf, %lf\n", m_LDwindAxes.x, m_LDwindAxes.y, m_LDwindAxes.z);
 
 	m_RForceElement = windAxisToBody(m_LDwindAxes, m_aoa, m_state.getBeta());
-	m_moment = cross(m_cp, m_RForceElement);
+
+	Vec3 deltaCentreOfPressure = m_cp - Vec3(0.0, 0.0, m_state.getCOM().z);
+
+	m_moment = cross( deltaCentreOfPressure, m_RForceElement);
 	
 }

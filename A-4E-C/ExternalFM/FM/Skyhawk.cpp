@@ -177,7 +177,9 @@ void ed_fm_set_current_mass_state
 )
 {
 	s_airframe->setMass(mass);
-	s_fm->setCOM(Vec3(center_of_mass_x, center_of_mass_y, center_of_mass_z));
+	Vec3 com = Vec3( center_of_mass_x, center_of_mass_y, center_of_mass_z );
+	s_state->setCOM( com );
+	s_fm->setCOM(com);
 }
 /*
 called before simulation to set up your environment for the next step

@@ -19,6 +19,7 @@ void Skyhawk::AircraftState::zeroInit()
 	m_localSpeed = Vec3();
 	m_localAirspeed = Vec3();
 	m_localAcceleration = Vec3();
+	m_com = Vec3();
 
 	m_aoa = 0.0;
 	m_beta = 0.0;

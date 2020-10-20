@@ -23,6 +23,7 @@ public:
 
 	inline void setMach( double mach );
 	inline void setRadarAltitude( double altitude );
+	inline void setCOM( const Vec3& com );
 
 	inline const Vec3& getWorldPosition() const;
 	inline const Vec3& getWorldVelocity() const;
@@ -46,6 +47,8 @@ public:
 	inline const double getMach() const;
 	inline const double getRadarAltitude() const;
 
+	inline const Vec3& getCOM() const;
+
 
 
 
@@ -60,6 +63,7 @@ private:
 	Vec3 m_localSpeed;
 	Vec3 m_localAirspeed;
 	Vec3 m_localAcceleration;
+	Vec3 m_com; //centre of mass
 	double m_aoa;
 	double m_beta;
 	double m_mach;
@@ -121,6 +125,11 @@ void AircraftState::setCurrentAtmosphere(
 void AircraftState::setMach( double mach )
 {
 	m_mach = mach;
+}
+
+void AircraftState::setCOM( const Vec3& com )
+{
+	m_com = com;
 }
 
 const Vec3& AircraftState::getWorldWindVelocity() const
@@ -220,6 +229,11 @@ const double AircraftState::getBeta() const
 const double AircraftState::getRadarAltitude() const
 {
 	return m_radarAltitude;
+}
+
+const Vec3& AircraftState::getCOM() const
+{
+	return m_com;
 }
 
 }
