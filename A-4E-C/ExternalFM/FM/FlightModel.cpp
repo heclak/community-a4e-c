@@ -78,7 +78,7 @@ Skyhawk::FlightModel::FlightModel
 	Cldr({ 0.01 }, 0.0, 1.0),
 	Cla_a({1.0, 0.01}, 0.236332313, 0.48131701),
 
-	Cmalpha(d_Cmalpha, 0.496756570504, 1.00164293811 ),
+	Cmalpha( d_Cmalpha, 0.1, 1.0019 ),
 	Cmde( d_Cmde, 0, 1.00216078 ), //x = mach
 	Cmq(d_Cmq, 0.13176098, 1.0006616),
 	Cmadot(d_Cmadot, 0.1618916, 0.99790229),
