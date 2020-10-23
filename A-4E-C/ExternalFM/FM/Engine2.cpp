@@ -1,11 +1,14 @@
 #include "Engine2.h"
-Skyhawk::Engine2::Engine2():
+Skyhawk::Engine2::Engine2() :
 	fuelToHPOmega( c_fuelToHPOmega, c_fuelToHPOmegaMin, c_fuelToHPOmegaMax ),
 	lpOmegaToMassFlow( c_lpOmegaToMassFlow, c_lpOmegaToMassFlowMin, c_lpOmegaToMassFlowMax ),
 	hpOmegaToMassFlow( c_hpOmegaToMassFlow, c_hpOmegaToMassFlowMin, c_hpOmegaToMassFlowMax ),
-	massFlowToStaticThrust(c_massFlowToStaticThrust, c_massFlowToStaticThrustMin, c_massFlowToStaticThrustMax ),
+	massFlowToStaticThrust( c_massFlowToStaticThrust, c_massFlowToStaticThrustMin, c_massFlowToStaticThrustMax ),
 	airspeedToHPOmega( c_windmill, c_windmillMin, c_windmillMax ),
-	thrustToFFOverSqrtTemp ( c_thrustToFFOverSqrtTemp, c_thrustToFFOverSqrtTempMin, c_thrustToFFOverSqrtTempMax )
+	thrustToFFOverSqrtTemp ( c_thrustToFFOverSqrtTemp, c_thrustToFFOverSqrtTempMin, c_thrustToFFOverSqrtTempMax ),
+	lpInertia( c_lpInertiaTable, 0.0, c_maxHPOmega ),
+	hpInertia( c_hpInertiaTable, 0.0, c_maxLPOmega ),
+	windmillInertiaFactor( c_windmillInertiaFactor, 0.0, c_maxHPOmega )
 {
 	zeroInit();
 }
@@ -77,10 +80,10 @@ void Skyhawk::Engine2::updateEngine( double dt )
 	//Thrust or Drag
 	double thrustSign = 1.0;
 
-	if ( m_hasFuel && m_ignitors && m_hpOmega > c_startOmega/2.0 )
+	if ( m_hasFuel && m_ignitors && m_hpOmega > c_startOmega/3.0 )
 	{
 		double desiredFractionalOmega = 0.0;
-		
+		double inertiaFactor = 1.0;
 		
 		if ( m_throttle >= -0.01 )
 		{
@@ -91,21 +94,20 @@ void Skyhawk::Engine2::updateEngine( double dt )
 		{
 			//Throttle is in 1st detent.
 			desiredFractionalOmega = (m_throttle + 1.0) / 1.5;
+
+			//inertiaFactor = desiredFractionalOmega > m_hpOmega / c_maxHPOmega ? 1.0 : 2.0;
 		}
 
 		double desiredFuelFlow = getPID( desiredFractionalOmega, dt );
 
 		//Update towards desired fuel flow with response time.
 		m_fuelFlow += (std::max( std::min( desiredFuelFlow, c_fuelFlowMax ), 0.0 ) - m_fuelFlow) * dt / c_fuelFlowInertia;
-
-		//Fuel Flow -> Shaft Speed
-		updateShafts( fuelToHPOmega( m_fuelFlow ), lowOmegaInertia, dt );
 	}
 	else if ( m_bleedAir )
 	{
 		m_fuelFlow = 0.0;
 		//Constant shaft Speed (bleed air from ground huffer)
-		updateShafts( c_startOmega, lowOmegaInertia, dt );
+		//updateShaftsDynamic( dt );
 	}
 	else
 	{
@@ -115,7 +117,17 @@ void Skyhawk::Engine2::updateEngine( double dt )
 		m_fuelFlow = 0.0;
 
 		//Airspeed -> Shaft Speed (Windmilling)
-		updateShafts( airspeedToHPOmega( m_airspeed ), 1.0, dt );
+		//updateShaftsDynamic( dt );
+	}
+
+	if ( getRPMNorm() > 0.48 )
+	{
+		//Fuel Flow -> Shaft Speed
+		updateShafts( fuelToHPOmega( m_fuelFlow ), 1.0, dt );
+	}
+	else
+	{
+		updateShaftsDynamic( dt );
 	}
 
 	//Mass flow is the average of the mass flows from hp and lp shafts.

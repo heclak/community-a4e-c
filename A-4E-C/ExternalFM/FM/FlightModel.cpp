@@ -326,8 +326,45 @@ void Skyhawk::FlightModel::calculateForcesAndMoments(double dt)
 	
 	calculateLocalPhysicsParams();
 
-	m_aoaDot = (m_state.getAOA() - m_aoaPrevious) / dt;
-	m_betaDot = (m_state.getBeta() - m_betaPrevious) / dt;
+	double dAOA = m_state.getAOA() - m_aoaPrevious;
+	double dAOAOpposite;
+	
+	if ( dAOA >= 0.0 )
+	{
+		dAOAOpposite = 2.0 * PI - dAOA;
+	}
+	else
+	{
+		dAOAOpposite = - 2.0 * PI - dAOA;
+	}
+
+	if ( fabs( dAOA ) > fabs( dAOAOpposite ) )
+	{
+		dAOA = dAOAOpposite;
+		printf( "Took opposite: %lf\n", dAOA );
+	}
+
+
+	double dBeta = m_state.getBeta() - m_betaPrevious;
+	double dBetaOpposite;
+
+	if ( dBeta >= 0.0 )
+	{
+		dBetaOpposite = 2.0 * PI - dBeta;
+	}
+	else
+	{
+		dBetaOpposite = - 2.0 * PI - dBeta;
+	}
+
+	if ( fabs( dBeta ) > fabs( dBetaOpposite ) )
+	{
+		dBeta = dBetaOpposite;
+		printf( "Took opposite: %lf\n", dBeta );
+	}
+
+	m_aoaDot = dAOA / dt;
+	m_betaDot = dBeta / dt;
 
 	//Get airspeed and scalar speed squared.
 	m_airspeed = m_state.getWorldVelocity() - m_state.getWorldWindVelocity();

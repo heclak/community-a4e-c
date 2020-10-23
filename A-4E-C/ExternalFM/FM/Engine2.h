@@ -12,10 +12,19 @@
 
 #define PI 3.14159
 
-#define c_lpInertia 2.0
+#define c_lpInertia 500.0
 #define c_hpInertia 2.0
 
-#define c_fuelFlowInertia 1.0
+#define c_hpInertiaTable {6.0, 12.0, 30.0, 25.0, 23.0, 10.0, 4.0, 3.5, 3.0, 3.0}
+#define c_lpInertiaTable c_hpInertiaTable
+#define c_windmillInertiaFactor {1.0, 0.5, 1.0, 1.0}
+
+#define c_fuelFlowInertia 0.8
+
+#define c_combustionTorque 90.0
+#define c_startTorque 20.0
+#define c_airspeedTorque 0.3
+#define c_engineDrag 0.1
 
 namespace Skyhawk
 {
@@ -55,6 +64,10 @@ private:
 
 	ZeroTable massFlowToStaticThrust;
 
+	Table lpInertia;
+	Table hpInertia;
+	Table windmillInertiaFactor;
+
 	double m_lpOmega = 0.0;
 	double m_hpOmega = 0.0;
 
@@ -82,6 +95,7 @@ private:
 	static inline double hpOmegaToLPOmega( double hpOmega );
 
 	inline void updateShafts(double hpTarget, double lowOmegaInertia, double dt);
+	inline void updateShaftsDynamic( double dt );
 };
 
 void Engine2::setThrottle( double throttle )
@@ -153,10 +167,20 @@ double Engine2::hpOmegaToLPOmega( double x )
 	return -2.46586697e-09 * pow( x, 4.0 ) + 7.31933906e-06 * pow( x, 3.0 ) - 6.38483117e-03 * pow( x, 2.0 ) + 2.25049813 * x;
 }
 
-void Engine2::updateShafts( double hpTarget, double lowOmegaInertia, double dt )
+void Engine2::updateShaftsDynamic( double dt )
 {
-	m_hpOmega += (hpTarget - m_hpOmega) * dt / (c_hpInertia * lowOmegaInertia);
-	m_lpOmega += (hpOmegaToLPOmega( m_hpOmega ) - m_lpOmega) * dt / (c_lpInertia * lowOmegaInertia);
+	double torque = (double)m_bleedAir * c_startTorque + m_fuelFlow * c_combustionTorque + m_airspeed * c_airspeedTorque - (m_hpOmega + m_lpOmega) * c_engineDrag;
+
+	m_hpOmega += dt * torque / c_hpInertia;
+	m_hpOmega = std::max( m_hpOmega, 0.0 );
+
+	m_lpOmega += (hpOmegaToLPOmega( m_hpOmega ) - m_lpOmega) * dt / (lpInertia( m_lpOmega ));
+}
+
+void Engine2::updateShafts( double hpTarget, double inertiaFactor, double dt )
+{
+	m_hpOmega += (hpTarget - m_hpOmega) * dt / (hpInertia(m_hpOmega)*inertiaFactor);
+	m_lpOmega += (hpOmegaToLPOmega( m_hpOmega ) - m_lpOmega) * dt / (lpInertia(m_lpOmega)*inertiaFactor);
 }
 
 }

@@ -40,6 +40,7 @@
 
 #define c_fuelFlowMax c_fuelToHPOmegaMax
 #define c_maxHPOmega c_hpOmegaToMassFlowMax
+#define c_maxLPOmega c_lpOmegaToMassFlowMax
 
 #define c_throttleIdle 0.55
 
