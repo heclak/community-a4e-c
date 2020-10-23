@@ -27,7 +27,7 @@ private:
 
 	//constants
 	const double m_timeConstant = 4.5;
-	const double m_baseGain = 1.0;
+	const double m_baseGain = 2.5;
 
 	inline double washoutFilter(double input, double dt);
 	double m_x = 0.0;

@@ -1,4 +1,5 @@
 -- set FM_dll to name of DLL with EFM, or nil to use SFM
+--EDITING THIS FILE WILL CAUSE THE EFM TO FAIL.
 local AFMenabled = true
 
 bin = {}

@@ -5,6 +5,8 @@
 --mount_vfs_liveries_path (current_mod_path.."/Liveries")   -- mounted in entry.lua
 --mount_vfs_texture_path  (current_mod_path.."/Textures")   -- mounted in entry.lua
 
+--EDITING THIS FILE WILL CAUSE THE EFM TO FAIL.
+
 local KG_TO_POUNDS  = 2.20462
 local POUNDS_TO_KG  = 1/KG_TO_POUNDS
 local FEET_TO_M     = 0.3048

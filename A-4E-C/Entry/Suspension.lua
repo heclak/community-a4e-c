@@ -1,4 +1,4 @@
-
+--EDITING THIS FILE WILL CAUSE THE EFM TO FAIL.
 --NOSEGEAR
 nose_amortizer_min_length 					= 0.00
 nose_amortizer_max_length 					= 0.25 --0.32
