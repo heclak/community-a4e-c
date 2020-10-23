@@ -75,6 +75,7 @@ public:
 
 		m_radarAltitude = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_RADAR_ALTITUDE" );
 		m_gunsightAngle = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_GUNSIGHT_ANGLE" );
+		m_targetSet = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_TARGET_SET" );
 	}
 
 	inline void coldInit()
@@ -228,6 +229,11 @@ public:
 	inline void setValidSolution( bool solution )
 	{
 		setParamNumber( m_validSolution, (double)solution );
+	}
+
+	inline void setTargetSet( bool targetSet )
+	{
+		setParamNumber( m_targetSet, (double)targetSet );
 	}
 
 	inline double getSlantRange()
@@ -397,6 +403,7 @@ private:
 
 	void* m_radarAltitude = NULL;
 	void* m_gunsightAngle = NULL;
+	void* m_targetSet = NULL;
 };
 
 

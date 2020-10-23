@@ -22,6 +22,7 @@ public:
 	inline void setGunsightAngle( double angle );
 
 	inline bool getSolution();
+	inline bool getTargetSet();
 
 	double calculateHorizontalDistance();
 	double calculateImpactDistance(double dt);
@@ -50,6 +51,11 @@ void CP741::setGunsightAngle( double angle )
 bool CP741::getSolution()
 {
 	return m_solution;
+}
+
+bool CP741::getTargetSet()
+{
+	return m_targetSet;
 }
 
 }

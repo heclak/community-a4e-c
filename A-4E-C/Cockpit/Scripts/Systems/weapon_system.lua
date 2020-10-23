@@ -329,6 +329,7 @@ function ripple_sequence_end()
     trigger_engaged = false
     ripple_sequence_position = 0
     glare_labs_annun_state = false -- turn off labs light
+	 bombing_computer_target_set = false
 end
 
 -- update visual state of the LABS annunciator
@@ -370,6 +371,16 @@ function check_all_stations_for_pairs_mode()
     return equal_priority_found
 end
 
+function updateComputerSolution(weapons_released)
+	--Only restrict pickle if Computer is used. (COMPUTER is currently using LABS selector).
+	valid_solution = true
+	if (function_selector == FUNC_CMPTR) then
+		valid_solution = efm_data_bus.fm_getValidSolution()
+		glare_labs_annun_state = efm_data_bus.fm_getTargetSet() and bombing_computer_target_set
+	end
+	
+	return valid_solution
+end
 
 function update()
 	--ECM_status = WeaponSystem:get_ECM_status()
@@ -421,11 +432,7 @@ function update()
     -- see NATOPS 8-3
     local released_weapon = false
 
-	--Only restrict pickle if Computer is used. (COMPUTER is currently using LABS selector).
-	valid_solution = true
-	if (function_selector == FUNC_CMPTR) then
-		valid_solution = efm_data_bus.fm_getValidSolution()
-	end
+	valid_solution = updateComputerSolution()
 
     if _master_arm and (pickle_engaged or trigger_engaged) and valid_solution then
 	
@@ -924,7 +931,8 @@ function SetCommand(command,value)
         
 	elseif command == Keys.PickleOn then
 		 efm_data_bus.fm_setSetTarget(1.0)
-			
+		 bombing_computer_target_set = true
+		
         weapon_release_ticker = weapon_interval -- fire first batch immediately
         --prepare_weapon_release()
         if AWRS_mode >= AWRS_mode_ripple_single then -- AWRS is in ripple mode
@@ -941,13 +949,13 @@ function SetCommand(command,value)
                 
                 -- In PAIRS mode, an equal priority pair must exist for LABS tone and light to turn on
                 if check_all_stations_for_pairs_mode() then
-                    labs_tone:play_continue()
+					  labs_tone:play_continue()
                     glare_labs_annun_state = true -- turn on labs light    
                 end
 
             -- All other AWRS modes
             else
-                labs_tone:play_continue()
+				  labs_tone:play_continue()
                 glare_labs_annun_state = true -- turn on labs light
             end
         end
@@ -958,6 +966,7 @@ function SetCommand(command,value)
         labs_tone:stop() -- TODO also stop after last auto-release interval bomb is dropped
         glare_labs_annun_state = false -- turn on labs light
         ripple_sequence_position = 0 -- reset ripple sequence
+		 bombing_computer_target_set = false
 
     elseif command == Keys.PlaneFireOn then
         if gun_ready and not geardown then

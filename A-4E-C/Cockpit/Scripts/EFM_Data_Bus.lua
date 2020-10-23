@@ -42,6 +42,7 @@ local fm_validSolution = get_param_handle("FM_VALID_SOLUTION")
 local fm_setTarget = get_param_handle("FM_SET_TARGET")
 local fm_radarAltitude = get_param_handle("FM_RADAR_ALTITUDE")
 local fm_gunsightAngle = get_param_handle("FM_GUNSIGHT_ANGLE")
+local fm_target_set = get_param_handle("FM_TARGET_SET")
 
 function fm_setNoseGear(value)
     fm_gear_nose:set(value)
@@ -163,6 +164,10 @@ function fm_getAOAUnits()
     return fm_aoa_units:get()
 end
 
+function fm_getTargetSet()
+    return fm_target_set:get() > 0.5
+end
+
 
 fm_setCockpitShake(optionsData_cockpitShake/100.0)
 
@@ -196,6 +201,7 @@ function get_efm_data_bus()
     efm_data_bus.fm_getIgnition = fm_getIgnition
     efm_data_bus.fm_getAOAUnits = fm_getAOAUnits
     efm_data_bus.fm_getValidSolution = fm_getValidSolution
+    efm_data_bus.fm_getTargetSet = fm_getTargetSet
     return efm_data_bus
    
 end
