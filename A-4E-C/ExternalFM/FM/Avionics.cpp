@@ -1,4 +1,8 @@
 #include "Avionics.h"
+#include "Maths.h"
+
+#define STAB_AUG_MAX_AUTHORITY 0.3
+#define MAX_ROTATION_RATE 1.6
 
 Skyhawk::Avionics::Avionics
 (
@@ -41,10 +45,19 @@ void Skyhawk::Avionics::airborneInit()
 
 void Skyhawk::Avionics::updateAvionics(double dt)
 {
+
+	printf( "Omega.y: %lf\n", m_state.getOmega().y );
 	if ( m_damperEnabled )
 	{
-		double f = washoutFilter( m_state.getOmega().y, dt ) * m_baseGain * (1.0 / (m_state.getMach() + 1));
-		m_input.yawDamper() = f; //f
+		double omega = m_state.getOmega().y;
+		if ( fabs( omega ) > MAX_ROTATION_RATE )
+		{
+			omega = 0.0;
+		}
+
+
+		double f = washoutFilter( omega, dt ) * m_baseGain * (1.0 / (m_state.getMach() + 1));
+		m_input.yawDamper() = clamp(f,-STAB_AUG_MAX_AUTHORITY, STAB_AUG_MAX_AUTHORITY); //f
 	}
 	else
 	{
