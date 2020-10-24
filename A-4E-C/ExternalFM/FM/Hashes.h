@@ -1,7 +1,7 @@
 #pragma once
     #include <Windows.h>
 
-    static WCHAR* files[] = {L"entry.lua",L"A-4E-C.lua",L"Cockpit/Scripts/EFM_Data_Bus.lua",L"Entry/Suspension.lua",L"EFM_ALPHA_BUILD_DO_NOT_DISTRIBUTE"};
+    static WCHAR* files[] = {L"entry.lua",L"A-4E-C.lua",L"Cockpit/Scripts/EFM_Data_Bus.lua",L"Entry/Suspension.lua",L"EFM_ALPHA_BUILD_DO_NOT_DISTRIBUTE.lua"};
 
     static BYTE hashes[][32] = {
 	{0xfd,0x96,0x5b,0xa2,0x4a,0x94,0xec,0x13,0x80,0x05,0xb9,0xdd,0xf4,0xc3,0x78,0x2a,0x65,0xf5,0x05,0x7f},

@@ -94,7 +94,7 @@ def main(files, root, fm_folder):
     generate_hashes(files, root, fm_folder)
 
 if __name__ == "__main__":
-    files = ["entry.lua","A-4E-C.lua", "Cockpit/Scripts/EFM_Data_Bus.lua", "Entry/Suspension.lua", "EFM_ALPHA_BUILD_DO_NOT_DISTRIBUTE"]
+    files = ["entry.lua","A-4E-C.lua", "Cockpit/Scripts/EFM_Data_Bus.lua", "Entry/Suspension.lua", "EFM_ALPHA_BUILD_DO_NOT_DISTRIBUTE.lua"]
     root = "A-4E-C"
     fm_folder = "A-4E-C/ExternalFM/FM"
 
