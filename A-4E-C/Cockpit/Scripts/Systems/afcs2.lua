@@ -187,7 +187,7 @@ function afcs_check_engage_state()
     if state == AFCS_STATE_ALTITUDE_HDG or state == AFCS_STATE_ALTITUDE_ONLY then
         --20 m/s = 4000 ft/min
         if math.abs(sensor_data.getVerticalVelocity()) > 20.0 then
-            print_message_to_user("Override Off")
+            --print_message_to_user("Override Off")
             return false
         end
 
@@ -196,7 +196,7 @@ function afcs_check_engage_state()
         local pitch_angle = math.deg(sensor_data.getPitch())
 
         if math.abs(bank_angle) > 70.0 or math.abs(pitch_angle) > 60.0 then
-            print_message_to_user("Override Off")
+            --print_message_to_user("Override Off")
             return false
         end
     end
@@ -302,7 +302,7 @@ function get_current_state(ignore_css)
 end
 
 function transition_state(from, to)
-
+--[[
     state_names = {}
 
     state_names[AFCS_STATE_OFF] = "AFCS_STATE_OFF"
@@ -314,6 +314,7 @@ function transition_state(from, to)
     state_names[AFCS_STATE_CSS] = "AFCS_STATE_CSS"
     
     print_message_to_user(tostring(state_names[from]).." -> "..tostring(state_names[to]))
+]]--
 
     if to == AFCS_STATE_ALTITUDE_ONLY then
         afcs_bank_angle_hold = math.deg(sensor_data.getRoll())
