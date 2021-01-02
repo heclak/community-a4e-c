@@ -139,6 +139,10 @@ void ed_fm_simulate(double dt)
 	s_interface->setStickPitch(s_airframe->getElevator());
 	s_interface->setStickRoll(s_airframe->getAileron());
 	s_interface->setRudderPedals(s_airframe->getRudder());
+
+	s_interface->setStickInputPitch( s_input->pitch() );
+	s_interface->setStickInputRoll( s_input->roll() );
+
 	s_interface->setInternalFuel(s_airframe->getFuelQty(Skyhawk::Airframe::Tank::INTERNAL));
 	s_interface->setExternalFuel(s_airframe->getFuelQtyExternal());
 	s_interface->setAOA( s_state->getAOA() );

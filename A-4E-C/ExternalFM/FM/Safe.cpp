@@ -209,7 +209,7 @@ int getHash( LPCWSTR filename, BYTE* hashBuffer )
 	CloseHandle( file );
 	free( buffer );
 
-	return SAFE;
+	return safe;
 }
 
 int verifyHash( BYTE* hash1, BYTE* hash2 )

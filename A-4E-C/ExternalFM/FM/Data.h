@@ -60,7 +60,9 @@
 
 #define c_maxCatMoment 4.0e5
 
-#define c_aoaStallClean 25.0
+//People seem to think the on-speed AOA is too high. I'm inclined to agree
+//so I'm reducing this number to 20.0 degrees to make it easier on the approach.
+#define c_aoaStallClean 20.0
 
 #define c_aoaZeroG 0.2
 

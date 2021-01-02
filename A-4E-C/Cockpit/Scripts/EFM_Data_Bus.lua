@@ -17,6 +17,9 @@ local fm_stick_pitch = get_param_handle("STICK_PITCH")
 local fm_stick_roll = get_param_handle("STICK_ROLL")
 local fm_rudder_pedals = get_param_handle("RUDDER_PEDALS")
 
+local fm_stick_input_pitch = get_param_handle("FM_STICK_INPUT_PITCH")
+local fm_stick_input_roll = get_param_handle("FM_STICK_INPUT_ROLL")
+
 local fm_pitch_trim = get_param_handle("PITCH_TRIM")
 local fm_roll_trim = get_param_handle("ROLL_TRIM")
 local fm_rudder_trim = get_param_handle("RUDDER_TRIM")
@@ -168,6 +171,13 @@ function fm_getTargetSet()
     return fm_target_set:get() > 0.5
 end
 
+function fm_getPitchInput()
+	return fm_stick_input_pitch:get()
+end
+
+function fm_getRollInput()
+	return fm_stick_input_roll:get()
+end
 
 fm_setCockpitShake(optionsData_cockpitShake/100.0)
 
@@ -202,6 +212,8 @@ function get_efm_data_bus()
     efm_data_bus.fm_getAOAUnits = fm_getAOAUnits
     efm_data_bus.fm_getValidSolution = fm_getValidSolution
     efm_data_bus.fm_getTargetSet = fm_getTargetSet
+	efm_data_bus.fm_getPitchInput = fm_getPitchInput
+	efm_data_bus.fm_getRollInput = fm_getRollInput
     return efm_data_bus
    
 end

@@ -46,6 +46,9 @@ public:
 		m_stickRoll				= m_api.pfn_ed_cockpit_get_parameter_handle("STICK_ROLL");
 		m_rudderPedals			= m_api.pfn_ed_cockpit_get_parameter_handle("RUDDER_PEDALS");
 
+		m_stickInputPitch       = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_STICK_INPUT_PITCH" );
+		m_stickInputRoll        = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_STICK_INPUT_ROLL" );
+
 		m_pitchTrim				= m_api.pfn_ed_cockpit_get_parameter_handle("PITCH_TRIM");
 		m_rollTrim				= m_api.pfn_ed_cockpit_get_parameter_handle("ROLL_TRIM");
 		m_rudderTrim			= m_api.pfn_ed_cockpit_get_parameter_handle("RUDDER_TRIM");
@@ -236,6 +239,16 @@ public:
 		setParamNumber( m_targetSet, (double)targetSet );
 	}
 
+	inline void setStickInputPitch( double number )
+	{
+		setParamNumber( m_stickInputPitch, number );
+	}
+
+	inline void setStickInputRoll( double number )
+	{
+		setParamNumber( m_stickInputRoll, number );
+	}
+
 	inline double getSlantRange()
 	{
 		return getParamNumber( m_slantRange );
@@ -369,6 +382,9 @@ private:
 	void* m_stickRoll = NULL;
 	void* m_stickPitch = NULL;
 	void* m_throttlePosition = NULL;
+
+	void* m_stickInputPitch = NULL;
+	void* m_stickInputRoll = NULL;
 
 	void* m_engineThrottlePosition = NULL;
 	void* m_engineIgnition = NULL;

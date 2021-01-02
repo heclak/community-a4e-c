@@ -519,6 +519,10 @@ function recursively_print(table_to_print, max_depth, max_number_tables, filepat
 	file:close()
 end
 
+function clamp(value, minimum, maximum)
+	return math.max(math.min(value,maximum),minimum)
+end
+
 --[[
 -- test code
 target_cur={}
