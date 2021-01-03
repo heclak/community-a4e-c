@@ -1,5 +1,6 @@
 #include "Engine2.h"
-Skyhawk::Engine2::Engine2() :
+Skyhawk::Engine2::Engine2(AircraftState& aircraftState) :
+	m_aircraftState(aircraftState),
 	fuelToHPOmega( c_fuelToHPOmega, c_fuelToHPOmegaMin, c_fuelToHPOmegaMax ),
 	lpOmegaToMassFlow( c_lpOmegaToMassFlow, c_lpOmegaToMassFlowMin, c_lpOmegaToMassFlowMax ),
 	hpOmegaToMassFlow( c_hpOmegaToMassFlow, c_hpOmegaToMassFlowMin, c_hpOmegaToMassFlowMax ),
@@ -133,9 +134,13 @@ void Skyhawk::Engine2::updateEngine( double dt )
 	//Mass flow is the average of the mass flows from hp and lp shafts.
 	m_massFlow = (lpOmegaToMassFlow( m_lpOmega ) + hpOmegaToMassFlow( m_hpOmega )) / 2.0;
 
+	double massFlowFactor =  (m_aircraftState.getAirDensity() / c_standardDayDensity);
+	//printf( "Mass Flow Factor: %lf\n", massFlowFactor );
 	//Thrust = staticThrust - massFlow * airspeed
-	m_thrust = (1000.0*massFlowToStaticThrust( m_massFlow ) - abs( m_airspeed ) * m_massFlow) * thrustSign;
+	m_thrust = ( 1000.0*massFlowToStaticThrust( m_massFlow ) - abs( m_airspeed ) * m_massFlow) * massFlowFactor * thrustSign;
 
 	//Correct fuel flow for temperature.
-	m_correctedFuelFlow = m_fuelFlow * sqrt( m_temperature ) / c_sqrtStandardDayTemp;
+	double factor = (m_aircraftState.getPressure() / c_standardDayPressure) * sqrt( m_aircraftState.getTemperature() ) / c_sqrtStandardDayTemp;
+	//printf( "Factor: %lf\n", factor );
+	m_correctedFuelFlow = m_fuelFlow * factor;
 }

@@ -248,16 +248,16 @@ join(res.keyCommands,{
     {down = Keys.AFCSEngageToggle,                                                      name = _('AFCS Engage Switch - OFF/ENGAGE'),                             category = {_('Left Console'), _('AFCS Panel')}},
     {down = Keys.AFCSAltitudeToggle,                                                    name = _('AFCS Altitude Switch - OFF/ALT'),                              category = {_('Left Console'), _('AFCS Panel')}},
     {down = Keys.AFCSHeadingToggle,                                                     name = _('AFCS Heading Select Switch - OFF/HDG SEL'),                    category = {_('Left Console'), _('AFCS Panel')}},
-    {down = Keys.AFCSHeadingInc,                                                        name = _('AFCS SET Knob - CW/Increase'),                                 category = {_('Left Console'), _('AFCS Panel')}},
-    {down = Keys.AFCSHeadingDec,                                                        name = _('AFCS SET Knob - CCW/Decrease'),                                category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_hdg_set, value_down = 1, cockpit_device_id = devices.AFCS,                name = _('AFCS SET Knob - CW/Increase'),              category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_hdg_set, value_down = -1, cockpit_device_id = devices.AFCS,                name = _('AFCS SET Knob - CCW/Decrease'),            category = {_('Left Console'), _('AFCS Panel')}},
 
     {down = Keys.AFCSHotasPath,                                                         name = _('AFCS Path Mode'),                                              category = {_('Left Console'), _('AFCS Panel')}},
     {down = Keys.AFCSHotasAltHdg,                                                       name = _('AFCS Altitude + Heading Modes'),                               category = {_('Left Console'), _('AFCS Panel')}},
     {down = Keys.AFCSHotasAlt,                                                          name = _('AFCS Altitude Mode'),                                          category = {_('Left Console'), _('AFCS Panel')}},
 
     -- Special commands for Warthog Throttle
-    {down = Keys.AFCSHotasMode, value_down = 1, up = Keys.AFCSHotasMode, value_up = 0,  name = _('AFCS Path Mode else Altitude+Heading (Warthog Throttle)'),     category = {_('Left Console'), _('AFCS Panel'), _('Special For Joystick')}},
-    {down = Keys.AFCSHotasMode, value_down = -1, up = Keys.AFCSHotasMode, value_up = 0, name = _('AFCS Altitude Mode else Altitude+Heading (Warthog Throttle)'), category = {_('Left Console'), _('AFCS Panel'), _('Special For Joystick')}},
+    {down = Keys.AFCSHotasPath, up = Keys.AFCSHotasAltHdg,  name = _('AFCS Path Mode else Altitude+Heading (Warthog Throttle)'),     category = {_('Left Console'), _('AFCS Panel'), _('Special For Joystick')}},
+    {down = Keys.AFCSHotasAlt, up = Keys.AFCSHotasAltHdg, name = _('AFCS Altitude Mode else Altitude+Heading (Warthog Throttle)'), category = {_('Left Console'), _('AFCS Panel'), _('Special For Joystick')}},
     {down = Keys.AFCSHotasEngage,                                                       name = _('AFCS Engage (Warthog Throttle)'),                              category = {_('Left Console'), _('AFCS Panel'), _('Special For Joystick')}},
 
     -- Oxygen and Anti-G Panel

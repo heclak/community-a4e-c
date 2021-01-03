@@ -5,6 +5,7 @@
 #include "Table.h"
 #include "Input.h"
 #include "Data.h"
+#include "AircraftState.h"
 #include <algorithm>
 
 #undef max
@@ -32,7 +33,7 @@ namespace Skyhawk
 class Engine2 : public BaseComponent
 {
 public:
-	Engine2();
+	Engine2(AircraftState& aircraftState);
 	~Engine2();
 
 	virtual void zeroInit();
@@ -55,6 +56,7 @@ public:
 
 	void updateEngine( double dt );
 private:
+	AircraftState& m_aircraftState;
 	ZeroTable thrustToFFOverSqrtTemp;
 	ZeroTable fuelToHPOmega;
 	ZeroTable airspeedToHPOmega;

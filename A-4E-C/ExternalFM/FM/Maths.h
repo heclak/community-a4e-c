@@ -1,4 +1,5 @@
 #pragma once
+#include <math.h>
 #include "Vec3.h"
 #include <algorithm>
 #undef max

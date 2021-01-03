@@ -341,7 +341,7 @@ void Skyhawk::FlightModel::calculateForcesAndMoments(double dt)
 	if ( fabs( dAOA ) > fabs( dAOAOpposite ) )
 	{
 		dAOA = dAOAOpposite;
-		printf( "Took opposite: %lf\n", dAOA );
+		//printf( "Took opposite: %lf\n", dAOA );
 	}
 
 
@@ -360,7 +360,7 @@ void Skyhawk::FlightModel::calculateForcesAndMoments(double dt)
 	if ( fabs( dBeta ) > fabs( dBetaOpposite ) )
 	{
 		dBeta = dBetaOpposite;
-		printf( "Took opposite: %lf\n", dBeta );
+		//printf( "Took opposite: %lf\n", dBeta );
 	}
 
 	m_aoaDot = dAOA / dt;

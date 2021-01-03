@@ -72,6 +72,21 @@ dev:listen_command(device_commands.afcs_hdg_set)
 dev:listen_command(device_commands.afcs_stab_aug)
 dev:listen_command(device_commands.afcs_ail_trim)
 
+--Keys to manipulate the panel
+dev:listen_command(Keys.AFCSOverride)
+dev:listen_command(Keys.AFCSStandbyToggle)
+dev:listen_command(Keys.AFCSEngageToggle)
+dev:listen_command(Keys.AFCSAltitudeToggle)
+dev:listen_command(Keys.AFCSHeadingToggle)
+dev:listen_command(Keys.AFCSHeadingInc)
+dev:listen_command(Keys.AFCSHeadingDec)
+--These appear to be shortcuts for certain combinations
+dev:listen_command(Keys.AFCSHotasMode)      -- for warthog
+dev:listen_command(Keys.AFCSHotasPath)      -- for warthog
+dev:listen_command(Keys.AFCSHotasAltHdg)    -- for warthog
+dev:listen_command(Keys.AFCSHotasAlt)       -- for warthog
+dev:listen_command(Keys.AFCSHotasEngage)    -- for warthog
+
 --Commands APC
 dev:listen_command(device_commands.apc_engagestbyoff)
 dev:listen_command(device_commands.apc_hotstdcold)
@@ -80,26 +95,38 @@ dev:listen_command(Keys.APCHotStdCold)
 
 -- AFCS States
 AFCS_STATE_OFF = 0
-AFCS_STATE_STBY = 1
-AFCS_STATE_ATTITUDE_ONLY = 2
-AFCS_STATE_ATTITUDE_HDG = 3
-AFCS_STATE_ALTITUDE_ONLY = 4
-AFCS_STATE_ALTITUDE_HDG = 5
-AFCS_STATE_CSS = 6
+AFCS_STATE_WARMUP = 1
+AFCS_STATE_STBY = 2
+AFCS_STATE_ATTITUDE_ONLY = 3
+AFCS_STATE_ATTITUDE_HDG = 4
+AFCS_STATE_ALTITUDE_ONLY = 5
+AFCS_STATE_ALTITUDE_HDG = 6
+AFCS_STATE_CSS = 7
+
+--Special Control State
+AFCS_CONTROL_PATH = 0
+AFCS_CONTROL_ALT_HDG = 1
+AFCS_CONTROL_ALT = 2
+
+--Constant
+local afcs_warmup_time = 90 --seconds
 
 -- AFCS initialization
 local afcs_standby_enabled = false
 local afcs_engage_enabled = false
+local afcs_engage_enabled_switch = false --switch position can be different from the engaged state
 local afcs_hdg_sel_enabled = false
 local afcs_alt_hold_enabled = false
 local afcs_ail_trim_enabled = true
 local afcs_stab_aug_enabled = false
 local afcs_css_enabled = false
+local afcs_control_state = AFCS_CONTROL_ALT_HDG
 
 
 --State information
 local afcs_state = AFCS_STATE_OFF
-local afcs_state_transition = false
+local afcs_warmup_count = 0
+local afcs_warmed_up = false
 
 --Current targets
 local afcs_bank_angle_hold = 0
@@ -118,13 +145,28 @@ local apc_state = "apc-off"
 local speedHold = -100
 local apc_light = get_param_handle("APC_LIGHT")
 
-local command_table = {}
+--APC States
+APC_OFF = 0
+APC_STBY = 1
+APC_ACTIVE = 2
 
+--APC modes
+APC_MODE_COLD = 0
+APC_MODE_STD = 1
+APC_MODE_HOT = 2
 
+--[[
+The commands are handled somewhat differently in this file.
+
+To avoid this becoming a rats nest of if statements a table is instead used with the command number as the key to a function.
+The function is then called with the value for that command.
+
+The table command_table has the key,value pairs for commands,function ptrs.
+]]
+--AFCS COMMAND CALLBACKS
 function afcs_standby(value)
     afcs_standby_enabled = (value == 1)
 end
-
 
 function afcs_hdg_set(value)
     if value > 0 then
@@ -143,8 +185,8 @@ function afcs_hdg_set(value)
 end
 
 function afcs_engage(value)
-
     afcs_engage_enabled = (value == 1)
+    afcs_engage_enabled_switch = afcs_engage_enabled
 
     if not afcs_engage_enabled then
         dev:performClickableAction(device_commands.afcs_hdg_sel,0,false)
@@ -164,6 +206,71 @@ function afcs_stab_aug(value)
     afcs_stab_aug_enabled = (value == 1)
 end
 
+function afcs_override(value)
+    dev:performClickableAction(device_commands.afcs_engage, 0, false)
+end
+
+function afcs_ail_trim(value)
+    afcs_ail_trim_enabled = (value == 1)
+end
+
+--AFCS Callbacks that manipulate the panel only.
+function afcs_standby_toggle()
+    dev:performClickableAction(device_commands.afcs_standby,afcs_standby_enabled and 0 or 1,false)
+end
+
+function afcs_engage_toggle()
+    dev:performClickableAction(device_commands.afcs_engage,afcs_engage_enabled_switch and 0 or 1,false)
+end
+
+function afcs_altitude_toggle()
+    dev:performClickableAction(device_commands.afcs_alt,afcs_alt_hold_enabled and 0 or 1,false)
+end
+
+function afcs_heading_toggle()
+    dev:performClickableAction(device_commands.afcs_hdg_sel,afcs_hdg_sel_enabled and 0 or 1,false)
+end
+
+--AFCS Callbacks that input special combinations
+function afcs_hotas_path()
+    afcs_control_state = AFCS_CONTROL_PATH
+    dev:performClickableAction(device_commands.afcs_hdg_sel, 0, false)
+    dev:performClickableAction(device_commands.afcs_alt, 0, false)
+end
+
+function afcs_hotas_alt_hdg()
+    afcs_control_state = AFCS_CONTROL_ALT_HDG
+    dev:performClickableAction(device_commands.afcs_hdg_sel, 1, false)
+    dev:performClickableAction(device_commands.afcs_alt, 1, false)
+end
+
+function afcs_hotas_alt()
+    afcs_control_state = AFCS_CONTROL_ALT
+    dev:performClickableAction(device_commands.afcs_hdg_sel, 0, false)
+    dev:performClickableAction(device_commands.afcs_alt, 1, false)
+end
+
+function afcs_hotas_engage()
+    if afcs_engage_enabled_switch then
+        dev:performClickableAction(device_commands.afcs_engage, 0, false)
+    else
+        if afcs_control_state == AFCS_CONTROL_PATH then
+            dev:performClickableAction(device_commands.afcs_hdg_sel, 0, false)
+            dev:performClickableAction(device_commands.afcs_alt, 0, false)
+            dev:performClickableAction(device_commands.afcs_engage, 1, false)
+        elseif afcs_control_state == AFCS_CONTROL_ALT_HDG then
+            dev:performClickableAction(device_commands.afcs_hdg_sel, 1, false)
+            dev:performClickableAction(device_commands.afcs_alt, 1, false)
+            dev:performClickableAction(device_commands.afcs_engage, 1, false)
+        elseif afcs_control_state == AFCS_CONTROL_ALT then
+            dev:performClickableAction(device_commands.afcs_hdg_sel, 0, false)
+            dev:performClickableAction(device_commands.afcs_alt, 1, false)
+            dev:performClickableAction(device_commands.afcs_engage, 1, false)
+        end
+    end
+end
+
+--APC COMMAND CALLBACKS
 function apc_engagestbyoff(value)
     apc_input = apc_inputlist[ round(value+2) ] -- convert -1,0,1 to 1,2,3
 end
@@ -180,9 +287,93 @@ function APCHotStdCold(value)
     dev:performClickableAction(device_commands.apc_hotstdcold, value, false)
 end
 
+--Table of functions for each possible input as a key.
+--This must be defined below any functions that are included such that the correct function ptr is not nil.
+local command_table = {
+    --[<command number>] = <function callback>
+    [device_commands.afcs_standby] = afcs_standby,
+    [device_commands.afcs_hdg_set] = afcs_hdg_set,
+    [device_commands.afcs_engage] = afcs_engage,
+    [device_commands.afcs_alt] = afcs_altitude,
+    [device_commands.afcs_hdg_sel] = afcs_heading,
+    [device_commands.afcs_stab_aug] = afcs_stab_aug,
+    [device_commands.afcs_ail_trim] = afcs_ail_trim,
 
-function afcs_check_engage_state()
-    local state = get_current_state()
+    --Keys
+    [Keys.AFCSOverride] = afcs_override,
+    [Keys.AFCSStandbyToggle] = afcs_standby_toggle,
+    [Keys.AFCSEngageToggle] = afcs_engage_toggle,
+    [Keys.AFCSAltitudeToggle] = afcs_altitude_toggle,
+    [Keys.AFCSHeadingToggle] = afcs_heading_toggle,
+    --Special Hotas Keys
+    [Keys.AFCSHotasPath] = afcs_hotas_path,
+    [Keys.AFCSHotasAltHdg] = afcs_hotas_alt_hdg,
+    [Keys.AFCSHotasAlt] = afcs_hotas_alt,
+    [Keys.AFCSHotasEngage] = afcs_hotas_engage,
+
+    [device_commands.apc_engagestbyoff] = apc_engagestbyoff,
+    [device_commands.apc_hotstdcold] = apc_hotstdcold,
+    [Keys.APCEngageStbyOff] = APCEngageStbyOff,
+    [Keys.APCHotStdCold] = APCHotStdCold,
+}
+
+
+function post_initialize()
+
+    afcs_engage_enabled = false
+    afcs_engage_enabled_switch = false
+    afcs_hdg_sel_enabled = false
+    afcs_alt_hold_enabled = false
+    afcs_ail_trim_enabled = false
+    afcs_css_enabled = false
+    
+    afcs_heading_hold = 0
+    
+    local birth = LockOn_Options.init_conditions.birth_place
+    if birth == "GROUND_HOT" or birth == "AIR_HOT" then
+        --Enable the afcs and stab aug switches
+        afcs_standby_enabled = true
+        afcs_stab_aug_enabled = true
+        afcs_state = AFCS_STATE_STBY
+
+        --Set AFCS to be warmed up.
+        afcs_warmup_count = afcs_warmup_time
+        afcs_warmed_up = true
+
+    elseif birth == "GROUND_COLD" then
+        afcs_standby_enabled = false
+        afcs_stab_aug_enabled = false
+        afcs_state = AFCS_STATE_OFF
+    end
+
+    dev:performClickableAction(device_commands.apc_engagestbyoff,-1,true) --disable APC by default
+
+    --Switches are synced to the states stored in this file on load.
+    sync_switches()
+end
+
+function SetCommand(command, value)
+    --print_message_to_user("AFCS ".. command .. "," .. tostring(value))
+    if command_table[command] == nil then
+        return
+    end
+    --get the callback and call it with the value
+    command_table[command](value)
+end
+
+function sync_switches()
+    dev:performClickableAction(device_commands.afcs_standby,   afcs_standby_enabled and 1 or 0,  false)
+    dev:performClickableAction(device_commands.afcs_engage,    afcs_engage_enabled and 1 or 0,   false)
+    dev:performClickableAction(device_commands.afcs_stab_aug,  afcs_stab_aug_enabled and 1 or 0, false)
+    dev:performClickableAction(device_commands.afcs_hdg_sel,   afcs_hdg_sel_enabled and 1 or 0,  false)
+    dev:performClickableAction(device_commands.afcs_alt,       afcs_alt_hold_enabled and 1 or 0, false)
+    dev:performClickableAction(device_commands.afcs_ail_trim,  afcs_ail_trim_enabled and 1 or 0, false)
+end
+
+--AFCS Functions
+function afcs_check_engage_params()
+
+    local state = afcs_get_current_state()
 
     if state == AFCS_STATE_ALTITUDE_HDG or state == AFCS_STATE_ALTITUDE_ONLY then
         --20 m/s = 4000 ft/min
@@ -205,84 +396,28 @@ function afcs_check_engage_state()
 
 end
 
-function sync_switches()
-    dev:performClickableAction(device_commands.afcs_standby,   afcs_standby_enabled and 1 or 0,  false)
-    dev:performClickableAction(device_commands.afcs_engage,    afcs_engage_enabled and 1 or 0,   false)
-    dev:performClickableAction(device_commands.afcs_stab_aug,  afcs_stab_aug_enabled and 1 or 0, false)
-    dev:performClickableAction(device_commands.afcs_hdg_sel,   afcs_hdg_sel_enabled and 1 or 0,  false)
-    dev:performClickableAction(device_commands.afcs_alt,       afcs_alt_hold_enabled and 1 or 0, false)
-    dev:performClickableAction(device_commands.afcs_ail_trim,  afcs_ail_trim_enabled and 1 or 0, false)
-end
-
-
-
-function post_initialize()
-
-    afcs_engage_enabled = false
-    afcs_hdg_sel_enabled = false
-    afcs_alt_hold_enabled = false
-    afcs_ail_trim_enabled = true
-    afcs_css_enabled = false
-    
-    afcs_heading_hold = 0
-    
-    local birth = LockOn_Options.init_conditions.birth_place
-    if birth == "GROUND_HOT" or birth == "AIR_HOT" then
-        afcs_standby_enabled = true
-        afcs_stab_aug_enabled = true
-        afcs_state = AFCS_STATE_STBY
-
-    elseif birth == "GROUND_COLD" then
-        afcs_standby_enabled = false
-        afcs_stab_aug_enabled = false
-        afcs_state = AFCS_STATE_OFF
-    end
-
-    dev:performClickableAction(device_commands.apc_engagestbyoff,-1,true) --disable APC by default
-
-
-    command_table[device_commands.afcs_standby] = afcs_standby
-    command_table[device_commands.afcs_hdg_set] = afcs_hdg_set
-    command_table[device_commands.afcs_engage] = afcs_engage
-    command_table[device_commands.afcs_alt] = afcs_altitude
-    command_table[device_commands.afcs_hdg_sel] = afcs_heading
-    command_table[device_commands.afcs_stab_aug] = afcs_stab_aug
-    command_table[device_commands.apc_engagestbyoff] = apc_engagestbyoff
-    command_table[device_commands.apc_hotstdcold] = apc_hotstdcold
-    command_table[Keys.APCEngageStbyOff] = APCEngageStbyOff
-    command_table[Keys.APCHotStdCold] = APCHotStdCold
-
-    sync_switches()
-end
-
-
-
-
-function SetCommand(command, value)
-    --print_message_to_user("AFCS ".. command .. "," .. tostring(value))
-    if command_table[command] == nil then
-        return
-    end
-    command_table[command](value)
-end
-
-
-function check_switches()
-    if not afcs_standby_enabled or not get_elec_mon_dc_ok() then
+function afcs_check_switches()
+    if afcs_state == AFCS_STATE_OFF then
         dev:performClickableAction(device_commands.afcs_engage,0,false)
         dev:performClickableAction(device_commands.afcs_stab_aug,0,false)
         dev:performClickableAction(device_commands.afcs_hdg_sel,0,false)
         dev:performClickableAction(device_commands.afcs_alt,0,false)
     end
+
+    if afcs_ail_trim_enabled then
+        dev:performClickableAction(device_commands.afcs_engage,0,false)
+    end
 end
 
 
 --Returns the current state of the autopilot based on the state of each setting.
-function get_current_state(ignore_css)
+function afcs_get_current_state()
 
-    if not afcs_standby_enabled then
+    if not afcs_standby_enabled or not get_elec_primary_ac_ok() or not get_elec_mon_dc_ok() then
         return AFCS_STATE_OFF
-    elseif not afcs_engage_enabled then
+    elseif not afcs_warmed_up then
+        return AFCS_STATE_WARMUP
+    elseif not afcs_engage_enabled or not get_hyd_utility_ok() then
         return AFCS_STATE_STBY
     elseif afcs_css_enabled then
         return AFCS_STATE_CSS
@@ -301,7 +436,7 @@ function get_current_state(ignore_css)
     end
 end
 
-function transition_state(from, to)
+function afcs_transition_state(from, to)
 --[[
     state_names = {}
 
@@ -312,9 +447,11 @@ function transition_state(from, to)
     state_names[AFCS_STATE_ALTITUDE_ONLY] = "AFCS_STATE_ALTITUDE_ONLY"
     state_names[AFCS_STATE_ALTITUDE_HDG] = "AFCS_STATE_ALTITUDE_HDG"
     state_names[AFCS_STATE_CSS] = "AFCS_STATE_CSS"
+    state_names[AFCS_STATE_WARMUP] = "AFCS_STATE_WARMUP"
     
     print_message_to_user(tostring(state_names[from]).." -> "..tostring(state_names[to]))
 ]]--
+
 
     if to == AFCS_STATE_ALTITUDE_ONLY then
         afcs_bank_angle_hold = math.deg(sensor_data.getRoll())
@@ -352,24 +489,29 @@ function transition_state(from, to)
 
         pitch_pid:reset(pitch_trim_handle:get())
         roll_pid:reset(roll_trim_handle:get())
-    elseif to == AFCS_STATE_OFF or to == AFCS_STATE_STBY then
-        roll_trim_handle:set(0.0)
+    elseif to == AFCS_STATE_STBY then
+        --Not sure whether to reset the roll trim here. Some people may want it
+        --to preserve the trim after the attitude control has corrected others
+        --may want to reset.
+        --roll_trim_handle:set(0.0)
+    elseif to == AFCS_STATE_OFF then
+        --print_message_to_user("AFCS Warmup Count "..tostring(afcs_warmup_count))
     end
 end
 
-function hold_bank(angle)
+function afcs_hold_bank(angle)
     local bank_angle = math.deg(sensor_data.getRoll())
     local roll_trim = clamp(roll_pid:run(angle, bank_angle), -1, 1)
     roll_trim_handle:set(roll_trim*0.4)
 end
 
-function hold_pitch(angle)
+function afcs_hold_pitch(angle)
     local pitch_angle = math.deg(sensor_data.getPitch())
     local pitch_trim = clamp(pitch_pid:run(angle, pitch_angle), -1, 1)
     pitch_trim_handle:set(pitch_trim*0.4)
 end
 
-function hold_altitude(altitude_hold_m)
+function afcs_hold_altitude(altitude_hold_m)
     -- first calculate desired rate of climb, based on delta between target and current altitude  (cannot directly control elevator to altitude)
     -- TODO: integrate with trim system (provide offset inputs)
     local cur_altitude_m
@@ -413,7 +555,7 @@ function hold_altitude(altitude_hold_m)
     pitch_trim_handle:set(altitude_trim*0.4)
 end
 
-function auto_trim_pitch()
+function afcs_auto_trim_pitch()
     local current_pitch_trim = pitch_trim_handle:get()
     local current_stick = efm_data_bus.fm_getPitchInput()
 
@@ -425,7 +567,7 @@ function auto_trim_pitch()
     pitch_trim_handle:set(new_pitch_trim)
 end
 
-function find_heading_desired_bank_angle()
+function afcs_find_heading_desired_bank_angle()
     local heading = math.deg(sensor_data.getMagneticHeading()) % 360
 
     local left = (heading - afcs_heading_hold) % 360
@@ -456,7 +598,7 @@ function find_heading_desired_bank_angle()
     return bank_angle
 end
 
-function check_for_css()
+function afcs_check_for_css()
 
     if math.abs(efm_data_bus.fm_getPitchInput()) > 0.03 or math.abs(efm_data_bus.fm_getRollInput()) > 0.03  then
         afcs_css_enabled = true
@@ -468,14 +610,14 @@ function check_for_css()
         afcs_css_enabled = false
 
         --If we cannot disable the css mode then we most go back to css.
-        if not afcs_check_engage_state() then
+        if not afcs_check_engage_params() then
             afcs_css_enabled = true
         end
 
     end
 end
 
-function check_limits()
+function afcs_check_limits()
     g_force = sensor_data.getVerticalAcceleration()
 
 
@@ -492,10 +634,23 @@ function check_limits()
 
 end
 
+--Are we allowed to engage from this state
+function afcs_allowed_to_engage_from_state(from)
+    --There is only one disallowed transition: from AFCS_STATE_WARMUP -> any engaged state.
+    --This transition must always go to standby first.
+    if from == AFCS_STATE_WARMUP then
+        return false
+    else
+        return true
+    end
+end
+
 function update_afcs()
 
     --enable/disable the afcs stability augmentation
-    if afcs_stab_aug_enabled and get_hyd_utility_ok() and get_elec_primary_dc_ok() and get_elec_primary_ac_ok() then
+    --Don't need to check AFCS_STATE_OFF because this switch cannot be on with that set to off.
+    --Do however need to check AFCS_STATE_WARMUP because it's possible to have this switch on in that state.
+    if afcs_stab_aug_enabled and afcs_state ~= AFCS_STATE_WARMUP and get_hyd_utility_ok() and get_elec_primary_dc_ok() and get_elec_primary_ac_ok() then
         efm_data_bus.fm_setYawDamper(1.0)
     else
         efm_data_bus.fm_setYawDamper(0.0)
@@ -503,49 +658,72 @@ function update_afcs()
 
     --switch based on the state and apply the various types of hold
     --early return for stdby/off positions
-    if afcs_state == AFCS_STATE_STBY or afcs_state == AFCS_STATE_OFF then
+    if afcs_state == AFCS_STATE_OFF then
+        
+        --Degrade the warmup at 3 times the rate of warmup
+        --This is a made up value, it just makes sense that the warmup
+        --wouldn't take 90 seconds after switching it off and then back off
+        --again very quickly.
+        if afcs_warmup_count >= 0 then
+            --print_message_to_user("AFCS Warmup count: "..afcs_warmup_count)
+            afcs_warmup_count = afcs_warmup_count - update_time_step * 3
+        end
+
+        if afcs_warmup_count < afcs_warmup_time then
+            afcs_warmed_up = false
+        end
+        return
+    elseif afcs_state == AFCS_STATE_STBY then
+        return
+    elseif afcs_state == AFCS_STATE_WARMUP then
+        afcs_warmup_count = afcs_warmup_count + update_time_step
+        --print_message_to_user("AFCS Warmup count: "..afcs_warmup_count)
+        if afcs_warmup_count > afcs_warmup_time then
+            --print_message_to_user("AFCS_WARMED_UP")
+            afcs_warmed_up = true
+        end
         return
     elseif afcs_state == AFCS_STATE_ATTITUDE_ONLY then
-        hold_bank(afcs_bank_angle_hold)
-        hold_pitch(afcs_pitch_angle_hold)
+        afcs_hold_bank(afcs_bank_angle_hold)
+        afcs_hold_pitch(afcs_pitch_angle_hold)
     elseif afcs_state == AFCS_STATE_ATTITUDE_HDG then
-        hold_bank(find_heading_desired_bank_angle())
-        hold_pitch(afcs_pitch_angle_hold)
+        afcs_hold_bank(afcs_find_heading_desired_bank_angle())
+        afcs_hold_pitch(afcs_pitch_angle_hold)
     elseif afcs_state == AFCS_STATE_ALTITUDE_ONLY then
-        hold_bank(afcs_bank_angle_hold)
-        hold_altitude(afcs_altitude_hold)
+        afcs_hold_bank(afcs_bank_angle_hold)
+        afcs_hold_altitude(afcs_altitude_hold)
     elseif afcs_state == AFCS_STATE_ALTITUDE_HDG then
-        hold_bank(find_heading_desired_bank_angle())
-        hold_altitude(afcs_altitude_hold)
+        afcs_hold_bank(afcs_find_heading_desired_bank_angle())
+        afcs_hold_altitude(afcs_altitude_hold)
     elseif afcs_state == AFCS_STATE_CSS then
-        auto_trim_pitch()
+        afcs_auto_trim_pitch()
     end
 
 
     --see if we should enter into css mode
-    check_for_css()
+    afcs_check_for_css()
 
     --see if we should disengage
-    check_limits()
+    afcs_check_limits()
 
     
 end
 
 function update()
 
-    check_switches()
-    local temp_state = get_current_state()
+    afcs_check_switches()
+    local temp_state = afcs_get_current_state()
 
     --State change
     if temp_state ~= afcs_state then
         --Check if this state change is allowed with the current condition
-        afcs_engage_enabled = afcs_check_engage_state() and afcs_engage_enabled
+        afcs_engage_enabled = afcs_engage_enabled and afcs_allowed_to_engage_from_state(afcs_state) and afcs_check_engage_params()
 
         --Update the possible new state
-        temp_state = get_current_state()
+        temp_state = afcs_get_current_state()
         --Actually transition if this state is not the same as our current state.
         if temp_state ~= afcs_state then
-            transition_state(afcs_state, temp_state)
+            afcs_transition_state(afcs_state, temp_state)
             --Update state after transition
             afcs_state = temp_state
         end
@@ -668,3 +846,5 @@ function update_apc()
         end
     end
 end
+
+need_to_be_closed = false -- close lua state after initialization

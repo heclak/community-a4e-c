@@ -218,12 +218,13 @@ join(res.keyCommands,{
     {down = Keys.RadarVolume, value_down = 0,   name = _('Radar Obstacle Tone Volume Knob - Decrease'),          category = {_('Left Console'), _('Radar Control Panel')}},
 
     -- AFCS Panel
+    
     {down = Keys.AFCSStandbyToggle,             name = _('AFCS Standby Switch - OFF/STANDBY'),                   category = {_('Left Console'), _('AFCS Panel')}},
     {down = Keys.AFCSEngageToggle,              name = _('AFCS Engage Switch - OFF/ENGAGE'),                     category = {_('Left Console'), _('AFCS Panel')}},
     {down = Keys.AFCSAltitudeToggle,            name = _('AFCS Altitude Switch - OFF/ALT'),                      category = {_('Left Console'), _('AFCS Panel')}},
     {down = Keys.AFCSHeadingToggle,             name = _('AFCS Heading Select Switch - OFF/HDG SEL'),            category = {_('Left Console'), _('AFCS Panel')}},
-    {down = Keys.AFCSHeadingInc,                name = _('AFCS SET Knob - CW/Increase'),                         category = {_('Left Console'), _('AFCS Panel')}},
-    {down = Keys.AFCSHeadingDec,                name = _('AFCS SET Knob - CCW/Decrease'),                        category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_hdg_set, value_down = 1, cockpit_device_id = devices.AFCS,                name = _('AFCS SET Knob - CW/Increase'),                         category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_hdg_set, value_down = -1, cockpit_device_id = devices.AFCS,               name = _('AFCS SET Knob - CCW/Decrease'),                        category = {_('Left Console'), _('AFCS Panel')}},
 
     {down = Keys.AFCSHotasPath,                 name = _('AFCS Path Mode'),                                      category = {_('Left Console'), _('AFCS Panel')}},
     {down = Keys.AFCSHotasAltHdg,               name = _('AFCS Altitude + Heading Modes'),                       category = {_('Left Console'), _('AFCS Panel')}},

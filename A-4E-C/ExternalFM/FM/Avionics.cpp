@@ -46,7 +46,7 @@ void Skyhawk::Avionics::airborneInit()
 void Skyhawk::Avionics::updateAvionics(double dt)
 {
 
-	printf( "Omega.y: %lf\n", m_state.getOmega().y );
+	//printf( "Omega.y: %lf\n", m_state.getOmega().y );
 	if ( m_damperEnabled )
 	{
 		double omega = m_state.getOmega().y;

@@ -1,4 +1,5 @@
 #include "Actuator.h"
+#include "Maths.h"
 #include <cmath>
 
 namespace Skyhawk
@@ -53,6 +54,7 @@ void Actuator::physicsUpdate(double dt)
 		m_actuatorPos += copysign(1.0, speedToTarget) * m_actuatorSpeed * dt;
 	}
 
+	m_actuatorPos = clamp( m_actuatorPos, -1.0, 1.0 );
 }
 
 double Actuator::getPosition()

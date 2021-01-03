@@ -35,7 +35,7 @@ void init()
 	s_state = new Skyhawk::AircraftState;
 	s_interface = new Skyhawk::Interface;
 	s_input = new Skyhawk::Input;
-	s_engine = new Skyhawk::Engine2;
+	s_engine = new Skyhawk::Engine2( *s_state );
 	s_airframe = new Skyhawk::Airframe( *s_state, *s_input, *s_engine );
 	s_avionics = new Skyhawk::Avionics( *s_input, *s_state );
 	s_fm = new Skyhawk::FlightModel( *s_state, *s_input, *s_airframe, *s_engine, *s_interface );
@@ -165,7 +165,6 @@ void ed_fm_set_atmosphere(
 {
 
 	s_state->setCurrentAtmosphere( t, a, ro, p, Vec3( wind_vx, wind_vy, wind_vz ) );
-	s_engine->setTemperature( t );
 }
 /*
 called before simulation to set up your environment for the next step
