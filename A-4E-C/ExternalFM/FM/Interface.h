@@ -79,6 +79,8 @@ public:
 		m_radarAltitude = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_RADAR_ALTITUDE" );
 		m_gunsightAngle = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_GUNSIGHT_ANGLE" );
 		m_targetSet = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_TARGET_SET" );
+
+		m_dumpingFuel = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_DUMPING_FUEL" );
 	}
 
 	inline void coldInit()
@@ -341,6 +343,11 @@ public:
 	{
 		return getParamNumber( m_gunsightAngle );
 	}
+
+	inline bool getDumpingFuel()
+	{
+		return getParamNumber( m_dumpingFuel ) > 0.5;
+	}
 		 
 	void* m_test = NULL;
 private:
@@ -420,6 +427,8 @@ private:
 	void* m_radarAltitude = NULL;
 	void* m_gunsightAngle = NULL;
 	void* m_targetSet = NULL;
+
+	void* m_dumpingFuel = NULL;
 };
 
 

@@ -234,13 +234,16 @@ function SetCommand(command,value)
         -- print_message_to_user("Fuel Dump "..value)
         if value == 1 then
             -- activate fuel dump
-            dispatch_action(nil, iCommandPlaneFuelOn)
+            efm_data_bus.fm_setDumpingFuel(1.0)
+            --dispatch_action(nil, iCommandPlaneFuelOn)
         elseif value == -1 then
+            efm_data_bus.fm_setDumpingFuel(0.0)
             -- position: emer trans
             -- TODO implement logic
         elseif value == 0 then
+            efm_data_bus.fm_setDumpingFuel(0.0)
             -- position: off
-            dispatch_action(nil, iCommandPlaneFuelOff)
+            --dispatch_action(nil, iCommandPlaneFuelOff)
         end
     elseif command == device_commands.ENGINE_fuel_control_sw then
         -- print_message_to_user("Fuel Control Switch: "..value)

@@ -46,9 +46,9 @@ local roll_trim_handle = get_param_handle("ROLL_TRIM")
 local pitch_trim_handle = get_param_handle("PITCH_TRIM")
 
 --AFCS PID
-local roll_pid = PID(6, 0.05, 0.9, -100, 100, 0.01)   -- create the PID for bank angle control (aileron trim), values found experimentally
-local pitch_pid = PID(6, 0.05, 0.2, -100, 100, 0.01)   -- create the PID for pitch angle control (elevator trim), values found experimentally
-local altitude_pid = PID(1.5, 0.01, 0.11, -100, 100, 0.01)   -- create the PID for altitude control (elevator trim), values found experimentally
+local roll_pid = PID(6, 0.05, 0.9, -100, 100, 0.004)   -- create the PID for bank angle control (aileron trim), values found experimentally
+local pitch_pid = PID(6, 0.05, 0.2, -100, 100, 0.004)   -- create the PID for pitch angle control (elevator trim), values found experimentally
+local altitude_pid = PID(1.5, 0.01, 0.11, -100, 100, 0.004)   -- create the PID for altitude control (elevator trim), values found experimentally
 
 --APC PID
 local apc_pid = PID(5, 0.02, 0.1, -100, 40, 0.01)   -- create the PID for the APC, values found experimentally
@@ -375,18 +375,16 @@ function afcs_check_engage_params()
 
     local state = afcs_get_current_state()
 
+    local bank_angle = math.deg(sensor_data.getRoll())
+    local pitch_angle = math.deg(sensor_data.getPitch())
+    if math.abs(bank_angle) > 70.0 or math.abs(pitch_angle) > 60.0 then
+        --print_message_to_user("Override Off")
+        return false
+    end
+
     if state == AFCS_STATE_ALTITUDE_HDG or state == AFCS_STATE_ALTITUDE_ONLY then
         --20 m/s = 4000 ft/min
         if math.abs(sensor_data.getVerticalVelocity()) > 20.0 then
-            --print_message_to_user("Override Off")
-            return false
-        end
-
-    elseif state == AFCS_STATE_ATTITUDE_HDG or state == AFCS_STATE_ATTITUDE_ONLY then
-        local bank_angle = math.deg(sensor_data.getRoll())
-        local pitch_angle = math.deg(sensor_data.getPitch())
-
-        if math.abs(bank_angle) > 70.0 or math.abs(pitch_angle) > 60.0 then
             --print_message_to_user("Override Off")
             return false
         end
@@ -437,7 +435,7 @@ function afcs_get_current_state()
 end
 
 function afcs_transition_state(from, to)
---[[
+
     state_names = {}
 
     state_names[AFCS_STATE_OFF] = "AFCS_STATE_OFF"
@@ -450,7 +448,6 @@ function afcs_transition_state(from, to)
     state_names[AFCS_STATE_WARMUP] = "AFCS_STATE_WARMUP"
     
     print_message_to_user(tostring(state_names[from]).." -> "..tostring(state_names[to]))
-]]--
 
 
     if to == AFCS_STATE_ALTITUDE_ONLY then
@@ -478,17 +475,15 @@ function afcs_transition_state(from, to)
         afcs_bank_angle_hold = math.deg(sensor_data.getRoll())
         afcs_pitch_angle_hold = math.deg(sensor_data.getPitch())
 
-        if from ~= AFCS_STATE_CSS then
-            pitch_pid:reset(pitch_trim_handle:get())
-            roll_pid:reset(roll_trim_handle:get())
-        end
+        pitch_pid:reset(pitch_trim_handle:get())
+        roll_pid:reset(roll_trim_handle:get())
 
     elseif to == AFCS_STATE_ATTITUDE_HDG then
         afcs_bank_angle_hold = 0
         afcs_pitch_angle_hold = math.deg(sensor_data.getPitch())
-
         pitch_pid:reset(pitch_trim_handle:get())
         roll_pid:reset(roll_trim_handle:get())
+
     elseif to == AFCS_STATE_STBY then
         --Not sure whether to reset the roll trim here. Some people may want it
         --to preserve the trim after the attitude control has corrected others
@@ -502,13 +497,13 @@ end
 function afcs_hold_bank(angle)
     local bank_angle = math.deg(sensor_data.getRoll())
     local roll_trim = clamp(roll_pid:run(angle, bank_angle), -1, 1)
-    roll_trim_handle:set(roll_trim*0.4)
+    roll_trim_handle:set(roll_trim)
 end
 
 function afcs_hold_pitch(angle)
     local pitch_angle = math.deg(sensor_data.getPitch())
     local pitch_trim = clamp(pitch_pid:run(angle, pitch_angle), -1, 1)
-    pitch_trim_handle:set(pitch_trim*0.4)
+    pitch_trim_handle:set(pitch_trim)
 end
 
 function afcs_hold_altitude(altitude_hold_m)
@@ -552,7 +547,7 @@ function afcs_hold_altitude(altitude_hold_m)
         altitude_trim=-1
     end
 
-    pitch_trim_handle:set(altitude_trim*0.4)
+    pitch_trim_handle:set(altitude_trim)
 end
 
 function afcs_auto_trim_pitch()

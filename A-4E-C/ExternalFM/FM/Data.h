@@ -65,7 +65,7 @@
 #define c_maxCatMoment 4.0e5
 
 //People seem to think the on-speed AOA is too high. I'm inclined to agree
-//so I'm reducing this number to 20.0 degrees to make it easier on the approach.
+//so I'm reducing this number to 20.0 (from 25.0) degrees to make it easier on the approach.
 #define c_aoaStallClean 20.0
 
 #define c_aoaZeroG 0.2
@@ -73,3 +73,5 @@
 #define c_gradAOA (27.0 / (c_aoaStallClean - c_aoaZeroG))
 
 #define c_constAOA -(c_aoaZeroG * c_gradAOA)
+
+#define c_fuelDumpRate 5.13 //kg/s

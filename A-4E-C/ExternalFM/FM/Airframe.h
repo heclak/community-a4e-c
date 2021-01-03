@@ -280,6 +280,8 @@ public:
 
 	inline void setSelectedTank( Tank selected );
 	inline void setFuelPrevious( Tank tank );
+	
+	inline void setDumpingFuel( bool dumping );
 
 	inline double getFuelPrevious( Tank tank );
 
@@ -382,6 +384,7 @@ private:
 	double m_fuel[4] = { 0.0, 0.0, 0.0, 0.0 };
 	double m_fuelPrev[4] = { 0.0, 0.0, 0.0, 0.0 };
 	Vec3 m_fuelPos[4] = { Vec3(), Vec3(), Vec3(), Vec3() };
+	bool m_dumpingFuel = false;
 
 	float* m_integrityElement;
 
@@ -401,6 +404,11 @@ private:
 	AircraftState& m_state;
 	std::vector<DamageDelta> m_damageStack;
 };
+
+void Airframe::setDumpingFuel( bool dumping )
+{
+	m_dumpingFuel = dumping;
+}
 
 void Airframe::setSelectedTank(Tank selected)
 {

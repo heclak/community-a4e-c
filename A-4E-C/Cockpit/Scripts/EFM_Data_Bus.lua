@@ -47,6 +47,8 @@ local fm_radarAltitude = get_param_handle("FM_RADAR_ALTITUDE")
 local fm_gunsightAngle = get_param_handle("FM_GUNSIGHT_ANGLE")
 local fm_target_set = get_param_handle("FM_TARGET_SET")
 
+local fm_dumping_fuel = get_param_handle("FM_DUMPING_FUEL")
+
 function fm_setNoseGear(value)
     fm_gear_nose:set(value)
 end
@@ -121,6 +123,10 @@ end
 
 function fm_setGunsightAngle(value)
     fm_gunsightAngle:set(value)
+end
+
+function fm_setDumpingFuel(value)
+    fm_dumping_fuel:set(value)
 end
 
 function fm_getGunsightAngle()
@@ -203,6 +209,7 @@ function get_efm_data_bus()
     efm_data_bus.fm_setSetTarget = fm_setSetTarget
     efm_data_bus.fm_setRadarAltitude = fm_setRadarAltitude
     efm_data_bus.fm_setGunsightAngle = fm_setGunsightAngle
+    efm_data_bus.fm_setDumpingFuel = fm_setDumpingFuel
 
 
     efm_data_bus.fm_getGunsightAngle = fm_getGunsightAngle

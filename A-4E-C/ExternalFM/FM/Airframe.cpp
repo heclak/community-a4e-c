@@ -111,6 +111,11 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 
 	double dm = m_engine.getFuelFlow()*dt;
 
+	if ( m_dumpingFuel )
+	{
+		dm += c_fuelDumpRate * dt;
+	}
+
 	int totalExt = 0;
 	for (int i = Tank::INTERNAL; i < Tank::DONT_TOUCH; i++)
 	{

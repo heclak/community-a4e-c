@@ -112,6 +112,7 @@ void ed_fm_simulate(double dt)
 	s_airframe->setGearLPosition( s_interface->getGearLeft() );
 	s_airframe->setGearRPosition( s_interface->getGearRight() );
 	s_airframe->setGearNPosition( s_interface->getGearNose() );
+	s_airframe->setDumpingFuel( s_interface->getDumpingFuel() );
 
 	s_avionics->getComputer().setGunsightAngle( s_interface->getGunsightAngle() );
 	s_avionics->getComputer().setTarget( s_interface->getSetTarget(), s_interface->getSlantRange() );
