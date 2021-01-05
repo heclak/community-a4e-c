@@ -157,7 +157,7 @@ function SetCommand(command,value)
 --        dispatch_action(nil, iCommandPlaneThrustCommon, throt)
     elseif command==device_commands.throttle_click then
         -- validate that throttle is not in adjust range
-        if sensor_data.getThrottleLeftPosition() > 0.01 then 
+        if sensor_data.getThrottleLeftPosition() > 0.3 then 
             return
         end
         if value==0 and throttle_state==THROTTLE_ADJUST and throttle<=0.01 then
@@ -185,7 +185,7 @@ function SetCommand(command,value)
 		 
     elseif command == device_commands.throttle_click_ITER then
         -- validate that throttle is not in adjust range else cancel action
-        if sensor_data.getThrottleLeftPosition() > 0.01 then
+        if sensor_data.getThrottleLeftPosition() > 0.3 then
             return
         end
         -- value should be +1 or -1
