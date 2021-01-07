@@ -435,7 +435,7 @@ function afcs_get_current_state()
 end
 
 function afcs_transition_state(from, to)
-
+--[[
     state_names = {}
 
     state_names[AFCS_STATE_OFF] = "AFCS_STATE_OFF"
@@ -448,7 +448,7 @@ function afcs_transition_state(from, to)
     state_names[AFCS_STATE_WARMUP] = "AFCS_STATE_WARMUP"
     
     print_message_to_user(tostring(state_names[from]).." -> "..tostring(state_names[to]))
-
+]]
 
     if to == AFCS_STATE_ALTITUDE_ONLY then
         afcs_bank_angle_hold = math.deg(sensor_data.getRoll())

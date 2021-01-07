@@ -3,6 +3,7 @@ dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.script_path.."Systems/mission.lua")
 dofile(LockOn_Options.script_path.."Nav/NAV_util.lua")
+dofile(LockOn_Options.script_path.."Nav/ils_utils.lua")
 
 startup_print("nav: load")
 
@@ -181,7 +182,7 @@ local bdhi_dme_xxX = get_param_handle("BDHI_DME_xxX")
 -----------------------------------------------------------------------
 
 -- arn-52 state and input processing
-tacan_modelist = {"OFF", "REC", "T/R", "A/A"}
+tacan_modelist = {"OFF", "REC", "T/R", "ILS"}
 local tacan_mode = "OFF"
 local tacan_volume = 0
 local tacan_ch_major = 0
@@ -194,7 +195,12 @@ local arn52_range = nil
 local arn52_bearing = nil
 local atcn -- "active tacan"
 
+--ils needles
+loc_needle = -1
+gs_needle = -1
 
+--marker
+current_marker = nil
 
 
 -- Variables
@@ -218,6 +224,8 @@ local rangelimit =  390 * 1.1508 -- nmile2mile
 
 local mr = {}
 local mridx = 2     -- 1 is home base ("0" in ME), 2 is first waypoint "1" in ME, etc.
+
+local ils_data, marker_data = get_ils_data_in_format()
 
 dev:listen_command(Keys.NavReset)
 --dev:listen_command(Keys.NavTCNNext)
@@ -299,6 +307,8 @@ end
 local morse_unit_time = 0.1  -- MorzeDot.wav is 0.1s long, MorzeDash.wav is 0.3s
 local time_to_next_morse = 0
 local current_morse_string=""
+local morse_silent = false
+local current_morse_char = 0
 local tacan_audio_active = false
 
 function post_initialize()
@@ -306,6 +316,8 @@ function post_initialize()
     sndhost = create_sound_host("COCKPIT_TACAN","HEADPHONES",0,0,0)
     morse_dot_snd = sndhost:create_sound("Aircrafts/A-4E-C/MorzeDot") -- refers to sdef file, and sdef file content refers to sound file, see DCSWorld/Sounds/sdef/_example.sdef
     morse_dash_snd = sndhost:create_sound("Aircrafts/A-4E-C/MorzeDash")
+    marker_middle_snd = sndhost:create_sound("Aircrafts/A-4E-C/MarkerMiddle")
+    marker_outer_snd = sndhost:create_sound("Aircrafts/A-4E-C/MarkerOuter")
 
     local mhdg = get_magnetic()
   
@@ -503,6 +515,7 @@ function SetCommand(command,value)
     ---------------------------------------------
     elseif command == device_commands.tacan_mode then
         tacan_mode = tacan_modelist[ round((value*10)+1,0) ]
+		print_message_to_user(tacan_mode)
     elseif command == device_commands.tacan_ch_major then
         tacan_ch_major = value * 20     -- 0.05 per increment, 0 to 12
         tacan_channel = round(10*tacan_ch_major + tacan_ch_minor)
@@ -1478,17 +1491,211 @@ function find_matched_tacan(chan)
     return nil
 end
 
+function bearing_to_2d_vector(brg)
+	brg = math.rad(brg)
+	vec = {
+		x = math.cos(brg),
+		z = math.sin(brg)
+	}
+	
+	return vec
+end
+
+function vec_to_bearing(vec)
+	angle = math.deg(math.atan2(vec.z,vec.x))
+	
+	if angle < 0 then
+		angle = 360 + angle
+	end
+	
+	return angle
+end
+
+function normalize_2d(vec)
+	mag = math.sqrt(vec.x^2 + vec.z^2)
+	new_vec = {
+		x = vec.x / mag,
+		z = vec.z / mag
+	}
+	return new_vec
+end
+
+function find_ils_loc(pos, brg)
+
+    if brg > 180 then
+        brg = brg - 180
+    else
+        brg = brg + 180
+    end
+
+	local curx, cury, curz = sensor_data.getSelfCoordinates()
+	
+	if not Terrain.isVisible(curx,cury,curz,pos.x,pos.y+15,pos.z) then
+		return 3.0, false
+    end
+    
+    local range = math.sqrt((pos.x - curx)^2 + (pos.y - cury)^2 + (pos.z - curz)^2)
+
+    if range > 33000 then
+        return 3.0, false
+    end
+	
+	
+	runway_vec = bearing_to_2d_vector(brg)
+	aircraft_vec = {
+		x = (pos.x - curx),
+		z = (pos.z - curz)
+	}
+	
+	aircraft_vec = normalize_2d(aircraft_vec)
+	--runway_vec = normalize_2d(runway_vec)
+	
+	--tan(angle) = y/x
+	--y = a x b
+	--x = a . b
+	-- where a and b are vectors.
+	localiser_angle =  math.deg(math.atan2( - aircraft_vec.z*runway_vec.x + aircraft_vec.x*runway_vec.z, aircraft_vec.z*runway_vec.z + aircraft_vec.x * runway_vec.x))
+    
+    if math.abs(localiser_angle) > 35 then
+        return 3.0, false
+    end
+
+	return localiser_angle, true
+end
+
+function find_ils_gs(pos)
+	local curx, cury, curz = sensor_data.getSelfCoordinates()
+
+	if not Terrain.isVisible(curx,cury,curz,pos.x,pos.y+15,pos.z) then
+		return -3.0, false
+	end
+	
+    local horizontal_range = math.sqrt((pos.x - curx)^2 + (pos.z - curz)^2)
+    
+    if horizontal_range > 22000 then
+        return -3.0, false
+    end
+
+	local height = cury - pos.y
+	
+	glide_slope_angle = math.deg(math.atan(height/horizontal_range))
+	
+	return glide_slope_angle, true
+end
+
+function update_ils()
+    local desired_gs = 1.0
+    local desired_loc = -1.0
+
+	if tacan_mode == "ILS" and ils_data[tacan_channel] ~= nil then
+    
+        local localiser_angle = 3.0
+        local glide_slope_angle = -3.0
+        local loc_avail = false
+        local gs_avail = false
+        
+        local current_ils = ils_data[tacan_channel]
+
+    -- print_message_to_user("Channel "..tacan_channel..tostring(current_ils)..tostring(current_ils[BEACON_TYPE_ILS_LOCALIZER]["direction"]))
+
+
+        if current_ils[BEACON_TYPE_ILS_GLIDESLOPE] ~= nil then
+            glide_slope_angle, gs_avail = find_ils_gs(current_ils[BEACON_TYPE_ILS_GLIDESLOPE].position)
+        end
+
+        if current_ils[BEACON_TYPE_ILS_LOCALIZER] ~= nil then
+            localiser_angle, loc_avail  = find_ils_loc(current_ils[BEACON_TYPE_ILS_LOCALIZER].position, current_ils[BEACON_TYPE_ILS_LOCALIZER].direction)
+
+            if loc_avail then
+                configure_morse_playback(current_ils.callsign)
+            else
+                stop_morse_playback()
+            end
+
+            if math.abs(localiser_angle) > 7 then
+                gs_avail = false
+            end
+
+        end
+        
+        --See 1-56B in the NATOPS for these numbers
+        local DEGREES_TO_DEFLECTION_LOC = 1.0/6.0
+        local DEGREES_TO_DEFLECTION_GS = 1.0/1.4 
+
+
+        if loc_avail then
+            desired_gs = (3 - glide_slope_angle) * DEGREES_TO_DEFLECTION_GS
+            update_marker()
+        end
+
+        if gs_avail then
+            desired_loc = -localiser_angle * DEGREES_TO_DEFLECTION_LOC
+        end
+
+    end
+
+    gs_needle = gs_needle + clamp(desired_gs - gs_needle, -1, 1) / 10
+    loc_needle = loc_needle + clamp(desired_loc - loc_needle, -1, 1) / 10
+
+	bdhi_ils_gs:set(gs_needle)
+	bdhi_ils_loc:set(loc_needle)
+
+end
+
+function update_marker()
+    
+    marker_outer_snd:update(nil, 1.0, nil)
+    marker_middle_snd:update(nil, 1.0, nil)
+
+    local curx, cury, curz = sensor_data.getSelfCoordinates()
+
+    if current_marker then
+        if (cury - current_marker.position.y) >= 330 then
+            current_marker = nil
+            return
+        end
+
+        --250 m -> squared
+        if (math.abs(curx - current_marker.position.x)^2 + math.abs(curz - current_marker.position.z)^2) >= 62500 then
+            current_marker = nil
+            return
+        end
+
+        return
+    end
+
+    for i,v in ipairs(marker_data) do
+        if (cury - v.position.y) < 330 then
+            --250 m -> squared
+            if (math.abs(curx - v.position.x)^2 + math.abs(curz - v.position.z)^2) < 62500 then
+                    current_marker = v
+                    if v.far then
+                        marker_outer_snd:play_once()
+                    else
+                        marker_middle_snd:play_once()
+                    end
+                    return
+            end
+        end
+    end
+end
+
 function update_tacan()
+
     local max_tacan_range = 225
 
     -- for position of the active_tacan beacon, update visibility, distance, and range
-    if atcn ~= nil and (tacan_mode == "REC" or tacan_mode == "T/R" or tacan_mode == "A/A") then
 
-	if tacan_mode == "A/A" then
-		tacan_channel_param:set(tacan_channel)
-	else
-		tacan_channel_param:set(0)
-	end
+    if atcn ~= nil and (tacan_mode == "REC" or tacan_mode == "T/R") then
+
+        if tacan_mode == "ILS" then
+            tacan_channel_param:set(tacan_channel)
+        else
+            tacan_channel_param:set(0)
+        end
+
+        
+    
 	   local curx,cury,curz = sensor_data.getSelfCoordinates()
 
         if Terrain.isVisible(curx,cury,curz,atcn.position.x,atcn.position.y+15,atcn.position.z) then
@@ -1510,33 +1717,24 @@ function update_tacan()
                 arn52_bearing = (bearing - declination - adj) % 360
                 --print_message_to_user("brg: "..bearing.."  dec: "..declination.."  mb: "..arn52_bearing)
 
-                if not tacan_audio_active then
-                    local timenow = get_model_time()
-                    if (math.floor(timenow) % 8) == 0 then
-                        if atcn.callsign ~= nil then
-                            current_morse_string = get_morse(atcn.callsign)
-                            tacan_audio_active = true
-                        end
-                    end
-                end
+                configure_morse_playback(atcn.callsign)
 
             else
-                current_morse_string = ""
-                tacan_audio_active = false
-                arn52_range = nil
-                arn52_bearing = nil
+                stop_morse_playback()
             end
         else
-            -- do not change string here, modulated with volume instead
+            morse_silent = true
             arn52_range = nil
             arn52_bearing = nil
         end
+    elseif tacan_mode == "ILS" then
+        --do nothing
     else
-        arn52_range = nil
-        arn52_bearing = nil
-        current_morse_string = ""
-        tacan_audio_active = false
+        stop_morse_playback()
     end
+
+    
+
 end
 
 local needle1_value = WMA_wrap(0.15,0,0,360)
@@ -1625,6 +1823,60 @@ function update_bdhi()
 --    bdhi_ils_loc:set(-1)
 end
 
+function configure_morse_playback(code)
+    if not tacan_audio_active then
+        local timenow = get_model_time()
+        if (math.floor(timenow) % 8) == 0 then
+            current_morse_string = get_morse(code)
+            tacan_audio_active = true
+        end
+    end
+end
+
+function stop_morse_playback()
+    current_morse_char = 0
+    tacan_audio_active = false
+    current_morse_string = ""
+end
+
+function update_morse_playback_2()
+
+    
+
+    time_to_next_morse = time_to_next_morse - update_time_step
+
+    if time_to_next_morse <= 0 then
+
+        if morse_silent and false then
+            morse_dot_snd:update(nil,0,nil)
+            morse_dash_snd:update(nil,0,nil)
+        else
+            morse_dot_snd:update(nil,tacan_volume,nil)
+            morse_dash_snd:update(nil,tacan_volume,nil)
+        end
+
+        local c = current_morse_string:sub(current_morse_char+1, current_morse_char+1)
+
+        if c == '.' then
+            time_to_next_morse = 2 * morse_unit_time
+            morse_dot_snd:play_once()
+        elseif c == '-' then
+            time_to_next_morse = 4 * morse_unit_time
+            morse_dash_snd:play_once()
+        elseif c == ' ' then
+            time_to_next_morse = morse_unit_time
+        end
+
+        current_morse_char = (current_morse_char + 1) % #current_morse_string
+
+        if current_morse_char == 0 then
+            time_to_next_morse = 0
+            tacan_audio_active = false
+        end
+
+    end
+end
+
 function update_morse_playback()
     if #current_morse_string==0 then
         tacan_audio_active = false
@@ -1643,7 +1895,7 @@ function update_morse_playback()
             morse_dash_snd:update(nil,tacan_volume,nil)
         end
 
-        --print_message_to_user(current_morse_string)
+        print_message_to_user(current_morse_string)
         local c = current_morse_string:sub(1,1)
         --[[if morse_dot_snd:is_playing() or morse_dash_snd:is_playing() then
             print_message_to_user("previous sound still playing!")
@@ -1683,13 +1935,15 @@ function update()
 
     if get_elec_mon_primary_ac_ok() then
         update_tacan()  -- AN/ARN-52(V) TACAN BEARING-DISTANCE EQUIPMENT
+        update_ils()
     end
 
     if get_elec_26V_ac_ok() then
         update_bdhi()
     end
     if tacan_audio_active then
-        update_morse_playback()
+        --update_morse_playback()
+        update_morse_playback_2()
     end
 end
 
