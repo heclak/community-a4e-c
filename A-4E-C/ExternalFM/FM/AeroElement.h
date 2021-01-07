@@ -18,7 +18,7 @@ class FlightModel;
 class AeroElement : public BaseComponent
 {
 public:
-	AeroElement(AircraftState& state, Table& CLalpha, Table& CDalpha, Vec3 cp, Vec3 surfaceNormal, double MAC, double m_area);
+	//AeroElement(AircraftState& state, Table& CLalpha, Table& CDalpha, Vec3 cp, Vec3 surfaceNormal, double surfaceConstant, bool isSurface);
 	~AeroElement();
 
 	virtual void zeroInit();
@@ -26,9 +26,11 @@ public:
 	virtual void hotInit();
 	virtual void airborneInit();
 
-	void elementLift();
-	void elementDrag();
-	void calculateElementPhysics();
+	virtual void elementLift();
+	virtual void elementDrag();
+	virtual void calculateElementPhysics();
+
+	double getAOA() { return m_aoa; }
 	Vec3 getForce() { return m_RForceElement; }
 	Vec3 getMoment() { return m_moment; }
 
@@ -36,11 +38,13 @@ public:
 	inline void setLFactor(double liftFactor);
 	inline void setDFactor(double dragFactor);
 	
+	double m_kElem = 0.0; // m_k
+	double m_aoa = 0.0;
+protected:
+	AeroElement(AircraftState& state, Table& CLalpha, Table& CDalpha, Vec3 cp, Vec3 surfaceNormal, double area);
 
-private:
 	const Vec3 m_cp;
 	const Vec3 m_surfaceNormal;
-	const double m_MAC;
 	const double m_area;
 	double m_liftFactor;
 	double m_dragFactor;
@@ -51,16 +55,36 @@ private:
 	Vec3 m_RForceElement;
 	Vec3 m_moment;
 	double m_scalarAirspeed = 0.0;
-	double m_aoa = 0.0;
+	
 	double m_beta = 0.0;
-	double m_kElem = 0.0; // m_k
 	
 	float m_damageElem = 1.0f;
 	Table& m_CLalpha;
 	Table& m_CDalpha;
 
-
 	AircraftState& m_state;
+};
+
+class AeroSurface : public AeroElement
+{
+public:
+	AeroSurface(AircraftState& state, Table& CLalpha, Table& CDalpha, Vec3 cp, Vec3 surfaceNormal, double area);
+};
+
+class AeroVerticalSurface : public AeroElement
+{
+public:
+	AeroVerticalSurface(AircraftState& state, Table& CLalpha, Table& CDalpha, Vec3 cp, Vec3 surfaceNormal, double area);
+	void elementLift() override;
+};
+
+class AeroControlSurface : public AeroElement
+{
+public:
+	AeroControlSurface(AircraftState& state, Table& CLalpha, Table& CDalpha, Vec3 cp, Vec3 surfaceNormal, double controlConstant);
+
+	void calculateElementPhysics() override;
+	void elementDrag() override;
 };
 
 void AeroElement::setLDFactor(double liftFactor, double dragFactor)

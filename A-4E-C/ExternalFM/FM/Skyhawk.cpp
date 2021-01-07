@@ -132,7 +132,7 @@ void ed_fm_simulate(double dt)
 	s_engine->updateEngine(dt);
 	s_airframe->airframeUpdate(dt);
 	s_avionics->updateAvionics(dt);
-	s_fm->calculateForcesAndMoments(dt);
+	s_fm->calculateAero(dt);
 
 	//Post update
 	s_interface->setRPM(s_engine->getRPMNorm()*100.0);

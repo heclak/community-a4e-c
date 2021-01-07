@@ -29,28 +29,25 @@ Skyhawk::FlightModel::FlightModel
 	m_q(0.0),
 	m_p(0.0),
 	m_k(0.0),
-	m_kL(0.0),
-	m_kR(0.0),
 	m_aoaDot(0.0),
 	m_aoaPrevious(0.0),
-	m_scalarAirspeedLW(0.0),
-	m_scalarAirspeedRW(0.0),
-	m_rLW(0, 0, -3.0),	//directional vbector from CG to CP of aerodynamic element (LW) 2
-	m_rRW(0, 0, 3.0),	//directional vbector from CG to CP of aerodynamic element (RW)
-	m_aoaLW(0.0),
-	m_aoaRW(0.0),
 	m_LslatVel(0.0),
 	m_RslatVel(0.0),
 	m_cockpitShake(0.0),
 
-	m_elementLW(m_state, CLalpha, CDalpha, Vec3(0, 0, -3.0), m_wingSurfaceNormalL, 0, m_totalWingArea/2),
-	m_elementRW(m_state, CLalpha, CDalpha, Vec3(0, 0, 3.0), m_wingSurfaceNormalR, 0, m_totalWingArea/2),
-	m_elementLSlat(m_state, dCLslat, CDslat, Vec3(0, 0, -3.0), m_wingSurfaceNormalL, 0, m_totalWingArea / 2),
-	m_elementRSlat(m_state, dCLslat, CDslat, Vec3(0, 0, 3.0), m_wingSurfaceNormalR, 0, m_totalWingArea / 2),
-	m_elementLFlap(m_state, dCLflap, CDflap, Vec3(0, 0, -3.0), m_wingSurfaceNormalL, 0, m_totalWingArea / 2),
-	m_elementRFlap(m_state, dCLflap, CDflap, Vec3(0, 0, 3.0), m_wingSurfaceNormalR, 0, m_totalWingArea / 2),
-	m_elementLSpoiler(m_state, dCLspoiler, dCDspoiler, Vec3(0, 0, -3.0), m_wingSurfaceNormalL, 0, m_totalWingArea / 2),
-	m_elementRSpoiler(m_state, dCLspoiler, dCDspoiler, Vec3(0, 0, 3.0), m_wingSurfaceNormalR, 0, m_totalWingArea / 2),
+	m_elementLW(m_state, CLalpha, CDalpha, Vec3(0, 0, -3.0), m_wingSurfaceNormalL, m_totalWingArea/2),
+	m_elementRW(m_state, CLalpha, CDalpha, Vec3(0, 0, 3.0), m_wingSurfaceNormalR, m_totalWingArea/2),
+	m_elementLSlat(m_state, dCLslat, CDslat, Vec3(0, 0, -3.0), m_wingSurfaceNormalL, m_totalWingArea / 2),
+	m_elementRSlat(m_state, dCLslat, CDslat, Vec3(0, 0, 3.0), m_wingSurfaceNormalR, m_totalWingArea / 2),
+	m_elementLFlap(m_state, dCLflap, CDflap, Vec3(0, 0, -3.0), m_wingSurfaceNormalL, m_totalWingArea / 2),
+	m_elementRFlap(m_state, dCLflap, CDflap, Vec3(0, 0, 3.0), m_wingSurfaceNormalR, m_totalWingArea / 2),
+	m_elementLSpoiler(m_state, dCLspoiler, dCDspoiler, Vec3(0, 0, -3.0), m_wingSurfaceNormalL, m_totalWingArea / 2),
+	m_elementRSpoiler(m_state, dCLspoiler, dCDspoiler, Vec3(0, 0, 3.0), m_wingSurfaceNormalR, m_totalWingArea / 2),
+	m_elementHorizontalStab(m_state, CLhstab, CDhstab, Vec3(-5.1, 1.65, 0.0), m_hStabSurfaceNormal, 4.0),
+	m_elementVerticalStab(m_state, CLvstab, CDvstab, Vec3(-4.8, 1.1, 0.0), m_vStabSurfaceNormal, 5.3),
+	m_elementLAil(m_state, dCLflap, CDflap, Vec3(0, 0, -3.2), m_wingSurfaceNormalL, m_totalWingArea/5),
+	m_elementRAil(m_state, dCLflap, CDflap, Vec3(0, 0, 3.2), m_wingSurfaceNormalR,  m_totalWingArea/5),
+
 
 	//Setup tables
 	CLalpha(d_CLalpha, -0.26981317, 1.57079633),
@@ -68,6 +65,11 @@ Skyhawk::FlightModel::FlightModel
 	CDbeta(d_CDbeta,-1.57, 1.57),
 	CDde({0.005}, c_elevatorDown, c_elevatorUp),
 
+	CLhstab(d_CL_hstab_alpha, -1.57079633, 1.57079633),
+	CDhstab(d_CD_hstab_alpha, -1.57079633, 1.57079633),
+	CLvstab(d_CL_vstab_aoa, -1.57079633, 1.57079633),
+	CDvstab(d_CD_hstab_alpha, -1.57079633, 1.57079633),
+
 	CYb({-1}, 0.0, 1.0),
 
 	Clb({ -0.01 }, 0.0, 1.0),
@@ -76,14 +78,17 @@ Skyhawk::FlightModel::FlightModel
 	//Cla({ 0.220, 0.037 }, 0.0, 2.0), //110
 	Cla({ 0.220 }, 0.0, 1.0),
 	Cldr({ 0.01 }, 0.0, 1.0),
-	Cla_a({1.0, 0.01}, 0.236332313, 0.48131701),
+	Cla_a({1.0, 0.3}, 0.436332313, 0.698131701),
 
-	Cmalpha( d_Cmalpha, 0.1, 1.0019 ),
-	Cmde( d_Cmde, 0, 1.00216078 ), //x = mach
+	CL_ail(d_CL_ail, 0.0, 0.872664626),
+	CD_ail(d_CD_ail, 0.0, 0.872664626),
+
+	Cmalpha(d_Cmalpha, 0.1, 1.0019),
+	Cmde(d_Cmde, 0, 1.00216078), //x = mach
 	Cmq(d_Cmq, 0.13176098, 1.0006616),
-	Cmadot(d_Cmadot, 0.1618916, 0.99790229),
+	Cmadot(d_Cmadot, 0.0, 1.0),
 	CmM(d_CmM, 0.06761245, 1.0),
-	Cmde_a( { 1.2, 0.4 }, 0.34906585, 1.04719755 ),
+	Cmde_a({1.2, 0.4}, 0.34906585, 1.04719755),
 	
 	//Cnb({0.36}, 0.0, 1.0), //0.12
 	Cnb(d_Cnb, -0.785398163, 0.785398163),
@@ -97,27 +102,27 @@ Skyhawk::FlightModel::FlightModel
 	rnd_aoa(d_rnd_aoa, -0.34906585, 0.41887902)
 
 {
-	/*m_elements.push_back(AeroElement(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -0.1067866894), m_wingSurfaceNormalL, 0, 1.9737953980));
-	m_elements.push_back(AeroElement(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -0.5399751247), m_wingSurfaceNormalL, 0, 1.8047195280));
-	m_elements.push_back(AeroElement(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -0.9731336040), m_wingSurfaceNormalL, 0, 1.6356436570));
-	m_elements.push_back(AeroElement(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -1.4062517670), m_wingSurfaceNormalL, 0, 1.4665677860));
-	m_elements.push_back(AeroElement(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -1.8393138510), m_wingSurfaceNormalL, 0, 1.2974919160));
-	m_elements.push_back(AeroElement(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -2.2722946510), m_wingSurfaceNormalL, 0, 1.1284160450));
-	m_elements.push_back(AeroElement(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -2.7051511890), m_wingSurfaceNormalL, 0, 0.9593401748));
-	m_elements.push_back(AeroElement(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -3.1378037070), m_wingSurfaceNormalL, 0, 0.7902643043));
-	m_elements.push_back(AeroElement(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -3.5700856160), m_wingSurfaceNormalL, 0, 0.6211884337));
-	m_elements.push_back(AeroElement(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -4.0014189490), m_wingSurfaceNormalL, 0, 0.3500000000));
+	//m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -0.1067866894), m_wingSurfaceNormalL, 1.9737953980 + 0.21931));
+	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -0.5399751247), m_wingSurfaceNormalL, 1.8047195280 + 0.21931));
+	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -0.9731336040), m_wingSurfaceNormalL, 1.6356436570 + 0.21931));
+	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -1.4062517670), m_wingSurfaceNormalL, 1.4665677860 + 0.21931));
+	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -1.8393138510), m_wingSurfaceNormalL, 1.2974919160 + 0.21931));
+	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -2.2722946510), m_wingSurfaceNormalL, 1.1284160450 + 0.21931));
+	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -2.7051511890), m_wingSurfaceNormalL, 0.9593401748 + 0.21931));
+	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -3.1378037070), m_wingSurfaceNormalL, 0.7902643043 + 0.21931));
+	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -3.5700856160), m_wingSurfaceNormalL, 0.6211884337 + 0.21931));
+	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -4.0014189490), m_wingSurfaceNormalL, 0.3500000000 + 0.21931));
 
-	m_elements.push_back(AeroElement(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 0.1067866894), m_wingSurfaceNormalR, 0, 1.9737953980));
-	m_elements.push_back(AeroElement(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 0.5399751247), m_wingSurfaceNormalR, 0, 1.8047195280));
-	m_elements.push_back(AeroElement(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 0.9731336040), m_wingSurfaceNormalR, 0, 1.6356436570));
-	m_elements.push_back(AeroElement(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 1.4062517670), m_wingSurfaceNormalR, 0, 1.4665677860));
-	m_elements.push_back(AeroElement(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 1.8393138510), m_wingSurfaceNormalR, 0, 1.2974919160));
-	m_elements.push_back(AeroElement(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 2.2722946510), m_wingSurfaceNormalR, 0, 1.1284160450));
-	m_elements.push_back(AeroElement(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 2.7051511890), m_wingSurfaceNormalR, 0, 0.9593401748));
-	m_elements.push_back(AeroElement(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 3.1378037070), m_wingSurfaceNormalR, 0, 0.7902643043));
-	m_elements.push_back(AeroElement(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 3.5700856160), m_wingSurfaceNormalR, 0, 0.6211884337));
-	m_elements.push_back(AeroElement(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 4.0014189490), m_wingSurfaceNormalR, 0, 0.3500000000));*/
+	//m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 0.1067866894), m_wingSurfaceNormalR, 1.9737953980));
+	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 0.5399751247), m_wingSurfaceNormalR, 1.8047195280 + 0.21931));
+	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 0.9731336040), m_wingSurfaceNormalR, 1.6356436570 + 0.21931));
+	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 1.4062517670), m_wingSurfaceNormalR, 1.4665677860 + 0.21931));
+	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 1.8393138510), m_wingSurfaceNormalR, 1.2974919160 + 0.21931));
+	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 2.2722946510), m_wingSurfaceNormalR, 1.1284160450 + 0.21931));
+	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 2.7051511890), m_wingSurfaceNormalR, 0.9593401748 + 0.21931));
+	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 3.1378037070), m_wingSurfaceNormalR, 0.7902643043 + 0.21931));
+	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 3.5700856160), m_wingSurfaceNormalR, 0.6211884337 + 0.21931));
+	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 4.0014189490), m_wingSurfaceNormalR, 0.3500000000 + 0.21931));
 
 }
 
@@ -133,20 +138,12 @@ void Skyhawk::FlightModel::zeroInit()
 	m_q = 0.0;
 	m_p = 0.0;
 	m_k = 0.0;
-	m_kL = 0.0;
-	m_kR = 0.0;
 
 	m_scalarVSquared = 0.0;
 	m_scalarV = 0.0;
 	m_aoaPrevious = 0.0;
 	m_betaPrevious = 0.0;
 	m_betaDot = 0.0;
-
-	m_scalarAirspeedLW = 0.0;
-	m_scalarAirspeedRW = 0.0;
-
-	m_aoaLW = 0.0;
-	m_aoaRW = 0.0;
 
 	m_LslatVel = 0.0;
 	m_RslatVel = 0.0;
@@ -157,21 +154,7 @@ void Skyhawk::FlightModel::zeroInit()
 	m_com = Vec3();
 	m_airspeed = Vec3();
 
-	m_LDwindAxesLW = Vec3();
-	m_LDwindAxesRW = Vec3();
 	m_CDwindAxesComp = Vec3();
-
-	m_airspeedLW = Vec3();
-	m_airspeedRW = Vec3();
-
-	m_liftVecLW = Vec3();
-	m_liftVecRW = Vec3();
-
-	m_dragVecLW = Vec3();
-	m_dragVecRW = Vec3();
-
-	m_nLW = Vec3();
-	m_nRW = Vec3();
 
 	m_elementLW.zeroInit();
 	m_elementRW.zeroInit();
@@ -199,34 +182,10 @@ void Skyhawk::FlightModel::airborneInit()
 	zeroInit();
 }
 
-void Skyhawk::FlightModel::calculateLocalPhysicsParams()
+void Skyhawk::FlightModel::calculateAero(double dt)
 {
-	
-	m_nRW = Vec3(0.0, cos(m_wingDihedral), -sin(m_wingDihedral));
-	m_nLW = Vec3(0.0, cos(m_wingDihedral), sin(m_wingDihedral));
-
-	m_airspeedLW = m_state.getLocalAirspeed() + cross(m_state.getOmega(), m_rLW);
-	m_airspeedRW = m_state.getLocalAirspeed() + cross( m_state.getOmega(), m_rRW);
-	
-	m_dragVecLW = -normalize(m_airspeedLW);
-	m_dragVecRW = -normalize(m_airspeedRW);
-
-	Vec3 tmpNormalLW{ normalize(cross(m_dragVecLW, m_nLW)) };
-	Vec3 tmpNormalRW{ normalize(cross(m_dragVecRW, m_nRW)) };
-	m_liftVecLW = normalize(cross(tmpNormalLW, m_dragVecLW));
-	m_liftVecRW = normalize(cross(tmpNormalRW, m_dragVecRW));
-
-	m_scalarAirspeedLW = sqrt(m_airspeedLW.x * m_airspeedLW.x + m_airspeedLW.y * m_airspeedLW.y + m_airspeedLW.z * m_airspeedLW.z);
-	m_scalarAirspeedRW = sqrt(m_airspeedRW.x * m_airspeedRW.x + m_airspeedRW.y * m_airspeedRW.y + m_airspeedRW.z * m_airspeedRW.z);
-	m_aoaLW = atan2(cross(m_nLW, m_liftVecLW) * tmpNormalLW, m_liftVecLW * m_nLW);
-	m_aoaRW = atan2(cross(m_nRW, m_liftVecRW) * tmpNormalRW, m_liftVecRW * m_nRW);
-}
-
-
-//This calculates only aerodynamic forces and moments.
-void Skyhawk::FlightModel::calculateAero()
-{
-
+	calculateLocalPhysicsParams(dt);
+	slats(dt);
 	lift();
 	drag();
 	calculateElements();
@@ -236,28 +195,57 @@ void Skyhawk::FlightModel::calculateAero()
 	L_stab();
 	M_stab();
 	N_stab();
-	//printf("moment.z: %lf, beta: %lf, m_q: %lf, m_p: %lf, omegax: %lf, omegay: %lf, Cla(mach): %lf\n", 
-		//m_moment.z, m_beta, m_q, m_p, m_omega.x, m_omega.y, Cla(m_mach));
 
 	calculateShake();
 }
 
-void Skyhawk::FlightModel::runThreads(int n)
+void Skyhawk::FlightModel::calculateLocalPhysicsParams(double dt)
 {
-	for (int i = n; i < 10 + n; i++)
-	{
-		m_elements[i].calculateElementPhysics();
-	}
+	m_force = Vec3();
+	m_moment = Vec3();
+
+	m_aoaDot = (m_state.getAOA() - m_aoaPrevious) / dt;
+	m_betaDot = (m_state.getBeta() - m_betaPrevious) / dt;
+
+	//Get airspeed and scalar speed squared.
+	m_airspeed = m_state.getWorldVelocity() - m_state.getWorldWindVelocity();
+
+	m_scalarVSquared = m_airspeed.x * m_airspeed.x + m_airspeed.y * m_airspeed.y + m_airspeed.z * m_airspeed.z;
+
+	m_scalarV = sqrt(m_scalarVSquared);
+	m_engine.setAirspeed(m_scalarV);
+	m_interface.setAirspeed(m_scalarV);
+	m_state.setMach(m_scalarV / m_state.getSpeedOfSound());
+
+	m_aoaPrevious = m_state.getAOA();
+	m_betaPrevious = m_state.getAOA();
+
+	m_k = m_scalarVSquared * m_state.getAirDensity() * 0.5 * m_totalWingArea;
+	m_q = m_k * m_totalWingSpan;
+	m_p = m_scalarV * m_state.getAirDensity() * 0.25 * m_totalWingArea * m_totalWingSpan * m_totalWingSpan;
+}
+
+void Skyhawk::FlightModel::lift()
+{
+	addForce(Vec3(0.0, m_k * (CLde(m_state.getMach()) * elevator()), 0.0));
+}
+
+void Skyhawk::FlightModel::drag()
+{
+	double CD = dCDspeedBrake(0.0) * m_airframe.getSpeedBrakePosition() +
+		CDbeta(m_state.getBeta()) + CDde(0.0) * abs(elevator()) +
+		CDmach(m_state.getMach()) + CDi(0.0) * pow(CLalpha(m_state.getAOA()), 2.0) +
+		m_airframe.getGearLPosition() * CDMainGear +
+		m_airframe.getGearRPosition() * CDMainGear +
+		m_airframe.getGearNPosition() * CDNoseGear;
+
+	m_CDwindAxesComp.y = 0;
+	m_CDwindAxesComp.z = 0;
+	m_CDwindAxesComp.x = -m_k * CD;
 }
 
 void Skyhawk::FlightModel::calculateElements()
 {
-
-	Vec3 LiftLW =  windAxisToBody(m_LDwindAxesLW, m_aoaLW, m_state.getBeta());
-	//printf("old: %lf, %lf, %lf\n", LiftLW.x, LiftLW.y, LiftLW.z);
-	
-	Vec3 LiftRW =  windAxisToBody(m_LDwindAxesRW, m_aoaRW, m_state.getBeta() );
-	//printf("RIGHT X: %lf Y: %lf Z: %lf\n", m_LDwindAxesRW.x, m_LDwindAxesRW.y, m_LDwindAxesRW.z);
 	Vec3 dragElem = windAxisToBody(m_CDwindAxesComp, m_state.getAOA(), m_state.getBeta() );
 	
 
@@ -267,9 +255,11 @@ void Skyhawk::FlightModel::calculateElements()
 	m_elementRFlap.setLDFactor(m_airframe.getFlapsPosition() * m_airframe.getFlapDamage(), m_airframe.getFlapsPosition());
 	m_elementLSpoiler.setLDFactor(m_airframe.getSpoilerPosition() * m_airframe.getSpoilerDamage(), m_airframe.getSpoilerPosition());
 	m_elementRSpoiler.setLDFactor(m_airframe.getSpoilerPosition() * m_airframe.getSpoilerDamage(), m_airframe.getSpoilerPosition());
+	m_elementHorizontalStab.setLDFactor( 0.5 * m_airframe.getHoriStabDamage(), 0.5 * m_airframe.getHoriStabDamage());
+	m_elementVerticalStab.setLDFactor( 1.0 * m_airframe.getVertStabDamage(), 0.5 * m_airframe.getVertStabDamage());
 
-	m_elementLW.setLDFactor(m_airframe.getLWingDamage(), 0.7);
-	m_elementRW.setLDFactor(m_airframe.getRWingDamage(), 0.7);
+	m_elementLAil.setLDFactor(m_airframe.getAileron() * m_airframe.getAileronDamage(), m_airframe.getAileron() * 0.05 * m_airframe.getAileronDamage());
+	m_elementRAil.setLDFactor(-m_airframe.getAileron() * m_airframe.getAileronDamage(), -m_airframe.getAileron() * 0.05 * m_airframe.getAileronDamage());
 
 	m_elementLSlat.calculateElementPhysics();
 	m_elementRSlat.calculateElementPhysics();
@@ -277,33 +267,14 @@ void Skyhawk::FlightModel::calculateElements()
 	m_elementRFlap.calculateElementPhysics();
 	m_elementLSpoiler.calculateElementPhysics();
 	m_elementRSpoiler.calculateElementPhysics();
-	m_elementLW.calculateElementPhysics();
-	m_elementRW.calculateElementPhysics();
-
-	//m_elementRW.calculateElementPhysics();
-
-	
-	Vec3 oldLiftcombined = LiftLW + LiftRW;
-	Vec3 newLift = m_elementLSlat.getForce()
-							+ m_elementRSlat.getForce()
-							+ m_elementLFlap.getForce()
-							+ m_elementRFlap.getForce()
-							+ m_elementLSpoiler.getForce()
-							+ m_elementRSpoiler.getForce()
-							+ m_elementLW.getForce()
-							+ m_elementRW.getForce();
-
-	Vec3 liftDelta = newLift - oldLiftcombined;
-	double liftDeltaMag = liftDelta * liftDelta;
-
-	if (liftDeltaMag > 0.01)
-	{
-		LOG("oldLift: %lf, %lf, %lf  newLift: %lf, %lf, %lf, mag: %lf\n", oldLiftcombined.x, oldLiftcombined.y, oldLiftcombined.z, newLift.x, newLift.y, newLift.z, liftDeltaMag);
-	}
+	m_elementLAil.calculateElementPhysics();
+	m_elementRAil.calculateElementPhysics();
+	m_elementHorizontalStab.calculateElementPhysics();
+	m_elementVerticalStab.calculateElementPhysics();
 
 
-	//addForceDir(, m_rLW);
-	//addForceDir(LiftRW, m_rRW);
+	printf("aoa hstab: %lf\n", toDegrees(m_elementHorizontalStab.m_aoa));
+	//printf("forceL: %lf, %lf, %lf  forceR: %lf, %lf, %lf\n", m_elementLAil.getForce().x, m_elementLAil.getForce().y, m_elementLAil.getForce().z, m_elementRAil.getForce().x, m_elementRAil.getForce().y, m_elementRAil.getForce().z);
 
 	addForceElement(m_elementLSlat);
 	addForceElement(m_elementRSlat);
@@ -311,102 +282,37 @@ void Skyhawk::FlightModel::calculateElements()
 	addForceElement(m_elementRFlap);
 	addForceElement(m_elementLSpoiler);
 	addForceElement(m_elementRSpoiler);
-	addForceElement(m_elementLW);
-	addForceElement(m_elementRW);
+
+	m_moment += m_elementLAil.getMoment();
+	m_moment += m_elementRAil.getMoment();
+	m_moment += m_elementHorizontalStab.getMoment();
+	m_moment += m_elementVerticalStab.getMoment();
+	
+	// i:0-8 = LW, i:8-17 = RW
+	float damage = 1.0;
+
+	for (int i = 0; i < m_elements.size(); i++)
+	{
+		if (i < m_elements.size() / 2)
+		{
+			damage = m_airframe.getLWingDamage();
+		}
+		else
+		{
+			damage = m_airframe.getRWingDamage();
+		}
+		m_elements[i].setLDFactor(1.0 * damage, 0.7 * damage);
+		m_elements[i].calculateElementPhysics();
+		addForceElement(m_elements[i]);
+	}
 
 	addForce(dragElem);
 }
 
-//This calculates all forces and moments. Including landing gear.
-void Skyhawk::FlightModel::calculateForcesAndMoments(double dt)
-{
-	//Reset at the start of the frame.
-	m_force = Vec3();
-	m_moment = Vec3();
-	
-	calculateLocalPhysicsParams();
-
-	double dAOA = m_state.getAOA() - m_aoaPrevious;
-	double dAOAOpposite;
-	
-	if ( dAOA >= 0.0 )
-	{
-		dAOAOpposite = 2.0 * PI - dAOA;
-	}
-	else
-	{
-		dAOAOpposite = - 2.0 * PI - dAOA;
-	}
-
-	if ( fabs( dAOA ) > fabs( dAOAOpposite ) )
-	{
-		dAOA = dAOAOpposite;
-		//printf( "Took opposite: %lf\n", dAOA );
-	}
-
-
-	double dBeta = m_state.getBeta() - m_betaPrevious;
-	double dBetaOpposite;
-
-	if ( dBeta >= 0.0 )
-	{
-		dBetaOpposite = 2.0 * PI - dBeta;
-	}
-	else
-	{
-		dBetaOpposite = - 2.0 * PI - dBeta;
-	}
-
-	if ( fabs( dBeta ) > fabs( dBetaOpposite ) )
-	{
-		dBeta = dBetaOpposite;
-		//printf( "Took opposite: %lf\n", dBeta );
-	}
-
-	m_aoaDot = dAOA / dt;
-	m_betaDot = dBeta / dt;
-
-	//Get airspeed and scalar speed squared.
-	m_airspeed = m_state.getWorldVelocity() - m_state.getWorldWindVelocity();
-
-	m_scalarVSquared = m_airspeed.x * m_airspeed.x + m_airspeed.y * m_airspeed.y + m_airspeed.z * m_airspeed.z;
-
-	m_scalarV = sqrt(m_scalarVSquared);
-	m_engine.setAirspeed( m_scalarV );
-	m_interface.setAirspeed( m_scalarV );
-	m_state.setMach( m_scalarV / m_state.getSpeedOfSound() );
-
-	m_k = m_scalarVSquared * m_state.getAirDensity() * 0.5 * m_totalWingArea;
-	m_kL = pow(m_scalarAirspeedLW, 2) * m_state.getAirDensity() * 0.5 * m_totalWingArea;
-	m_kR = pow(m_scalarAirspeedRW, 2) * m_state.getAirDensity() * 0.5 * m_totalWingArea;
-	m_q = m_k * m_totalWingSpan;
-	m_p = m_scalarV * m_state.getAirDensity() * 0.25 * m_totalWingArea * m_totalWingSpan * m_totalWingSpan;
-
-	//printf("orig: %lf ", );
-
-	//Slats logic (legacy - dance)
-	//double slatPositionL = (m_aoaLW - 0.2268)/0.069813; //full actuation ~17 deg, onset ~13 deg aoa
-	//double slatPositionR = (m_aoaRW - 0.2268)/0.069813; //full actuation ~17 deg, onset ~13 deg aoa
-	//slatPositionL = std::min(slatPositionL, 1.0);
-	//slatPositionL = std::max(slatPositionL, 0.0);
-	//slatPositionR = std::min(slatPositionR, 1.0);
-	//slatPositionR = std::max(slatPositionR, 0.0);
-
-
-	////printf("slats: %lf\n", slatPosition);
-	//m_controls.slatL() = slatPositionL;
-	//m_controls.slatR() = slatPositionR;
-	slats(dt);
-
-	calculateAero();
-	m_aoaPrevious = m_state.getAOA();
-	m_betaPrevious = m_state.getAOA();
-}
-
 void Skyhawk::FlightModel::slats(double& dt)
 {
-	double forceL = (m_kL / m_totalWingArea) * m_slatArea * slatCL(m_aoaLW);
-	double forceR = (m_kR / m_totalWingArea) * m_slatArea * slatCL(m_aoaRW);
+	double forceL = (m_elementLSlat.m_kElem / m_totalWingArea) * m_slatArea * slatCL(m_elementLSlat.getAOA());
+	double forceR = (m_elementLSlat.m_kElem / m_totalWingArea) * m_slatArea * slatCL(m_elementRSlat.getAOA());
 
 	Vec3 accDirection(-0.94, 0.34, 0.0);
 	double accAircraft = normalize(accDirection) * m_state.getLocalAcceleration();
