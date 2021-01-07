@@ -56,7 +56,7 @@ Skyhawk::FlightModel::FlightModel
 	dCLspoiler({-0.35}, 0, 1),
 	CLde(d_CLde, 0.157982, 1.000377),
 	CDalpha(d_CDalpha, -1.57079633, 1.57079633),
-	CDi({0.015}, 0, 1),
+	CDi({0.025}, 0, 1),
 	CDmach(d_CDmach,0.0, 1.8),
 	CDflap(d_CDflap, -1.57079633, 1.57079633),
 	CDslat(d_CDslat, -1.57079633, 1.57079633),
