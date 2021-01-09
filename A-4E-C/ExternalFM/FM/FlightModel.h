@@ -302,7 +302,7 @@ void FlightModel::addForce( const Vec3& force )
 
 void FlightModel::L_stab()
 {
-	m_moment.x += m_q * (Cldr( 0.0 ) * rudder() * m_airframe.getRudderDamage());
+	//m_moment.x += m_q * (Cldr( 0.0 ) * rudder() * m_airframe.getRudderDamage());
 
 
 	//DO NOT DELETE!!!
@@ -315,7 +315,7 @@ void FlightModel::M_stab()
 {
 	double horizDamage = m_airframe.getHoriStabDamage();
 	double wingDamage = (m_airframe.getLWingDamage() + m_airframe.getRWingDamage())/2.0;
-	m_moment.z += m_k * m_chord * (Cmde( m_state.getMach() ) * Cmde_a( std::abs( m_state.getAOA() ) ) * elevator() * m_airframe.getElevatorDamage() + CmM( m_state.getMach() ) * 0.2) + 0.25 * m_scalarV * m_totalWingArea * m_chord * m_chord * horizDamage * (Cmadot(m_state.getMach()) * m_aoaDot * 6.5);
+	m_moment.z += m_k * m_chord * (0.5 * Cmde( m_state.getMach() ) * Cmde_a( std::abs( m_state.getAOA() ) ) * elevator() * m_airframe.getElevatorDamage() + CmM( m_state.getMach() ) * 0.2) + 0.25 * m_scalarV * m_totalWingArea * m_chord * m_chord * horizDamage * (Cmadot(m_state.getMach()) * m_aoaDot * 6.5);
 	
 	//DO NOT DELETE!!!
 	/*Cmalpha(m_state.getMach())* m_state.getAOA()* wingDamage * 1.5
@@ -325,7 +325,8 @@ void FlightModel::M_stab()
 void FlightModel::N_stab()
 {
 	double vertDamage = m_airframe.getVertStabDamage();
-	m_moment.y += m_q * (Cndr(0.0) * rudder() * m_airframe.getRudderDamage());
+	m_moment.y += m_q * (Cndr(0.0) * rudder() * m_airframe.getRudderDamage()) + m_p * (Cmadot(m_state.getMach()) * m_betaDot * 0.75);
+	//printf("betad: %lf\n", m_betaDot);
 	
 	//DO NOT DELETE!!!
 	//-Cnb(m_state.getBeta()) * vertDamage * 0.8

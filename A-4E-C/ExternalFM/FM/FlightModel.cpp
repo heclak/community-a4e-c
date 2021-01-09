@@ -44,18 +44,21 @@ Skyhawk::FlightModel::FlightModel
 	m_elementLSpoiler(m_state, dCLspoiler, dCDspoiler, Vec3(0, 0, -3.0), m_wingSurfaceNormalL, m_totalWingArea / 2),
 	m_elementRSpoiler(m_state, dCLspoiler, dCDspoiler, Vec3(0, 0, 3.0), m_wingSurfaceNormalR, m_totalWingArea / 2),
 	m_elementHorizontalStab(m_state, CLhstab, CDhstab, Vec3(-5.1, 1.65, 0.0), m_hStabSurfaceNormal, 4.0),
-	m_elementVerticalStab(m_state, CLvstab, CDvstab, Vec3(-4.8, 1.1, 0.0), m_vStabSurfaceNormal, 5.3),
+	m_elementVerticalStab(m_state, CLvstab, CDvstab, Vec3(-4.8, 1.0, 0.0), m_vStabSurfaceNormal, 5.3),
 	m_elementLAil(m_state, dCLflap, CDflap, Vec3(0, 0, -3.2), m_wingSurfaceNormalL, m_totalWingArea/5),
 	m_elementRAil(m_state, dCLflap, CDflap, Vec3(0, 0, 3.2), m_wingSurfaceNormalR,  m_totalWingArea/5),
 
 
 	//Setup tables
-	CLalpha(d_CLalpha, -0.26981317, 1.57079633),
+	//CLalpha(d_CLalpha, -0.26981317, 1.57079633), OLD - DONT DELETE
+	//CLalpha(d_CLalpha, -1.5708, 1.5708),
+	CLalpha(d_CLalpha, -PI, PI),
 	dCLflap(d_CLflap, -0.26981317, 1.57079633),
 	dCLslat(d_CLslat, -0.26981317, 1.57079633),
 	dCLspoiler({-0.35}, 0, 1),
 	CLde(d_CLde, 0.157982, 1.000377),
-	CDalpha(d_CDalpha, -1.57079633, 1.57079633),
+	//CDalpha(d_CDalpha, -1.57079633, 1.57079633),
+	CDalpha(d_CDalpha, -PI, PI),
 	CDi({0.025}, 0, 1),
 	CDmach(d_CDmach,0.0, 1.8),
 	CDflap(d_CDflap, -1.57079633, 1.57079633),
@@ -65,10 +68,12 @@ Skyhawk::FlightModel::FlightModel
 	CDbeta(d_CDbeta,-1.57, 1.57),
 	CDde({0.005}, c_elevatorDown, c_elevatorUp),
 
-	CLhstab(d_CL_hstab_alpha, -1.57079633, 1.57079633),
-	CDhstab(d_CD_hstab_alpha, -1.57079633, 1.57079633),
-	CLvstab(d_CL_vstab_aoa, -1.57079633, 1.57079633),
-	CDvstab(d_CD_hstab_alpha, -1.57079633, 1.57079633),
+	//CLhstab(d_CL_hstab_alpha, -1.57079633, 1.57079633),
+	CLhstab(d_CL_hstab_alpha, -PI, PI),
+	CDhstab(d_CD_hstab_alpha, -PI, PI),
+	//CLvstab(d_CL_vstab_aoa, -1.57079633, 1.57079633),
+	CLvstab(d_CL_vstab_aoa, -PI, PI),
+	CDvstab(d_CD_vstab_alpha, -PI, PI),
 
 	CYb({-1}, 0.0, 1.0),
 
@@ -77,7 +82,7 @@ Skyhawk::FlightModel::FlightModel
 	Clr({ 0.0 }, 0.0, 1.0), //0.15
 	//Cla({ 0.220, 0.037 }, 0.0, 2.0), //110
 	Cla({ 0.220 }, 0.0, 1.0),
-	Cldr({ 0.01 }, 0.0, 1.0),
+	Cldr({ 0.0 }, 0.0, 1.0),
 	Cla_a({1.0, 0.3}, 0.436332313, 0.698131701),
 
 	CL_ail(d_CL_ail, 0.0, 0.872664626),
@@ -204,8 +209,44 @@ void Skyhawk::FlightModel::calculateLocalPhysicsParams(double dt)
 	m_force = Vec3();
 	m_moment = Vec3();
 
-	m_aoaDot = (m_state.getAOA() - m_aoaPrevious) / dt;
-	m_betaDot = (m_state.getBeta() - m_betaPrevious) / dt;
+	double dAOA = m_state.getAOA() - m_aoaPrevious;
+	double dAOAOpposite;
+
+	if (dAOA >= 0.0)
+	{
+		dAOAOpposite = 2.0 * PI - dAOA;
+	}
+	else
+	{
+		dAOAOpposite = -2.0 * PI - dAOA;
+	}
+
+	if (fabs(dAOA) > fabs(dAOAOpposite))
+	{
+		dAOA = dAOAOpposite;
+		//printf( "Took opposite: %lf\n", dAOA );
+	}
+
+	double dBeta = m_state.getBeta() - m_betaPrevious;
+	double dBetaOpposite;
+
+	if (dBeta >= 0.0)
+	{
+		dBetaOpposite = 2.0 * PI - dBeta;
+	}
+	else
+	{
+		dBetaOpposite = -2.0 * PI - dBeta;
+	}
+
+	if (fabs(dBeta) > fabs(dBetaOpposite))
+	{
+		dBeta = dBetaOpposite;
+		//printf( "Took opposite: %lf\n", dBeta );
+	}
+
+	m_aoaDot = dAOA / dt;
+	m_betaDot = dBeta / dt;
 
 	//Get airspeed and scalar speed squared.
 	m_airspeed = m_state.getWorldVelocity() - m_state.getWorldWindVelocity();
@@ -218,7 +259,7 @@ void Skyhawk::FlightModel::calculateLocalPhysicsParams(double dt)
 	m_state.setMach(m_scalarV / m_state.getSpeedOfSound());
 
 	m_aoaPrevious = m_state.getAOA();
-	m_betaPrevious = m_state.getAOA();
+	m_betaPrevious = m_state.getBeta();
 
 	m_k = m_scalarVSquared * m_state.getAirDensity() * 0.5 * m_totalWingArea;
 	m_q = m_k * m_totalWingSpan;
@@ -255,8 +296,9 @@ void Skyhawk::FlightModel::calculateElements()
 	m_elementRFlap.setLDFactor(m_airframe.getFlapsPosition() * m_airframe.getFlapDamage(), m_airframe.getFlapsPosition());
 	m_elementLSpoiler.setLDFactor(m_airframe.getSpoilerPosition() * m_airframe.getSpoilerDamage(), m_airframe.getSpoilerPosition());
 	m_elementRSpoiler.setLDFactor(m_airframe.getSpoilerPosition() * m_airframe.getSpoilerDamage(), m_airframe.getSpoilerPosition());
-	m_elementHorizontalStab.setLDFactor( 0.5 * m_airframe.getHoriStabDamage(), 0.5 * m_airframe.getHoriStabDamage());
-	m_elementVerticalStab.setLDFactor( 1.0 * m_airframe.getVertStabDamage(), 0.5 * m_airframe.getVertStabDamage());
+	m_elementHorizontalStab.setLDFactor( 0.25 * m_airframe.getHoriStabDamage(), 0.85 * m_airframe.getHoriStabDamage());
+	m_elementVerticalStab.setLDFactor( 0.35 * m_airframe.getVertStabDamage(), 0.85 * m_airframe.getVertStabDamage());
+	//printf("beta: %lf, aoa: %lf\n", toDegrees(m_elementVerticalStab.getAOA()));
 
 	m_elementLAil.setLDFactor(m_airframe.getAileron() * m_airframe.getAileronDamage(), m_airframe.getAileron() * 0.05 * m_airframe.getAileronDamage());
 	m_elementRAil.setLDFactor(-m_airframe.getAileron() * m_airframe.getAileronDamage(), -m_airframe.getAileron() * 0.05 * m_airframe.getAileronDamage());
@@ -272,8 +314,7 @@ void Skyhawk::FlightModel::calculateElements()
 	m_elementHorizontalStab.calculateElementPhysics();
 	m_elementVerticalStab.calculateElementPhysics();
 
-
-	printf("aoa hstab: %lf\n", toDegrees(m_elementHorizontalStab.m_aoa));
+	//printf("aoa hstab: %lf\n", toDegrees(m_elementHorizontalStab.m_aoa));
 	//printf("forceL: %lf, %lf, %lf  forceR: %lf, %lf, %lf\n", m_elementLAil.getForce().x, m_elementLAil.getForce().y, m_elementLAil.getForce().z, m_elementRAil.getForce().x, m_elementRAil.getForce().y, m_elementRAil.getForce().z);
 
 	addForceElement(m_elementLSlat);
@@ -304,7 +345,11 @@ void Skyhawk::FlightModel::calculateElements()
 		m_elements[i].setLDFactor(1.0 * damage, 0.7 * damage);
 		m_elements[i].calculateElementPhysics();
 		addForceElement(m_elements[i]);
+		//printf("id: %d, aoa: %lf, beta: %lf\n", i, toDegrees(m_elements[i].getAOA()), toDegrees(m_elements[i].getBeta()));
 	}
+
+	//printf("[HSTAB] aoa: %lf, beta: %lf, moment: %lf, %lf, %lf\n", toDegrees(m_elementHorizontalStab.getAOA()), toDegrees(m_elementHorizontalStab.getBeta()), m_elementHorizontalStab.getMoment().x, m_elementHorizontalStab.getMoment().y, m_elementHorizontalStab.getMoment().z);
+	//printf("[VSTAB] aoa: %lf, beta: %lf, moment: %lf, %lf, %lf\n", toDegrees(m_elementVerticalStab.getAOA()), toDegrees(m_elementVerticalStab.getBeta()), m_elementVerticalStab.getMoment().x, m_elementVerticalStab.getMoment().y, m_elementVerticalStab.getMoment().z);
 
 	addForce(dragElem);
 }

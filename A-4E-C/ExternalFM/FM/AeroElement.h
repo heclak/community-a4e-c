@@ -31,6 +31,7 @@ public:
 	virtual void calculateElementPhysics();
 
 	double getAOA() { return m_aoa; }
+	double getBeta() { return m_beta; }
 	Vec3 getForce() { return m_RForceElement; }
 	Vec3 getMoment() { return m_moment; }
 
@@ -75,7 +76,9 @@ class AeroVerticalSurface : public AeroElement
 {
 public:
 	AeroVerticalSurface(AircraftState& state, Table& CLalpha, Table& CDalpha, Vec3 cp, Vec3 surfaceNormal, double area);
+	void calculateElementPhysics() override;
 	void elementLift() override;
+	void elementDrag() override;
 };
 
 class AeroControlSurface : public AeroElement
