@@ -301,6 +301,7 @@ public:
 	inline double getSlatLPosition();
 	inline double getSlatRPosition();
 	inline double getCatMoment();
+	inline double getCatForce();
 	inline Tank getSelectedTank();
 	inline double getMass();
 	inline double setAileron(double dt);
@@ -321,6 +322,7 @@ public:
 	inline const bool& catapultStateSent() const;
 	inline bool& catapultStateSent();
 	inline void setCatStateFromKey();
+	inline void setCatAngle( double angle );
 
 	inline void setIntegrityElement(Damage element, float integrity);
 	inline float getIntegrityElement(Damage element);
@@ -393,7 +395,9 @@ private:
 	CatapultState m_catapultState = OFF_CAT;
 	bool m_catStateSent = false;
 	double m_catMoment = 0.0;
+	double m_catForce = 0.0;
 	double m_catMomentVelocity = 0.0;
+	double m_catAngle = 0.0;
 	double m_angle = 0.0;
 	double m_integral = 0.0;
 	double m_prevAccel = 0.0;
@@ -483,6 +487,16 @@ void Airframe::setMass(double mass)
 void Airframe::setNoseCompression( double x )
 {
 	m_noseCompression = x;
+}
+
+void Airframe::setCatAngle( double angle )
+{
+	m_catAngle = angle;
+}
+
+double Airframe::getCatForce()
+{
+	return m_catForce;
 }
 
 double Airframe::getFuelPrevious( Tank tank )

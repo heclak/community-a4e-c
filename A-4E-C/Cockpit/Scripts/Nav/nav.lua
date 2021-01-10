@@ -1656,7 +1656,7 @@ function update_marker()
         end
 
         --250 m -> squared
-        if (math.abs(curx - current_marker.position.x)^2 + math.abs(curz - current_marker.position.z)^2) >= 62500 then
+        if (math.abs(curx - current_marker.position.x)^2 + math.abs(curz - current_marker.position.z)^2) >= 562500 then
             current_marker = nil
             return
         end
@@ -1667,7 +1667,7 @@ function update_marker()
     for i,v in ipairs(marker_data) do
         if (cury - v.position.y) < 330 then
             --250 m -> squared
-            if (math.abs(curx - v.position.x)^2 + math.abs(curz - v.position.z)^2) < 62500 then
+            if (math.abs(curx - v.position.x)^2 + math.abs(curz - v.position.z)^2) < 562500 then
                     current_marker = v
                     if v.far then
                         marker_outer_snd:play_once()
