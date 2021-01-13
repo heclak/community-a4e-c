@@ -14,6 +14,9 @@ extern "C"
 	void _switch_radio(void* ptr, void* fnc);
 	int _get_gun_shells(void* ptr, void* fnc);
 	bool _ext_is_on(void* ptr, void* fnc);
+
+	void _connect_radio_power( void* radio, void* elec, void* fnc );
+	void _set_radio_power( void* radio, bool value, void* fnc );
 }
 
 namespace Skyhawk
@@ -59,6 +62,10 @@ public:
 		m_externalFuel = m_api.pfn_ed_cockpit_get_parameter_handle("FM_EXTERNAL_FUEL");
 
 		m_radio                 = m_api.pfn_ed_cockpit_get_parameter_handle("THIS_RADIO_PTR");
+		m_elec = m_api.pfn_ed_cockpit_get_parameter_handle( "THIS_ELEC_PTR" );
+
+		m_radioPower = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_RADIO_POWER" );
+
 		m_intercom                 = m_api.pfn_ed_cockpit_get_parameter_handle("THIS_INTERCOM_PTR");
 		m_weapon                 = m_api.pfn_ed_cockpit_get_parameter_handle("THIS_WEAPON_PTR");
 
@@ -117,6 +124,134 @@ public:
 		}
 			//shells = _get_gun_shells(ptr,)
 		return shells;
+	}
+
+	inline void* getRadioPointer()
+	{
+		char buffer[20];
+		uintptr_t ptr_radio = NULL;
+		getParamString( m_radio, buffer, 20 );
+
+		if ( sscanf( buffer, "%p.0", &ptr_radio ) )
+		{
+			if ( ptr_radio )
+			{
+				//0x20 is the offset from the lua virtual
+				//function table to the primary virtual function
+				//table.
+				//                                                           
+				//primary table | 16 bytes of data | global context pointer | lua table 
+				return (void*)(ptr_radio - 0x20);
+			}
+		}
+
+		return NULL;
+	}
+
+	inline void* getElecPointer()
+	{
+		char buffer[20];
+		uintptr_t ptr_elec = NULL;
+		getParamString( m_elec, buffer, 20 );
+
+		if ( sscanf( buffer, "%p.0", &ptr_elec ) )
+		{
+			if ( ptr_elec )
+			{
+				//0x20 is the offset from the lua virtual
+				//function table to the primary virtual function
+				//table.
+				//                                                           
+				//primary table | 16 bytes of data | global context pointer | lua table 
+				return (void*)(ptr_elec - 0x20);
+			}
+		}
+		
+		return NULL;
+	}
+
+	inline void connectAndSetRadioPower()
+	{
+		char buffer[100];
+		void* ptr_radio = NULL;
+		void* ptr_elec = NULL;
+		void* ptr_intercom = NULL;
+		getParamString( m_radio, buffer, 100 );
+		sscanf( buffer, "%p", &ptr_radio );
+		getParamString( m_elec, buffer, 100 );
+		sscanf( buffer, "%p", &ptr_elec );
+		printf( "Radio ptr: %p, Elec ptr: %p\n", ptr_radio, ptr_elec );
+		//-0x20 since we get the pointer to the lua vfptr table
+
+
+		printf( "Global Table %p\n", m_api.device_array );
+		intptr_t ptr = (intptr_t)m_api.device_array + 0x30;
+		ptr = (intptr_t)(*((void**)ptr));
+		printf( "Cockpit Table %p\n", (void*)ptr );
+		ptr_elec = *((void**)((intptr_t)ptr + 0x10));
+		ptr_intercom = *((void**)((intptr_t)ptr + 0x18));
+		ptr_radio = *((void**)((intptr_t)ptr + 0x20));
+		
+
+		//intptr_t cur = ptr;
+		//for ( int i = 0; i < 10; i++ )
+		//{
+		//	void** p = (void**)cur;
+		//	printf( "Offset: %p, Pointer: %p\n", (void*)(i*0x8), *p );
+		//	//printf( "Offset: %p, Pointer: %p, DC1 %p, DC2 %p\n", (i * 0x8), *p, m_api.pfn_get_dc_wire( *p, 1 ), m_api.pfn_get_dc_wire( *p, 2 ) );
+		//	cur += 0x8;
+		//}
+		//0x10 elec
+		//0x18 intercom
+		//0x20 radio
+		printf( "Radio ptr: %p, Elec ptr: %p\n", ptr_radio, ptr_elec );
+
+
+		void* ptr_wire = NULL;
+		if ( ptr_elec )
+		{
+			ptr_wire = m_api.pfn_get_dc_wire( ptr_elec, 1 );
+			printf( "AC_1 %p\n", m_api.pfn_get_ac_wire( ptr_elec, 1 ) );
+			printf( "AC_2 %p\n", m_api.pfn_get_ac_wire( ptr_elec, 2 ) );
+			printf( "DC_1 %p\n", m_api.pfn_get_dc_wire( ptr_elec, 1 ) );
+			printf( "DC_2 %p\n", m_api.pfn_get_dc_wire( ptr_elec, 2 ) );
+		}
+
+		printf( "Wire ptr: %p\n", ptr_wire );
+		
+		
+		//printf( "Freq %d\n", m_api.pfn_get_freq( ptr_radio ) );
+		if ( ptr_radio && ptr_wire )
+		{
+			
+			printf( "Calling %p\n", m_api.pfn_connect_electric );
+			m_api.pfn_connect_electric( ptr_radio, ptr_wire );
+			//_connect_radio_power( ptr_radio, ptr_elec, m_api.pfn_connect_electric );
+			printf( "Radio should be connected!\n" );
+			//_set_radio_power( ptr_radio, true, m_api.pfn_set_elec_power );
+			printf( "Calling %p\n", m_api.pfn_set_elec_power );
+
+
+			void* ptr_baseRadio = (void*)((intptr_t)ptr_radio + 0xB8);
+
+			m_api.pfn_set_elec_power = (PFN_SET_ELEC_POWER)*(*((void***)ptr_baseRadio));
+
+			m_api.pfn_set_elec_power( ptr_baseRadio, true );
+
+
+			printf( "Radio should be powered on!\n" );
+
+			void* ptr_communicator = m_api.pfn_get_communicator( ptr_radio );
+
+			printf( "Communicator %p\n", ptr_communicator);
+			m_api.pfn_set_communicator_as_current( ptr_communicator );
+
+		}
+		else
+		{
+			printf( "Something went wrong!\n" );
+		}
+		
 	}
 
 	inline void setIntercomPower(bool value)
@@ -249,6 +384,11 @@ public:
 	inline void setStickInputRoll( double number )
 	{
 		setParamNumber( m_stickInputRoll, number );
+	}
+
+	inline bool getRadioPower()
+	{
+		return getParamNumber( m_radioPower ) > 0.5;
 	}
 
 	inline double getSlantRange()
@@ -410,6 +550,8 @@ private:
 
 	//Radio Pointer for the Radio Device.
 	void* m_radio = NULL;
+	void* m_elec = NULL;
+	void* m_radioPower = NULL;
 	void* m_intercom = NULL;
 	void* m_weapon = NULL;
 	void* m_cockpitShake = NULL;

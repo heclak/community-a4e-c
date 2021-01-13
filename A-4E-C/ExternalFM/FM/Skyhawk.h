@@ -190,6 +190,9 @@ extern "C"
 		you should distribute it inside at different fuel tanks
 	*/
 	ED_FM_API void ed_fm_set_internal_fuel(double fuel);
+
+	//ED_FM_API void ed_fm_refueling_add_fuel( double fuel );
+
 	/*
 		get internal fuel volume 
 	*/

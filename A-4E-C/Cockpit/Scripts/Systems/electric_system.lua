@@ -7,6 +7,8 @@ end
 
 startup_print("electric_system: load")
 
+this_elec_ptr = get_param_handle("THIS_ELEC_PTR")
+
 local electric_system = GetSelf()
 local dev = electric_system
 
@@ -145,6 +147,9 @@ function update()
 end
 
 function post_initialize()
+
+    str_ptr = string.sub(tostring(dev.link),10)
+    this_elec_ptr:set(str_ptr)
     startup_print("electric_system: postinit start")
 
     electric_system:AC_Generator_1_on(true) -- A-4E generator is automatic and cannot be controlled by switches

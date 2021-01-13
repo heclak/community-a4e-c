@@ -57,7 +57,11 @@ function post_initialize()
   --recursively_print(dev, 30, 100, "C:/tmp/stuff1.txt")
   
   --radio_ptr = strsub(tostring(dev:link()), 10)
-  --this_radio_ptr:set(string.sub(tostring(dev.link),10))
+  str_ptr = string.sub(tostring(dev.link),10)
+  this_radio_ptr:set(str_ptr)
+
+  local intercom = GetDevice(devices.INTERCOM)
+  intercom:set_communicator(devices.UHF_RADIO)
   
   --print_message_to_user(string.sub(dev["link"],10))
 	--print_message_to_user(GetDevice(devices.RADIO))

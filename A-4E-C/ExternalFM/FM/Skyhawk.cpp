@@ -14,6 +14,7 @@
 #include "Avionics.h"
 #include "Interface.h"
 #include "AircraftState.h"
+#include "Radio.h"
 #include "Maths.h"
 //============================ Skyhawk Statics ============================//
 static Skyhawk::AircraftState* s_state = NULL;
@@ -23,6 +24,7 @@ static Skyhawk::Engine2* s_engine = NULL;
 static Skyhawk::Airframe* s_airframe = NULL;
 static Skyhawk::FlightModel* s_fm = NULL;
 static Skyhawk::Avionics* s_avionics = NULL;
+static Skyhawk::Radio* s_radio = NULL;
 //========================================================================//
 
 static void init();
@@ -39,6 +41,7 @@ void init()
 	s_airframe = new Skyhawk::Airframe( *s_state, *s_input, *s_engine );
 	s_avionics = new Skyhawk::Avionics( *s_input, *s_state );
 	s_fm = new Skyhawk::FlightModel( *s_state, *s_input, *s_airframe, *s_engine, *s_interface );
+	s_radio = new Skyhawk::Radio(*s_interface);
 }
 
 void cleanup()
@@ -50,6 +53,7 @@ void cleanup()
 	delete s_airframe;
 	delete s_avionics;
 	delete s_fm;
+	delete s_radio;
 
 	s_state = NULL;
 	s_interface = NULL;
@@ -58,6 +62,7 @@ void cleanup()
 	s_airframe = NULL;
 	s_avionics = NULL;
 	s_fm = NULL;
+	s_radio = NULL;
 }
 
 double rawAOAToUnits( double rawAOA )
@@ -129,6 +134,7 @@ void ed_fm_simulate(double dt)
 	s_engine->setIgnitors(s_interface->getIgnition() > 0.1);
 
 	//Update
+	s_radio->update();
 	s_engine->updateEngine(dt);
 	s_airframe->airframeUpdate(dt);
 	s_avionics->updateAvionics(dt);
@@ -310,6 +316,8 @@ void ed_fm_set_command
 		s_input->hook() = !s_input->hook();
 		break;
 	case Skyhawk::Control::RUDDER_LEFT_START:
+		s_radio->setup( s_interface->getRadioPointer(), s_interface->getElecPointer() );
+		s_radio->setPower( true );
 		s_input->yawAxis().keyDecrease();
 		break;
 	case Skyhawk::Control::RUDDER_LEFT_STOP:
@@ -427,6 +435,12 @@ void ed_fm_set_internal_fuel(double fuel)
 {
 	s_airframe->setFuelState(Skyhawk::Airframe::Tank::INTERNAL, s_fm->getCOM(), fuel);
 }
+
+//void ed_fm_refueling_add_fuel( double fuel )
+//{
+//	printf( "%lf\n", fuel );
+//}
+
 /*
 	get internal fuel volume 
 */
@@ -481,8 +495,12 @@ void ed_fm_set_draw_args (EdDrawArgument * drawargs,size_t size)
 
 	drawargs[HOOK].f = s_airframe->getHookPosition();
 
+	drawargs[117].f = s_interface->getPitchTrim();
+
 	//This is the launch bar argument.
 	drawargs[85].f = 1.0;
+
+	drawargs[22].f = 1.0;
 
 }
 
@@ -504,8 +522,11 @@ double ed_fm_get_param(unsigned index)
 		return s_airframe->getGearRPosition();
 
 	case ED_FM_ANTI_SKID_ENABLE:
+		break;
 	case ED_FM_CAN_ACCEPT_FUEL_FROM_TANKER:
-		return 1.0;
+		printf( "Can we connect?\n" );
+		return 1000.0;
+
 	case ED_FM_ENGINE_1_CORE_RPM:
 	case ED_FM_ENGINE_1_RPM:
 		return s_engine->getRPM();
@@ -696,7 +717,8 @@ void ed_fm_suspension_feedback(int idx, const ed_fm_suspension_info* info)
 {
 	if ( idx == 0 )
 		s_airframe->setNoseCompression( info->struct_compression );
-	//printf("Force(%lf, %lf, %lf)\n", info->acting_force[0], info->acting_force[1], info->acting_force[2]);
+	//
+	("Force(%lf, %lf, %lf)\n", info->acting_force[0], info->acting_force[1], info->acting_force[2]);
 	//printf("Position(%lf, %lf, %lf)\n", info->acting_force_point[0], info->acting_force_point[1], info->acting_force_point[2]);
 	//printf("Struct Compression %d: %lf\n", idx, info->struct_compression);
 	//printf("Integrity Factor: %lf", info->integrity_factor);

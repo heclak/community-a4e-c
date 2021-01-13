@@ -1,6 +1,8 @@
+dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."devices.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
+dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 
 local dev 	    = GetSelf()
 local update_time_step = 0.05 --update will be called 20/second
@@ -14,6 +16,8 @@ dev:listen_command(device_commands.arc51_freq_preset)
 dev:listen_command(device_commands.arc51_freq_XXxxx)
 dev:listen_command(device_commands.arc51_freq_xxXxx)
 dev:listen_command(device_commands.arc51_freq_xxxXX)
+
+efm_data_bus = get_efm_data_bus()
 
 
 -- arc-51 state and input processing
@@ -110,6 +114,13 @@ function update_arc51()
     arc51_freq_xxxXX_display:set( arc51_freq_xxxXX )
     arc51_freq_preset_display:set( arc51_freq_preset )
 
+    if (arc51_state == "arc51-tr" or arc51_state == "arc51-trg") and get_elec_primary_dc_ok() then
+        efm_data_bus.fm_setRadioPower(1.0)
+    else
+        efm_data_bus.fm_setRadioPower(0.0)
+    end
+    
+
     if arc51_state == "arc51-off" then
         if arc51_input == "T/R" then arc51_state = "arc51-tr"
         elseif arc51_input == "T/R+G" then arc51_state = "arc51-trg"
@@ -121,6 +132,7 @@ function update_arc51()
         elseif arc51_input == "ADF" then arc51_state = "arc51-adf"
         end
     elseif arc51_state == "arc51-trg" then
+        
         if arc51_input == "OFF" then arc51_state = "arc51-off"
         elseif arc51_input == "T/R" then arc51_state = "arc51-tr"
         elseif arc51_input == "ADF" then arc51_state = "arc51-adf"
@@ -131,7 +143,6 @@ function update_arc51()
         elseif arc51_input == "T/R+G" then arc51_state = "arc51-trg"
         end
     end
-
 
 end
 
