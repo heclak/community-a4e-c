@@ -1,6 +1,7 @@
 #ifndef AVIONICS_H
 #define AVIONICS_H
 #pragma once
+#include "Maths.h"
 #include "BaseComponent.h"
 #include "Input.h"
 #include "AircraftState.h"
@@ -26,7 +27,7 @@ public:
 private:
 
 	//constants
-	const double m_timeConstant = 4.5;
+	const double m_timeConstant = 4.5; //was 4.5
 	const double m_baseGain = 2.5;
 
 	inline double washoutFilter(double input, double dt);
@@ -42,7 +43,7 @@ private:
 double Avionics::washoutFilter(double input, double dt)
 {
 	double sampleRatio = dt / m_timeConstant;
-	m_x = (1.0 - (sampleRatio)) * m_x + sampleRatio * input;
+	m_x = clamp((1.0 - (sampleRatio)) * m_x + sampleRatio * input, -0.1,0.1);
 	return input - m_x;
 }
 
