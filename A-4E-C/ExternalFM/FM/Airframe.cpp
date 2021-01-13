@@ -63,6 +63,7 @@ void Skyhawk::Airframe::zeroInit()
 	m_aileronRight = 0.0;
 	m_elevator = 0.0;
 	m_rudder = 0.0;
+	m_stabilizer = 0.0;
 
 	m_selected = Tank::INTERNAL;
 
@@ -146,6 +147,7 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 	//printf("LEFT: %lf, CENTRE: %lf, RIGHT: %lf, INTERNAL: %lf\n", m_fuel[Tank::LEFT_EXT], m_fuel[Tank::CENTRE_EXT], m_fuel[Tank::RIGHT_EXT], m_fuel[Tank::INTERNAL]);
 	m_engine.setHasFuel(m_fuel[Tank::INTERNAL] > 20.0);
 	
+	m_stabilizer = setStabilizer(dt);
 	m_elevator = setElevator(dt);
 	m_aileronLeft = setAileron(dt);
 	m_aileronRight = -m_aileronLeft;

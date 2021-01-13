@@ -12,7 +12,9 @@ local update_time_step = 0.05
 make_default_activity(update_time_step) --update will be called 20 times per second
 
 local full_trim_time = 10.0 -- DCS SFM default seems to take 10s to fully trim roll from neutral to right, or pitch from neutral to up, or rudder from neutral to right
+local full_trim_pitch_time = 3.75
 local trim_update = update_time_step / full_trim_time
+local trim_pitch_update = update_time_step / full_trim_pitch_time
 
 -- some scaling adjustments, input values are in the -1 to 1 range, pass scaled version of these to DCS
 local pitch_trim_scale = 0.4 -- thumbsuck value of 0.4, maybe needs to be tweaked
@@ -193,11 +195,11 @@ function update()
     end
 
     if trimming_updown ~= 0 then
-        pitch_trim = pitch_trim + trimming_updown * trim_update * trimspeedfactor
+        pitch_trim = pitch_trim + trimming_updown * trim_pitch_update * trimspeedfactor
         if pitch_trim>1 then
             pitch_trim=1
-        elseif pitch_trim<-0.24 then
-            pitch_trim=-0.24
+        elseif pitch_trim<-1 then
+            pitch_trim=-1
         end
         pitch_trim_handle:set(pitch_trim)
         dispatch_action(nil, iCommandPlaneTrimPitchAbs, pitch_trim*pitch_trim_scale)
@@ -206,6 +208,8 @@ function update()
         provided by repositioning the entire horizontal stabilizer, not just
         the elevators. Not sure how to override this in SFM though, so for
         now we just trim with the elevators.
+
+         - i have no words. truly
         --]]
     end
     if trimming_leftright ~= 0 then

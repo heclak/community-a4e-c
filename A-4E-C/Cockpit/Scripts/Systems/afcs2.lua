@@ -47,7 +47,7 @@ local pitch_trim_handle = get_param_handle("PITCH_TRIM")
 
 --AFCS PID
 local roll_pid = PID(6, 0.05, 0.9, -100, 100, 0.004)   -- create the PID for bank angle control (aileron trim), values found experimentally
-local pitch_pid = PID(6, 0.05, 0.2, -100, 100, 0.004)   -- create the PID for pitch angle control (elevator trim), values found experimentally
+local pitch_pid = PID(6, 0.05, 0.2, -100, 100, 0.01)   -- create the PID for pitch angle control (elevator trim), values found experimentally
 local altitude_pid = PID(1.5, 0.01, 0.11, -100, 100, 0.004)   -- create the PID for altitude control (elevator trim), values found experimentally
 
 --APC PID
@@ -435,7 +435,7 @@ function afcs_get_current_state()
 end
 
 function afcs_transition_state(from, to)
---[[
+
     state_names = {}
 
     state_names[AFCS_STATE_OFF] = "AFCS_STATE_OFF"
@@ -448,7 +448,7 @@ function afcs_transition_state(from, to)
     state_names[AFCS_STATE_WARMUP] = "AFCS_STATE_WARMUP"
     
     print_message_to_user(tostring(state_names[from]).." -> "..tostring(state_names[to]))
-]]
+
 
     if to == AFCS_STATE_ALTITUDE_ONLY then
         afcs_bank_angle_hold = math.deg(sensor_data.getRoll())

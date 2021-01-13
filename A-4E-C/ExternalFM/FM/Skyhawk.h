@@ -26,7 +26,7 @@ extern "C"
 		RIGHT_SPOILER = 120,
 		LEFT_SLAT = 14,
 		RIGHT_SLAT = 13,
-
+		STABILIZER_TRIM = 117,
 	};
 
 

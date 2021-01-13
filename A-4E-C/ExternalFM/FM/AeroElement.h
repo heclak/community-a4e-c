@@ -5,6 +5,7 @@
 #include "Vec3.h"
 #include "Table.h"
 #include "Interface.h"
+#include "Airframe.h"
 #include "AircraftState.h"
 #include "Maths.h"
 #include <fstream>
@@ -75,19 +76,30 @@ public:
 class AeroVerticalSurface : public AeroElement
 {
 public:
-	AeroVerticalSurface(AircraftState& state, Table& CLalpha, Table& CDalpha, Vec3 cp, Vec3 surfaceNormal, double area);
+	AeroVerticalSurface(AircraftState& state, Airframe& airframe, Table& CLalpha, Table& CDalpha, Vec3 cp, Vec3 surfaceNormal, double area);
 	void calculateElementPhysics() override;
 	void elementLift() override;
 	void elementDrag() override;
+private:
+	Airframe& m_airframe;
+};
+
+class AeroHorizontalTail : public AeroElement
+{
+public:
+	AeroHorizontalTail(AircraftState& state, Airframe& airframe, Table& CLalpha, Table& CDalpha, Vec3 cp, Vec3 surfaceNormal, double area);
+	void calculateElementPhysics() override;
+private:
+	Airframe& m_airframe;
 };
 
 class AeroControlSurface : public AeroElement
 {
 public:
-	AeroControlSurface(AircraftState& state, Table& CLalpha, Table& CDalpha, Vec3 cp, Vec3 surfaceNormal, double controlConstant);
-
+	AeroControlSurface(AircraftState& state, Airframe& airframe, Table& CLalpha, Table& CDalpha, Vec3 cp, Vec3 surfaceNormal, double area);
 	void calculateElementPhysics() override;
-	void elementDrag() override;
+private:
+	Airframe& m_airframe;
 };
 
 void AeroElement::setLDFactor(double liftFactor, double dragFactor)

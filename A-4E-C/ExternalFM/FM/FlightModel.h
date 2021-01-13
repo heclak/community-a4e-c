@@ -214,21 +214,22 @@ private:
 	Table Cmde_a;
 	Table rnd_aoa;
 
-	AeroSurface m_elementLW;
-	AeroSurface m_elementRW;
+	/*AeroSurface m_elementLW;
+	AeroSurface m_elementRW;*/
 	AeroSurface m_elementLSlat;
 	AeroSurface m_elementRSlat;
 	AeroSurface m_elementLFlap;
 	AeroSurface m_elementRFlap;
 	AeroSurface m_elementLSpoiler;
 	AeroSurface m_elementRSpoiler;
-	AeroSurface m_elementHorizontalStab;
+	AeroHorizontalTail m_elementHorizontalStab;
 	AeroVerticalSurface m_elementVerticalStab;
 
-	AeroControlSurface m_elementLAil;
-	AeroControlSurface m_elementRAil;
+	/*AeroControlSurface m_elementLAil;
+	AeroControlSurface m_elementRAil;*/
 
 	std::vector<AeroElement> m_elements;
+	std::vector<AeroControlSurface> m_elementsC;
 
 
 	Input& m_controls; //for now
@@ -315,9 +316,10 @@ void FlightModel::M_stab()
 {
 	double horizDamage = m_airframe.getHoriStabDamage();
 	double wingDamage = (m_airframe.getLWingDamage() + m_airframe.getRWingDamage())/2.0;
-	m_moment.z += m_k * m_chord * (0.5 * Cmde( m_state.getMach() ) * Cmde_a( std::abs( m_state.getAOA() ) ) * elevator() * m_airframe.getElevatorDamage() + CmM( m_state.getMach() ) * 0.2) + 0.25 * m_scalarV * m_totalWingArea * m_chord * m_chord * horizDamage * (Cmadot(m_state.getMach()) * m_aoaDot * 6.5);
+	m_moment.z += m_k * m_chord * (CmM( m_state.getMach() ) * 0.2) + 0.25 * m_scalarV * m_totalWingArea * m_chord * m_chord * horizDamage * (Cmadot(m_state.getMach()) * m_aoaDot * 6.5);
 	
 	//DO NOT DELETE!!!
+	//0.5 * Cmde( m_state.getMach() ) * Cmde_a( std::abs( m_state.getAOA() ) ) * elevator() * m_airframe.getElevatorDamage() + 
 	/*Cmalpha(m_state.getMach())* m_state.getAOA()* wingDamage * 1.5
 	Cmq(m_state.getMach()) * m_state.getOmega().z + Cmadot(m_state.getMach()) * m_aoaDot*/
 }
@@ -325,10 +327,11 @@ void FlightModel::M_stab()
 void FlightModel::N_stab()
 {
 	double vertDamage = m_airframe.getVertStabDamage();
-	m_moment.y += m_q * (Cndr(0.0) * rudder() * m_airframe.getRudderDamage()) + m_p * (Cmadot(m_state.getMach()) * m_betaDot * 0.75);
+	m_moment.y += m_p * (Cmadot(m_state.getMach()) * m_betaDot * 0.3);
 	//printf("betad: %lf\n", m_betaDot);
 	
 	//DO NOT DELETE!!!
+	//m_q * (Cndr(0.0) * rudder() * m_airframe.getRudderDamage()) +
 	//-Cnb(m_state.getBeta()) * vertDamage * 0.8
 	//	+ m_p * (Cnr(0.0) * m_state.getOmega().y * vertDamage);//(Cnr(0.0)*m_omega.y); //This needs to be fixed, constants like 0.8 are temporary!!!
 }

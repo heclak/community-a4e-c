@@ -45,13 +45,29 @@ Skyhawk::AeroSurface::AeroSurface
 Skyhawk::AeroVerticalSurface::AeroVerticalSurface
 (
 	AircraftState& state,
+	Airframe& airframe,
 	Table& CLalpha,
 	Table& CDalpha,
 	Vec3 cp,
 	Vec3 surfaceNormal,
 	double area
 ) :
-	AeroElement(state, CLalpha, CDalpha, cp, surfaceNormal, area)
+	AeroElement(state, CLalpha, CDalpha, cp, surfaceNormal, area), m_airframe{ airframe }
+{
+
+}
+
+Skyhawk::AeroHorizontalTail::AeroHorizontalTail
+(
+	AircraftState& state,
+	Airframe& airframe,
+	Table& CLalpha,
+	Table& CDalpha,
+	Vec3 cp,
+	Vec3 surfaceNormal,
+	double area
+) :
+	AeroElement(state, CLalpha, CDalpha, cp, surfaceNormal, area), m_airframe{ airframe }
 {
 
 }
@@ -59,13 +75,14 @@ Skyhawk::AeroVerticalSurface::AeroVerticalSurface
 Skyhawk::AeroControlSurface::AeroControlSurface
 (
 	AircraftState& state,
+	Airframe& airframe,
 	Table& CLalpha,
 	Table& CDalpha,
 	Vec3 cp,
 	Vec3 surfaceNormal,
-	double controlConstant
+	double area
 ) :
-	AeroElement(state, CLalpha, CDalpha, cp, surfaceNormal, controlConstant)
+	AeroElement(state, CLalpha, CDalpha, cp, surfaceNormal, area), m_airframe{ airframe }
 {
 
 }
@@ -120,20 +137,78 @@ void Skyhawk::AeroVerticalSurface::elementDrag()
 	m_LDwindAxes.x = -m_kElem * ( m_CDalpha(m_aoa) * abs(cos(m_beta)) * m_dragFactor);
 }
 
-void Skyhawk::AeroControlSurface::elementDrag()
+void Skyhawk::AeroElement::calculateElementPhysics()
 {
-	if (m_dragFactor >= 0.0)
+
+	// calculate member variables
+	m_airspeed = m_state.getLocalAirspeed() + cross(m_state.getOmega(), m_cp);
+	m_scalarAirspeed = sqrt(m_airspeed.x * m_airspeed.x + m_airspeed.y * m_airspeed.y + m_airspeed.z * m_airspeed.z);
+	m_dragVec = -normalize(m_airspeed);
+	m_kElem = pow(m_scalarAirspeed, 2) * m_state.getAirDensity() * m_area * 0.5;
+
+	//calculating aoa&beta
+	Vec3 forwardVec(1.0, 0.0, 0.0);
+	Vec3 spanVec = normalize(cross(m_surfaceNormal, forwardVec));
+	Vec3 flightPath = m_airspeed;
+	Vec3 flightPathProjectedAOA = flightPath - ((flightPath * spanVec) / (spanVec * spanVec)) * spanVec;
+	Vec3 flightPathProjectedBeta = flightPath - ((flightPath * m_surfaceNormal) / (m_surfaceNormal * m_surfaceNormal)) * m_surfaceNormal;
+
+	m_aoa = atan2(cross(forwardVec, flightPathProjectedAOA) * spanVec, forwardVec * flightPathProjectedAOA);
+
+	//m_beta = atan2(cross(forwardVec, flightPathProjectedBeta)*m_surfaceNormal, forwardVec*flightPathProjectedBeta);
+	m_beta = m_state.getBeta();
+	elementLift();
+	elementDrag();
+
+	//printf("new: LDVec = %lf, %lf, %lf\n", m_LDwindAxes.x, m_LDwindAxes.y, m_LDwindAxes.z);
+	Vec3 deltaCentreOfPressure = m_cp - Vec3(0.0, 0.0, m_state.getCOM().z);
+	m_RForceElement = windAxisToBody(m_LDwindAxes, m_aoa, m_beta);
+	m_moment = cross(deltaCentreOfPressure, m_RForceElement);
+
+}
+
+void Skyhawk::AeroControlSurface::calculateElementPhysics()
+{
+
+	// calculate member variables
+	m_airspeed = m_state.getLocalAirspeed() + cross(m_state.getOmega(), m_cp);
+	m_scalarAirspeed = sqrt(m_airspeed.x * m_airspeed.x + m_airspeed.y * m_airspeed.y + m_airspeed.z * m_airspeed.z);
+	m_dragVec = -normalize(m_airspeed);
+	m_kElem = pow(m_scalarAirspeed, 2) * m_state.getAirDensity() * m_area * 0.5;
+
+	//calculating aoa&beta
+	Vec3 forwardVec(1.0, 0.0, 0.0);
+	Vec3 spanVec = normalize(cross(m_surfaceNormal, forwardVec));
+	Vec3 flightPath = m_airspeed;
+	Vec3 flightPathProjectedAOA = flightPath - ((flightPath * spanVec) / (spanVec * spanVec)) * spanVec;
+	Vec3 flightPathProjectedBeta = flightPath - ((flightPath * m_surfaceNormal) / (m_surfaceNormal * m_surfaceNormal)) * m_surfaceNormal;
+	
+	float defToDeg = 0.0;
+	if (m_cp.z > 0)
 	{
-		m_LDwindAxes.x = -m_kElem * (m_CDalpha(m_aoa) * abs(cos(m_beta)) * abs(m_dragFactor));
+		defToDeg = -m_airframe.getAileron() * toRad(8);
 	}
 	else
 	{
-		m_LDwindAxes.x = -m_kElem * ((1/m_CDalpha(m_aoa)) * abs(cos(m_beta)) * abs(m_dragFactor)*0.25);
+		defToDeg = m_airframe.getAileron() * toRad(8);
 	}
-	
+	//printf("defToDeg: %lf\n", defToDeg);
+
+	m_aoa = atan2(cross(forwardVec, flightPathProjectedAOA) * spanVec, forwardVec * flightPathProjectedAOA);
+	m_aoa += defToDeg;
+	//m_beta = atan2(cross(forwardVec, flightPathProjectedBeta)*m_surfaceNormal, forwardVec*flightPathProjectedBeta);
+	m_beta = m_state.getBeta();
+	elementLift();
+	elementDrag();
+
+	//printf("new: LDVec = %lf, %lf, %lf\n", m_LDwindAxes.x, m_LDwindAxes.y, m_LDwindAxes.z);
+	Vec3 deltaCentreOfPressure = m_cp - Vec3(0.0, 0.0, m_state.getCOM().z);
+	m_RForceElement = windAxisToBody(m_LDwindAxes, m_aoa, m_beta);
+	m_moment = cross(deltaCentreOfPressure, m_RForceElement);
+
 }
 
-void Skyhawk::AeroElement::calculateElementPhysics()
+void Skyhawk::AeroHorizontalTail::calculateElementPhysics()
 {
 
 	// calculate member variables
@@ -149,11 +224,15 @@ void Skyhawk::AeroElement::calculateElementPhysics()
 	Vec3 flightPathProjectedAOA = flightPath - ((flightPath*spanVec) / (spanVec*spanVec)) * spanVec;
 	Vec3 flightPathProjectedBeta = flightPath - ((flightPath*m_surfaceNormal) / (m_surfaceNormal*m_surfaceNormal)) * m_surfaceNormal;
 	
-	m_aoa = atan2(cross(forwardVec, flightPathProjectedAOA)*spanVec, forwardVec*flightPathProjectedAOA);
+	float defToDeg = -m_airframe.getElevator() * toRad(35);
 
+	//printf("defToDeg: %lf\n", defToDeg);
+
+	m_aoa = atan2(cross(forwardVec, flightPathProjectedAOA) * spanVec, forwardVec * flightPathProjectedAOA);
+	m_aoa += defToDeg;
+	m_aoa += -m_airframe.getStabilizer();
 	//m_beta = atan2(cross(forwardVec, flightPathProjectedBeta)*m_surfaceNormal, forwardVec*flightPathProjectedBeta);
 	m_beta = m_state.getBeta();
-	
 	elementLift();
 	elementDrag();
 	
@@ -180,8 +259,12 @@ void Skyhawk::AeroVerticalSurface::calculateElementPhysics()
 	Vec3 flightPathProjectedAOA = flightPath - ((flightPath*spanVec) / (spanVec*spanVec)) * spanVec;
 	Vec3 flightPathProjectedBeta = flightPath - ((flightPath*m_surfaceNormal) / (m_surfaceNormal*m_surfaceNormal)) * m_surfaceNormal;
 
-	m_aoa = atan2(cross(forwardVec, flightPathProjectedAOA)*spanVec, forwardVec*flightPathProjectedAOA);
+	float defToDeg = -m_airframe.getRudder() * toRad(15);
 
+	//printf("defToDeg: %lf\n", defToDeg);
+
+	m_aoa = atan2(cross(forwardVec, flightPathProjectedAOA)*spanVec, forwardVec*flightPathProjectedAOA);
+	m_aoa += defToDeg;
 	//m_beta = atan2(cross(forwardVec, flightPathProjectedBeta)*m_surfaceNormal, forwardVec*flightPathProjectedBeta);
 	m_beta = m_state.getAOA();
 
@@ -195,31 +278,3 @@ void Skyhawk::AeroVerticalSurface::calculateElementPhysics()
 
 }
 
-void Skyhawk::AeroControlSurface::calculateElementPhysics()
-{
-	// calculate member variables
-	m_airspeed = m_state.getLocalAirspeed() + cross(m_state.getOmega(), m_cp);
-	m_scalarAirspeed = sqrt(m_airspeed.x * m_airspeed.x + m_airspeed.y * m_airspeed.y + m_airspeed.z * m_airspeed.z);
-	m_dragVec = -normalize(m_airspeed);
-	m_kElem = pow(m_scalarAirspeed, 2) * m_state.getAirDensity() * m_area * 0.5;
-
-	//calculating aoa
-	Vec3 forwardVec(1.0, 0.0, 0.0);
-	Vec3 spanVec = normalize(cross(m_surfaceNormal, forwardVec));
-	Vec3 flightPath = m_airspeed;
-	Vec3 flightPathProjected = flightPath - (flightPath*spanVec) / (spanVec*spanVec) * spanVec;
-
-	m_aoa = atan2(cross(forwardVec, flightPathProjected)*spanVec, forwardVec*flightPathProjected);
-
-	m_aoa = abs(m_aoa);
-	m_beta = m_state.getBeta();
-
-	elementLift();
-	elementDrag();
-
-	//printf("new: LDVec = %lf, %lf, %lf\n", m_LDwindAxes.x, m_LDwindAxes.y, m_LDwindAxes.z);
-	Vec3 deltaCentreOfPressure = m_cp - Vec3(0.0, 0.0, m_state.getCOM().z);
-	m_RForceElement = windAxisToBody(m_LDwindAxes, m_aoa, m_beta);
-	m_moment = cross(deltaCentreOfPressure, m_RForceElement);
-
-}

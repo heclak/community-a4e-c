@@ -481,6 +481,8 @@ void ed_fm_set_draw_args (EdDrawArgument * drawargs,size_t size)
 
 	drawargs[HOOK].f = s_airframe->getHookPosition();
 
+	drawargs[STABILIZER_TRIM].f = s_airframe->getStabilizerAnim();
+
 	//This is the launch bar argument.
 	drawargs[85].f = 1.0;
 

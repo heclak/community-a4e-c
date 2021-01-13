@@ -7,6 +7,7 @@
 #include "Input.h"
 #include <stdio.h>
 #include "Engine2.h"
+#include "Maths.h"
 #include "Vec3.h"
 
 //Macro police don't hurt me
@@ -307,9 +308,12 @@ public:
 	inline double setAileron(double dt);
 	inline double setElevator(double dt);
 	inline double setRudder(double dt);
+	inline double setStabilizer(double dt);
 	inline double getAileron();
 	inline double getElevator();
 	inline double getRudder();
+	inline double getStabilizer();
+	inline double getStabilizerAnim();
 
 
 
@@ -374,6 +378,7 @@ private:
 	double m_aileronLeft = 0.0;
 	double m_aileronRight = 0.0;
 	double m_elevator = 0.0;
+	double m_stabilizer = 0.0;
 	double m_rudder = 0.0;
 
 	Actuator m_actuatorElev;
@@ -439,7 +444,10 @@ double Airframe::setAileron(double dt)
 
 double Airframe::setElevator(double dt)
 {
-	double input = m_controls.pitch() + m_controls.pitchTrim();
+	double stabilizer = toDegrees(m_stabilizer);
+	double bungeeTrimDeg = (stabilizer + 1.0) / (-13.25) * (-0.65306 - 7.3469) - 0.65306;
+	double bungeeTrimStick = bungeeTrimDeg / 15.0; // transformation from control surface deflection to stick normalized coordinate goes here
+	double input = m_controls.pitch() + bungeeTrimStick;
 	return m_actuatorElev.inputUpdate(input, dt);
 }
 
@@ -447,6 +455,13 @@ double Airframe::setRudder(double dt)
 {
 	double input = m_controls.yaw() + m_controls.yawDamper() + m_controls.yawTrim();
 	return m_actuatorRud.inputUpdate(input, dt);
+}
+
+double Airframe::setStabilizer(double dt)
+{
+	double lin_transform = toRad((m_controls.pitchTrim() - 1.0)/(-2.0) * (-13.25) + 12.25);
+	printf("stickTrim: %lf\n", m_controls.pitchTrim());
+	return lin_transform;
 }
 
 void Airframe::setFlapsPosition(double position)
@@ -557,6 +572,24 @@ double Airframe::getAileron()
 double Airframe::getElevator()
 {
 	return m_elevator;
+}
+
+double Airframe::getStabilizer()
+{
+	return m_stabilizer;
+}
+
+double Airframe::getStabilizerAnim()
+{
+	double stab = toDegrees(m_stabilizer);
+	if (stab > 0.0)
+	{
+		return stab / 12.25;
+	}
+	else
+	{
+		return stab;
+	}
 }
 
 double Airframe::getRudder()

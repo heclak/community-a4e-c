@@ -21,6 +21,11 @@ static inline double toDegrees( double radians )
 	return radians * 180.0 / PI;
 }
 
+static inline double toRad(double degrees)
+{
+	return degrees * PI / 180.0;
+}
+
 static inline double clamp( double value, double min, double max )
 {
 	return std::max( std::min( value, max ), min );
