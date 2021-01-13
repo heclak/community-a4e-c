@@ -2,7 +2,16 @@
 #include <windows.h>
 namespace cockpit
 {
-	class avBaseRadio;
+	struct avUHF_ARC_164;
+}
+
+namespace EagleFM
+{
+	namespace Elec
+	{
+		struct ItemBase;
+	}
+	
 }
 
 //params handling
@@ -12,12 +21,19 @@ typedef void   (*PFN_ED_COCKPIT_UPDATE_PARAMETER_WITH_NUMBER)  (void		  * handle
 typedef bool   (*PFN_ED_COCKPIT_PARAMETER_VALUE_TO_NUMBER   )  (const void * handle	,double & res	,bool interpolated);
 typedef bool   (*PFN_ED_COCKPIT_PARAMETER_VALUE_TO_STRING   )  (const void * handle	,char * buffer	,unsigned buffer_size);
 typedef int    (*PFN_ED_COCKPIT_COMPARE_PARAMETERS			)  (void		  * handle_1,void * handle_2);
-typedef void   (cockpit::avBaseRadio::*MemberFncBool)		   (bool value);
+//typedef void   (cockpit::avBaseRadio::*MemberFncBool)		   (bool value);
 typedef void   (*RADIO_POWER_FUNC)							   (void* value);
 typedef bool  (*GET_RADIO_POWER_FUNC)							(void);
 typedef bool  (*GET_SOMETHING)									(void);
 typedef int   (*GET_SOMETHING_INT)								(void);
 typedef void* (*PFN_ED_COCKPIT_SET_ACTION_DIGITAL)(int value);
+typedef void  (*PFN_CONNECT_ELECTRIC)(void*, void*);
+typedef void  (*PFN_SET_ELEC_POWER)(void*, bool);
+typedef void*  (*PFN_GET_COMMUNICATOR)(void*);
+typedef void  (*PFN_SET_COMMUNICATOR_AS_CURRENT)(void*);
+typedef void*  (*PFN_GET_WIRE)(void*, int);
+typedef int   (*PFN_GET_FREQ)(void*);
+
 
 /* usage
 HMODULE	cockpit_dll						= GetModuleHandle("CockpitBase.dll"); assume that we work inside same process
@@ -49,6 +65,14 @@ struct cockpit_param_api
 	GET_SOMETHING	isOnIntercom;
 	GET_SOMETHING_INT getGunShells;
 	PFN_ED_COCKPIT_SET_ACTION_DIGITAL				 pfn_ed_cockpit_set_action_digital;
+	PFN_CONNECT_ELECTRIC                             pfn_connect_electric;
+	PFN_SET_ELEC_POWER                               pfn_set_elec_power;
+	PFN_GET_COMMUNICATOR							 pfn_get_communicator;
+	PFN_SET_COMMUNICATOR_AS_CURRENT                  pfn_set_communicator_as_current;
+	PFN_GET_WIRE									 pfn_get_dc_wire;
+	PFN_GET_WIRE									 pfn_get_ac_wire;
+	PFN_GET_FREQ pfn_get_freq;
+	void** device_array;
 };
 
 inline cockpit_param_api  ed_get_cockpit_param_api()
@@ -71,6 +95,16 @@ inline cockpit_param_api  ed_get_cockpit_param_api()
 	ret.switchRadioPowerFncPtr = (GET_RADIO_POWER_FUNC)GetProcAddress(cockpit_dll, "?perform_init_state@avRadio_MAC@cockpit@@MEAAXXZ");
 	ret.pfn_ed_cockpit_set_action_digital = (PFN_ED_COCKPIT_SET_ACTION_DIGITAL)GetProcAddress(cockpit_dll, "ed_cockpit_set_action_digital");
 	ret.isOnIntercom = (GET_SOMETHING)GetProcAddress(cockpit_dll, "?isOn@avIntercom@cockpit@@UEBA_NXZ");
+
+	ret.pfn_set_elec_power = (PFN_SET_ELEC_POWER)GetProcAddress( cockpit_dll, "?setElecPower@avBaseRadio@cockpit@@UEAAX_N@Z" );
+	ret.pfn_connect_electric = (PFN_CONNECT_ELECTRIC)GetProcAddress( cockpit_dll, "?connect_electric@avUHF_ARC_164@cockpit@@IEAAXAEAVItemBase@Elec@EagleFM@@@Z" );
+	ret.pfn_get_communicator = (PFN_GET_COMMUNICATOR)GetProcAddress( cockpit_dll, "?getCommunicator@avBaseRadio@cockpit@@QEAAAEAVavCommunicator@2@XZ" );
+	ret.pfn_set_communicator_as_current = (PFN_SET_COMMUNICATOR_AS_CURRENT)GetProcAddress( cockpit_dll, "?setAsCurrent@avCommunicator@cockpit@@QEAAXXZ" );
+	ret.device_array = (void**)GetProcAddress( cockpit_dll, "?contexts@ccCockpitContext@cockpit@@0PAV12@A" );
+	ret.pfn_get_dc_wire = (PFN_GET_WIRE)GetProcAddress( cockpit_dll, "?getDCbus@avSimpleElectricSystem@cockpit@@QEAAAEAVWire@Elec@EagleFM@@H@Z" );
+	ret.pfn_get_ac_wire = (PFN_GET_WIRE)GetProcAddress( cockpit_dll, "?getACbus@avSimpleElectricSystem@cockpit@@QEAAAEAVWire@Elec@EagleFM@@H@Z" );
+	ret.pfn_get_freq = (PFN_GET_FREQ)GetProcAddress( cockpit_dll, "?get_knobs_frequency@avUHF_ARC_164@cockpit@@IEBAHXZ" );
+
 	//ret.getGunShells = (GET_SOMETHING_INT)GetProcAddress(cockpit_dll, "")
 	return ret;
 }

@@ -460,7 +460,7 @@ double Airframe::setRudder(double dt)
 double Airframe::setStabilizer(double dt)
 {
 	double lin_transform = toRad((m_controls.pitchTrim() - 1.0)/(-2.0) * (-13.25) + 12.25);
-	printf("stickTrim: %lf\n", m_controls.pitchTrim());
+	//printf("stickTrim: %lf\n", m_controls.pitchTrim());
 	return lin_transform;
 }
 
