@@ -48,7 +48,7 @@ local pitch_trim_handle = get_param_handle("PITCH_TRIM")
 --AFCS PID
 local roll_pid = PID(6, 0.05, 0.9, -100, 100, 0.004)   -- create the PID for bank angle control (aileron trim), values found experimentally
 local pitch_pid = PID(6, 0.05, 0.2, -100, 100, 0.01)   -- create the PID for pitch angle control (elevator trim), values found experimentally
-local altitude_pid = PID(1.5, 0.01, 0.11, -100, 100, 0.004)   -- create the PID for altitude control (elevator trim), values found experimentally
+local altitude_pid = PID(1.5, 0.01, 0.11, -100, 100, 0.01)   -- create the PID for altitude control (elevator trim), values found experimentally
 
 --APC PID
 local apc_pid = PID(5, 0.02, 0.1, -100, 40, 0.01)   -- create the PID for the APC, values found experimentally

@@ -7,12 +7,14 @@ Skyhawk::Radio::Radio(Interface& inter):
 	m_api = ed_get_cockpit_param_api();
 }
 
-void Skyhawk::Radio::setup( void* baseRadio, void* electricalSystem )
+void Skyhawk::Radio::setup( void* baseRadio, void* electricalSystem, void* intercom )
 {
-	if ( ! electricalSystem || ! baseRadio )
+	if ( ! electricalSystem || ! baseRadio || ! intercom )
 	{
 		return;
 	}
+
+	m_intercom = intercom;
 
 	//Get the 1st DC system wire.
 	void* wire = m_api.pfn_get_dc_wire( electricalSystem, 1 );
@@ -59,10 +61,12 @@ void Skyhawk::Radio::update()
 	if ( m_setup )
 	{
 		setPower( m_interface.getRadioPower() );
+		//m_api.pfn_try_set_communicator( m_intercom, 1 );
+		//m_api.pfn_push_to_talk( m_intercom, true );
 	}
 	else
 	{
-		setup( m_interface.getRadioPointer(), m_interface.getElecPointer() );
+		setup( m_interface.getRadioPointer(), m_interface.getElecPointer(), m_interface.getIntercomPointer() );
 	}
 }
 

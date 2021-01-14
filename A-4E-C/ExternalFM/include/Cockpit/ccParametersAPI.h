@@ -33,6 +33,8 @@ typedef void*  (*PFN_GET_COMMUNICATOR)(void*);
 typedef void  (*PFN_SET_COMMUNICATOR_AS_CURRENT)(void*);
 typedef void*  (*PFN_GET_WIRE)(void*, int);
 typedef int   (*PFN_GET_FREQ)(void*);
+typedef void  (*PFN_PUSH_TO_TALK)(void*, bool);
+typedef void  (*PFN_TRY_SET_COMMUNICATOR)(void*, unsigned int);
 
 
 /* usage
@@ -72,6 +74,8 @@ struct cockpit_param_api
 	PFN_GET_WIRE									 pfn_get_dc_wire;
 	PFN_GET_WIRE									 pfn_get_ac_wire;
 	PFN_GET_FREQ pfn_get_freq;
+	PFN_PUSH_TO_TALK pfn_push_to_talk;
+	PFN_TRY_SET_COMMUNICATOR pfn_try_set_communicator;
 	void** device_array;
 };
 
@@ -104,7 +108,10 @@ inline cockpit_param_api  ed_get_cockpit_param_api()
 	ret.pfn_get_dc_wire = (PFN_GET_WIRE)GetProcAddress( cockpit_dll, "?getDCbus@avSimpleElectricSystem@cockpit@@QEAAAEAVWire@Elec@EagleFM@@H@Z" );
 	ret.pfn_get_ac_wire = (PFN_GET_WIRE)GetProcAddress( cockpit_dll, "?getACbus@avSimpleElectricSystem@cockpit@@QEAAAEAVWire@Elec@EagleFM@@H@Z" );
 	ret.pfn_get_freq = (PFN_GET_FREQ)GetProcAddress( cockpit_dll, "?get_knobs_frequency@avUHF_ARC_164@cockpit@@IEBAHXZ" );
-
+	ret.pfn_push_to_talk = (PFN_PUSH_TO_TALK)GetProcAddress( cockpit_dll, "?pushToTalk@avIntercom@cockpit@@IEAAX_N@Z" );
+	ret.pfn_try_set_communicator = (PFN_TRY_SET_COMMUNICATOR)GetProcAddress(cockpit_dll, "?makeSetupForCommunicator@avIntercom@cockpit@@MEAA_NI@Z");
+	//?makeSetupForCommunicator@avIntercom@cockpit@@MEAA_NI@Z
+	//?trySetCommunicator@avIntercom@cockpit@@MEAAXI@Z
 	//ret.getGunShells = (GET_SOMETHING_INT)GetProcAddress(cockpit_dll, "")
 	return ret;
 }

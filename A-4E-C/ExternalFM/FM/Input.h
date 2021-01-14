@@ -56,6 +56,7 @@ enum Control
 
 	BRAKE_ALL_START = 10135,
 	BRAKE_ALL_STOP = 10136,
+	RADIO_MENU = 179, //iCommandToggleCommandMenu
 };
 
 class Input : public BaseComponent
