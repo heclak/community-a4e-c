@@ -126,48 +126,45 @@ public:
 		return shells;
 	}
 
-	inline void* getRadioPointer()
+
+
+	inline void* getPointer( void* handle )
 	{
 		char buffer[20];
-		uintptr_t ptr_radio = NULL;
-		getParamString( m_radio, buffer, 20 );
-
-		if ( sscanf( buffer, "%p.0", &ptr_radio ) )
+		uintptr_t ptr = NULL;
+		getParamString( handle, buffer, 20 );
+		printf( "%s\n", buffer );
+		if ( sscanf( buffer, "%p.0", &ptr ) )
 		{
-			if ( ptr_radio )
+			if ( ptr )
 			{
 				//0x20 is the offset from the lua virtual
 				//function table to the primary virtual function
 				//table.
 				//                                                           
 				//primary table | 16 bytes of data | global context pointer | lua table 
-				return (void*)(ptr_radio - 0x20);
+				return (void*)(ptr - 0x20);
 			}
 		}
 
 		return NULL;
 	}
 
+	inline void* getIntercomPointer()
+	{
+		void* ptr = getPointer( m_intercom );
+		printf( "Intercom: %p\n", ptr );
+		return ptr;
+	}
+
+	inline void* getRadioPointer()
+	{
+		return getPointer( m_radio );
+	}
+
 	inline void* getElecPointer()
 	{
-		char buffer[20];
-		uintptr_t ptr_elec = NULL;
-		getParamString( m_elec, buffer, 20 );
-
-		if ( sscanf( buffer, "%p.0", &ptr_elec ) )
-		{
-			if ( ptr_elec )
-			{
-				//0x20 is the offset from the lua virtual
-				//function table to the primary virtual function
-				//table.
-				//                                                           
-				//primary table | 16 bytes of data | global context pointer | lua table 
-				return (void*)(ptr_elec - 0x20);
-			}
-		}
-		
-		return NULL;
+		return getPointer( m_elec );
 	}
 
 	inline void connectAndSetRadioPower()
@@ -551,8 +548,8 @@ private:
 	//Radio Pointer for the Radio Device.
 	void* m_radio = NULL;
 	void* m_elec = NULL;
-	void* m_radioPower = NULL;
 	void* m_intercom = NULL;
+	void* m_radioPower = NULL;
 	void* m_weapon = NULL;
 	void* m_cockpitShake = NULL;
 

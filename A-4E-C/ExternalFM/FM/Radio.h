@@ -11,14 +11,16 @@ class Radio
 public:
 	Radio(Interface& inter);
 	
-	void setup(void* radio, void* electricalSystem);
+	void setup(void* radio, void* electricalSystem, void* intercom);
 	void update();
 	void cleanup();
 	inline void setPower( bool power );
 	inline bool isSetup();
+	inline void toggleRadioMenu();
 
 private:
 	void* m_radio = NULL;
+	void* m_intercom = NULL;
 	bool m_setup = false;
 	bool m_on = false;
 
@@ -42,6 +44,15 @@ void Radio::setPower( bool power )
 bool Radio::isSetup()
 {
 	return m_setup;
+}
+
+void Radio::toggleRadioMenu()
+{
+	if ( m_intercom )
+	{
+		//m_api.pfn_push_to_talk( m_intercom, true );
+		//printf( "Toggle Radio\n" );
+	}
 }
 
 

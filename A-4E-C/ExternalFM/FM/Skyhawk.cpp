@@ -316,8 +316,6 @@ void ed_fm_set_command
 		s_input->hook() = !s_input->hook();
 		break;
 	case Skyhawk::Control::RUDDER_LEFT_START:
-		s_radio->setup( s_interface->getRadioPointer(), s_interface->getElecPointer() );
-		s_radio->setPower( true );
 		s_input->yawAxis().keyDecrease();
 		break;
 	case Skyhawk::Control::RUDDER_LEFT_STOP:
@@ -371,8 +369,11 @@ void ed_fm_set_command
 		s_input->leftBrakeAxis().reset();
 		s_input->rightBrakeAxis().reset();
 		break;
+	case Skyhawk::Control::RADIO_MENU:
+		s_radio->toggleRadioMenu();
+		break;
 	default:
-		; //printf( "number %d: %lf\n", command, value );
+		;// printf( "number %d: %lf\n", command, value );
 	}
 }
 
