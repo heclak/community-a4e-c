@@ -122,12 +122,12 @@ void ed_fm_simulate(double dt)
 	s_avionics->getComputer().setGunsightAngle( s_interface->getGunsightAngle() );
 	s_avionics->getComputer().setTarget( s_interface->getSetTarget(), s_interface->getSlantRange() );
 
-
 	s_input->pitchTrim() = s_interface->getPitchTrim();
 	s_input->rollTrim() = s_interface->getRollTrim();
 	s_input->yawTrim() = s_interface->getRudderTrim();
 
 	s_input->update();
+	//printf( "x: %lf, y: %lf, z: %lf, mass: %lf\n", s_state->getCOM().x, s_state->getCOM().y, s_state->getCOM().z, s_airframe->getMass() );
 
 	s_engine->setThrottle(s_interface->getEngineThrottlePosition());
 	s_engine->setBleedAir(s_interface->getBleedAir() > 0.1);
@@ -407,25 +407,23 @@ bool ed_fm_change_mass  (double & delta_mass,
 						)
 {
 	Skyhawk::Airframe::Tank tank = s_airframe->getSelectedTank();
-	Vec3 pos = s_airframe->getFuelPos(tank);
-	Vec3 r = pos - s_fm->getCOM();
+	if ( tank == Skyhawk::Airframe::Tank::DONT_TOUCH )
+	{
+		s_airframe->setSelectedTank( Skyhawk::Airframe::Tank::INTERNAL );
+		return false;
+	}
 
+	Vec3 pos = s_airframe->getFuelPos(tank);
+	//Vec3 r = pos - s_state->getCOM();
+	
 	delta_mass = s_airframe->getFuelQtyDelta(tank);
 	s_airframe->setFuelPrevious( tank );
 	delta_mass_pos_x = pos.x;
 	delta_mass_pos_y = pos.y;
 	delta_mass_pos_z = pos.z;
 
-	if (tank == Skyhawk::Airframe::Tank::RIGHT_EXT)
-	{
-		s_airframe->setSelectedTank(Skyhawk::Airframe::Tank::INTERNAL);
-		return false;
-	}
-	else
-	{
-		s_airframe->setSelectedTank((Skyhawk::Airframe::Tank)((int)tank + 1));
-		return true;
-	}
+	s_airframe->setSelectedTank((Skyhawk::Airframe::Tank)((int)tank + 1));
+	return true;
 }
 /*
 	set internal fuel volume , init function, called on object creation and for refueling , 
@@ -433,7 +431,7 @@ bool ed_fm_change_mass  (double & delta_mass,
 */
 void ed_fm_set_internal_fuel(double fuel)
 {
-	s_airframe->setFuelState(Skyhawk::Airframe::Tank::INTERNAL, s_fm->getCOM(), fuel);
+	s_airframe->setFuelState(Skyhawk::Airframe::Tank::INTERNAL, s_state->getCOM(), fuel);
 }
 
 //void ed_fm_refueling_add_fuel( double fuel )
@@ -457,6 +455,7 @@ void  ed_fm_set_external_fuel (int	 station,
 								double y,
 								double z)
 {
+	//printf( "Station: %d, Fuel: %lf, Z: %lf, COM %lf\n", station, fuel, z, s_state->getCOM().z );
 	s_airframe->setFuelState((Skyhawk::Airframe::Tank)station, Vec3(x, y, z), fuel);
 }
 /*

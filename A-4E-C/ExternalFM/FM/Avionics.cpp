@@ -64,8 +64,6 @@ void Skyhawk::Avionics::updateAvionics(double dt)
 		m_x = 0.0;
 		m_input.yawDamper() = 0.0;
 	}
-	
-	printf( "m_x: %lf\n", m_x );
 	m_bombingComputer.updateSolution(dt);
 
 	//printf("Filter: %lf, Rudder: %lf\n", f, m_flightModel.yawRate());
