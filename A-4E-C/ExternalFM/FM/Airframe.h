@@ -449,7 +449,7 @@ double Airframe::setElevator(double dt)
 	double bungeeTrimStick = bungeeTrimDeg / 20.0; // transformation from control surface deflection to stick normalized coordinate goes here
 	double speedbrakeTrim = -0.15 * m_speedBrakePosition;
 	m_actuatorElev.setActuatorSpeed(clamp(1.0 - 1.2 * pow(m_state.getMach(), 3.0), 0.1, 1.0));
-	printf("factor: %lf\n", clamp(1.0 - 1.2 * pow(m_state.getMach(), 3.0), 0.1, 1.0));
+	//printf("factor: %lf\n", clamp(1.0 - 1.2 * pow(m_state.getMach(), 3.0), 0.1, 1.0));
 	double input = m_controls.pitch() + bungeeTrimStick + speedbrakeTrim;
 	return m_actuatorElev.inputUpdate(input, dt);
 }

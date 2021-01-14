@@ -203,8 +203,8 @@ void Skyhawk::FlightModel::calculateAero(double dt)
 	M_stab();
 	N_stab();
 
-	//printf("roll rate: %lf\n", toDegrees(m_state.getOmega().x));
-
+	printf("roll rate: %lf\n", m_state.getOmega().x);
+	
 	calculateShake();
 }
 
