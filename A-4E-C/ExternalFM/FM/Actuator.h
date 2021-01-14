@@ -9,6 +9,7 @@ class Actuator : public BaseComponent
 {
 public:
 	Actuator();
+	Actuator(double speed);
 	~Actuator();
 
 	virtual void Actuator::zeroInit();
@@ -20,8 +21,10 @@ public:
 	double inputUpdate(double targetPosition, double dt);
 	void physicsUpdate(double dt);
 	double getPosition();
+	void setActuatorSpeed(double factor);
 private:
-	const double m_actuatorSpeed = 10;
+	double m_actuatorFactor;
+	double m_actuatorSpeed;
 	double m_actuatorPos;
 	double m_actuatorTargetPos;
 };

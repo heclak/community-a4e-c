@@ -87,10 +87,11 @@ private:
 class AeroHorizontalTail : public AeroElement
 {
 public:
-	AeroHorizontalTail(AircraftState& state, Airframe& airframe, Table& CLalpha, Table& CDalpha, Vec3 cp, Vec3 surfaceNormal, double area);
+	AeroHorizontalTail(AircraftState& state, Airframe& airframe, Table& CLalpha, Table& CDalpha, Table& compress, Vec3 cp, Vec3 surfaceNormal, double area);
 	void calculateElementPhysics() override;
 private:
 	Airframe& m_airframe;
+	Table& m_compressElev;
 };
 
 class AeroControlSurface : public AeroElement

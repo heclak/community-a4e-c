@@ -1,9 +1,10 @@
 #include "Airframe.h"
 #include <algorithm>
-Skyhawk::Airframe::Airframe( AircraftState& state, Input& controls, Engine2& engine):
+Skyhawk::Airframe::Airframe(AircraftState& state, Input& controls, Engine2& engine) :
 	m_state(state),
 	m_controls(controls),
-	m_engine(engine)
+	m_engine(engine),
+	m_actuatorElev(5.0)
 {
 	m_integrityElement = new float[(int)Damage::COUNT];
 	zeroInit();

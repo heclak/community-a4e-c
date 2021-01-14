@@ -63,11 +63,12 @@ Skyhawk::AeroHorizontalTail::AeroHorizontalTail
 	Airframe& airframe,
 	Table& CLalpha,
 	Table& CDalpha,
+	Table& compress,
 	Vec3 cp,
 	Vec3 surfaceNormal,
 	double area
 ) :
-	AeroElement(state, CLalpha, CDalpha, cp, surfaceNormal, area), m_airframe{ airframe }
+	AeroElement(state, CLalpha, CDalpha, cp, surfaceNormal, area), m_airframe{ airframe }, m_compressElev{ compress }
 {
 
 }
@@ -224,7 +225,7 @@ void Skyhawk::AeroHorizontalTail::calculateElementPhysics()
 	Vec3 flightPathProjectedAOA = flightPath - ((flightPath*spanVec) / (spanVec*spanVec)) * spanVec;
 	Vec3 flightPathProjectedBeta = flightPath - ((flightPath*m_surfaceNormal) / (m_surfaceNormal*m_surfaceNormal)) * m_surfaceNormal;
 	
-	float defToDeg = -m_airframe.getElevator() * toRad(35);
+	float defToDeg = -m_airframe.getElevator() * toRad(35) * m_compressElev(m_state.getMach());
 
 	//printf("defToDeg: %lf\n", defToDeg);
 

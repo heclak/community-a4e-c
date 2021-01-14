@@ -43,7 +43,7 @@ Skyhawk::FlightModel::FlightModel
 	m_elementRFlap(m_state, dCLflap, CDflap, Vec3(0, 0, 3.0), m_wingSurfaceNormalR, m_totalWingArea / 2),
 	m_elementLSpoiler(m_state, dCLspoiler, dCDspoiler, Vec3(0, 0, -3.0), m_wingSurfaceNormalL, m_totalWingArea / 2),
 	m_elementRSpoiler(m_state, dCLspoiler, dCDspoiler, Vec3(0, 0, 3.0), m_wingSurfaceNormalR, m_totalWingArea / 2),
-	m_elementHorizontalStab(m_state, m_airframe, CLhstab, CDhstab, Vec3(-5.1, 1.65, 0.0), m_hStabSurfaceNormal, 4.0),
+	m_elementHorizontalStab(m_state, m_airframe, CLhstab, CDhstab, comp_e, Vec3(-5.1, 1.65, 0.0), m_hStabSurfaceNormal, 4.0),
 	m_elementVerticalStab(m_state, m_airframe, CLvstab, CDvstab, Vec3(-4.8, 1.0, 0.0), m_vStabSurfaceNormal, 5.3),
 	//m_elementLAil(m_state, dCLflap, CDflap, Vec3(0, 0, -3.2), m_wingSurfaceNormalL, m_totalWingArea/5),
 	//m_elementRAil(m_state, dCLflap, CDflap, Vec3(0, 0, 3.2), m_wingSurfaceNormalR,  m_totalWingArea/5),
@@ -73,6 +73,8 @@ Skyhawk::FlightModel::FlightModel
 	//CLvstab(d_CL_vstab_aoa, -1.57079633, 1.57079633),
 	CLvstab(d_CL_vstab_aoa, -PI, PI),
 	CDvstab(d_CD_vstab_alpha, -PI, PI),
+
+	comp_e(d_comp_e, 0.0, 1.0),
 
 	CYb({-1}, 0.0, 1.0),
 
