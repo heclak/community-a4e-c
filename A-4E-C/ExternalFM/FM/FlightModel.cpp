@@ -43,8 +43,8 @@ Skyhawk::FlightModel::FlightModel
 	m_elementRFlap(m_state, dCLflap, CDflap, Vec3(0, 0, 3.0), m_wingSurfaceNormalR, m_totalWingArea / 2),
 	m_elementLSpoiler(m_state, dCLspoiler, dCDspoiler, Vec3(0, 0, -3.0), m_wingSurfaceNormalL, m_totalWingArea / 2),
 	m_elementRSpoiler(m_state, dCLspoiler, dCDspoiler, Vec3(0, 0, 3.0), m_wingSurfaceNormalR, m_totalWingArea / 2),
-	m_elementHorizontalStab(m_state, m_airframe, CLhstab, CDhstab, Vec3(-5.1, 1.65, 0.0), m_hStabSurfaceNormal, 4.0),
-	m_elementVerticalStab(m_state, m_airframe, CLvstab, CDvstab, Vec3(-4.8, 1.0, 0.0), m_vStabSurfaceNormal, 5.3),
+	m_elementHorizontalStab(m_state, m_airframe, CLhstab, CDhstab, comp_e, Vec3(-5.1, 1.65, 0.0), m_hStabSurfaceNormal, 4.0),
+	m_elementVerticalStab(m_state, m_airframe, CLvstab, CDvstab, Vec3(-4.8, 2.2, 0.0), m_vStabSurfaceNormal, 5.3),
 	//m_elementLAil(m_state, dCLflap, CDflap, Vec3(0, 0, -3.2), m_wingSurfaceNormalL, m_totalWingArea/5),
 	//m_elementRAil(m_state, dCLflap, CDflap, Vec3(0, 0, 3.2), m_wingSurfaceNormalR,  m_totalWingArea/5),
 
@@ -73,6 +73,8 @@ Skyhawk::FlightModel::FlightModel
 	//CLvstab(d_CL_vstab_aoa, -1.57079633, 1.57079633),
 	CLvstab(d_CL_vstab_aoa, -PI, PI),
 	CDvstab(d_CD_vstab_alpha, -PI, PI),
+
+	comp_e(d_comp_e, 0.0, 1.0),
 
 	CYb({-1}, 0.0, 1.0),
 
@@ -276,11 +278,13 @@ void Skyhawk::FlightModel::lift()
 void Skyhawk::FlightModel::drag()
 {
 	double CD = dCDspeedBrake(0.0) * m_airframe.getSpeedBrakePosition() +
-		CDbeta(m_state.getBeta()) + CDde(0.0) * abs(elevator()) +
+		CDbeta(m_state.getBeta()) +
+		CDde(0.0) * abs(elevator()) +
 		CDmach(m_state.getMach()) + CDi(0.0) * pow(CLalpha(m_state.getAOA()), 2.0) +
 		m_airframe.getGearLPosition() * CDMainGear +
 		m_airframe.getGearRPosition() * CDMainGear +
 		m_airframe.getGearNPosition() * CDNoseGear;
+
 
 	m_CDwindAxesComp.y = 0;
 	m_CDwindAxesComp.z = 0;
@@ -331,6 +335,9 @@ void Skyhawk::FlightModel::calculateElements()
 	m_moment += m_elementHorizontalStab.getMoment();
 	m_moment += m_elementVerticalStab.getMoment();
 	
+	//addForceElement(m_elementHorizontalStab);
+	//addForceElement(m_elementVerticalStab);
+
 	// i:0-8 = LW, i:8-17 = RW
 	float damage = 1.0;
 
@@ -421,7 +428,7 @@ void Skyhawk::FlightModel::slats(double& dt)
 void Skyhawk::FlightModel::calculateShake()
 {
 	double shakeAmplitude{ 0.0 };
-	double buffetAmplitude = 0.3 * m_cockpitShakeModifier;
+	double buffetAmplitude = 0.6 * m_cockpitShakeModifier;
 	double x{ 0.0 };
 
 	// 19 - 28

@@ -5,7 +5,12 @@
 namespace Skyhawk
 { // start namespace
 
-Actuator::Actuator() : m_actuatorPos{ 0.0 }, m_actuatorTargetPos{ 0.0 }
+Actuator::Actuator() : m_actuatorSpeed{ 10.0 }, m_actuatorPos{ 0.0 }, m_actuatorTargetPos{ 0.0 }, m_actuatorFactor{ 1.0 }
+{
+
+}
+
+Actuator::Actuator(double speed) : m_actuatorSpeed{ speed }, m_actuatorPos{ 0.0 }, m_actuatorTargetPos{ 0.0 }, m_actuatorFactor{ 1.0 }
 {
 
 }
@@ -44,14 +49,42 @@ double Actuator::inputUpdate(double targetPosition, double dt)
 void Actuator::physicsUpdate(double dt)
 {
 	double speedToTarget = (m_actuatorTargetPos - m_actuatorPos)/dt;
+	
+	
+	double actuatorSpeed = 0.0;
 
-	if (abs(speedToTarget) <= m_actuatorSpeed)
+	// logic for control speed dependant on aerodynamic load. Down the line this will be better handled in a separate pilot physiology class
+	if (m_actuatorPos > 0.0)
+	{
+		if (m_actuatorTargetPos - m_actuatorPos < 0.0)
+		{
+			actuatorSpeed = m_actuatorSpeed;
+		}
+		else
+		{
+			actuatorSpeed = m_actuatorSpeed * m_actuatorFactor;
+		}
+	}
+	else
+	{
+		if (m_actuatorTargetPos - m_actuatorPos > 0.0)
+		{
+			actuatorSpeed = m_actuatorSpeed;
+		}
+		else
+		{
+			actuatorSpeed = m_actuatorSpeed * m_actuatorFactor;
+		}
+	}
+
+
+	if (abs(speedToTarget) <= actuatorSpeed)
 	{
 		m_actuatorPos = m_actuatorTargetPos;
 	}
 	else
 	{
-		m_actuatorPos += copysign(1.0, speedToTarget) * m_actuatorSpeed * dt;
+		m_actuatorPos += copysign(1.0, speedToTarget) * actuatorSpeed * dt;
 	}
 
 	m_actuatorPos = clamp( m_actuatorPos, -1.0, 1.0 );
@@ -60,6 +93,11 @@ void Actuator::physicsUpdate(double dt)
 double Actuator::getPosition()
 {
 	return m_actuatorPos;
+}
+
+void Actuator::setActuatorSpeed(double factor)
+{
+	m_actuatorFactor = factor;
 }
 
 } // end namespace
