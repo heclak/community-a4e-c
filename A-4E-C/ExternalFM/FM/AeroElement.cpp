@@ -260,7 +260,7 @@ void Skyhawk::AeroVerticalSurface::calculateElementPhysics()
 	Vec3 flightPathProjectedAOA = flightPath - ((flightPath*spanVec) / (spanVec*spanVec)) * spanVec;
 	Vec3 flightPathProjectedBeta = flightPath - ((flightPath*m_surfaceNormal) / (m_surfaceNormal*m_surfaceNormal)) * m_surfaceNormal;
 
-	float defToDeg = -m_airframe.getRudder() * toRad(15);
+	float defToDeg = -m_airframe.getRudder() * toRad(17);
 
 	//printf("defToDeg: %lf\n", defToDeg);
 
@@ -276,6 +276,5 @@ void Skyhawk::AeroVerticalSurface::calculateElementPhysics()
 	Vec3 deltaCentreOfPressure = m_cp - Vec3(0.0, 0.0, m_state.getCOM().z);
 	m_RForceElement = windAxisToBody(m_LDwindAxes, m_beta, m_aoa);
 	m_moment = cross(deltaCentreOfPressure, m_RForceElement);
-
 }
 

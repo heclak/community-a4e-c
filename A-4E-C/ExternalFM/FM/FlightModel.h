@@ -359,7 +359,7 @@ double FlightModel::thrust()
 
 void FlightModel::sideForce()
 {
-	addForce(Vec3(0.0, 0.0, m_k*CYb(0.0)*m_state.getBeta()));
+	addForce(Vec3(0.0, 0.0, m_k*CYb(0.0)*m_state.getBeta()*0.35));
 }
 
 void FlightModel::thrustForce()
