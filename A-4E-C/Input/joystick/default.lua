@@ -376,6 +376,9 @@ join(res.keyCommands,{
     {down   = iCommandPlane_Helmet_Brightess_Up  , name = _('Goggle Gain - Inc'),            category = _('Sensors')},
     {down   = iCommandPlane_Helmet_Brightess_Down, name = _('Goggle Gain - Dec'),            category = _('Sensors')},
     
+	-- Radio
+	{down = Keys.radio_ptt   , name = _('Radio Push to Talk (PTT)'), category = _('Radio')},
+	
     -- PID tuning
     {down = Keys.Tune1, value_down = 0.1,          name = _('Tune1: +0.1'),                  category = _('Debug')},
     {down = Keys.Tune1, value_down = -0.1,         name = _('Tune1: -0.1'),                  category = _('Debug')},

@@ -16,6 +16,7 @@ dev:listen_command(device_commands.arc51_freq_preset)
 dev:listen_command(device_commands.arc51_freq_XXxxx)
 dev:listen_command(device_commands.arc51_freq_xxXxx)
 dev:listen_command(device_commands.arc51_freq_xxxXX)
+--dev:listen_command(Keys.radio_ptt)
 
 efm_data_bus = get_efm_data_bus()
 

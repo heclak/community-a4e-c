@@ -108,32 +108,35 @@ void ed_fm_simulate(double dt)
 		return;
 
 	//Pre update
-	s_state->setRadarAltitude( s_interface->getRadarAltitude() );
-	s_avionics->setYawDamperPower( s_interface->getYawDamper() > 0.5 );
-	s_fm->setCockpitShakeModifier( s_interface->getCockpitShake() );
-	s_airframe->setFlapsPosition(s_interface->getFlaps());
-	s_airframe->setSpoilerPosition(s_interface->getSpoilers());
-	s_airframe->setAirbrakePosition(s_interface->getSpeedBrakes());
-	s_airframe->setGearLPosition( s_interface->getGearLeft() );
-	s_airframe->setGearRPosition( s_interface->getGearRight() );
-	s_airframe->setGearNPosition( s_interface->getGearNose() );
-	s_airframe->setDumpingFuel( s_interface->getDumpingFuel() );
+	if ( s_interface->getAvionicsAlive() )
+	{
+		s_state->setRadarAltitude( s_interface->getRadarAltitude() );
+		s_avionics->setYawDamperPower( s_interface->getYawDamper() > 0.5 );
+		s_fm->setCockpitShakeModifier( s_interface->getCockpitShake() );
+		s_airframe->setFlapsPosition( s_interface->getFlaps() );
+		s_airframe->setSpoilerPosition( s_interface->getSpoilers() );
+		s_airframe->setAirbrakePosition( s_interface->getSpeedBrakes() );
+		s_airframe->setGearLPosition( s_interface->getGearLeft() );
+		s_airframe->setGearRPosition( s_interface->getGearRight() );
+		s_airframe->setGearNPosition( s_interface->getGearNose() );
+		s_airframe->setDumpingFuel( s_interface->getDumpingFuel() );
 
-	s_avionics->getComputer().setGunsightAngle( s_interface->getGunsightAngle() );
-	s_avionics->getComputer().setTarget( s_interface->getSetTarget(), s_interface->getSlantRange() );
+		s_avionics->getComputer().setGunsightAngle( s_interface->getGunsightAngle() );
+		s_avionics->getComputer().setTarget( s_interface->getSetTarget(), s_interface->getSlantRange() );
 
-	s_input->pitchTrim() = s_interface->getPitchTrim();
-	s_input->rollTrim() = s_interface->getRollTrim();
-	s_input->yawTrim() = s_interface->getRudderTrim();
+		s_input->pitchTrim() = s_interface->getPitchTrim();
+		s_input->rollTrim() = s_interface->getRollTrim();
+		s_input->yawTrim() = s_interface->getRudderTrim();
 
-	s_input->update();
-	//printf( "x: %lf, y: %lf, z: %lf, mass: %lf\n", s_state->getCOM().x, s_state->getCOM().y, s_state->getCOM().z, s_airframe->getMass() );
 
-	s_engine->setThrottle(s_interface->getEngineThrottlePosition());
-	s_engine->setBleedAir(s_interface->getBleedAir() > 0.1);
-	s_engine->setIgnitors(s_interface->getIgnition() > 0.1);
+		//printf( "x: %lf, y: %lf, z: %lf, mass: %lf\n", s_state->getCOM().x, s_state->getCOM().y, s_state->getCOM().z, s_airframe->getMass() );
+		s_engine->setThrottle( s_interface->getEngineThrottlePosition() );
+		s_engine->setBleedAir( s_interface->getBleedAir() > 0.1 );
+		s_engine->setIgnitors( s_interface->getIgnition() > 0.1 );
+	}
 
 	//Update
+	s_input->update();
 	s_radio->update();
 	s_engine->updateEngine(dt);
 	s_airframe->airframeUpdate(dt);
@@ -316,6 +319,7 @@ void ed_fm_set_command
 		s_input->hook() = !s_input->hook();
 		break;
 	case Skyhawk::Control::RUDDER_LEFT_START:
+		s_radio->toggleRadioMenu();
 		s_input->yawAxis().keyDecrease();
 		break;
 	case Skyhawk::Control::RUDDER_LEFT_STOP:
@@ -369,7 +373,7 @@ void ed_fm_set_command
 		s_input->leftBrakeAxis().reset();
 		s_input->rightBrakeAxis().reset();
 		break;
-	case Skyhawk::Control::RADIO_MENU:
+	case Skyhawk::Control::RADIO_PTT:
 		s_radio->toggleRadioMenu();
 		break;
 	default:

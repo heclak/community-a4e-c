@@ -9,7 +9,7 @@ extern bool g_logging;
 
 extern int isSafeContext();
 
-#define DEBUG_CONSOLE
+//#define DEBUG_CONSOLE
 
 //Uncomment this to enable logging make sure this is commited with this commented out!!!!!!
 //#define LOGGING

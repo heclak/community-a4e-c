@@ -6,6 +6,16 @@ local function __custom_counter()
 	return __count_custom
 end
 
+--[[
+	===================================================
+				   WARNING WARNING WARNING
+	===================================================
+	
+	DO NOT PUT COMMANDS BEFORE COMMANDS MARKED FOR EFM. 
+	SERIOUSLY DON'T PUT CONTROLS BEFORE THIS. IF YOU DO 
+	YOU WILL BREAK ALL THE EFM SPECIFIC BINDS. AS THESE
+	MUST BE HARD CODED INTO THE BINARY.
+]]--
 
 Keys =
 {
@@ -280,8 +290,11 @@ Keys =
     AWRSModeSelCCW                  = __custom_counter(),
     AWRSModeSelCW                   = __custom_counter(),
 	
+	--EFM SPECIFIC BINDS
 	nws_engage						 = __custom_counter(),
 	nws_disengage					 = __custom_counter(),
+	radio_ptt						 = __custom_counter(),
+	--END EFM SPECIFIC BINDS
 }
 
 start_command   = 3000

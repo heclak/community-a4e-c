@@ -88,6 +88,7 @@ public:
 		m_targetSet = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_TARGET_SET" );
 
 		m_dumpingFuel = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_DUMPING_FUEL" );
+		m_avionicsAlive = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_AVIONICS_ALIVE" );
 	}
 
 	inline void coldInit()
@@ -485,6 +486,11 @@ public:
 	{
 		return getParamNumber( m_dumpingFuel ) > 0.5;
 	}
+
+	inline bool getAvionicsAlive()
+	{
+		return getParamNumber( m_avionicsAlive ) > 0.5;
+	}
 		 
 	void* m_test = NULL;
 private:
@@ -568,6 +574,8 @@ private:
 	void* m_targetSet = NULL;
 
 	void* m_dumpingFuel = NULL;
+
+	void* m_avionicsAlive = NULL;
 };
 
 

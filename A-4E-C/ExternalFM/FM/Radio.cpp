@@ -33,7 +33,16 @@ void Skyhawk::Radio::setup( void* baseRadio, void* electricalSystem, void* inter
 
 	if ( communicator )
 	{
+		/*m_api.pfn_set_communicator_on( communicator, true );
+		m_api.pfn_set_receiver_on( communicator, true );
+		m_api.pfn_set_transmitter_on( communicator, true );*/
+
+
+		//printf( "Communicator: %d, Receiver %d, Transmitter %d\n", m_api.pfn_is_communicator_on( communicator ), m_api.pfn_is_receiver_on( communicator ), m_api.pfn_is_transmitter_on( communicator ) );
+
+
 		m_api.pfn_set_communicator_as_current( communicator );
+		//m_api.pfn_send_net_message( communicator, true );
 		LOG( "Set communicator as primary.\n" );
 	}
 	else
@@ -58,7 +67,18 @@ void Skyhawk::Radio::setup( void* baseRadio, void* electricalSystem, void* inter
 
 void Skyhawk::Radio::update()
 {
-	if ( m_setup )
+	
+	//DOESNT BRING UP THE MENU!!!!
+	/*intptr_t ptr = (intptr_t)m_api.pfn_get_human_communicator();
+	intptr_t table = *(intptr_t*)ptr;
+	if ( ptr )
+	{
+		PFN_OPEN_RADIO_MENU fnc = (PFN_OPEN_RADIO_MENU)(*(intptr_t*)(table + 0x50));
+		printf( "Communicator %p, fnc %p\n", ptr, fnc );
+		fnc( (void*)ptr );
+	}*/
+	
+	if ( m_setup && m_interface.getAvionicsAlive() )
 	{
 		setPower( m_interface.getRadioPower() );
 		//m_api.pfn_try_set_communicator( m_intercom, 1 );
