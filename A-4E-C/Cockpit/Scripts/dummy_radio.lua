@@ -1,3 +1,4 @@
+dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 dofile(LockOn_Options.script_path.."devices.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
@@ -6,16 +7,13 @@ local dev 	    = GetSelf()
 GUI = {
 }
 
-local update_time_step = 1 --update will be called once per second
---local this_radio_ptr = get_param_handle("THIS_RADIO_PTR")
+local efm_data_bus = get_efm_data_bus()
 
-local this_intercom_ptr = get_param_handle("THIS_INTERCOM_PTR")
+local update_time_step = 1 --update will be called once per second
 
 function post_initialize()
     str_ptr = string.sub(tostring(dev.link),10)
-    this_intercom_ptr:set(str_ptr)
-
-	--print_message_to_user("Init intercom")
+    efm_data_bus.fm_setIntercomPTR(str_ptr)
 end
 
 function SetCommand(command,value)

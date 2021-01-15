@@ -35,6 +35,10 @@ typedef void*  (*PFN_GET_WIRE)(void*, int);
 typedef int   (*PFN_GET_FREQ)(void*);
 typedef void  (*PFN_PUSH_TO_TALK)(void*, bool);
 typedef void  (*PFN_TRY_SET_COMMUNICATOR)(void*, unsigned int);
+typedef bool  (*PFN_IS_ON)(void*);
+typedef void  (*PFN_SET_ON)(void*, bool);
+typedef void* (*PFN_GET_HUMAN_COMMUNICATOR)(void);
+typedef void  (*PFN_OPEN_RADIO_MENU)(void*);
 
 
 /* usage
@@ -76,6 +80,15 @@ struct cockpit_param_api
 	PFN_GET_FREQ pfn_get_freq;
 	PFN_PUSH_TO_TALK pfn_push_to_talk;
 	PFN_TRY_SET_COMMUNICATOR pfn_try_set_communicator;
+	PFN_IS_ON pfn_is_communicator_on;
+	PFN_IS_ON pfn_is_transmitter_on;
+	PFN_IS_ON pfn_is_receiver_on;
+	PFN_SET_ON pfn_set_communicator_on;
+	PFN_SET_ON pfn_set_transmitter_on;
+	PFN_SET_ON pfn_set_receiver_on;
+	PFN_SET_ON pfn_send_net_message;
+	PFN_GET_HUMAN_COMMUNICATOR pfn_get_human_communicator;
+	
 	void** device_array;
 };
 
@@ -110,6 +123,16 @@ inline cockpit_param_api  ed_get_cockpit_param_api()
 	ret.pfn_get_freq = (PFN_GET_FREQ)GetProcAddress( cockpit_dll, "?get_knobs_frequency@avUHF_ARC_164@cockpit@@IEBAHXZ" );
 	ret.pfn_push_to_talk = (PFN_PUSH_TO_TALK)GetProcAddress( cockpit_dll, "?pushToTalk@avIntercom@cockpit@@IEAAX_N@Z" );
 	ret.pfn_try_set_communicator = (PFN_TRY_SET_COMMUNICATOR)GetProcAddress(cockpit_dll, "?makeSetupForCommunicator@avIntercom@cockpit@@MEAA_NI@Z");
+	ret.pfn_is_communicator_on = (PFN_IS_ON)GetProcAddress( cockpit_dll, "?isOn@avCommunicator@cockpit@@QEBA_NXZ" );
+	ret.pfn_is_receiver_on = (PFN_IS_ON)GetProcAddress( cockpit_dll, "?isReceiverOn@avCommunicator@cockpit@@QEBA_NXZ" );
+	ret.pfn_is_transmitter_on = (PFN_IS_ON)GetProcAddress( cockpit_dll, "?isTransmitterOn@avCommunicator@cockpit@@QEBA_NXZ" );
+
+	ret.pfn_set_communicator_on = (PFN_SET_ON)GetProcAddress( cockpit_dll, "?setOnOff@avCommunicator@cockpit@@QEAAX_N@Z" );
+	ret.pfn_set_receiver_on = (PFN_SET_ON)GetProcAddress( cockpit_dll, "?setReceiverOnOff@avCommunicator@cockpit@@QEAAX_N@Z" );
+	ret.pfn_set_transmitter_on = (PFN_SET_ON)GetProcAddress( cockpit_dll, "?setTransmitterOnOff@avCommunicator@cockpit@@QEAAX_N@Z" );
+	ret.pfn_send_net_message = (PFN_SET_ON)GetProcAddress( cockpit_dll, "?sendNetMessage@avCommunicator@cockpit@@IEAAX_N@Z" );
+	ret.pfn_get_human_communicator = (PFN_GET_HUMAN_COMMUNICATOR)GetProcAddress( cockpit_dll, "?c_get_communicator@cockpit@@YAPEAVwHumanCommunicator@@XZ" );
+
 	//?makeSetupForCommunicator@avIntercom@cockpit@@MEAA_NI@Z
 	//?trySetCommunicator@avIntercom@cockpit@@MEAAXI@Z
 	//ret.getGunShells = (GET_SOMETHING_INT)GetProcAddress(cockpit_dll, "")

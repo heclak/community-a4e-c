@@ -197,7 +197,6 @@ void Skyhawk::AeroControlSurface::calculateElementPhysics()
 
 	m_aoa = atan2(cross(forwardVec, flightPathProjectedAOA) * spanVec, forwardVec * flightPathProjectedAOA);
 	m_aoa += defToDeg;
-	printf("aoa: %lf\n", toDegrees(m_aoa));
 	//m_beta = atan2(cross(forwardVec, flightPathProjectedBeta)*m_surfaceNormal, forwardVec*flightPathProjectedBeta);
 	m_beta = m_state.getBeta();
 	elementLift();

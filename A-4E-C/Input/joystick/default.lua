@@ -28,8 +28,10 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- Systems ----------------------------------
     ---------------------------------------------
-    {down = iCommandPlaneEject,                                                      name = _('Eject (3 times)'),                  category = {_('Systems')}},
-    {down = Keys.BrakesOn, up = Keys.BrakesOff,                                      name = _('Wheel Brake - ON/OFF'),                   category = {_('Systems')}},
+    {down = iCommandPlaneEject,                                                     name = _('Eject (3 times)'),                  category = {_('Systems')}},
+    {down = Keys.BrakesOn, up = Keys.BrakesOff,                                      name = _('Wheel Brake - ON/OFF'),             category = {_('Systems')}},
+	{down = Keys.BrakesOnLeft, up = Keys.BrakesOffLeft,							 		  name = _('Wheel Brake Left - ON/OFF'), 		category = {_('Systems')}},
+	{down = Keys.BrakesOnRight, up = Keys.BrakesOffRight,						 		  name = _('Wheel Brake Right - ON/OFF'), 		category = {_('Systems')}},
 
     ---------------------------------------------
     -- Flight Control ---------------------------
@@ -376,6 +378,9 @@ join(res.keyCommands,{
     {down   = iCommandPlane_Helmet_Brightess_Up  , name = _('Goggle Gain - Inc'),            category = _('Sensors')},
     {down   = iCommandPlane_Helmet_Brightess_Down, name = _('Goggle Gain - Dec'),            category = _('Sensors')},
     
+	-- Radio
+	{down = Keys.radio_ptt   , name = _('Radio Push to Talk (PTT)'), category = _('Radio')},
+	
     -- PID tuning
     {down = Keys.Tune1, value_down = 0.1,          name = _('Tune1: +0.1'),                  category = _('Debug')},
     {down = Keys.Tune1, value_down = -0.1,         name = _('Tune1: -0.1'),                  category = _('Debug')},
@@ -418,8 +423,8 @@ join(res.axisCommands,{
     {combos = defaultDeviceAssignmentFor("roll"),   action = iCommandPlaneRoll,                                                             name = _('Roll'),              category = {_('Flight Control')}},
     {combos = defaultDeviceAssignmentFor("pitch"),  action = iCommandPlanePitch,                                                            name = _('Pitch'),             category = {_('Flight Control')}},
 	{combos = defaultDeviceAssignmentFor("rudder"), action = iCommandPlaneRudder,																	name = _('Rudder'),            category = {_('Flight Control')}},
-	{combos = defaultDeviceAssignmentFor("thrust"), action = device_commands.throttle_axis_mod,    cockpit_device_id = devices.CARRIER ,    name = _('Thrust'),            category = {_('Flight Control')}},
-    {                                               action = device_commands.wheelbrake_AXIS,       cockpit_device_id = devices.AIRBRAKES ,  name = _('Wheel Brake'),       category = {_('Systems')}},
+	{combos = defaultDeviceAssignmentFor("thrust"), action = iCommandPlaneThrustCommon,    														name = _('Thrust'),            category = {_('Flight Control')}},
+    {action = device_commands.wheelbrake_AXIS,       cockpit_device_id = devices.AIRBRAKES ,  name = _('Wheel Brake'),       category = {_('Systems')}},
     {action = device_commands.left_wheelbrake_AXIS,  name = _('Wheel Brake Left'),  category = {_('Systems')}},
     {action = device_commands.right_wheelbrake_AXIS,  name = _('Wheel Brake Right'), category = {_('Systems')}},
     
@@ -447,8 +452,6 @@ join(res.axisCommands,{
     {action = device_commands.AWRS_drop_interval_AXIS,      cockpit_device_id = devices.WEAPON_SYSTEM, name = _('DROP INTVL Control'),      category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
     
     --{action = iCommandWheelBrake,		name = _('Wheel Brake')},
-    --{action = iCommandLeftWheelBrake,	name = _('Wheel Brake Left')},
-    --{action = iCommandRightWheelBrake,	name = _('Wheel Brake Right')},
 
     {action = device_commands.GunsightElevationControl_AXIS,   cockpit_device_id = devices.GUNSIGHT,       name = _('Gunsight Elevation Control'),      category = {_('Instrument Panel'), _('Gunsight Panel')}},
 

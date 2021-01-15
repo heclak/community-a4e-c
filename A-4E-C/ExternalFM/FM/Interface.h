@@ -48,6 +48,8 @@ public:
 		m_stickPitch			= m_api.pfn_ed_cockpit_get_parameter_handle("STICK_PITCH");
 		m_stickRoll				= m_api.pfn_ed_cockpit_get_parameter_handle("STICK_ROLL");
 		m_rudderPedals			= m_api.pfn_ed_cockpit_get_parameter_handle("RUDDER_PEDALS");
+		m_leftBrakePedal		= m_api.pfn_ed_cockpit_get_parameter_handle("LEFT_BRAKE_PEDAL");
+		m_rightBrakePedal		= m_api.pfn_ed_cockpit_get_parameter_handle("RIGHT_BRAKE_PEDAL");
 
 		m_stickInputPitch       = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_STICK_INPUT_PITCH" );
 		m_stickInputRoll        = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_STICK_INPUT_ROLL" );
@@ -88,6 +90,7 @@ public:
 		m_targetSet = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_TARGET_SET" );
 
 		m_dumpingFuel = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_DUMPING_FUEL" );
+		m_avionicsAlive = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_AVIONICS_ALIVE" );
 	}
 
 	inline void coldInit()
@@ -133,7 +136,7 @@ public:
 		char buffer[20];
 		uintptr_t ptr = NULL;
 		getParamString( handle, buffer, 20 );
-		printf( "%s\n", buffer );
+		//printf( "%s\n", buffer );
 		if ( sscanf( buffer, "%p.0", &ptr ) )
 		{
 			if ( ptr )
@@ -152,9 +155,7 @@ public:
 
 	inline void* getIntercomPointer()
 	{
-		void* ptr = getPointer( m_intercom );
-		printf( "Intercom: %p\n", ptr );
-		return ptr;
+		return getPointer( m_intercom );
 	}
 
 	inline void* getRadioPointer()
@@ -383,6 +384,16 @@ public:
 		setParamNumber( m_stickInputRoll, number );
 	}
 
+	inline void setLeftBrakePedal( double number )
+	{
+		setParamNumber( m_leftBrakePedal, number );
+	}
+
+	inline void setRightBrakePedal( double number )
+	{
+		setParamNumber( m_rightBrakePedal, number );
+	}
+
 	inline bool getRadioPower()
 	{
 		return getParamNumber( m_radioPower ) > 0.5;
@@ -485,6 +496,11 @@ public:
 	{
 		return getParamNumber( m_dumpingFuel ) > 0.5;
 	}
+
+	inline bool getAvionicsAlive()
+	{
+		return getParamNumber( m_avionicsAlive ) > 0.5;
+	}
 		 
 	void* m_test = NULL;
 private:
@@ -527,6 +543,9 @@ private:
 	void* m_stickPitch = NULL;
 	void* m_throttlePosition = NULL;
 
+	void* m_leftBrakePedal = NULL;
+	void* m_rightBrakePedal = NULL;
+
 	void* m_stickInputPitch = NULL;
 	void* m_stickInputRoll = NULL;
 
@@ -568,6 +587,9 @@ private:
 	void* m_targetSet = NULL;
 
 	void* m_dumpingFuel = NULL;
+
+	void* m_avionicsAlive = NULL;
+
 };
 
 

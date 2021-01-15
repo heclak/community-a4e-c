@@ -28,8 +28,10 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- Systems ----------------------------------
     ---------------------------------------------
-    {combos = {{key = 'E', reformers = {'LCtrl'}}}, down = iCommandPlaneEject,                                           name = _('Eject (3 times)'),                  category = {_('Systems')}},
-    {combos = {{key = 'W'}}, down = Keys.BrakesOn, up = Keys.BrakesOff,                                                  name = _('Wheel Brake - ON/OFF'),                   category = {_('Systems')}},
+    {combos = {{key = 'E', reformers = {'LCtrl'}}}, down = iCommandPlaneEject,                                           name = _('Eject (3 times)'),                  	category = {_('Systems')}},
+    {combos = {{key = 'W'}}, down = Keys.BrakesOn, up = Keys.BrakesOff,                                                  name = _('Wheel Brake - ON/OFF'),             	category = {_('Systems')}},
+	{combos = {{key = 'W', reformers = {'LShift'}}}, down = Keys.BrakesOnLeft, up = Keys.BrakesOffLeft,						 name = _('Wheel Brake Left - ON/OFF'), 			category = {_('Systems')}},
+	{combos = {{key = 'W', reformers = {'LAlt'}}}, down = Keys.BrakesOnRight, up = Keys.BrakesOffRight,						 name = _('Wheel Brake Right - ON/OFF'), 		category = {_('Systems')}},
 
     ---------------------------------------------
     -- Flight Control ---------------------------
@@ -335,6 +337,10 @@ join(res.keyCommands,{
     {combos = {{key = 'H', reformers = {'RShift'}}}        , down = iCommandViewNightVisionGogglesOn   , name = _('Night Vision Goggle - Toggle'), category = _('Sensors')},
     {combos = {{key = 'H', reformers = {'RShift','RCtrl'}}}, down = iCommandPlane_Helmet_Brightess_Up  , name = _('Goggle Gain - Inc'),            category = _('Sensors')},
     {combos = {{key = 'H', reformers = {'RShift','RAlt'}}} , down = iCommandPlane_Helmet_Brightess_Down, name = _('Goggle Gain - Dec'),            category = _('Sensors')},
+  
+	-- Radio
+	{combos = {{key = '\\', reformers = {'RCtrl'}}}        , down = Keys.radio_ptt   , name = _('Radio Push to Talk (PTT)'), category = _('Radio')},
+    
   
     -- PID tuning
     {down = Keys.Tune1, value_down = 0.1,                                                                name = _('Tune1: +0.1'),                  category = _('Debug')},
