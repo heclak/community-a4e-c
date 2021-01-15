@@ -140,6 +140,10 @@ function SetCommand(command,value)
     end
 end
 
+function trim_to_incidence( trim )
+    return (trim - 1.0)/(-2.0) * (-13.25) + 12.25
+end
+
 local prev_trim_override = trim_override
 function update()
     -- TODO : take electric system into account
@@ -179,7 +183,7 @@ function update()
 
     -- update trim position indicators
     if get_elec_primary_dc_ok() then
-        pitch_trim_gauge_handle:set(pitch_trim_gauge:get_WMA(pitch_trim))
+        pitch_trim_gauge_handle:set(trim_to_incidence(pitch_trim))
         yaw_trim_gauge_handle:set(yaw_trim_gauge:get_WMA(rudder_trim))
     else
         pitch_trim_gauge_handle:set(pitch_trim_gauge:get_WMA(0))
