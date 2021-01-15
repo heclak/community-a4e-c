@@ -98,8 +98,8 @@ Landinggearhandle.controller		= controllers.gear_handle_animation
 
 PitchTrim							= CreateGauge("parameter")
 PitchTrim.arg_number				= 870
-PitchTrim.input						= {-1, 1}
-PitchTrim.output					= {-1, 1}
+PitchTrim.input						= {-3, 13}
+PitchTrim.output					= {-0.25, 1}
 PitchTrim.parameter_name			= "PITCH_TRIM_GAUGE"
 
 RollTrim							= CreateGauge("parameter")
