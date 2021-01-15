@@ -35,7 +35,7 @@ local engine_heat_stress = get_param_handle("ENGINE_HEAT_STRESS")
 local manual_fuel_control_warn_param = get_param_handle("MANUAL_FUEL_CONTROL_WARN")
 
 local throttle_position = get_param_handle("THROTTLE_POSITION")
-local throttle_position_wma = WMA(0.15, 0)
+local throttle_position_wma = WMA(0.35, 0)
 local iCommandPlaneThrustCommon = 2004
 
 local ENGINE_OFF = 0
