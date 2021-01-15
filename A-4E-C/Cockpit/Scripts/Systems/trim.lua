@@ -76,7 +76,7 @@ function post_initialize()
     local dev = GetSelf()
     local sensor_data = get_base_data()
     -- TODO: is there a better way to determine initial SFM pitch trim?
-    pitch_trim_handle:set((sensor_data.getStickRollPosition()/100.0)/pitch_trim_scale)  -- for some reason, stick pitch is reported as stick roll in the API
+    pitch_trim_handle:set(-0.5)  -- for some reason, stick pitch is reported as stick roll in the API
     trim_override_handle:set(0)
     trim_override = false
 

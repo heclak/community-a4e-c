@@ -226,7 +226,7 @@ void Skyhawk::AeroHorizontalTail::calculateElementPhysics()
 	Vec3 flightPathProjectedAOA = flightPath - ((flightPath*spanVec) / (spanVec*spanVec)) * spanVec;
 	Vec3 flightPathProjectedBeta = flightPath - ((flightPath*m_surfaceNormal) / (m_surfaceNormal*m_surfaceNormal)) * m_surfaceNormal;
 	
-	float defToDeg = -m_airframe.getElevator() * toRad(35) * m_compressElev(m_state.getMach());
+	float defToDeg = -m_airframe.getElevator() * toRad(30) * m_compressElev(m_state.getMach());
 
 	//printf("defToDeg: %lf\n", defToDeg);
 
