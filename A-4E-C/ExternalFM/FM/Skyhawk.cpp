@@ -149,6 +149,8 @@ void ed_fm_simulate(double dt)
 	s_interface->setStickPitch(s_airframe->getElevator());
 	s_interface->setStickRoll(s_airframe->getAileron());
 	s_interface->setRudderPedals(s_airframe->getRudder());
+	s_interface->setLeftBrakePedal( -s_input->brakeLeft() );
+	s_interface->setRightBrakePedal( -s_input->brakeRight() );
 
 	s_interface->setStickInputPitch( s_input->pitch() );
 	s_interface->setStickInputRoll( s_input->roll() );

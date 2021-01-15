@@ -48,6 +48,8 @@ public:
 		m_stickPitch			= m_api.pfn_ed_cockpit_get_parameter_handle("STICK_PITCH");
 		m_stickRoll				= m_api.pfn_ed_cockpit_get_parameter_handle("STICK_ROLL");
 		m_rudderPedals			= m_api.pfn_ed_cockpit_get_parameter_handle("RUDDER_PEDALS");
+		m_leftBrakePedal		= m_api.pfn_ed_cockpit_get_parameter_handle("LEFT_BRAKE_PEDAL");
+		m_rightBrakePedal		= m_api.pfn_ed_cockpit_get_parameter_handle("RIGHT_BRAKE_PEDAL");
 
 		m_stickInputPitch       = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_STICK_INPUT_PITCH" );
 		m_stickInputRoll        = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_STICK_INPUT_ROLL" );
@@ -382,6 +384,16 @@ public:
 		setParamNumber( m_stickInputRoll, number );
 	}
 
+	inline void setLeftBrakePedal( double number )
+	{
+		setParamNumber( m_leftBrakePedal, number );
+	}
+
+	inline void setRightBrakePedal( double number )
+	{
+		setParamNumber( m_rightBrakePedal, number );
+	}
+
 	inline bool getRadioPower()
 	{
 		return getParamNumber( m_radioPower ) > 0.5;
@@ -531,6 +543,9 @@ private:
 	void* m_stickPitch = NULL;
 	void* m_throttlePosition = NULL;
 
+	void* m_leftBrakePedal = NULL;
+	void* m_rightBrakePedal = NULL;
+
 	void* m_stickInputPitch = NULL;
 	void* m_stickInputRoll = NULL;
 
@@ -574,6 +589,7 @@ private:
 	void* m_dumpingFuel = NULL;
 
 	void* m_avionicsAlive = NULL;
+
 };
 
 
