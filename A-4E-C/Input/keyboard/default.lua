@@ -28,8 +28,10 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- Systems ----------------------------------
     ---------------------------------------------
-    {combos = {{key = 'E', reformers = {'LCtrl'}}}, down = iCommandPlaneEject,                                           name = _('Eject (3 times)'),                  category = {_('Systems')}},
-    {combos = {{key = 'W'}}, down = Keys.BrakesOn, up = Keys.BrakesOff,                                                  name = _('Wheel Brake - ON/OFF'),                   category = {_('Systems')}},
+    {combos = {{key = 'E', reformers = {'LCtrl'}}}, down = iCommandPlaneEject,                                           name = _('Eject (3 times)'),                  	category = {_('Systems')}},
+    {combos = {{key = 'W'}}, down = Keys.BrakesOn, up = Keys.BrakesOff,                                                  name = _('Wheel Brake - ON/OFF'),             	category = {_('Systems')}},
+	{combos = {{key = 'W', reformers = {'LShift'}}}, down = Keys.BrakesOnLeft, up = Keys.BrakesOffLeft,						 name = _('Wheel Brake Left - ON/OFF'), 			category = {_('Systems')}},
+	{combos = {{key = 'W', reformers = {'LAlt'}}}, down = Keys.BrakesOnRight, up = Keys.BrakesOffRight,						 name = _('Wheel Brake Right - ON/OFF'), 		category = {_('Systems')}},
 
     ---------------------------------------------
     -- Flight Control ---------------------------

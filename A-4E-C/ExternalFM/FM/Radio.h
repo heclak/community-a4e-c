@@ -51,7 +51,7 @@ void Radio::toggleRadioMenu()
 	if ( m_intercom )
 	{
 		m_api.pfn_push_to_talk( m_intercom, true );
-		printf( "Toggle Radio\n" );
+		//printf( "Toggle Radio\n" );
 	}
 }
 

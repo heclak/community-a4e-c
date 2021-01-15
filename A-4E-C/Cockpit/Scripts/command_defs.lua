@@ -235,8 +235,10 @@ Keys =
     AFCSHotasAlt                    = __custom_counter(),  -- for warthog hotas
     AFCSHotasEngage                 = __custom_counter(),  -- for warthog hotas
 
+	--EFM SPECIFIC BINDS
     BrakesOn                        = __custom_counter(),
     BrakesOff                       = __custom_counter(),
+	--END EFM SPECIFIC BINDS
 
     Tune1                           = __custom_counter(),
     Tune2                           = __custom_counter(),
@@ -293,7 +295,11 @@ Keys =
 	--EFM SPECIFIC BINDS
 	nws_engage						 = __custom_counter(),
 	nws_disengage					 = __custom_counter(),
-	radio_ptt						 = __custom_counter(),
+    radio_ptt						 = __custom_counter(),
+    BrakesOnLeft                   = __custom_counter(),
+    BrakesOffLeft                  = __custom_counter(),
+    BrakesOnRight                  = __custom_counter(),
+    BrakesOffRight                 = __custom_counter(),
 	--END EFM SPECIFIC BINDS
 }
 

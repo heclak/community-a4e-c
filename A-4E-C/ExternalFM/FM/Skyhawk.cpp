@@ -373,11 +373,24 @@ void ed_fm_set_command
 		s_input->leftBrakeAxis().reset();
 		s_input->rightBrakeAxis().reset();
 		break;
+
+	case Skyhawk::Control::BRAKE_LEFT_START:
+		s_input->leftBrakeAxis().keyIncrease();
+		break;
+	case Skyhawk::Control::BRAKE_LEFT_STOP:
+		s_input->leftBrakeAxis().reset();
+		break;
+	case Skyhawk::Control::BRAKE_RIGHT_START:
+		s_input->rightBrakeAxis().keyIncrease();
+		break;
+	case Skyhawk::Control::BRAKE_RIGHT_STOP:
+		s_input->rightBrakeAxis().reset();
+		break;
 	case Skyhawk::Control::RADIO_PTT:
 		s_radio->toggleRadioMenu();
 		break;
 	default:
-		;// printf( "number %d: %lf\n", command, value );
+		; //printf( "number %d: %lf\n", command, value );
 	}
 }
 

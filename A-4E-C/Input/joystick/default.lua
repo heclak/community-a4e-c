@@ -28,8 +28,10 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- Systems ----------------------------------
     ---------------------------------------------
-    {down = iCommandPlaneEject,                                                      name = _('Eject (3 times)'),                  category = {_('Systems')}},
-    {down = Keys.BrakesOn, up = Keys.BrakesOff,                                      name = _('Wheel Brake - ON/OFF'),                   category = {_('Systems')}},
+    {down = iCommandPlaneEject,                                                     name = _('Eject (3 times)'),                  category = {_('Systems')}},
+    {down = Keys.BrakesOn, up = Keys.BrakesOff,                                      name = _('Wheel Brake - ON/OFF'),             category = {_('Systems')}},
+	{down = Keys.BrakesOnLeft, up = Keys.BrakesOffLeft,							 		  name = _('Wheel Brake Left - ON/OFF'), 		category = {_('Systems')}},
+	{down = Keys.BrakesOnRight, up = Keys.BrakesOffRight,						 		  name = _('Wheel Brake Right - ON/OFF'), 		category = {_('Systems')}},
 
     ---------------------------------------------
     -- Flight Control ---------------------------
@@ -450,8 +452,6 @@ join(res.axisCommands,{
     {action = device_commands.AWRS_drop_interval_AXIS,      cockpit_device_id = devices.WEAPON_SYSTEM, name = _('DROP INTVL Control'),      category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
     
     --{action = iCommandWheelBrake,		name = _('Wheel Brake')},
-    --{action = iCommandLeftWheelBrake,	name = _('Wheel Brake Left')},
-    --{action = iCommandRightWheelBrake,	name = _('Wheel Brake Right')},
 
     {action = device_commands.GunsightElevationControl_AXIS,   cockpit_device_id = devices.GUNSIGHT,       name = _('Gunsight Elevation Control'),      category = {_('Instrument Panel'), _('Gunsight Panel')}},
 

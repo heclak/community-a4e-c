@@ -134,7 +134,7 @@ public:
 		char buffer[20];
 		uintptr_t ptr = NULL;
 		getParamString( handle, buffer, 20 );
-		printf( "%s\n", buffer );
+		//printf( "%s\n", buffer );
 		if ( sscanf( buffer, "%p.0", &ptr ) )
 		{
 			if ( ptr )
@@ -153,9 +153,7 @@ public:
 
 	inline void* getIntercomPointer()
 	{
-		void* ptr = getPointer( m_intercom );
-		printf( "Intercom: %p\n", ptr );
-		return ptr;
+		return getPointer( m_intercom );
 	}
 
 	inline void* getRadioPointer()
