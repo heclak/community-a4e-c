@@ -12,6 +12,7 @@ FILE* stream;
 FILE* g_log = NULL;
 int g_safeToRun = 0;
 bool g_logging = false;
+bool g_disableRadio = false;
 
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
@@ -33,6 +34,11 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_BLUE);
 		}
 #endif
+		size_t size;
+		getenv_s( &size, NULL, 0, "A4E_EFM_RADIO_DISABLE" );
+
+		if ( size )
+			g_disableRadio = true;
 
 #ifdef LOGGING_OLD
 		size_t size;

@@ -214,7 +214,7 @@ function fm_getRollInput()
 	return fm_stick_input_roll:get()
 end
 
-fm_setCockpitShake(3.0 * optionsData_cockpitShake/100.0)
+fm_setCockpitShake(2.0 * optionsData_cockpitShake/100.0)
 
 function get_efm_data_bus()
     local efm_data_bus = {}

@@ -249,8 +249,9 @@ void Skyhawk::FlightModel::calculateLocalPhysicsParams(double dt)
 		//printf( "Took opposite: %lf\n", dBeta );
 	}
 
-	m_aoaDot = dAOA / dt;
-	m_betaDot = dBeta / dt;
+	//Clamped to prevent strange behaviour from the lack of precision in the timestep.
+	m_aoaDot = clamp(dAOA / dt, -10.0 * PI, 10.0 * PI);
+	m_betaDot = clamp( dBeta / dt, -10 * PI, 10.0 * PI );
 
 	//Get airspeed and scalar speed squared.
 	m_airspeed = m_state.getWorldVelocity() - m_state.getWorldWindVelocity();

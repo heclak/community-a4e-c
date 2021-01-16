@@ -19,7 +19,7 @@ local efm_data_bus = get_efm_data_bus()
 
 sensor_data.mod_fuel_flow = function()
 	local org_fuel_flow = sensor_data.getEngineLeftFuelConsumption() 
-	if org_fuel_flow > 0.9743 then org_fuel_flow = 0.9743 end
+	--if org_fuel_flow > 0.9743 then org_fuel_flow = 0.9743 end
 	return org_fuel_flow
 end
 

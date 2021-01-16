@@ -67,7 +67,12 @@ void Skyhawk::Radio::setup( void* baseRadio, void* electricalSystem, void* inter
 
 void Skyhawk::Radio::update()
 {
-	
+	//In case anyone runs into crashes.
+	if ( g_disableRadio )
+		return;
+
+
+
 	//DOESNT BRING UP THE MENU!!!!
 	/*intptr_t ptr = (intptr_t)m_api.pfn_get_human_communicator();
 	intptr_t table = *(intptr_t*)ptr;

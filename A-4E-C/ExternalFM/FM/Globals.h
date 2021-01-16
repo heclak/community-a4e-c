@@ -6,6 +6,7 @@
 extern FILE* g_log;
 extern int g_safeToRun;
 extern bool g_logging;
+extern bool g_disableRadio;
 
 extern int isSafeContext();
 

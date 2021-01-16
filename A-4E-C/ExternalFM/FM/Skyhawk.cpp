@@ -543,7 +543,6 @@ double ed_fm_get_param(unsigned index)
 	case ED_FM_ANTI_SKID_ENABLE:
 		break;
 	case ED_FM_CAN_ACCEPT_FUEL_FROM_TANKER:
-		printf( "Can we connect?\n" );
 		return 1000.0;
 
 	case ED_FM_ENGINE_1_CORE_RPM:
