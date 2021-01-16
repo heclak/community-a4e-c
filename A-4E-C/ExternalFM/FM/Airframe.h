@@ -358,6 +358,8 @@ public:
 	inline float getSpeedbrakeDamage() const;
 	inline float getFlapDamage() const;
 
+	inline double getNoseCompression() const;
+
 private:
 
 	//Airframe Constants
@@ -792,6 +794,11 @@ inline float Airframe::getSpeedbrakeDamage() const
 inline float Airframe::getFlapDamage() const
 {
 	return (DMG_ELEM( Damage::FLAP_L ) + DMG_ELEM( Damage::FLAP_R )) / 2.0;
+}
+
+double Airframe::getNoseCompression() const
+{
+	return m_noseCompression;
 }
 
 } // end namespace

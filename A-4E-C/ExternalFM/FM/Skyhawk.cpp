@@ -736,7 +736,7 @@ void ed_fm_suspension_feedback(int idx, const ed_fm_suspension_info* info)
 	if ( idx == 0 )
 		s_airframe->setNoseCompression( info->struct_compression );
 	//
-	("Force(%lf, %lf, %lf)\n", info->acting_force[0], info->acting_force[1], info->acting_force[2]);
+	//("Force(%lf, %lf, %lf)\n", info->acting_force[0], info->acting_force[1], info->acting_force[2]);
 	//printf("Position(%lf, %lf, %lf)\n", info->acting_force_point[0], info->acting_force_point[1], info->acting_force_point[2]);
 	//printf("Struct Compression %d: %lf\n", idx, info->struct_compression);
 	//printf("Integrity Factor: %lf", info->integrity_factor);

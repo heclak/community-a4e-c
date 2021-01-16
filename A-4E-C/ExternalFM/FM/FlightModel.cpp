@@ -214,6 +214,7 @@ void Skyhawk::FlightModel::calculateLocalPhysicsParams(double dt)
 	m_moment = Vec3();
 
 	double dAOA = m_state.getAOA() - m_aoaPrevious;
+	//printf( "%lf - %lf = %lf\n", m_state.getAOA(), m_aoaPrevious, dAOA );
 	double dAOAOpposite;
 
 	if (dAOA >= 0.0)
@@ -227,8 +228,9 @@ void Skyhawk::FlightModel::calculateLocalPhysicsParams(double dt)
 
 	if (fabs(dAOA) > fabs(dAOAOpposite))
 	{
+		//printf( "Took opposite: %lf, instead of %lf\n", dAOAOpposite, dAOA );
 		dAOA = dAOAOpposite;
-		//printf( "Took opposite: %lf\n", dAOA );
+		
 	}
 
 	double dBeta = m_state.getBeta() - m_betaPrevious;
@@ -251,6 +253,13 @@ void Skyhawk::FlightModel::calculateLocalPhysicsParams(double dt)
 
 	//Clamped to prevent strange behaviour from the lack of precision in the timestep.
 	m_aoaDot = clamp(dAOA / dt, -10.0 * PI, 10.0 * PI);
+
+	//Nose compression + Lower than 50 kts.
+	if ( m_airframe.getNoseCompression() > 0.05 && m_scalarV < 25.0 )
+	{
+		m_aoaDot = 0.0;
+	}
+
 	m_betaDot = clamp( dBeta / dt, -10 * PI, 10.0 * PI );
 
 	//Get airspeed and scalar speed squared.
