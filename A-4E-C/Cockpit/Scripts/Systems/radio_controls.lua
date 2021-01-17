@@ -38,6 +38,8 @@ local arc51_freq_XXxxx = 0
 local arc51_freq_xxXxx = 0
 local arc51_freq_xxxXX = 0
 
+local arc51_xmitinput
+
 local arc51_frequency = 220E6
 
 -- arc-51 displayed frequencies
@@ -116,6 +118,7 @@ function update_arc51()
     arc51_freq_preset_display:set( arc51_freq_preset )
 
     if (arc51_state == "arc51-tr" or arc51_state == "arc51-trg") and get_elec_primary_dc_ok() then
+		print_message_to_user("Hello")
         efm_data_bus.fm_setRadioPower(1.0)
     else
         efm_data_bus.fm_setRadioPower(0.0)

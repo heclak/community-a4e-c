@@ -104,8 +104,8 @@ void ed_fm_add_local_moment(double & x,double &y,double &z)
 
 void ed_fm_simulate(double dt)
 {
-	if ( ! g_safeToRun )
-		return;
+	//if ( ! g_safeToRun )
+		//return;
 
 	//Pre update
 	if ( s_interface->getAvionicsAlive() )
@@ -120,6 +120,12 @@ void ed_fm_simulate(double dt)
 		s_airframe->setGearRPosition( s_interface->getGearRight() );
 		s_airframe->setGearNPosition( s_interface->getGearNose() );
 		s_airframe->setDumpingFuel( s_interface->getDumpingFuel() );
+
+		s_airframe->setFuelCapacity( 
+			s_interface->getLTankCapacity(),
+			s_interface->getCTankCapacity(),
+			s_interface->getRTankCapacity() 
+		);
 
 		s_avionics->getComputer().setGunsightAngle( s_interface->getGunsightAngle() );
 		s_avionics->getComputer().setTarget( s_interface->getSetTarget(), s_interface->getSlantRange() );
@@ -321,7 +327,6 @@ void ed_fm_set_command
 		s_input->hook() = !s_input->hook();
 		break;
 	case Skyhawk::Control::RUDDER_LEFT_START:
-		s_radio->toggleRadioMenu();
 		s_input->yawAxis().keyDecrease();
 		break;
 	case Skyhawk::Control::RUDDER_LEFT_STOP:
@@ -454,10 +459,10 @@ void ed_fm_set_internal_fuel(double fuel)
 	s_airframe->setFuelState(Skyhawk::Airframe::Tank::INTERNAL, s_state->getCOM(), fuel);
 }
 
-//void ed_fm_refueling_add_fuel( double fuel )
-//{
-//	printf( "%lf\n", fuel );
-//}
+void ed_fm_refueling_add_fuel( double fuel )
+{
+	s_airframe->addFuel( fuel );
+}
 
 /*
 	get internal fuel volume 

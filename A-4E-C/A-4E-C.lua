@@ -394,6 +394,7 @@ A_4E_C =  {
         500, -- model air brake
         501, -- RAT
         499, -- wheel chocks
+		 117, -- stabilizer
 
     },
 	-------------------------

@@ -22,7 +22,7 @@ private:
 	void* m_radio = NULL;
 	void* m_intercom = NULL;
 	bool m_setup = false;
-	bool m_on = false;
+	bool m_on = -1;
 
 	cockpit_param_api m_api;
 	Interface& m_interface;

@@ -97,8 +97,36 @@ void Skyhawk::Airframe::airborneInit()
 	zeroInit();
 }
 
+void Skyhawk::Airframe::addFuel( double dm )
+{
+	int totalExt = 0;
+	for ( int i = Tank::LEFT_EXT; i < Tank::DONT_TOUCH; i++ )
+	{
+		if ( m_fuelCapacity[i] > 1.0 && m_fuel[i] < m_fuelCapacity[i])
+		{
+			totalExt++;
+		}
+	}
+
+	double sub_dm = totalExt > 0 ? dm / (double)totalExt : dm;
+	for ( int i = Tank::INTERNAL; i < Tank::DONT_TOUCH; i++ )
+	{
+		if ( ! totalExt && i == Tank::INTERNAL )
+		{
+			m_fuel[i] += dm;
+			break;
+		}
+		else if ( m_fuel[i] < m_fuelCapacity[i] )
+		{
+			m_fuel[i] += sub_dm;
+		}
+	}
+
+}
+
 void Skyhawk::Airframe::airframeUpdate(double dt)
 {
+	//printf( "I %lf, L %lf, C %lf, R %lf\n", m_fuel[0], m_fuel[1], m_fuel[2], m_fuel[3] );
 
 	if (m_controls.hook())
 	{
@@ -119,10 +147,10 @@ void Skyhawk::Airframe::airframeUpdate(double dt)
 	}
 
 	int totalExt = 0;
-	for (int i = Tank::INTERNAL; i < Tank::DONT_TOUCH; i++)
+	for (int i = Tank::LEFT_EXT; i < Tank::DONT_TOUCH; i++)
 	{
 		//m_fuelPrev[i] = m_fuel[i];
-		if (m_fuel[i] > 10.0 && i > Tank::INTERNAL)
+		if (m_fuel[i] > 10.0)
 		{
 			totalExt++;
 		}

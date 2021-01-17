@@ -7,6 +7,16 @@ Skyhawk::Radio::Radio(Interface& inter):
 	m_api = ed_get_cockpit_param_api();
 }
 
+// Steps for setting radio up
+//
+// The following steps were found by TheRealHarold.
+//
+// 1. Get wire from Electrical System
+// 2. Connect wire to radio
+// 3. Get communicator and then set it as current.
+// 4. Get a pointer to the virtual function pointer table for the inherited radio.
+// 5. Use this pointer to find the setElecPower function.
+// 
 void Skyhawk::Radio::setup( void* baseRadio, void* electricalSystem, void* intercom )
 {
 	if ( ! electricalSystem || ! baseRadio || ! intercom )
@@ -22,7 +32,7 @@ void Skyhawk::Radio::setup( void* baseRadio, void* electricalSystem, void* inter
 	{
 		//Connect the DC system wire to the radio.
 		m_api.pfn_connect_electric( baseRadio, wire );
-		LOG( "Connected Radio to Electrical System.\n" );
+		LOG( "Connected Radio to Electrical System. Elec: %p, Wire: %p, Radio: %p.\n", electricalSystem, baseRadio, wire );
 	}
 	else
 	{
@@ -83,15 +93,18 @@ void Skyhawk::Radio::update()
 		fnc( (void*)ptr );
 	}*/
 	
-	if ( m_setup && m_interface.getAvionicsAlive() )
+	if ( m_interface.getAvionicsAlive() )
 	{
-		setPower( m_interface.getRadioPower() );
-		//m_api.pfn_try_set_communicator( m_intercom, 1 );
-		//m_api.pfn_push_to_talk( m_intercom, true );
-	}
-	else
-	{
-		setup( m_interface.getRadioPointer(), m_interface.getElecPointer(), m_interface.getIntercomPointer() );
+		if ( m_setup )
+		{
+			setPower( m_interface.getRadioPower() );
+			//m_api.pfn_try_set_communicator( m_intercom, 1 );
+			//m_api.pfn_push_to_talk( m_intercom, true );
+		}
+		else
+		{
+			setup( m_interface.getRadioPointer(), m_interface.getElecPointer(), m_interface.getIntercomPointer() );
+		}
 	}
 }
 

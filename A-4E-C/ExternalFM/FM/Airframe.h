@@ -274,8 +274,10 @@ public:
 	inline void setSlatRPosition(double position);
 	inline void setAirbrakePosition(double position);
 	inline void setFuelState(Tank tank, Vec3 pos, double fuel);
+	void addFuel( double fuel );
 	inline void setAngle(double angle);
 	inline void setMass(double angle);
+	inline void setFuelCapacity( double l, double c, double r );
 
 	inline void setNoseCompression( double x );
 
@@ -393,6 +395,9 @@ private:
 	double m_fuel[4] = { 0.0, 0.0, 0.0, 0.0 };
 	double m_fuelPrev[4] = { 0.0, 0.0, 0.0, 0.0 };
 	Vec3 m_fuelPos[4] = { Vec3(), Vec3(), Vec3(), Vec3() };
+	bool m_hasFuelTank[4] = { true, false, false, false };
+	double m_fuelCapacity[4] = { 0.0, 0.0, 0.0, 0.0 };
+
 	bool m_dumpingFuel = false;
 
 	float* m_integrityElement;
@@ -436,6 +441,13 @@ void Airframe::setFuelState(Tank tank, Vec3 pos, double fuel)
 {
 	m_fuel[tank] = fuel;
 	m_fuelPos[tank] = pos;
+}
+
+void Airframe::setFuelCapacity( double l, double c, double r )
+{
+	m_fuelCapacity[Tank::LEFT_EXT] = l;
+	m_fuelCapacity[Tank::CENTRE_EXT] = c;
+	m_fuelCapacity[Tank::RIGHT_EXT] = r;
 }
 
 double Airframe::setAileron(double dt)

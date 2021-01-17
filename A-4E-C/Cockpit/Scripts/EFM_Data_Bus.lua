@@ -58,6 +58,21 @@ local fm_radio_power = get_param_handle("FM_RADIO_POWER")
 
 local fm_avionics_alive = get_param_handle("FM_AVIONICS_ALIVE")
 
+local fm_l_tank_capacity = get_param_handle("FM_L_TANK_CAPACITY")
+local fm_c_tank_capacity = get_param_handle("FM_C_TANK_CAPACITY")
+local fm_r_tank_capacity = get_param_handle("FM_R_TANK_CAPACITY")
+
+local tanks = {
+    [1] = fm_l_tank_capacity,
+    [2] = fm_c_tank_capacity,
+    [3] = fm_r_tank_capacity,
+}
+
+--Mask for tank states
+function fm_setTankState(idx, value)
+    tanks[idx]:set(value)
+end
+
 function fm_setRadioPTR(value)
     ptr_radio:set(value)
 end
@@ -244,6 +259,7 @@ function get_efm_data_bus()
     efm_data_bus.fm_setElecPTR = fm_setElecPTR
     efm_data_bus.fm_setIntercomPTR = fm_setIntercomPTR
     efm_data_bus.fm_setRadioPTR = fm_setRadioPTR
+    efm_data_bus.fm_setTankState = fm_setTankState
 
 
     efm_data_bus.fm_getGunsightAngle = fm_getGunsightAngle

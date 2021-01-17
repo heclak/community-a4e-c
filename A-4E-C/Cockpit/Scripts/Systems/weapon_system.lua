@@ -294,6 +294,14 @@ local last_pylon_release = {0,0,0,0,0}  -- last time (see time_ticker) pylon was
 local last_bomblet_release = {0,0,0,0,0}  -- last time (see time_ticker) bomblet was released from dispenser
 local priority_pairs = { 5, 4, 3, 2, 1 }
 
+local GALLON_TO_KG = 3.785 * 0.8
+local fuel_tank_capacity = {
+    ["{DFT-400gal}"] = GALLON_TO_KG * 400,
+    ["{DFT-300gal}"] = GALLON_TO_KG * 300,
+    ["{DFT-300gal_LR}"] = GALLON_TO_KG * 300,
+    ["{DFT-150gal}"] = GALLON_TO_KG * 150,
+}
+
 
 function prepare_weapon_release()
     weapon_release_count = 0
@@ -338,6 +346,17 @@ function update_labs_annunciator()
         GLARE_LABS_ANNUN:set(1)
     else
         GLARE_LABS_ANNUN:set(0)
+    end
+end
+
+function update_fuel_tanks()
+
+    for i=1,3, 1 do
+        local tank = WeaponSystem:get_station_info(i)
+        if tank ~= nil and tank.weapon.level3 == wsType_FuelTank then
+            local type = tank["CLSID"]
+            efm_data_bus.fm_setTankState(i, fuel_tank_capacity[type])
+        end
     end
 end
 
@@ -402,6 +421,8 @@ function update()
 		end
 	end	--]]
     
+    update_fuel_tanks()
+
     time_ticker = time_ticker + update_rate
     local _master_arm = get_elec_mon_arms_dc_ok() -- check master arm status
     

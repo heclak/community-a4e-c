@@ -91,6 +91,10 @@ public:
 
 		m_dumpingFuel = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_DUMPING_FUEL" );
 		m_avionicsAlive = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_AVIONICS_ALIVE" );
+
+		m_lTankCapacity = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_L_TANK_CAPACITY" );
+		m_cTankCapacity = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_C_TANK_CAPACITY" );
+		m_rTankCapacity = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_R_TANK_CAPACITY" );
 	}
 
 	inline void coldInit()
@@ -501,6 +505,21 @@ public:
 	{
 		return getParamNumber( m_avionicsAlive ) > 0.5;
 	}
+
+	inline double getLTankCapacity()
+	{
+		return getParamNumber( m_lTankCapacity );
+	}
+
+	inline double getCTankCapacity()
+	{
+		return getParamNumber( m_cTankCapacity );
+	}
+
+	inline double getRTankCapacity()
+	{
+		return getParamNumber( m_rTankCapacity );
+	}
 		 
 	void* m_test = NULL;
 private:
@@ -589,6 +608,10 @@ private:
 	void* m_dumpingFuel = NULL;
 
 	void* m_avionicsAlive = NULL;
+
+	void* m_lTankCapacity = NULL;
+	void* m_cTankCapacity = NULL;
+	void* m_rTankCapacity = NULL;
 
 };
 

@@ -515,7 +515,6 @@ function SetCommand(command,value)
     ---------------------------------------------
     elseif command == device_commands.tacan_mode then
         tacan_mode = tacan_modelist[ round((value*10)+1,0) ]
-		print_message_to_user(tacan_mode)
     elseif command == device_commands.tacan_ch_major then
         tacan_ch_major = value * 20     -- 0.05 per increment, 0 to 12
         tacan_channel = round(10*tacan_ch_major + tacan_ch_minor)
@@ -1895,7 +1894,6 @@ function update_morse_playback()
             morse_dash_snd:update(nil,tacan_volume,nil)
         end
 
-        print_message_to_user(current_morse_string)
         local c = current_morse_string:sub(1,1)
         --[[if morse_dot_snd:is_playing() or morse_dash_snd:is_playing() then
             print_message_to_user("previous sound still playing!")
