@@ -34,6 +34,9 @@ Skyhawk::FlightModel::FlightModel
 	m_LslatVel(0.0),
 	m_RslatVel(0.0),
 	m_cockpitShake(0.0),
+	m_shakeDuration(0.1),
+	m_shakeTimerSlatL(0.1),
+	m_shakeTimerSlatR(0.1),
 
 	//m_elementLW(m_state, CLalpha, CDalpha, Vec3(0, 0, -3.0), m_wingSurfaceNormalL, m_totalWingArea/2),
 	//m_elementRW(m_state, CLalpha, CDalpha, Vec3(0, 0, 3.0), m_wingSurfaceNormalR, m_totalWingArea/2),
@@ -172,6 +175,13 @@ void Skyhawk::FlightModel::zeroInit()
 	m_elementLSpoiler.zeroInit();
 	m_elementRSpoiler.zeroInit();
 
+	gearShake = false;
+	prevGearShake = false;
+	slatLShake = false;
+	slatLShakePrev = false;
+	slatRShake = false;
+	slatRShakePrev = false;
+
 }
 
 void Skyhawk::FlightModel::coldInit()
@@ -205,7 +215,7 @@ void Skyhawk::FlightModel::calculateAero(double dt)
 
 	//printf("roll rate: %lf\n", m_state.getOmega().x);
 	
-	calculateShake();
+	calculateShake(dt);
 }
 
 void Skyhawk::FlightModel::calculateLocalPhysicsParams(double dt)
@@ -435,22 +445,141 @@ void Skyhawk::FlightModel::slats(double& dt)
 	m_airframe.setSlatRPosition( x_R );
 }
 
-void Skyhawk::FlightModel::calculateShake()
+void Skyhawk::FlightModel::calculateShake(double& dt)
 {
+	
+
+	// cockpit shake calculations
 	double shakeAmplitude{ 0.0 };
+	double shakeInstGear = 0.0;
+	double shakeInstSlat = 0.0;
 	double buffetAmplitude = 0.6 * m_cockpitShakeModifier;
 	double x{ 0.0 };
 
-	// 19 - 28
+	// 20 - 28
 	double aoa = std::abs(m_state.getAOA());
-	if (aoa >= 0.332 && m_scalarV > 30.0)
+	if (aoa >= toRad(20.0) && m_scalarV > 30.0)
 	{
-		x = std::min(aoa - 0.332, 0.157)/0.157;
+		x = std::min(aoa - toRad(20.0), toRad(8.0)) / toRad(8.0);
 		shakeAmplitude += x * buffetAmplitude;
 	}
 
-	m_cockpitShake = shakeAmplitude;
+	// GEAR CONTRIBUTION
+
+	double gearContinousShake = (m_airframe.getGearLPosition() + m_airframe.getGearRPosition() + m_airframe.getGearNPosition()) / 3.0 * 0.8;
+
+
+	if (m_airframe.getGearLPosition() > 0.99 || m_airframe.getGearLPosition() < 0.01)
+	{
+		gearShake = true;
+	}
+	else if (m_airframe.getGearRPosition() > 0.99 || m_airframe.getGearLPosition() < 0.01)
+	{
+		gearShake = true;
+	}
+	else if (m_airframe.getGearNPosition() > 0.99 || m_airframe.getGearLPosition() < 0.01)
+	{
+		gearShake = true;
+	}
+	else
+	{
+		gearShake = false;
+	}
+
+	if (gearShake && !prevGearShake)
+	{
+		m_shakeDuration.startTimer();
+		prevGearShake = true;
+	}
+	else if (!gearShake)
+	{
+		prevGearShake = false;
+	}
+
+	// SLATS
+	if ((m_airframe.getSlatLPosition() > 0.95 || m_airframe.getSlatLPosition() < 0.05))
+	{
+		slatLShake = true;
+	}
+	else
+	{
+		slatLShake = false;
+	}
+
+	if ((m_airframe.getSlatRPosition() > 0.95 || m_airframe.getSlatRPosition() < 0.05))
+	{
+		slatRShake = true;
+	}
+	else
+	{
+		slatRShake = false;
+	}
+
+
+	if (slatLShake && !slatLShakePrev)
+	{
+		m_shakeTimerSlatL.startTimer();
+		slatLShakePrev = true;
+	}
+	else if (!slatLShake)
+	{
+		slatLShakePrev = false;
+	}
+
+	if (slatRShake && !slatRShakePrev)
+	{
+		m_shakeTimerSlatR.startTimer();
+		slatRShakePrev = true;
+	}
+	else if (!slatRShake)
+	{
+		slatRShakePrev = false;
+	}
+
+	if (m_shakeTimerSlatL.getState())
+	{
+		shakeInstSlat += 0.25;
+	}
+	if (m_shakeTimerSlatR.getState())
+	{
+		shakeInstSlat += 0.25;
+	}
+
+	double slatsContinousShake = (m_airframe.getSlatLPosition() + m_airframe.getSlatRPosition()) / 2.0 * 0.05;
+
+
+	// FLAPS CONTRIBUTION
+	double flapsContinousShake = m_airframe.getFlapsPosition() * 0.06;
+	
+	
+	// SPEED BRAKES CONTRIBUTION
+	double speedBrakesContinousShake = m_airframe.getSpeedBrakePosition() * 0.12;
+	
+
+	m_shakeDuration.updateLoop(dt);
+	m_shakeTimerSlatL.updateLoop(dt);
+	m_shakeTimerSlatR.updateLoop(dt);
+
+	if (m_shakeDuration.getState())
+	{
+		shakeInstGear += 1.0;
+	}
+	//printf(gearShake ? "true" : "false");
+	//printf(prevGearShake ? "true" : "false");
+
+	double shakeGroupA = std::min(flapsContinousShake + gearContinousShake + slatsContinousShake, 0.075);
+	double shakeGroupB = speedBrakesContinousShake;
+	double shakeGroupInst = std::min(shakeInstGear + shakeInstSlat, 1.5);
+	
+	//printf("shake: %lf\n", shakeAmplitude);
+
+	m_cockpitShake = shakeAmplitude + shakeGroupA + shakeGroupB + shakeGroupInst;
 }
+
+//void Skyhawk::FlightModel::shakeInst()
+//{
+//	m_cockpitShake = 100.0;
+//}
 
 void Skyhawk::FlightModel::csvData(std::vector<double>& data)
 {

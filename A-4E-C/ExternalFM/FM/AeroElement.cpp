@@ -147,7 +147,7 @@ void Skyhawk::AeroElement::calculateElementPhysics()
 	m_dragVec = -normalize(m_airspeed);
 	m_kElem = pow(m_scalarAirspeed, 2) * m_state.getAirDensity() * m_area * 0.5;
 
-	//calculating aoa&beta
+	//calculate aoa and beta
 	Vec3 forwardVec(1.0, 0.0, 0.0);
 	Vec3 spanVec = normalize(cross(m_surfaceNormal, forwardVec));
 	Vec3 flightPath = m_airspeed;

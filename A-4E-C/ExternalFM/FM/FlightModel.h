@@ -11,6 +11,7 @@
 #include "Interface.h"
 #include "AeroElement.h"
 #include "Maths.h"
+#include "Timer.h"
 #include "AircraftState.h"
 
 
@@ -61,7 +62,7 @@ public:
 
 	void calculateAero(double dt);
 	void calculateElements();
-	void calculateShake();
+	void calculateShake(double& dt);
 
 	//Get forces for ED physics engine.
 	inline const Vec3& getForce() const;
@@ -238,6 +239,16 @@ private:
 	//Misc
 	double m_cockpitShake;
 	double m_cockpitShakeModifier = 0.0;
+
+	Timer m_shakeDuration;
+	Timer m_shakeTimerSlatL;
+	Timer m_shakeTimerSlatR;
+	bool prevGearShake;
+	bool gearShake;
+	bool slatLShake;
+	bool slatLShakePrev;
+	bool slatRShake;
+	bool slatRShakePrev;
 	Interface& m_interface;
 };
 
