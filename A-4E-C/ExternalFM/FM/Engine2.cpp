@@ -34,6 +34,7 @@ void Skyhawk::Engine2::zeroInit()
 	m_airspeed = 0.0;
 	m_temperature = 15.0 + 273.0;
 	m_errPrev = 0.0;
+	m_errAcc = 0.0;
 }
 
 void Skyhawk::Engine2::coldInit()
@@ -52,7 +53,7 @@ void Skyhawk::Engine2::hotInit()
 void Skyhawk::Engine2::airborneInit()
 {
 	zeroInit();
-	m_hpOmega = c_maxHPOmega * 0.55;
+	m_hpOmega = c_maxHPOmega * 0.70;
 	m_lpOmega = hpOmegaToLPOmega( m_hpOmega );
 	m_ignitors = true;
 }
@@ -100,9 +101,15 @@ void Skyhawk::Engine2::updateEngine( double dt )
 		}
 
 		double desiredFuelFlow = getPID( desiredFractionalOmega, dt );
-
+		//m_fuelFlow = desiredFuelFlow;
 		//Update towards desired fuel flow with response time.
-		m_fuelFlow += (std::max( std::min( desiredFuelFlow, c_fuelFlowMax ), 0.0 ) - m_fuelFlow) * dt / c_fuelFlowInertia;
+		//m_fuelFlow = m_throttle;
+
+		double desired = clamp( desiredFuelFlow, 0.0, c_fuelFlowMax );
+		m_fuelFlow += (desired - m_fuelFlow) * dt / c_fuelFlowInertia;
+		printf( "Desired %lf, current %lf\n", desired, m_fuelFlow );
+		//printf( "FF %lf\n", m_fuelFlow * 2.2 * 3600.0 );
+		//m_fuelFlow += (std::max( std::min( desiredFuelFlow, c_fuelFlowMax ), 0.0 ) - m_fuelFlow) * dt / c_fuelFlowInertia;
 	}
 	else if ( m_bleedAir )
 	{

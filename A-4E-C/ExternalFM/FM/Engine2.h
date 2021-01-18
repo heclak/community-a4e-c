@@ -5,6 +5,7 @@
 #include "Table.h"
 #include "Input.h"
 #include "Data.h"
+#include "Maths.h"
 #include "AircraftState.h"
 #include <algorithm>
 
@@ -20,7 +21,7 @@
 #define c_lpInertiaTable c_hpInertiaTable
 #define c_windmillInertiaFactor {1.0, 0.5, 1.0, 1.0}
 
-#define c_fuelFlowInertia 0.8
+#define c_fuelFlowInertia 1.5
 
 #define c_combustionTorque 90.0
 #define c_startTorque 20.0
@@ -73,6 +74,12 @@ private:
 	double m_lpOmega = 0.0;
 	double m_hpOmega = 0.0;
 
+	double m_lpOmegaDot = 0.0;
+	double m_hpOmegaDot = 0.0;
+
+	double m_lpOmegaErrorPrev = 0.0;
+	double m_hpOmegaErrorPrev = 0.0;
+
 	double m_throttle = 0.0;
 	double m_fuelFlow = 0.0;
 	double m_correctedFuelFlow = 0.0;
@@ -84,15 +91,18 @@ private:
 	bool m_ignitors = true;
 	bool m_bleedAir = false;
 
+	bool m_started = false;
+
 	//Environment
 	double m_airspeed = 0.0;
 	double m_temperature = 15.0 + 273.0;
 
 	//PID
 	double m_pGain = 3.0;
-	double m_iGain = 0.0;
-	double m_dGain = 3.0;
+	double m_iGain = 10.0;//10.0;
+	double m_dGain = 4.5;// 3.8;
 	double m_errPrev = 0.0;
+	double m_errAcc = 0.0;
 
 	static inline double hpOmegaToLPOmega( double hpOmega );
 
@@ -155,12 +165,18 @@ double Engine2::getPID( double desiredFractionalRPM, double dt )
 	//Error between setpoint and process variable
 	double error = c_maxHPOmega * desiredFractionalRPM - m_hpOmega;
 
+	//dError * dt
+	m_errAcc += error * dt;
+	m_errAcc = clamp( m_errAcc, -0.1, 0.1 );
+
+	//printf( "i error %lf\n", m_errAcc );
+
 	//dError/dt
 	double errDeriv = (error - m_errPrev) / dt;
 	m_errPrev = error;
 
-	//     proportional        derrivative
-	return error * m_pGain + errDeriv * m_dGain;
+	//     proportional          integral             derrivative
+	return error * m_pGain + m_errAcc * m_iGain + errDeriv * m_dGain;
 }
 
 double Engine2::hpOmegaToLPOmega( double x )
@@ -181,8 +197,40 @@ void Engine2::updateShaftsDynamic( double dt )
 
 void Engine2::updateShafts( double hpTarget, double inertiaFactor, double dt )
 {
-	m_hpOmega += (hpTarget - m_hpOmega) * dt / (hpInertia(m_hpOmega)*inertiaFactor);
-	m_lpOmega += (hpOmegaToLPOmega( m_hpOmega ) - m_lpOmega) * dt / (lpInertia(m_lpOmega)*inertiaFactor);
+	
+
+	double hpError = (hpTarget - m_hpOmega);
+	double lpError = (hpOmegaToLPOmega( m_hpOmega ) - m_lpOmega);
+
+	if ( ! m_started )
+	{
+		m_hpOmegaErrorPrev = hpError;
+		m_lpOmegaErrorPrev = lpError;
+		m_started = true;
+	}
+
+	double hpErrorDot = (m_hpOmegaErrorPrev - hpError);
+	double lpErrorDot = (m_lpOmegaErrorPrev - lpError);
+	
+	//1.0 134.0 0.21
+	//1 400 0.13
+	double hpAccel = (hpError - hpErrorDot * 500.0) * 0.20;
+	double lpAccel = (lpError - lpErrorDot * 500.0) * 0.20;
+
+	m_hpOmegaDot += dt * hpAccel;
+	m_lpOmegaDot += dt * lpAccel;
+
+	m_hpOmega += dt * m_hpOmegaDot;
+	m_lpOmega += dt * m_lpOmegaDot;
+
+
+	//m_hpOmega += dt * ((hpErrorDot) + (hpError / hpInertia(m_hpOmega))) / inertiaFactor;
+	//m_lpOmega += dt * ((lpErrorDot) + (lpError / lpInertia(m_lpOmega))) / inertiaFactor;
+
+	//printf( "Error dot %lf, Regular %lf\n", hpErrorDot, (hpError / hpInertia( m_hpOmega )) );
+
+	m_hpOmegaErrorPrev = hpError;
+	m_lpOmegaErrorPrev = lpError;
 }
 
 }
