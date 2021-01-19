@@ -15,6 +15,10 @@ function round(num, idp)
     return math.floor(num * mult + 0.5) / mult
 end
 
+function clamp(value, minimum, maximum)
+	return math.max(math.min(value,maximum),minimum)
+end
+
 -- calculates the x,y,z in russian coordinates of the point that is 'radius' distance away
 -- from px,py,pz using the x,z angle of 'hdg' and the vertical slant angle
 -- of 'slantangle'
@@ -440,6 +444,57 @@ function WMA_wrap:get_target_val ()
     return self.target_val
 end
 
+--------------------------------------------------------------------
+
+Constant_Speed_Controller = {}
+Constant_Speed_Controller.__index = Constant_Speed_Controller
+setmetatable(Constant_Speed_Controller,
+  {
+    __call = function(cls, ...)
+        return cls.new(...) --call constructor if someone calls this table
+    end
+  }
+)
+
+function Constant_Speed_Controller.new(speed, min, max, pos)
+  local self = setmetatable({}, Constant_Speed_Controller)
+  self.speed = speed
+  self.min = min
+  self.max = max
+  self.pos = pos
+  return self
+end
+
+function Constant_Speed_Controller:update(target)
+
+  local p = self.pos
+  local direction = target - self.pos
+
+  if math.abs(direction) <= self.speed then
+    self.pos = target
+  elseif direction < 0.0 then
+    self.pos = self.pos - self.speed
+  elseif direction > 0.0 then
+    self.pos = self.pos + self.speed
+  end
+
+end
+
+function Constant_Speed_Controller:get_position()
+  return self.pos
+end
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------
+
 --[[
 Description
 Recursively descends both meta and regular tables and prints their key : value pairs until
@@ -517,10 +572,6 @@ function recursively_print(table_to_print, max_depth, max_number_tables, filepat
 	end
 	
 	file:close()
-end
-
-function clamp(value, minimum, maximum)
-	return math.max(math.min(value,maximum),minimum)
 end
 
 --[[

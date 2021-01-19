@@ -323,9 +323,9 @@ void ed_fm_set_command
 	case Skyhawk::Control::RIGHT_BRAKE:
 		s_input->brakeRight( value );
 		break;
-	case Skyhawk::Control::HOOK_TOGGLE:
+	/*case Skyhawk::Control::HOOK_TOGGLE:
 		s_input->hook() = !s_input->hook();
-		break;
+		break;*/
 	case Skyhawk::Control::RUDDER_LEFT_START:
 		s_input->yawAxis().keyDecrease();
 		break;
@@ -517,13 +517,14 @@ void ed_fm_set_draw_args (EdDrawArgument * drawargs,size_t size)
 
 	drawargs[AIRBRAKE].f = s_airframe->getSpeedBrakePosition();
 
-	drawargs[HOOK].f = s_airframe->getHookPosition();
+	//drawargs[HOOK].f = s_airframe->getHookPosition();
 
 	drawargs[STABILIZER_TRIM].f = s_airframe->getStabilizerAnim();
 
 	//This is the launch bar argument.
 	drawargs[85].f = 1.0;
 
+	//This is the refueling probe argument.
 	drawargs[22].f = 1.0;
 
 }

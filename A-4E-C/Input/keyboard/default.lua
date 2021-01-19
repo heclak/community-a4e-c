@@ -125,9 +125,9 @@ join(res.keyCommands,{
     {combos = {{key = 'G', reformers = {'LShift'}}}, down = Keys.PlaneGearDown,                     name = _('Landing Gear Handle - DOWN'),     category = {_('Instrument Panel')}},
 
     -- Arresting Hook Handle
-    {combos = {{key = 'G', reformers = {'LAlt'}}}, down = iCommandPlaneHook,                        name = _('Tail Hook Handle - UP/DOWN'),     category = {_('Instrument Panel')}},
-    --{down = Keys.PlaneHookUp,                                                                     name = _('Tail Hook Up'),                   category = {_('Systems')}},
-    --{down = Keys.PlaneHookDown,                                                                   name = _('Tail Hook Down'),                 category = {_('Systems')}},
+    {combos = {{key = 'G', reformers = {'LAlt'}}}, down = Keys.PlaneHook,                          name = _('Tail Hook Handle - UP/DOWN'),     category = {_('Instrument Panel')}},
+    {down = Keys.PlaneHookUp,                                                                     name = _('Tail Hook Up'),                   category = {_('Systems')}},
+    {down = Keys.PlaneHookDown,                                                                   name = _('Tail Hook Down'),                 category = {_('Systems')}},
 
     -- Misc Switches Panel
     {down = Keys.RadarTCPlanProfile, value_down = 1,                                              name = _('Radar Terrain Clearance - PLAN'),         category = {_('Instrument Panel'), _('Misc Switches Panel')}},

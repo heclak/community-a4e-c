@@ -202,11 +202,13 @@ FlapsIndicator.parameter_name   = "D_FLAPS_IND"
 FlapsIndicator.input            = {0.0, 1.0}    -- percentage down relative to travel limits
 FlapsIndicator.output           = {0.0, 0.95}
 
+--[[
 TailhookLever                  = CreateGauge("parameter")
 TailhookLever.arg_number       = 10
 TailhookLever.parameter_name   = "D_TAIL_HOOK"
 TailhookLever.input            = {0.0, 1.0}
 TailhookLever.output           = {0.0, 1.0}
+]]--
 
 GearNose                        = CreateGauge("parameter")
 GearNose.arg_number             = 20

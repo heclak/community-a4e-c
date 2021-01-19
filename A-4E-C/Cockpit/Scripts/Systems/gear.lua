@@ -2,6 +2,7 @@ dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."Systems/hydraulic_system_api.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
+dofile(LockOn_Options.script_path.."utils.lua")
 
 -- This file includes both gear and tailhook behavior/systems
 --
@@ -65,10 +66,18 @@ local GEAR_ERR   = 0
 -- HOOK constants/definitions/configuration
 
 local HOOK_TARGET =     0   -- 0 = retracted, 1 = extended -- "future" hook position
+local hook_controller = Constant_Speed_Controller(0.01, 0.0, 1.0, 0.0)
 
 local emergency_gear_countdown = 0
 
 local ONCE = 1
+
+
+
+dev:listen_command(Hook)
+dev:listen_command(HookUp)
+dev:listen_command(HookDown)
+dev:listen_command(HookHandle)
 
 dev:listen_command(Gear)
 dev:listen_command(GearUp)
@@ -78,16 +87,9 @@ dev:listen_command(device_commands.emer_gear_release)
 dev:listen_command(NWS_Engage)
 dev:listen_command(NWS_Disengage)
 
---[[
-dev:listen_command(Hook)
-dev:listen_command(HookUp)
-dev:listen_command(HookDown)
-dev:listen_command(HookHandle)
---]]
 
 
 function SetCommand(command,value)
---[[
 	if command == Hook then
         dev:performClickableAction(HookHandle, 1-HOOK_TARGET, false)    -- send the object click when user presses key, with invert
     elseif command == HookUp then
@@ -96,9 +98,7 @@ function SetCommand(command,value)
         dev:performClickableAction(HookHandle, 1, false)                -- send the object click when user presses key, force 1
     elseif command == HookHandle then
         if value ~= HOOK_TARGET then
-            HOOK_TARGET = value                     -- only set it if the value is different
-            dispatch_action(nil,iCommandPlaneHook)  -- dispatch the built-in SFM command, since we cannot override it drawing to our model's external args
-            -- NOTE: for some reason this doesn't work in DCS replays
+            HOOK_TARGET = value
         end
     end
 --]]
@@ -357,13 +357,15 @@ end
 local tail_hook_param = get_param_handle("D_TAIL_HOOK")
 function update_hook()
     -- NOTE: we do not need to draw this ourselves, SFM always draws it based on built-in capabilities
---set_aircraft_draw_argument_value(25,HOOK_TARGET)
+    hook_controller:update(HOOK_TARGET)
+
+    set_aircraft_draw_argument_value(25,hook_controller:get_position())
 
     -- mirror tail_hook to in-cockpit tailhook lever
     -- usually done automatically by clickabledata.lua, but DCS replay issue is forcing us to remove
     -- clickable behavior on the tail hook lever, so now we're implementing it as parametrized gauge
-    local tail_hook = get_aircraft_draw_argument_value(25)
-    tail_hook_param:set(tail_hook)
+    --local tail_hook = get_aircraft_draw_argument_value(25)
+    --tail_hook_param:set(hook_controller:get_position())
 end
 
 function update()

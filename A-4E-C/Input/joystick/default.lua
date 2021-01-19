@@ -130,7 +130,7 @@ join(res.keyCommands,{
     {down = iCommandPlaneGearUp, up = iCommandPlaneGearDown, name = _('Landing Gear Handle - UP else DOWN'), category = {_('Instrument Panel'), _('Special For Joystick')}}, -- for Warthog/HOTAS Toggle
 
     -- Arresting Hook Handle
-    {down = iCommandPlaneHook,                               name = _('Tail Hook Handle - UP/DOWN'),         category = {_('Instrument Panel')}},
+    {down = device_commands.Hook, value_down = 1.0,                              name = _('Tail Hook Handle - UP/DOWN'),         category = {_('Instrument Panel')}},
     --{down = Keys.PlaneHookUp,                              name = _('Tail Hook Up'),                       category = 'Systems'},
     --{down = Keys.PlaneHookDown,                            name = _('Tail Hook Down'),                     category = 'Systems'},
     --{down = Keys.PlaneHookDown, up = Keys.PlaneHookUp,     name = _('Tail Hook DOWN else UP'),             category = 'HOTAS'},
