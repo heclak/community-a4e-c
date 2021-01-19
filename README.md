@@ -8,7 +8,7 @@ We thank the DCS World community for their support over the years, and dedicate 
 
 ## Contributing Developers
 
-Gospadin, gyrovague, kryb / Archimaede, plusnine, Merker, Jones, Farlander, Heclak, Nero, Dr. Manius
+Gospadin, gyrovague, kryb / Archimaede, plusnine, Merker, Jones, Farlander, Heclak, Nero, Dr. Manius, Joshua Nelson
 
 ## Special Thanks
 
