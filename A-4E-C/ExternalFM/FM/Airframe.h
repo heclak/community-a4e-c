@@ -37,6 +37,7 @@ namespace Skyhawk
 
 #define c_catAngle 0.0
 #define	c_catConstrainingForce 4500.0
+#define c_catConstantMoment 100000.0
 
 
 
