@@ -36,6 +36,15 @@ else
     stick_vis_state = 0
 end
 
+function post_initialize()
+    local birth = LockOn_Options.init_conditions.birth_place
+    if birth == "GROUND_COLD" then
+        CANOPY_COMMAND = 1
+    else
+        CANOPY_COMMAND = 0
+    end
+end
+
 -- getCanopyPos
 -- getCanopyState
 
