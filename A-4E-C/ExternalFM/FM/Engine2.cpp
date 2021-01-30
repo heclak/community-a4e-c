@@ -98,7 +98,7 @@ void Scooter::Engine2::updateEngine( double dt )
 	//Thrust or Drag
 	double thrustSign = 1.0;
 
-	if ( m_hasFuel && m_ignitors && m_hpOmega > c_startOmega/3.0 )
+	if ( m_hasFuel && m_ignitors )
 	{
 		double desiredFractionalOmega = 0.0;
 		double inertiaFactor = 1.0;
@@ -122,6 +122,13 @@ void Scooter::Engine2::updateEngine( double dt )
 		//m_fuelFlow = m_throttle;
 
 		double desired = clamp( desiredFuelFlow, 0.0, c_fuelFlowMax );
+
+		if ( getRPMNorm() < 0.52 )
+		{
+			desired *= 0.3 * getRPMNorm();
+		}
+
+
 		m_fuelFlow += (desired - m_fuelFlow) * dt / c_fuelFlowInertia;
 		//printf( "FF %lf\n", m_fuelFlow * 2.2 * 3600.0 );
 		//m_fuelFlow += (std::max( std::min( desiredFuelFlow, c_fuelFlowMax ), 0.0 ) - m_fuelFlow) * dt / c_fuelFlowInertia;
@@ -143,10 +150,10 @@ void Scooter::Engine2::updateEngine( double dt )
 		//updateShaftsDynamic( dt );
 	}
 
-	if ( getRPMNorm() > 0.48 )
+	if ( getRPMNorm() > 0.52 && m_ignitors && m_hasFuel )
 	{
 		//Fuel Flow -> Shaft Speed
-		updateShafts( fuelToHPOmega( m_fuelFlow ), 1.0, dt );
+		updateShafts( m_compressorDamage * fuelToHPOmega( m_fuelFlow ), 1.0, dt );
 	}
 	else
 	{

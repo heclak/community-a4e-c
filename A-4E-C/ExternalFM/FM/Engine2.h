@@ -38,8 +38,8 @@
 
 #define c_fuelFlowInertia 1.5
 
-#define c_combustionTorque 90.0
-#define c_startTorque 20.0
+#define c_combustionTorque 720.0
+#define c_startTorque 30.0
 #define c_airspeedTorque 0.3
 #define c_engineDrag 0.1
 
@@ -63,6 +63,8 @@ public:
 	inline void setBleedAir( bool bleedAir );
 	inline void setIgnitors( bool ignitors );
 	inline void setTemperature( double temperature );
+	inline void setCompressorDamage( double damage );
+	inline void setTurbineDamage( double damage );
 
 	inline double getThrust();
 	inline double getFuelFlow();
@@ -105,6 +107,9 @@ private:
 	bool m_hasFuel = true;
 	bool m_ignitors = true;
 	bool m_bleedAir = false;
+
+	double m_compressorDamage = 0.0;
+	double m_turbineDamage = 0.0;
 
 	bool m_started = false;
 
@@ -202,7 +207,7 @@ double Engine2::hpOmegaToLPOmega( double x )
 
 void Engine2::updateShaftsDynamic( double dt )
 {
-	double torque = (double)m_bleedAir * c_startTorque + m_fuelFlow * c_combustionTorque + m_airspeed * c_airspeedTorque - (m_hpOmega + m_lpOmega) * c_engineDrag;
+	double torque = (double)m_bleedAir * c_startTorque + m_turbineDamage * m_compressorDamage * m_fuelFlow * c_combustionTorque + m_airspeed * c_airspeedTorque - (m_hpOmega + m_lpOmega) * c_engineDrag;
 
 	m_hpOmega += dt * torque / c_hpInertia;
 	m_hpOmega = std::max( m_hpOmega, 0.0 );
@@ -235,8 +240,8 @@ void Engine2::updateShafts( double hpTarget, double inertiaFactor, double dt )
 	m_hpOmegaDot += dt * hpAccel;
 	m_lpOmegaDot += dt * lpAccel;
 
-	m_hpOmega += dt * m_hpOmegaDot;
-	m_lpOmega += dt * m_lpOmegaDot;
+	m_hpOmega += dt * (m_hpOmegaDot - m_turbineDamage);
+	m_lpOmega += dt * (m_lpOmegaDot - m_turbineDamage);
 
 
 	//m_hpOmega += dt * ((hpErrorDot) + (hpError / hpInertia(m_hpOmega))) / inertiaFactor;
@@ -246,6 +251,16 @@ void Engine2::updateShafts( double hpTarget, double inertiaFactor, double dt )
 
 	m_hpOmegaErrorPrev = hpError;
 	m_lpOmegaErrorPrev = lpError;
+}
+
+void Engine2::setCompressorDamage( double damage )
+{
+	m_compressorDamage = damage;
+}
+
+void Engine2::setTurbineDamage( double damage )
+{
+	m_turbineDamage = damage;
 }
 
 }

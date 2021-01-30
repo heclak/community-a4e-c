@@ -374,7 +374,6 @@ public:
 	inline float getSpoilerDamage() const;
 	inline float getSpeedbrakeDamage() const;
 	inline float getFlapDamage() const;
-
 	inline double getNoseCompression() const;
 
 private:
@@ -803,11 +802,11 @@ inline float Airframe::getElevatorDamage() const
 
 inline float Airframe::getCompressorDamage() const
 {
-	return 1.0; //stub for now
+	return 1.0 - clamp(2.0 - DMG_ELEM( Damage::FUSELAGE_LEFT_SIDE ) - DMG_ELEM( Damage::FUSELAGE_RIGHT_SIDE ), 0.0, 1.0);
 }
 inline float Airframe::getTurbineDamage() const
 {
-	return 1.0; //stub for now
+	return 1.0 - clamp( 2.0 - DMG_ELEM( Damage::TAIL_LEFT_SIDE ) - DMG_ELEM( Damage::TAIL_RIGHT_SIDE ), 0.0, 1.0 );
 }
 
 inline float Airframe::getSpoilerDamage() const

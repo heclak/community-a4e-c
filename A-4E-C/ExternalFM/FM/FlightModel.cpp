@@ -579,8 +579,10 @@ void Scooter::FlightModel::calculateShake(double& dt)
 	//printf(gearShake ? "true" : "false");
 	//printf(prevGearShake ? "true" : "false");
 
-	double shakeGroupA = std::min(flapsContinousShake + gearContinousShake + slatsContinousShake, 0.075);
-	double shakeGroupB = speedBrakesContinousShake;
+	double airspeedScale = clamp((1.0 / 50.0) * (m_scalarV - 50.0), 0.0, 1.0);
+
+	double shakeGroupA = airspeedScale * std::min(flapsContinousShake + gearContinousShake + slatsContinousShake, 0.075);
+	double shakeGroupB = airspeedScale * speedBrakesContinousShake;
 	double shakeGroupInst = std::min(shakeInstGear + shakeInstSlat, 1.5);
 	
 	//printf("shake: %lf\n", shakeAmplitude);
