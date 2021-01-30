@@ -1,5 +1,15 @@
 #pragma once
-
+//=========================================================================//
+//
+//		FILE NAME	: AeroElement.h
+//		AUTHOR		: TerjeTL
+//		DATE		: October 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Provides element classes for aerodynamics simulation.
+//
+//================================ Includes ===============================//
 #include "BaseComponent.h"
 #include <iostream>
 #include "Vec3.h"
@@ -9,6 +19,7 @@
 #include "AircraftState.h"
 #include "Maths.h"
 #include <fstream>
+//=========================================================================//
 
 namespace Scooter
 {//begin namespace

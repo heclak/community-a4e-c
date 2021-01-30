@@ -1,3 +1,14 @@
+//=========================================================================//
+//
+//		FILE NAME	: FlightModel.cpp
+//		AUTHOR		: Joshua Nelson
+//		DATE		: May 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Class for flight model simulation. It's pretty self explanitory.
+//
+//================================ Includes ===============================//
 #include <vector>
 #include <stdio.h>
 #include <algorithm>
@@ -6,6 +17,7 @@
 #include "Globals.h"
 #include "Data.h"
 #include "Maths.h"
+//=========================================================================//
 
 #undef min
 

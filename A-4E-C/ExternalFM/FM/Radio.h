@@ -1,7 +1,21 @@
 #pragma once
+#ifndef RADIO_H
+#define RADIO_H
+//=========================================================================//
+//
+//		FILE NAME	: Radio.h
+//		AUTHOR		: Joshua Nelson
+//		DATE		: January 2021
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Radio trickery.
+//
+//================================ Includes ===============================//
 #include "Interface.h"
 #include "../include/Cockpit/ccParametersAPI.h"
 #include <stdlib.h>
+//=========================================================================//
 
 namespace Scooter
 {
@@ -57,4 +71,6 @@ void Radio::toggleRadioMenu()
 
 
 }//end namespace
+
+#endif //RADIO_H
 

@@ -1,8 +1,23 @@
+#pragma once
 #ifndef TABLE_H
 #define TABLE_H
-#pragma once
-//#include <stdlib.h>
+//=========================================================================//
+//
+//		FILE NAME	: Table.h
+//		AUTHOR		: Joshua Nelson
+//		DATE		: May 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	The two table classes here provide an interface to easily
+//						access values from a 1 dimensional data table. Values must
+//						be evenly spaced, this is to reduce storage requirements
+//						and accessing complexity.
+//
+//================================ Includes ===============================//
 #include <vector>
+//=========================================================================//
+
 class Table
 {
 public:

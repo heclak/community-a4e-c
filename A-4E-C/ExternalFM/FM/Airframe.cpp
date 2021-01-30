@@ -1,5 +1,20 @@
+//=========================================================================//
+//
+//		FILE NAME	: Airframe.cpp
+//		AUTHOR		: Joshua Nelson
+//		DATE		: May 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Airframe class handles the current state of each parameter
+//						for the airframe. This includes things like fuel, control
+//						surfaces and damage.
+//
+//================================ Includes ===============================//
 #include "Airframe.h"
 #include <algorithm>
+//=========================================================================//
+
 Scooter::Airframe::Airframe(AircraftState& state, Input& controls, Engine2& engine) :
 	m_state(state),
 	m_controls(controls),

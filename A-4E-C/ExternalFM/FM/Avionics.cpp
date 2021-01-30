@@ -1,5 +1,18 @@
+//=========================================================================//
+//
+//		FILE NAME	: Avionics.cpp
+//		AUTHOR		: Joshua Nelson
+//		DATE		: May 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Avionics class handles the any C/C++ side avionics. This
+//						is the the yaw damper and the CP741/A bombing computer.
+//
+//================================ Includes ===============================//
 #include "Avionics.h"
 #include "Maths.h"
+//=========================================================================//
 
 #define STAB_AUG_MAX_AUTHORITY 0.3
 #define MAX_ROTATION_RATE 1.6

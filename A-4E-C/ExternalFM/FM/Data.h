@@ -1,4 +1,20 @@
 #pragma once
+#ifndef DATA_H
+#define DATA_H
+//=========================================================================//
+//
+//		FILE NAME	: Data.h
+//		AUTHOR		: Joshua Nelson
+//		DATE		: October 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Contains all the data tables and contstants for the flight model.
+//
+//================================ Includes ===============================//
+//=========================================================================//
+
+
 //Tables
 //***********************************//
 //			 OLD TABLES				 //
@@ -104,3 +120,6 @@
 #define c_constAOA -(c_aoaZeroG * c_gradAOA)
 
 #define c_fuelDumpRate 5.13 //kg/s
+
+
+#endif //DATA_H

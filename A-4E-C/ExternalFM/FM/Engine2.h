@@ -1,6 +1,20 @@
 #pragma once
 #ifndef ENGINE_2_H
 #define ENGINE_2_H
+//=========================================================================//
+//
+//		FILE NAME	: Engine2.cpp
+//		AUTHOR		: Joshua Nelson
+//		DATE		: October 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Class for engine simulation, this uses lookup tables for
+//						static thrust values with second order dynamics to provide
+//						transient response. The static thrust at sea level are then
+//						corrected for pressure and temperature.
+//
+//================================ Includes ===============================//
 #include "BaseComponent.h"
 #include "Table.h"
 #include "Input.h"
@@ -8,6 +22,7 @@
 #include "Maths.h"
 #include "AircraftState.h"
 #include <algorithm>
+//=========================================================================//
 
 #undef max
 #undef min

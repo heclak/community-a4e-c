@@ -1,6 +1,18 @@
 #pragma once
+//=========================================================================//
+//
+//		FILE NAME	: AeroElement.cpp
+//		AUTHOR		: TerjeTL
+//		DATE		: October 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Provides element classes for aerodynamics simulation.
+//
+//================================ Includes ===============================//
 #include "AeroElement.h"
 #include "Maths.h"
+//=========================================================================//
 
 Scooter::AeroElement::AeroElement
 (

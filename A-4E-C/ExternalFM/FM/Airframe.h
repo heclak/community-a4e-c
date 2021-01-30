@@ -1,6 +1,19 @@
+#pragma once
 #ifndef AIRFRAME_H
 #define AIRFRAME_H
-#pragma once
+//=========================================================================//
+//
+//		FILE NAME	: Airframe.h
+//		AUTHOR		: Joshua Nelson
+//		DATE		: May 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Airframe class handles the current state of each parameter
+//						for the airframe. This includes things like fuel, control
+//						surfaces and damage.
+//
+//================================ Includes ===============================//
 #include "BaseComponent.h"
 #include "AircraftState.h"
 #include "Actuator.h"
@@ -9,6 +22,7 @@
 #include "Engine2.h"
 #include "Maths.h"
 #include "Vec3.h"
+//=========================================================================//
 
 //Macro police don't hurt me
 #define DMG_ELEM(v) m_integrityElement[(int)v]

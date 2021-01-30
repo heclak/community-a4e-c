@@ -1,6 +1,16 @@
-#pragma once
-
+//=========================================================================//
+//
+//		FILE NAME	: Timer.cpp
+//		AUTHOR		: TerjeTL
+//		DATE		: January 2021
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Utility class for timer.
+//
+//================================ Includes ===============================//
 #include "Timer.h"
+//=========================================================================//
 
 namespace Scooter
 { // start namespace

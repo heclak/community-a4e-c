@@ -1,4 +1,18 @@
+//=========================================================================//
+//
+//		FILE NAME	: AircraftState.cpp
+//		AUTHOR		: Joshua Nelson
+//		DATE		: October 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	State class contains the current state for the aircraft
+//						to make accessing certain parameters much easier from
+//						different locations.
+//
+//================================ Includes ===============================//
 #include "AircraftState.h"
+//=========================================================================//
 
 Scooter::AircraftState::AircraftState()
 {

@@ -1,4 +1,20 @@
+//=========================================================================//
+//
+//		FILE NAME	: Engine2.cpp
+//		AUTHOR		: Joshua Nelson
+//		DATE		: October 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Class for engine simulation, this uses lookup tables for
+//						static thrust values with second order dynamics to provide
+//						transient response. The static thrust at sea level are then
+//						corrected for pressure and temperature.
+//
+//================================ Includes ===============================//
 #include "Engine2.h"
+//=========================================================================//
+
 Scooter::Engine2::Engine2(AircraftState& aircraftState) :
 	m_aircraftState(aircraftState),
 	fuelToHPOmega( c_fuelToHPOmega, c_fuelToHPOmegaMin, c_fuelToHPOmegaMax ),
@@ -107,7 +123,6 @@ void Scooter::Engine2::updateEngine( double dt )
 
 		double desired = clamp( desiredFuelFlow, 0.0, c_fuelFlowMax );
 		m_fuelFlow += (desired - m_fuelFlow) * dt / c_fuelFlowInertia;
-		printf( "Desired %lf, current %lf\n", desired, m_fuelFlow );
 		//printf( "FF %lf\n", m_fuelFlow * 2.2 * 3600.0 );
 		//m_fuelFlow += (std::max( std::min( desiredFuelFlow, c_fuelFlowMax ), 0.0 ) - m_fuelFlow) * dt / c_fuelFlowInertia;
 	}

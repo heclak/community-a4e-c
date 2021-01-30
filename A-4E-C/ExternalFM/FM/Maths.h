@@ -1,7 +1,21 @@
 #pragma once
+//=========================================================================//
+//
+//		FILE NAME	: Maths.h
+//		AUTHOR		: TerjeTL
+//		DATE		: October 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Utility maths functions.
+//
+//================================ Includes ===============================//
 #include <math.h>
 #include "Vec3.h"
 #include <algorithm>
+//=========================================================================//
+
+//To stop silly macros.
 #undef max
 #undef min
 

@@ -1,5 +1,19 @@
 #pragma once
+#ifndef AXIS_H
+#define AXIS_H
+//=========================================================================//
+//
+//		FILE NAME	: Axis.h
+//		AUTHOR		: Joshua Nelson
+//		DATE		: October 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Added axis class to support keyboard users more easily.
+//
+//================================ Includes ===============================//
 #include "BaseComponent.h"
+//=========================================================================//
 
 class Axis : public BaseComponent
 {
@@ -65,3 +79,5 @@ const double Axis::getValue() const
 {
 	return m_value;
 }
+
+#endif //AXIS_H

@@ -2,7 +2,7 @@
 //
 //		FILE NAME	: Safe.cpp
 //		AUTHOR		: Joshua Nelson
-//		Date		: October 2020
+//		DATE		: October 2020
 //
 //		This file falls under the licence found in the root ExternalFM directory.
 //

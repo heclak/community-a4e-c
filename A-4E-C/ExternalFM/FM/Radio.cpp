@@ -1,5 +1,17 @@
+//=========================================================================//
+//
+//		FILE NAME	: Radio.cpp
+//		AUTHOR		: Joshua Nelson
+//		DATE		: January 2021
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Radio trickery.
+//
+//================================ Includes ===============================//
 #include "Radio.h"
 #include "Globals.h"
+//=========================================================================//
 
 Scooter::Radio::Radio(Interface& inter):
 	m_interface(inter)

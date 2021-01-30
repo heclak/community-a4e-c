@@ -1,6 +1,19 @@
+#pragma once
 #ifndef VEC3_H
 #define VEC3_H
-#pragma once
+//=========================================================================//
+//
+//		FILE NAME	: Vec3.h
+//		AUTHOR		: Joshua Nelson
+//		DATE		: May 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Vec3 class with added operator overloads to make maths easier.
+//
+//================================ Includes ===============================//
+//=========================================================================//
+
 struct Vec3
 {
 	Vec3() : x(0.0), y(0.0), z(0.0) {}

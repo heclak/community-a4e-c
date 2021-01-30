@@ -1,7 +1,22 @@
+//=========================================================================//
+//
+//		FILE NAME	: CP741.cpp
+//		AUTHOR		: Joshua Nelson
+//		DATE		: October 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	CP-741/A bombing computer class. Calculates bomb travel
+//						distance using the current aircraft state vector.
+//						This just solves the equation for a parabola, so no
+//						air resistance is taken into account.
+//
+//================================ Includes ===============================//
 #include "CP741.h"
 #include <stdio.h>
 #include <math.h>
 #include "Maths.h"
+//=========================================================================//
 
 //             angle from weapons dataum + fudge factor
 #define c_weaponDatum (0.05235987756 + 0.01)

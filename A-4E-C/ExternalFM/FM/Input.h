@@ -5,7 +5,7 @@
 //
 //		FILE NAME	: Input.h
 //		AUTHOR		: Joshua Nelson
-//		Date		: May 2020
+//		DATE		: May 2020
 //
 //		This file falls under the licence found in the root ExternalFM directory.
 //

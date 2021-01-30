@@ -1,6 +1,19 @@
+//=========================================================================//
+//
+//		FILE NAME	: Actuator.cpp
+//		AUTHOR		: TerjeTL
+//		DATE		: October 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Actuator class to provide realistic movement for the
+//						controls.
+//
+//================================ Includes ===============================//
 #include "Actuator.h"
 #include "Maths.h"
 #include <cmath>
+//=========================================================================//
 
 namespace Scooter
 { // start namespace

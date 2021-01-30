@@ -1,7 +1,19 @@
 #pragma once //globals r bad
 #ifndef GLOBALS_H
 #define GLOBALS_H
+//=========================================================================//
+//
+//		FILE NAME	: Globals.h
+//		AUTHOR		: Joshua Nelson
+//		DATE		: June 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Contains all global variables declaration.
+//
+//================================ Includes ===============================//
 #include <stdio.h>
+//=========================================================================//
 
 extern FILE* g_log;
 extern int g_safeToRun;

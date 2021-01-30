@@ -1,6 +1,17 @@
+#pragma once
 #ifndef FLIGHTMODEL_H
 #define FLIGHTMODEL_H
-#pragma once
+//=========================================================================//
+//
+//		FILE NAME	: FlightModel.h
+//		AUTHOR		: Joshua Nelson
+//		DATE		: May 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Class for flight model simulation. It's pretty self explanitory.
+//
+//================================ Includes ===============================//
 #include "BaseComponent.h"
 #include <iostream>
 #include "Vec3.h"
@@ -13,7 +24,7 @@
 #include "Maths.h"
 #include "Timer.h"
 #include "AircraftState.h"
-
+//=========================================================================//
 
 namespace Scooter
 {//begin namespace

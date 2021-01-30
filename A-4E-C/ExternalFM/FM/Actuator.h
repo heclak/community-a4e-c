@@ -1,6 +1,18 @@
 #pragma once
+//=========================================================================//
+//
+//		FILE NAME	: Actuator.h
+//		AUTHOR		: TerjeTL
+//		DATE		: October 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Actuator class to provide realistic movement for the
+//						controls.
+//
+//================================ Includes ===============================//
 #include "BaseComponent.h"
-
+//=========================================================================//
 
 namespace Scooter
 {

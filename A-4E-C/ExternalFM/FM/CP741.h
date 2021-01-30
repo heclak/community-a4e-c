@@ -1,7 +1,24 @@
 #pragma once
+#ifndef CP741_H
+#define CP741_H
+//=========================================================================//
+//
+//		FILE NAME	: CP741.h
+//		AUTHOR		: Joshua Nelson
+//		DATE		: October 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	CP-741/A bombing computer class. Calculates bomb travel
+//						distance using the current aircraft state vector.
+//						This just solves the equation for a parabola, so no
+//						air resistance is taken into account.
+//
+//================================ Includes ===============================//
 #include "BaseComponent.h"
 #include "AircraftState.h"
 #include "Vec3.h"
+//=========================================================================//
 
 namespace Scooter
 {
@@ -59,3 +76,5 @@ bool CP741::getTargetSet()
 }
 
 }
+
+#endif //CP741_H

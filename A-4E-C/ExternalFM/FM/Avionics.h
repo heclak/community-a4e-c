@@ -1,11 +1,25 @@
+#pragma once
 #ifndef AVIONICS_H
 #define AVIONICS_H
-#pragma once
+//=========================================================================//
+//
+//		FILE NAME	: Avionics.h
+//		AUTHOR		: Joshua Nelson
+//		DATE		: May 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Avionics class handles the any C/C++ side avionics. This
+//						is the the yaw damper and the CP741/A bombing computer.
+//
+//================================ Includes ===============================//
 #include "Maths.h"
 #include "BaseComponent.h"
 #include "Input.h"
 #include "AircraftState.h"
 #include "CP741.h"
+//=========================================================================//
+
 namespace Scooter
 {//begin namespace
 

@@ -1,6 +1,17 @@
+//=========================================================================//
+//
+//		FILE NAME	: Axis.cpp
+//		AUTHOR		: Joshua Nelson
+//		DATE		: October 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Added axis class to support keyboard users more easily.
+//
+//================================ Includes ===============================//
 #include "Axis.h"
 #include <algorithm>
-
+//=========================================================================//
 
 Axis::Axis( 
 	double sensitivity, 

@@ -5,7 +5,7 @@
 //
 //		FILE NAME	: Interface.h
 //		AUTHOR		: Joshua Nelson
-//		Date		: June 2020
+//		DATE		: June 2020
 //
 //		This file falls under the licence found in the root ExternalFM directory.
 //
@@ -146,8 +146,6 @@ public:
 			//shells = _get_gun_shells(ptr,)
 		return shells;
 	}
-
-
 
 	inline void* getPointer( void* handle )
 	{

@@ -1,5 +1,17 @@
+//=========================================================================//
+//
+//		FILE NAME	: Maths.cpp
+//		AUTHOR		: TerjeTL
+//		DATE		: October 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Utility maths functions.
+//
+//================================ Includes ===============================//
 #include <math.h>
 #include "Maths.h"
+//=========================================================================//
 
 namespace Scooter
 {	// start namespace

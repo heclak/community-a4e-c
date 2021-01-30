@@ -2,7 +2,7 @@
 //
 //		FILE NAME	: Scooter.h
 //		AUTHOR		: Joshua Nelson
-//		Date		: March 2020
+//		DATE		: March 2020
 //
 //		This file falls under the license found in the root ExternalFM directory.
 //
