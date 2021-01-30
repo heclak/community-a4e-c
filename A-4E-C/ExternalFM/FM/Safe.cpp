@@ -1,10 +1,23 @@
+//=========================================================================//
+//
+//		FILE NAME	: Safe.cpp
+//		AUTHOR		: Joshua Nelson
+//		Date		: October 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Confirms that the program is running with the files as 
+//						expected.
+//
+//================================ Includes ===============================//
 #include "Hashes.h"
 #include <wincrypt.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <memory.h>
 #include "Globals.h"
-#include "Skyhawk.h"
+#include "Scooter.h"
+//=========================================================================//
 
 enum FileCodes
 {

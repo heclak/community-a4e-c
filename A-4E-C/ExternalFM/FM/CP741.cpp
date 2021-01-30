@@ -6,13 +6,13 @@
 //             angle from weapons dataum + fudge factor
 #define c_weaponDatum (0.05235987756 + 0.01)
 
-Skyhawk::CP741::CP741( AircraftState& state ):
+Scooter::CP741::CP741( AircraftState& state ):
 	m_state(state)
 {
 	
 }
 
-void Skyhawk::CP741::zeroInit()
+void Scooter::CP741::zeroInit()
 {
 	m_solution = false;
 	m_power = false;
@@ -21,22 +21,22 @@ void Skyhawk::CP741::zeroInit()
 	m_gunsightAngle = 0.0;
 }
 
-void Skyhawk::CP741::coldInit()
+void Scooter::CP741::coldInit()
 {
 
 }
 
-void Skyhawk::CP741::hotInit()
+void Scooter::CP741::hotInit()
 {
 
 }
 
-void Skyhawk::CP741::airborneInit()
+void Scooter::CP741::airborneInit()
 {
 
 }
 
-void Skyhawk::CP741::updateSolution( double dt )
+void Scooter::CP741::updateSolution( double dt )
 {
 	//Must be turned on
 	//if ( m_power )
@@ -63,7 +63,7 @@ void Skyhawk::CP741::updateSolution( double dt )
 	}
 }
 
-double Skyhawk::CP741::calculateHorizontalDistance()
+double Scooter::CP741::calculateHorizontalDistance()
 {
 	Vec3 distance = m_target - m_state.getWorldPosition();
 	distance.y = 0.0;
@@ -75,7 +75,7 @@ double Skyhawk::CP741::calculateHorizontalDistance()
 	return sign*magnitude( distance );
 }
 
-void Skyhawk::CP741::setTarget( bool set, double slant )
+void Scooter::CP741::setTarget( bool set, double slant )
 {
 	//Pitch - weapon datum
 	double weaponAngle = m_state.getAngle().z - c_weaponDatum - m_gunsightAngle;
@@ -112,7 +112,7 @@ void Skyhawk::CP741::setTarget( bool set, double slant )
 	}
 }
 
-double Skyhawk::CP741::calculateImpactDistance(double dt)
+double Scooter::CP741::calculateImpactDistance(double dt)
 {
 
 	Vec3 velocity = m_state.getWorldVelocity();

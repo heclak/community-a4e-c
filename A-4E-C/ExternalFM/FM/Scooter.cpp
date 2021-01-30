@@ -1,9 +1,18 @@
-// ED_FM_Template.cpp : Defines the exported functions for the DLL application.
-//#include "ED_FM_Utility.h"
+//=========================================================================//
+//
+//		FILE NAME	: Scooter.cpp
+//		AUTHOR		: Joshua Nelson
+//		Date		: March 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Contains the exported function definitions called by 
+//						Eagle Dynamics.
+//
+//================================ Includes ===============================//
 #include "stdafx.h"
-//#include "A-4_Aero.h"
 #include "Globals.h"
-#include "Skyhawk.h"
+#include "Scooter.h"
 #include <Math.h>
 #include <stdio.h>
 #include <string>
@@ -16,32 +25,34 @@
 #include "AircraftState.h"
 #include "Radio.h"
 #include "Maths.h"
-//============================ Skyhawk Statics ============================//
-static Skyhawk::AircraftState* s_state = NULL;
-static Skyhawk::Interface* s_interface = NULL;
-static Skyhawk::Input* s_input = NULL;
-static Skyhawk::Engine2* s_engine = NULL;
-static Skyhawk::Airframe* s_airframe = NULL;
-static Skyhawk::FlightModel* s_fm = NULL;
-static Skyhawk::Avionics* s_avionics = NULL;
-static Skyhawk::Radio* s_radio = NULL;
-//========================================================================//
 
+//============================= Statics ===================================//
+static Scooter::AircraftState* s_state = NULL;
+static Scooter::Interface* s_interface = NULL;
+static Scooter::Input* s_input = NULL;
+static Scooter::Engine2* s_engine = NULL;
+static Scooter::Airframe* s_airframe = NULL;
+static Scooter::FlightModel* s_fm = NULL;
+static Scooter::Avionics* s_avionics = NULL;
+static Scooter::Radio* s_radio = NULL;
+
+//========================== Static Functions =============================//
 static void init();
 static void cleanup();
-
 static inline double rawAOAToUnits( double rawAOA );
+
+//=========================================================================//
 
 void init()
 {
-	s_state = new Skyhawk::AircraftState;
-	s_interface = new Skyhawk::Interface;
-	s_input = new Skyhawk::Input;
-	s_engine = new Skyhawk::Engine2( *s_state );
-	s_airframe = new Skyhawk::Airframe( *s_state, *s_input, *s_engine );
-	s_avionics = new Skyhawk::Avionics( *s_input, *s_state );
-	s_fm = new Skyhawk::FlightModel( *s_state, *s_input, *s_airframe, *s_engine, *s_interface );
-	s_radio = new Skyhawk::Radio(*s_interface);
+	s_state = new Scooter::AircraftState;
+	s_interface = new Scooter::Interface;
+	s_input = new Scooter::Input;
+	s_engine = new Scooter::Engine2( *s_state );
+	s_airframe = new Scooter::Airframe( *s_state, *s_input, *s_engine );
+	s_avionics = new Scooter::Avionics( *s_input, *s_state );
+	s_fm = new Scooter::FlightModel( *s_state, *s_input, *s_airframe, *s_engine, *s_interface );
+	s_radio = new Scooter::Radio(*s_interface);
 }
 
 void cleanup()
@@ -161,7 +172,7 @@ void ed_fm_simulate(double dt)
 	s_interface->setStickInputPitch( s_input->pitch() );
 	s_interface->setStickInputRoll( s_input->roll() );
 
-	s_interface->setInternalFuel(s_airframe->getFuelQty(Skyhawk::Airframe::Tank::INTERNAL));
+	s_interface->setInternalFuel(s_airframe->getFuelQty(Scooter::Airframe::Tank::INTERNAL));
 	s_interface->setExternalFuel(s_airframe->getFuelQtyExternal());
 	s_interface->setAOA( s_state->getAOA() );
 	s_interface->setBeta( s_state->getBeta() );
@@ -287,7 +298,7 @@ void ed_fm_set_current_state_body_axis
 
 void ed_fm_on_damage( int element, double element_integrity_factor )
 {
-	s_airframe->setIntegrityElement((Skyhawk::Airframe::Damage)element, (float)element_integrity_factor);
+	s_airframe->setIntegrityElement((Scooter::Airframe::Damage)element, (float)element_integrity_factor);
 }
 
 /*
@@ -301,99 +312,99 @@ void ed_fm_set_command
 {
 	switch (command)
 	{
-	case Skyhawk::Control::PITCH:
+	case Scooter::Control::PITCH:
 		s_input->pitch( value );
 		break;
-	case Skyhawk::Control::ROLL:
+	case Scooter::Control::ROLL:
 		s_input->roll( value );
 		break;
-	case Skyhawk::Control::YAW:
+	case Scooter::Control::YAW:
 		s_input->yaw( value );
 		break;
-	case Skyhawk::Control::THROTTLE:
+	case Scooter::Control::THROTTLE:
 		s_input->throttle( value );
 		break;
-	case Skyhawk::Control::BRAKE:
+	case Scooter::Control::BRAKE:
 		s_input->brakeLeft( value );
 		s_input->brakeRight( value );
 		break;
-	case Skyhawk::Control::LEFT_BRAKE:
+	case Scooter::Control::LEFT_BRAKE:
 		s_input->brakeLeft( value );
 		break;
-	case Skyhawk::Control::RIGHT_BRAKE:
+	case Scooter::Control::RIGHT_BRAKE:
 		s_input->brakeRight( value );
 		break;
-	/*case Skyhawk::Control::HOOK_TOGGLE:
+	/*case Scooter::Control::HOOK_TOGGLE:
 		s_input->hook() = !s_input->hook();
 		break;*/
-	case Skyhawk::Control::RUDDER_LEFT_START:
+	case Scooter::Control::RUDDER_LEFT_START:
 		s_input->yawAxis().keyDecrease();
 		break;
-	case Skyhawk::Control::RUDDER_LEFT_STOP:
+	case Scooter::Control::RUDDER_LEFT_STOP:
 		s_input->yawAxis().reset();
 		break;
-	case Skyhawk::Control::RUDDER_RIGHT_START:
+	case Scooter::Control::RUDDER_RIGHT_START:
 		s_input->yawAxis().keyIncrease();
 		break;
-	case Skyhawk::Control::RUDDER_RIGHT_STOP:
+	case Scooter::Control::RUDDER_RIGHT_STOP:
 		s_input->yawAxis().reset();
 		break;
-	case Skyhawk::Control::ROLL_LEFT_START:
+	case Scooter::Control::ROLL_LEFT_START:
 		s_input->rollAxis().keyDecrease();
 		break;
-	case Skyhawk::Control::ROLL_LEFT_STOP:
+	case Scooter::Control::ROLL_LEFT_STOP:
 		s_input->rollAxis().reset();
 		break;
-	case Skyhawk::Control::ROLL_RIGHT_START:
+	case Scooter::Control::ROLL_RIGHT_START:
 		s_input->rollAxis().keyIncrease();
 		break;
-	case Skyhawk::Control::ROLL_RIGHT_STOP:
+	case Scooter::Control::ROLL_RIGHT_STOP:
 		s_input->rollAxis().reset();
 		break;
-	case Skyhawk::Control::PITCH_DOWN_START:
+	case Scooter::Control::PITCH_DOWN_START:
 		s_input->pitchAxis().keyDecrease();
 		break;
-	case Skyhawk::Control::PITCH_DOWN_STOP:
+	case Scooter::Control::PITCH_DOWN_STOP:
 		s_input->pitchAxis().reset();
 		break;
-	case Skyhawk::Control::PITCH_UP_START:
+	case Scooter::Control::PITCH_UP_START:
 		s_input->pitchAxis().keyIncrease();
 		break;
-	case Skyhawk::Control::PITCH_UP_STOP:
+	case Scooter::Control::PITCH_UP_STOP:
 		s_input->pitchAxis().reset();
 		break;
-	case Skyhawk::Control::THROTTLE_DOWN_START:
+	case Scooter::Control::THROTTLE_DOWN_START:
 		//Throttle is inverted for some reason in DCS
 		s_input->throttleAxis().keyIncrease();
 		break;
-	case Skyhawk::Control::THROTTLE_STOP:
+	case Scooter::Control::THROTTLE_STOP:
 		s_input->throttleAxis().stop();
 		break;
-	case Skyhawk::Control::THROTTLE_UP_START:
+	case Scooter::Control::THROTTLE_UP_START:
 		s_input->throttleAxis().keyDecrease();
 		break;
-	case Skyhawk::Control::BRAKE_ALL_START:
+	case Scooter::Control::BRAKE_ALL_START:
 		s_input->leftBrakeAxis().keyIncrease();
 		s_input->rightBrakeAxis().keyIncrease();
 		break;
-	case Skyhawk::Control::BRAKE_ALL_STOP:
+	case Scooter::Control::BRAKE_ALL_STOP:
 		s_input->leftBrakeAxis().reset();
 		s_input->rightBrakeAxis().reset();
 		break;
 
-	case Skyhawk::Control::BRAKE_LEFT_START:
+	case Scooter::Control::BRAKE_LEFT_START:
 		s_input->leftBrakeAxis().keyIncrease();
 		break;
-	case Skyhawk::Control::BRAKE_LEFT_STOP:
+	case Scooter::Control::BRAKE_LEFT_STOP:
 		s_input->leftBrakeAxis().reset();
 		break;
-	case Skyhawk::Control::BRAKE_RIGHT_START:
+	case Scooter::Control::BRAKE_RIGHT_START:
 		s_input->rightBrakeAxis().keyIncrease();
 		break;
-	case Skyhawk::Control::BRAKE_RIGHT_STOP:
+	case Scooter::Control::BRAKE_RIGHT_STOP:
 		s_input->rightBrakeAxis().reset();
 		break;
-	case Skyhawk::Control::RADIO_PTT:
+	case Scooter::Control::RADIO_PTT:
 		s_radio->toggleRadioMenu();
 		break;
 	default:
@@ -431,10 +442,10 @@ bool ed_fm_change_mass  (double & delta_mass,
 						double & delta_mass_moment_of_inertia_z
 						)
 {
-	Skyhawk::Airframe::Tank tank = s_airframe->getSelectedTank();
-	if ( tank == Skyhawk::Airframe::Tank::DONT_TOUCH )
+	Scooter::Airframe::Tank tank = s_airframe->getSelectedTank();
+	if ( tank == Scooter::Airframe::Tank::DONT_TOUCH )
 	{
-		s_airframe->setSelectedTank( Skyhawk::Airframe::Tank::INTERNAL );
+		s_airframe->setSelectedTank( Scooter::Airframe::Tank::INTERNAL );
 		return false;
 	}
 
@@ -447,7 +458,7 @@ bool ed_fm_change_mass  (double & delta_mass,
 	delta_mass_pos_y = pos.y;
 	delta_mass_pos_z = pos.z;
 
-	s_airframe->setSelectedTank((Skyhawk::Airframe::Tank)((int)tank + 1));
+	s_airframe->setSelectedTank((Scooter::Airframe::Tank)((int)tank + 1));
 	return true;
 }
 /*
@@ -456,7 +467,7 @@ bool ed_fm_change_mass  (double & delta_mass,
 */
 void ed_fm_set_internal_fuel(double fuel)
 {
-	s_airframe->setFuelState(Skyhawk::Airframe::Tank::INTERNAL, s_state->getCOM(), fuel);
+	s_airframe->setFuelState(Scooter::Airframe::Tank::INTERNAL, s_state->getCOM(), fuel);
 }
 
 void ed_fm_refueling_add_fuel( double fuel )
@@ -469,7 +480,7 @@ void ed_fm_refueling_add_fuel( double fuel )
 */
 double ed_fm_get_internal_fuel()
 {
-	return s_airframe->getFuelQty(Skyhawk::Airframe::Tank::INTERNAL);
+	return s_airframe->getFuelQty(Scooter::Airframe::Tank::INTERNAL);
 }
 /*
 	set external fuel volume for each payload station , called for weapon init and on reload
@@ -481,14 +492,14 @@ void  ed_fm_set_external_fuel (int	 station,
 								double z)
 {
 	//printf( "Station: %d, Fuel: %lf, Z: %lf, COM %lf\n", station, fuel, z, s_state->getCOM().z );
-	s_airframe->setFuelState((Skyhawk::Airframe::Tank)station, Vec3(x, y, z), fuel);
+	s_airframe->setFuelState((Scooter::Airframe::Tank)station, Vec3(x, y, z), fuel);
 }
 /*
 	get external fuel volume 
 */
 double ed_fm_get_external_fuel ()
 {
-	return s_airframe->getFuelQty(Skyhawk::Airframe::Tank::LEFT_EXT) + s_airframe->getFuelQty(Skyhawk::Airframe::Tank::CENTRE_EXT) + s_airframe->getFuelQty(Skyhawk::Airframe::Tank::RIGHT_EXT);
+	return s_airframe->getFuelQty(Scooter::Airframe::Tank::LEFT_EXT) + s_airframe->getFuelQty(Scooter::Airframe::Tank::CENTRE_EXT) + s_airframe->getFuelQty(Scooter::Airframe::Tank::RIGHT_EXT);
 }
 
 void ed_fm_set_draw_args (EdDrawArgument * drawargs,size_t size)
@@ -610,26 +621,26 @@ double ed_fm_get_param(unsigned index)
 
 bool ed_fm_pop_simulation_event(ed_fm_simulation_event& out)
 {
-	if (s_airframe->catapultState() == Skyhawk::Airframe::ON_CAT_NOT_READY && !s_airframe->catapultStateSent())
+	if (s_airframe->catapultState() == Scooter::Airframe::ON_CAT_NOT_READY && !s_airframe->catapultStateSent())
 	{
 		out.event_type = ED_FM_EVENT_CARRIER_CATAPULT;
 		out.event_params[0] = 0;
 		s_airframe->catapultStateSent() = true;
 		return true;
 	}
-	else if (s_airframe->catapultState() == Skyhawk::Airframe::ON_CAT_READY)
+	else if (s_airframe->catapultState() == Scooter::Airframe::ON_CAT_READY)
 	{
 		out.event_type = ED_FM_EVENT_CARRIER_CATAPULT;
 		out.event_params[0] = 1;
 		out.event_params[1] = 3.0f;
 		out.event_params[2] = 60.0f + 20.0 * std::min(s_airframe->getMass() / c_maxTakeoffMass, 1.0);
 		out.event_params[3] = s_engine->getThrust();
-		s_airframe->catapultState() = Skyhawk::Airframe::ON_CAT_WAITING;
+		s_airframe->catapultState() = Scooter::Airframe::ON_CAT_WAITING;
 		return true;
 	}
 	else
 	{
-		Skyhawk::Airframe::Damage damage;
+		Scooter::Airframe::Damage damage;
 		float integrity;
 		if ( s_airframe->processDamageStack( damage, integrity ) )
 		{
@@ -650,21 +661,21 @@ bool ed_fm_push_simulation_event(const ed_fm_simulation_event& in)
 	{
 		if (in.event_params[0] == 1)
 		{
-			s_airframe->catapultState() = Skyhawk::Airframe::ON_CAT_NOT_READY;
+			s_airframe->catapultState() = Scooter::Airframe::ON_CAT_NOT_READY;
 		}
 		else if (in.event_params[0] == 2)
 		{
-			s_airframe->catapultState() = Skyhawk::Airframe::ON_CAT_LAUNCHING;
+			s_airframe->catapultState() = Scooter::Airframe::ON_CAT_LAUNCHING;
 		}
 		else if (in.event_params[0] == 3)
 		{
-			if (s_airframe->catapultState() == Skyhawk::Airframe::ON_CAT_LAUNCHING)
+			if (s_airframe->catapultState() == Scooter::Airframe::ON_CAT_LAUNCHING)
 			{
-				s_airframe->catapultState() = Skyhawk::Airframe::OFF_CAT;
+				s_airframe->catapultState() = Scooter::Airframe::OFF_CAT;
 			}
 			else
 			{
-				s_airframe->catapultState() = Skyhawk::Airframe::OFF_CAT;
+				s_airframe->catapultState() = Scooter::Airframe::OFF_CAT;
 			}
 		}
 	}

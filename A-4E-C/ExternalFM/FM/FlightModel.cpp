@@ -11,7 +11,7 @@
 
 //Set everything to zero.
 //Vectors already constructor to zero vector.
-Skyhawk::FlightModel::FlightModel
+Scooter::FlightModel::FlightModel
 (
 	AircraftState& state,
 	Input& controls,
@@ -136,14 +136,14 @@ Skyhawk::FlightModel::FlightModel
 
 }
 
-Skyhawk::FlightModel::~FlightModel()
+Scooter::FlightModel::~FlightModel()
 {
 
 }
 
 //Seriously need to set EVERY VARIABLE to zero (or approriate value if zero causes singularity) in the constructor and 
 //in this function. Otherwise Track's become unusable because of the butterfly effect.
-void Skyhawk::FlightModel::zeroInit()
+void Scooter::FlightModel::zeroInit()
 {
 	m_q = 0.0;
 	m_p = 0.0;
@@ -184,22 +184,22 @@ void Skyhawk::FlightModel::zeroInit()
 
 }
 
-void Skyhawk::FlightModel::coldInit()
+void Scooter::FlightModel::coldInit()
 {
 	zeroInit();
 }
 
-void Skyhawk::FlightModel::hotInit()
+void Scooter::FlightModel::hotInit()
 {
 	zeroInit();
 }
 
-void Skyhawk::FlightModel::airborneInit()
+void Scooter::FlightModel::airborneInit()
 {
 	zeroInit();
 }
 
-void Skyhawk::FlightModel::calculateAero(double dt)
+void Scooter::FlightModel::calculateAero(double dt)
 {
 	calculateLocalPhysicsParams(dt);
 	slats(dt);
@@ -218,7 +218,7 @@ void Skyhawk::FlightModel::calculateAero(double dt)
 	calculateShake(dt);
 }
 
-void Skyhawk::FlightModel::calculateLocalPhysicsParams(double dt)
+void Scooter::FlightModel::calculateLocalPhysicsParams(double dt)
 {
 	m_force = Vec3();
 	m_moment = Vec3();
@@ -290,12 +290,12 @@ void Skyhawk::FlightModel::calculateLocalPhysicsParams(double dt)
 	m_p = m_scalarV * m_state.getAirDensity() * 0.25 * m_totalWingArea * m_totalWingSpan * m_totalWingSpan;
 }
 
-void Skyhawk::FlightModel::lift()
+void Scooter::FlightModel::lift()
 {
 	addForce(Vec3(0.0, m_k * (CLde(m_state.getMach()) * elevator()), 0.0));
 }
 
-void Skyhawk::FlightModel::drag()
+void Scooter::FlightModel::drag()
 {
 	double CD = dCDspeedBrake(0.0) * m_airframe.getSpeedBrakePosition() +
 		CDbeta(m_state.getBeta()) +
@@ -311,7 +311,7 @@ void Skyhawk::FlightModel::drag()
 	m_CDwindAxesComp.x = -m_k * CD;
 }
 
-void Skyhawk::FlightModel::calculateElements()
+void Scooter::FlightModel::calculateElements()
 {
 	Vec3 dragElem = windAxisToBody(m_CDwindAxesComp, m_state.getAOA(), m_state.getBeta() );
 	
@@ -399,7 +399,7 @@ void Skyhawk::FlightModel::calculateElements()
 	addForce(dragElem);
 }
 
-void Skyhawk::FlightModel::slats(double& dt)
+void Scooter::FlightModel::slats(double& dt)
 {
 	double forceL = (m_elementLSlat.m_kElem / m_totalWingArea) * m_slatArea * slatCL(m_elementLSlat.getAOA());
 	double forceR = (m_elementLSlat.m_kElem / m_totalWingArea) * m_slatArea * slatCL(m_elementRSlat.getAOA());
@@ -445,7 +445,7 @@ void Skyhawk::FlightModel::slats(double& dt)
 	m_airframe.setSlatRPosition( x_R );
 }
 
-void Skyhawk::FlightModel::calculateShake(double& dt)
+void Scooter::FlightModel::calculateShake(double& dt)
 {
 	
 
@@ -576,12 +576,12 @@ void Skyhawk::FlightModel::calculateShake(double& dt)
 	m_cockpitShake = shakeAmplitude + shakeGroupA + shakeGroupB + shakeGroupInst;
 }
 
-//void Skyhawk::FlightModel::shakeInst()
+//void Scooter::FlightModel::shakeInst()
 //{
 //	m_cockpitShake = 100.0;
 //}
 
-void Skyhawk::FlightModel::csvData(std::vector<double>& data)
+void Scooter::FlightModel::csvData(std::vector<double>& data)
 {
 	
 

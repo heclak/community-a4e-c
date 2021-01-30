@@ -15,7 +15,7 @@
 #include "AircraftState.h"
 
 
-namespace Skyhawk
+namespace Scooter
 {//begin namespace
 
 class FlightModel : public BaseComponent

@@ -8,7 +8,7 @@
 
 #define PI 3.14159265359
 
-namespace Skyhawk
+namespace Scooter
 {
 
 extern const Vec3 windAxisToBody(const Vec3& force, const double& alpha, const double& beta);

@@ -1,9 +1,23 @@
+#pragma once
 #ifndef INTERFACE_H
 #define INTERFACE_H
-#pragma once
+//=========================================================================//
+//
+//		FILE NAME	: Interface.h
+//		AUTHOR		: Joshua Nelson
+//		Date		: June 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Class for handling interface between lua and C/C++.
+//						See equivelent file for lua EFM_Data_Bus.lua.
+//
+//================================ Includes ===============================//
 #include <stdlib.h>
 #include <stdio.h>
 #include "../include/Cockpit/ccParametersAPI.h"
+
+//=========================================================================//
 
 extern "C"
 {
@@ -19,7 +33,7 @@ extern "C"
 	void _set_radio_power( void* radio, bool value, void* fnc );
 }
 
-namespace Skyhawk
+namespace Scooter
 {//namespace begin
 
 class Interface

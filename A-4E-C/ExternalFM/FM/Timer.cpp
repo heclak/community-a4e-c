@@ -2,7 +2,7 @@
 
 #include "Timer.h"
 
-namespace Skyhawk
+namespace Scooter
 { // start namespace
 
 	Timer::Timer(double time) : m_time{ time }, m_timeElapsed{ 0.0 }, m_isActive{ false }

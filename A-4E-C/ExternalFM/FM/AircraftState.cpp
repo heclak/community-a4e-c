@@ -1,13 +1,13 @@
 #include "AircraftState.h"
 
-Skyhawk::AircraftState::AircraftState()
+Scooter::AircraftState::AircraftState()
 {
 	zeroInit();
 }
 
 //Seriously need to set EVERY VARIABLE to zero (or approriate value if zero causes singularity) in the constructor and 
 //in this function. Otherwise Track's become unusable because of the butterfly effect.
-void Skyhawk::AircraftState::zeroInit()
+void Scooter::AircraftState::zeroInit()
 {
 	m_worldPosition = Vec3();
 	m_worldVelocity = Vec3();
@@ -31,17 +31,17 @@ void Skyhawk::AircraftState::zeroInit()
 	m_radarAltitude = 0.0;
 }
 
-void Skyhawk::AircraftState::coldInit()
+void Scooter::AircraftState::coldInit()
 {
 	zeroInit();
 }
 
-void Skyhawk::AircraftState::hotInit()
+void Scooter::AircraftState::hotInit()
 {
 	zeroInit();
 }
 
-void Skyhawk::AircraftState::airborneInit()
+void Scooter::AircraftState::airborneInit()
 {
 	zeroInit();
 }

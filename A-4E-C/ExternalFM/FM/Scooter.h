@@ -1,6 +1,20 @@
+//=========================================================================//
+//
+//		FILE NAME	: Scooter.h
+//		AUTHOR		: Joshua Nelson
+//		Date		: March 2020
+//
+//		This file falls under the license found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Contains the exported function declarations called by 
+//						Eagle Dynamics.
+//
+//
+//
+//================================ Includes ===============================//
 #include "ED_FM_API.h"
 #include "../../include/FM/wHumanCustomPhysicsAPI.h"
-
+//=========================================================================//
 
 extern "C" 
 {

@@ -1,10 +1,23 @@
+#pragma once
 #ifndef CONTROL_H
 #define CONTROL_H
-#pragma once
+//=========================================================================//
+//
+//		FILE NAME	: Input.h
+//		AUTHOR		: Joshua Nelson
+//		Date		: May 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Class for handling control inputs.
+//
+//================================ Includes ===============================//
 #include "BaseComponent.h"
 #include "Axis.h"
 
-namespace Skyhawk
+//=========================================================================//
+
+namespace Scooter
 {//begin namespace
 
 enum Control

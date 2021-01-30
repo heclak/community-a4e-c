@@ -2,7 +2,7 @@
 #include "AeroElement.h"
 #include "Maths.h"
 
-Skyhawk::AeroElement::AeroElement
+Scooter::AeroElement::AeroElement
 (
 	AircraftState& state,
 	Table& CLalpha,
@@ -23,12 +23,12 @@ Skyhawk::AeroElement::AeroElement
 
 }
 
-Skyhawk::AeroElement::~AeroElement()
+Scooter::AeroElement::~AeroElement()
 {
 
 }
 
-Skyhawk::AeroSurface::AeroSurface
+Scooter::AeroSurface::AeroSurface
 (
 	AircraftState& state,
 	Table& CLalpha,
@@ -42,7 +42,7 @@ Skyhawk::AeroSurface::AeroSurface
 
 }
 
-Skyhawk::AeroVerticalSurface::AeroVerticalSurface
+Scooter::AeroVerticalSurface::AeroVerticalSurface
 (
 	AircraftState& state,
 	Airframe& airframe,
@@ -57,7 +57,7 @@ Skyhawk::AeroVerticalSurface::AeroVerticalSurface
 
 }
 
-Skyhawk::AeroHorizontalTail::AeroHorizontalTail
+Scooter::AeroHorizontalTail::AeroHorizontalTail
 (
 	AircraftState& state,
 	Airframe& airframe,
@@ -73,7 +73,7 @@ Skyhawk::AeroHorizontalTail::AeroHorizontalTail
 
 }
 
-Skyhawk::AeroControlSurface::AeroControlSurface
+Scooter::AeroControlSurface::AeroControlSurface
 (
 	AircraftState& state,
 	Airframe& airframe,
@@ -88,7 +88,7 @@ Skyhawk::AeroControlSurface::AeroControlSurface
 
 }
 
-void Skyhawk::AeroElement::zeroInit()
+void Scooter::AeroElement::zeroInit()
 {
 	m_dragFactor = 1.0;
 	m_liftFactor = 1.0;
@@ -105,40 +105,40 @@ void Skyhawk::AeroElement::zeroInit()
 	m_RForceElement = Vec3();
 	m_moment = Vec3();
 }
-void Skyhawk::AeroElement::coldInit()
+void Scooter::AeroElement::coldInit()
 {
 
 }
-void Skyhawk::AeroElement::hotInit()
+void Scooter::AeroElement::hotInit()
 {
 
 }
-void Skyhawk::AeroElement::airborneInit()
+void Scooter::AeroElement::airborneInit()
 {
 
 }
 
-void Skyhawk::AeroElement::elementLift()
+void Scooter::AeroElement::elementLift()
 {
 	m_LDwindAxes.y = m_kElem * ( m_CLalpha(m_aoa) * abs(cos(m_beta)) * m_liftFactor * m_damageElem );
 }
 
-void Skyhawk::AeroVerticalSurface::elementLift()
+void Scooter::AeroVerticalSurface::elementLift()
 {
 	m_LDwindAxes.z = m_kElem * ( m_CLalpha(m_aoa) * abs(cos(m_beta)) * m_liftFactor * m_damageElem);
 }
 
-void Skyhawk::AeroElement::elementDrag()
+void Scooter::AeroElement::elementDrag()
 {
 	m_LDwindAxes.x = -m_kElem * ( m_CDalpha(m_aoa) * abs(cos(m_beta)) * m_dragFactor);
 }
 
-void Skyhawk::AeroVerticalSurface::elementDrag()
+void Scooter::AeroVerticalSurface::elementDrag()
 {
 	m_LDwindAxes.x = -m_kElem * ( m_CDalpha(m_aoa) * abs(cos(m_beta)) * m_dragFactor);
 }
 
-void Skyhawk::AeroElement::calculateElementPhysics()
+void Scooter::AeroElement::calculateElementPhysics()
 {
 
 	// calculate member variables
@@ -168,7 +168,7 @@ void Skyhawk::AeroElement::calculateElementPhysics()
 
 }
 
-void Skyhawk::AeroControlSurface::calculateElementPhysics()
+void Scooter::AeroControlSurface::calculateElementPhysics()
 {
 
 	// calculate member variables
@@ -209,7 +209,7 @@ void Skyhawk::AeroControlSurface::calculateElementPhysics()
 
 }
 
-void Skyhawk::AeroHorizontalTail::calculateElementPhysics()
+void Scooter::AeroHorizontalTail::calculateElementPhysics()
 {
 
 	// calculate member variables
@@ -244,7 +244,7 @@ void Skyhawk::AeroHorizontalTail::calculateElementPhysics()
 	
 }
 
-void Skyhawk::AeroVerticalSurface::calculateElementPhysics()
+void Scooter::AeroVerticalSurface::calculateElementPhysics()
 {
 
 	// calculate member variables

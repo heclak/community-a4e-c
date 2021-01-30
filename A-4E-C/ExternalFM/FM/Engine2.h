@@ -28,7 +28,7 @@
 #define c_airspeedTorque 0.3
 #define c_engineDrag 0.1
 
-namespace Skyhawk
+namespace Scooter
 {
 
 class Engine2 : public BaseComponent

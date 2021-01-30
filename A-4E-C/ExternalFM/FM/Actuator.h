@@ -2,7 +2,7 @@
 #include "BaseComponent.h"
 
 
-namespace Skyhawk
+namespace Scooter
 {
 
 class Actuator : public BaseComponent

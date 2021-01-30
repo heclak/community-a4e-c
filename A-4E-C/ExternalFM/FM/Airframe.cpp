@@ -1,6 +1,6 @@
 #include "Airframe.h"
 #include <algorithm>
-Skyhawk::Airframe::Airframe(AircraftState& state, Input& controls, Engine2& engine) :
+Scooter::Airframe::Airframe(AircraftState& state, Input& controls, Engine2& engine) :
 	m_state(state),
 	m_controls(controls),
 	m_engine(engine),
@@ -10,12 +10,12 @@ Skyhawk::Airframe::Airframe(AircraftState& state, Input& controls, Engine2& engi
 	zeroInit();
 }
 
-Skyhawk::Airframe::~Airframe()
+Scooter::Airframe::~Airframe()
 {
 	delete[] m_integrityElement;
 }
 
-void Skyhawk::Airframe::printDamageState()
+void Scooter::Airframe::printDamageState()
 {
 	printf( "===========================================\n" );
 
@@ -37,7 +37,7 @@ void Skyhawk::Airframe::printDamageState()
 	printf( "            %.1f\n", getRudderDamage() );
 }
 
-void Skyhawk::Airframe::resetDamage()
+void Scooter::Airframe::resetDamage()
 {
 	for ( int i = 0; i < (int)Damage::COUNT; i++ )
 	{
@@ -47,7 +47,7 @@ void Skyhawk::Airframe::resetDamage()
 
 //Seriously need to set EVERY VARIABLE to zero (or approriate value if zero causes singularity) in the constructor and 
 //in this function. Otherwise Track's become unusable because of the butterfly effect.
-void Skyhawk::Airframe::zeroInit()
+void Scooter::Airframe::zeroInit()
 {
 	m_gearLPosition = 0.0;
 	m_gearRPosition = 0.0;
@@ -82,22 +82,22 @@ void Skyhawk::Airframe::zeroInit()
 	m_damageStack.clear();
 }
 
-void Skyhawk::Airframe::coldInit()
+void Scooter::Airframe::coldInit()
 {
 	zeroInit();
 }
 
-void Skyhawk::Airframe::hotInit()
+void Scooter::Airframe::hotInit()
 {
 	zeroInit();
 }
 
-void Skyhawk::Airframe::airborneInit()
+void Scooter::Airframe::airborneInit()
 {
 	zeroInit();
 }
 
-void Skyhawk::Airframe::addFuel( double dm )
+void Scooter::Airframe::addFuel( double dm )
 {
 	int totalExt = 0;
 	for ( int i = Tank::LEFT_EXT; i < Tank::DONT_TOUCH; i++ )
@@ -124,7 +124,7 @@ void Skyhawk::Airframe::addFuel( double dm )
 
 }
 
-void Skyhawk::Airframe::airframeUpdate(double dt)
+void Scooter::Airframe::airframeUpdate(double dt)
 {
 	//printf( "I %lf, L %lf, C %lf, R %lf\n", m_fuel[0], m_fuel[1], m_fuel[2], m_fuel[3] );
 

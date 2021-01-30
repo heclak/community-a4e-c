@@ -1,5 +1,5 @@
 #include "Engine2.h"
-Skyhawk::Engine2::Engine2(AircraftState& aircraftState) :
+Scooter::Engine2::Engine2(AircraftState& aircraftState) :
 	m_aircraftState(aircraftState),
 	fuelToHPOmega( c_fuelToHPOmega, c_fuelToHPOmegaMin, c_fuelToHPOmegaMax ),
 	lpOmegaToMassFlow( c_lpOmegaToMassFlow, c_lpOmegaToMassFlowMin, c_lpOmegaToMassFlowMax ),
@@ -14,12 +14,12 @@ Skyhawk::Engine2::Engine2(AircraftState& aircraftState) :
 	zeroInit();
 }
 
-Skyhawk::Engine2::~Engine2()
+Scooter::Engine2::~Engine2()
 {
 
 }
 
-void Skyhawk::Engine2::zeroInit()
+void Scooter::Engine2::zeroInit()
 {
 	m_lpOmega = 0.0;
 	m_hpOmega = 0.0;
@@ -37,12 +37,12 @@ void Skyhawk::Engine2::zeroInit()
 	m_errAcc = 0.0;
 }
 
-void Skyhawk::Engine2::coldInit()
+void Scooter::Engine2::coldInit()
 {
 	zeroInit();
 }
 
-void Skyhawk::Engine2::hotInit()
+void Scooter::Engine2::hotInit()
 {
 	zeroInit();
 	m_hpOmega = c_maxHPOmega * 0.55;
@@ -50,7 +50,7 @@ void Skyhawk::Engine2::hotInit()
 	m_ignitors = true;
 }
 
-void Skyhawk::Engine2::airborneInit()
+void Scooter::Engine2::airborneInit()
 {
 	zeroInit();
 	m_hpOmega = c_maxHPOmega * 0.70;
@@ -58,7 +58,7 @@ void Skyhawk::Engine2::airborneInit()
 	m_ignitors = true;
 }
 
-void Skyhawk::Engine2::updateEngine( double dt )
+void Scooter::Engine2::updateEngine( double dt )
 {
 	double correctedThrottle = 0.0;
 	if ( m_throttle >= 0.0 )

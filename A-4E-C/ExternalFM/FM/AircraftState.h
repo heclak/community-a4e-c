@@ -5,7 +5,7 @@
 #include <math.h>
 #include "Vec3.h"
 
-namespace Skyhawk
+namespace Scooter
 {
 
 class AircraftState : public BaseComponent

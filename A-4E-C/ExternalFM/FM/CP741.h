@@ -3,7 +3,7 @@
 #include "AircraftState.h"
 #include "Vec3.h"
 
-namespace Skyhawk
+namespace Scooter
 {
 
 class CP741 : public BaseComponent

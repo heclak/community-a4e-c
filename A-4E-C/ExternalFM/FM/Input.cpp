@@ -1,6 +1,19 @@
+//=========================================================================//
+//
+//		FILE NAME	: Input.cpp
+//		AUTHOR		: Joshua Nelson
+//		Date		: October 2020
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Updates control axes as appropriate for keyboard.
+//
+//================================ Includes ===============================//
 #include "Input.h"
 #include <stdio.h>
-Skyhawk::Input::Input():
+//=========================================================================//
+
+Scooter::Input::Input():
 	m_pitchAxis( 0.015, -1.0, 1.0, 0.0, 1.0 ),
 	m_rollAxis( 0.015, -1.0, 1.0, 0.0, 1.0 ),
 	m_yawAxis(0.015, -1.0, 1.0, 0.0, 1.0),
@@ -12,7 +25,7 @@ Skyhawk::Input::Input():
 }
 
 
-void Skyhawk::Input::update()
+void Scooter::Input::update()
 {
 	m_pitchAxis.update();
 	m_rollAxis.update();

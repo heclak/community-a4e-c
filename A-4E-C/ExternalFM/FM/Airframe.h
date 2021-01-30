@@ -13,7 +13,7 @@
 //Macro police don't hurt me
 #define DMG_ELEM(v) m_integrityElement[(int)v]
 
-namespace Skyhawk
+namespace Scooter
 {//begin namespace
 
 

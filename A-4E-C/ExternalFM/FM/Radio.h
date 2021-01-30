@@ -3,7 +3,7 @@
 #include "../include/Cockpit/ccParametersAPI.h"
 #include <stdlib.h>
 
-namespace Skyhawk
+namespace Scooter
 {
 
 class Radio

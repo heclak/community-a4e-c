@@ -1,7 +1,7 @@
 #include <math.h>
 #include "Maths.h"
 
-namespace Skyhawk
+namespace Scooter
 {	// start namespace
 
 const Vec3 windAxisToBody(const Vec3& force, const double& alpha, const double& beta)

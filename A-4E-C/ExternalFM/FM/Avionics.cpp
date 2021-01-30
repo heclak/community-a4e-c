@@ -4,7 +4,7 @@
 #define STAB_AUG_MAX_AUTHORITY 0.3
 #define MAX_ROTATION_RATE 1.6
 
-Skyhawk::Avionics::Avionics
+Scooter::Avionics::Avionics
 (
 	Input& input,
 	AircraftState& state
@@ -16,34 +16,34 @@ Skyhawk::Avionics::Avionics
 	zeroInit();
 }
 
-Skyhawk::Avionics::~Avionics()
+Scooter::Avionics::~Avionics()
 {
 
 }
 
 //Seriously need to set EVERY VARIABLE to zero (or approriate value if zero causes singularity) in the constructor and 
 //in this function. Otherwise Track's become unusable because of the butterfly effect.
-void Skyhawk::Avionics::zeroInit()
+void Scooter::Avionics::zeroInit()
 {
 	m_x = 0.0;
 }
 
-void Skyhawk::Avionics::coldInit()
+void Scooter::Avionics::coldInit()
 {
 	zeroInit();
 }
 
-void Skyhawk::Avionics::hotInit()
+void Scooter::Avionics::hotInit()
 {
 	zeroInit();
 }
 
-void Skyhawk::Avionics::airborneInit()
+void Scooter::Avionics::airborneInit()
 {
 	zeroInit();
 }
 
-void Skyhawk::Avionics::updateAvionics(double dt)
+void Scooter::Avionics::updateAvionics(double dt)
 {
 
 	//printf( "Omega.y: %lf\n", m_state.getOmega().y );

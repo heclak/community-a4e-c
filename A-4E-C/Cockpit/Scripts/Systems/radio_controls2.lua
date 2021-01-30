@@ -204,6 +204,8 @@ function arc51_update()
     
     if arc51_state == ARC51_STATE_ON_PRESET or arc51_state == ARC51_STATE_ON_MANUAL or arc51_state == ARC51_STATE_ON_GUARD then
         efm_data_bus.fm_setRadioPower(1.0)
+        --print_message_to_user("Power ON "..tostring(uhf_radio_device:is_on()))
+        
     else
         efm_data_bus.fm_setRadioPower(0.0)
     end

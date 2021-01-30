@@ -1,7 +1,7 @@
 #include "Radio.h"
 #include "Globals.h"
 
-Skyhawk::Radio::Radio(Interface& inter):
+Scooter::Radio::Radio(Interface& inter):
 	m_interface(inter)
 {
 	m_api = ed_get_cockpit_param_api();
@@ -17,7 +17,7 @@ Skyhawk::Radio::Radio(Interface& inter):
 // 4. Get a pointer to the virtual function pointer table for the inherited radio.
 // 5. Use this pointer to find the setElecPower function.
 // 
-void Skyhawk::Radio::setup( void* baseRadio, void* electricalSystem, void* intercom )
+void Scooter::Radio::setup( void* baseRadio, void* electricalSystem, void* intercom )
 {
 	if ( ! electricalSystem || ! baseRadio || ! intercom )
 	{
@@ -75,7 +75,7 @@ void Skyhawk::Radio::setup( void* baseRadio, void* electricalSystem, void* inter
 	m_setup = true;
 }
 
-void Skyhawk::Radio::update()
+void Scooter::Radio::update()
 {
 	//In case anyone runs into crashes.
 	if ( g_disableRadio )
@@ -108,7 +108,7 @@ void Skyhawk::Radio::update()
 	}
 }
 
-void Skyhawk::Radio::cleanup()
+void Scooter::Radio::cleanup()
 {
 	m_setup = false;
 	fnc_setElecPower = NULL;

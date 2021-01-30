@@ -10,7 +10,7 @@
 #include "Maths.h"
 #include <fstream>
 
-namespace Skyhawk
+namespace Scooter
 {//begin namespace
 
 

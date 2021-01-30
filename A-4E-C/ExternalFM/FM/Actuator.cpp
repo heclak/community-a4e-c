@@ -2,7 +2,7 @@
 #include "Maths.h"
 #include <cmath>
 
-namespace Skyhawk
+namespace Scooter
 { // start namespace
 
 Actuator::Actuator() : m_actuatorSpeed{ 10.0 }, m_actuatorPos{ 0.0 }, m_actuatorTargetPos{ 0.0 }, m_actuatorFactor{ 1.0 }

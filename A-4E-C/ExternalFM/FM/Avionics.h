@@ -6,7 +6,7 @@
 #include "Input.h"
 #include "AircraftState.h"
 #include "CP741.h"
-namespace Skyhawk
+namespace Scooter
 {//begin namespace
 
 class Avionics : public BaseComponent
