@@ -191,7 +191,7 @@ void Scooter::Airframe::airframeUpdate(double dt)
 	//printf("LEFT: %lf, CENTRE: %lf, RIGHT: %lf, INTERNAL: %lf\n", m_fuel[Tank::LEFT_EXT], m_fuel[Tank::CENTRE_EXT], m_fuel[Tank::RIGHT_EXT], m_fuel[Tank::INTERNAL]);
 	m_engine.setHasFuel(m_fuel[Tank::INTERNAL] > 20.0);
 
-	printf( "Compressor Damage %lf, Turbine Damage: %lf\n", getCompressorDamage(), getTurbineDamage() );
+	//printf( "Compressor Damage %lf, Turbine Damage: %lf\n", getCompressorDamage(), getTurbineDamage() );
 
 
 	m_engine.setCompressorDamage( getCompressorDamage() );

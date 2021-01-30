@@ -24,7 +24,8 @@ Axis::Axis(
 	m_min(min),
 	m_max(max),
 	m_reset(reset),
-	m_linear(linear)
+	m_linear(linear),
+	m_value(reset)
 {
 
 }

@@ -103,6 +103,13 @@ public:
 		m_hook = false;
 		m_nosewheelSteering = false;
 		m_starter = false;
+
+		m_pitchAxis.zeroInit();
+		m_rollAxis.zeroInit();
+		m_yawAxis.zeroInit();
+		m_throttleAxis.zeroInit();
+		m_leftBrakeAxis.zeroInit();
+		m_rightBrakeAxis.zeroInit();
 	}
 
 	virtual void coldInit()
