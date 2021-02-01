@@ -82,7 +82,7 @@ Scooter::FlightModel::FlightModel
 	CDmach(d_CDmach,0.0, 1.8),
 	CDflap(d_CDflap, -1.57079633, 1.57079633),
 	CDslat(d_CDslat, -1.57079633, 1.57079633),
-	dCDspoiler({ 0.05 }, 0, 1),
+	dCDspoiler({ 0.45 }, 0, 1),
 	dCDspeedBrake({0.08}, 0.0, 1.0),
 	CDbeta(d_CDbeta,-1.57, 1.57),
 	CDde({0.005}, c_elevatorDown, c_elevatorUp),
@@ -372,6 +372,8 @@ void Scooter::FlightModel::calculateElements()
 	//m_elementRAil.calculateElementPhysics();
 	m_elementHorizontalStab.calculateElementPhysics();
 	m_elementVerticalStab.calculateElementPhysics();
+
+	printf( "Left Spoiler: %lf, %lf, %lf\n", m_elementLSpoiler.getForce().x, m_elementLSpoiler.getForce().y, m_elementLSpoiler.getForce().z );
 
 	//printf("aoa hstab: %lf\n", toDegrees(m_elementHorizontalStab.m_aoa));
 	//printf("forceL: %lf, %lf, %lf  forceR: %lf, %lf, %lf\n", m_elementLAil.getForce().x, m_elementLAil.getForce().y, m_elementLAil.getForce().z, m_elementRAil.getForce().x, m_elementRAil.getForce().y, m_elementRAil.getForce().z);

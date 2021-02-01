@@ -783,8 +783,10 @@ void ed_fm_set_plugin_data_install_path ( const char* path )
 	sprintf_s( logFile, 200, "%s/efm_log.txt", path );
 	fopen_s( &g_log, logFile, "a+" );
 #endif
+	printf( "%s\n", srcvers );
+
 	LOG_BREAK();
-	LOG( "Begin Log.\n" );
+	LOG( "Begin Log, %s\n", srcvers );
 	LOG( "Initialising Components...\n" );
 
 	char configFile[200];
