@@ -409,7 +409,8 @@ void Scooter::FlightModel::calculateElements()
 		m_elements[i].setLDFactor(1.0 * damage, 0.7 * damage);
 		m_elements[i].calculateElementPhysics();
 
-		m_splines[vapourMap[i]].setOpacity(m_elements[i].getOpacity());
+		if ( m_splines.size() )
+			m_splines[vapourMap[i]].setOpacity(m_elements[i].getOpacity());
 
 		addForceElement(m_elements[i]);
 		//printf("id: %d, aoa: %lf, beta: %lf\n", i, toDegrees(m_elements[i].getAOA()), toDegrees(m_elements[i].getBeta()));
@@ -431,10 +432,13 @@ void Scooter::FlightModel::calculateElements()
 		m_elementsC[i].setLDFactor(1.0 * damage, 0.7 * damage);
 		m_elementsC[i].calculateElementPhysics();
 
-		m_splines[vapourMapC[i]].setOpacity( m_elementsC[i].getOpacity() );
-		if ( i == (m_elementsC.size() - 1) || i == (-1 + m_elementsC.size() / 2) )
+		if ( m_splines.size() )
 		{
-			m_splines[vapourMapC[i] + 1].setOpacity( m_elementsC[i].getOpacity() );
+			m_splines[vapourMapC[i]].setOpacity( m_elementsC[i].getOpacity() );
+			if ( i == (m_elementsC.size() - 1) || i == (-1 + m_elementsC.size() / 2) )
+			{
+				m_splines[vapourMapC[i] + 1].setOpacity( m_elementsC[i].getOpacity() );
+			}
 		}
 
 

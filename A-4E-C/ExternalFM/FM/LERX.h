@@ -22,7 +22,7 @@ public:
 
 	inline LERX_vortex_spline_point* getArrayPointer()
 	{
-		return m_points.size() ? &m_points[0] : (LERX_vortex_spline_point*)NULL;
+		return ( m_points.size() && m_opacity != 0.0 ) ? &m_points[0] : (LERX_vortex_spline_point*)NULL;
 	}
 
 	inline size_t size() const
