@@ -121,5 +121,7 @@
 
 #define c_fuelDumpRate 5.13 //kg/s
 
+#define c_wingSpan 8.3
+
 
 #endif //DATA_H

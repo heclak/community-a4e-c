@@ -19,6 +19,10 @@
 #include "Maths.h"
 //=========================================================================//
 
+static int vapourMap[8] = {};
+static int vapourMapC[10] = {};
+
+
 #undef min
 
 //Set everything to zero.
@@ -29,7 +33,8 @@ Scooter::FlightModel::FlightModel
 	Input& controls,
 	Airframe& airframe,
 	Engine2& engine,
-	Interface& inter
+	Interface& inter,
+	std::vector<LERX>& splines
 ):
 	m_state(state),
 	m_controls(controls),
@@ -120,7 +125,8 @@ Scooter::FlightModel::FlightModel
 	//slats
 	slatCL({-0.15, 0.15}, 0.261799, 0.436332313),
 
-	rnd_aoa(d_rnd_aoa, -0.34906585, 0.41887902)
+	rnd_aoa(d_rnd_aoa, -0.34906585, 0.41887902),
+	m_splines(splines)
 {
 	//m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -0.1067866894), m_wingSurfaceNormalL, 1.9737953980 + 0.21931));
 	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -0.5399751247), m_wingSurfaceNormalL, 1.8047195280 + 0.21931));
@@ -146,6 +152,21 @@ Scooter::FlightModel::FlightModel
 	m_elementsC.push_back(AeroControlSurface(m_state, m_airframe, CLalpha, CDalpha, Vec3(0.0, 0.0, 3.5700856160), m_wingSurfaceNormalR, 0.6211884337 + 0.21931));
 	m_elementsC.push_back(AeroControlSurface(m_state, m_airframe, CLalpha, CDalpha, Vec3(0.0, 0.0, 4.0014189490), m_wingSurfaceNormalR, 0.3500000000 + 0.21931));
 
+
+	int splineSize = splines.size() / 2;
+	int elementSize = m_elements.size() / 2;
+
+	for ( int i = 0; i < elementSize; i++ )
+	{
+		vapourMap[i] = i;
+		vapourMap[i + elementSize] = i + splineSize;
+	}
+
+	for ( int i = 0; i < m_elementsC.size() / 2; i++ )
+	{
+		vapourMapC[i] = i + elementSize;
+		vapourMapC[i + m_elementsC.size() / 2] = i + splineSize + elementSize;
+	}
 }
 
 Scooter::FlightModel::~FlightModel()
@@ -385,6 +406,9 @@ void Scooter::FlightModel::calculateElements()
 		}
 		m_elements[i].setLDFactor(1.0 * damage, 0.7 * damage);
 		m_elements[i].calculateElementPhysics();
+
+		m_splines[vapourMap[i]].setOpacity(m_elements[i].getOpacity());
+
 		addForceElement(m_elements[i]);
 		//printf("id: %d, aoa: %lf, beta: %lf\n", i, toDegrees(m_elements[i].getAOA()), toDegrees(m_elements[i].getBeta()));
 	}
@@ -399,8 +423,19 @@ void Scooter::FlightModel::calculateElements()
 		{
 			damage = m_airframe.getRWingDamage();
 		}
+
+		
+
 		m_elementsC[i].setLDFactor(1.0 * damage, 0.7 * damage);
 		m_elementsC[i].calculateElementPhysics();
+
+		m_splines[vapourMapC[i]].setOpacity( m_elementsC[i].getOpacity() );
+		if ( i == (m_elementsC.size() - 1) || i == (-1 + m_elementsC.size() / 2) )
+		{
+			m_splines[vapourMapC[i] + 1].setOpacity( m_elementsC[i].getOpacity() );
+		}
+
+
 		addForceElement(m_elementsC[i]);
 		//printf("id: %d, aoa: %lf, beta: %lf\n", i, toDegrees(m_elements[i].getAOA()), toDegrees(m_elements[i].getBeta()));
 	}

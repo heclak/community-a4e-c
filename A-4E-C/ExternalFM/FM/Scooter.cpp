@@ -25,6 +25,8 @@
 #include "AircraftState.h"
 #include "Radio.h"
 #include "Maths.h"
+#include "LuaVM.h"
+#include "LERX.h"
 
 //============================= Statics ===================================//
 static Scooter::AircraftState* s_state = NULL;
@@ -35,6 +37,9 @@ static Scooter::Airframe* s_airframe = NULL;
 static Scooter::FlightModel* s_fm = NULL;
 static Scooter::Avionics* s_avionics = NULL;
 static Scooter::Radio* s_radio = NULL;
+static LuaVM* s_luaVM = NULL;
+
+static std::vector<LERX> s_splines;
 
 //========================== Static Functions =============================//
 static void init();
@@ -43,20 +48,26 @@ static inline double rawAOAToUnits( double rawAOA );
 
 //=========================================================================//
 
-void init()
+void init(const char* config)
 {
+	
+	s_luaVM = new LuaVM;
+	s_luaVM->dofile( config );
+	s_luaVM->getSplines( "splines", s_splines );
+
 	s_state = new Scooter::AircraftState;
 	s_interface = new Scooter::Interface;
 	s_input = new Scooter::Input;
 	s_engine = new Scooter::Engine2( *s_state );
 	s_airframe = new Scooter::Airframe( *s_state, *s_input, *s_engine );
 	s_avionics = new Scooter::Avionics( *s_input, *s_state );
-	s_fm = new Scooter::FlightModel( *s_state, *s_input, *s_airframe, *s_engine, *s_interface );
+	s_fm = new Scooter::FlightModel( *s_state, *s_input, *s_airframe, *s_engine, *s_interface, s_splines );
 	s_radio = new Scooter::Radio(*s_interface);
 }
 
 void cleanup()
 {
+	delete s_luaVM;
 	delete s_state;
 	delete s_interface;
 	delete s_input;
@@ -66,6 +77,7 @@ void cleanup()
 	delete s_fm;
 	delete s_radio;
 
+	s_luaVM = NULL;
 	s_state = NULL;
 	s_interface = NULL;
 	s_input = NULL;
@@ -74,6 +86,8 @@ void cleanup()
 	s_avionics = NULL;
 	s_fm = NULL;
 	s_radio = NULL;
+
+	s_splines.clear();
 }
 
 double rawAOAToUnits( double rawAOA )
@@ -751,7 +765,10 @@ bool ed_fm_enable_debug_info()
 void ed_fm_suspension_feedback(int idx, const ed_fm_suspension_info* info)
 {
 	if ( idx == 0 )
+	{
 		s_airframe->setNoseCompression( info->struct_compression );
+	}
+		
 	//
 	//("Force(%lf, %lf, %lf)\n", info->acting_force[0], info->acting_force[1], info->acting_force[2]);
 	//printf("Position(%lf, %lf, %lf)\n", info->acting_force_point[0], info->acting_force_point[1], info->acting_force_point[2]);
@@ -769,7 +786,12 @@ void ed_fm_set_plugin_data_install_path ( const char* path )
 	LOG_BREAK();
 	LOG( "Begin Log.\n" );
 	LOG( "Initialising Components...\n" );
-	init();
+
+	char configFile[200];
+	sprintf_s( configFile, 200, "%s/Config/config.lua", path );
+
+	init(configFile);
+
 	g_safeToRun = isSafeContext();
 }
 
@@ -791,4 +813,20 @@ void ed_fm_release ()
 		g_log = NULL;
 	}
 #endif
+}
+
+bool ed_fm_LERX_vortex_update( unsigned idx, LERX_vortex& out )
+{
+	if ( idx < s_splines.size() )
+	{
+		out.opacity = s_splines[idx].getOpacity();//clamp((s_state->getAOA() - 0.07) / 0.174533, 0.0, 0.8);
+		out.explosion_start = 10.0;
+		out.spline = s_splines[idx].getArrayPointer();
+		out.spline_points_count = s_splines[idx].size();
+		out.spline_point_size_in_bytes = LERX_vortex_spline_point_size;
+		out.version = 0;
+		return true;
+	}
+
+	return false;
 }

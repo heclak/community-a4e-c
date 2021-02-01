@@ -26,7 +26,7 @@ main_amortizer_min_length 					= 0.00
 main_amortizer_max_length 					= 0.67 --0.7
 main_amortizer_basic_length 				= 0.67 --0.7
 --This is the length over which the amortizer will reduce. Smaller values mean higher ride height, larger values lower ride height.
-main_amortizer_reduce_length 				= 28.0 
+main_amortizer_reduce_length 				= 28.0  --yes you read that right, 28 metres.
 
 -- F = kx^y, where x is the displacement from the default position (determined by the reduce length)
 --This is k in the above equation
@@ -45,12 +45,12 @@ main_damper_coeff 							= 100.0
 
 main_wheel_moment_of_inertia 				= 2.65
 
-wheel_static_friction_factor_COMMON 		= 1.0
+wheel_static_friction_factor_COMMON 		= 0.75
 wheel_side_friction_factor_COMMON 			= 0.6
 wheel_roll_friction_factor_COMMON 			= 0.04
-wheel_glide_friction_factor_COMMON 			= 0.20 --this needs to be low to go from standstill to moving smoothly
+wheel_glide_friction_factor_COMMON 			= 0.15 --this needs to be low to go from standstill to moving smoothly
 
-brake_moment_main 							= 5000.0
+brake_moment_main 							= 2500.0
 
 wheel_radius_factor 						= 1.0
 
@@ -107,7 +107,7 @@ suspension =
 
     --MAINGEAR LEFT
     {
-        anti_skid_installed = true,
+        anti_skid_installed = false,
 	
 		mass 									= 200.0,
 		damage_element 							= 84,
@@ -152,10 +152,10 @@ suspension =
 
     --MAINGEAR RIGHT
     {
-        anti_skid_installed 					= true,
+        anti_skid_installed 					= false,
 		
 		mass 									= 200.0,
-		damage_element 							= 84,--?
+		damage_element 							= 85,--?
 		moment_of_inertia 						= {100.0,10.0,100.0},--leg
 		wheel_axle_offset 						= 0.0,
 		yaw_limit	 							= 0.0,

@@ -21,6 +21,28 @@ Scooter::AeroElement::AeroElement
 	Table& CDalpha,
 	Vec3 cp,
 	Vec3 surfaceNormal,
+	double area,
+	LERX* lerx
+) :
+	m_state{ state },
+	m_CLalpha{ CLalpha },
+	m_CDalpha{ CDalpha },
+	m_cp{ cp },
+	m_surfaceNormal{ surfaceNormal },
+	m_area{ area },
+	m_dragFactor{ 1.0 },
+	m_liftFactor{ 1.0 }
+{
+
+}
+
+Scooter::AeroElement::AeroElement
+(
+	AircraftState& state,
+	Table& CLalpha,
+	Table& CDalpha,
+	Vec3 cp,
+	Vec3 surfaceNormal,
 	double area
 ) :
 	m_state{ state },
@@ -177,7 +199,7 @@ void Scooter::AeroElement::calculateElementPhysics()
 	Vec3 deltaCentreOfPressure = m_cp - Vec3(0.0, 0.0, m_state.getCOM().z);
 	m_RForceElement = windAxisToBody(m_LDwindAxes, m_aoa, m_beta);
 	m_moment = cross(deltaCentreOfPressure, m_RForceElement);
-
+	updateLERX();
 }
 
 void Scooter::AeroControlSurface::calculateElementPhysics()
@@ -218,7 +240,7 @@ void Scooter::AeroControlSurface::calculateElementPhysics()
 	Vec3 deltaCentreOfPressure = m_cp - Vec3(0.0, 0.0, m_state.getCOM().z);
 	m_RForceElement = windAxisToBody(m_LDwindAxes, m_aoa, m_beta);
 	m_moment = cross(deltaCentreOfPressure, m_RForceElement);
-
+	updateLERX();
 }
 
 void Scooter::AeroHorizontalTail::calculateElementPhysics()

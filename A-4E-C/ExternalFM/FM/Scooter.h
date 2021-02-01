@@ -13,7 +13,7 @@
 //
 //================================ Includes ===============================//
 #include "ED_FM_API.h"
-#include "../../include/FM/wHumanCustomPhysicsAPI.h"
+#include "../include/FM/wHumanCustomPhysicsAPI.h"
 //=========================================================================//
 
 extern "C" 
@@ -252,4 +252,6 @@ extern "C"
 	ED_FM_API void ed_fm_set_plugin_data_install_path ( const char* path );
 	ED_FM_API void ed_fm_release ();
 	ED_FM_API void ed_fm_configure ( const char* cfg_path );
+
+	ED_FM_API bool ed_fm_LERX_vortex_update(unsigned idx, LERX_vortex& out);
 };

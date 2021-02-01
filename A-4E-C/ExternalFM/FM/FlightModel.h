@@ -32,7 +32,14 @@ namespace Scooter
 class FlightModel : public BaseComponent
 {
 public:
-	FlightModel(AircraftState& state, Input& controls, Airframe& airframe, Engine2& engine, Interface& inter);
+	FlightModel(
+		AircraftState& state, 
+		Input& controls, 
+		Airframe& airframe, 
+		Engine2& engine, 
+		Interface& inter,
+		std::vector<LERX>& splines
+	);
 	~FlightModel();
 
 	virtual void zeroInit();
@@ -243,6 +250,7 @@ private:
 
 	std::vector<AeroElement> m_elements;
 	std::vector<AeroControlSurface> m_elementsC;
+	std::vector<LERX>& m_splines;
 
 
 	Input& m_controls; //for now

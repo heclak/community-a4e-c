@@ -80,6 +80,7 @@ void Scooter::Airframe::zeroInit()
 	m_elevator = 0.0;
 	m_rudder = 0.0;
 	m_stabilizer = 0.0;
+	m_noseWheelAngle = 0.0;
 
 	m_selected = Tank::INTERNAL;
 

@@ -820,6 +820,32 @@ LERX VORTEX EFFECT DATA , as it complex effect with very specific realization fo
 */
 struct LERX_vortex_spline_point
 {
+	LERX_vortex_spline_point() {}
+
+	LERX_vortex_spline_point
+	(
+		float x,
+		float y,
+		float z,
+		float xVel,
+		float yVel,
+		float zVel,
+		float r,
+		float o
+	)
+	{
+		pos[0] = x;
+		pos[1] = y;
+		pos[2] = z;
+
+		vel[0] = xVel;
+		vel[1] = yVel;
+		vel[2] = zVel;
+
+		radius = r;
+		opacity = o;
+	}
+
 	///location in aircraft body frame
 	float pos[3];
 	///speed in aircraft body frame

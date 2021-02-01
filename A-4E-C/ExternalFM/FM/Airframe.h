@@ -301,37 +301,41 @@ public:
 	
 	inline void setDumpingFuel( bool dumping );
 
-	inline double getFuelPrevious( Tank tank );
+	inline double setAileron( double dt );
+	inline double setElevator( double dt );
+	inline double setRudder( double dt );
+	inline double setStabilizer( double dt );
+
+	inline void setNoseWheelAngle( double angle );
+
+
+	inline double getFuelPrevious( Tank tank ) const;
 
 	inline const Vec3& getFuelPos(Tank tank) const;
 	inline double getFuelQty(Tank tank) const;
 	inline double getFuelQtyExternal() const;
 	inline double getFuelQtyDelta(Tank tank) const;
 
-	inline double getGearLPosition(); //returns gear pos
-	inline double getGearRPosition(); //returns gear pos
-	inline double getGearNPosition(); //returns gear pos
+	inline double getGearLPosition() const; //returns gear pos
+	inline double getGearRPosition() const; //returns gear pos
+	inline double getGearNPosition() const; //returns gear pos
 
-	inline double getFlapsPosition();
-	inline double getSpoilerPosition();
-	inline double getSpeedBrakePosition();
-	inline double getHookPosition();
-	inline double getSlatLPosition();
-	inline double getSlatRPosition();
-	inline double getCatMoment();
-	inline double getCatForce();
-	inline Tank getSelectedTank();
-	inline double getMass();
-	inline double setAileron(double dt);
-	inline double setElevator(double dt);
-	inline double setRudder(double dt);
-	inline double setStabilizer(double dt);
-	inline double getAileron();
-	inline double getElevator();
-	inline double getRudder();
-	inline double getStabilizer();
-	inline double getStabilizerAnim();
-
+	inline double getFlapsPosition() const;
+	inline double getSpoilerPosition() const;
+	inline double getSpeedBrakePosition() const;
+	inline double getHookPosition() const;
+	inline double getSlatLPosition() const;
+	inline double getSlatRPosition() const;
+	inline double getCatMoment() const;
+	inline double getCatForce() const;
+	inline Tank getSelectedTank() const;
+	inline double getMass() const;
+	inline double getAileron() const;
+	inline double getElevator() const;
+	inline double getRudder() const;
+	inline double getStabilizer() const;
+	inline double getStabilizerAnim() const;
+	inline double getNoseWheelAngle() const;
 
 
 	inline double aileronAngle();
@@ -398,6 +402,8 @@ private:
 	double m_elevator = 0.0;
 	double m_stabilizer = 0.0;
 	double m_rudder = 0.0;
+
+	double m_noseWheelAngle = 0.0;
 
 	Actuator m_actuatorElev;
 	Actuator m_actuatorAil;
@@ -535,82 +541,92 @@ void Airframe::setNoseCompression( double x )
 	m_noseCompression = x;
 }
 
+void Airframe::setNoseWheelAngle( double angle )
+{
+	m_noseWheelAngle = angle;
+}
+
 void Airframe::setCatAngle( double angle )
 {
 	m_catAngle = angle;
 }
 
-double Airframe::getCatForce()
+double Airframe::getNoseWheelAngle() const
+{
+	return m_noseWheelAngle;
+}
+
+double Airframe::getCatForce() const
 {
 	return m_catForce;
 }
 
-double Airframe::getFuelPrevious( Tank tank )
+double Airframe::getFuelPrevious( Tank tank ) const
 {
 	return m_fuelPrev[tank];
 }
 
-double Airframe::getGearLPosition()
+double Airframe::getGearLPosition() const
 {
 	return m_gearLPosition;
 }
 
-double Airframe::getGearRPosition()
+double Airframe::getGearRPosition() const
 {
 	return m_gearRPosition;
 }
 
-double Airframe::getGearNPosition()
+double Airframe::getGearNPosition() const
 {
 	return m_gearNPosition;
 }
 
-double Airframe::getFlapsPosition()
+double Airframe::getFlapsPosition() const
 {
 	return m_flapsPosition;
 }
 
-double Airframe::getSpoilerPosition()
+double Airframe::getSpoilerPosition() const
 {
 	return m_spoilerPosition;
 }
 
-double Airframe::getSpeedBrakePosition()
+double Airframe::getSpeedBrakePosition() const
 {
 	return m_speedBrakePosition;
 }
 
-double Airframe::getHookPosition()
+double Airframe::getHookPosition() const
 {
 	return m_hookPosition;
 }
 
-double Airframe::getSlatLPosition()
+double Airframe::getSlatLPosition() const
 {
 	return m_slatLPosition;
 }
 
-double Airframe::getSlatRPosition()
+double Airframe::getSlatRPosition() const
 {
 	return m_slatRPosition;
 }
 
-double Airframe::getAileron()
+double Airframe::getAileron() const
 {
 	return m_aileronLeft;
 }
 
-double Airframe::getElevator()
+double Airframe::getElevator() const
 {
 	return m_elevator;
 }
 
-double Airframe::getStabilizer()
+double Airframe::getStabilizer() const
 {
 	return m_stabilizer;
 }
 
-double Airframe::getStabilizerAnim()
+double Airframe::getStabilizerAnim() const
 {
 	double stab = toDegrees(m_stabilizer);
 	if (stab > 0.0)
@@ -623,7 +639,7 @@ double Airframe::getStabilizerAnim()
 	}
 }
 
-double Airframe::getRudder()
+double Airframe::getRudder() const
 {
 	return m_rudder;
 }
@@ -715,17 +731,17 @@ double Airframe::getFuelQtyDelta(Tank tank) const
 	return m_fuel[tank] - m_fuelPrev[tank];
 }
 
-double Airframe::getCatMoment()
+double Airframe::getCatMoment() const
 {
 	return m_catMoment;
 }
 
-double Airframe::getMass()
+double Airframe::getMass() const
 {
 	return m_mass;
 }
 
-inline Airframe::Tank Airframe::getSelectedTank()
+inline Airframe::Tank Airframe::getSelectedTank() const
 {
 	return m_selected;
 }
