@@ -50,7 +50,7 @@ wheel_side_friction_factor_COMMON 			= 0.6
 wheel_roll_friction_factor_COMMON 			= 0.04
 wheel_glide_friction_factor_COMMON 			= 0.15 --this needs to be low to go from standstill to moving smoothly
 
-brake_moment_main 							= 3500.0
+brake_moment_main 							= 5500.0
 
 wheel_radius_factor 						= 1.0
 
