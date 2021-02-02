@@ -627,7 +627,7 @@ void Scooter::FlightModel::calculateShake(double& dt)
 	double shakeGroupInst = std::min(shakeInstGear + shakeInstSlat, 1.5);
 	
 	//printf("shake: %lf\n", shakeAmplitude);
-
+	m_interface.setCockpitRattle( shakeAmplitude );
 	m_cockpitShake = shakeAmplitude + shakeGroupA + shakeGroupB + shakeGroupInst;
 }
 

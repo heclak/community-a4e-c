@@ -21,11 +21,13 @@ elements["PNT_2"] = default_2_position_tumb("Hide Stick Toggle", devices.CANOPY,
 elements["PNT_8"] = default_2_position_tumb("Landing Gear Handle", devices.GEAR, device_commands.Gear, 8)
 elements["PNT_8"].animated        = {true, true}
 elements["PNT_8"].animation_speed = {2, 2}  -- multiply these numbers by the base 1.0 second animation speed to get final speed.  2 means animates in 0.5 seconds.
+elements["PNT_8"].sound = {{GEAR_LEVER_DOWN,GEAR_LEVER_UP}}
 
 --Remove tail hook level from clickables, until we can solve the tail hook problem in DCS replays. For now it moves to a gauge in mainpanel_init.lua
 elements["PNT_10"] = default_2_position_tumb("Tail Hook Handle", devices.GEAR, device_commands.Hook, 10)
 elements["PNT_10"].animated        = {true, true}
 elements["PNT_10"].animation_speed = {2, 2} -- multiply these numbers by the base 1.0 second animation speed to get final speed.  2 means animates in 0.5 seconds.
+elements["PNT_10"].sound = {{TAILHOOK_HANDLE_DOWN,TAILHOOK_HANDLE_UP}}--{{TAILHOOK_HANDLE_DOWN},{KNOBCLICK_RIGHT_MID}}
 
 elements["PNT_83"] = multiposition_switch_limited("Master Lighting ON/OFF/Momentary", devices.EXT_LIGHTS, device_commands.extlight_master, 83, 3, 1, false, -1.0, TOGGLECLICK_LEFT_MID)
 
@@ -39,16 +41,18 @@ elements["PNT_128"] = default_3_position_tumb("Speedbrake emergency",devices.AIR
 
 -- canopy lever
 elements["PNT_129"] = default_2_position_tumb("Canopy", devices.CANOPY, Keys.Canopy, 0)
+elements["PNT_129"].sound = {{CANOPY_LEVER_OPEN, CANOPY_LEVER_CLOSE}}
 
 elements["PNT_132"] = multiposition_switch_limited("Flaps Lever", devices.FLAPS, device_commands.flaps, 132, 3, 1, false, -1.0)
 
 -- THROTTLE PANEL
 elements["PNT_80"] 	= default_3_position_tumb("Throttle", devices.ENGINE, device_commands.throttle_click,0, false, true)
+elements["PNT_80"].sound = {{THROTTLE_DETENT}}
 elements["PNT_82"] 	= default_axis_limited("Rudder trim", devices.TRIM, device_commands.rudder_trim, 82, 0.0, 0.3, false, false, {-1,1})
 
 --ENGINE CONTROL PANEL
 elements["PNT_100"] = default_2_position_tumb("Starter switch",devices.ENGINE, device_commands.push_starter_switch,100)
-elements["PNT_100"].sound = {{PUSHPRESS,PUSHRELEASE}}
+elements["PNT_100"].sound = {{STARTER_PUSH,STARTER_RELEASE}}
 elements["PNT_101"] = default_3_position_tumb("Drop Tanks Pressurization and Flight Refuel switch", devices.ENGINE, device_commands.ENGINE_drop_tanks_sw, 101, false, true, TOGGLECLICK_LEFT_MID) -- NO COMMAND
 elements["PNT_103"] = default_3_position_tumb("Emer Transfer and Wing Fuel Dump switch", devices.ENGINE, device_commands.ENGINE_wing_fuel_sw, 103, false, true, TOGGLECLICK_LEFT_MID) -- NO COMMAND
 elements["PNT_104"] = default_2_position_tumb("Fuel control switch",devices.ENGINE, device_commands.ENGINE_fuel_control_sw,104, TOGGLECLICK_LEFT_MID)

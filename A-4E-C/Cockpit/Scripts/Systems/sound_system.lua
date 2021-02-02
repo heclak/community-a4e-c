@@ -1,6 +1,7 @@
 dofile(LockOn_Options.common_script_path.."devices_defs.lua")
 dofile(LockOn_Options.script_path.."devices.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
+dofile(LockOn_Options.script_path.."sound_class.lua")
 
 local SOUND_SYSTEM = GetSelf()
 local update_time_step = 0.02  --20 time per second
@@ -17,9 +18,48 @@ end
 local param_catapult_takeoff = get_param_handle("SOUND_CAT_TAKEOFF")
 
 
+local sounds
+
 function post_initialize()
     -- initialise soundhosts
     sndhost_cockpit             = create_sound_host("COCKPIT","2D",0,0,0) -- TODO: look into defining this sound host for HEADPHONES/HELMET
+
+
+    sounds = {
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsFlapsMove", "SND_CONT_FLAPS_MOVE", SOUND_CONTINUOUS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsFlapsStop", "SND_INST_FLAPS_STOP", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitRattle", "SND_ALWS_COCKPIT_RATTLE", SOUND_ALWAYS),
+
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsCanopyOpenMove", "SND_CONT_CANOPY_MOV_OPEN", SOUND_CONTINUOUS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsCanopyCloseMove", "SND_CONT_CANOPY_MOV_CLOSE", SOUND_CONTINUOUS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsCanopyOpenSeal", "SND_INST_CANOPY_MOV_SEAL_OPEN", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsCanopyCloseSeal", "SND_INST_CANOPY_MOV_SEAL_CLOSE", SOUND_ONCE),
+
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsCanopyCloseSeal", "SND_INST_CANOPY_CLOSE_STOP", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsCanopyOpenStop", "SND_INST_CANOPY_OPEN_STOP", SOUND_ONCE),
+
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearPodClose", "SND_INST_L_GEAR_POD_CLOSE", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearPodOpen", "SND_INST_L_GEAR_POD_OPEN", SOUND_ONCE),
+
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearMove", "SND_CONT_GEAR_MOV", SOUND_CONTINUOUS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearStop", "SND_INST_GEAR_STOP", SOUND_ONCE),
+
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearPodClose", "SND_INST_R_GEAR_POD_CLOSE", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearPodOpen", "SND_INST_R_GEAR_POD_OPEN", SOUND_ONCE),
+
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowGear", "FM_GEAR_NOSE", SOUND_ALWAYS, 20.5, 62.0),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowGear", "FM_GEAR_LEFT", SOUND_ALWAYS, 20.5, 62.0),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowGear", "FM_GEAR_RIGHT", SOUND_ALWAYS, 20.5, 62.0),
+
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowSpoiler", "FM_SPOILERS", SOUND_ALWAYS, 18.0, 51.5),
+
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowSpoiler", "FM_FLAPS", SOUND_ALWAYS, 18.0, 51.5),
+
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowSpeedbrake", "FM_BRAKES", SOUND_ALWAYS, 26.0, 77.0),
+    }
+
+
+
 
     -- initialise sounds
     snd_catapultTakeoff = sndhost_cockpit:create_sound("Aircrafts/A-4E-C/A4E-CarrierCatapultTakeoff_In")
@@ -29,6 +69,12 @@ function post_initialize()
 end
 
 function update()
+    
+    for index, sound in pairs(sounds) do
+        sound:update()
+    end
+
+
     playSoundOnceByParam(snd_catapultTakeoff, snd_catapultLaunchbarDisconnect, param_catapult_takeoff)
 end
 

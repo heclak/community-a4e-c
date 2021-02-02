@@ -3,6 +3,7 @@ dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."Systems/hydraulic_system_api.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
+dofile(LockOn_Options.script_path.."sound_params.lua")
 
 -- This file includes both gear and tailhook behavior/systems
 --
@@ -189,6 +190,9 @@ local dev_gear_left = get_param_handle("GEAR_LEFT")
 local dev_gear_right = get_param_handle("GEAR_RIGHT")
 
 
+local GEAR_POD_CLOSE = 0.1
+local GEAR_POD_OPEN = 0.9
+
 function update_gear()
     local gear_handle_pos = get_cockpit_draw_argument_value(8)  -- 1==down, 0==up
     local retraction_release_solenoid = get_elec_primary_ac_ok()    -- according to NATOPS, if system is on emer gen power, the safety solenoid opens, allowing the gear handle to be moved up and gear retracted.  However, see gyrovague's notes at end of this file.
@@ -223,55 +227,109 @@ function update_gear()
             print_message_to_user("Landing gear overspeed damage!") -- delete me once we have a sound effect or other notification
         end
     end
-	
+    
+    sound_params.snd_cont_gear_mov:set(0.0)
+    sound_params.snd_inst_gear_stop:set(1.0)
+
+    sound_params.snd_inst_r_gear_pod_open:set(0.0)
+    sound_params.snd_inst_r_gear_pod_close:set(0.0)
+
+    sound_params.snd_inst_l_gear_pod_open:set(0.0)
+    sound_params.snd_inst_l_gear_pod_close:set(0.0)
+    
+
     -- gear movement is dependent on operational utility hydraulics.
     -- gear will be stuck in transit if hydraulic fails during transit.
+
+    local gear_in_transit = false
+
     if get_hyd_utility_ok() or GEAR_ERR == 1 then
         -- make primary nosegear adjustments if needed
         if GEAR_TARGET ~= GEAR_NOSE_STATE then
             if GEAR_NOSE_STATE < GEAR_TARGET or GEAR_ERR==1 then
                 GEAR_NOSE_STATE = GEAR_NOSE_STATE + gear_nose_extend_increment
+                gear_in_transit = true
                 if GEAR_ERR == 1 then -- extend more quickly (drop by gravity and ram air pressure)
                     GEAR_NOSE_STATE = GEAR_NOSE_STATE + 2*gear_nose_extend_increment
                 end
             else
                 if GEAR_ERR == 0 and allowRetract then
                     GEAR_NOSE_STATE = GEAR_NOSE_STATE - gear_nose_retract_increment
+                    gear_in_transit = true
                 end
             end
         end
 
         -- make primary main gear adjustments if needed
         if GEAR_TARGET ~= GEAR_LEFT_STATE or GEAR_TARGET ~= GEAR_RIGHT_STATE then
+
+            if math.abs(GEAR_LEFT_STATE - GEAR_TARGET) < gear_main_increment then
+                GEAR_LEFT_STATE = GEAR_TARGET
+            end
+
+            if math.abs(GEAR_RIGHT_STATE - GEAR_TARGET) < gear_main_increment then
+                GEAR_RIGHT_STATE = GEAR_TARGET
+            end
+
+
             -- left gear moves first, both up and down
             if GEAR_LEFT_STATE < GEAR_TARGET or GEAR_ERR==1 then
+
+                if GEAR_TARGET - GEAR_LEFT_STATE >= GEAR_POD_OPEN then
+                    sound_params.snd_inst_l_gear_pod_open:set(1.0)
+                end
+
                 -- extending
                 GEAR_LEFT_STATE = GEAR_LEFT_STATE + gear_main_increment
+                gear_in_transit = true
                 if GEAR_ERR == 1 then -- extend more quickly (drop by gravity and ram air pressure)
                     GEAR_LEFT_STATE = GEAR_LEFT_STATE + 2*gear_main_increment
                 end
-            else
+            elseif GEAR_LEFT_STATE > GEAR_TARGET then
+
+                if GEAR_LEFT_STATE - GEAR_TARGET <= GEAR_POD_CLOSE then
+                    sound_params.snd_inst_l_gear_pod_close:set(1.0)
+                end
+
                 if GEAR_ERR == 0 and allowRetract then
                     GEAR_LEFT_STATE = GEAR_LEFT_STATE - gear_main_increment
+                    gear_in_transit = true
                 end
             end
 
             -- right gear lags left gear by LeftSideLead seconds
             if GEAR_RIGHT_STATE < GEAR_TARGET or GEAR_ERR==1 then
+
+                if GEAR_TARGET - GEAR_RIGHT_STATE >= GEAR_POD_OPEN then
+                    sound_params.snd_inst_r_gear_pod_open:set(1.0)
+                end
+
                 if GEAR_LEFT_STATE > LeftSideLead then
                     GEAR_RIGHT_STATE = GEAR_RIGHT_STATE + gear_main_increment
+                    gear_in_transit = true
                     if GEAR_ERR == 1 then -- extend more quickly (drop by gravity and ram air pressure)
                         GEAR_RIGHT_STATE = GEAR_RIGHT_STATE + 2*gear_main_increment
                     end
                 end
-            else
+            elseif GEAR_RIGHT_STATE > GEAR_TARGET then
+
+                if GEAR_RIGHT_STATE - GEAR_TARGET <= GEAR_POD_CLOSE then
+                    sound_params.snd_inst_r_gear_pod_close:set(1.0)
+                end
+
                 if GEAR_LEFT_STATE < (1-LeftSideLead) then
                     if GEAR_ERR == 0 and allowRetract then
                         GEAR_RIGHT_STATE = GEAR_RIGHT_STATE - gear_main_increment
+                        gear_in_transit = true
                     end
                 end
             end
         end
+    end
+
+    if gear_in_transit then
+        sound_params.snd_cont_gear_mov:set(1.0)
+        sound_params.snd_inst_gear_stop:set(0.0)
     end
 
     -- handle rounding errors induced by non-modulo increment remainders

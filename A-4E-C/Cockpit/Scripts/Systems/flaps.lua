@@ -3,6 +3,7 @@ dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."Systems/hydraulic_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
+dofile(LockOn_Options.script_path.."sound_params.lua")
 
 -- "continuous" flaps behavior
 --
@@ -131,8 +132,12 @@ function update()
     elseif FLAPS_STATE ~= FLAPS_TARGET then
         if get_hyd_utility_ok() then
             if MOVING == 1 then
+                sound_params.snd_cont_flaps_mov:set(1.0)
+                sound_params.snd_inst_flaps_stop:set(0.0)
                 -- we intended to move the flaps, and they're out of position...
-                if FLAPS_STATE < FLAPS_TARGET then
+                if math.abs(FLAPS_STATE - FLAPS_TARGET) < flaps_increment then
+                    FLAPS_STATE = FLAPS_TARGET
+                elseif FLAPS_STATE < FLAPS_TARGET then
                     FLAPS_STATE = FLAPS_STATE + flaps_increment
                 else
                     FLAPS_STATE = FLAPS_STATE - flaps_increment
@@ -156,6 +161,8 @@ function update()
             end
         end
         MOVING = 0 -- reaching desired position disables the intent to move
+        sound_params.snd_cont_flaps_mov:set(0.0)
+        sound_params.snd_inst_flaps_stop:set(1.0)
 	end
 	
     -- handle rounding errors induced by non-modulo increment remainders
