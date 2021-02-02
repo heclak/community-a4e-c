@@ -327,7 +327,7 @@ A_4E_C =  {
     ViewSettings        = ViewSettings,
 
     -- enable A-4 for all countries.  It is CHEAP and easy to maintain
-	Countries = {"Abkhazia","Australia","Austria","Belarus","Belgium","Brazil","Bulgaria","Canada","China","Croatia",
+	Countries = {"Abkhazia","Argentina","Australia","Austria","Belarus","Belgium","Brazil","Bulgaria","Canada","China","Croatia",
                  "Czech Republic","Denmark","Egypt","Finland","France","Georgia","Germany","Greece","Hungary",
                  "India","Insurgents","Iran","Iraq","Israel","Italy","Japan","Kazakhstan","The Netherlands","North Korea",
                  "Norway","Pakistan","Poland","Romania","Russia","Saudi Arabia","Serbia","Slovakia","South Korea",
@@ -479,7 +479,7 @@ A_4E_C =  {
     main_gear_wheel_diameter                 = 0.609,   -- 0.609, --*
     brakeshute_name                          = 0,       -- Landing - brake chute visual shape after separation
 	]]--
-	
+
 	-----------------------------------------------------------------------
 	----------------- SUSPENSION CODE ENDS
 	-----------------------------------------------------------------------
@@ -1203,8 +1203,8 @@ A_4E_C =  {
         -- ["HOOK"]                    = {critical_damage = 2}, -- 98
 
     }),
-	
-	
+
+
 
     DamageParts =
     {
