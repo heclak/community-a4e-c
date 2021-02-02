@@ -1,0 +1,26 @@
+wave = {
+"Effects/Aircrafts/A-4E-C/a-4e_EngineIgniterSpark_01.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_EngineIgniterSpark_02.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_EngineIgniterSpark_03.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_EngineIgniterSpark_04.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_EngineIgniterSpark_05.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_EngineIgniterSpark_06.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_EngineIgniterSpark_07.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_EngineIgniterSpark_08.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_EngineIgniterSpark_09.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_EngineIgniterSpark_10.ogg"
+}
+inner_radius = 50
+outer_radius = 150
+gain = 1.0
+pitch = 1.0
+detached = true
+listmode = RANDOM
+position = {-0.7, 0.2, 0}
+
+-- preceded 0.2 by a-4e_EngineIgniterStart.sdef
+-- play: fuel is ingited
+-- once
+-- lowpass = 24000.0
+-- repeat this event 5-7 times (0.2 interval between events)
+-- later: it is appropriate to broadcast this event so to be audible a few parked aircraft away

@@ -1,0 +1,11 @@
+wave = "Effects/Aircrafts/A-4E-C/a-4e_HydraulicsCanopyCloseStop.ogg"
+inner_radius = 10
+outer_radius = 100
+gain = 1.0
+detached = true
+position = {-0.3, -0.3, 0}
+
+-- play: canopy reaches closed position
+-- once
+-- cross-fade a-4e_HydraulicsCanopyCloseMove.sdef
+-- lowpass = 24000.0

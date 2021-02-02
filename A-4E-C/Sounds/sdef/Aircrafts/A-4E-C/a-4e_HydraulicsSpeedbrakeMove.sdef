@@ -1,0 +1,15 @@
+wave = "Effects/Aircrafts/A-4E-C/a-4e_HydraulicsSpeedbrakeMove.ogg"
+inner_radius = 10
+outer_radius = 100
+gain = 0.5
+release = 0.1
+position = {-1, 0, 0}
+
+-- play: speedbrake in motion
+-- continuous
+-- cross-fade a-4e_HydraulicsSpeedbrakeStop.sdef
+-- lowpass = 24000.0
+-- note: is the tailhook hydraulic?
+-- if so, the same motor probably operates both, and the same sound can be used.
+-- utilize the various variables (notably position and lowpass filter) and make a variant tailhook motion sound event.
+-- pair those changes with a-4e_HydraulicsSpeedbrakeStop.sdef

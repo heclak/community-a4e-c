@@ -1,0 +1,11 @@
+wave = "Effects/Aircrafts/A-4E-C/a-4e_HydraulicsGearMove.ogg"
+inner_radius = 20
+outer_radius = 150
+gain = 2.5
+release = 0.1
+position = {0, -0.5, 0}
+
+-- play: gear in motion
+-- continuous
+-- cross-fade a-4e_HydraulicsGearStop.sdef
+-- lowpass = 24000.0
