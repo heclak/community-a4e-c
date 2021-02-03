@@ -8,7 +8,8 @@ gain = 1.2
 pitch = 1.0
 pitch_random = 0.15
 gain_random = 0.15
-position = {-0.22932, 0.70924, -0.33107}
+position = {0.5, -0.2, 0.5}
+listmode = RANDOM
 
 -- play: throttle changes detent position
 -- switch: there are 3 possible positions

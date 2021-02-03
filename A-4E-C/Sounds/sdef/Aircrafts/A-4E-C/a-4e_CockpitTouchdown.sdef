@@ -9,6 +9,8 @@ outer_radius = 150
 gain = 6.0
 listmode = RANDOM
 position = {0, -0.7, 0}
+pitch_random = 0.1
+gain_random = 0.1
 
 -- play: from flight, weight hits wheels
 -- once
