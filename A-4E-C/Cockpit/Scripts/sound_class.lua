@@ -61,7 +61,8 @@ function Sound_Player:updateAlways()
         self.sound:play_continue()
     end
 
-    self.sound:update(nil, self.param:get() * self:airspeedGain(), nil)
+    --print_message_to_user(tostring(self:airspeedGain()))
+    self.sound:update(nil,  self.param:get() * self:airspeedGain() , nil)
 end
 
 function Sound_Player:update()
@@ -82,7 +83,7 @@ function Sound_Player:airspeedGain()
     end
 
     local value = (self:airspeed() - self.min_speed) / (self.max_speed - self.min_speed)
-    return math.max(math.min(value, 1.0), 0.0)
+    return math.max(math.min(math.log10(value + 0.1), 1.0), 0.0)
 end
 
 function Sound_Player:airspeed()
