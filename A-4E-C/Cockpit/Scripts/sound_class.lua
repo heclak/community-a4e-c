@@ -15,7 +15,7 @@ SOUND_CONTINUOUS = 1
 SOUND_ONCE = 2
 SOUND_ALWAYS = 3
 
-function Sound_Player.new(sndhost, sound_file, param, type, min_speed, max_speed)
+function Sound_Player.new(sndhost, sound_file, param, type, min_speed, max_speed, factor, fade)
     local self = setmetatable({}, Sound_Player)
     self.sound = sndhost:create_sound(sound_file)
     self.type = type or SOUND_ONCE
@@ -23,7 +23,9 @@ function Sound_Player.new(sndhost, sound_file, param, type, min_speed, max_speed
     self.played = false
     self.min_speed = min_speed or nil
     self.max_speed = max_speed or nil
-
+    self.factor = factor or 3.0
+    self.fade = fade or 0.0
+    self.volume = 0.0
     self.airspeed_param = get_param_handle("FM_AIRSPEED")
     return self
 end
@@ -31,7 +33,6 @@ end
 function Sound_Player:updateOnce()
     --print_message_to_user(self.param:get())
     if not self.sound:is_playing() then
-        print("Sound not playing")
         if self.param:get() >= 1.0 then
             if not self.played then
                 self.sound:play_once()
@@ -62,7 +63,23 @@ function Sound_Player:updateAlways()
     end
 
     --print_message_to_user(tostring(self:airspeedGain()))
-    self.sound:update(nil,  self.param:get() * self:airspeedGain() , nil)
+    local desiredVolume = self.param:get()--math.pow(self.param:get(), self.factor)
+    if self.fade ~= 0.0 then
+        local diff = desiredVolume - self.volume
+        local dv = 1.0 / self.fade
+
+        if math.abs(diff) < dv then
+            self.volume = desiredVolume
+        elseif diff < 0.0 then
+            self.volume = self.volume - dv
+        elseif diff > 0.0 then
+            self.volume = self.volume + dv
+        end
+    else
+        self.volume = desiredVolume
+    end
+
+    self.sound:update(nil, math.pow(self.volume,self.factor) * self:airspeedGain() , 0.0)
 end
 
 function Sound_Player:update()
@@ -83,7 +100,7 @@ function Sound_Player:airspeedGain()
     end
 
     local value = (self:airspeed() - self.min_speed) / (self.max_speed - self.min_speed)
-    return math.max(math.min(math.log10(value + 0.1), 1.0), 0.0)
+    return math.pow(math.max(math.min(value, 1.0), 0.0), 3)
 end
 
 function Sound_Player:airspeed()
