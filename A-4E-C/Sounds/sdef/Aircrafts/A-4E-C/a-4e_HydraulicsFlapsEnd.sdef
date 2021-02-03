@@ -5,6 +5,8 @@ gain = 1.0
 attack = 0.1
 detached = true
 position = {-1, 0, 0}
+pitch_random = 0.05
+gain_random = 0.05
 
 -- play: flaps/spoilers reach minimum or maximum position
 -- once
