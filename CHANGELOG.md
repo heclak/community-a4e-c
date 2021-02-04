@@ -2,6 +2,76 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
+## Version 2.0.0 - 4 February 2021
+
+#### Warning you will need to delete and rebind your control bindings as described in the installation steps.
+
+### Added
+- EFM
+  - Realistic Flight Dynamics (it's pretty nifty)
+  - Realistic Suspension
+  - Differential Brakes
+  - Nose wheel steering
+  - Realistic Engine Simulation
+  - Realistic force based slat simulation
+  - Damage to engine and aerodynamic surfaces (physically simulated only)
+  - Cockpit shake effect
+  - Wing vapour effect
+  - Compatibility with regular carrier
+  - Carrier hook up keybind (Ship Takeoff Position)
+  - Basic compatibility with Supercarrier
+  - Added Salute option to radio menu
+  - Added Request Launch option to radio menu
+
+- Sounds
+  - Gear door
+  - Gear locking
+  - Gear hydraulic
+  - Flap stop
+  - Flap hydraulic
+  - Slat stop
+  - Gear airflow
+  - Flap airflow
+  - Speedbrake airflow
+  - Spoiler airflow
+  - Cockpit rattle at high AOA
+
+
+- Avionics
+  - CP-741/A Bombing computer
+  - Yaw damper (stab aug switch on AFCS panel)
+  - ILS Navigation (see kneeboard pages for presets)
+  - Enabled Radio (see kneeboard pages for presets)
+
+- Basic support for FFB joysticks
+
+### Changed
+- Added Argentina/ARG to countries and assigned appropriate livery
+- Re-wrote AFCS for EFM integration
+
+### Deprecated
+- SFM Fake afterburner
+- Everything on the special menu, except cockpit shake
+
+### Removed
+- SFM Carrier Launch Mechanism
+
+### Fixed
+- Hook clickable
+- Flap blowback valve
+- Carrier Launch Mechanism present on runways (see removed)
+- Carrier trap from airstart causes explosion
+- Aircraft drift during carrier operations
+
+### Known Issues
+- Chocks do not stop the aircraft
+- Pilot can blackout from cat shot
+- Pilot can blackout from rolling too fast
+- APC may not respond fast enough
+- Connecting to the super carrier will get you stuck for a bit, just keep the power high and you will move into position after 30 seconds or so.
+- The CMPTR switch has not been animated yet please use the LABS switch in the meantime.
+
+
 ## Version 1.4.2 - 4 October 2020
 
 ### Added
