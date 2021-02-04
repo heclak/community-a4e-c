@@ -28,7 +28,7 @@ function post_initialize()
     sounds = {
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsFlapsMove", "SND_CONT_FLAPS_MOVE", SOUND_CONTINUOUS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsFlapsStop", "SND_INST_FLAPS_STOP", SOUND_ONCE),
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitRattle", "SND_ALWS_COCKPIT_RATTLE", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitRattle", "SND_ALWS_COCKPIT_RATTLE", SOUND_ALWAYS, nil, nil, 1.0, 2.0 / device_timer_dt ),
 
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsCanopyOpenMove", "SND_CONT_CANOPY_MOV_OPEN", SOUND_CONTINUOUS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsCanopyCloseMove", "SND_CONT_CANOPY_MOV_CLOSE", SOUND_CONTINUOUS),

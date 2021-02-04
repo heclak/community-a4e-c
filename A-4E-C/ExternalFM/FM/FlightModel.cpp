@@ -78,7 +78,7 @@ Scooter::FlightModel::FlightModel
 	CLde(d_CLde, 0.157982, 1.000377),
 	//CDalpha(d_CDalpha, -1.57079633, 1.57079633),
 	CDalpha(d_CDalpha, -PI, PI),
-	CDi({0.025}, 0, 1),
+	CDi( d_CDialpha, c_CDialphaMin, c_CDialphaMax ),
 	CDmach(d_CDmach,0.0, 1.8),
 	CDflap(d_CDflap, -1.57079633, 1.57079633),
 	CDslat(d_CDslat, -1.57079633, 1.57079633),
@@ -333,7 +333,7 @@ void Scooter::FlightModel::drag()
 	double CD = dCDspeedBrake(0.0) * m_airframe.getSpeedBrakePosition() +
 		CDbeta(m_state.getBeta()) +
 		CDde(0.0) * abs(elevator()) +
-		CDmach(m_state.getMach()) + CDi(0.0) * pow(CLalpha(m_state.getAOA()), 2.0) +
+		CDmach(m_state.getMach()) + CDi(m_state.getAOA()) * pow(CLalpha(m_state.getAOA()), 2.0) +
 		m_airframe.getGearLPosition() * CDMainGear +
 		m_airframe.getGearRPosition() * CDMainGear +
 		m_airframe.getGearNPosition() * CDNoseGear;
@@ -506,16 +506,15 @@ void Scooter::FlightModel::calculateShake(double& dt)
 	double shakeAmplitude{ 0.0 };
 	double shakeInstGear = 0.0;
 	double shakeInstSlat = 0.0;
-	double buffetAmplitude = 0.6 * m_cockpitShakeModifier;
+	double buffetAmplitude = 0.6;
 	double x{ 0.0 };
 
 	// 20 - 28
-	double aoa = std::abs(m_state.getAOA());
-	if (aoa >= toRad(20.0) && m_scalarV > 30.0)
-	{
-		x = std::min(aoa - toRad(20.0), toRad(8.0)) / toRad(8.0);
-		shakeAmplitude += x * buffetAmplitude;
-	}
+	double aoa = toDegrees( std::abs( m_state.getAOA() ) );
+	if ( m_scalarV > 30.0 )
+		shakeAmplitude = clamp( (aoa - 10.0) / 15.0, 0.0, 1.0 );
+	m_interface.setCockpitRattle( shakeAmplitude );
+	shakeAmplitude *= buffetAmplitude;
 
 	// GEAR CONTRIBUTION
 
@@ -627,8 +626,10 @@ void Scooter::FlightModel::calculateShake(double& dt)
 	double shakeGroupInst = std::min(shakeInstGear + shakeInstSlat, 1.5);
 	
 	//printf("shake: %lf\n", shakeAmplitude);
-	m_interface.setCockpitRattle( shakeAmplitude );
+	
 	m_cockpitShake = shakeAmplitude + shakeGroupA + shakeGroupB + shakeGroupInst;
+	m_cockpitShake *= m_cockpitShakeModifier;
+	
 }
 
 //void Scooter::FlightModel::shakeInst()
