@@ -4,11 +4,16 @@ dofile(LockOn_Options.common_script_path.."mission_prepare.lua")
 local gettext = require("i_18n")
 _ = gettext.translate
 
+dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 dofile(LockOn_Options.script_path.."devices.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 
 local dev 	    = GetSelf()
+
+local efm_data_bus = get_efm_data_bus()
+
+device_timer_dt = 0.2
 
 innerNoise 			= getInnerNoise(2.5E-6, 10.0)--V/m (dB S+N/N)
 frequency_accuracy 	= 500.0				--Hz
@@ -37,14 +42,48 @@ GUI = {
 local update_time_step = 1 --update will be called once per second
 device_timer_dt = update_time_step
 
-
 function post_initialize()
-  local dev = GetSelf()
+  efm_data_bus.fm_setAvionicsAlive(1.0)
   dev:set_frequency(256E6) -- Sochi
+  --print_message_to_user(tostring(dev:get_frequency()))
   dev:set_modulation(MODULATION_AM) -- gives DCS.log INFO msg:  COCKPITBASE: avBaseRadio::ext_set_modulation not implemented, used direct set
+  --print_message_to_user("Power before "..dev:get_power())
+  
+  --[[
+  for k,v in pairs(getmetatable(dev)["__index"]) do
+	print_message_to_user(tostring(k).." : "..tostring(v).."\n")
+  end
+  ]]--
+  
+  --recursively_print(dev, 30, 100, "C:/tmp/stuff1.txt")
+  
+  --radio_ptr = strsub(tostring(dev:link()), 10)
+  str_ptr = string.sub(tostring(dev.link),10)
+  efm_data_bus.fm_setRadioPTR(str_ptr)
+
   local intercom = GetDevice(devices.INTERCOM)
   intercom:set_communicator(devices.UHF_RADIO)
-
+  intercom:make_setup_for_communicator()
+  
+  --print_message_to_user(string.sub(dev["link"],10))
+	--print_message_to_user(GetDevice(devices.RADIO))
+	
+	--[[
+	dev = GetDevice(devices.UHF_RADIO)
+	print_message_to_user(tostring(dev))
+	for k,v in pairs(getmetatable(dev)) do
+		print_message_to_user(tostring(k).." : "..tostring(v))
+	end
+	
+	for k,v in pairs(getmetatable(dev)["__index"]) do
+		print_message_to_user(tostring(k).." : "..tostring(v))
+	end
+	--]]
+	
+	--print_message_to_user("Is on: "..tostring(dev:is_on()))
+	
+	--print_message_to_user("End")
+  --print_message_to_user("Power after "..dev:get_power())
 --[[
   GetSelf meta["__index"]["listen_command"] = function: 00000000CC631830
 GetSelf meta["__index"]["is_frequency_in_range"] = function: 00000000CC632290
@@ -78,12 +117,17 @@ end
 
 --local iCommandToggleCommandMenu=179
 --dev:listen_command(iCommandToggleCommandMenu)
-dev:listen_command(device_commands.GunsightDayNight) -- test
+
 local iCommandPlaneIntercomUHFPress=1172
 dev:listen_command(iCommandPlaneIntercomUHFPress)
 
+function listen_event()
+	print_message_to_user("LISTEN_EVENT")
+end
+
 
 function SetCommand(command,value)
+	print_message_to_user("Is on: "..tostring(dev:is_on()))
     print_message_to_user("SetCommand in uhf_radio: "..tostring(command).."="..tostring(value))
     dev:set_frequency(256E6) -- Sochi
     dev:set_modulation(MODULATION_AM)

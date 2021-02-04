@@ -5,6 +5,7 @@ dofile(LockOn_Options.script_path.."Systems/stores_config.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
+dofile(LockOn_Options.script_path.."sound_params.lua")
 
 local update_time_step = 0.02  --50 time per second
 make_default_activity(update_time_step)
@@ -36,6 +37,15 @@ else
     stick_vis_state = 0
 end
 
+function post_initialize()
+    local birth = LockOn_Options.init_conditions.birth_place
+    if birth == "GROUND_COLD" then
+        CANOPY_COMMAND = 1
+    else
+        CANOPY_COMMAND = 0
+    end
+end
+
 -- getCanopyPos
 -- getCanopyState
 
@@ -56,12 +66,29 @@ function update()
     if current_canopy_position > 0.95 then
         CANOPY_COMMAND = 2 -- canopy was jettisoned
     end
+
+    sound_params.snd_cont_canopy_mov_open:set(0.0)
+    sound_params.snd_cont_canopy_mov_close:set(0.0)
+    sound_params.snd_inst_canopy_mov_seal_open:set(0.0)
+    sound_params.snd_inst_canopy_mov_seal_close:set(0.0)
+
 	if (CANOPY_COMMAND == 0 and current_canopy_position > 0) then
 		-- lower canopy in increments of 0.01 (50x per second)
-		current_canopy_position = current_canopy_position - 0.01
+        current_canopy_position = current_canopy_position - 0.01
+        sound_params.snd_cont_canopy_mov_close:set(1.0)
+
+        if current_canopy_position < 0.2 then
+            sound_params.snd_inst_canopy_mov_seal_close:set(1.0)
+        end
+
         set_aircraft_draw_argument_value(canopy_ext_anim_arg, current_canopy_position)
 	elseif (CANOPY_COMMAND == 1 and current_canopy_position <= 0.89) then
         -- raise canopy in increment of 0.01 (50x per second)
+        sound_params.snd_cont_canopy_mov_open:set(1.0)
+        if current_canopy_position < 0.02 then
+            sound_params.snd_inst_canopy_mov_seal_open:set(1.0)
+        end
+
 		current_canopy_position = current_canopy_position + 0.01
         set_aircraft_draw_argument_value(canopy_ext_anim_arg, current_canopy_position)
 	end

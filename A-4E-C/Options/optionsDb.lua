@@ -1,4 +1,5 @@
 local DbOption  = require('Options.DbOption')
+local Range 	= DbOption.Range
 local i18n	    = require('i18n')
 local oms       = require('optionsModsScripts')
 
@@ -31,4 +32,8 @@ return {
 																}),
 
 	catapultAlignmentCheck	= DbOption.new():setValue(true):checkbox(),
+
+	efmEnabled				= DbOption.new():setValue(true):checkbox(),
+
+	cockpitShake 			= DbOption.new():setValue(100):slider(Range(0,200)),
 }

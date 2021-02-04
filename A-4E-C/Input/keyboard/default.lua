@@ -28,8 +28,10 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- Systems ----------------------------------
     ---------------------------------------------
-    {combos = {{key = 'E', reformers = {'LCtrl'}}}, down = iCommandPlaneEject,                                           name = _('Eject (3 times)'),                  category = {_('Systems')}},
-    {combos = {{key = 'W'}}, down = Keys.BrakesOn, up = Keys.BrakesOff,                                                  name = _('Wheel Brake - ON/OFF'),                   category = {_('Systems')}},
+    {combos = {{key = 'E', reformers = {'LCtrl'}}}, down = iCommandPlaneEject,                                           name = _('Eject (3 times)'),                  	category = {_('Systems')}},
+    {combos = {{key = 'W'}}, down = Keys.BrakesOn, up = Keys.BrakesOff,                                                  name = _('Wheel Brake - ON/OFF'),             	category = {_('Systems')}},
+	{combos = {{key = 'W', reformers = {'LShift'}}}, down = Keys.BrakesOnLeft, up = Keys.BrakesOffLeft,						 name = _('Wheel Brake Left - ON/OFF'), 			category = {_('Systems')}},
+	{combos = {{key = 'W', reformers = {'LAlt'}}}, down = Keys.BrakesOnRight, up = Keys.BrakesOffRight,						 name = _('Wheel Brake Right - ON/OFF'), 		category = {_('Systems')}},
 
     ---------------------------------------------
     -- Flight Control ---------------------------
@@ -54,7 +56,7 @@ join(res.keyCommands,{
     {down = Keys.AFCSOverride,                                                                                           name = _('AFCS Override Button'),             category = {_('Stick')}},
 
     {down = Keys.ToggleStick,                                                                                            name = _('Control Stick - HIDE/SHOW'),        category = {_('Stick')}},
-
+	  {down = Keys.nws_engage, up = Keys.nws_disengage,                                              name = _('Nose Wheel Steering'),              category = {_('Stick')}},
     ---------------------------------------------
     -- Throttle Quadrant ------------------------
     ---------------------------------------------
@@ -123,9 +125,9 @@ join(res.keyCommands,{
     {combos = {{key = 'G', reformers = {'LShift'}}}, down = Keys.PlaneGearDown,                     name = _('Landing Gear Handle - DOWN'),     category = {_('Instrument Panel')}},
 
     -- Arresting Hook Handle
-    {combos = {{key = 'G', reformers = {'LAlt'}}}, down = iCommandPlaneHook,                        name = _('Tail Hook Handle - UP/DOWN'),     category = {_('Instrument Panel')}},
-    --{down = Keys.PlaneHookUp,                                                                     name = _('Tail Hook Up'),                   category = {_('Systems')}},
-    --{down = Keys.PlaneHookDown,                                                                   name = _('Tail Hook Down'),                 category = {_('Systems')}},
+    {combos = {{key = 'G', reformers = {'LAlt'}}}, down = Keys.PlaneHook,                          name = _('Tail Hook Handle - UP/DOWN'),     category = {_('Instrument Panel')}},
+    {down = Keys.PlaneHookUp,                                                                     name = _('Tail Hook Up'),                   category = {_('Systems')}},
+    {down = Keys.PlaneHookDown,                                                                   name = _('Tail Hook Down'),                 category = {_('Systems')}},
 
     -- Misc Switches Panel
     {down = Keys.RadarTCPlanProfile, value_down = 1,                                              name = _('Radar Terrain Clearance - PLAN'),         category = {_('Instrument Panel'), _('Misc Switches Panel')}},
@@ -218,12 +220,13 @@ join(res.keyCommands,{
     {down = Keys.RadarVolume, value_down = 0,   name = _('Radar Obstacle Tone Volume Knob - Decrease'),          category = {_('Left Console'), _('Radar Control Panel')}},
 
     -- AFCS Panel
+    
     {down = Keys.AFCSStandbyToggle,             name = _('AFCS Standby Switch - OFF/STANDBY'),                   category = {_('Left Console'), _('AFCS Panel')}},
     {down = Keys.AFCSEngageToggle,              name = _('AFCS Engage Switch - OFF/ENGAGE'),                     category = {_('Left Console'), _('AFCS Panel')}},
     {down = Keys.AFCSAltitudeToggle,            name = _('AFCS Altitude Switch - OFF/ALT'),                      category = {_('Left Console'), _('AFCS Panel')}},
     {down = Keys.AFCSHeadingToggle,             name = _('AFCS Heading Select Switch - OFF/HDG SEL'),            category = {_('Left Console'), _('AFCS Panel')}},
-    {down = Keys.AFCSHeadingInc,                name = _('AFCS SET Knob - CW/Increase'),                         category = {_('Left Console'), _('AFCS Panel')}},
-    {down = Keys.AFCSHeadingDec,                name = _('AFCS SET Knob - CCW/Decrease'),                        category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_hdg_set, value_down = 1, cockpit_device_id = devices.AFCS,                name = _('AFCS SET Knob - CW/Increase'),                         category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_hdg_set, value_down = -1, cockpit_device_id = devices.AFCS,               name = _('AFCS SET Knob - CCW/Decrease'),                        category = {_('Left Console'), _('AFCS Panel')}},
 
     {down = Keys.AFCSHotasPath,                 name = _('AFCS Path Mode'),                                      category = {_('Left Console'), _('AFCS Panel')}},
     {down = Keys.AFCSHotasAltHdg,               name = _('AFCS Altitude + Heading Modes'),                       category = {_('Left Console'), _('AFCS Panel')}},
@@ -318,9 +321,9 @@ join(res.keyCommands,{
 		---------------------------------------------
     -- Carrier Catapult -------------------------
     ---------------------------------------------
-	  {combos = {{key = 'U', reformers = {}}},                  down = Keys.catapult_ready, value_down = 1.0, value_up = 0.0, name = _('Catapult Hook-up'), category = _('Flight Control')},
-    {combos = {{key = 'U', reformers = {'LShift'}}},          down = Keys.catapult_shoot, value_down = 1.0, value_up = 0.0, name = _('Catapult Shoot'),     category = _('Flight Control')},
-    {combos = {{key = 'S', reformers = {'LCtrl', 'LShift'}}}, down = device_commands.pilot_salute, cockpit_device_id = devices.CARRIER, value_down = 1.0, value_up = 0.0, name = _('Pilot Salute'),     category = _('Communications')},
+	  --{combos = {{key = 'U', reformers = {}}},                  down = Keys.catapult_ready, value_down = 1.0, value_up = 0.0, name = _('Catapult Hook-up'), category = _('Flight Control')},
+    --{combos = {{key = 'U', reformers = {'LShift'}}},          down = Keys.catapult_shoot, value_down = 1.0, value_up = 0.0, name = _('Catapult Shoot'),     category = _('Flight Control')},
+    {combos = {{key = 'S', reformers = {'LCtrl', 'LShift'}}}, down = iCommandPilotGestureSalute, name = _('Pilot Salute'),     category = _('Communications')},
   
     -- Weapon/CMDS Adjustment
     {combos = {{key = '2', reformers = {'RShift','RAlt'}}},		down = Keys.ChangeCBU2AQuantity,    value_down = 1, name = _('ALE-29A Programmer CBU-2/A Release Quantity - 1/2/3'),            category = {_('Kneeboard'), _('ALE-29A Programmer')}},
@@ -334,6 +337,10 @@ join(res.keyCommands,{
     {combos = {{key = 'H', reformers = {'RShift'}}}        , down = iCommandViewNightVisionGogglesOn   , name = _('Night Vision Goggle - Toggle'), category = _('Sensors')},
     {combos = {{key = 'H', reformers = {'RShift','RCtrl'}}}, down = iCommandPlane_Helmet_Brightess_Up  , name = _('Goggle Gain - Inc'),            category = _('Sensors')},
     {combos = {{key = 'H', reformers = {'RShift','RAlt'}}} , down = iCommandPlane_Helmet_Brightess_Down, name = _('Goggle Gain - Dec'),            category = _('Sensors')},
+  
+	-- Radio
+	{combos = {{key = '\\', reformers = {'RCtrl'}}}        , down = Keys.radio_ptt   , name = _('Radio Push to Talk (PTT)'), category = _('Radio')},
+    
   
     -- PID tuning
     {down = Keys.Tune1, value_down = 0.1,                                                                name = _('Tune1: +0.1'),                  category = _('Debug')},

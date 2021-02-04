@@ -17,6 +17,7 @@ end
 
 function update()
 	--Test set anim argument
+	--[[
 
 	local ROLL_STATE = sensor_data:getStickPitchPosition() / 100
 	set_aircraft_draw_argument_value(11, ROLL_STATE) -- right aileron
@@ -46,6 +47,7 @@ function update()
     
 	--print(ROLL_STATE)
 	--print(PITCH_STATE)
+	]]
 end
 
 need_to_be_closed = false -- close lua state after initialization

@@ -1,0 +1,15 @@
+wave = "Effects/Aircrafts/A-4E-C/a-4e_HydraulicsFlapsStop.ogg"
+inner_radius = 10
+outer_radius = 100
+gain = 1.0
+attack = 0.1
+detached = true
+position = {-1, 0, 0}
+pitch_random = 0.05
+gain_random = 0.05
+
+-- play: flaps/spoilers reach minimum or maximum position
+-- once
+-- lowpass = 24000.0
+-- note: we could use this same sample set for the spoilers.
+-- utilize the various variables (notably position and lowpass filter) in a a-4e_HydraulicsSpoilersStop.sdef

@@ -1,11 +1,16 @@
 -- set FM_dll to name of DLL with EFM, or nil to use SFM
-local AFMenabled = false
+--EDITING THIS FILE WILL CAUSE THE EFM TO FAIL.
 
-local bin = {}
+--THIS IS AN EFM ALPHA BUILD PLEASE DO NOT DISTRIBUTE
+
+local AFMenabled = true
+
+bin = {}
 
 if AFMenabled == true then
- bin = {'A4E_FM'}
+	bin = {'A-4E-C'} 
 end
+
 
 local self_ID="A-4E-C"
 declare_plugin(self_ID,
@@ -16,7 +21,7 @@ displayName  = _("A-4E-C"),
 
 fileMenuName = _("A-4E-C"),
 update_id        = "A-4E-C",
-version		 = "1.4.2",	-- increment this number on the release branch. Use semantic versioning https://semver.org
+version		 = "2.0.0-alpha-3",	-- increment this number on the release branch. Use semantic versioning https://semver.org
 state		 = "installed",
 info		 = _("A-4E-C aka \"Community A-4E\"\n\nThe A-4 is a lightweight, subsonic, single-engine attack aircraft. Entering service in 1956, it was designed to deliver conventional and nuclear weapons in daytime visual flight conditions.  However, using the APG-53(A) radar first installed on the A-4C, the A-4 is capable of all-weather navigation at low altitudes, as well as limited computer-assisted weapon delivery."),
 encyclopedia_path = current_mod_path..'/Encyclopedia',
@@ -88,12 +93,19 @@ mount_vfs_texture_path  (current_mod_path.."/Textures/a4e_blueangels")
 
 -- Option Cockpit operationnel, HUD partiel
 if AFMenabled == true then
-	local FM = {self_ID, 'A4E_FM'}
+	dofile(current_mod_path.."/Entry/Suspension.lua")
+	local FM = 
+	{
+		[1] = self_ID,
+		[2] = 'A-4E-C',
+		center_of_mass = {0.0, 0.0, 0.0}, --x=0.183, y=0.261
+		moment_of_inertia = {10968, 39500, 35116, -763}, --xy = -5518 --xy = -1763
+		suspension = suspension
+	}
 	make_flyable('A-4E-C'	, current_mod_path..'/Cockpit/Scripts/', FM, current_mod_path..'/comm.lua')
 else
 	make_flyable('A-4E-C'	, current_mod_path..'/Cockpit/Scripts/', nil, current_mod_path..'/comm.lua')
 end
-
 
 dofile(current_mod_path..'/Weapons/A4E_Weapons.lua')
 dofile(current_mod_path..'/A-4E-C.lua')
@@ -101,5 +113,7 @@ dofile(current_mod_path..'/UnitPayloads/A-4E-C.lua')
 
 dofile(current_mod_path.."/Views.lua")
 make_view_settings('A-4E-C', ViewSettings, SnapViews)
+
+
 
 plugin_done()-- finish declaration , clear temporal data

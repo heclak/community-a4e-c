@@ -4,6 +4,7 @@ dofile(LockOn_Options.script_path.."Systems/stores_config.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
+dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 
 local update_rate = 0.006
 make_default_activity(update_rate)
@@ -16,6 +17,7 @@ function debug_print(x)
 end
 
 local sensor_data = get_base_data()
+local efm_data_bus = get_efm_data_bus()
 ------------------------------------------------
 ----------------  CONSTANTS  -------------------
 ------------------------------------------------
@@ -45,6 +47,7 @@ local FUNC_GM_UNARM = 2
 local FUNC_SPRAY_TANK = 3
 local FUNC_LABS = 4
 local FUNC_BOMBS_GM_ARM = 5
+local FUNC_CMPTR = 4 --change to 6 when we its animated
 local selector_debug_text={"OFF","ROCKETS","GM UNARM","SPRAY TANK","LABS","BOMBS & GM ARM"}
 
 -- emergency selector switch constants
@@ -134,7 +137,11 @@ local GLARE_LABS_ANNUN = get_param_handle("D_GLARE_LABS")
 local glare_labs_annun_state = false
 
 local shrike_armed_param = get_param_handle("SHRIKE_ARMED")
+local jato_armed_and_full_param = get_param_handle("JATO_ARMED_AND_FULL")
 
+local main_rpm = get_param_handle("RPM")
+
+local bombing_computer_target_set = false
 
 ------------------------------------------------
 -----------  AIRCRAFT DEFINITION  --------------
@@ -197,6 +204,10 @@ WeaponSystem:listen_command(device_commands.AWRS_drop_interval_AXIS)
 WeaponSystem:listen_command(Keys.ChangeCBU2AQuantity)
 WeaponSystem:listen_command(Keys.ChangeCBU2BAQuantity)
 
+WeaponSystem:listen_command(device_commands.JATO_arm)
+WeaponSystem:listen_command(device_commands.JATO_jettison)
+WeaponSystem:listen_command(Keys.JATOFiringButton)
+
 local shrike_sidewinder_volume = get_param_handle("SHRIKE_SIDEWINDER_VOLUME")
 
 local cbu1a_quantity = get_param_handle("CBU1A_QTY")
@@ -208,8 +219,10 @@ local cbu2a_quantity_array = {1,2,3,4,6,17}
 local cbu2ba_quantity_array = {2,4,6}
 local cbu2a_quantity_array_pos = 0
 local cbu2ba_quantity_array_pos = 0
+local this_weapon_ptr = get_param_handle("THIS_WEAPON_PTR")
 
 function post_initialize()
+	this_weapon_ptr:set(string.sub(tostring(WeaponSystem.link),10))
     startup_print("weapon_system: postinit start")
 
     sndhost = create_sound_host("COCKPIT_ARMS","HEADPHONES",0,0,0)
@@ -281,6 +294,14 @@ local last_pylon_release = {0,0,0,0,0}  -- last time (see time_ticker) pylon was
 local last_bomblet_release = {0,0,0,0,0}  -- last time (see time_ticker) bomblet was released from dispenser
 local priority_pairs = { 5, 4, 3, 2, 1 }
 
+local GALLON_TO_KG = 3.785 * 0.8
+local fuel_tank_capacity = {
+    ["{DFT-400gal}"] = GALLON_TO_KG * 400,
+    ["{DFT-300gal}"] = GALLON_TO_KG * 300,
+    ["{DFT-300gal_LR}"] = GALLON_TO_KG * 300,
+    ["{DFT-150gal}"] = GALLON_TO_KG * 150,
+}
+
 
 function prepare_weapon_release()
     weapon_release_count = 0
@@ -316,6 +337,7 @@ function ripple_sequence_end()
     trigger_engaged = false
     ripple_sequence_position = 0
     glare_labs_annun_state = false -- turn off labs light
+	 bombing_computer_target_set = false
 end
 
 -- update visual state of the LABS annunciator
@@ -324,6 +346,17 @@ function update_labs_annunciator()
         GLARE_LABS_ANNUN:set(1)
     else
         GLARE_LABS_ANNUN:set(0)
+    end
+end
+
+function update_fuel_tanks()
+
+    for i=1,3, 1 do
+        local tank = WeaponSystem:get_station_info(i)
+        if tank ~= nil and tank.weapon.level3 == wsType_FuelTank then
+            local type = tank["CLSID"]
+            efm_data_bus.fm_setTankState(i, fuel_tank_capacity[type])
+        end
     end
 end
 
@@ -357,6 +390,16 @@ function check_all_stations_for_pairs_mode()
     return equal_priority_found
 end
 
+function updateComputerSolution(weapons_released)
+	--Only restrict pickle if Computer is used. (COMPUTER is currently using LABS selector).
+	valid_solution = true
+	if (function_selector == FUNC_CMPTR) then
+		valid_solution = efm_data_bus.fm_getValidSolution()
+		glare_labs_annun_state = efm_data_bus.fm_getTargetSet() and bombing_computer_target_set
+	end
+	
+	return valid_solution
+end
 
 function update()
 	--ECM_status = WeaponSystem:get_ECM_status()
@@ -378,7 +421,8 @@ function update()
 		end
 	end	--]]
     
-    
+    update_fuel_tanks()
+
     time_ticker = time_ticker + update_rate
     local _master_arm = get_elec_mon_arms_dc_ok() -- check master arm status
     
@@ -409,8 +453,14 @@ function update()
     -- see NATOPS 8-3
     local released_weapon = false
 
-    if _master_arm and (pickle_engaged or trigger_engaged) then
-        
+	valid_solution = updateComputerSolution()
+
+    if _master_arm and (pickle_engaged or trigger_engaged) and valid_solution then
+	
+		 if function_selector == FUNC_CMPTR then
+			 labs_tone:play_continue()
+		 end
+		
         local weap_release = false
         
         -- AWRS mode is in ripple single, ripple pairs, or ripple salvo
@@ -458,11 +508,12 @@ function update()
             ripple_sequence_end()
             -- break
         end
-
+		
         for py = 1, num_stations, 1 do
 
             if weapon_release_count >= max_weapon_release_count and function_selector ~= FUNC_OFF then
-                break
+				break
+				  
             end
 
             i = pylon_order[next_pylon]
@@ -498,7 +549,7 @@ function update()
                 if station.count > 0 and (
                 (station.weapon.level2 == wsType_NURS and ((trigger_engaged and function_selector == FUNC_ROCKETS) or (pickle_engaged and function_selector == FUNC_GM_UNARM)) and weap_release) or -- launch unguided rockets
                 ((station.weapon.level2 == wsType_Missile) and function_selector == FUNC_BOMBS_GM_ARM and weap_release) or -- launch missiles (pickle and fire trigger)
-                ((station.weapon.level2 == wsType_Bomb) and pickle_engaged and function_selector == FUNC_BOMBS_GM_ARM and weap_release) -- launch bombs
+                ((station.weapon.level2 == wsType_Bomb) and pickle_engaged and (function_selector == FUNC_BOMBS_GM_ARM or function_selector == FUNC_CMPTR) and weap_release) -- launch bombs
                 ) then
                     -- Bomb release logic
                     if (station.weapon.level2 == wsType_Bomb) then
@@ -740,6 +791,13 @@ function check_sidewinder(_master_arm)
     end
 end
 
+function check_jato_armed_and_full(_jato_arm)
+	if (_jato_arm) then
+		jato_armed_and_full_param:set(1.0)
+	else
+		jato_armed_and_full_param:set(0.0)
+	end
+end
 
 function check_shrike(_master_arm)
 
@@ -893,6 +951,9 @@ function SetCommand(command,value)
         end
         
 	elseif command == Keys.PickleOn then
+		 efm_data_bus.fm_setSetTarget(1.0)
+		 bombing_computer_target_set = true
+		
         weapon_release_ticker = weapon_interval -- fire first batch immediately
         --prepare_weapon_release()
         if AWRS_mode >= AWRS_mode_ripple_single then -- AWRS is in ripple mode
@@ -909,22 +970,24 @@ function SetCommand(command,value)
                 
                 -- In PAIRS mode, an equal priority pair must exist for LABS tone and light to turn on
                 if check_all_stations_for_pairs_mode() then
-                    labs_tone:play_continue()
+					  labs_tone:play_continue()
                     glare_labs_annun_state = true -- turn on labs light    
                 end
 
             -- All other AWRS modes
             else
-                labs_tone:play_continue()
+				  labs_tone:play_continue()
                 glare_labs_annun_state = true -- turn on labs light
             end
         end
 
     elseif command == Keys.PickleOff then
+		 efm_data_bus.fm_setSetTarget(0.0)
         pickle_engaged = false
         labs_tone:stop() -- TODO also stop after last auto-release interval bomb is dropped
         glare_labs_annun_state = false -- turn on labs light
         ripple_sequence_position = 0 -- reset ripple sequence
+		 bombing_computer_target_set = false
 
     elseif command == Keys.PlaneFireOn then
         if gun_ready and not geardown then
@@ -1150,7 +1213,7 @@ function SetCommand(command,value)
         
     elseif command == Keys.ChangeCBU2AQuantity then
         -- check for weight on wheels and engine off
-        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (sensor_data.getEngineLeftRPM() == 0) then
+        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (main_rpm:get() < 2) then
             -- increment position
             cbu2a_quantity_array_pos = (cbu2a_quantity_array_pos + 1) % table.getn(cbu2a_quantity_array)
             debug_print("CBU-2/A quantity changed to "..tostring(cbu2a_quantity_array_pos))
@@ -1160,7 +1223,7 @@ function SetCommand(command,value)
 
     elseif command == Keys.ChangeCBU2BAQuantity then
         -- check for weight on wheels and engine off
-        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (sensor_data.getEngineLeftRPM() == 0) then
+        if (sensor_data.getWOW_LeftMainLandingGear() > 0) and (main_rpm:get() < 2) then
             -- increment position
             cbu2ba_quantity_array_pos = (cbu2ba_quantity_array_pos + 1) % table.getn(cbu2ba_quantity_array)
             debug_print("CBU-2B/A quantity changed to "..tostring(cbu2ba_quantity_array_pos))
@@ -1173,6 +1236,12 @@ function SetCommand(command,value)
         aim9seek:update(nil, LinearTodB(shrike_sidewinder_volume:get()), nil)
     elseif command == device_commands.shrike_selector then
         -- print_message_to_user(value)
+	elseif command == Keys.JATOFiringButton then
+		
+	elseif command == device_commands.JATO_arm then
+		check_jato_armed_and_full(value)
+	elseif command == device_commands.JATO_jettison then
+		
     end
 end
 

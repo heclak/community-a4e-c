@@ -1,0 +1,12 @@
+wave = "Effects/Aircrafts/A-4E-C/a-4e_HydraulicsGearPodOpen_C.ogg"
+inner_radius = 20
+outer_radius = 150
+gain = 6.0
+detached = true
+position = {1.5, -1.5, 0}
+pitch_random = 0.05
+gain_random = 0.05
+
+-- play: center gear pod opens
+-- once
+-- lowpass = 24000.0

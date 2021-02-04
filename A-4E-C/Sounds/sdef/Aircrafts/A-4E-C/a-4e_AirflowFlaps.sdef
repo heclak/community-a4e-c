@@ -1,0 +1,14 @@
+wave = "Effects/Aircrafts/A-4E-C/a-4e_AirflowFlaps.ogg"
+inner_radius = 20
+outer_radius = 150
+gain = 0.75
+attack = 0.1
+release = 0.3
+position = {0.25, -0.5, 0}
+
+-- play: flaps extended
+-- continuous
+-- lowpass = 24000.0
+-- gain variable should have a multiplier based on kts:
+-- < 35 kts = 0%
+-- > 140 kts = 100%

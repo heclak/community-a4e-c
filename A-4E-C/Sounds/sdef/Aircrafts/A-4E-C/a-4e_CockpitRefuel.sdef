@@ -1,0 +1,14 @@
+wave = "Effects/Aircrafts/A-4E-C/a-4e_CockpitRefuel.ogg"
+inner_radius = 10
+outer_radius = 150
+gain = 1.0
+attack = 0.1
+position = {0, -1.25, 0}
+
+-- play: taking in fuel
+-- continuous
+-- lowpass = 24000.0
+-- to ensure this sound is unique each time it is heard,
+-- it should play in-flight continuously, silently,
+-- manipulating gain value when the event triggers
+-- (set gain value based on the amount of shake input)

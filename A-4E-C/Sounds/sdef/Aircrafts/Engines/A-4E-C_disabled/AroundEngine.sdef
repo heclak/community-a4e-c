@@ -1,0 +1,5 @@
+wave = "Effects/Aircrafts/Engines/A-4E-C/AroundEngine"
+inner_radius = 100
+outer_radius = 1000
+gain = 1.0
+pitch = 1.5

@@ -1,0 +1,10 @@
+wave = "Effects/Aircrafts/A-4E-C/a-4e_CockpitCanopyLeverOpen.ogg"
+inner_radius = 1
+outer_radius = 4
+position = {0.5, -0.2, 0.5}
+detached = true
+
+-- play: canopy lever set to open
+-- switch: a-4e_CockpitCanopyLeverClose.sdef
+-- once
+-- lowpass = 24000.0

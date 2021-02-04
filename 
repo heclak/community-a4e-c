@@ -1,0 +1,351 @@
+[1mdiff --cc A-4E-C/Cockpit/Scripts/command_defs.lua[m
+[1mindex 1bd2989,586f775..0000000[m
+[1m--- a/A-4E-C/Cockpit/Scripts/command_defs.lua[m
+[1m+++ b/A-4E-C/Cockpit/Scripts/command_defs.lua[m
+[36m@@@ -291,157 -291,196 +291,215 @@@[m [men[m
+  [m
+  device_commands =[m
+  {[m
+[31m-     Button_Test = __counter(),[m
+[31m-     arm_gun = __counter(),[m
+[31m-     arm_master = __counter(),[m
+[31m-     arm_station1 = __counter(),[m
+[31m-     arm_station2 = __counter(),[m
+[31m-     arm_station3 = __counter(),[m
+[31m-     arm_station4 = __counter(),[m
+[31m-     arm_station5 = __counter(),[m
+[31m-     arm_func_selector = __counter(),[m
+[31m-     gunpod_l = __counter(),[m
+[31m-     gunpod_c = __counter(),[m
+[31m-     gunpod_r = __counter(),[m
+[31m-     gunpod_chargeclear = __counter(),[m
+[31m- 	push_starter_switch = __counter(),[m
+[31m- 	throttle = __counter(),[m
+[31m-     flaps = __counter(),[m
+[31m- 	spoiler_cover = __counter(),[m
+[31m- 	spoiler_arm = __counter(),[m
+[31m-     FuelGaugeExtButton = __counter(),[m
+[31m-     AltPressureKnob = __counter(),[m
+[31m-     Gear = __counter(),[m
+[31m-     Hook = __counter(),[m
+[31m-     emer_gen_bypass = __counter(),[m
+[31m-     emer_gen_deploy = __counter(),[m
+[31m-     speedbrake = __counter(),[m
+[31m-     arm_emer_sel = __counter(),[m
+[31m-     arm_bomb = __counter(),[m
+[31m-     emer_bomb_release = __counter(),[m
+[31m-     GunsightKnob = __counter(),[m
+[31m-     GunsightDayNight = __counter(),[m
+[31m-     GunsightBrightness = __counter(),[m
+[31m-     AWRS_quantity = __counter(),[m
+[31m-     AWRS_drop_interval = __counter(),[m
+[31m-     AWRS_multiplier = __counter(),[m
+[31m-     AWRS_stepripple = __counter(),[m
+[31m-     speedbrake_emer = __counter(),[m
+[31m-     emer_gear_release = __counter(),[m
+[31m-     radar_alt_indexer = __counter(),[m
+[31m-     radar_alt_switch = __counter(),[m
+[31m-     master_test = __counter(),[m
+[31m-     ias_index_button = __counter(),[m
+[31m-     ias_index_knob = __counter(),[m
+[31m-     stby_att_index_button = __counter(),[m
+[31m-     stby_att_index_knob = __counter(),[m
+[31m- [m
+[31m-     bdhi_mode = __counter(),[m
+[31m- [m
+[31m-     doppler_select = __counter(),[m
+[31m-     doppler_memory_test = __counter(),[m
+[31m- [m
+[31m-     nav_select = __counter(),[m
+[31m-     asn41_magvar = __counter(),[m
+[31m-     asn41_windspeed = __counter(),[m
+[31m-     asn41_winddir = __counter(),[m
+[31m-     ppos_lat = __counter(),[m
+[31m-     ppos_lon = __counter(),[m
+[31m-     dest_lat = __counter(),[m
+[31m-     dest_lon = __counter(),[m
+[31m- [m
+[31m-     radar_planprofile = __counter(),[m
+[31m-     radar_range = __counter(),[m
+[31m-     radar_storage = __counter(),[m
+[31m-     radar_brilliance = __counter(),[m
+[31m-     radar_detail = __counter(),[m
+[31m-     radar_gain = __counter(),[m
+[31m-     radar_filter = __counter(),[m
+[31m-     radar_reticle = __counter(),[m
+[31m-     radar_mode = __counter(),[m
+[31m-     radar_aoacomp = __counter(),[m
+[31m-     radar_angle = __counter(),[m
+[31m-     radar_angle_axis = __counter(),[m
+[31m-     radar_angle_axis_abs = __counter(),[m
+[31m-     radar_volume = __counter(),[m
+[31m-     tacan_mode = __counter(),[m
+[31m-     tacan_ch_major = __counter(),[m
+[31m-     tacan_ch_minor = __counter(),[m
+[31m-     tacan_volume = __counter(),[m
+[31m-     extlight_master = __counter(),[m
+[31m-     extlight_probe = __counter(),[m
+[31m-     extlight_taxi = __counter(),[m
+[31m-     extlight_anticoll = __counter(),[m
+[31m-     extlight_fuselage = __counter(),[m
+[31m-     extlight_flashsteady = __counter(),[m
+[31m-     extlight_nav = __counter(),[m
+[31m-     extlight_tail = __counter(),[m
+[31m-     intlight_whiteflood = __counter(),[m
+[31m-     intlight_instruments = __counter(),[m
+[31m-     intlight_console = __counter(),[m
+[31m-     intlight_brightness = __counter(),[m
+[31m-     rudder_trim = __counter(),[m
+[31m-     throttle_axis = __counter(),[m
+[31m-     throttle_click = __counter(),[m
+[31m- [m
+[31m-     afcs_standby = __counter(),[m
+[31m-     afcs_engage = __counter(),[m
+[31m-     afcs_hdg_sel = __counter(),[m
+[31m-     afcs_alt = __counter(),[m
+[31m-     afcs_hdg_set = __counter(),[m
+[31m-     afcs_stab_aug = __counter(),[m
+[31m-     afcs_ail_trim = __counter(),[m
+[31m- [m
+[31m-     apc_engagestbyoff = __counter(),[m
+[31m-     apc_hotstdcold = __counter(),[m
+[31m- [m
+[31m-     arc51_mode = __counter(),[m
+[31m-     arc51_xmitmode = __counter(),[m
+[31m-     arc51_volume = __counter(),[m
+[31m-     arc51_squelch = __counter(),[m
+[31m-     arc51_freq_preset = __counter(),[m
+[31m-     arc51_freq_XXxxx = __counter(),[m
+[31m-     arc51_freq_xxXxx = __counter(),[m
+[31m-     arc51_freq_xxxXX = __counter(),[m
+[31m- [m
+[31m-     clock_stopwatch = __counter(),[m
+[31m- [m
+[31m-     cm_bank = __counter(),[m
+[31m-     cm_auto = __counter(),[m
+[31m-     cm_adj1 = __counter(),[m
+[31m-     cm_adj2 = __counter(),[m
+[31m-     cm_pwr = __counter(),[m
+[31m- [m
+[31m-     accel_reset = __counter(),[m
+[32m+     Button_Test                     = __counter(),[m
+[32m+     arm_gun                         = __counter(),[m
+[32m+     arm_master                      = __counter(),[m
+[32m+     arm_station1                    = __counter(),[m
+[32m+     arm_station2                    = __counter(),[m
+[32m+     arm_station3                    = __counter(),[m
+[32m+     arm_station4                    = __counter(),[m
+[32m+     arm_station5                    = __counter(),[m
+[32m+     arm_func_selector               = __counter(),[m
+[32m+     gunpod_l                        = __counter(),[m
+[32m+     gunpod_c                        = __counter(),[m
+[32m+     gunpod_r                        = __counter(),[m
+[32m+     gunpod_chargeclear              = __counter(),[m
+[32m+ 	push_starter_switch             = __counter(),[m
+[32m+ 	throttle                        = __counter(),[m
+[32m+     flaps                           = __counter(),[m
+[32m+ 	spoiler_cover                   = __counter(),[m
+[32m+ 	spoiler_arm                     = __counter(),[m
+[32m+     FuelGaugeExtButton              = __counter(),[m
+[32m+     AltPressureKnob                 = __counter(),[m
+[32m+     Gear                            = __counter(),[m
+[32m+     Hook                            = __counter(),[m
+[32m+     emer_gen_bypass                 = __counter(),[m
+[32m+     emer_gen_deploy                 = __counter(),[m
+[32m+     speedbrake                      = __counter(),[m
+[32m+     arm_emer_sel                    = __counter(),[m
+[32m+     arm_bomb                        = __counter(),[m
+[32m+     emer_bomb_release               = __counter(),[m
+[32m+     GunsightKnob                    = __counter(),[m
+[32m+     GunsightDayNight                = __counter(),[m
+[32m+     GunsightBrightness              = __counter(),[m
+[32m+     AWRS_quantity                   = __counter(),[m
+[32m+     AWRS_drop_interval              = __counter(),[m
+[32m+     AWRS_multiplier                 = __counter(),[m
+[32m+     AWRS_stepripple                 = __counter(),[m
+[32m+     speedbrake_emer                 = __counter(),[m
+[32m+     emer_gear_release               = __counter(),[m
+[32m+     radar_alt_indexer               = __counter(),[m
+[32m+     radar_alt_switch                = __counter(),[m
+[32m+     master_test                     = __counter(),[m
+[32m+     ias_index_button                = __counter(),[m
+[32m+     ias_index_knob                  = __counter(),[m
+[32m+     stby_att_index_button           = __counter(),[m
+[32m+     stby_att_index_knob             = __counter(),[m
+[32m+ [m
+[32m+     bdhi_mode                       = __counter(),[m
+[32m+ [m
+[32m+     doppler_select                  = __counter(),[m
+[32m+     doppler_memory_test             = __counter(),[m
+[32m+ [m
+[32m+     nav_select                      = __counter(),[m
+[32m+     asn41_magvar                    = __counter(),[m
+[32m+     asn41_windspeed                 = __counter(),[m
+[32m+     asn41_winddir                   = __counter(),[m
+[32m+     ppos_lat                        = __counter(),[m
+[32m+     ppos_lon                        = __counter(),[m
+[32m+     dest_lat                        = __counter(),[m
+[32m+     dest_lon                        = __counter(),[m
+[32m+ [m
+[32m+     radar_planprofile               = __counter(),[m
+[32m+     radar_range                     = __counter(),[m
+[32m+     radar_storage                   = __counter(),[m
+[32m+     radar_brilliance                = __counter(),[m
+[32m+     radar_detail                    = __counter(),[m
+[32m+     radar_gain                      = __counter(),[m
+[32m+     radar_filter                    = __counter(),[m
+[32m+     radar_reticle                   = __counter(),[m
+[32m+     radar_mode                      = __counter(),[m
+[32m+     radar_aoacomp                   = __counter(),[m
+[32m+     radar_angle                     = __counter(),[m
+[32m+     radar_angle_axis                = __counter(),[m
+[32m+     radar_angle_axis_abs            = __counter(),[m
+[32m+     radar_volume                    = __counter(),[m
+[32m+     tacan_mode                      = __counter(),[m
+[32m+     tacan_ch_major                  = __counter(),[m
+[32m+     tacan_ch_minor                  = __counter(),[m
+[32m+     tacan_volume                    = __counter(),[m
+[32m+     extlight_master                 = __counter(),[m
+[32m+     extlight_probe                  = __counter(),[m
+[32m+     extlight_taxi                   = __counter(),[m
+[32m+     extlight_anticoll               = __counter(),[m
+[32m+     extlight_fuselage               = __counter(),[m
+[32m+     extlight_flashsteady            = __counter(),[m
+[32m+     extlight_nav                    = __counter(),[m
+[32m+     extlight_tail                   = __counter(),[m
+[32m+     intlight_whiteflood             = __counter(),[m
+[32m+     intlight_instruments            = __counter(),[m
+[32m+     intlight_console                = __counter(),[m
+[32m+     intlight_brightness             = __counter(),[m
+[32m+     rudder_trim                     = __counter(),[m
+[32m+     throttle_axis                   = __counter(),[m
+[32m+     throttle_click                  = __counter(),[m
+[32m+ [m
+[32m+     afcs_standby                    = __counter(),[m
+[32m+     afcs_engage                     = __counter(),[m
+[32m+     afcs_hdg_sel                    = __counter(),[m
+[32m+     afcs_alt                        = __counter(),[m
+[32m+     afcs_hdg_set                    = __counter(),[m
+[32m+     afcs_stab_aug                   = __counter(),[m
+[32m+     afcs_ail_trim                   = __counter(),[m
+[32m+ [m
+[32m+     apc_engagestbyoff               = __counter(),[m
+[32m+     apc_hotstdcold                  = __counter(),[m
+[32m+ [m
+[32m+     arc51_mode                      = __counter(),[m
+[32m+     arc51_xmitmode                  = __counter(),[m
+[32m+     arc51_volume                    = __counter(),[m
+[32m+     arc51_squelch                   = __counter(),[m
+[32m+     arc51_freq_preset               = __counter(),[m
+[32m+     arc51_freq_XXxxx                = __counter(),[m
+[32m+     arc51_freq_xxXxx                = __counter(),[m
+[32m+     arc51_freq_xxxXX                = __counter(),[m
+[32m+ [m
+[32m+     clock_stopwatch                 = __counter(),[m
+[32m+ [m
+[32m+     cm_bank                         = __counter(),[m
+[32m+     cm_auto                         = __counter(),[m
+[32m+     cm_adj1                         = __counter(),[m
+[32m+     cm_adj2                         = __counter(),[m
+[32m+     cm_pwr                          = __counter(),[m
+[32m+ [m
+[32m+     accel_reset                     = __counter(),[m
+  	[m
+[31m- 	throttle_axis_mod = __counter(),[m
+[32m+ 	throttle_axis_mod               = __counter(),[m
+  	[m
+[31m- 	ecm_apr25_off	= __counter(),[m
+[31m- 	ecm_apr25_audio	= __counter(),[m
+[31m- 	ecm_apr27_off	= __counter(),[m
+[32m+ 	ecm_apr25_off	                = __counter(),[m
+[32m+ 	ecm_apr25_audio	                = __counter(),[m
+[32m+ 	ecm_apr27_off	                = __counter(),[m
+  	[m
+[31m- 	ecm_systest_upper	= __counter(),[m
+[31m- 	ecm_systest_lower	= __counter(),[m
+[32m+ 	ecm_systest_upper	            = __counter(),[m
+[32m+ 	ecm_systest_lower	            = __counter(),[m
+  	[m
+[31m- 	ecm_msl_alert_axis_inner	= __counter(),[m
+[31m- 	ecm_msl_alert_axis_outer	= __counter(),[m
+[32m+ 	ecm_msl_alert_axis_inner	    = __counter(),[m
+[32m+ 	ecm_msl_alert_axis_outer	    = __counter(),[m
+  	[m
+[31m- 	ecm_selector_knob = __counter(),[m
+[32m+ 	ecm_selector_knob               = __counter(),[m
+  	[m
+[32m++<<<<<<< HEAD[m
+[32m +	pitch_axis_mod 	= __counter(),[m
+[32m +	roll_axis_mod 	= __counter(),[m
+[32m +	rudder_axis_mod = __counter(),[m
+[32m +	brake_axis_mod 	= __counter(),[m
+[32m +[m
+[32m +    shrike_sidewinder_volume    = __counter(),[m
+[32m +[m
+[32m +    AWRS_drop_interval_AXIS     = __counter(),[m
+[32m +    intlight_whiteflood_AXIS = __counter(),[m
+[32m +    intlight_instruments_AXIS = __counter(),[m
+[32m +    intlight_console_AXIS = __counter(),[m
+[32m +    intlight_whiteflood_CHANGE = __counter(),[m
+[32m +    intlight_instruments_CHANGE = __counter(),[m
+[32m +    intlight_console_CHANGE = __counter(),[m
+[32m +	nosewheel_steering_engage = __counter(),[m
+[32m +	nosewheel_steering_disengage = __counter(),[m
+[32m++=======[m
+[32m+ 	pitch_axis_mod 	                = __counter(),[m
+[32m+ 	roll_axis_mod 	                = __counter(),[m
+[32m+ 	rudder_axis_mod                 = __counter(),[m
+[32m+ 	wheelbrake_AXIS 	            = __counter(),[m
+[32m+ [m
+[32m+     shrike_sidewinder_volume        = __counter(),[m
+[32m+ [m
+[32m+     AWRS_drop_interval_AXIS         = __counter(),[m
+[32m+     intlight_whiteflood_AXIS        = __counter(),[m
+[32m+     intlight_instruments_AXIS       = __counter(),[m
+[32m+     intlight_console_AXIS           = __counter(),[m
+[32m+     intlight_whiteflood_CHANGE      = __counter(),[m
+[32m+     intlight_instruments_CHANGE     = __counter(),[m
+[32m+     intlight_console_CHANGE         = __counter(),[m
+[32m+     [m
+[32m+     cabin_pressure                  = __counter(),[m
+[32m+     windshield_defrost              = __counter(),[m
+[32m+     cabin_temp                      = __counter(),[m
+[32m+ [m
+[32m+     man_flt_control_override        = __counter(),[m
+[32m+     [m
+[32m+     shrike_selector                 = __counter(),[m
+[32m+     oxygen_switch                   = __counter(),[m
+[32m+     [m
+[32m+     COMPASS_set_heading             = __counter(),[m
+[32m+     COMPASS_push_to_sync            = __counter(),[m
+[32m+     COMPASS_free_slaved_switch      = __counter(),[m
+[32m+     COMPASS_latitude                = __counter(),[m
+[32m+     [m
+[32m+     ENGINE_wing_fuel_sw             = __counter(),[m
+[32m+     ENGINE_drop_tanks_sw            = __counter(),[m
+[32m+     ENGINE_fuel_control_sw          = __counter(),[m
+[32m+     ENGINE_manual_fuel_shutoff        = __counter(),[m
+[32m+     ENGINE_manual_fuel_shutoff_catch  = __counter(),[m
+[32m+ [m
+[32m+     CPT_shoulder_harness            = __counter(),[m
+[32m+     CPT_secondary_ejection_handle   = __counter(),[m
+[32m+     ppos_lat_push                   = __counter(),[m
+[32m+     ppos_lon_push                   = __counter(),[m
+[32m+     dest_lat_push                   = __counter(),[m
+[32m+     dest_lon_push                   = __counter(),[m
+[32m+     asn41_magvar_push               = __counter(),[m
+[32m+     asn41_windspeed_push            = __counter(),[m
+[32m+     asn41_winddir_push              = __counter(),[m
+[32m+ [m
+[32m+     throttle_click_ITER             = __counter(),[m
+[32m+ [m
+[32m+     JATO_arm                        = __counter(),[m
+[32m+     JATO_jettison                   = __counter(),[m
+[32m+ [m
+[32m+     GunsightElevationControl_AXIS   = __counter(),[m
+[32m+     pilot_salute                    = __counter(),[m
+[32m+ [m
+[32m+     left_wheelbrake_AXIS            = __counter(),[m
+[32m+     right_wheelbrake_AXIS           = __counter(),[m
+[32m++>>>>>>> b7a5b2c9d179a591c94a4f89bbf590348a07353b[m
+  }[m

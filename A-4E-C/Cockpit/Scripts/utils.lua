@@ -15,6 +15,10 @@ function round(num, idp)
     return math.floor(num * mult + 0.5) / mult
 end
 
+function clamp(value, minimum, maximum)
+	return math.max(math.min(value,maximum),minimum)
+end
+
 -- calculates the x,y,z in russian coordinates of the point that is 'radius' distance away
 -- from px,py,pz using the x,z angle of 'hdg' and the vertical slant angle
 -- of 'slantangle'
@@ -438,6 +442,136 @@ end
 -- read the target value (latest value passed to the get_WMA_wrap() function)
 function WMA_wrap:get_target_val ()
     return self.target_val
+end
+
+--------------------------------------------------------------------
+
+Constant_Speed_Controller = {}
+Constant_Speed_Controller.__index = Constant_Speed_Controller
+setmetatable(Constant_Speed_Controller,
+  {
+    __call = function(cls, ...)
+        return cls.new(...) --call constructor if someone calls this table
+    end
+  }
+)
+
+function Constant_Speed_Controller.new(speed, min, max, pos)
+  local self = setmetatable({}, Constant_Speed_Controller)
+  self.speed = speed
+  self.min = min
+  self.max = max
+  self.pos = pos
+  return self
+end
+
+function Constant_Speed_Controller:update(target)
+
+  local p = self.pos
+  local direction = target - self.pos
+
+  if math.abs(direction) <= self.speed then
+    self.pos = target
+  elseif direction < 0.0 then
+    self.pos = self.pos - self.speed
+  elseif direction > 0.0 then
+    self.pos = self.pos + self.speed
+  end
+
+end
+
+function Constant_Speed_Controller:get_position()
+  return self.pos
+end
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------
+
+--[[
+Description
+Recursively descends both meta and regular tables and prints their key : value pairs until
+limits are reached or the table is exhausted.
+
+@param[in] table_to_print 		root of the tables to recursively explore
+@param[in] max_depth				how many levels are recursion (not function recursion) are allowed.
+@param[in] max_number_tables		how many different tables are allowed to be processed in total
+@param[in] filepath				path to put this data
+
+@return VOID
+]]--
+function recursively_print(table_to_print, max_depth, max_number_tables, filepath)
+	file = io.open(filepath, "w")
+	file:write("Key,Value\n")
+	
+	stack = {}
+	
+	table.insert(stack, {key = "start", value = table_to_print, level = 0})
+	
+	total = 0
+	
+	hash_table = {}
+
+	hash_table[tostring(hash_table)] = 2
+	hash_table[tostring(stack)] = 2
+	
+	item = true
+	while (item) do
+		item = table.remove(stack)
+		
+		if (item == nil) then
+			break
+		end
+		key = item.key
+		value = item.value
+		level = item.level
+		
+		file:write(string.rep("\t", level)..tostring(key).." = "..tostring(value).."\n")
+		
+		hash = hash_table[tostring(value)]
+		valid_table = (hash == nil or hash < 2)
+		
+		if (type(value) == "table" and valid_table) then
+			for k,v in pairs(value) do
+				if (v ~= nil and level <= max_depth and total < max_number_tables) then
+					table.insert(stack, {key = k, value = v, level = level+1})
+					if (type(v) == "table") then
+						if (hash_table[tostring(v)] == nil) then
+							hash_table[tostring(v)] = 1
+						elseif (hash_table[tostring(v)] < 2) then
+							hash_table[tostring(v)] = 2
+						end
+						total = total + 1
+					end
+				end
+			end
+		end
+		
+		if (getmetatable(value) and valid_table) then
+			for k,v in pairs(getmetatable(value)) do
+				if (v ~= nil and level <= max_depth and total < max_number_tables) then
+					table.insert(stack, {key = k, value = v, level = level+1})
+					if (type(v) == "table") then
+						if (hash_table[tostring(v)] == nil) then
+							hash_table[tostring(v)] = 1
+						elseif (hash_table[tostring(v)] < 2) then
+							hash_table[tostring(v)] = 2
+						end
+						total = total + 1
+					end
+				end
+			end
+		end
+	end
+	
+	file:close()
 end
 
 --[[

@@ -12,7 +12,9 @@ local update_time_step = 0.05
 make_default_activity(update_time_step) --update will be called 20 times per second
 
 local full_trim_time = 10.0 -- DCS SFM default seems to take 10s to fully trim roll from neutral to right, or pitch from neutral to up, or rudder from neutral to right
+local full_trim_pitch_time = 3.75
 local trim_update = update_time_step / full_trim_time
+local trim_pitch_update = update_time_step / full_trim_pitch_time
 
 -- some scaling adjustments, input values are in the -1 to 1 range, pass scaled version of these to DCS
 local pitch_trim_scale = 0.4 -- thumbsuck value of 0.4, maybe needs to be tweaked
@@ -74,7 +76,7 @@ function post_initialize()
     local dev = GetSelf()
     local sensor_data = get_base_data()
     -- TODO: is there a better way to determine initial SFM pitch trim?
-    pitch_trim_handle:set((sensor_data.getStickRollPosition()/100.0)/pitch_trim_scale)  -- for some reason, stick pitch is reported as stick roll in the API
+    pitch_trim_handle:set(-0.5)  -- for some reason, stick pitch is reported as stick roll in the API
     trim_override_handle:set(0)
     trim_override = false
 
@@ -138,6 +140,10 @@ function SetCommand(command,value)
     end
 end
 
+function trim_to_incidence( trim )
+    return (trim - 1.0)/(-2.0) * (-13.25) + 12.25
+end
+
 local prev_trim_override = trim_override
 function update()
     -- TODO : take electric system into account
@@ -177,7 +183,7 @@ function update()
 
     -- update trim position indicators
     if get_elec_primary_dc_ok() then
-        pitch_trim_gauge_handle:set(pitch_trim_gauge:get_WMA(pitch_trim))
+        pitch_trim_gauge_handle:set(trim_to_incidence(pitch_trim))
         yaw_trim_gauge_handle:set(yaw_trim_gauge:get_WMA(rudder_trim))
     else
         pitch_trim_gauge_handle:set(pitch_trim_gauge:get_WMA(0))
@@ -193,11 +199,11 @@ function update()
     end
 
     if trimming_updown ~= 0 then
-        pitch_trim = pitch_trim + trimming_updown * trim_update * trimspeedfactor
+        pitch_trim = pitch_trim + trimming_updown * trim_pitch_update * trimspeedfactor
         if pitch_trim>1 then
             pitch_trim=1
-        elseif pitch_trim<-0.24 then
-            pitch_trim=-0.24
+        elseif pitch_trim<-1 then
+            pitch_trim=-1
         end
         pitch_trim_handle:set(pitch_trim)
         dispatch_action(nil, iCommandPlaneTrimPitchAbs, pitch_trim*pitch_trim_scale)
@@ -206,6 +212,8 @@ function update()
         provided by repositioning the entire horizontal stabilizer, not just
         the elevators. Not sure how to override this in SFM though, so for
         now we just trim with the elevators.
+
+         - i have no words. truly
         --]]
     end
     if trimming_leftright ~= 0 then

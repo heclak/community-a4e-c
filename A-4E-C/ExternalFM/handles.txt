@@ -1,0 +1,359 @@
+Line 2: local my_param  = get_param_handle("TEST_PARAM") -- obtain shared parameter (created if not exist ), i.e. databus
+	Line 15: local DC_BUS_V  = get_param_handle("DC_BUS_V")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\clock.lua (5 hits)
+	Line 8: currtime_hours = get_param_handle("CURRTIME_HOURS")
+	Line 9: currtime_mins = get_param_handle("CURRTIME_MINS")
+	Line 10: currtime_secs = get_param_handle("CURRTIME_SECS")
+	Line 11: stopwatch_mins = get_param_handle("STOPWATCH_MINS")
+	Line 12: stopwatch_secs = get_param_handle("STOPWATCH_SECS")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\CURRENT_MACH.lua (1 hit)
+	Line 2: local current_mach  = get_param_handle("CURRENT_MACH") -- obtain shared parameter (created if not exist ), i.e. databus
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\externalanimations.lua (1 hit)
+	Line 40:     local pitch_trim_handle = get_param_handle("PITCH_TRIM")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\HUD\hud_disp.lua (2 hits)
+	Line 6: local current_PITCH  	 = get_param_handle("D_PITCH")
+	Line 7: local current_ROLL  	 = get_param_handle("D_ROLL")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\HUD\Indicator\indication_page.lua (2 hits)
+	Line 4: local P_HYD1 = get_param_handle("P_HYD1")
+	Line 5: local P_HYD2 = get_param_handle("P_HYD2")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Nav\ils.lua (15 hits)
+	Line 16: local hsi_comp = get_param_handle("D_MHDG")
+	Line 17: --local ils_gs_bar = get_param_handle("D_ILS_GS")
+	Line 18: --local ils_loc_bar = get_param_handle("D_ILS_LOC")
+	Line 20: local ils_gs_bar = get_param_handle("BDHI_ILS_GS")
+	Line 21: local ils_loc_bar = get_param_handle("BDHI_ILS_LOC")
+	Line 22: --local hsi_1000 = get_param_handle("D_HSI_1000")
+	Line 24: --local tcn_001 = get_param_handle("D_TCN_001")
+	Line 25: --local tcn_010 = get_param_handle("D_TCN_010")
+	Line 26: --local tcn_xy = get_param_handle("D_TCN_XY")
+	Line 28: --local vor_d01 = get_param_handle("D_VOR_D_01")
+	Line 29: --local vor_d10 = get_param_handle("D_VOR_D_10")
+	Line 30: --local vor_i001 = get_param_handle("D_VOR_I_001")
+	Line 31: --local vor_i010 = get_param_handle("D_VOR_I_010")
+	Line 32: --local vor_i100 = get_param_handle("D_VOR_I_100")
+	Line 34: local tacan_channel_param = get_param_handle("TACAN_CHANNEL")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Nav\nav.lua (56 hits)
+	Line 27: local carrier_posx_param = get_param_handle("CARRIER_POSX")
+	Line 28: local carrier_posz_param = get_param_handle("CARRIER_POSZ")
+	Line 31: local tacan_channel_param = get_param_handle("TACAN_CHANNEL")
+	Line 49: local apn153_gs = get_param_handle("APN153-GS")
+	Line 50: local apn153_drift = get_param_handle("APN153-DRIFT")
+	Line 53: local apn153_speed_Xnn = get_param_handle("APN153-SPEED-Xnn")
+	Line 54: local apn153_speed_nXn = get_param_handle("APN153-SPEED-nXn")
+	Line 55: local apn153_speed_nnX = get_param_handle("APN153-SPEED-nnX")
+	Line 56: local apn153_drift_gauge = get_param_handle("APN153-DRIFT-GAUGE")
+	Line 57: local apn153_memorylight = get_param_handle("APN153-MEMORYLIGHT")
+	Line 91: local asn41_valid = get_param_handle("ASN41-VALID")
+	Line 92: local asn41_bearing = get_param_handle("ASN41-BEARING")     -- calculated magnetic bearing to target
+	Line 93: local asn41_track = get_param_handle("ASN41-TRACK")         -- calculated magnetic ground track to target
+	Line 94: local asn41_range = get_param_handle("ASN41-RANGE")         -- calculated range to target
+	Line 97: local nav_curpos_lat_Xnnnn = get_param_handle("NAV_CURPOS_LAT_Xnnnn")
+	Line 98: local nav_curpos_lat_nXnnn = get_param_handle("NAV_CURPOS_LAT_nXnnn")
+	Line 99: local nav_curpos_lat_nnXnn = get_param_handle("NAV_CURPOS_LAT_nnXnn")
+	Line 100: local nav_curpos_lat_nnnXn = get_param_handle("NAV_CURPOS_LAT_nnnXn")
+	Line 101: local nav_curpos_lat_nnnnX = get_param_handle("NAV_CURPOS_LAT_nnnnX")
+	Line 103: local nav_curpos_lon_Xnnnnn = get_param_handle("NAV_CURPOS_LON_Xnnnnn")
+	Line 104: local nav_curpos_lon_nXnnnn = get_param_handle("NAV_CURPOS_LON_nXnnnn")
+	Line 105: local nav_curpos_lon_nnXnnn = get_param_handle("NAV_CURPOS_LON_nnXnnn")
+	Line 106: local nav_curpos_lon_nnnXnn = get_param_handle("NAV_CURPOS_LON_nnnXnn")
+	Line 107: local nav_curpos_lon_nnnnXn = get_param_handle("NAV_CURPOS_LON_nnnnXn")
+	Line 108: local nav_curpos_lon_nnnnnX = get_param_handle("NAV_CURPOS_LON_nnnnnX")
+	Line 110: local nav_dest_lat_Xnnnn = get_param_handle("NAV_DEST_LAT_Xnnnn")
+	Line 111: local nav_dest_lat_nXnnn = get_param_handle("NAV_DEST_LAT_nXnnn")
+	Line 112: local nav_dest_lat_nnXnn = get_param_handle("NAV_DEST_LAT_nnXnn")
+	Line 113: local nav_dest_lat_nnnXn = get_param_handle("NAV_DEST_LAT_nnnXn")
+	Line 114: local nav_dest_lat_nnnnX = get_param_handle("NAV_DEST_LAT_nnnnX")
+	Line 116: local nav_dest_lon_Xnnnnn = get_param_handle("NAV_DEST_LON_Xnnnnn")
+	Line 117: local nav_dest_lon_nXnnnn = get_param_handle("NAV_DEST_LON_nXnnnn")
+	Line 118: local nav_dest_lon_nnXnnn = get_param_handle("NAV_DEST_LON_nnXnnn")
+	Line 119: local nav_dest_lon_nnnXnn = get_param_handle("NAV_DEST_LON_nnnXnn")
+	Line 120: local nav_dest_lon_nnnnXn = get_param_handle("NAV_DEST_LON_nnnnXn")
+	Line 121: local nav_dest_lon_nnnnnX = get_param_handle("NAV_DEST_LON_nnnnnX")
+	Line 123: local asn41_windspeed_Xxx = get_param_handle("ASN41-WINDSPEED-Xxx")
+	Line 124: local asn41_windspeed_xXx = get_param_handle("ASN41-WINDSPEED-xXx")
+	Line 125: local asn41_windspeed_xxX = get_param_handle("ASN41-WINDSPEED-xxX")
+	Line 127: local asn41_winddir_Xxx = get_param_handle("ASN41-WINDDIR-Xxx")
+	Line 128: local asn41_winddir_xXx = get_param_handle("ASN41-WINDDIR-xXx")
+	Line 129: local asn41_winddir_xxX = get_param_handle("ASN41-WINDDIR-xxX")
+	Line 131: local asn41_magvar_Xxxxx = get_param_handle("ASN41-MAGVAR-Xxxxx")
+	Line 132: local asn41_magvar_xXxxx = get_param_handle("ASN41-MAGVAR-xXxxx")
+	Line 133: local asn41_magvar_xxXxx = get_param_handle("ASN41-MAGVAR-xxXxx")
+	Line 134: local asn41_magvar_xxxXx = get_param_handle("ASN41-MAGVAR-xxxXx")
+	Line 135: local asn41_magvar_xxxxX = get_param_handle("ASN41-MAGVAR-xxxxX")
+	Line 147: local bdhi_hdg = get_param_handle("BDHI_HDG")
+	Line 148: local bdhi_needle1 = get_param_handle("BDHI_NEEDLE1")
+	Line 149: local bdhi_needle2 = get_param_handle("BDHI_NEEDLE2")
+	Line 150: local bdhi_ils_gs = get_param_handle("BDHI_ILS_GS")
+	Line 151: local bdhi_ils_loc = get_param_handle("BDHI_ILS_LOC")
+	Line 153: local bdhi_dme_flag = get_param_handle("BDHI_DME_FLAG")
+	Line 154: local bdhi_dme_Xxx = get_param_handle("BDHI_DME_Xxx")
+	Line 155: local bdhi_dme_xXx = get_param_handle("BDHI_DME_xXx")
+	Line 156: local bdhi_dme_xxX = get_param_handle("BDHI_DME_xxX")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Nav\terrainmask.lua (5 hits)
+	Line 14: --local terrain_block = get_param_handle("PARAM_TERRAIN_MASK")
+	Line 15: local tcn_idx = get_param_handle("PARAM_TCN_IDX")
+	Line 16: local ndb_idx = get_param_handle("PARAM_NDB_IDX")
+	Line 18: local tcn_block = get_param_handle("PARAM_TCN_TERRAIN_BLOCK")
+	Line 19: local ndb_block = get_param_handle("PARAM_NDB_TERRAIN_BLOCK")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\RADAR\apg53a.lua (6 hits)
+	Line 21: local radar_grid_op = get_param_handle("RADAR_GRID_OP")
+	Line 22: local apg53a_leftrange = get_param_handle("APG53A-LEFTRANGE")
+	Line 23: local apg53a_bottomrange = get_param_handle("APG53A-BOTTOMRANGE")
+	Line 24: local master_test_param = get_param_handle("D_MASTER_TEST")
+	Line 25: local glare_obst_light=get_param_handle("D_GLARE_OBST")
+	Line 26: local radar_filter_param=get_param_handle("RADAR_FILTER")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Systems\afcs.lua (10 hits)
+	Line 41: local AFCS_HDG_100s_param = get_param_handle("AFCS_HDG_100s")
+	Line 42: local AFCS_HDG_10s_param = get_param_handle("AFCS_HDG_10s")
+	Line 43: local AFCS_HDG_1s_param = get_param_handle("AFCS_HDG_1s")
+	Line 91: local roll_trim_handle = get_param_handle("ROLL_TRIM")
+	Line 92: local pitch_trim_handle = get_param_handle("PITCH_TRIM")
+	Line 93: local trim_override_handle = get_param_handle("TRIM_OVERRIDE")
+	Line 94: local apc_light = get_param_handle("APC_LIGHT")
+	Line 123: local Kp_handle = get_param_handle("Kp_DEBUG")      -- used for PID debug tuning, feel free to repurpose
+	Line 124: local Ki_handle = get_param_handle("Ki_DEBUG")
+	Line 125: local Kd_handle = get_param_handle("Kd_DEBUG")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Systems\airbrakes.lua (5 hits)
+	Line 42: local brake_eff = get_param_handle("BRAKE_EFF")
+	Line 44: local wheelchocks_state_param = get_param_handle("WHEEL_CHOCKS_STATE")
+	Line 129: local current_spoiler=get_param_handle("D_SPOILERS")
+	Line 130: local spdbrk_caution=get_param_handle("D_SPDBRK_CAUTION")
+	Line 131: local master_test_param = get_param_handle("D_MASTER_TEST")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Systems\avionics.lua (57 hits)
+	Line 44: --local ias = get_param_handle("D_IAS")
+	Line 49: local adi_pitch = get_param_handle("ADI_PITCH")
+	Line 50: local adi_roll = get_param_handle("ADI_ROLL")
+	Line 51: local adi_hdg = get_param_handle("ADI_HDG")
+	Line 52: local adi_off = get_param_handle("ADI_OFF")
+	Line 53: local adi_slip = get_param_handle("ADI_SLIP")
+	Line 54: local adi_turn = get_param_handle("ADI_TURN")
+	Line 55: local backup_compass = get_param_handle("COMPASS_HDG")
+	Line 65: local alt_needle = get_param_handle("D_ALT_NEEDLE") -- 0 to 1000
+	Line 66: local alt_10k = get_param_handle("D_ALT_10K") -- 0 to 100,000
+	Line 67: local alt_1k = get_param_handle("D_ALT_1K") -- 0 to 10,000
+	Line 68: local alt_100s = get_param_handle("D_ALT_100S") -- 0 to 1000
+	Line 69: local alt_adj_NNxx = get_param_handle("ALT_ADJ_NNxx") -- first digits, 29-30 is input
+	Line 70: local alt_adj_xxNx = get_param_handle("ALT_ADJ_xxNx") -- 3rd digit, 0-10 input
+	Line 71: local alt_adj_xxxN = get_param_handle("ALT_ADJ_xxxN") -- 4th digit, 0-10 input
+	Line 78: local fuelgauge = get_param_handle("D_FUEL") -- 0 to 6800 lbs
+	Line 79: local fuelflowgauge = get_param_handle("D_FUEL_FLOW")
+	Line 101: local ias_needle = get_param_handle("D_IAS_DEG")    -- 0 to 360 degrees of rotation
+	Line 102: local ias_mach = get_param_handle("D_IAS_MACH_DEG") -- 0 to 360 degrees of rotation
+	Line 106: local flaps_ind = get_param_handle("D_FLAPS_IND")   -- 0 to 1, 1 = fully down
+	Line 110: local attgyro_stby_pitch = get_param_handle("ATTGYRO_STBY_PITCH")
+	Line 111: local attgyro_stby_roll = get_param_handle("ATTGYRO_STBY_ROLL")
+	Line 112: local attgyro_stby_off = get_param_handle("ATTGYRO_STBY_OFF")
+	Line 113: local attgyro_stby_horiz = get_param_handle("ATTGYRO_STBY_HORIZ")
+	Line 119: local cabin_altitude = get_param_handle("CABIN_ALT")
+	Line 123: local lo2_quantity = get_param_handle("LIQUID_O2")
+	Line 124: local lo2_warning = get_param_handle("D_OXYGEN_LOW")
+	Line 125: local lo2_flag = get_param_handle("D_OXYGEN_OFF")
+	Line 132: local glareshield_WHEELS = get_param_handle("D_GLARE_WHEELS")
+	Line 137: local IAS_knots_indexer = get_param_handle("D_IAS_IDX")
+	Line 138: local IAS_mach_indexer = get_param_handle("D_MACH_IDX")
+	Line 147: local master_test_param = get_param_handle("D_MASTER_TEST")
+	Line 151: local aoa_green = get_param_handle("AOA_GREEN")
+	Line 152: local aoa_yellow = get_param_handle("AOA_YELLOW")
+	Line 153: local aoa_red = get_param_handle("AOA_RED")
+	Line 154: local glide_slope = get_param_handle("GLIDE_SLOPE")
+	Line 158: local accel_cur = get_param_handle("ACCEL_CUR")
+	Line 159: local accel_max = get_param_handle("ACCEL_MAX")
+	Line 160: local accel_min = get_param_handle("ACCEL_MIN")
+	Line 167: lights_int_floodwhite = get_param_handle("LIGHTS-FLOOD-WHITE")
+	Line 168: lights_int_floodred = get_param_handle("LIGHTS-FLOOD-RED")
+	Line 169: lights_int_instruments = get_param_handle("LIGHTS-INST")
+	Line 170: lights_int_console = get_param_handle("LIGHTS-CONSOLE")
+	Line 198: vvi = get_param_handle("VVI")
+	Line 831: local test_glare_labs=get_param_handle("D_GLARE_LABS")
+	Line 832: local test_glare_iff=get_param_handle("D_GLARE_IFF")
+	Line 833: local test_glare_fire=get_param_handle("D_GLARE_FIRE")
+	Line 834: local test_ladder_fuelboost=get_param_handle("D_FUELBOOST_CAUTION")
+	Line 835: local test_ladder_conthyd=get_param_handle("D_CONTHYD_CAUTION")
+	Line 836: local test_ladder_utilhyd=get_param_handle("D_UTILHYD_CAUTION")
+	Line 837: local test_ladder_fueltrans=get_param_handle("D_FUELTRANS_CAUTION")
+	Line 838: local test_oil_low=get_param_handle("D_OIL_LOW")
+	Line 839: local test_advisory_inrange=get_param_handle("D_ADVISORY_INRANGE")
+	Line 840: local test_advisory_setrange=get_param_handle("D_ADVISORY_SETRANGE")
+	Line 841: local test_advisory_dive=get_param_handle("D_ADVISORY_DIVE")
+	Line 843: local test_glare_rwr_param=get_param_handle("D_GLARE_RWR")
+	Line 845: local rwr_status_light_param=get_param_handle("RWR_STATUS_LIGHT")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Systems\canopy.lua (1 hit)
+	Line 26: local HideStick = get_param_handle("HIDE_STICK")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Systems\carrier.lua (6 hits)
+	Line 62: local carrier_posx_param = get_param_handle("CARRIER_POSX")
+	Line 63: local carrier_posz_param = get_param_handle("CARRIER_POSZ")
+	Line 68: local wheelchocks_state_param = get_param_handle("WHEEL_CHOCKS_STATE")
+	Line 69: local egt_param = get_param_handle("EGT_C")
+	Line 70: local rpm_param = get_param_handle("RPM")
+	Line 77: local param_snd_catapult_takeoff = get_param_handle("SOUND_CAT_TAKEOFF")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Systems\countermeasures.lua (9 hits)
+	Line 74: local rwr_status = get_param_handle("RWR_STATUS_SIGNAL")
+	Line 78: local cms_bursts_param          = get_param_handle("CMS_BURSTS_PARAM")
+	Line 79: local cms_burst_interval_param  = get_param_handle("CMS_BURST_INTERVAL_PARAM")
+	Line 80: local cms_salvos_param          = get_param_handle("CMS_SALVOS_PARAM")
+	Line 81: local cms_salvo_interval_param  = get_param_handle("CMS_SALVO_INTERVAL_PARAM")
+	Line 105: local cm_bank1_Xx = get_param_handle("CM_BANK1_Xx")
+	Line 106: local cm_bank1_xX = get_param_handle("CM_BANK1_xX")
+	Line 107: local cm_bank2_Xx = get_param_handle("CM_BANK2_Xx")
+	Line 108: local cm_bank2_xX = get_param_handle("CM_BANK2_xX")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Systems\electric_system_api.lua (11 hits)
+	Line 64: elec_primary_ac_ok=get_param_handle("ELEC_PRIMARY_AC_OK") -- 1 or 0
+	Line 65: elec_primary_dc_ok=get_param_handle("ELEC_PRIMARY_DC_OK") -- 1 or 0
+	Line 66: elec_26V_ac_ok=get_param_handle("ELEC_26V_AC_OK") -- 1 or 0
+	Line 67: elec_aft_mon_ac_ok=get_param_handle("ELEC_AFT_MON_AC_OK") -- 1 or 0
+	Line 68: elec_fwd_mon_ac_ok=get_param_handle("ELEC_FWD_MON_AC_OK") -- 1 or 0
+	Line 69: elec_mon_primary_ac_ok=get_param_handle("ELEC_MON_PRIMARY_AC_OK") -- 1 or 0
+	Line 70: elec_mon_dc_ok=get_param_handle("ELEC_MON_DC_OK") -- 1 or 0
+	Line 71: elec_mon_arms_dc_ok=get_param_handle("ELEC_MON_ARMS_DC_OK") -- 1 or 0
+	Line 72: elec_emergency_gen_active=get_param_handle("ELEC_EMERGENCY_GEN_ACTIVE") -- 1 or 0
+	Line 73: elec_external_power=get_param_handle("ELEC_EXTERNAL_POWER") -- 1 or 0
+	Line 74: elec_ground_mode=get_param_handle("ELEC_GROUND_MODE") -- 1 or 0
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Systems\engine.lua (7 hits)
+	Line 27: local pressure_ratio = get_param_handle("PRESSURE_RATIO")
+	Line 28: local oil_pressure = get_param_handle("OIL_PRESSURE")
+	Line 29: local egt_c = get_param_handle("EGT_C")
+	Line 30: local engine_heat_stress = get_param_handle("ENGINE_HEAT_STRESS")
+	Line 32: local throttle_position = get_param_handle("THROTTLE_POSITION")
+	Line 199: local rpm_main = get_param_handle("RPM")
+	Line 200: local rpm_deci = get_param_handle("RPM_DECI")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Systems\gear.lua (5 hits)
+	Line 164: local gear_light_param = get_param_handle("GEAR_LIGHT")
+	Line 271:     local dev_gear_nose = get_param_handle("GEAR_NOSE")
+	Line 272:     local dev_gear_left = get_param_handle("GEAR_LEFT")
+	Line 273:     local dev_gear_right = get_param_handle("GEAR_RIGHT")
+	Line 319: local tail_hook_param = get_param_handle("D_TAIL_HOOK")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Systems\gunsight.lua (5 hits)
+	Line 23: local gunsight_reflector_param = get_param_handle("D_GUNSIGHT_REFLECTOR")
+	Line 24: local gunsight_reflector_rot_param = get_param_handle("D_GUNSIGHT_REFLECTOR_ROT")
+	Line 25: local gunsight_daynight_param = get_param_handle("D_GUNSIGHT_DAYNIGHT")
+	Line 26: local gunsight_mil_param = get_param_handle("GUNSIGHT_MIL_ANGLE") -- used for knob mil scale indication eventually
+	Line 27: local gunsight_visible = get_param_handle("D_GUNSIGHT_VISIBLE")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Systems\hydraulic_system.lua (3 hits)
+	Line 13: local conthyd_light_param=get_param_handle("D_CONTHYD_CAUTION")
+	Line 14: local utilhyd_light_param=get_param_handle("D_UTILHYD_CAUTION")
+	Line 15: local master_test_param=get_param_handle("D_MASTER_TEST")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Systems\hydraulic_system_api.lua (3 hits)
+	Line 32: hyd_flight_control_ok = get_param_handle("HYD_FLIGHT_CONTROL_OK")   -- 1 or 0
+	Line 33: hyd_utility_ok = get_param_handle("HYD_UTILITY_OK")                 -- 1 or 0
+	Line 34: hyd_brakes_ok = get_param_handle("HYD_BRAKES_OK")                   -- 1 or 0
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Systems\radarwarn.lua (6 hits)
+	Line 38: local current_RALT=get_param_handle("D_RADAR_ALT")
+	Line 39: local RALT_idx=get_param_handle("D_RADAR_IDX")
+	Line 41: local RALT_off=get_param_handle("D_RADAR_OFF")
+	Line 43: local RALT_warn=get_param_handle("D_RADAR_WARN")
+	Line 47: local current_RALT_valid=get_param_handle("D_RADAR_ALT_VALID")
+	Line 49: local master_test_param = get_param_handle("D_MASTER_TEST")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Systems\radar_scope_api.lua (5 hits)
+	Line 13:     blob_ud_params[i]=get_param_handle("RADAR_BLOB_"..tostring(i).."_UD")
+	Line 14:     blob_lr_params[i]=get_param_handle("RADAR_BLOB_"..tostring(i).."_LR")
+	Line 15:     blob_op_params[i]=get_param_handle("RADAR_BLOB_"..tostring(i).."_OP")
+	Line 17: scribe_10nm_param=get_param_handle("RADAR_PROFILE_SCRIBE_10NM")
+	Line 18: scribe_20nm_param=get_param_handle("RADAR_PROFILE_SCRIBE_20NM")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Systems\radio_controls.lua (4 hits)
+	Line 39: local arc51_freq_XXxxx_display = get_param_handle("ARC51-FREQ-XXxxx")
+	Line 40: local arc51_freq_xxXxx_display = get_param_handle("ARC51-FREQ-xxXxx")
+	Line 41: local arc51_freq_xxxXX_display = get_param_handle("ARC51-FREQ-xxxXX")
+	Line 42: local arc51_freq_preset_display = get_param_handle("ARC51-FREQ-PRESET")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Systems\rwr.lua (15 hits)
+	Line 49: 					signal_h		= get_param_handle("RWR_CONTACT_0" .. i .. "_SIGNAL"),
+	Line 50: 					power_h			= get_param_handle("RWR_CONTACT_0" .. i .. "_POWER"),
+	Line 51: 					general_type_h	= get_param_handle("RWR_CONTACT_0" .. i .. "_GENERAL_TYPE"),
+	Line 58: 				UU	= get_param_handle("ECM_TEST_UPPER_U"),
+	Line 59: 				ULL	= get_param_handle("ECM_TEST_UPPER_LL"),
+	Line 60: 				ULR	= get_param_handle("ECM_TEST_UPPER_LR"),
+	Line 62: 				LUL	= get_param_handle("ECM_TEST_LOWER_UL"),
+	Line 63: 				LUR	= get_param_handle("ECM_TEST_LOWER_UR"),
+	Line 64: 				LLL	= get_param_handle("ECM_TEST_LOWER_LL"),
+	Line 65: 				LLR	= get_param_handle("ECM_TEST_LOWER_LR"),
+	Line 73: --local glare_rwr_light=get_param_handle("D_GLARE_RWR")	-- glare_rwr_light:set(rwr_val)
+	Line 74: local glare_rwr_light=get_param_handle("D_GLARE_OBST")	--glare_obst_light:set(obst_val) --USED ONLY UNTIL PROPPER LIGHT IS IN
+	Line 76: local glare_rwr_param=get_param_handle("D_GLARE_RWR")
+	Line 77: local rwr_status_light_param=get_param_handle("RWR_STATUS_LIGHT")
+	Line 78: local rwr_status_signal_param=get_param_handle("RWR_STATUS_SIGNAL")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Systems\shrike.lua (11 hits)
+	Line 35: shrike_armed_param = get_param_handle("SHRIKE_ARMED")
+	Line 36: shrike_sidewinder_volume = get_param_handle("SHRIKE_SIDEWINDER_VOLUME")
+	Line 44:         elevation_h 	= get_param_handle("RWR_CONTACT_0" .. i .. "_ELEVATION"),       -- elevation of the target relative to the aircraft
+	Line 45:         azimuth_h 		= get_param_handle("RWR_CONTACT_0" .. i .. "_AZIMUTH"),         -- direction of the target relative to the aircraft
+	Line 46:         power_h 		= get_param_handle("RWR_CONTACT_0" .. i .. "_POWER"),           -- strength of signal. use to detect contact and relative distance
+	Line 47:         unit_type_h		= get_param_handle("RWR_CONTACT_0" .. i .. "_UNIT_TYPE"),       -- name of unit
+	Line 49:         general_type_h	= get_param_handle("RWR_CONTACT_0" .. i .. "_GENERAL_TYPE"),    -- (0) EWR, (1) Aircraft, (2) Search Radar
+	Line 50:         priority_h		= get_param_handle("RWR_CONTACT_0" .. i .. "_PRIORITY"),        -- some value which shows how dangerous the threat is to you
+	Line 51:         signal_h		= get_param_handle("RWR_CONTACT_0" .. i .. "_SIGNAL"),          -- (1) Search, (2) Locked, (3) Missile launched
+	Line 52:         time_h			= get_param_handle("RWR_CONTACT_0" .. i .. "_TIME"),            -- time since target data was updated
+	Line 53:         source_h		= get_param_handle("RWR_CONTACT_0" .. i .. "_SOURCE"),          -- unique id of the object
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Systems\sound_system.lua (1 hit)
+	Line 17: local param_catapult_takeoff = get_param_handle("SOUND_CAT_TAKEOFF")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Systems\spoilers.lua (3 hits)
+	Line 61: local current_spoiler=get_param_handle("D_SPOILERS")
+	Line 62: local spoiler_caution=get_param_handle("D_SPOILER_CAUTION")
+	Line 63: local master_test_param = get_param_handle("D_MASTER_TEST")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Systems\trim.lua (8 hits)
+	Line 24: local trim_override_handle = get_param_handle("TRIM_OVERRIDE") -- set by AFCS(autopilot) system when it takes over
+	Line 28: local pitch_trim_handle = get_param_handle("PITCH_TRIM")
+	Line 30: local roll_trim_handle = get_param_handle("ROLL_TRIM")
+	Line 32: local rudder_trim_handle = get_param_handle("RUDDER_TRIM")
+	Line 34: local pitch_trim_gauge_handle = get_param_handle("PITCH_TRIM_GAUGE")
+	Line 36: local yaw_trim_gauge_handle = get_param_handle("YAW_TRIM_GAUGE")
+	Line 38: local pitch_trim_knob_handle = get_param_handle("PITCH_TRIM_KNOB")
+	Line 40: local roll_trim_knob_handle = get_param_handle("ROLL_TRIM_KNOB")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\Systems\weapon_system.lua (13 hits)
+	Line 115: local AWRS_power = get_param_handle("AWRS_POWER")
+	Line 132: local MASTER_TEST_BTN = get_param_handle("D_MASTER_TEST")
+	Line 133: local GLARE_LABS_ANNUN = get_param_handle("D_GLARE_LABS")
+	Line 136: local shrike_armed_param = get_param_handle("SHRIKE_ARMED")
+	Line 199: local shrike_sidewinder_volume = get_param_handle("SHRIKE_SIDEWINDER_VOLUME")
+	Line 201: local cbu1a_quantity = get_param_handle("CBU1A_QTY")
+	Line 202: local cbu2a_quantity = get_param_handle("CBU2A_QTY")
+	Line 203: local cbu2ba_quantity = get_param_handle("CBU2BA_QTY")
+	Line 304: local ir_missile_lock_param = get_param_handle("WS_IR_MISSILE_LOCK")
+	Line 305: local ir_missile_az_param = get_param_handle("WS_IR_MISSILE_TARGET_AZIMUTH")
+	Line 306: local ir_missile_el_param = get_param_handle("WS_IR_MISSILE_TARGET_ELEVATION")
+	Line 307: local ir_missile_des_az_param = get_param_handle("WS_IR_MISSILE_SEEKER_DESIRED_AZIMUTH")
+	Line 308: local ir_missile_des_el_param = get_param_handle("WS_IR_MISSILE_SEEKER_DESIRED_ELEVATION")
+  C:\Users\joshn\Saved Games\DCS.openbeta\Mods\Aircraft\A-4E-C\Cockpit\Scripts\test_device.lua (45 hits)
+	Line 18: local current_mach  = get_param_handle("D_MACH") -- obtain shared parameter (created if not exist ), i.e. databus
+	Line 19: local current_RPM=get_param_handle("D_RPMG")
+	Line 20: --local current_pitch=get_param_handle("D_PITCH")
+	Line 21: local current_IAS=get_param_handle("D_IAS")
+	Line 22: local current_TAS=get_param_handle("D_TAS")
+	Line 23: local current_AOA=get_param_handle("D_AOA")
+	Line 24: local current_G=get_param_handle("current_G")
+	Line 25: local current_HDG=get_param_handle("D_HDG")
+	Line 26: local current_ALT=get_param_handle("D_ALT")
+	Line 27: local current_RALT=get_param_handle("D_RADAR_ALT")
+	Line 28: local current_RALT_valid=get_param_handle("D_RADAR_ALT_VALID")
+	Line 29: --local current_FUEL=get_param_handle("D_FUEL")
+	Line 30: local current_VV=get_param_handle("D_VV")
+	Line 31: local debug_enable=get_param_handle("D_ENABLE")
+	Line 32: local generic1_output=get_param_handle("D_GENERIC1")
+	Line 33: local generic2_output=get_param_handle("D_GENERIC2")
+	Line 34: --local current_test1=get_param_handle("COCKPIT")
+	Line 35: --local current_test2=get_param_handle("COCKPIT2")
+	Line 36: --local current_piper=get_param_handle("WS_GUN_PIPER_AVAILABLE")
+	Line 37: local gunsight_mil_param = get_param_handle("GUNSIGHT_MIL_ANGLE")
+	Line 39: local pitch_trim_handle = get_param_handle("PITCH_TRIM")
+	Line 40: local roll_trim_handle = get_param_handle("ROLL_TRIM")
+	Line 41: local rudder_trim_handle = get_param_handle("RUDDER_TRIM")
+	Line 83:     {"Kp", "", function() return string.format("%.4f",get_param_handle("Kp_DEBUG"):get()) end},
+	Line 84:     {"Ki", "", function() return string.format("%.4f",get_param_handle("Ki_DEBUG"):get()) end},
+	Line 85:     {"Kd", "", function() return string.format("%.4f",get_param_handle("Kd_DEBUG"):get()) end},
+	Line 86:     {"GL", "deg", function() return get_param_handle("GLIDE_SLOPE"):get() end},
+	Line 97:     {"GL", "deg", function() return get_param_handle("GLIDE_SLOPE"):get() end},
+	Line 98:     {"BRK", "pct", function() return get_param_handle("BRAKE_EFF"):get() end},
+	Line 106:     {"IR_LOCK", "", function() return get_param_handle("WS_IR_MISSILE_LOCK"):get() end},
+	Line 107:     {"IR_AZ", "", function() return get_param_handle("WS_IR_MISSILE_TARGET_AZIMUTH"):get() end},
+	Line 108:     {"IR_EL", "", function() return get_param_handle("WS_IR_MISSILE_TARGET_ELEVATION"):get() end},
+	Line 109:     {"IR_D_AZ", "", function() return get_param_handle("WS_IR_MISSILE_SEEKER_DESIRED_AZIMUTH"):get() end},
+	Line 110:     {"IR_D_EL", "", function() return get_param_handle("WS_IR_MISSILE_SEEKER_DESIRED_ELEVATION"):get() end},
+	Line 121:     {"Kp", "", function() return string.format("%.4f",get_param_handle("Kp_DEBUG"):get()) end},
+	Line 122:     {"Ki", "", function() return string.format("%.4f",get_param_handle("Ki_DEBUG"):get()) end},
+	Line 123:     {"Kd", "", function() return string.format("%.4f",get_param_handle("Kd_DEBUG"):get()) end},
+	Line 124:     {"IRae", "", function() az=get_param_handle("WS_IR_MISSILE_TARGET_AZIMUTH"):get() el=get_param_handle("WS_IR_MISSILE_TARGET_ELEVATION"):get() az=math.deg(az) el=math.deg(el) return string.format("%3.1f",az)..","..string.format("%3.1f",el) end},
+	Line 124:     {"IRae", "", function() az=get_param_handle("WS_IR_MISSILE_TARGET_AZIMUTH"):get() el=get_param_handle("WS_IR_MISSILE_TARGET_ELEVATION"):get() az=math.deg(az) el=math.deg(el) return string.format("%3.1f",az)..","..string.format("%3.1f",el) end},
+	Line 125:     {"IR_offset", "", function() az=get_param_handle("WS_IR_MISSILE_TARGET_AZIMUTH"):get() el=get_param_handle("WS_IR_MISSILE_TARGET_ELEVATION"):get() az=math.deg(az) el=math.deg(el)+3 return math.sqrt(az*az+el*el) end},
+	Line 125:     {"IR_offset", "", function() az=get_param_handle("WS_IR_MISSILE_TARGET_AZIMUTH"):get() el=get_param_handle("WS_IR_MISSILE_TARGET_ELEVATION"):get() az=math.deg(az) el=math.deg(el)+3 return math.sqrt(az*az+el*el) end},
+	Line 387:         local hyd_flight_control_ok = get_param_handle("HYD_FLIGHT_CONTROL_OK")
+	Line 388:         local hyd_utility_ok = get_param_handle("HYD_UTILITY_OK")
+	Line 389:         local hyd_brakes_ok = get_param_handle("HYD_BRAKES_OK")
+	Line 688: _G["get_param_handle"] = function: 00000000282C9F20

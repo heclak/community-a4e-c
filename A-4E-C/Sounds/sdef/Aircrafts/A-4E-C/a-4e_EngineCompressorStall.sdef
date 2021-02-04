@@ -1,0 +1,27 @@
+wave = {
+	"Effects/Aircrafts/A-4E-C/a-4e_EngineCompressorStall_01.ogg",
+	"Effects/Aircrafts/A-4E-C/a-4e_EngineCompressorStall_02.ogg",
+	"Effects/Aircrafts/A-4E-C/a-4e_EngineCompressorStall_03.ogg",
+	"Effects/Aircrafts/A-4E-C/a-4e_EngineCompressorStall_04.ogg",
+	"Effects/Aircrafts/A-4E-C/a-4e_EngineCompressorStall_05.ogg",
+	"Effects/Aircrafts/A-4E-C/a-4e_EngineCompressorStall_06.ogg",
+	"Effects/Aircrafts/A-4E-C/a-4e_EngineCompressorStall_07.ogg",
+	"Effects/Aircrafts/A-4E-C/a-4e_EngineCompressorStall_08.ogg",
+	"Effects/Aircrafts/A-4E-C/a-4e_EngineCompressorStall_09.ogg",
+	"Effects/Aircrafts/A-4E-C/a-4e_EngineCompressorStall_10.ogg",
+	"Effects/Aircrafts/A-4E-C/a-4e_EngineCompressorStall_11.ogg"
+}
+inner_radius = 50
+outer_radius = 150
+gain = 25.0
+pitch = 1.0
+detached = true
+listmode = RANDOM
+position = {-0.5, 0, 0}
+
+-- play: engine compressor stall occurs
+-- once
+-- lowpass = 24000.0
+-- exterior events should be be more like explosions
+-- a variant set can be produced for exterior sound events on request
+-- assets have already been purchased to accomplish this

@@ -5,6 +5,7 @@ dofile(LockOn_Options.script_path.."Systems/stores_config.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
+dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 
 local update_time_step = 0.05
 make_default_activity(update_time_step)--update will be called 20 times per second
@@ -14,7 +15,8 @@ startup_print("avionics: load")
 local once_per_second_refresh = 1/update_time_step
 local once_per_second = once_per_second_refresh
 
-local sensor_data = get_base_data()
+local sensor_data = get_efm_sensor_data_overrides()
+local efm_data_bus = get_efm_data_bus()
 
 
 sensor_data.mod_fuel_flow = function()
@@ -504,7 +506,13 @@ function update_fuel_gauge()
         end
     end
     -- establish the fuel amount we want to display
-    fuelQty = showingInternal and fuelQtyInternal or fuelQtyExternal
+    --fuelQty = showingInternal and fuelQtyInternal or fuelQtyExternal
+	
+	fuelQty = efm_data_bus.fm_getInternalFuel()*KG_TO_POUNDS
+	
+	if (showingInternal == false) then
+		fuelQty = efm_data_bus.fm_getExternalFuel()*KG_TO_POUNDS
+	end
 
     -- move needle towards value we're trying to show
     if master_test_param:get()==0 then
@@ -604,7 +612,7 @@ function update_attitude_gyros()
     local pitch = sensor_data.getPitch()*RADIANS_TO_DEGREES
     local roll = sensor_data.getRoll()*RADIANS_TO_DEGREES
     local heading = sensor_data.getMagneticHeading()*RADIANS_TO_DEGREES
-    local slip = sensor_data.getAngleOfSlide()/18.5  -- 18.5 is about the max slide value when applying full rudder
+    local slip = math.deg(sensor_data.getAngleOfSlide())/18.5  -- 18.5 is about the max slide value when applying full rudder
     if slip>1 then
         slip=1
     elseif slip<-1 then
@@ -829,6 +837,7 @@ end
 -- assuming 0.5s toggle
 --
 -- TODO: Connect to flaps lever and flap position, once flap lever is implemented
+
 function update_wheels_light()
     local rpm=sensor_data.getEngineLeftRPM()
     local flaps=get_aircraft_draw_argument_value(9)
@@ -937,8 +946,7 @@ function update_aoa_ladder()
     -- TODO: external approach lights
     local gear = get_aircraft_draw_argument_value(0)
 
-    local aoa_tmp = aoa:get_WMA(math.deg(sensor_data.getAngleOfAttack()))
-
+    local aoa_tmp = aoa:get_WMA(efm_data_bus.fm_getAOAUnits())
     -- ideal AoA is 17-18 units
     --
     -- 18.5 - 30.0 units:   green only
@@ -953,9 +961,9 @@ function update_aoa_ladder()
             aoa_red:set(1)
         else
             if gear > 0 and get_elec_retraction_release_airborne() then
-                aoa_green:set(   (aoa_tmp*2 >= 18.0)                          and 1 or 0 )
-                aoa_yellow:set( ((aoa_tmp*2 >= 16.5) and (aoa_tmp*2 <= 18.5)) and 1 or 0 )
-                aoa_red:set(     (aoa_tmp*2 <= 17.0)                          and 1 or 0 )
+                aoa_green:set(   (aoa_tmp >= 18.0)                          and 1 or 0 )
+                aoa_yellow:set( ((aoa_tmp >= 16.5) and (aoa_tmp <= 18.5)) and 1 or 0 )
+                aoa_red:set(     (aoa_tmp <= 17.0)                          and 1 or 0 )
             else
                 aoa_green:set(0)
                 aoa_yellow:set(0)
@@ -1089,6 +1097,8 @@ local GLARESHIELD_BRIGHTNESS_LOW = 0.5
 -- master update function for all avionics
 ---
 function update()
+	efm_data_bus.fm_setRadarAltitude(sensor_data.getRadarAltitude())
+
     update_altimeter()
     update_accelerometer()
     update_vvi()

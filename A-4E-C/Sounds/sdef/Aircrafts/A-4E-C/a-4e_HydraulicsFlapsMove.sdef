@@ -1,0 +1,13 @@
+wave = "Effects/Aircrafts/A-4E-C/a-4e_HydraulicsFlapsMove.ogg"
+inner_radius = 10
+outer_radius = 100
+gain = 6.0
+release = 0.1
+position = {-0.7, -0.5, 0}
+
+-- play: flaps/spoilers in motion
+-- continuous
+-- cross-fade a-4e_HydraulicsFlapsStop.sdef
+-- lowpass = 24000.0
+-- note: we could use this same sample set for the spoilers.
+-- utilize the various variables (notably position and lowpass filter) in a a-4e_HydraulicsSpoilersMove.sdef

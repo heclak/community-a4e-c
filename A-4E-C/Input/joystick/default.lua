@@ -16,7 +16,7 @@ join(res.keyCommands,{
     ---------------------------------------------
     {down = iCommandPlaneShipTakeOff,                                                name = _('Ship Take Off Position'),           category = {_('General')}},
     -- {down = iCommandCockpitShowPilotOnOff,                                        name = _('Show Pilot Body'),                  category = _('General')},
-    {down = iCommandPlaneWingtipSmokeOnOff,                                          name = _('Smoke - ON/OFF'),                   category = {_('General')}},
+    {down = iCommandPlaneWingtipSmokeOnOff,                                          name = _('Smoke - ON/OFF'), category = {_('General')}},
 
     ---------------------------------------------
     -- View Cockpit -----------------------------
@@ -28,8 +28,10 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- Systems ----------------------------------
     ---------------------------------------------
-    {down = iCommandPlaneEject,                                                      name = _('Eject (3 times)'),                  category = {_('Systems')}},
-    {down = Keys.BrakesOn, up = Keys.BrakesOff,                                      name = _('Wheel Brake - ON/OFF'),                   category = {_('Systems')}},
+    {down = iCommandPlaneEject,                                                     name = _('Eject (3 times)'),                  category = {_('Systems')}},
+    {down = Keys.BrakesOn, up = Keys.BrakesOff,                                      name = _('Wheel Brake - ON/OFF'),             category = {_('Systems')}},
+	{down = Keys.BrakesOnLeft, up = Keys.BrakesOffLeft,							 		  name = _('Wheel Brake Left - ON/OFF'), 		category = {_('Systems')}},
+	{down = Keys.BrakesOnRight, up = Keys.BrakesOffRight,						 		  name = _('Wheel Brake Right - ON/OFF'), 		category = {_('Systems')}},
 
     ---------------------------------------------
     -- Flight Control ---------------------------
@@ -55,6 +57,8 @@ join(res.keyCommands,{
     {down = Keys.AFCSOverride,                                                       name = _('AFCS Override Button'),             category = {_('Stick')}},
 
     {down = Keys.ToggleStick,                                                        name = _('Control Stick - HIDE/SHOW'),        category = {_('Stick')}},
+
+    {down = Keys.nws_engage, up = Keys.nws_disengage,          name = _('Nose Wheel Steering'),              category = {_('Stick')}},
 
     ---------------------------------------------
     -- Throttle Quadrant ------------------------
@@ -126,7 +130,7 @@ join(res.keyCommands,{
     {down = iCommandPlaneGearUp, up = iCommandPlaneGearDown, name = _('Landing Gear Handle - UP else DOWN'), category = {_('Instrument Panel'), _('Special For Joystick')}}, -- for Warthog/HOTAS Toggle
 
     -- Arresting Hook Handle
-    {down = iCommandPlaneHook,                               name = _('Tail Hook Handle - UP/DOWN'),         category = {_('Instrument Panel')}},
+    {down = device_commands.Hook, value_down = 1.0,                              name = _('Tail Hook Handle - UP/DOWN'),         category = {_('Instrument Panel')}},
     --{down = Keys.PlaneHookUp,                              name = _('Tail Hook Up'),                       category = 'Systems'},
     --{down = Keys.PlaneHookDown,                            name = _('Tail Hook Down'),                     category = 'Systems'},
     --{down = Keys.PlaneHookDown, up = Keys.PlaneHookUp,     name = _('Tail Hook DOWN else UP'),             category = 'HOTAS'},
@@ -246,16 +250,16 @@ join(res.keyCommands,{
     {down = Keys.AFCSEngageToggle,                                                      name = _('AFCS Engage Switch - OFF/ENGAGE'),                             category = {_('Left Console'), _('AFCS Panel')}},
     {down = Keys.AFCSAltitudeToggle,                                                    name = _('AFCS Altitude Switch - OFF/ALT'),                              category = {_('Left Console'), _('AFCS Panel')}},
     {down = Keys.AFCSHeadingToggle,                                                     name = _('AFCS Heading Select Switch - OFF/HDG SEL'),                    category = {_('Left Console'), _('AFCS Panel')}},
-    {down = Keys.AFCSHeadingInc,                                                        name = _('AFCS SET Knob - CW/Increase'),                                 category = {_('Left Console'), _('AFCS Panel')}},
-    {down = Keys.AFCSHeadingDec,                                                        name = _('AFCS SET Knob - CCW/Decrease'),                                category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_hdg_set, value_down = 1, cockpit_device_id = devices.AFCS,                name = _('AFCS SET Knob - CW/Increase'),              category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_hdg_set, value_down = -1, cockpit_device_id = devices.AFCS,                name = _('AFCS SET Knob - CCW/Decrease'),            category = {_('Left Console'), _('AFCS Panel')}},
 
     {down = Keys.AFCSHotasPath,                                                         name = _('AFCS Path Mode'),                                              category = {_('Left Console'), _('AFCS Panel')}},
     {down = Keys.AFCSHotasAltHdg,                                                       name = _('AFCS Altitude + Heading Modes'),                               category = {_('Left Console'), _('AFCS Panel')}},
     {down = Keys.AFCSHotasAlt,                                                          name = _('AFCS Altitude Mode'),                                          category = {_('Left Console'), _('AFCS Panel')}},
 
     -- Special commands for Warthog Throttle
-    {down = Keys.AFCSHotasMode, value_down = 1, up = Keys.AFCSHotasMode, value_up = 0,  name = _('AFCS Path Mode else Altitude+Heading (Warthog Throttle)'),     category = {_('Left Console'), _('AFCS Panel'), _('Special For Joystick')}},
-    {down = Keys.AFCSHotasMode, value_down = -1, up = Keys.AFCSHotasMode, value_up = 0, name = _('AFCS Altitude Mode else Altitude+Heading (Warthog Throttle)'), category = {_('Left Console'), _('AFCS Panel'), _('Special For Joystick')}},
+    {down = Keys.AFCSHotasPath, up = Keys.AFCSHotasAltHdg,  name = _('AFCS Path Mode else Altitude+Heading (Warthog Throttle)'),     category = {_('Left Console'), _('AFCS Panel'), _('Special For Joystick')}},
+    {down = Keys.AFCSHotasAlt, up = Keys.AFCSHotasAltHdg, name = _('AFCS Altitude Mode else Altitude+Heading (Warthog Throttle)'), category = {_('Left Console'), _('AFCS Panel'), _('Special For Joystick')}},
     {down = Keys.AFCSHotasEngage,                                                       name = _('AFCS Engage (Warthog Throttle)'),                              category = {_('Left Console'), _('AFCS Panel'), _('Special For Joystick')}},
 
     -- Oxygen and Anti-G Panel
@@ -357,9 +361,9 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- Carrier Catapult -------------------------
     --------------------------------------------- 
-    {down = Keys.catapult_ready, value_down = 1.0, value_up = 0.0, name = _('Catapult Hook-up'), category = _('Flight Control')},
-    {down = Keys.catapult_shoot, value_down = 1.0, value_up = 0.0, name = _('Catapult Shoot'),     category = _('Flight Control')},
-    {down = device_commands.pilot_salute, cockpit_device_id = devices.CARRIER, value_down = 1.0, value_up = 0.0, name = _('Pilot Salute'),     category = _('Communications')},
+    --{down = Keys.catapult_ready, value_down = 1.0, value_up = 0.0, name = _('Catapult Hook-up'), category = _('Flight Control')},
+    --{down = Keys.catapult_shoot, value_down = 1.0, value_up = 0.0, name = _('Catapult Shoot'),     category = _('Flight Control')},
+    {down = iCommandPilotGestureSalute, name = _('Pilot Salute'),     category = _('Communications')},
     
     -- Weapon/CMDS Adjustment
     {down = Keys.ChangeCBU2AQuantity,    value_down = 1, name = _('ALE-29A Programmer CBU-2/A Release Quantity - 1/2/3'),            category = {_('Kneeboard'), _('ALE-29A Programmer')}},
@@ -374,6 +378,9 @@ join(res.keyCommands,{
     {down   = iCommandPlane_Helmet_Brightess_Up  , name = _('Goggle Gain - Inc'),            category = _('Sensors')},
     {down   = iCommandPlane_Helmet_Brightess_Down, name = _('Goggle Gain - Dec'),            category = _('Sensors')},
     
+	-- Radio
+	{down = Keys.radio_ptt   , name = _('Radio Push to Talk (PTT)'), category = _('Radio')},
+	
     -- PID tuning
     {down = Keys.Tune1, value_down = 0.1,          name = _('Tune1: +0.1'),                  category = _('Debug')},
     {down = Keys.Tune1, value_down = -0.1,         name = _('Tune1: -0.1'),                  category = _('Debug')},
@@ -415,11 +422,11 @@ join(res.axisCommands,{
 
     {combos = defaultDeviceAssignmentFor("roll"),   action = iCommandPlaneRoll,                                                             name = _('Roll'),              category = {_('Flight Control')}},
     {combos = defaultDeviceAssignmentFor("pitch"),  action = iCommandPlanePitch,                                                            name = _('Pitch'),             category = {_('Flight Control')}},
-	{combos = defaultDeviceAssignmentFor("rudder"), action = device_commands.rudder_axis_mod,      cockpit_device_id = devices.SFMEXTENDER, name = _('Rudder'),            category = {_('Flight Control')}},
-	{combos = defaultDeviceAssignmentFor("thrust"), action = device_commands.throttle_axis_mod,    cockpit_device_id = devices.CARRIER ,    name = _('Thrust'),            category = {_('Flight Control')}},
-    {                                               action = device_commands.wheelbrake_AXIS,       cockpit_device_id = devices.AIRBRAKES ,  name = _('Wheel Brake'),       category = {_('Systems')}},
-    {                                               action = device_commands.left_wheelbrake_AXIS,  cockpit_device_id = devices.AIRBRAKES ,  name = _('Wheel Brake Left'),  category = {_('Systems')}},
-    {                                               action = device_commands.right_wheelbrake_AXIS, cockpit_device_id = devices.AIRBRAKES ,  name = _('Wheel Brake Right'), category = {_('Systems')}},
+	{combos = defaultDeviceAssignmentFor("rudder"), action = iCommandPlaneRudder,																	name = _('Rudder'),            category = {_('Flight Control')}},
+	{combos = defaultDeviceAssignmentFor("thrust"), action = iCommandPlaneThrustCommon,    														name = _('Thrust'),            category = {_('Flight Control')}},
+    {action = device_commands.wheelbrake_AXIS,       cockpit_device_id = devices.AIRBRAKES ,  name = _('Wheel Brake'),       category = {_('Systems')}},
+    {action = device_commands.left_wheelbrake_AXIS,  name = _('Wheel Brake Left'),  category = {_('Systems')}},
+    {action = device_commands.right_wheelbrake_AXIS,  name = _('Wheel Brake Right'), category = {_('Systems')}},
     
 	--Old throttle
     --{combos = defaultDeviceAssignmentFor("rudder"),  action = iCommandPlaneRudder	   , name = _('Rudder')},
@@ -445,8 +452,6 @@ join(res.axisCommands,{
     {action = device_commands.AWRS_drop_interval_AXIS,      cockpit_device_id = devices.WEAPON_SYSTEM, name = _('DROP INTVL Control'),      category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
     
     --{action = iCommandWheelBrake,		name = _('Wheel Brake')},
-    --{action = iCommandLeftWheelBrake,	name = _('Wheel Brake Left')},
-    --{action = iCommandRightWheelBrake,	name = _('Wheel Brake Right')},
 
     {action = device_commands.GunsightElevationControl_AXIS,   cockpit_device_id = devices.GUNSIGHT,       name = _('Gunsight Elevation Control'),      category = {_('Instrument Panel'), _('Gunsight Panel')}},
 

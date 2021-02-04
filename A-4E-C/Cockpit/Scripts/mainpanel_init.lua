@@ -50,23 +50,26 @@ CanopyLever.input   				= {0, 0.1, 0.9}
 CanopyLever.output  				= {1, 0.4, 0.0}
 CanopyLever.controller 				= controllers.base_gauge_CanopyPos
 
-StickPitch							= CreateGauge()
-StickPitch.arg_number				= 3
-StickPitch.input					= {-100, 100}
+StickPitch							= CreateGauge("parameter")
+StickPitch.arg_number				= 2
+StickPitch.input					= {-1, 1}
 StickPitch.output					= {-1, 1}
-StickPitch.controller				= controllers.base_gauge_StickPitchPosition
+--StickPitch.controller				= controllers.base_gauge_StickPitchPosition
+StickPitch.parameter_name				= "STICK_PITCH"
 
-StickBank							= CreateGauge()
-StickBank.arg_number				= 2
-StickBank.input						= {-100, 100}
+StickBank							= CreateGauge("parameter")
+StickBank.arg_number				= 3
+StickBank.input						= {-1, 1}
 StickBank.output					= {-1, 1}
-StickBank.controller				= controllers.base_gauge_StickRollPosition
+--StickBank.controller				= controllers.base_gauge_StickRollPosition
+StickBank.parameter_name				= "STICK_ROLL"
 
-RudderPedals						= CreateGauge()
+RudderPedals						= CreateGauge("parameter")
 RudderPedals.arg_number				= 4
-RudderPedals.input					= {-100,100}
+RudderPedals.input					= {-1,1}
 RudderPedals.output					= {-1,1}
-RudderPedals.controller				= controllers.base_gauge_RudderPosition
+--RudderPedals.controller				= controllers.base_gauge_RudderPosition
+RudderPedals.parameter_name				= "RUDDER_PEDALS"
 
 LeftBrakePedal						= CreateGauge("parameter")
 LeftBrakePedal.arg_number			= 5
@@ -95,8 +98,8 @@ Landinggearhandle.controller		= controllers.gear_handle_animation
 
 PitchTrim							= CreateGauge("parameter")
 PitchTrim.arg_number				= 870
-PitchTrim.input						= {-1, 1}
-PitchTrim.output					= {-1, 1}
+PitchTrim.input						= {-3, 13}
+PitchTrim.output					= {-0.25, 1}
 PitchTrim.parameter_name			= "PITCH_TRIM_GAUGE"
 
 RollTrim							= CreateGauge("parameter")
@@ -122,7 +125,7 @@ RollTrimKnob.parameter_name				= "ROLL_TRIM_KNOB"
 ---------------------------------------------------------------
 Engine_RPM                          = CreateGauge("parameter")
 Engine_RPM.arg_number               = 520
-Engine_RPM.input                    = {0.0, 103}
+Engine_RPM.input                    = {0.0, 103.0}
 Engine_RPM.output                   = {0.0, 1.0}
 Engine_RPM.parameter_name           = "RPM"
 
@@ -197,13 +200,15 @@ FlapsIndicator                  = CreateGauge("parameter")
 FlapsIndicator.arg_number       = 23
 FlapsIndicator.parameter_name   = "D_FLAPS_IND"
 FlapsIndicator.input            = {0.0, 1.0}    -- percentage down relative to travel limits
-FlapsIndicator.output           = {0.0, 1.0}
+FlapsIndicator.output           = {0.0, 0.95}
 
+--[[
 TailhookLever                  = CreateGauge("parameter")
 TailhookLever.arg_number       = 10
 TailhookLever.parameter_name   = "D_TAIL_HOOK"
 TailhookLever.input            = {0.0, 1.0}
 TailhookLever.output           = {0.0, 1.0}
+]]--
 
 GearNose                        = CreateGauge("parameter")
 GearNose.arg_number             = 20
@@ -643,11 +648,11 @@ APCLight.output                     = {0.0, 1.0}
 APCLight.parameter_name             = "APC_LIGHT"
 
 -- AOA Indicator and Ladder Lights
-AngleOfAttack                       = CreateGauge()
+AngleOfAttack                       = CreateGauge("parameter")
 AngleOfAttack.arg_number            = 840
-AngleOfAttack.input                 = {0, (15/360)*2.0*math.pi} -- gauge shows arbitrary units up to 30 (not degrees or radians), optimum landing AoA should be 17.5units at 3oclock position. base_gauge_AngleOfAttack is in radians though... Need to tweak this input range on the gauge if we can figure out how the arbitrary units correspond to radians
+AngleOfAttack.input                 = {0, 30.0} -- gauge shows arbitrary units up to 30 (not degrees or radians), optimum landing AoA should be 17.5units at 3oclock position. base_gauge_AngleOfAttack is in radians though... Need to tweak this input range on the gauge if we can figure out how the arbitrary units correspond to radians
 AngleOfAttack.output                = {0.0, 1.0}
-AngleOfAttack.controller            = controllers.base_gauge_AngleOfAttack
+AngleOfAttack.parameter_name        = "FM_AOA_UNITS"
 
 AoA_Green                           = CreateGauge("parameter")
 AoA_Green.arg_number                = 850

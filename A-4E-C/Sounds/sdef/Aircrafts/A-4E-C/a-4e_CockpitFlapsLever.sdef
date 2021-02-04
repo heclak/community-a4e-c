@@ -1,0 +1,15 @@
+wave = {
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitFlapsLever_01.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitFlapsLever_02.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitFlapsLever_03.ogg"
+}
+gain = 1.0
+pitch = 1.0
+position = {0.5, -0.2, 0.5}
+listmode = RANDOM
+
+-- play: flaps lever changes position
+-- switch: there are 3 possible positions
+-- once
+-- lowpass = 24000.0
+-- use identical sounds for any change in position

@@ -1,6 +1,7 @@
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
+dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 
 local debug_mode = false -- set to true for debug messages
 
@@ -16,7 +17,8 @@ local dev = GetSelf()
 local update_time_step = 0.02  --50 time per second
 make_default_activity(update_time_step)
 
-local sensor_data = get_base_data()
+local sensor_data = get_efm_sensor_data_overrides()
+local efm_data_bus = get_efm_data_bus()
 
 ---------------------------------
 -- ANIMATION CONSTANTS
@@ -254,7 +256,7 @@ end
 
 function update()
     update_birth()
-    update_brakes()
+    --update_brakes()
     		
 	if (ABRAKE_COMMAND == 0 and ABRAKE_STATE > 0) then
 		ABRAKE_STATE = ABRAKE_STATE - 0.01 -- lower airbrake in increments of 0.01 (50x per second)
@@ -263,7 +265,7 @@ function update()
         end
 	else
 		if (ABRAKE_COMMAND == 1) then
-            local knots = sensor_data.getIndicatedAirSpeed()*1.9438444924574
+            local knots = sensor_data.getTrueAirSpeed()*1.9438444924574
             if knots > speedbrake_max_effective_knots then
                 if knots > speedbrake_blowback_knots then
                     -- blowback pressure relief valve opens
@@ -319,9 +321,10 @@ function update()
     -- used only on the ground. Instead of dumping lift, we will emulate them as
     -- airbrakes (increasing drag)
     local effective_airbrake = 0.333*ABRAKE_STATE + 0.667*spoil -- TODO: determine percentage split between airbrake and spoiler
-    set_aircraft_draw_argument_value(21,effective_airbrake)
-    set_aircraft_draw_argument_value(500,ABRAKE_STATE)
+    --set_aircraft_draw_argument_value(21,effective_airbrake)
+    --set_aircraft_draw_argument_value(500,ABRAKE_STATE)
     set_aircraft_draw_argument_value(WHEELCHOCKS_ANIM_ARG, WHEELCHOCKS_STATE) -- draw wheel chocks if state is 1. 
+	efm_data_bus.fm_setBrakes(ABRAKE_STATE)
 end
 
 function update_birth()

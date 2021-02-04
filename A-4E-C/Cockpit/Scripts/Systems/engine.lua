@@ -4,6 +4,7 @@ dofile(LockOn_Options.common_script_path.."devices_defs.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
+dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 
 function debug_print(x)
     --print_message_to_user(x)
@@ -12,12 +13,13 @@ end
 local update_rate = 0.05
 make_default_activity(update_rate)
 
-local sensor_data = get_base_data()
+local sensor_data = get_efm_sensor_data_overrides()
+local efm_data_bus = get_efm_data_bus()
 
 
 sensor_data.mod_fuel_flow = function()
 	local org_fuel_flow = sensor_data.getEngineLeftFuelConsumption() 
-	if org_fuel_flow > 0.9743 then org_fuel_flow = 0.9743 end
+	--if org_fuel_flow > 0.9743 then org_fuel_flow = 0.9743 end
 	return org_fuel_flow
 end
 
@@ -33,7 +35,7 @@ local engine_heat_stress = get_param_handle("ENGINE_HEAT_STRESS")
 local manual_fuel_control_warn_param = get_param_handle("MANUAL_FUEL_CONTROL_WARN")
 
 local throttle_position = get_param_handle("THROTTLE_POSITION")
-local throttle_position_wma = WMA(0.15, 0)
+local throttle_position_wma = WMA(0.35, 0)
 local iCommandPlaneThrustCommon = 2004
 
 local ENGINE_OFF = 0
@@ -77,17 +79,22 @@ function post_initialize()
 
     local birth = LockOn_Options.init_conditions.birth_place
     if birth=="GROUND_HOT" then
+		 efm_data_bus.fm_setIgnition(1.0)
         engine_state = ENGINE_RUNNING
         throttle_state = THROTTLE_ADJUST
         throttle_clickable_ref:hide(throttle>0.01)
         dev:performClickableAction(device_commands.throttle_click,1,false)
         dev:performClickableAction(device_commands.ENGINE_manual_fuel_shutoff,0,false)
+        throttle_position:set(0)
     elseif birth=="AIR_HOT" then
+        efm_data_bus.fm_setIgnition(1.0)
         engine_state = ENGINE_RUNNING
         throttle_state = THROTTLE_ADJUST
         dev:performClickableAction(device_commands.throttle_click,1,false)
         throttle_clickable_ref:hide(throttle>0.01)
+        throttle_position:set(0)
     elseif birth=="GROUND_COLD" then
+        efm_data_bus.fm_setIgnition(0.0)
         engine_state = ENGINE_OFF
         throttle_state = THROTTLE_OFF
         throttle_clickable_ref:hide(false)
@@ -106,6 +113,8 @@ pilot controlled ground start sequence:
 6. When RPM gets to 55%, request ground power OFF
 --]]
 
+
+
 local start_button_popup_timer = 0
 function SetCommand(command,value)
 	local rpm = sensor_data.getEngineLeftRPM()
@@ -113,16 +122,19 @@ function SetCommand(command,value)
 
     if command==device_commands.push_starter_switch then
         if value==1 then
-            if (engine_state==ENGINE_OFF) and rpm<5 and get_elec_external_power() and EMER_FUEL_SHUTOFF == false then -- initiate ground start procedure
-                dispatch_action(nil,iCommandEnginesStart)
+            if (engine_state==ENGINE_OFF) and get_elec_external_power() and EMER_FUEL_SHUTOFF == false then -- initiate ground start procedure 
+				 --dispatch_action(nil,iCommandEnginesStart)
+				 efm_data_bus.fm_setBleedAir(1.0)
             elseif (engine_state==ENGINE_OFF) and rpm<50 and rpm>10 and get_elec_primary_ac_ok() and get_elec_primary_dc_ok() and throttle_state==THROTTLE_IGN  and EMER_FUEL_SHUTOFF == false  then -- initiate air start
                 engine_state = ENGINE_STARTING
                 dispatch_action(nil,iCommandEnginesStart)
+				 efm_data_bus.fm_setBleedAir(1.0)
             else
                 start_button_popup_timer = 0.3
             end
         end
         if value==0 then
+			 efm_data_bus.fm_setBleedAir(0.0)
             if (engine_state==ENGINE_IGN or engine_state==ENGINE_STARTING) and rpm<50 and get_elec_external_power() then -- abort ground start procedure
                 engine_state=ENGINE_OFF
                 dispatch_action(nil,iCommandEnginesStop)
@@ -145,30 +157,35 @@ function SetCommand(command,value)
 --        dispatch_action(nil, iCommandPlaneThrustCommon, throt)
     elseif command==device_commands.throttle_click then
         -- validate that throttle is not in adjust range
-        if sensor_data.getThrottleLeftPosition() > 0.01 then 
+        if sensor_data.getThrottleLeftPosition() > 0.3 then 
             return
         end
         if value==0 and throttle_state==THROTTLE_ADJUST and throttle<=0.01 then
-            -- click to IGN from adjust
-            throttle_state = THROTTLE_IGN
+           -- click to IGN from adjust
+           throttle_state = THROTTLE_IGN
+			efm_data_bus.fm_setIgnition(1.0)
         elseif value==0 and throttle_state==THROTTLE_OFF then
-            -- click to IGN from OFF
-            throttle_state = THROTTLE_IGN
+           -- click to IGN from OFF
+           throttle_state = THROTTLE_IGN
+			efm_data_bus.fm_setIgnition(1.0)
         elseif value==-1 and throttle_state==THROTTLE_IGN then
-            -- click to OFF from IGN
-            throttle_state = THROTTLE_OFF
-            if rpm>=55 and engine_state == ENGINE_RUNNING then
+           -- click to OFF from IGN
+           throttle_state = THROTTLE_OFF
+			efm_data_bus.fm_setIgnition(0.0)
+           if rpm>=55 and engine_state == ENGINE_RUNNING then
                 debug_print("engine has been turned off")
                 dispatch_action(nil,iCommandEnginesStop)
                 engine_state = ENGINE_OFF
-            end
+           end
         elseif value==1 and throttle_state==THROTTLE_IGN then
-            -- click to ADJUST from IGN
-            throttle_state = THROTTLE_ADJUST
+           -- click to ADJUST from IGN
+           throttle_state = THROTTLE_ADJUST
+			efm_data_bus.fm_setIgnition(1.0)
         end
+		 
     elseif command == device_commands.throttle_click_ITER then
         -- validate that throttle is not in adjust range else cancel action
-        if sensor_data.getThrottleLeftPosition() > 0.01 then
+        if sensor_data.getThrottleLeftPosition() > 0.3 then
             return
         end
         -- value should be +1 or -1
@@ -197,6 +214,7 @@ function SetCommand(command,value)
         if value == 1 then
             dispatch_action(nil,iCommandEnginesStop)
             engine_state = ENGINE_OFF
+			 efm_data_bus.fm_setIgnition(0.0)
             Engine:performClickableAction(device_commands.push_starter_switch,0,false) -- pop up start button
             EMER_FUEL_SHUTOFF = true
             manual_fuel_shutoff_catch_clickable_ref:hide(true)
@@ -216,13 +234,16 @@ function SetCommand(command,value)
         -- print_message_to_user("Fuel Dump "..value)
         if value == 1 then
             -- activate fuel dump
-            dispatch_action(nil, iCommandPlaneFuelOn)
+            efm_data_bus.fm_setDumpingFuel(1.0)
+            --dispatch_action(nil, iCommandPlaneFuelOn)
         elseif value == -1 then
+            efm_data_bus.fm_setDumpingFuel(0.0)
             -- position: emer trans
             -- TODO implement logic
         elseif value == 0 then
+            efm_data_bus.fm_setDumpingFuel(0.0)
             -- position: off
-            dispatch_action(nil, iCommandPlaneFuelOff)
+            --dispatch_action(nil, iCommandPlaneFuelOff)
         end
     elseif command == device_commands.ENGINE_fuel_control_sw then
         -- print_message_to_user("Fuel Control Switch: "..value)
@@ -290,22 +311,15 @@ end
 
 
 
-local rpm_main = get_param_handle("RPM")
+
 local rpm_deci = get_param_handle("RPM_DECI")
 
 function update_rpm()
     -- idle at 55% internal, max 103%
     -- draw .534 at 55%, draw 1.0 at 100%
-    local rpm=sensor_data.getEngineLeftRPM()
+    --local rpm=sensor_data.getEngineLeftRPM()
 
-    if rpm < 55 then
-        rpm_main:set(rpm/1.03)
-    else
-        rpm = rpm - 55
-        rpm = (rpm * 1.0667) + 55 -- scale 55 to 100 input to 102.9% reporting maximum
-        rpm_main:set(rpm)
-    end
-
+	rpm=sensor_data.getEngineLeftRPM()
     rpm=rpm/10.0
     rpm=rpm-math.floor(rpm)
     rpm_deci:set(rpm)
@@ -450,7 +464,8 @@ function update()
 	local rpm = sensor_data.getEngineLeftRPM()
     local throttle = sensor_data.getThrottleLeftPosition()
     local gear = get_aircraft_draw_argument_value(0) -- nose gear
-  
+
+
     update_rpm()
     update_oil_pressure()
     update_pressure_ratio()
@@ -524,12 +539,13 @@ function update()
     if throttle_state == THROTTLE_OFF then
         throttle = -1
     elseif throttle_state == THROTTLE_IGN then
-        throttle = -0.2
+        throttle = -0.7
     elseif throttle_state == THROTTLE_ADJUST then
         local throttle_clickable_ref = get_clickable_element_reference("PNT_80")
         throttle_clickable_ref:hide(throttle>0.01)
     end
-
+	
+	
     local throttle_pos = throttle_position_wma:get_WMA(throttle)
     if prev_throttle_pos ~= throttle_pos then
         if throttle <= 0.01 then
@@ -538,6 +554,7 @@ function update()
         end
         prev_throttle_pos = throttle_pos
     end
+	efm_data_bus.fm_setEngineThrottle(throttle_pos)
     throttle_position:set(throttle_pos)
 end
 

@@ -1,0 +1,12 @@
+wave = "Effects/Aircrafts/A-4E-C/a-4e_HydraulicsGearStop.ogg"
+inner_radius = 20
+outer_radius = 150
+gain = 2.0
+attack = 0.1
+detached = true
+position = {0, -0.5, 0}
+
+-- play: gear motion ends (or maximum position reached)
+-- once
+-- cross-fade a-4e_HydraulicsGearMove.sdef
+-- lowpass = 24000.0

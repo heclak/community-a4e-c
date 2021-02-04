@@ -25,13 +25,15 @@ function SetCommand(command, value)
     end
 end
 
+local main_rpm = get_param_handle("RPM")
+
 function update_hydraulic_state()
     -- only enable hydraulics when engine is running
     -- hydraulic system is powered if engine is turning at IDLE RPM (55%) or greater
     -- Informed by 1-26A
-    engine_rpm = sensor_data.getEngineLeftRPM()
+	engine_rpm = main_rpm:get()
     -- print_message_to_user(engine_rpm)
-    if engine_rpm >= 54.9 then
+    if engine_rpm >= 52.0 then
         hyd_flight_control_ok:set(1)
         hyd_utility_ok:set(1)
         hyd_brakes_ok:set(1)
@@ -69,6 +71,10 @@ function post_initialize()
     conthyd_light_param:set(0)
     utilhyd_light_param:set(0)
     startup_print("hydraulic_system: postinit end")
+	
+	--This is a dirty hack for the rudder not initialising to zero in the EFM for some reason.
+	--2003 is the rudder enum, we just set it to zero for init.
+	dispatch_action(nil, 2003, 0.0)
 end
 
 startup_print("hydraulic_system: load end")

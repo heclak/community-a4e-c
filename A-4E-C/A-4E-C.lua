@@ -5,6 +5,10 @@
 --mount_vfs_liveries_path (current_mod_path.."/Liveries")   -- mounted in entry.lua
 --mount_vfs_texture_path  (current_mod_path.."/Textures")   -- mounted in entry.lua
 
+--EDITING THIS FILE WILL CAUSE THE EFM TO FAIL.
+
+--THIS IS AN EFM ALPHA BUILD PLEASE DO NOT DISTRIBUTE
+
 local KG_TO_POUNDS  = 2.20462
 local POUNDS_TO_KG  = 1/KG_TO_POUNDS
 local FEET_TO_M     = 0.3048
@@ -323,7 +327,7 @@ A_4E_C =  {
     ViewSettings        = ViewSettings,
 
     -- enable A-4 for all countries.  It is CHEAP and easy to maintain
-	Countries = {"Abkhazia","Australia","Austria","Belarus","Belgium","Brazil","Bulgaria","Canada","China","Croatia",
+	Countries = {"Abkhazia","Argentina","Australia","Austria","Belarus","Belgium","Brazil","Bulgaria","Canada","China","Croatia",
                  "Czech Republic","Denmark","Egypt","Finland","France","Georgia","Germany","Greece","Hungary",
                  "India","Insurgents","Iran","Iraq","Israel","Italy","Japan","Kazakhstan","The Netherlands","North Korea",
                  "Norway","Pakistan","Poland","Romania","Russia","Saudi Arabia","Serbia","Slovakia","South Korea",
@@ -390,6 +394,7 @@ A_4E_C =  {
         500, -- model air brake
         501, -- RAT
         499, -- wheel chocks
+		 117, -- stabilizer
 
     },
 	-------------------------
@@ -457,8 +462,9 @@ A_4E_C =  {
 	-----------------------------------------------------------------------
 	----------------- SUSPENSION CODE BEGINS
 	-----------------------------------------------------------------------
-    nose_gear_pos                            = {2.72, -2.38, 0}, -- {2.72, -2.37, 0},    --      2.72,       -2.28,    0
-    main_gear_pos                            = {-0.79, -2.46, 1.18}, -- {-0.79, -2.42, 1.18},    --  0.79,   -2.35,    1.18
+	--[[
+    nose_gear_pos                            = {2.72, -2.78, 0}, -- {2.72, -2.37, 0},    --      2.72,       -2.28,    0
+    main_gear_pos                            = {-0.79, -2.86, 1.18}, -- {-0.79, -2.42, 1.18},    --  0.79,   -2.35,    1.18
     tand_gear_max                            = 0.554,   -- // tangent on maximum yaw angle of front wheel
 
     nose_gear_amortizer_direct_stroke        = 0.05,    -- 1.878 - 1.878, -- down from nose_gear_pos !!!
@@ -472,6 +478,7 @@ A_4E_C =  {
     nose_gear_wheel_diameter                 = 0.441,   -- 0.441, --*
     main_gear_wheel_diameter                 = 0.609,   -- 0.609, --*
     brakeshute_name                          = 0,       -- Landing - brake chute visual shape after separation
+	]]--
 
 	-----------------------------------------------------------------------
 	----------------- SUSPENSION CODE ENDS
@@ -513,7 +520,7 @@ A_4E_C =  {
 			--ejection_order 		 = 2,
 			--role 				 = "pilot",
 			--role_display_name    = _("Pilot"),
-			g_suit 			   =  5 -- I'm assuming there are different levels of suits which black you out at different G's. We should try and experiment with different ones.
+			g_suit 			   =  5.0 -- I'm assuming there are different levels of suits which black you out at different G's. We should try and experiment with different ones.
         }, -- end of [1]
     }, -- end of crew_members
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -1135,6 +1142,7 @@ A_4E_C =  {
     --             [85]    = {critical_damage = 3, args = {135}}, 						-- right wheel
     -- },
 
+
     Damage = verbose_to_dmg_properties(
 	{
         ["NOSE_CENTER"]             = {critical_damage = 3}, -- 0
@@ -1195,6 +1203,7 @@ A_4E_C =  {
         -- ["HOOK"]                    = {critical_damage = 2}, -- 98
 
     }),
+
 
 
     DamageParts =

@@ -1,3 +1,4 @@
+dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
@@ -9,6 +10,8 @@ startup_print("electric_system: load")
 
 local electric_system = GetSelf()
 local dev = electric_system
+
+local efm_data_bus = get_efm_data_bus()
 
 local update_time_step = 0.02 --update will be called 50 times per second
 make_default_activity(update_time_step)
@@ -145,6 +148,9 @@ function update()
 end
 
 function post_initialize()
+
+    str_ptr = string.sub(tostring(dev.link),10)
+    efm_data_bus.fm_setElecPTR(str_ptr)
     startup_print("electric_system: postinit start")
 
     electric_system:AC_Generator_1_on(true) -- A-4E generator is automatic and cannot be controlled by switches
