@@ -37,7 +37,7 @@ function Sound_Player:updateOnce()
         if self.param:get() >= 1.0 then
             if not self.played then
                 self.sound:play_once()
-                print_message_to_user("Playing Sound "..self.param_string.." once.")
+                --print_message_to_user("Playing Sound "..self.param_string.." once.")
                 self.played = true
             end
         elseif self.param:get() <= 0.0 and self.played then
@@ -50,7 +50,7 @@ function Sound_Player:updateContinuous()
     if self.param:get() >= 1.0 then
         if not self.sound:is_playing() then
             self.sound:play_continue()
-            print_message_to_user("Playing Sound "..self.param_string.." continuous.")
+            --print_message_to_user("Playing Sound "..self.param_string.." continuous.")
             self.played = true
         end
     elseif self.param:get() <= 0.0 and self.played then
@@ -62,7 +62,7 @@ end
 function Sound_Player:updateAlways()
     if not self.sound:is_playing() then
         self.sound:play_continue()
-        print_message_to_user("Playing Sound "..self.param_string.." always.")
+        --print_message_to_user("Playing Sound "..self.param_string.." always.")
     end
 
     local desiredVolume = self.param:get()
