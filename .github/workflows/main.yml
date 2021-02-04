@@ -1,4 +1,6 @@
 on:
+  workflow_dispatch:
+  
   push:
     # Sequence of patterns matched against refs/tags
     tags:
