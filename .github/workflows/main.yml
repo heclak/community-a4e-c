@@ -11,7 +11,7 @@ jobs:
     name: Upload Release Asset
     runs-on: ubuntu-latest
     env:
-      RELEASE_VERSION: $(echo ${GITHUB_REF:10})
+      RELEASE_VERSION: ${GITHUB_REF:10}
     steps:
       - name: Checkout code
         uses: actions/checkout@master
