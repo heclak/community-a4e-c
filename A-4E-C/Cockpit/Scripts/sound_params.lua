@@ -34,6 +34,8 @@ sound_params = {
     snd_inst_c_gear_end_out = get_param_handle("SND_INST_C_GEAR_END_OUT"),
 
     --SLATS
-    snd_inst_l_slat = get_param_handle("SND_INST_L_SLAT"),
-    snd_inst_r_slat = get_param_handle("SND_INST_R_SLAT")
+    snd_inst_l_slat_in = get_param_handle("SND_INST_L_SLAT_IN"),
+    snd_inst_l_slat_out = get_param_handle("SND_INST_L_SLAT_OUT"),
+    snd_inst_r_slat_in = get_param_handle("SND_INST_R_SLAT_IN"),
+    snd_inst_r_slat_out = get_param_handle("SND_INST_R_SLAT_OUT"),
 }

@@ -23,17 +23,30 @@ function update()
 	slatR = efm_data_bus.fm_getSlatRight()
 	--print_message_to_user("L "..tostring(slatL).." R "..tostring(slatR))
 
-	if slatL <= SLAT_MIN_SOUND or slatL >= SLAT_MAX_SOUND then
-		sound_params.snd_inst_l_slat:set(1.0)
+	if slatL <= SLAT_MIN_SOUND then
+		sound_params.snd_inst_l_slat_in:set(1.0)
 	else
-		sound_params.snd_inst_l_slat:set(0.0)
+		sound_params.snd_inst_l_slat_in:set(0.0)
+	end
+	
+	if slatL >= SLAT_MAX_SOUND then
+		sound_params.snd_inst_l_slat_out:set(1.0)
+	else
+		sound_params.snd_inst_l_slat_out:set(0.0)
 	end
 
-	if slatR <= SLAT_MIN_SOUND or slatR >= SLAT_MAX_SOUND then
-		sound_params.snd_inst_r_slat:set(1.0)
+	if slatR <= SLAT_MIN_SOUND then
+		sound_params.snd_inst_r_slat_in:set(1.0)
 	else
-		sound_params.snd_inst_r_slat:set(0.0)
+		sound_params.snd_inst_r_slat_in:set(0.0)
 	end
+	
+	if slatR >= SLAT_MAX_SOUND then
+		sound_params.snd_inst_r_slat_out:set(1.0)
+	else
+		sound_params.snd_inst_r_slat_out:set(0.0)
+	end
+
 
 	
 	local t_ias = sensor_data.getIndicatedAirSpeed()*1.9438444924574

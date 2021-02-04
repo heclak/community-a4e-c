@@ -71,8 +71,11 @@ function post_initialize()
 
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowSpeedbrake", "FM_BRAKES", SOUND_ALWAYS, 26.0, 77.0),
 
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitSlatsLeft", "SND_INST_L_SLAT", SOUND_ONCE),
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitSlatsRight", "SND_INST_R_SLAT", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitSlatsLeftIn", "SND_INST_L_SLAT_IN", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitSlatsLeftOut", "SND_INST_L_SLAT_OUT", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitSlatsRightIn", "SND_INST_R_SLAT_IN", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitSlatsRightOut", "SND_INST_R_SLAT_OUT", SOUND_ONCE),
+
     }
 
 
