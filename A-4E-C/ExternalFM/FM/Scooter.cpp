@@ -193,6 +193,9 @@ void ed_fm_simulate(double dt)
 	s_interface->setAOAUnits( rawAOAToUnits(s_state->getAOA()) );
 	s_interface->setValidSolution( s_avionics->getComputer().getSolution() );
 	s_interface->setTargetSet( s_avionics->getComputer().getTargetSet() );
+
+	s_interface->setLeftSlat( s_airframe->getSlatLPosition() );
+	s_interface->setRightSlat( s_airframe->getSlatRPosition() );
 }
 
 void ed_fm_set_atmosphere(

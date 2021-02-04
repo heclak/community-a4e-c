@@ -62,6 +62,9 @@ local fm_l_tank_capacity = get_param_handle("FM_L_TANK_CAPACITY")
 local fm_c_tank_capacity = get_param_handle("FM_C_TANK_CAPACITY")
 local fm_r_tank_capacity = get_param_handle("FM_R_TANK_CAPACITY")
 
+local fm_slat_left = get_param_handle("FM_SLAT_LEFT")
+local fm_slat_right = get_param_handle("FM_SLAT_RIGHT")
+
 local tanks = {
     [1] = fm_l_tank_capacity,
     [2] = fm_c_tank_capacity,
@@ -229,6 +232,14 @@ function fm_getRollInput()
 	return fm_stick_input_roll:get()
 end
 
+function fm_getSlatLeft()
+    return fm_slat_left:get()
+end
+
+function fm_getSlatRight()
+    return fm_slat_right:get()
+end
+
 fm_setCockpitShake(2.0 * optionsData_cockpitShake/100.0)
 
 function get_efm_data_bus()
@@ -270,7 +281,9 @@ function get_efm_data_bus()
     efm_data_bus.fm_getValidSolution = fm_getValidSolution
     efm_data_bus.fm_getTargetSet = fm_getTargetSet
 	efm_data_bus.fm_getPitchInput = fm_getPitchInput
-	efm_data_bus.fm_getRollInput = fm_getRollInput
+    efm_data_bus.fm_getRollInput = fm_getRollInput
+    efm_data_bus.fm_getSlatLeft = fm_getSlatLeft
+    efm_data_bus.fm_getSlatRight = fm_getSlatRight
     return efm_data_bus
    
 end

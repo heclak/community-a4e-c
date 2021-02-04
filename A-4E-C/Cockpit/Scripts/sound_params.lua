@@ -12,9 +12,28 @@ sound_params = {
     snd_cont_gear_mov = get_param_handle("SND_CONT_GEAR_MOV"),
     snd_inst_gear_stop = get_param_handle("SND_INST_GEAR_STOP"),
 
+    --GEAR
+    --Pod
     snd_inst_l_gear_pod_open = get_param_handle("SND_INST_L_GEAR_POD_OPEN"),
     snd_inst_l_gear_pod_close = get_param_handle("SND_INST_L_GEAR_POD_CLOSE"),
 
     snd_inst_r_gear_pod_open = get_param_handle("SND_INST_R_GEAR_POD_OPEN"),
     snd_inst_r_gear_pod_close = get_param_handle("SND_INST_R_GEAR_POD_CLOSE"),
+
+    snd_inst_c_gear_pod_open = get_param_handle("SND_INST_C_GEAR_POD_OPEN"),
+    snd_inst_c_gear_pod_close = get_param_handle("SND_INST_C_GEAR_POD_CLOSE"),
+
+    --Stops
+    snd_inst_l_gear_end_in = get_param_handle("SND_INST_L_GEAR_END_IN"),
+    snd_inst_l_gear_end_out = get_param_handle("SND_INST_L_GEAR_END_OUT"),
+
+    snd_inst_r_gear_end_in = get_param_handle("SND_INST_R_GEAR_END_IN"),
+    snd_inst_r_gear_end_out = get_param_handle("SND_INST_R_GEAR_END_OUT"),
+
+    snd_inst_c_gear_end_in = get_param_handle("SND_INST_C_GEAR_END_IN"),
+    snd_inst_c_gear_end_out = get_param_handle("SND_INST_C_GEAR_END_OUT"),
+
+    --SLATS
+    snd_inst_l_slat = get_param_handle("SND_INST_L_SLAT"),
+    snd_inst_r_slat = get_param_handle("SND_INST_R_SLAT")
 }

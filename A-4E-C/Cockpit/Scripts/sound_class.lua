@@ -20,6 +20,7 @@ function Sound_Player.new(sndhost, sound_file, param, type, min_speed, max_speed
     self.sound = sndhost:create_sound(sound_file)
     self.type = type or SOUND_ONCE
     self.param = get_param_handle(param)
+    self.param_string = param
     self.played = false
     self.min_speed = min_speed or nil
     self.max_speed = max_speed or nil
@@ -36,7 +37,7 @@ function Sound_Player:updateOnce()
         if self.param:get() >= 1.0 then
             if not self.played then
                 self.sound:play_once()
-                --print_message_to_user("Playing Sound")
+                print_message_to_user("Playing Sound "..self.param_string.." once.")
                 self.played = true
             end
         elseif self.param:get() <= 0.0 and self.played then
@@ -49,6 +50,7 @@ function Sound_Player:updateContinuous()
     if self.param:get() >= 1.0 then
         if not self.sound:is_playing() then
             self.sound:play_continue()
+            print_message_to_user("Playing Sound "..self.param_string.." continuous.")
             self.played = true
         end
     elseif self.param:get() <= 0.0 and self.played then
@@ -60,10 +62,10 @@ end
 function Sound_Player:updateAlways()
     if not self.sound:is_playing() then
         self.sound:play_continue()
+        print_message_to_user("Playing Sound "..self.param_string.." always.")
     end
 
-    --print_message_to_user(tostring(self:airspeedGain()))
-    local desiredVolume = self.param:get()--math.pow(self.param:get(), self.factor)
+    local desiredVolume = self.param:get()
     if self.fade ~= 0.0 then
         local diff = desiredVolume - self.volume
         local dv = 1.0 / self.fade

@@ -111,6 +111,10 @@ public:
 		m_rTankCapacity = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_R_TANK_CAPACITY" );
 
 		m_sndCockpitRattle = m_api.pfn_ed_cockpit_get_parameter_handle( "SND_ALWS_COCKPIT_RATTLE" );
+
+		m_leftSlat = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_SLAT_LEFT" );
+		m_rightSlat = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_SLAT_RIGHT" );
+
 	}
 
 	inline void coldInit()
@@ -325,6 +329,16 @@ public:
 				//_set_radio(ptr, true);
 			}
 		}
+	}
+
+	inline void setLeftSlat( double number )
+	{
+		setParamNumber( m_leftSlat, number );
+	}
+
+	inline void setRightSlat( double number )
+	{
+		setParamNumber( m_rightSlat, number );
 	}
 
 	inline void setCockpitRattle( double number )
@@ -633,6 +647,9 @@ private:
 	void* m_rTankCapacity = NULL;
 
 	void* m_sndCockpitRattle = NULL;
+
+	void* m_leftSlat = NULL;
+	void* m_rightSlat = NULL;
 
 };
 

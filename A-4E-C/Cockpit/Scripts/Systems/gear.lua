@@ -236,6 +236,51 @@ function update_gear()
 
     sound_params.snd_inst_l_gear_pod_open:set(0.0)
     sound_params.snd_inst_l_gear_pod_close:set(0.0)
+
+    sound_params.snd_inst_c_gear_pod_open:set(0.0)
+    sound_params.snd_inst_c_gear_pod_close:set(0.0)
+
+    sound_params.snd_inst_l_gear_end_in:set(0.0)
+    sound_params.snd_inst_l_gear_end_out:set(0.0)
+
+    sound_params.snd_inst_r_gear_end_in:set(0.0)
+    sound_params.snd_inst_r_gear_end_out:set(0.0)
+
+    sound_params.snd_inst_c_gear_end_in:set(0.0)
+    sound_params.snd_inst_c_gear_end_out:set(0.0)
+
+    if GEAR_NOSE_STATE == GEAR_TARGET then
+        if GEAR_TARGET == 1.0 then
+            sound_params.snd_inst_c_gear_end_out:set(1.0)
+        else
+            sound_params.snd_inst_c_gear_end_in:set(1.0)
+        end
+    end
+
+    if GEAR_NOSE_STATE == GEAR_TARGET then
+        if GEAR_TARGET == 1.0 then
+            sound_params.snd_inst_c_gear_end_out:set(1.0)
+        else
+            sound_params.snd_inst_c_gear_end_in:set(1.0)
+        end
+    end
+
+    if GEAR_LEFT_STATE == GEAR_TARGET then
+        if GEAR_TARGET == 1.0 then
+            sound_params.snd_inst_l_gear_end_out:set(1.0)
+        else
+            sound_params.snd_inst_l_gear_end_in:set(1.0)
+        end
+    end
+
+    if GEAR_RIGHT_STATE == GEAR_TARGET then
+        if GEAR_TARGET == 1.0 then
+            sound_params.snd_inst_r_gear_end_out:set(1.0)
+        else
+            sound_params.snd_inst_r_gear_end_in:set(1.0)
+        end
+    end
+
     
 
     -- gear movement is dependent on operational utility hydraulics.
@@ -246,13 +291,28 @@ function update_gear()
     if get_hyd_utility_ok() or GEAR_ERR == 1 then
         -- make primary nosegear adjustments if needed
         if GEAR_TARGET ~= GEAR_NOSE_STATE then
+
+            if math.abs(GEAR_NOSE_STATE - GEAR_TARGET) < gear_main_increment then
+                GEAR_NOSE_STATE = GEAR_TARGET
+            end
+
             if GEAR_NOSE_STATE < GEAR_TARGET or GEAR_ERR==1 then
+
+                if GEAR_TARGET - GEAR_NOSE_STATE >= GEAR_POD_OPEN then
+                    sound_params.snd_inst_c_gear_pod_open:set(1.0)
+                end
+
                 GEAR_NOSE_STATE = GEAR_NOSE_STATE + gear_nose_extend_increment
                 gear_in_transit = true
                 if GEAR_ERR == 1 then -- extend more quickly (drop by gravity and ram air pressure)
                     GEAR_NOSE_STATE = GEAR_NOSE_STATE + 2*gear_nose_extend_increment
                 end
-            else
+            elseif GEAR_NOSE_STATE > GEAR_TARGET then
+
+                if GEAR_NOSE_STATE - GEAR_TARGET <= GEAR_POD_CLOSE then
+                    sound_params.snd_inst_c_gear_pod_close:set(1.0)
+                end
+
                 if GEAR_ERR == 0 and allowRetract then
                     GEAR_NOSE_STATE = GEAR_NOSE_STATE - gear_nose_retract_increment
                     gear_in_transit = true

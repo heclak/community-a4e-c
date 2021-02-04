@@ -614,7 +614,7 @@ void Scooter::FlightModel::calculateShake(double& dt)
 
 	if (m_shakeDuration.getState())
 	{
-		shakeInstGear += 1.0;
+		shakeInstGear += 0.5;
 	}
 	//printf(gearShake ? "true" : "false");
 	//printf(prevGearShake ? "true" : "false");

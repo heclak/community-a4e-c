@@ -38,24 +38,41 @@ function post_initialize()
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsCanopyCloseSeal", "SND_INST_CANOPY_CLOSE_STOP", SOUND_ONCE),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsCanopyOpenStop", "SND_INST_CANOPY_OPEN_STOP", SOUND_ONCE),
 
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearPodClose", "SND_INST_L_GEAR_POD_CLOSE", SOUND_ONCE),
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearPodOpen", "SND_INST_L_GEAR_POD_OPEN", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearPodClose_L", "SND_INST_L_GEAR_POD_CLOSE", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearPodOpen_L", "SND_INST_L_GEAR_POD_OPEN", SOUND_ONCE),
+
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearPodClose_R", "SND_INST_R_GEAR_POD_CLOSE", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearPodOpen_R", "SND_INST_R_GEAR_POD_OPEN", SOUND_ONCE),
+
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearPodClose_C", "SND_INST_C_GEAR_POD_CLOSE", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearPodOpen_C", "SND_INST_C_GEAR_POD_OPEN", SOUND_ONCE),
+
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearEndIn_L", "SND_INST_L_GEAR_END_IN", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearEndOut_L", "SND_INST_L_GEAR_END_OUT", SOUND_ONCE),
+
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearEndIn_R", "SND_INST_R_GEAR_END_IN", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearEndOut_R", "SND_INST_R_GEAR_END_OUT", SOUND_ONCE),
+
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearEndIn_C", "SND_INST_C_GEAR_END_IN", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearEndOut_C", "SND_INST_C_GEAR_END_OUT", SOUND_ONCE),
 
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearMove", "SND_CONT_GEAR_MOV", SOUND_CONTINUOUS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearStop", "SND_INST_GEAR_STOP", SOUND_ONCE),
 
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearPodClose", "SND_INST_R_GEAR_POD_CLOSE", SOUND_ONCE),
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearPodOpen", "SND_INST_R_GEAR_POD_OPEN", SOUND_ONCE),
+        
 
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowGear", "FM_GEAR_NOSE", SOUND_ALWAYS, 20.5, 62.0),
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowGear", "FM_GEAR_LEFT", SOUND_ALWAYS, 20.5, 62.0),
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowGear", "FM_GEAR_RIGHT", SOUND_ALWAYS, 20.5, 62.0),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowGear_C", "FM_GEAR_NOSE", SOUND_ALWAYS, 20.5, 62.0),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowGear_L", "FM_GEAR_LEFT", SOUND_ALWAYS, 20.5, 62.0),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowGear_R", "FM_GEAR_RIGHT", SOUND_ALWAYS, 20.5, 62.0),
 
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowSpoiler", "FM_SPOILERS", SOUND_ALWAYS, 18.0, 51.5),
 
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowSpoiler", "FM_FLAPS", SOUND_ALWAYS, 18.0, 51.5),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowFlaps", "FM_FLAPS", SOUND_ALWAYS, 18.0, 51.5),
 
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowSpeedbrake", "FM_BRAKES", SOUND_ALWAYS, 26.0, 77.0),
+
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitSlatsLeft", "SND_INST_L_SLAT", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitSlatsRight", "SND_INST_R_SLAT", SOUND_ONCE),
     }
 
 
