@@ -1,0 +1,32 @@
+wave = {
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitSlats_01.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitSlats_02.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitSlats_03.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitSlats_04.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitSlats_05.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitSlats_06.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitSlats_07.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitSlats_08.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitSlats_09.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitSlats_10.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitSlats_11.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitSlats_12.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitSlats_13.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitSlats_14.ogg"
+}
+inner_radius = 50
+outer_radius = 150
+gain = 25.0
+pitch = 1.0
+position = {0.5, -0.5, 0.7}
+pitch_random = 0.05
+gain_random = 0.05
+detached = true
+listmode = RANDOM
+
+-- play: slats on right wing reach minimum position
+-- once
+-- lowpass = 24000.0
+-- ensure this does not trigger too frequently:
+-- trigger as the animation enters a set range,
+-- e.g., entering the top or bottom 5%
