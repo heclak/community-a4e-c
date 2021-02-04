@@ -14,9 +14,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@master
       - name: Set env
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-        run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
+        env: 
+          name: RELEASE_VERSION::$(echo ${GITHUB_REF:10})
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
           mkdir -p Community_A-4E-C_${{ env.RELEASE_VERSION }}/Mods/aircraft/
