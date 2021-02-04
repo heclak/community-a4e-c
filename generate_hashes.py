@@ -65,7 +65,7 @@ def normalise_file_endings(file):
         text = fileRead.read()
         fileRead.close()
 
-        text = text.replace('\n', '\r\n')
+        text = text.replace('\r\n','\n')
 
         fileWrite = open(file, "wb+")
         if fileWrite:
