@@ -23,10 +23,10 @@ pitch_random = 0.05
 gain_random = 0.05
 detached = true
 listmode = RANDOM
+lowpass = 18000.0
 
--- play: slats on left wing reach minimum or maximum position
+-- play: slats on left wing reach minimum position
 -- once
--- lowpass = 24000.0
 -- ensure this does not trigger too frequently:
 -- trigger as the animation enters a set range,
 -- e.g., entering the top or bottom 5%
