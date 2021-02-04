@@ -63,7 +63,7 @@
 
 #define d_CDialpha {0.025, 0.2, 0.4}
 #define c_CDialphaMin 0.297
-#define c_CDialphaMax 0.0
+#define c_CDialphaMax 0.454
 
 
 #define c_fuelToHPOmegaMin 0.0997972712713
