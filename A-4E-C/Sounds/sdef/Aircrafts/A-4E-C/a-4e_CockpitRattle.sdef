@@ -1,12 +1,13 @@
 wave = "Effects/Aircrafts/A-4E-C/a-4e_CockpitRattle.ogg"
 inner_radius = 10
 outer_radius = 150
-gain = 1.0
+gain = 0.9
 attack = 0.1
+release = 0.25
+lowpass = 24000.0
 
 -- play: cockpit is shaking
 -- continuous
--- lowpass = 24000.0
 -- to ensure this sound is unique each time it is heard,
 -- it should play in-flight continuously, silently,
 -- manipulating gain value when the event triggers

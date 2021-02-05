@@ -1,9 +1,9 @@
 wave = "Effects/Aircrafts/A-4E-C/a-4e_HydraulicsGearEndOut_C.ogg"
 inner_radius = 20
 outer_radius = 150
-gain = 6.0
+gain = 4.5
 detached = true
-position = {1.5, -1.5, 0}
+position = {1.5, -2, 0}
 pitch_random = 0.05
 gain_random = 0.05
 

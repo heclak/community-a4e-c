@@ -1,10 +1,10 @@
 wave = "Effects/Aircrafts/A-4E-C/a-4e_HydraulicsFlapsStop.ogg"
 inner_radius = 10
 outer_radius = 100
-gain = 1.0
+gain = 8.5
 attack = 0.1
 detached = true
-position = {-1, 0, 0}
+position = {-1.5, 0, 0}
 pitch_random = 0.05
 gain_random = 0.05
 
