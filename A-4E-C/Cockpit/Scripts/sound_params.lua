@@ -38,4 +38,12 @@ sound_params = {
     snd_inst_l_slat_out = get_param_handle("SND_INST_L_SLAT_OUT"),
     snd_inst_r_slat_in = get_param_handle("SND_INST_R_SLAT_IN"),
     snd_inst_r_slat_out = get_param_handle("SND_INST_R_SLAT_OUT"),
+
+    --SPEEDBRAKE AND TAILHOOK HYDRAULICS
+    --snd_cont_hydraulic_mov = get_param_handle("SND_CONT_HYD_MOV"),
+    --snd_inst_hydraulic_stop = get_param_handle("SND_INST_HYD_STOP"),
+
+    --REFUELING
+    --snd_cont_fuel_intake = get_param_handle("SND_CONT_FUEL_INTAKE"),
+
 }
