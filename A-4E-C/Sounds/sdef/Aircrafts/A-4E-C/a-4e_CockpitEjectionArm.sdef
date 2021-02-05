@@ -4,7 +4,7 @@ outer_radius = 4
 position = {0.5, -0.2, 0.5}
 detached = true
 
--- play: seat ejection lever armed
+-- play: harness lever armed
 -- switch: a-4e_CockpitEjectiondDearm.sdef
 -- once
 -- lowpass = 24000.0
