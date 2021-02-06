@@ -6,6 +6,7 @@ dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
+dofile(LockOn_Options.script_path.."sound_params.lua") 
 
 local update_time_step = 0.05
 make_default_activity(update_time_step)--update will be called 20 times per second
@@ -46,6 +47,16 @@ local iCommandPlaneEject = 83
 
 -- Variables
 --local ias = get_param_handle("D_IAS")
+
+-----------------------------------------------------------------------------
+-- AVIONICS SUITE POWER-UP WHINE
+function update_avionics_power()
+    if get_elec_primary_ac_ok() and get_elec_external_power() then
+        sound_params.snd_inst_avionics_whine:set(1.0)
+    else
+        sound_params.snd_inst_avionics_whine:set(0.0)
+    end
+end
 
 -----------------------------------------------------------------------------
 -- AN/AJB-3A All-Attitude Indicator (gauge #19)
@@ -1099,6 +1110,7 @@ local GLARESHIELD_BRIGHTNESS_LOW = 0.5
 function update()
 	efm_data_bus.fm_setRadarAltitude(sensor_data.getRadarAltitude())
 
+    update_avionics_power()
     update_altimeter()
     update_accelerometer()
     update_vvi()
