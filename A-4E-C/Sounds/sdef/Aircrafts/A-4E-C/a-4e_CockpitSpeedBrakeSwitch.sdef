@@ -3,7 +3,7 @@ wave = {
 "Effects/Aircrafts/A-4E-C/a-4e_CockpitSpeedBrakeSwitch_02.ogg",
 "Effects/Aircrafts/A-4E-C/a-4e_CockpitSpeedBrakeSwitch_03.ogg"
 }
-gain = 0.5
+gain = 1.5
 pitch = 1.0
 pitch_random = 0.05
 gain_random = 0.1

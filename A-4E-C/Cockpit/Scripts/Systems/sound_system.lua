@@ -84,7 +84,7 @@ function post_initialize()
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearStop", "SND_INST_GEAR_STOP", SOUND_ONCE),
         --supplemental
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsMove", "SND_CONT_HYD_MOV", SOUND_CONTINUOUS),
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsStop", "SND_CONT_HYD_STOP", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsStop", "SND_INST_HYD_STOP", SOUND_ONCE),
 
     }
 

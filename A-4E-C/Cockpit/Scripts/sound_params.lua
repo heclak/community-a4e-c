@@ -2,8 +2,9 @@ sound_params = {
 
     --ENVIRONMENTAL
     -- engine
-    snd_inst_avionics_whine = get_param_handle("SND_INST_ENGINE_IGNITER"),
-    snd_inst_engine_igniter = get_param_handle("SND_INST_AVIONICS_WHINE"),
+    --TODO:
+    snd_inst_avionics_whine = get_param_handle("SND_INST_AVIONICS_WHINE"),
+    snd_inst_engine_igniter = get_param_handle("SND_INST_ENGINE_IGNITER"),
     --gear pod doors
     snd_inst_l_gear_pod_open = get_param_handle("SND_INST_L_GEAR_POD_OPEN"),
     snd_inst_l_gear_pod_close = get_param_handle("SND_INST_L_GEAR_POD_CLOSE"),
@@ -19,6 +20,7 @@ sound_params = {
     snd_inst_c_gear_end_in = get_param_handle("SND_INST_C_GEAR_END_IN"),
     snd_inst_c_gear_end_out = get_param_handle("SND_INST_C_GEAR_END_OUT"),
     --refueling
+    --TODO:
     snd_cont_fuel_intake = get_param_handle("SND_CONT_FUEL_INTAKE"),
     --slats
     snd_inst_l_slat_in = get_param_handle("SND_INST_L_SLAT_IN"),
@@ -41,6 +43,7 @@ sound_params = {
     snd_cont_gear_mov = get_param_handle("SND_CONT_GEAR_MOV"),
     snd_inst_gear_stop = get_param_handle("SND_INST_GEAR_STOP"),
     --supplemental (speedbrake or tailhook)
+    --TODO:
     snd_cont_hydraulic_mov = get_param_handle("SND_CONT_HYD_MOV"),
     snd_inst_hydraulic_stop = get_param_handle("SND_INST_HYD_STOP"),
 

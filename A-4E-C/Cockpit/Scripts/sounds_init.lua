@@ -18,8 +18,8 @@ sounds[KNOBCLICK_RIGHT_AFT] = {"Aircrafts/A-4E-C/knob_ra"}
 sounds[KNOBCLICK_MID_FWD] = {"Aircrafts/A-4E-C/knob_mf"}
 sounds[PUSHPRESS] = {"Aircrafts/A-4E-C/pushpress"}
 sounds[PUSHRELEASE] = {"Aircrafts/A-4E-C/pushrelease"}
---2021 ONE-SHOT SOUNDS
---clickables be sure to (define in /cockpit/scripts/sounds.lua)
+--declarations match sounds.lua
+--assign events in clickabledata.lua
 sounds[CANOPY_LEVER_OPEN] = {"Aircrafts/A-4E-C/a-4e_CockpitCanopyLeverOpen"}
 sounds[CANOPY_LEVER_CLOSE] = {"Aircrafts/A-4E-C/a-4e_CockpitCanopyLeverClose"}
 sounds[COCKPIT_ILLUM_POT] = {"Aircrafts/A-4E-C/a-4e_CockpitIllumPot"}
@@ -36,16 +36,12 @@ sounds[EMER_MFC_PULL] = {"Aircrafts/A-4E-C/a-4e_CockpitEmerMFCOut"}
 sounds[EMER_MFC_RELEASE] = {"Aircrafts/A-4E-C/a-4e_CockpitEmerMFCIn"}
 sounds[EMER_GEN_PULL] = {"Aircrafts/A-4E-C/a-4e_CockpitEmerGenOut"}
 sounds[EMER_GEN_RELEASE] = {"Aircrafts/A-4E-C/a-4e_CockpitEmerGenIn"}
-sounds[RADAR_SCREEN_DOWN] = {"Aircrafts/A-4E-C/a-4e_CockpitRadarScreenCoverDown"}
-sounds[RADAR_SCREEN_UP] = {"Aircrafts/A-4E-C/a-4e_CockpitRadarScreenCoverUp"}
+sounds[FLAPS_LEVER] = {"Aircrafts/A-4E-C/a-4e_CockpitFlapsLever"}
+sounds[RADAR_FILTER_DOWN] = {"Aircrafts/A-4E-C/a-4e_CockpitRadarFilterDown"}
+sounds[RADAR_FILTER_UP] = {"Aircrafts/A-4E-C/a-4e_CockpitRadarFilterUp"}
 sounds[SPEEDBRAKE_SWITCH] = {"Aircrafts/A-4E-C/a-4e_CockpitSpeedBrakeSwitch"}
 sounds[STARTER_PUSH] = {"Aircrafts/A-4E-C/a-4e_CockpitEngineStarterPush"}
 sounds[STARTER_RELEASE] = {"Aircrafts/A-4E-C/a-4e_CockpitEngineStarterRelease"}
 sounds[TAILHOOK_HANDLE_DOWN] = {"Aircrafts/A-4E-C/a-4e_CockpitTailhookLeverDown"}
 sounds[TAILHOOK_HANDLE_UP] = {"Aircrafts/A-4E-C/a-4e_CockpitTailhookLeverUp"}
 sounds[THROTTLE_DETENT] = {"Aircrafts/A-4E-C/a-4e_CockpitThrottleDetent"}
---events
-sounds[AVIONICS_WHINE] = {"Aircrafts/A-4E-C/a-4e_CockpitAvionics"}
-sounds[ENGINE_STALL] = {"Aircrafts/A-4E-C/a-4e_EngineCompressorStall"}
-sounds[ENGINE_IGNITER] = {"Aircrafts/A-4E-C/a-4e_EngineIgniter"}
-sounds[WHEELS_TOUCHDOWN] = {"Aircrafts/A-4E-C/a-4e_CockpitTouchdown"}
