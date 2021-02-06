@@ -67,7 +67,7 @@ elseif optionsData_trimspeed == 1 then
 else
 	trimspeedfactor = 1
 end
---print_message_to_user(trimspeedfactor)
+print_message_to_user(trimspeedfactor)
 
 
 function post_initialize()

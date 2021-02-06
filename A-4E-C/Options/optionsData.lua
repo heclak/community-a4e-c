@@ -11,4 +11,6 @@ cdata =
 	A4E_EXPERIMENTAL_EFM_CHECK_HELP   = _('Should the A-4E-C use the experimental external flight model or the simple flight model.'),
 	A4E_COCKPIT_SHAKE_SLIDER_TEXT 	  = _('Cockpit Shake'),
 	A4E_COCKPIT_SHAKE_SLIDER_HELP	  = _('Cockpit Shake due to load on the aircraft.'),
+	A4E_COCKPIT_CSS_TEXT			  = _('CSS Mode FFB Deflection'),
+	A4E_COCKPIT_CSS_HELP			  = _('At what deflection of the stick in % should the AFCS switch to CSS mode. Note only for FFB sticks.'),
 }

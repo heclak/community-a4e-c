@@ -15,6 +15,9 @@ make_default_activity(update_time_step) --update will be called 50 times per sec
 local sensor_data = get_efm_sensor_data_overrides()
 local efm_data_bus = get_efm_data_bus()
 
+local optionsData_ffbCSSActivate = get_plugin_option_value("A-4E-C", "cssActivate", "local")
+
+
 --[[
 Control_Channel = {}
 Control_Channel.__index = Control_Channel
@@ -435,7 +438,7 @@ function afcs_get_current_state()
 end
 
 function afcs_transition_state(from, to)
-
+--[[
     state_names = {}
 
     state_names[AFCS_STATE_OFF] = "AFCS_STATE_OFF"
@@ -448,7 +451,7 @@ function afcs_transition_state(from, to)
     state_names[AFCS_STATE_WARMUP] = "AFCS_STATE_WARMUP"
     
     print_message_to_user(tostring(state_names[from]).." -> "..tostring(state_names[to]))
-
+]]--
 
     if to == AFCS_STATE_ALTITUDE_ONLY then
         afcs_bank_angle_hold = math.deg(sensor_data.getRoll())
@@ -596,7 +599,7 @@ end
 
 --Switch between these if the user is using FFB.
 DEFAULT_CSS_DEFLECTION = 0.03
-FFB_CSS_DEFLECTION = 0.10
+FFB_CSS_DEFLECTION = optionsData_ffbCSSActivate or 0.15
 
 function afcs_check_for_css()
 
@@ -605,6 +608,8 @@ function afcs_check_for_css()
     if efm_data_bus.fm_getUsingFFB() == 1.0 then
         required_css_deflection = FFB_CSS_DEFLECTION
     end
+
+    print_message_to_user("CSS: "..optionsData_ffbCSSActivate)
 
     if math.abs(efm_data_bus.fm_getPitchInput()) > required_css_deflection or math.abs(efm_data_bus.fm_getRollInput()) > required_css_deflection  then
         afcs_css_enabled = true
@@ -637,8 +642,11 @@ function afcs_check_limits()
     The AFCS is also disengaged when the ailerons are deflected more than 50%, in this case the stick deflection is used.
     TODO: change to aileron deflection.
     ]]--
-    if g_force > 4 or g_force < -1.5 or efm_data_bus.fm_getRollInput() > 0.5 then
+    if g_force > 4 or g_force < -1.5 then
         dev:performClickableAction(device_commands.afcs_engage,0,false)
+    elseif math.abs(efm_data_bus.fm_getRollInput()) > 0.5 then
+        dev:performClickableAction(device_commands.afcs_engage,0,false)
+        roll_trim_handle:set(0.0)
     end
 
 

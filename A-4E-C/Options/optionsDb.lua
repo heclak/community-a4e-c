@@ -27,13 +27,15 @@ return {
 																DbOption.Item(_('50%')):Value(1),
 																}),
 
-	catapultLaunchMode		= DbOption.new():setValue(0):combo({DbOption.Item(_('MIL Power')):Value(0),
+	--[[catapultLaunchMode		= DbOption.new():setValue(0):combo({DbOption.Item(_('MIL Power')):Value(0),
 																DbOption.Item(_('Manual')):Value(1),
-																}),
+																}),]]
 
-	catapultAlignmentCheck	= DbOption.new():setValue(true):checkbox(),
+	--catapultAlignmentCheck	= DbOption.new():setValue(true):checkbox(),
 
-	efmEnabled				= DbOption.new():setValue(true):checkbox(),
+	--efmEnabled				= DbOption.new():setValue(true):checkbox(),
 
 	cockpitShake 			= DbOption.new():setValue(100):slider(Range(0,200)),
+
+	cssActivate				= DbOption.new():setValue(15):slider(Range(1,100)),
 }

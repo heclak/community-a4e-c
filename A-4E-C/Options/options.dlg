@@ -69,131 +69,7 @@ dialog = {
 					},
 					["type"] = "Static"
 				},
-
-				--------------------------------------------
-				-- Catapult Check Option
-				--------------------------------------------
-
-				["catapultAlignmentCheckCheckbox"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = 24,
-							["w"] = 300,
-							["x"] = LeftColumnX,
-							["y"] = 90,
-						},
-						["enabled"] = true,
-						["state"] = true,
-						["tabOrder"] = 0,
-						["text"] = "$A4E_CATAPULT_ALIGNMENT_CHECK_TEXT",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = CheckBoxSkin,
-					["type"] = "CheckBox",
-				},
-				["catapultAlignmentCheckHelpLabel"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = 24,
-							["w"] = 500,
-							["x"] = LeftColumnX,
-							["y"] = 90 + 20,
-						},
-						["enabled"] = true,
-						["text"] = "$A4E_CATAPULT_ALIGNMENT_CHECK_HELP",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = HelpSkin,
-					["type"] = "Static",
-				},
-
-				--------------------------------------------
-				-- Trimspeed Option
-				--------------------------------------------
-
-				["catapultLaunchModeLabel"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = 24,
-							["w"] = 260,
-							["x"] = LeftColumnX,
-							["y"] = 150
-						},
-						["enabled"] = true,
-						["text"] = "$A4E_CATLAUNCHMODE_LABEL",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0
-					},
-					["skin"] = {
-						["params"] = {
-							["name"] = "staticOptionsCaptionSkin"
-						}
-					},
-					["type"] = "Static"
-				},
-				["catapultLaunchModeComboList"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = 24,
-							["w"] = 180,
-							["x"] = LeftColumnComboListX,
-							["y"] = 150
-						},
-						["enabled"] = true,
-						["tabOrder"] = 0,
-						["text"] = "Item1",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0
-					},
-					["skin"] = {
-						["params"] = {
-							["name"] = "comboListSkin_options"
-						}
-					},
-					["type"] = "ComboList"
-				},
-
-				["catapultLaunchModeHelpLabel"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = 24,
-							["w"] = 500,
-							["x"] = LeftColumnX,
-							["y"] = 150 + 25,
-						},
-						["enabled"] = true,
-						["text"] = "$A4E_CATLAUNCHMODE_HELP",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = HelpSkin,
-					["type"] = "Static",
-				},
-				["catapultLaunchModeHelpLabel2"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = 24,
-							["w"] = 500,
-							["x"] = LeftColumnX,
-							["y"] = 150 + 25 + 12,
-						},
-						["enabled"] = true,
-						["text"] = "$A4E_CATLAUNCHMODE_HELP2",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = HelpSkin,
-					["type"] = "Static",
-				},
-	
+				
 				--------------------------------------------
 				-- Trimspeed Option
 				--------------------------------------------
@@ -204,7 +80,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 260,
 							["x"] = LeftColumnX,
-							["y"] = 220
+							["y"] = 100
 						},
 						["enabled"] = true,
 						["text"] = "$TRIMSPEEDL",
@@ -225,7 +101,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 180,
 							["x"] = LeftColumnComboListX,
-							["y"] = 220
+							["y"] = 100
 						},
 						["enabled"] = true,
 						["tabOrder"] = 0,
@@ -242,49 +118,6 @@ dialog = {
 					["type"] = "ComboList"
 				},
 
-				
-
-				--------------------------------------------
-				-- EFM Check Option
-				--------------------------------------------
-
-				["efmEnabledOptionCheckBox"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = 24,
-							["w"] = 300,
-							["x"] = LeftColumnX,
-							["y"] = 253,
-						},
-						["enabled"] = true,
-						["state"] = true,
-						["tabOrder"] = 0,
-						["text"] = "$A4E_EXPERIMENTAL_EFM_CHECK_TEXT",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = CheckBoxSkin,
-					["type"] = "CheckBox",
-				},
-				["efmEnabledOptionHelpLabel"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = 24,
-							["w"] = 500,
-							["x"] = LeftColumnX,
-							["y"] = 253 + 20,
-						},
-						["enabled"] = true,
-						["text"] = "$A4E_EXPERIMENTAL_EFM_CHECK_HELP",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = HelpSkin,
-					["type"] = "Static",
-				},
-
 				--------------------------------------------
 				-- Cockpit Shake Slider
 				--------------------------------------------
@@ -294,7 +127,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 100,
 							["x"] = LeftColumnX,
-							["y"] = 300,
+							["y"] = 150,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_COCKPIT_SHAKE_SLIDER_TEXT",
@@ -314,8 +147,8 @@ dialog = {
 						["bounds"] = {
 							["h"] = 24,
 							["w"] = 300,
-							["x"] = LeftColumnX + 100,
-							["y"] = 300,
+							["x"] = LeftColumnX + 150,
+							["y"] = 150,
 						},
 						["enabled"] = true,
 						["step"] = 1,
@@ -337,8 +170,8 @@ dialog = {
 						["bounds"] = {
 							["h"] = 24,
 							["w"] = 50,
-							["x"] = LeftColumnX + 400,
-							["y"] = 300,
+							["x"] = LeftColumnX + 450,
+							["y"] = 150,
 						},
 						["enabled"] = true,
 						["text"] = "0",
@@ -359,10 +192,96 @@ dialog = {
 							["h"] = 24,
 							["w"] = 500,
 							["x"] = LeftColumnX,
-							["y"] = 300 + 20,
+							["y"] = 150 + 20,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_COCKPIT_SHAKE_SLIDER_HELP",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = HelpSkin,
+					["type"] = "Static",
+				},
+
+				--------------------------------------------
+				-- FFB Required Deflection for CSS
+				--------------------------------------------
+				["cssActivateLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 200,
+							["x"] = LeftColumnX,
+							["y"] = 220,
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_COCKPIT_CSS_TEXT",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsCaptionSkin",
+						},
+					},
+					["type"] = "Static",
+				},
+				["cssActivateSlider"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 300,
+							["x"] = LeftColumnX + 150,
+							["y"] = 220,
+						},
+						["enabled"] = true,
+						["step"] = 1,
+						["range"] = {
+							["max"] = 200,
+							["min"] = 0,
+						},
+						["tabOrder"] = 0,
+						["text"] = "",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = SliderSkin,
+					["type"] = "HorzSlider",
+				},
+				["cssActivateWidget"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 50,
+							["x"] = LeftColumnX + 450,
+							["y"] = 220,
+						},
+						["enabled"] = true,
+						["text"] = "0",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsSliderValueSkin",
+						},
+					},
+					["type"] = "Static",
+				},
+				["cssActivateHelpLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 500,
+							["x"] = LeftColumnX,
+							["y"] = 220 + 20,
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_COCKPIT_CSS_HELP",
 						["tooltip"] = "",
 						["visible"] = true,
 						["zindex"] = 0,
