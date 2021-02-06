@@ -435,7 +435,7 @@ function afcs_get_current_state()
 end
 
 function afcs_transition_state(from, to)
---[[
+
     state_names = {}
 
     state_names[AFCS_STATE_OFF] = "AFCS_STATE_OFF"
@@ -448,7 +448,7 @@ function afcs_transition_state(from, to)
     state_names[AFCS_STATE_WARMUP] = "AFCS_STATE_WARMUP"
     
     print_message_to_user(tostring(state_names[from]).." -> "..tostring(state_names[to]))
-]]--
+
 
     if to == AFCS_STATE_ALTITUDE_ONLY then
         afcs_bank_angle_hold = math.deg(sensor_data.getRoll())
@@ -593,9 +593,20 @@ function afcs_find_heading_desired_bank_angle()
     return bank_angle
 end
 
+
+--Switch between these if the user is using FFB.
+DEFAULT_CSS_DEFLECTION = 0.03
+FFB_CSS_DEFLECTION = 0.10
+
 function afcs_check_for_css()
 
-    if math.abs(efm_data_bus.fm_getPitchInput()) > 0.03 or math.abs(efm_data_bus.fm_getRollInput()) > 0.03  then
+    local required_css_deflection = DEFAULT_CSS_DEFLECTION
+
+    if efm_data_bus.fm_getUsingFFB() == 1.0 then
+        required_css_deflection = FFB_CSS_DEFLECTION
+    end
+
+    if math.abs(efm_data_bus.fm_getPitchInput()) > required_css_deflection or math.abs(efm_data_bus.fm_getRollInput()) > required_css_deflection  then
         afcs_css_enabled = true
         dev:performClickableAction(device_commands.afcs_hdg_sel,0,false)
         dev:performClickableAction(device_commands.afcs_alt,0,false)
@@ -622,10 +633,15 @@ function afcs_check_limits()
     normal load factor approaches 4 +/- 0.5 positive-g or 1.5 +/- 0.5 negative-g, or when the aileron surface displacement exceeds 20 degrees,
     one-half lateral stick displacement from neutral. Normal acceleration values are reduced to 3.5 +/- 0.5 positive-g and 1 +/- 0.5 negative-g
     when a centreline store is carried, except when operating in CSS mode. (Refer to Control Stick Steering Mode.)
+
+    The AFCS is also disengaged when the ailerons are deflected more than 50%, in this case the stick deflection is used.
+    TODO: change to aileron deflection.
     ]]--
-    if g_force > 4 or g_force < -1.5 then
+    if g_force > 4 or g_force < -1.5 or efm_data_bus.fm_getRollInput() > 0.5 then
         dev:performClickableAction(device_commands.afcs_engage,0,false)
     end
+
+
 
 end
 

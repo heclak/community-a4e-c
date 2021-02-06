@@ -115,6 +115,8 @@ public:
 		m_leftSlat = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_SLAT_LEFT" );
 		m_rightSlat = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_SLAT_RIGHT" );
 
+		m_usingFFB = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_USING_FFB" );
+
 	}
 
 	inline void coldInit()
@@ -431,6 +433,11 @@ public:
 		setParamNumber( m_rightBrakePedal, number );
 	}
 
+	inline void setUsingFFB( bool ffb )
+	{
+		setParamNumber( m_usingFFB, (double)ffb );
+	}
+
 	inline bool getRadioPower()
 	{
 		return getParamNumber( m_radioPower ) > 0.5;
@@ -650,6 +657,8 @@ private:
 
 	void* m_leftSlat = NULL;
 	void* m_rightSlat = NULL;
+
+	void* m_usingFFB = NULL;
 
 };
 

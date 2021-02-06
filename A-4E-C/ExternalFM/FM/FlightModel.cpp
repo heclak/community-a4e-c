@@ -373,8 +373,6 @@ void Scooter::FlightModel::calculateElements()
 	m_elementHorizontalStab.calculateElementPhysics();
 	m_elementVerticalStab.calculateElementPhysics();
 
-	printf( "Left Spoiler: %lf, %lf, %lf\n", m_elementLSpoiler.getForce().x, m_elementLSpoiler.getForce().y, m_elementLSpoiler.getForce().z );
-
 	//printf("aoa hstab: %lf\n", toDegrees(m_elementHorizontalStab.m_aoa));
 	//printf("forceL: %lf, %lf, %lf  forceR: %lf, %lf, %lf\n", m_elementLAil.getForce().x, m_elementLAil.getForce().y, m_elementLAil.getForce().z, m_elementRAil.getForce().x, m_elementRAil.getForce().y, m_elementRAil.getForce().z);
 

@@ -100,6 +100,8 @@ public:
 		m_brakeLeft = 0.0;
 		m_brakeRight = 0.0;
 
+		m_FFBEnabled = false;
+
 		m_hook = false;
 		m_nosewheelSteering = false;
 		m_starter = false;
@@ -245,6 +247,17 @@ public:
 	{
 		return m_FFBRollFrequency;
 	}
+
+	inline bool getFFBEnabled()
+	{
+		return m_FFBEnabled;
+	}
+
+	inline void setFFBEnabled( bool enabled )
+	{
+		m_FFBEnabled = enabled;
+	}
+
 	inline const bool& hook() const
 	{
 		return m_hook;
@@ -328,6 +341,7 @@ private:
 	double m_FFBRollFactor = 1.0;
 	double m_FFBRollAmplitude = 0.0;
 	double m_FFBRollFrequency = 0.0;
+	bool m_FFBEnabled = false;
 
 
 	bool m_hook = false;

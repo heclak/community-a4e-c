@@ -65,6 +65,8 @@ local fm_r_tank_capacity = get_param_handle("FM_R_TANK_CAPACITY")
 local fm_slat_left = get_param_handle("FM_SLAT_LEFT")
 local fm_slat_right = get_param_handle("FM_SLAT_RIGHT")
 
+local fm_using_FFB = get_param_handle("FM_USING_FFB")
+
 local tanks = {
     [1] = fm_l_tank_capacity,
     [2] = fm_c_tank_capacity,
@@ -176,6 +178,10 @@ function fm_setRadioPower(value)
     fm_radio_power:set(value)
 end
 
+function fm_getUsingFFB()
+    return fm_using_FFB:get()
+end
+
 function fm_getGunsightAngle()
     return fm_gunsightAngle:get()
 end
@@ -284,6 +290,7 @@ function get_efm_data_bus()
     efm_data_bus.fm_getRollInput = fm_getRollInput
     efm_data_bus.fm_getSlatLeft = fm_getSlatLeft
     efm_data_bus.fm_getSlatRight = fm_getSlatRight
+    efm_data_bus.fm_getUsingFFB = fm_getUsingFFB
     return efm_data_bus
    
 end

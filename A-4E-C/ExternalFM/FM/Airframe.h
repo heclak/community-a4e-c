@@ -380,6 +380,8 @@ public:
 	inline float getFlapDamage() const;
 	inline double getNoseCompression() const;
 
+	inline double getElevatorZeroForceDeflection() const;
+
 private:
 
 	//Airframe Constants
@@ -408,6 +410,8 @@ private:
 	Actuator m_actuatorElev;
 	Actuator m_actuatorAil;
 	Actuator m_actuatorRud;
+
+	double m_elevatorZeroForceDeflection = 0.0;
 
 
 	Tank m_selected = Tank::INTERNAL;
@@ -484,7 +488,10 @@ double Airframe::setElevator(double dt)
 	double speedbrakeTrim = -0.15 * m_speedBrakePosition;
 	m_actuatorElev.setActuatorSpeed(clamp(1.0 - 1.2 * pow(m_state.getMach(), 3.0), 0.1, 1.0));
 	//printf("factor: %lf\n", clamp(1.0 - 1.2 * pow(m_state.getMach(), 3.0), 0.1, 1.0));
-	double input = m_controls.pitch() + bungeeTrimStick + speedbrakeTrim;
+
+	m_elevatorZeroForceDeflection = bungeeTrimStick + speedbrakeTrim;
+
+	double input = m_controls.pitch() + m_elevatorZeroForceDeflection;
 	return m_actuatorElev.inputUpdate(input, dt);
 }
 
@@ -642,6 +649,11 @@ double Airframe::getStabilizerAnim() const
 double Airframe::getRudder() const
 {
 	return m_rudder;
+}
+
+double Airframe::getElevatorZeroForceDeflection() const
+{
+	return m_elevatorZeroForceDeflection;
 }
 
 double Airframe::aileronAngle()
