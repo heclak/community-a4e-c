@@ -196,6 +196,8 @@ void ed_fm_simulate(double dt)
 
 	s_interface->setLeftSlat( s_airframe->getSlatLPosition() );
 	s_interface->setRightSlat( s_airframe->getSlatRPosition() );
+
+	s_interface->setUsingFFB( s_input->getFFBEnabled() );
 }
 
 void ed_fm_set_atmosphere(
@@ -618,6 +620,7 @@ double ed_fm_get_param(unsigned index)
 	case ED_FM_SUSPENSION_0_WHEEL_YAW:
 		return s_interface->getNWS() > 0.5 ? -s_input->yaw()/4.0 : 0.0;
 	case ED_FM_STICK_FORCE_CENTRAL_PITCH:  // i.e. trimmered position where force feeled by pilot is zero
+		s_input->setFFBEnabled(true);
 		return s_airframe->getElevatorZeroForceDeflection();
 	case ED_FM_STICK_FORCE_FACTOR_PITCH:
 		return s_input->getFFBPitchFactor();
