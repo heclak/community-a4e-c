@@ -622,10 +622,15 @@ function afcs_check_limits()
     normal load factor approaches 4 +/- 0.5 positive-g or 1.5 +/- 0.5 negative-g, or when the aileron surface displacement exceeds 20 degrees,
     one-half lateral stick displacement from neutral. Normal acceleration values are reduced to 3.5 +/- 0.5 positive-g and 1 +/- 0.5 negative-g
     when a centreline store is carried, except when operating in CSS mode. (Refer to Control Stick Steering Mode.)
+
+    The AFCS is also disengaged when the ailerons are deflected more than 50%, in this case the stick deflection is used.
+    TODO: change to aileron deflection.
     ]]--
-    if g_force > 4 or g_force < -1.5 then
+    if g_force > 4 or g_force < -1.5 or efm_data_bus.fm_getRollInput() > 0.5 then
         dev:performClickableAction(device_commands.afcs_engage,0,false)
     end
+
+
 
 end
 

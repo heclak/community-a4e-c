@@ -22,6 +22,8 @@ Please list the changes you've made in this file. We should try to follow the gu
   - Basic compatibility with Supercarrier
   - Added Salute option to radio menu
   - Added Request Launch option to radio menu
+  - Added stabiliser trim
+  - Flight control actuators
 
 - Sounds
   - Gear door
@@ -41,7 +43,7 @@ Please list the changes you've made in this file. We should try to follow the gu
   - CP-741/A Bombing computer
   - Yaw damper (stab aug switch on AFCS panel)
   - ILS Navigation (see kneeboard pages for presets)
-  - Enabled Radio (see kneeboard pages for presets)
+  - Enabled Radio (see kneeboard pages for presets, thanks to the TheRealHarold for filling in the missing pieces of the puzzle on this one)
 
 - Basic support for FFB joysticks
 

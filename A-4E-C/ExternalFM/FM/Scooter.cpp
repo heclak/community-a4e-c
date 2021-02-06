@@ -618,7 +618,7 @@ double ed_fm_get_param(unsigned index)
 	case ED_FM_SUSPENSION_0_WHEEL_YAW:
 		return s_interface->getNWS() > 0.5 ? -s_input->yaw()/4.0 : 0.0;
 	case ED_FM_STICK_FORCE_CENTRAL_PITCH:  // i.e. trimmered position where force feeled by pilot is zero
-		return s_input->pitchTrim();
+		return s_airframe->getElevatorZeroForceDeflection();
 	case ED_FM_STICK_FORCE_FACTOR_PITCH:
 		return s_input->getFFBPitchFactor();
 	//case ED_FM_STICK_FORCE_SHAKE_AMPLITUDE_PITCH:
