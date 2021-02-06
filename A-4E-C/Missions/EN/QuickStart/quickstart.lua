@@ -17,6 +17,14 @@ planes = {
         name = _("Free Flight"),
         file = "Caucasus A-4E-C Free Flight.miz"
     },
+    {
+        name = _("Harbour Bombing"),
+        file = "Caucasus A-4E-C Harbour Bombing.miz"
+    },
+    {
+        name = _("Slalom Course"),
+        file = "Caucasus A-4E-C Slalom.miz"
+    },
 
     -- Persian Gulf
     {
