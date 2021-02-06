@@ -40,6 +40,11 @@ function post_initialize()
         --engine
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitAvionics", "SND_INST_AVIONICS_WHINE", SOUND_ONCE),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineIgniter", "SND_INST_ENGINE_IGNITER", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineWindUp", "SND_INST_ENGINE_WIND_UP", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineWindDown", "SND_INST_ENGINE_WIND_DOWN", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineWindConstant", "SND_CONT_ENGINE_WIND_ON", SOUND_CONTINUOUS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineOperationLo", "SND_CONT_ENGINE_OPERATION_LO", SOUND_CONTINUOUS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineOperationHi", "SND_CONT_ENGINE_OPERATION_HI", SOUND_CONTINUOUS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineCompressorStall", "SND_INST_ENGINE_STALL", SOUND_ONCE),
         --gear pod doors
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearPodClose_L", "SND_INST_L_GEAR_POD_CLOSE", SOUND_ONCE),
