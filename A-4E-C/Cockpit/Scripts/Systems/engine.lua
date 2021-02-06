@@ -5,6 +5,7 @@ dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
+dofile(LockOn_Options.script_path.."sound_params.lua")
 
 function debug_print(x)
     --print_message_to_user(x)
@@ -503,9 +504,11 @@ function update()
                     debug_print("failed to ignite engine")
                     dispatch_action(nil,iCommandEnginesStop)
                     Engine:performClickableAction(device_commands.push_starter_switch,0,false) -- pop up start button
+                    sound_params.snd_inst_engine_igniter:set(0.0)
                 elseif throttle_state==THROTTLE_IGN and get_cockpit_draw_argument_value(100)>0.99 then
                     engine_state = ENGINE_IGN
                     debug_print("igniting engine")
+                    sound_params.snd_inst_engine_igniter:set(1.0)
                 end
             end
             if rpm>=22 and (engine_state == ENGINE_IGN or throttle_state ~= THROTTLE_ADJUST) and get_cockpit_draw_argument_value(100)>0.99 then
