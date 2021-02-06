@@ -1,0 +1,15 @@
+wave = "Effects/Aircrafts/A-4E-C/a-4e_EngineOperationHi.ogg"
+inner_radius = 10
+outer_radius = 100
+gain = 6.0
+attack = 0.1
+release = 0.1
+position = {-1, 0.25, 0}
+pitch = 1.0
+detached = true
+
+-- play: engine shutdown <10% RPM
+-- once
+-- cross-fade a-4e_EngineWindDown.sdef
+-- lowpass = 24000.0
+-- utilize the various variables (notably position and lowpass filter) in a a-4e_HydraulicsSpoilersMove.sdef

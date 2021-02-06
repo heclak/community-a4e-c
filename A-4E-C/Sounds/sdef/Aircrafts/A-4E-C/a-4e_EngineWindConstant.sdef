@@ -1,0 +1,13 @@
+wave = "Effects/Aircrafts/A-4E-C/a-4e_EngineWindConstant.ogg"
+inner_radius = 10
+outer_radius = 100
+gain = 6.0
+attack = 10
+release = 0.1
+position = {-1, 0.25, 0}
+pitch = 1.0
+
+-- play: engine in operation, >10% RPM
+-- continuous
+-- lowpass = 24000.0
+-- utilize the various variables (notably position and lowpass filter) in a a-4e_HydraulicsSpoilersMove.sdef

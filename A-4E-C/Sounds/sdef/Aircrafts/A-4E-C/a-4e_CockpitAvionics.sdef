@@ -5,8 +5,7 @@ gain = 1.0
 pitch = 1.0
 detached = true
 position = {-1, 0.7, 0}
-listmode = RANDOM
 
--- play: engine start-up complete / electrical system turns on
+-- play: avionics enabled
 -- once
 -- lowpass = 24000.0
