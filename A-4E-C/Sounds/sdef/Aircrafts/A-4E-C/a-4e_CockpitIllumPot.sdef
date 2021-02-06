@@ -1,0 +1,14 @@
+wave = "Effects/Aircrafts/A-4E-C/a-4e_CockpitIllumPot.ogg"
+inner_radius = 50
+outer_radius = 150
+gain = 1.0
+pitch = 1.0
+pitch_random = 0.05
+gain_random = 0.1
+detached = true
+position = {-1, 0.7, 0}
+listmode = RANDOM
+
+-- play: cockpit illumination potentiometer arrives at or leaves 0
+-- once
+-- lowpass = 24000.0

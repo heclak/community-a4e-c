@@ -1,0 +1,11 @@
+wave = "Effects/Aircrafts/A-4E-C/a-4e_CockpitEjectionPull.ogg"
+inner_radius = 1
+outer_radius = 4
+position = {0.3, -0.5, 0}
+gain = 3.0
+detached = true
+
+-- play: seat ejection lever pulled
+-- switch: a-4e_CockpitEjectiondDearm.sdef
+-- once
+-- lowpass = 24000.0

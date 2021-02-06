@@ -1,0 +1,11 @@
+wave = "Effects/Aircrafts/A-4E-C/a-4e_CockpitEjectionArm.ogg"
+inner_radius = 1
+outer_radius = 4
+gain = 0.8
+position = {0.5, -0.2, 0.5}
+detached = true
+lowpass = 18000.0
+
+-- play: harness lever armed
+-- switch: a-4e_CockpitHarnessLock.sdef
+-- once

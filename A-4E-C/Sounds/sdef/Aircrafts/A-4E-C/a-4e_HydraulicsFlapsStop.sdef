@@ -1,7 +1,7 @@
 wave = "Effects/Aircrafts/A-4E-C/a-4e_HydraulicsFlapsEnd.ogg"
 inner_radius = 10
 outer_radius = 100
-gain = 6.0
+gain = 6.5
 detached = true
 position = {-0.7, -0.5, 0}
 

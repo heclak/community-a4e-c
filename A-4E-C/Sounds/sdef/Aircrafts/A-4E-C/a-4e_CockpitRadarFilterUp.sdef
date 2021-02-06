@@ -1,0 +1,11 @@
+wave = "Effects/Aircrafts/A-4E-C/a-4e_CockpitRadarFilterUp.ogg"
+inner_radius = 1
+outer_radius = 4
+position = {0.6, 0.5, 0}
+gain = 30.0
+detached = true
+
+-- play: radar screen cover raised
+-- switch: a-4e_CockpitRadarFilterDown.sdef
+-- once
+-- lowpass = 24000.0

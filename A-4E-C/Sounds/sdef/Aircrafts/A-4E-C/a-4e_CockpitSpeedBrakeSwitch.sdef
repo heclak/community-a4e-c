@@ -1,0 +1,17 @@
+wave = {
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitSpeedBrakeSwitch_01.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitSpeedBrakeSwitch_02.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitSpeedBrakeSwitch_03.ogg"
+}
+gain = 1.5
+pitch = 1.0
+pitch_random = 0.05
+gain_random = 0.1
+position = {0.5, -0.2, 0.5}
+listmode = RANDOM
+
+-- play: speedbrake switch changes position
+-- switch: there are 3 possible positions
+-- once
+-- lowpass = 24000.0
+-- use identical sounds for any change in position

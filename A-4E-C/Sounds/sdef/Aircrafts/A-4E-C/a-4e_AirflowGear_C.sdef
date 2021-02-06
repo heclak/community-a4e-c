@@ -1,12 +1,12 @@
 wave = "Effects/Aircrafts/A-4E-C/a-4e_AirflowGear_C.ogg"
 inner_radius = 20
 outer_radius = 150
-gain = 0.75
-attack = 0.4
+gain = 0.7
+attack = 0.5
 release = 0.2
 position = {1.5, -1.5, 0}
 
--- play: gear is down
+-- play: center gear is down
 -- continuous
 -- lowpass = 24000.0
 -- gain variable should have a multiplier based on kts:

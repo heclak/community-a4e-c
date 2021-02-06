@@ -1,7 +1,7 @@
 wave = "Effects/Aircrafts/A-4E-C/a-4e_AirflowSpeedbrake.ogg"
 inner_radius = 20
 outer_radius = 150
-gain = 0.75
+gain = 0.6
 attack = 0.2
 release = 0.1
 position = {-1, 0, 0}
