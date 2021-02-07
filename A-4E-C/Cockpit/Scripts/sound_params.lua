@@ -1,7 +1,9 @@
 sound_params = {
 
     --ENVIRONMENTAL
-    -- engine
+    --damage
+    snd_inst_damage_gear_overspeed = get_param_handle("SND_INST_DAMAGE_GEAR_OVERSPEED"),
+    --engine
     snd_inst_avionics_whine = get_param_handle("SND_INST_AVIONICS_WHINE"),
     snd_inst_engine_igniter = get_param_handle("SND_INST_ENGINE_IGNITER"),
     snd_inst_engine_wind_up = get_param_handle("SND_INST_ENGINE_WIND_UP"),
