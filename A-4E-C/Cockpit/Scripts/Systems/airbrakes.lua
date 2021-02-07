@@ -1,7 +1,9 @@
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
+dofile(LockOn_Options.script_path.."Systems/hydraulic_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
+dofile(LockOn_Options.script_path.."sound_params.lua")
 
 local debug_mode = false -- set to true for debug messages
 
@@ -325,6 +327,21 @@ function update()
     --set_aircraft_draw_argument_value(500,ABRAKE_STATE)
     set_aircraft_draw_argument_value(WHEELCHOCKS_ANIM_ARG, WHEELCHOCKS_STATE) -- draw wheel chocks if state is 1. 
 	efm_data_bus.fm_setBrakes(ABRAKE_STATE)
+
+    -- speedbrake hydraulic transit sound
+    local speedbrake_in_transit = false
+    if get_hyd_utility_ok() then
+        if ((ABRAKE_STATE <= ABRAKE_TARGET) or (ABRAKE_STATE >= ABRAKE_TARGET)) and ((ABRAKE_STATE > 0) and (ABRAKE_STATE < 1)) then
+            speedbrake_in_transit = true
+        end
+        if speedbrake_in_transit == true then
+            sound_params.snd_cont_hydraulic_mov:set(1.0)
+            sound_params.snd_inst_hydraulic_stop:set(0.0)
+        else
+            sound_params.snd_cont_hydraulic_mov:set(0.0)
+            sound_params.snd_inst_hydraulic_stop:set(1.0)
+        end
+    end
 end
 
 function update_birth()

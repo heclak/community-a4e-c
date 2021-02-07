@@ -64,7 +64,7 @@ function post_initialize()
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitRumble", "SND_ALWS_COCKPIT_RUMBLE", SOUND_ALWAYS, nil, nil, 1.0, 2.0 / device_timer_dt ),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitRattle", "SND_ALWS_COCKPIT_RATTLE", SOUND_ALWAYS, nil, nil, 1.0, 2.0 / device_timer_dt ),
         --refueling
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsMove", "SND_CONT_FUEL_INTAKE", SOUND_CONTINUOUS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitRefuel", "SND_CONT_FUEL_INTAKE", SOUND_CONTINUOUS),
         --slats
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitSlatsLeftIn", "SND_INST_L_SLAT_IN", SOUND_ONCE),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitSlatsLeftOut", "SND_INST_L_SLAT_OUT", SOUND_ONCE),
@@ -88,8 +88,8 @@ function post_initialize()
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearMove", "SND_CONT_GEAR_MOV", SOUND_CONTINUOUS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearStop", "SND_INST_GEAR_STOP", SOUND_ONCE),
         --supplemental
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsMove", "SND_CONT_HYD_MOV", SOUND_CONTINUOUS),
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsStop", "SND_INST_HYD_STOP", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsSpeedbrakeMove", "SND_CONT_HYD_MOV", SOUND_CONTINUOUS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsSpeedbrakeStop", "SND_INST_HYD_STOP", SOUND_ONCE),
 
     }
 
