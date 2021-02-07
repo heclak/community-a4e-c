@@ -33,7 +33,7 @@ class FlightModel;
 class AeroElement : public BaseComponent
 {
 public:
-	//AeroElement(AircraftState& state, Table& CLalpha, Table& CDalpha, Vec3 cp, Vec3 surfaceNormal, double surfaceConstant, bool isSurface);
+	AeroElement( AircraftState& state, Table& CLalpha, Table& CDalpha, Vec3 cp, Vec3 surfaceNormal, double area );
 	~AeroElement();
 
 	virtual void zeroInit();
@@ -60,8 +60,7 @@ public:
 	double m_kElem = 0.0; // m_k
 	double m_aoa = 0.0;
 protected:
-	AeroElement(AircraftState& state, Table& CLalpha, Table& CDalpha, Vec3 cp, Vec3 surfaceNormal, double area, LERX* lerx );
-	AeroElement(AircraftState& state, Table& CLalpha, Table& CDalpha, Vec3 cp, Vec3 surfaceNormal, double area);
+	
 
 	const Vec3 m_cp;
 	const Vec3 m_surfaceNormal;

@@ -34,7 +34,7 @@ public:
 	virtual void airborneInit();
 
 	inline void setPower( bool power );
-	void updateSolution( double dt );
+	void updateSolution();
 	void setTarget( bool set, double slant );
 	inline void setGunsightAngle( double angle );
 
@@ -42,7 +42,7 @@ public:
 	inline bool getTargetSet();
 
 	double calculateHorizontalDistance();
-	double calculateImpactDistance(double dt);
+	double calculateImpactDistance();
 
 private:
 
