@@ -1,12 +1,12 @@
 wave = "Effects/Aircrafts/A-4E-C/a-4e_CockpitEmerLeverOut.ogg"
 inner_radius = 1
 outer_radius = 4
-position = {0.5, 0.2, 0.25}
+position = {-0.5, 0.2, -0.5}
 gain = 3.0
-pitch = 0.95
+pitch = 1.3
 detached = true
 
--- play: manual flight control lever pulled
--- switch: a-4e_CockpitEmerGearin.sdef
+-- play: emergency speedbrake lever pulled
+-- switch: a-4e_CockpitEmerSpeedbrakeIn.sdef
 -- once
 -- lowpass = 24000.0

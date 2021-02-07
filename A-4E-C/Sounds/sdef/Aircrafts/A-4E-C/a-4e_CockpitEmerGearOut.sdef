@@ -7,6 +7,6 @@ pitch = 0.8
 detached = true
 
 -- play: emer gear lever pulled
--- switch: a-4e_CockpitGearLeverIn.sdef
+-- switch: a-4e_CockpitEmerGenIn.sdef
 -- once
 -- lowpass = 24000.0

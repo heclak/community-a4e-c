@@ -18,11 +18,11 @@ planes = {
         file = "Caucasus A-4E-C Free Flight.miz"
     },
     {
-        name = _("Harbour Bombing"),
+        name = _("Harbour Bombing (by sidekick65)"),
         file = "Caucasus A-4E-C Harbour Bombing.miz"
     },
     {
-        name = _("Slalom Course"),
+        name = _("Slalom Course (by sidekick65)"),
         file = "Caucasus A-4E-C Slalom.miz"
     },
 
