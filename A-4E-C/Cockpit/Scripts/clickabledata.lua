@@ -273,7 +273,7 @@ elements["PNT_107"] = default_axis_limited( "Console Lighting", devices.AVIONICS
 elements["PNT_108"] = multiposition_switch_limited("Console Light Intensity", devices.AVIONICS, device_commands.intlight_brightness, 108, 3, 1, true, -1.0, TOGGLECLICK_RIGHT_AFT)
 elements["PNT_110"] = default_axis_limited( "White Floodlight Control", devices.AVIONICS, device_commands.intlight_whiteflood, 110, 0.0, 0.3, false, false, {0,1} )
 -- TODO: trigger at or leave 0 ?
-elements["PNT_405"].sound = {{COCKPIT_ILLUM_POT}, {COCKPIT_ILLUM_POT}}
+elements["PNT_405"].sound = {{COCKPIT_ILLUM_POT, COCKPIT_ILLUM_POT}}
 
 -- AN/ARC-51 UHF RADIO #67
 elements["PNT_361"] = multiposition_switch_limited("ARC-51 UHF Preset Channel", devices.RADIO, device_commands.arc51_freq_preset, 361, 20, 0.05, false, 0.00, KNOBCLICK_RIGHT_MID)
@@ -295,19 +295,19 @@ elements["PNT_513"] = default_button("Compass Push to Sync", devices.COMPASS, de
 elements["PNT_1240"] = default_2_position_tumb("Emergency gear release",devices.GEAR, device_commands.emer_gear_release,1240)
 elements["PNT_1240"].animated        = {true, true}
 elements["PNT_1240"].animation_speed = {15, 15}
-elements["PNT_1240"].sound = {{EMER_GEAR_PULL}, {EMER_GEAR_RELEASE}}
+elements["PNT_1240"].sound = {{EMER_GEAR_PULL, EMER_GEAR_RELEASE}}
 elements["PNT_1241"] = default_2_position_tumb("Emergency bomb release",devices.WEAPON_SYSTEM, device_commands.emer_bomb_release,1241)
 elements["PNT_1241"].animated        = {true, true}
 elements["PNT_1241"].animation_speed = {15, 15}
-elements["PNT_1241"].sound = {{EMER_BOMB_PULL}, {EMER_BOMB_RELEASE}}
+elements["PNT_1241"].sound = {{EMER_BOMB_PULL, EMER_BOMB_RELEASE}}
 elements["PNT_1242"] = default_2_position_tumb("Manual Flight Control",devices.HYDRAULIC_SYSTEM, device_commands.man_flt_control_override,1242)
 elements["PNT_1242"].animated        = {true, true}
 elements["PNT_1242"].animation_speed = {15, 15}
-elements["PNT_1242"].sound = {{EMER_BOMB_PULL}, {EMER_BOMB_RELEASE}}
+elements["PNT_1242"].sound = {{EMER_BOMB_PULL, EMER_BOMB_RELEASE}}
 elements["PNT_1243"] = default_2_position_tumb("Emergency generator deploy",devices.ELECTRIC_SYSTEM, device_commands.emer_gen_deploy,1243)
 elements["PNT_1243"].animated        = {true, true}
 elements["PNT_1243"].animation_speed = {15, 15}
-elements["PNT_1243"].sound = {{EMER_BOMB_PULL}, {EMER_BOMB_RELEASE}}
+elements["PNT_1243"].sound = {{EMER_BOMB_PULL, EMER_BOMB_RELEASE}}
 
 -- ECM panel
 elements["PNT_503"] = default_2_position_tumb("Audio APR/25 - APR/27",devices.RWR,device_commands.ecm_apr25_audio,	503,TOGGLECLICK_LEFT_MID)
