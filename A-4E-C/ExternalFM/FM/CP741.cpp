@@ -51,7 +51,7 @@ void Scooter::CP741::airborneInit()
 
 }
 
-void Scooter::CP741::updateSolution( double dt )
+void Scooter::CP741::updateSolution()
 {
 	//Must be turned on
 	//if ( m_power )
@@ -69,7 +69,7 @@ void Scooter::CP741::updateSolution( double dt )
 	if ( m_target.y > m_state.getWorldPosition().y )
 		return;
 
-	double error = fabs( calculateHorizontalDistance() - calculateImpactDistance( dt ));
+	double error = fabs( calculateHorizontalDistance() - calculateImpactDistance());
 
 	if ( error < 5.0 )
 	{
@@ -127,7 +127,7 @@ void Scooter::CP741::setTarget( bool set, double slant )
 	}
 }
 
-double Scooter::CP741::calculateImpactDistance(double dt)
+double Scooter::CP741::calculateImpactDistance()
 {
 
 	Vec3 velocity = m_state.getWorldVelocity();

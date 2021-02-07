@@ -77,7 +77,7 @@ void Scooter::Avionics::updateAvionics(double dt)
 		m_x = 0.0;
 		m_input.yawDamper() = 0.0;
 	}
-	m_bombingComputer.updateSolution(dt);
+	m_bombingComputer.updateSolution();
 
 	//printf("Filter: %lf, Rudder: %lf\n", f, m_flightModel.yawRate());
 }

@@ -139,29 +139,13 @@ public:
 		m_api.pfn_ed_cockpit_set_action_digital(10);
 	}
 
-	inline int getGunShells()
-	{
-		void* ptr = NULL;
-		static char buffer[100];
-		getParamString(m_intercom, buffer, 100);
-		sscanf(buffer, "%p", &ptr);
-		printf("Weapon Pointer is: %p\n", ptr);
-		int shells = 0;
-		if (ptr)
-		{
-
-		}
-			//shells = _get_gun_shells(ptr,)
-		return shells;
-	}
-
 	inline void* getPointer( void* handle )
 	{
 		char buffer[20];
 		uintptr_t ptr = NULL;
 		getParamString( handle, buffer, 20 );
 		//printf( "%s\n", buffer );
-		if ( sscanf( buffer, "%p.0", &ptr ) )
+		if ( sscanf_s( buffer, "%p.0", &ptr ) )
 		{
 			if ( ptr )
 			{
@@ -190,147 +174,6 @@ public:
 	inline void* getElecPointer()
 	{
 		return getPointer( m_elec );
-	}
-
-	inline void connectAndSetRadioPower()
-	{
-		char buffer[100];
-		void* ptr_radio = NULL;
-		void* ptr_elec = NULL;
-		void* ptr_intercom = NULL;
-		getParamString( m_radio, buffer, 100 );
-		sscanf( buffer, "%p", &ptr_radio );
-		getParamString( m_elec, buffer, 100 );
-		sscanf( buffer, "%p", &ptr_elec );
-		printf( "Radio ptr: %p, Elec ptr: %p\n", ptr_radio, ptr_elec );
-		//-0x20 since we get the pointer to the lua vfptr table
-
-
-		printf( "Global Table %p\n", m_api.device_array );
-		intptr_t ptr = (intptr_t)m_api.device_array + 0x30;
-		ptr = (intptr_t)(*((void**)ptr));
-		printf( "Cockpit Table %p\n", (void*)ptr );
-		ptr_elec = *((void**)((intptr_t)ptr + 0x10));
-		ptr_intercom = *((void**)((intptr_t)ptr + 0x18));
-		ptr_radio = *((void**)((intptr_t)ptr + 0x20));
-		
-
-		//intptr_t cur = ptr;
-		//for ( int i = 0; i < 10; i++ )
-		//{
-		//	void** p = (void**)cur;
-		//	printf( "Offset: %p, Pointer: %p\n", (void*)(i*0x8), *p );
-		//	//printf( "Offset: %p, Pointer: %p, DC1 %p, DC2 %p\n", (i * 0x8), *p, m_api.pfn_get_dc_wire( *p, 1 ), m_api.pfn_get_dc_wire( *p, 2 ) );
-		//	cur += 0x8;
-		//}
-		//0x10 elec
-		//0x18 intercom
-		//0x20 radio
-		printf( "Radio ptr: %p, Elec ptr: %p\n", ptr_radio, ptr_elec );
-
-
-		void* ptr_wire = NULL;
-		if ( ptr_elec )
-		{
-			ptr_wire = m_api.pfn_get_dc_wire( ptr_elec, 1 );
-			printf( "AC_1 %p\n", m_api.pfn_get_ac_wire( ptr_elec, 1 ) );
-			printf( "AC_2 %p\n", m_api.pfn_get_ac_wire( ptr_elec, 2 ) );
-			printf( "DC_1 %p\n", m_api.pfn_get_dc_wire( ptr_elec, 1 ) );
-			printf( "DC_2 %p\n", m_api.pfn_get_dc_wire( ptr_elec, 2 ) );
-		}
-
-		printf( "Wire ptr: %p\n", ptr_wire );
-		
-		
-		//printf( "Freq %d\n", m_api.pfn_get_freq( ptr_radio ) );
-		if ( ptr_radio && ptr_wire )
-		{
-			
-			printf( "Calling %p\n", m_api.pfn_connect_electric );
-			m_api.pfn_connect_electric( ptr_radio, ptr_wire );
-			//_connect_radio_power( ptr_radio, ptr_elec, m_api.pfn_connect_electric );
-			printf( "Radio should be connected!\n" );
-			//_set_radio_power( ptr_radio, true, m_api.pfn_set_elec_power );
-			printf( "Calling %p\n", m_api.pfn_set_elec_power );
-
-
-			void* ptr_baseRadio = (void*)((intptr_t)ptr_radio + 0xB8);
-
-			m_api.pfn_set_elec_power = (PFN_SET_ELEC_POWER)*(*((void***)ptr_baseRadio));
-
-			m_api.pfn_set_elec_power( ptr_baseRadio, true );
-
-
-			printf( "Radio should be powered on!\n" );
-
-			void* ptr_communicator = m_api.pfn_get_communicator( ptr_radio );
-
-			printf( "Communicator %p\n", ptr_communicator);
-			m_api.pfn_set_communicator_as_current( ptr_communicator );
-
-		}
-		else
-		{
-			printf( "Something went wrong!\n" );
-		}
-		
-	}
-
-	inline void setIntercomPower(bool value)
-	{
-		void* ptr = nullptr;
-		char buffer[100];
-		getParamString(m_intercom, buffer, 100);
-		sscanf(buffer, "%p", &ptr);
-		printf("Intercom Pointer is: %p\n", ptr);
-		static int x = 0;
-		x++;
-		if (ptr && x > 10)
-		{
-			//_set_radio(ptr, m_api.setRadioPowerFncPtr, true);
-			if (_is_on_intercom(ptr, m_api.isOnIntercom))
-			{
-				printf("Intercom On\n");
-				//_set_radio(ptr,false);
-			}
-			else
-			{
-				printf("Intercom Off\n");
-				//_set_radio(ptr, true);
-			}
-		}
-	}
-
-	inline void setRadioPower(bool value)
-	{
-		//printf("Radio Power Pointer: %p", m_api.setRadioPowerFncPtr);
-		//__asm {MOV ECX, m_radio}
-		void* ptr = nullptr;
-		char buffer[100];
-		getParamString(m_radio, buffer, 100);
-		sscanf(buffer, "%p", &ptr);
-		
-
-		void* deref = *((void**)ptr);
-		void* deref2 = *((void**)deref);
-		printf("Pointer is: %p\n", ptr);
-
-		static int x = 0;
-		x++;
-		if (ptr && x > 10)
-		{
-			//_set_radio(ptr, m_api.setRadioPowerFncPtr, true);
-			if (_ext_is_on(ptr, m_api.getRadioPowerFncPtr))
-			{
-				printf("Radio On\n");
-				//_set_radio(ptr,false);
-			}
-			else
-			{
-				printf("Radio Off\n");
-				//_set_radio(ptr, true);
-			}
-		}
 	}
 
 	inline void setLeftSlat( double number )

@@ -21,28 +21,6 @@ Scooter::AeroElement::AeroElement
 	Table& CDalpha,
 	Vec3 cp,
 	Vec3 surfaceNormal,
-	double area,
-	LERX* lerx
-) :
-	m_state{ state },
-	m_CLalpha{ CLalpha },
-	m_CDalpha{ CDalpha },
-	m_cp{ cp },
-	m_surfaceNormal{ surfaceNormal },
-	m_area{ area },
-	m_dragFactor{ 1.0 },
-	m_liftFactor{ 1.0 }
-{
-
-}
-
-Scooter::AeroElement::AeroElement
-(
-	AircraftState& state,
-	Table& CLalpha,
-	Table& CDalpha,
-	Vec3 cp,
-	Vec3 surfaceNormal,
 	double area
 ) :
 	m_state{ state },
