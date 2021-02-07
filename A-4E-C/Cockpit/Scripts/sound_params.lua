@@ -49,6 +49,8 @@ sound_params = {
     snd_cont_gear_mov = get_param_handle("SND_CONT_GEAR_MOV"),
     snd_inst_gear_stop = get_param_handle("SND_INST_GEAR_STOP"),
     --supplemental (speedbrake or tailhook)
+    snd_inst_emer_speedbrake_in = get_param_handle("SND_INST_EMER_SPEEDBRAKE_IN"),
+    snd_inst_emer_speedbrake_out = get_param_handle("SND_INST_EMER_SPEEDBRAKE_OUT"),
     snd_cont_hydraulic_mov = get_param_handle("SND_CONT_HYD_MOV"),
     snd_inst_hydraulic_stop = get_param_handle("SND_INST_HYD_STOP"),
 
