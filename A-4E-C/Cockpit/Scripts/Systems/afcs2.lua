@@ -609,8 +609,6 @@ function afcs_check_for_css()
         required_css_deflection = FFB_CSS_DEFLECTION
     end
 
-    print_message_to_user("CSS: "..optionsData_ffbCSSActivate)
-
     if math.abs(efm_data_bus.fm_getPitchInput()) > required_css_deflection or math.abs(efm_data_bus.fm_getRollInput()) > required_css_deflection  then
         afcs_css_enabled = true
         dev:performClickableAction(device_commands.afcs_hdg_sel,0,false)

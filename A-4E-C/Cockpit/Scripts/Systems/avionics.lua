@@ -282,6 +282,15 @@ function enumerate_fueltanks()
 end
 
 function post_initialize()
+
+    local abstime = get_absolute_model_time()
+    local hours = abstime / 3600.0
+
+    if hours <= 6 or hours >= 17 then
+        dev:performClickableAction(device_commands.intlight_console, 1.0, false)
+        dev:performClickableAction(device_commands.intlight_instruments, 1.0, false)
+    end
+
     startup_print("avionics: postinit start")
 
     local dev = GetSelf()
