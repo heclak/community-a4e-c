@@ -16,7 +16,7 @@ wave = {
 }
 inner_radius = 50
 outer_radius = 150
-gain = 16.0
+gain = 13.0
 pitch = 1.1
 position = {0.5, -0.5, -1.5}
 pitch_random = 0.05

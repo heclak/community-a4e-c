@@ -1,0 +1,15 @@
+wave = {
+"Effects/Aircrafts/A-4E-C/a-4e_DamageGearOverspeed_01.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_DamageGearOverspeed_02.ogg"
+}
+inner_radius = 20
+outer_radius = 150
+gain = 16.0
+detached = true
+position = {0.75, -2, 0}
+pitch_random = 0.15
+listmode = RANDOM
+
+-- play: landing gear overspeed damage
+-- once
+-- lowpass = 24000.0

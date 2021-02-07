@@ -37,6 +37,8 @@ function post_initialize()
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowGear_R", "FM_GEAR_RIGHT", SOUND_ALWAYS, 20.5, 62.0),
 
         --ENVIRONMENTAL
+        --damage
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_DamageGearOverspeed", "SND_INST_DAMAGE_GEAR_OVERSPEED", SOUND_ONCE),
         --engine
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitAvionics", "SND_INST_AVIONICS_WHINE", SOUND_ONCE),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineIgniter", "SND_INST_ENGINE_IGNITER", SOUND_ONCE),
