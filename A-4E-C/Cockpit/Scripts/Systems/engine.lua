@@ -500,11 +500,11 @@ function update()
             end
         else
             if rpm>=5 and engine_state == ENGINE_OFF then
+                sound_params.snd_inst_engine_igniter:set(0.0)
                 if rpm>14 and get_cockpit_draw_argument_value(100)>0.99 then
                     debug_print("failed to ignite engine")
                     dispatch_action(nil,iCommandEnginesStop)
                     Engine:performClickableAction(device_commands.push_starter_switch,0,false) -- pop up start button
-                    sound_params.snd_inst_engine_igniter:set(0.0)
                 elseif throttle_state==THROTTLE_IGN and get_cockpit_draw_argument_value(100)>0.99 then
                     engine_state = ENGINE_IGN
                     debug_print("igniting engine")
