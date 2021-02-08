@@ -314,6 +314,9 @@ local function get_centerline_weapons( side )
 		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E745}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Yellow
 		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E746}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Orange
 
+        -- ILLUMINATION POD --
+        { CLSID = "{CAE48299-A294-4bad-8EE6-89EFC5DCDF00}", connector = rocketConnector, arg_value = 0.2},
+
 
 		-- CLEAN --
 		{ CLSID = "<CLEAN>", arg_value = 1 },
