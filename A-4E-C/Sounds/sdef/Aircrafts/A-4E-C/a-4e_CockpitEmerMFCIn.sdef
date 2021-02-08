@@ -7,6 +7,6 @@ pitch = 0.95
 detached = true
 
 -- play: manual flight control lever released
--- switch: a-4e_CockpitGearLeverOut.sdef
+-- switch: a-4e_CockpitEmerMFCOut.sdef
 -- once
 -- lowpass = 24000.0
