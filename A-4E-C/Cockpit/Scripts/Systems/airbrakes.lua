@@ -105,12 +105,16 @@ function SetCommand(command,value)
             ABRAKE_COMMAND = value
         end
     elseif command == device_commands.speedbrake_emer then
+        sound_params.snd_inst_emer_speedbrake_out:set(0.0)
+        sound_params.snd_inst_emer_speedbrake_in:set(0.0)
         if (value==1 or value==-1) then
             speedbrake_emer_countdown=0.25 -- seconds until bungee knob reset
             if value==1 then
                 ABRAKE_COMMAND = 1
+                sound_params.snd_inst_emer_speedbrake_out:set(1.0)
             else
                 ABRAKE_COMMAND = 0
+                sound_params.snd_inst_emer_speedbrake_in:set(1.0)
             end
         end
     elseif command == Keys.BrakesOn then
