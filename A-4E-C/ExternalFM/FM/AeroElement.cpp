@@ -1,7 +1,7 @@
 #pragma once
 //=========================================================================//
 //
-//		FILE NAME	: AeroElement.h
+//		FILE NAME	: AeroElement.cpp
 //		AUTHOR		: TerjeTL
 //		DATE		: October 2020
 //
