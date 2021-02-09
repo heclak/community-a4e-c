@@ -106,4 +106,22 @@ planes = {
         file = "Nevada A-4E-C Free Flight.miz"
     },
 
+    -- Syria
+    {
+        name = _("Cold Start"),
+        file = "Syria A-4E-C Cold Start.miz"
+    },
+    {
+        name = _("Takeoff"),
+        file = "Syria A-4E-C Takeoff.miz"
+    },
+    {
+        name = _("Carrier Launch"),
+        file = "Syria A-4E-C Carrier Start.miz"
+    },
+    {
+        name = _("Free Flight"),
+        file = "Syria A-4E-C Free Flight.miz"
+    },
+
 }
