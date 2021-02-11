@@ -46,6 +46,8 @@ local fm_setTarget = get_param_handle("FM_SET_TARGET")
 local fm_radarAltitude = get_param_handle("FM_RADAR_ALTITUDE")
 local fm_gunsightAngle = get_param_handle("FM_GUNSIGHT_ANGLE")
 local fm_target_set = get_param_handle("FM_TARGET_SET")
+local fm_in_range = get_param_handle("FM_IN_RANGE")
+local fm_cp741_power = get_param_handle("FM_CP741_POWER")
 
 local fm_dumping_fuel = get_param_handle("FM_DUMPING_FUEL")
 
@@ -178,6 +180,10 @@ function fm_setRadioPower(value)
     fm_radio_power:set(value)
 end
 
+function fm_setCP741Power(value)
+    fm_cp741_power:set(value)
+end
+
 function fm_getUsingFFB()
     return fm_using_FFB:get()
 end
@@ -246,6 +252,10 @@ function fm_getSlatRight()
     return fm_slat_right:get()
 end
 
+function fm_getInRange()
+    return fm_in_range:get()
+end
+
 fm_setCockpitShake(2.0 * optionsData_cockpitShake/100.0)
 
 function get_efm_data_bus()
@@ -277,6 +287,7 @@ function get_efm_data_bus()
     efm_data_bus.fm_setIntercomPTR = fm_setIntercomPTR
     efm_data_bus.fm_setRadioPTR = fm_setRadioPTR
     efm_data_bus.fm_setTankState = fm_setTankState
+    efm_data_bus.fm_setCP741Power = fm_setCP741Power
 
 
     efm_data_bus.fm_getGunsightAngle = fm_getGunsightAngle
@@ -291,6 +302,8 @@ function get_efm_data_bus()
     efm_data_bus.fm_getSlatLeft = fm_getSlatLeft
     efm_data_bus.fm_getSlatRight = fm_getSlatRight
     efm_data_bus.fm_getUsingFFB = fm_getUsingFFB
+    efm_data_bus.fm_getInRange = fm_getInRange
+
     return efm_data_bus
    
 end

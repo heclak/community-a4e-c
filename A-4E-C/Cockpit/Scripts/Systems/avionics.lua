@@ -903,14 +903,16 @@ function update_test()
         test_advisory_dive:set(1)
 		
     else
-        test_glare_labs:set(0)
+        --Commented out lights which are updated by other systems
+        --This is to prevent flicker.
+        --test_glare_labs:set(0)
 	    test_glare_iff:set(0)
         test_glare_fire:set(0)
-        glareshield_WHEELS:set(glareshield_wheels_value)
+        --glareshield_WHEELS:set(glareshield_wheels_value)
         test_ladder_fuelboost:set(0)
         test_ladder_fueltrans:set(0)
         test_oil_low:set(0)
-        test_advisory_inrange:set(0)
+        --test_advisory_inrange:set(0)
         test_advisory_setrange:set(0)
         test_advisory_dive:set(0)
     end

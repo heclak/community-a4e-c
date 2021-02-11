@@ -102,6 +102,8 @@ public:
 		m_radarAltitude = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_RADAR_ALTITUDE" );
 		m_gunsightAngle = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_GUNSIGHT_ANGLE" );
 		m_targetSet = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_TARGET_SET" );
+		m_cp741Power = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_CP741_POWER" );
+		m_inRange = m_api.pfn_ed_cockpit_get_parameter_handle( "D_ADVISORY_INRANGE" );
 
 		m_dumpingFuel = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_DUMPING_FUEL" );
 		m_avionicsAlive = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_AVIONICS_ALIVE" );
@@ -279,6 +281,16 @@ public:
 	inline void setUsingFFB( bool ffb )
 	{
 		setParamNumber( m_usingFFB, (double)ffb );
+	}
+
+	inline void setInRange( bool inRange )
+	{
+		setParamNumber( m_inRange, (double)inRange );
+	}
+
+	inline bool getCP741Power()
+	{
+		return getParamNumber( m_cp741Power ) > 0.5;
 	}
 
 	inline bool getRadioPower()
@@ -483,6 +495,8 @@ private:
 	void* m_setTarget = NULL;
 	void* m_validSolution = NULL;
 	void* m_slantRange = NULL;
+	void* m_cp741Power = NULL;
+	void* m_inRange = NULL;
 
 	void* m_radarAltitude = NULL;
 	void* m_gunsightAngle = NULL;

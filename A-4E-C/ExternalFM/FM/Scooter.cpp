@@ -154,6 +154,7 @@ void ed_fm_simulate(double dt)
 
 		s_avionics->getComputer().setGunsightAngle( s_interface->getGunsightAngle() );
 		s_avionics->getComputer().setTarget( s_interface->getSetTarget(), s_interface->getSlantRange() );
+		s_avionics->getComputer().setPower( s_interface->getCP741Power() );
 
 		s_input->pitchTrim() = s_interface->getPitchTrim();
 		s_input->rollTrim() = s_interface->getRollTrim();
@@ -193,6 +194,7 @@ void ed_fm_simulate(double dt)
 	s_interface->setAOAUnits( rawAOAToUnits(s_state->getAOA()) );
 	s_interface->setValidSolution( s_avionics->getComputer().getSolution() );
 	s_interface->setTargetSet( s_avionics->getComputer().getTargetSet() );
+	s_interface->setInRange( s_avionics->getComputer().inRange() );
 
 	s_interface->setLeftSlat( s_airframe->getSlatLPosition() );
 	s_interface->setRightSlat( s_airframe->getSlatRPosition() );

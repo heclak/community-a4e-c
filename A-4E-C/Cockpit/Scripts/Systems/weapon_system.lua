@@ -393,10 +393,13 @@ end
 function updateComputerSolution(weapons_released)
 	--Only restrict pickle if Computer is used. (COMPUTER is currently using LABS selector).
 	valid_solution = true
-	if (function_selector == FUNC_CMPTR) then
+	if function_selector == FUNC_CMPTR then
+        efm_data_bus.fm_setCP741Power(1.0)
 		valid_solution = efm_data_bus.fm_getValidSolution()
 		glare_labs_annun_state = efm_data_bus.fm_getTargetSet() and bombing_computer_target_set
-	end
+    else
+        efm_data_bus.fm_setCP741Power(0.0)
+    end
 	
 	return valid_solution
 end
@@ -457,9 +460,11 @@ function update()
 
     if _master_arm and (pickle_engaged or trigger_engaged) and valid_solution then
 	
+        --[[
 		 if function_selector == FUNC_CMPTR then
 			 labs_tone:play_continue()
 		 end
+         ]]--
 		
         local weap_release = false
         
@@ -963,7 +968,7 @@ function SetCommand(command,value)
         pickle_engaged = true
         
         -- if AWRS is setup for bombs or rockets
-        if ( function_selector == FUNC_BOMBS_GM_ARM or function_selector == FUNC_GM_UNARM ) and _master_arm then
+        if ( function_selector == FUNC_BOMBS_GM_ARM or function_selector == FUNC_GM_UNARM or function_selector == FUNC_CMPTR ) and _master_arm then
 
             -- PAIRS mode conditional logic checks
             if (AWRS_mode == AWRS_mode_ripple_pairs or AWRS_mode == AWRS_mode_step_pairs) then

@@ -161,6 +161,7 @@
   <ItemGroup>
     <ClCompile Include="AeroElement_Tests.cpp" />
     <ClCompile Include="CP741_Tests.cpp" />
+    <ClCompile Include="Maths_Tests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FM\FM.vcxproj">

@@ -49,6 +49,7 @@ public:
 		state.setRadarAltitude( radarAltitude );
 		state.setCurrentStateBodyAxis( 0.0, 0.0, { 0.0, 0.0, toRad( pitchAngle ) }, Vec3(), Vec3(), Vec3(), Vec3(), Vec3() );
 		computer.setGunsightAngle( gunsightAngle );
+		computer.setPower( true );
 	}
 
 	/// DESCRIPTION		:	Set Target using slant ranging from radar.
@@ -206,7 +207,7 @@ public:
 		setupTargetTestData( state, computer,
 			velocity, altitude, radarAltitude, pitchAngle, gunsightAngle );
 
-		Assert::AreEqual( 470.852, computer.calculateImpactDistance(), TARGET_TOLERANCE, L"Bomb range was not correct." );
+		Assert::AreEqual( 470.852, computer.calculateImpactDistance( 0.0 ), TARGET_TOLERANCE, L"Bomb range was not correct." );
 	}
 
 	/// DESCRIPTION		:	Calculate range of bomb falling with forwards up
@@ -228,7 +229,7 @@ public:
 		setupTargetTestData( state, computer,
 			velocity, altitude, radarAltitude, pitchAngle, gunsightAngle );
 
-		Assert::AreEqual( 1082.472 , computer.calculateImpactDistance(), TARGET_TOLERANCE, L"Bomb range was not correct." );
+		Assert::AreEqual( 1082.472 , computer.calculateImpactDistance( 0.0 ), TARGET_TOLERANCE, L"Bomb range was not correct." );
 	}
 
 	//////////////////////////////////////////////////////////
@@ -301,8 +302,8 @@ public:
 	/// FAILED RESULT	:	Solution is not found.
 	TEST_METHOD( CheckTargetSolution1 )
 	{
-		//Data
-		Vec3 velocity = { 86, -60.0, 0.0 };
+		//Data 86.0
+		Vec3 velocity = { 86.0 , -60.0, 0.0 };
 		double altitude = 1000.0;
 		double radarAltitude = 0.0;
 		double pitchAngle = -45.0;
@@ -318,6 +319,7 @@ public:
 		computer.setTarget( true, slantRange );
 		Assert::IsTrue( computer.getTargetSet(), L"Target was not set." );
 
+		
 		computer.updateSolution();
 
 		Assert::IsTrue( computer.getSolution(), L"No bombing solution found." );
@@ -348,6 +350,62 @@ public:
 		computer.updateSolution();
 
 		Assert::IsTrue( computer.getSolution(), L"No bombing solution found."  );
+	}
+
+	//////////////////////////////////////////////////////////
+	//
+	//		            IN RANGE TESTS
+	//
+	//////////////////////////////////////////////////////////
+
+	/// DESCRIPTION		:	Confirm whether a pull up of 45 degrees
+	///						would release the bomb.
+	/// EXPECTED RESULT	:	Target is in range.
+	/// FAILED RESULT	:	Target is not in range.
+	TEST_METHOD( InRange1 )
+	{
+		//Data
+		Vec3 velocity = { 0, -60.0, 74.0 };
+		double altitude = 1000.0;
+		double radarAltitude = altitude;
+		double pitchAngle = -45.0;
+		double slantRange = 0.0;
+		double gunsightAngle = 0.0;
+
+		Scooter::AircraftState state;
+		Scooter::CP741 computer( state );
+
+		setupTargetTestData( state, computer,
+			velocity, altitude, radarAltitude, pitchAngle, gunsightAngle );
+
+		computer.setTarget( false, slantRange );
+
+		Assert::IsTrue( computer.inRange(), L"Not in range." );
+	}
+
+	/// DESCRIPTION		:	Confirm whether a pull up of 45 degrees
+	///						would release the bomb.
+	/// EXPECTED RESULT	:	Target is not in range.
+	/// FAILED RESULT	:	Target is in range.
+	TEST_METHOD( InRange2 )
+	{
+		//Data
+		Vec3 velocity = { 34, -30.0, 0.0 };
+		double altitude = 1000.0;
+		double radarAltitude = altitude;
+		double pitchAngle = -45.0;
+		double slantRange = 0.0;
+		double gunsightAngle = 0.0;
+
+		Scooter::AircraftState state;
+		Scooter::CP741 computer( state );
+
+		setupTargetTestData( state, computer,
+			velocity, altitude, radarAltitude, pitchAngle, gunsightAngle );
+
+		computer.setTarget( false, slantRange );
+
+		Assert::IsFalse( computer.inRange(), L"In range." );
 	}
 };
 

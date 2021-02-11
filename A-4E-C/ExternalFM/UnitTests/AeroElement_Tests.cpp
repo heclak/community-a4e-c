@@ -1,6 +1,6 @@
 //=========================================================================//
 //
-//		FILE NAME	: CP741_Tests.cpp
+//		FILE NAME	: AeroElement_Tests.cpp
 //		AUTHOR		: Joshua Nelson
 //		DATE		: February 2020
 //

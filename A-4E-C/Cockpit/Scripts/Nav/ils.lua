@@ -300,6 +300,11 @@ end
 
 
 function update()
+
+	if true then
+		return
+	end
+
 	model_time = get_model_time()
 --print_message_to_user("update")
 	--update_tacans()

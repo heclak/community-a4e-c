@@ -25,6 +25,8 @@
 namespace Scooter
 {
 
+extern const Vec3 rotate( const Vec3& v, const double pitch, const double yaw );
+extern const Vec3 rotateVectorIntoXYPlane( const Vec3& v );
 extern const Vec3 windAxisToBody(const Vec3& force, const double& alpha, const double& beta);
 extern const Vec3 directionVector( const double pitch, const double yaw );
 

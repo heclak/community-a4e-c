@@ -20,6 +20,7 @@
 
 //             angle from weapons dataum + fudge factor
 #define c_weaponDatum (0.05235987756 + 0.01)
+#define PULL_UP_ANGLE 0.785398
 
 Scooter::CP741::CP741( AircraftState& state ):
 	m_state(state)
@@ -54,8 +55,8 @@ void Scooter::CP741::airborneInit()
 void Scooter::CP741::updateSolution()
 {
 	//Must be turned on
-	//if ( m_power )
-		//return;
+	if ( ! m_power )
+		return;
 
 	//Target must be set otherwise we can't range to anything.
 	if ( ! m_targetSet )
@@ -69,7 +70,7 @@ void Scooter::CP741::updateSolution()
 	if ( m_target.y > m_state.getWorldPosition().y )
 		return;
 
-	double error = fabs( calculateHorizontalDistance() - calculateImpactDistance());
+	double error = fabs( calculateHorizontalDistance() - calculateImpactDistance( 0.0 ));
 
 	if ( error < 5.0 )
 	{
@@ -92,6 +93,14 @@ double Scooter::CP741::calculateHorizontalDistance()
 
 void Scooter::CP741::setTarget( bool set, double slant )
 {
+	if ( ! m_power )
+	{
+		m_solution = false;
+		m_targetSet = false;
+		m_targetFound = false;
+		return;
+	}
+
 	//Pitch - weapon datum
 	double weaponAngle = m_state.getAngle().z - c_weaponDatum - m_gunsightAngle;
 
@@ -114,23 +123,36 @@ void Scooter::CP741::setTarget( bool set, double slant )
 		{
 			m_targetSet = false;
 			m_solution = false;
+			m_targetFound = false;
 		}
 	}
-	else if ( set && slant > 10.0)
+	else if ( slant > 10.0)
 	{
-		//Set target and reset solution.
-		m_targetSet = true;
+		//Reset solution.
 		m_solution = false;
+		m_targetFound = true;
+
+		//Set target to what was passed. We need to continually update the position
+		//tracked by the radar, this is to give a valid inrange light.
+		m_targetSet = set;
 		
 		Vec3 direction = directionVector( weaponAngle, m_state.getAngle().y );
 		m_target = direction * slant + m_state.getWorldPosition();
 	}
+	else
+	{
+		m_targetFound = false;
+	}
 }
 
-double Scooter::CP741::calculateImpactDistance()
+double Scooter::CP741::calculateImpactDistance( double angle ) const
 {
+	Vec3 velocity = rotateVectorIntoXYPlane(m_state.getWorldVelocity());
 
-	Vec3 velocity = m_state.getWorldVelocity();
+	if ( angle != 0.0 )
+	{
+		velocity = rotate( velocity, angle, 0.0 );
+	}
 
 	//Calculate time until impact.
 	double ua = velocity.y / (-9.81);
@@ -139,9 +161,21 @@ double Scooter::CP741::calculateImpactDistance()
 
 
 	//Get horizontal component distance.
-	velocity.y = 0.0;
-	double speed = magnitude( velocity );
-	double distHoriz = speed * t;
+	double distHoriz = velocity.x * t;
 	return distHoriz;
+}
+
+
+bool Scooter::CP741::inRange()
+{
+	//printf( "Found: %d Power: %d\n", m_targetFound, m_power );
+
+	if ( ! m_targetFound || ! m_power )
+		return false;
+
+	double impactAt45 = calculateImpactDistance( PULL_UP_ANGLE );
+	double distance = calculateHorizontalDistance();
+	//printf("%lf, %lf\n", impactAt45, distance );
+	return impactAt45 >= distance;
 }
 

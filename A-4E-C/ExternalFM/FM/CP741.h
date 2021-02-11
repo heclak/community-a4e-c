@@ -42,7 +42,8 @@ public:
 	inline bool getTargetSet();
 
 	double calculateHorizontalDistance();
-	double calculateImpactDistance();
+	double calculateImpactDistance( double angle ) const;
+	bool inRange();
 
 private:
 
@@ -50,6 +51,7 @@ private:
 	bool m_power = false;
 	bool m_solution = false;
 	bool m_targetSet = false;
+	bool m_targetFound = false;
 	double m_gunsightAngle = 0.0;
 
 	Vec3 m_target;
