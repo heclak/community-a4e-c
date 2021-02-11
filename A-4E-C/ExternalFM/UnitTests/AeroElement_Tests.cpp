@@ -41,7 +41,7 @@ public:
 	{
 		Scooter::AircraftState state;
 		Table table( {}, 0.0, 0.0 );
-		Scooter::AeroElement element(state, table, table, Vec3(), Vec3(), 0.0);
+		Scooter::AeroElement element(state, Scooter::AeroElement::HORIZONTAL, table, table, Vec3(), Vec3(), 0.0);
 	}
 
 };

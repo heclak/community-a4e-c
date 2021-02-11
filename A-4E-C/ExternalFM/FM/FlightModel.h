@@ -236,20 +236,20 @@ private:
 
 	/*AeroSurface m_elementLW;
 	AeroSurface m_elementRW;*/
-	AeroSurface m_elementLSlat;
-	AeroSurface m_elementRSlat;
-	AeroSurface m_elementLFlap;
-	AeroSurface m_elementRFlap;
-	AeroSurface m_elementLSpoiler;
-	AeroSurface m_elementRSpoiler;
-	AeroHorizontalTail m_elementHorizontalStab;
-	AeroVerticalSurface m_elementVerticalStab;
+	AeroElement m_elementLSlat;
+	AeroElement m_elementRSlat;
+	AeroElement m_elementLFlap;
+	AeroElement m_elementRFlap;
+	AeroElement m_elementLSpoiler;
+	AeroElement m_elementRSpoiler;
+	AeroControlElement m_elementHorizontalStab;
+	AeroControlElement m_elementVerticalStab;
 
 	/*AeroControlSurface m_elementLAil;
 	AeroControlSurface m_elementRAil;*/
 
 	std::vector<AeroElement> m_elements;
-	std::vector<AeroControlSurface> m_elementsC;
+	std::vector<AeroControlElement> m_elementsC;
 	std::vector<LERX>& m_splines;
 
 

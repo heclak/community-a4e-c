@@ -57,14 +57,14 @@ Scooter::FlightModel::FlightModel
 
 	//m_elementLW(m_state, CLalpha, CDalpha, Vec3(0, 0, -3.0), m_wingSurfaceNormalL, m_totalWingArea/2),
 	//m_elementRW(m_state, CLalpha, CDalpha, Vec3(0, 0, 3.0), m_wingSurfaceNormalR, m_totalWingArea/2),
-	m_elementLSlat(m_state, dCLslat, CDslat, Vec3(0, 0, -3.0), m_wingSurfaceNormalL, m_totalWingArea / 2),
-	m_elementRSlat(m_state, dCLslat, CDslat, Vec3(0, 0, 3.0), m_wingSurfaceNormalR, m_totalWingArea / 2),
-	m_elementLFlap(m_state, dCLflap, CDflap, Vec3(0, 0, -3.0), m_wingSurfaceNormalL, m_totalWingArea / 2),
-	m_elementRFlap(m_state, dCLflap, CDflap, Vec3(0, 0, 3.0), m_wingSurfaceNormalR, m_totalWingArea / 2),
-	m_elementLSpoiler(m_state, dCLspoiler, dCDspoiler, Vec3(0, 0, -3.0), m_wingSurfaceNormalL, m_totalWingArea / 2),
-	m_elementRSpoiler(m_state, dCLspoiler, dCDspoiler, Vec3(0, 0, 3.0), m_wingSurfaceNormalR, m_totalWingArea / 2),
-	m_elementHorizontalStab(m_state, m_airframe, CLhstab, CDhstab, comp_e, Vec3(-5.1, 1.65, 0.0), m_hStabSurfaceNormal, 4.0),
-	m_elementVerticalStab(m_state, m_airframe, CLvstab, CDvstab, Vec3(-4.8, 2.2, 0.0), m_vStabSurfaceNormal, 5.3),
+	m_elementLSlat(m_state, AeroElement::HORIZONTAL, dCLslat, CDslat, Vec3(0, 0, -3.0), m_wingSurfaceNormalL, m_totalWingArea / 2),
+	m_elementRSlat(m_state, AeroElement::HORIZONTAL, dCLslat, CDslat, Vec3(0, 0, 3.0), m_wingSurfaceNormalR, m_totalWingArea / 2),
+	m_elementLFlap(m_state, AeroElement::HORIZONTAL, dCLflap, CDflap, Vec3(0, 0, -3.0), m_wingSurfaceNormalL, m_totalWingArea / 2),
+	m_elementRFlap(m_state, AeroElement::HORIZONTAL, dCLflap, CDflap, Vec3(0, 0, 3.0), m_wingSurfaceNormalR, m_totalWingArea / 2),
+	m_elementLSpoiler(m_state, AeroElement::HORIZONTAL, dCLspoiler, dCDspoiler, Vec3(0, 0, -3.0), m_wingSurfaceNormalL, m_totalWingArea / 2),
+	m_elementRSpoiler(m_state, AeroElement::HORIZONTAL, dCLspoiler, dCDspoiler, Vec3(0, 0, 3.0), m_wingSurfaceNormalR, m_totalWingArea / 2),
+	m_elementHorizontalStab(m_state, m_airframe, AeroElement::ELEVATOR, CLhstab, CDhstab, &comp_e, Vec3(-5.1, 1.65, 0.0), m_hStabSurfaceNormal, 4.0),
+	m_elementVerticalStab(m_state, m_airframe, AeroElement::RUDDER, CLvstab, CDvstab, Vec3(-4.8, 2.2, 0.0), m_vStabSurfaceNormal, 5.3),
 	//m_elementLAil(m_state, dCLflap, CDflap, Vec3(0, 0, -3.2), m_wingSurfaceNormalL, m_totalWingArea/5),
 	//m_elementRAil(m_state, dCLflap, CDflap, Vec3(0, 0, 3.2), m_wingSurfaceNormalR,  m_totalWingArea/5),
 
@@ -129,28 +129,28 @@ Scooter::FlightModel::FlightModel
 	m_splines(splines)
 {
 	//m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -0.1067866894), m_wingSurfaceNormalL, 1.9737953980 + 0.21931));
-	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -0.5399751247), m_wingSurfaceNormalL, 1.8047195280 + 0.21931));
-	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -0.9731336040), m_wingSurfaceNormalL, 1.6356436570 + 0.21931));
-	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -1.4062517670), m_wingSurfaceNormalL, 1.4665677860 + 0.21931));
-	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, -1.8393138510), m_wingSurfaceNormalL, 1.2974919160 + 0.21931));
+	m_elements.push_back(AeroElement(m_state, AeroElement::HORIZONTAL, CLalpha, CDalpha, Vec3(0.0, 0.0, -0.5399751247), m_wingSurfaceNormalL, 1.8047195280 + 0.21931));
+	m_elements.push_back(AeroElement(m_state, AeroElement::HORIZONTAL, CLalpha, CDalpha, Vec3(0.0, 0.0, -0.9731336040), m_wingSurfaceNormalL, 1.6356436570 + 0.21931));
+	m_elements.push_back(AeroElement(m_state, AeroElement::HORIZONTAL, CLalpha, CDalpha, Vec3(0.0, 0.0, -1.4062517670), m_wingSurfaceNormalL, 1.4665677860 + 0.21931));
+	m_elements.push_back(AeroElement(m_state, AeroElement::HORIZONTAL, CLalpha, CDalpha, Vec3(0.0, 0.0, -1.8393138510), m_wingSurfaceNormalL, 1.2974919160 + 0.21931));
 	//wing+ail								  
-	m_elementsC.push_back(AeroControlSurface(m_state, m_airframe, CLalpha, CDalpha, Vec3(0.0, 0.0, -2.2722946510), m_wingSurfaceNormalL, 1.1284160450 + 0.21931));
-	m_elementsC.push_back(AeroControlSurface(m_state, m_airframe, CLalpha, CDalpha, Vec3(0.0, 0.0, -2.7051511890), m_wingSurfaceNormalL, 0.9593401748 + 0.21931));
-	m_elementsC.push_back(AeroControlSurface(m_state, m_airframe, CLalpha, CDalpha, Vec3(0.0, 0.0, -3.1378037070), m_wingSurfaceNormalL, 0.7902643043 + 0.21931));
-	m_elementsC.push_back(AeroControlSurface(m_state, m_airframe, CLalpha, CDalpha, Vec3(0.0, 0.0, -3.5700856160), m_wingSurfaceNormalL, 0.6211884337 + 0.21931));
-	m_elementsC.push_back(AeroControlSurface(m_state, m_airframe, CLalpha, CDalpha, Vec3(0.0, 0.0, -4.0014189490), m_wingSurfaceNormalL, 0.3500000000 + 0.21931));
+	m_elementsC.push_back(AeroControlElement(m_state, m_airframe, AeroElement::AILERON, CLalpha, CDalpha, Vec3(0.0, 0.0, -2.2722946510), m_wingSurfaceNormalL, 1.1284160450 + 0.21931));
+	m_elementsC.push_back(AeroControlElement(m_state, m_airframe, AeroElement::AILERON, CLalpha, CDalpha, Vec3(0.0, 0.0, -2.7051511890), m_wingSurfaceNormalL, 0.9593401748 + 0.21931));
+	m_elementsC.push_back(AeroControlElement(m_state, m_airframe, AeroElement::AILERON, CLalpha, CDalpha, Vec3(0.0, 0.0, -3.1378037070), m_wingSurfaceNormalL, 0.7902643043 + 0.21931));
+	m_elementsC.push_back(AeroControlElement(m_state, m_airframe, AeroElement::AILERON, CLalpha, CDalpha, Vec3(0.0, 0.0, -3.5700856160), m_wingSurfaceNormalL, 0.6211884337 + 0.21931));
+	m_elementsC.push_back(AeroControlElement(m_state, m_airframe, AeroElement::AILERON, CLalpha, CDalpha, Vec3(0.0, 0.0, -4.0014189490), m_wingSurfaceNormalL, 0.3500000000 + 0.21931));
 
 	//m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 0.1067866894), m_wingSurfaceNormalR, 1.9737953980));
-	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 0.5399751247), m_wingSurfaceNormalR, 1.8047195280 + 0.21931));
-	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 0.9731336040), m_wingSurfaceNormalR, 1.6356436570 + 0.21931));
-	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 1.4062517670), m_wingSurfaceNormalR, 1.4665677860 + 0.21931));
-	m_elements.push_back(AeroSurface(m_state, CLalpha, CDalpha, Vec3(0.0, 0.0, 1.8393138510), m_wingSurfaceNormalR, 1.2974919160 + 0.21931));
+	m_elements.push_back(AeroElement(m_state, AeroElement::HORIZONTAL, CLalpha, CDalpha, Vec3(0.0, 0.0, 0.5399751247), m_wingSurfaceNormalR, 1.8047195280 + 0.21931));
+	m_elements.push_back(AeroElement(m_state, AeroElement::HORIZONTAL, CLalpha, CDalpha, Vec3(0.0, 0.0, 0.9731336040), m_wingSurfaceNormalR, 1.6356436570 + 0.21931));
+	m_elements.push_back(AeroElement(m_state, AeroElement::HORIZONTAL, CLalpha, CDalpha, Vec3(0.0, 0.0, 1.4062517670), m_wingSurfaceNormalR, 1.4665677860 + 0.21931));
+	m_elements.push_back(AeroElement(m_state, AeroElement::HORIZONTAL, CLalpha, CDalpha, Vec3(0.0, 0.0, 1.8393138510), m_wingSurfaceNormalR, 1.2974919160 + 0.21931));
 	//wing+ail								   
-	m_elementsC.push_back(AeroControlSurface(m_state, m_airframe, CLalpha, CDalpha, Vec3(0.0, 0.0, 2.2722946510), m_wingSurfaceNormalR, 1.1284160450 + 0.21931));
-	m_elementsC.push_back(AeroControlSurface(m_state, m_airframe, CLalpha, CDalpha, Vec3(0.0, 0.0, 2.7051511890), m_wingSurfaceNormalR, 0.9593401748 + 0.21931));
-	m_elementsC.push_back(AeroControlSurface(m_state, m_airframe, CLalpha, CDalpha, Vec3(0.0, 0.0, 3.1378037070), m_wingSurfaceNormalR, 0.7902643043 + 0.21931));
-	m_elementsC.push_back(AeroControlSurface(m_state, m_airframe, CLalpha, CDalpha, Vec3(0.0, 0.0, 3.5700856160), m_wingSurfaceNormalR, 0.6211884337 + 0.21931));
-	m_elementsC.push_back(AeroControlSurface(m_state, m_airframe, CLalpha, CDalpha, Vec3(0.0, 0.0, 4.0014189490), m_wingSurfaceNormalR, 0.3500000000 + 0.21931));
+	m_elementsC.push_back(AeroControlElement(m_state, m_airframe, AeroElement::AILERON, CLalpha, CDalpha, Vec3(0.0, 0.0, 2.2722946510), m_wingSurfaceNormalR, 1.1284160450 + 0.21931));
+	m_elementsC.push_back(AeroControlElement(m_state, m_airframe, AeroElement::AILERON, CLalpha, CDalpha, Vec3(0.0, 0.0, 2.7051511890), m_wingSurfaceNormalR, 0.9593401748 + 0.21931));
+	m_elementsC.push_back(AeroControlElement(m_state, m_airframe, AeroElement::AILERON, CLalpha, CDalpha, Vec3(0.0, 0.0, 3.1378037070), m_wingSurfaceNormalR, 0.7902643043 + 0.21931));
+	m_elementsC.push_back(AeroControlElement(m_state, m_airframe, AeroElement::AILERON, CLalpha, CDalpha, Vec3(0.0, 0.0, 3.5700856160), m_wingSurfaceNormalR, 0.6211884337 + 0.21931));
+	m_elementsC.push_back(AeroControlElement(m_state, m_airframe, AeroElement::AILERON, CLalpha, CDalpha, Vec3(0.0, 0.0, 4.0014189490), m_wingSurfaceNormalR, 0.3500000000 + 0.21931));
 
 
 	int splineSize = splines.size() / 2;
@@ -452,8 +452,8 @@ void Scooter::FlightModel::calculateElements()
 
 void Scooter::FlightModel::slats(double& dt)
 {
-	double forceL = (m_elementLSlat.m_kElem / m_totalWingArea) * m_slatArea * slatCL(m_elementLSlat.getAOA());
-	double forceR = (m_elementLSlat.m_kElem / m_totalWingArea) * m_slatArea * slatCL(m_elementRSlat.getAOA());
+	double forceL = (m_elementLSlat.get_kElem() / m_totalWingArea) * m_slatArea * slatCL(m_elementLSlat.getAOA());
+	double forceR = (m_elementLSlat.get_kElem() / m_totalWingArea) * m_slatArea * slatCL(m_elementRSlat.getAOA());
 
 	Vec3 accDirection(-0.94, 0.34, 0.0);
 	double accAircraft = normalize(accDirection) * m_state.getLocalAcceleration();
