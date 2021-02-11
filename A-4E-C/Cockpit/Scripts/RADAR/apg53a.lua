@@ -1266,7 +1266,8 @@ function update_apg53a()
         else
             apg53a_leftrange:set(0)
             apg53a_bottomrange:set(0)
-            apg53a_scan_a2g(hdg,pitch-math.rad(3)-efm_data_bus.fm_getGunsightAngle())  -- performs range array update[], always uses weapon datum - minus the gunsight angle
+            -- add -efm_data_bus.fm_getGunsightAngle() to allow gunsight angle slaved radar
+            apg53a_scan_a2g(hdg,pitch-math.rad(3))  -- performs range array update[], always uses weapon datum - minus the gunsight angle
 			 --apg53a_scan_a2g(hdg,pitch)  -- performs range array update[], always uses weapon datum
             apg53a_draw_a2g()
         end
