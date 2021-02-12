@@ -2,7 +2,60 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
-## Version 2.0.0 - 4 February 2021
+#### Warning you will need to delete and rebind your control bindings as described in the installation steps IF you are upgrading from the SFM.
+
+## Version 2.0.0-beta-2 - 11 February 2021
+
+### Added
+- Slider for FFB sticks at which deflection of the stick to switch into AFCS CSS mode.
+- Quick Start Missions (thanks sidekick65, SPINEG, Cubeboy).
+- Added SUU-25 Parachute illumination pod for night ops.
+- CP741 in range light illuminates when within a distance that pulling up 45 degrees would release the bombs.
+
+- Sounds
+  - Avionics Whine
+  - Emergency Levers
+  - Illumination Potentiometers
+  - Radar Screen Cover
+  - Speedbrake switch
+  - Flaps lever
+  - Spoiler airflow
+  - Harness lever
+  - Engine ignitor sound
+  - Airbrake movement sound.
+  - Landing gear overspeed sound.
+
+### Changed
+
+- LABS tone is played whenever the pickle is pressed CMPTR mode.
+- Improved sound mixing
+- Menu icon
+- Menu screen.
+- Enabled cockpit lights by default between the hours of 1700 and 0500.
+
+### Deprecated
+
+### Removed
+- Bunch of deprecated special menu options.
+- Landing gear overspeed message.
+
+### Fixed
+- Trim setting in the customisation menu
+- FFB pitch trim not working.
+- FFB not working AFCS.
+- Hook controls not bindable on peripherals.
+- Stab Aug switch saying unimplemented.
+- Bomblet drag issue for the CBU 1 and 2 allowing the A-4 to go supersonic.
+
+### Known Issues
+- Chocks do not stop the aircraft
+- Pilot can blackout from cat shot
+- Pilot can blackout from rolling too fast
+- APC may not respond fast enough
+- Connecting to the super carrier will get you stuck for a bit, just keep the power high and you will move into position after 30 seconds or so.
+- The CMPTR switch has not been animated yet please use the LABS switch in the meantime.
+
+## Version 2.0.0-beta-1 - 4 February 2021
 
 #### Warning you will need to delete and rebind your control bindings as described in the installation steps.
 

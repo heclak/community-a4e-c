@@ -153,6 +153,8 @@ void Scooter::AeroElement::calculateElementPhysics()
 	m_beta = m_state.getBeta();
 	elementLift();
 	elementDrag();
+
+	updateLERX();
 	
 	//printf("lift vector (w): LDVec = %lf, %lf, %lf\n", m_LDwindAxes.x, m_LDwindAxes.y, m_LDwindAxes.z);
 	if (m_type == HORIZONTAL || m_type == AILERON || m_type == ELEVATOR)
