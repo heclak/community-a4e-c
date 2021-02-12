@@ -73,7 +73,9 @@ end
 
 function post_initialize()
     uhf_radio_device = GetDevice(devices.UHF_RADIO)
+	arc51_set_knobs_to_frequency(arc51_radio_presets[1])
 
+	dev:performClickableAction(device_commands.arc51_volume, 0.8, false)
     local birth = LockOn_Options.init_conditions.birth_place
 
     if birth == "GROUND_HOT" or birth == "AIR_HOT" then
@@ -103,7 +105,7 @@ function fnc_arc51_volume(value)
     elseif value > 0.8 then
         dev:performClickableAction(device_commands.arc51_volume, 0.8, false)
     else
-        arc51_value = value
+        arc51_volume = value
     end
 end
 
@@ -163,6 +165,24 @@ function arc51_get_current_state()
             return ARC_STATE_ON_GUARD
         end
     end
+end
+
+function arc51_set_knobs_to_frequency(value)
+	value = value - 220
+	
+	--I absolutely fucking hate floats.
+	--This should be entirely represented by
+	--integers but NOOOO lua doesn't need integers
+	--because everything is just a magical number.
+	--TODO clean my conscience
+	XXxxx = math.floor(value / 10)
+	xxXxx = math.floor(value % 10)
+	xxxXX = round( (value % 1) * 100 )
+	
+	
+	dev:performClickableAction(device_commands.arc51_freq_XXxxx, XXxxx / 20, false)
+	dev:performClickableAction(device_commands.arc51_freq_xxXxx, xxXxx / 10, false)
+	dev:performClickableAction(device_commands.arc51_freq_xxxXX, xxxXX / 100, false)
 end
 
 function arc51_update_frequency()
