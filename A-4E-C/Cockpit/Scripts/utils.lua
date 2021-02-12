@@ -498,19 +498,19 @@ end
 --[[
 Description
 Recursively descends both meta and regular tables and prints their key : value pairs until
-limits are reached or the table is exhausted.
+limits are reached or the table is exhausted. Returns the resulting string.
 
 @param[in] table_to_print 		root of the tables to recursively explore
 @param[in] max_depth				how many levels are recursion (not function recursion) are allowed.
 @param[in] max_number_tables		how many different tables are allowed to be processed in total
-@param[in] filepath				path to put this data
 
-@return VOID
+@return STRING
 ]]--
-function recursively_print(table_to_print, max_depth, max_number_tables, filepath)
-	file = io.open(filepath, "w")
-	file:write("Key,Value\n")
+function recursively_traverse(table_to_print, max_depth, max_number_tables)
 	
+  max_depth = max_depth or 100
+  max_number_tables = max_number_tables or 100
+
 	stack = {}
 	
 	table.insert(stack, {key = "start", value = table_to_print, level = 0})
@@ -522,6 +522,8 @@ function recursively_print(table_to_print, max_depth, max_number_tables, filepat
 	hash_table[tostring(hash_table)] = 2
 	hash_table[tostring(stack)] = 2
 	
+  str = ""
+
 	item = true
 	while (item) do
 		item = table.remove(stack)
@@ -533,7 +535,7 @@ function recursively_print(table_to_print, max_depth, max_number_tables, filepat
 		value = item.value
 		level = item.level
 		
-		file:write(string.rep("\t", level)..tostring(key).." = "..tostring(value).."\n")
+		str = str..(string.rep("        ", level)..tostring(key).." = "..tostring(value).."\n")
 		
 		hash = hash_table[tostring(value)]
 		valid_table = (hash == nil or hash < 2)
@@ -570,8 +572,28 @@ function recursively_print(table_to_print, max_depth, max_number_tables, filepat
 			end
 		end
 	end
-	
-	file:close()
+
+  return str
+end
+
+--[[
+Description
+Recursively descends both meta and regular tables and prints their key : value pairs until
+limits are reached or the table is exhausted.
+
+@param[in] table_to_print 		root of the tables to recursively explore
+@param[in] max_depth				how many levels are recursion (not function recursion) are allowed.
+@param[in] max_number_tables		how many different tables are allowed to be processed in total
+@param[in] filepath				path to put this data
+
+@return VOID
+]]--
+function recursively_print(table_to_print, max_depth, max_number_tables, filepath)
+  file = io.open(filepath, "w")
+	file:write("Key,Value\n")
+  str = recursively_traverse(table_to_print,max_depth,max_number_tables)
+  file:write(str)
+  file:close()
 end
 
 --[[
