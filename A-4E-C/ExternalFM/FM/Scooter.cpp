@@ -379,25 +379,25 @@ void ed_fm_set_command
 		s_input->rollAxis().keyDecrease();
 		break;
 	case Scooter::Control::ROLL_LEFT_STOP:
-		s_input->rollAxis().reset();
+		s_input->rollAxis().stop();
 		break;
 	case Scooter::Control::ROLL_RIGHT_START:
 		s_input->rollAxis().keyIncrease();
 		break;
 	case Scooter::Control::ROLL_RIGHT_STOP:
-		s_input->rollAxis().reset();
+		s_input->rollAxis().stop();
 		break;
 	case Scooter::Control::PITCH_DOWN_START:
 		s_input->pitchAxis().keyDecrease();
 		break;
 	case Scooter::Control::PITCH_DOWN_STOP:
-		s_input->pitchAxis().reset();
+		s_input->pitchAxis().stop();
 		break;
 	case Scooter::Control::PITCH_UP_START:
 		s_input->pitchAxis().keyIncrease();
 		break;
 	case Scooter::Control::PITCH_UP_STOP:
-		s_input->pitchAxis().reset();
+		s_input->pitchAxis().stop();
 		break;
 	case Scooter::Control::THROTTLE_DOWN_START:
 		//Throttle is inverted for some reason in DCS
