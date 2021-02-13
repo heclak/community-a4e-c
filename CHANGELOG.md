@@ -4,13 +4,14 @@ Please list the changes you've made in this file. We should try to follow the gu
 
 #### Warning you will need to delete and rebind your control bindings as described in the installation steps IF you are upgrading from the SFM.
 
-## Version 2.0.0-beta-2 - 11 February 2021
+## Version 2.0.0-beta-2 - 13 February 2021
 
 ### Added
 - Slider for FFB sticks at which deflection of the stick to switch into AFCS CSS mode.
 - Quick Start Missions (thanks sidekick65, SPINEG, Cubeboy).
 - Added SUU-25 Parachute illumination pod for night ops.
 - CP741 in range light illuminates when within a distance that pulling up 45 degrees would release the bombs.
+- Wheel brake axis for both brakes.
 
 - Sounds
   - Avionics Whine
@@ -32,12 +33,15 @@ Please list the changes you've made in this file. We should try to follow the gu
 - Menu icon
 - Menu screen.
 - Enabled cockpit lights by default between the hours of 1700 and 0500.
+- Keyboard commands for roll and pitch no longer reset to centre.
+- The radio manual frequency now starts at the channel 1 preset.
 
 ### Deprecated
 
 ### Removed
 - Bunch of deprecated special menu options.
 - Landing gear overspeed message.
+- Removed ability for the Gunsight to slave to the radar. The gunsight must now be set to zero when using the CP-741/A bombing computer.
 
 ### Fixed
 - Trim setting in the customisation menu
@@ -46,6 +50,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 - Hook controls not bindable on peripherals.
 - Stab Aug switch saying unimplemented.
 - Bomblet drag issue for the CBU 1 and 2 allowing the A-4 to go supersonic.
+- Radio volume knob starting at 0.
 
 ### Known Issues
 - Chocks do not stop the aircraft
