@@ -7,6 +7,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Skyhawk", "FM\FM.vcxproj", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTests", "UnitTests\UnitTests.vcxproj", "{747C568E-44FD-4351-87DC-9D4AB5FC2877}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Generate_Control_Headers", "Generate_Control_Headers\Generate_Control_Headers.vcxproj", "{F6EFF4C6-EF0E-4E02-AA48-542AF3B24541}"
+	ProjectSection(ProjectDependencies) = postProject
+		{30A7F19A-ED9B-4E78-99E7-C40FB579973A} = {30A7F19A-ED9B-4E78-99E7-C40FB579973A}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -31,6 +36,14 @@ Global
 		{747C568E-44FD-4351-87DC-9D4AB5FC2877}.Release|Win32.Build.0 = Release|Win32
 		{747C568E-44FD-4351-87DC-9D4AB5FC2877}.Release|x64.ActiveCfg = Release|x64
 		{747C568E-44FD-4351-87DC-9D4AB5FC2877}.Release|x64.Build.0 = Release|x64
+		{F6EFF4C6-EF0E-4E02-AA48-542AF3B24541}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F6EFF4C6-EF0E-4E02-AA48-542AF3B24541}.Debug|Win32.Build.0 = Debug|Win32
+		{F6EFF4C6-EF0E-4E02-AA48-542AF3B24541}.Debug|x64.ActiveCfg = Debug|x64
+		{F6EFF4C6-EF0E-4E02-AA48-542AF3B24541}.Debug|x64.Build.0 = Debug|x64
+		{F6EFF4C6-EF0E-4E02-AA48-542AF3B24541}.Release|Win32.ActiveCfg = Release|Win32
+		{F6EFF4C6-EF0E-4E02-AA48-542AF3B24541}.Release|Win32.Build.0 = Release|Win32
+		{F6EFF4C6-EF0E-4E02-AA48-542AF3B24541}.Release|x64.ActiveCfg = Release|x64
+		{F6EFF4C6-EF0E-4E02-AA48-542AF3B24541}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

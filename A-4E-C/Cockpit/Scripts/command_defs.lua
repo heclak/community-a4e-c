@@ -421,9 +421,9 @@ device_commands =
     arc51_volume                    = __counter(),
     arc51_squelch                   = __counter(),
     arc51_freq_preset               = __counter(),
-    arc51_freq_XXxxx                = __counter(),
-    arc51_freq_xxXxx                = __counter(),
-    arc51_freq_xxxXX                = __counter(),
+    arc51_freq_XXooo                = __counter(),
+    arc51_freq_ooXoo                = __counter(),
+    arc51_freq_oooXX                = __counter(),
 
     clock_stopwatch                 = __counter(),
 

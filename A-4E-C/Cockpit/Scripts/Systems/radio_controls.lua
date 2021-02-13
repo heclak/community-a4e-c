@@ -13,9 +13,9 @@ dev:listen_command(device_commands.arc51_xmitmode)
 dev:listen_command(device_commands.arc51_volume)
 dev:listen_command(device_commands.arc51_squelch)
 dev:listen_command(device_commands.arc51_freq_preset)
-dev:listen_command(device_commands.arc51_freq_XXxxx)
-dev:listen_command(device_commands.arc51_freq_xxXxx)
-dev:listen_command(device_commands.arc51_freq_xxxXX)
+dev:listen_command(device_commands.arc51_freq_XXooo)
+dev:listen_command(device_commands.arc51_freq_ooXoo)
+dev:listen_command(device_commands.arc51_freq_oooXX)
 --dev:listen_command(Keys.radio_ptt)
 
 efm_data_bus = get_efm_data_bus()
@@ -85,11 +85,11 @@ function SetCommand(command,value)
         arc51_squelch = value
     elseif command == device_commands.arc51_freq_preset then
         arc51_freq_preset = value
-    elseif command == device_commands.arc51_freq_XXxxx then
+    elseif command == device_commands.arc51_freq_XXooo then
         arc51_freq_XXxxx = value
-    elseif command == device_commands.arc51_freq_xxXxx then
+    elseif command == device_commands.arc51_freq_ooXoo then
         arc51_freq_xxXxx = value
-    elseif command == device_commands.arc51_freq_xxxXX then
+    elseif command == device_commands.arc51_freq_oooXX then
         arc51_freq_xxxXX = value
     end
 

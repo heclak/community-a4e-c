@@ -27,6 +27,7 @@
 #include "Maths.h"
 #include "LuaVM.h"
 #include "LERX.h"
+#include "Commands.h"
 
 //============================= Statics ===================================//
 static Scooter::AircraftState* s_state = NULL;
@@ -48,11 +49,14 @@ static inline double rawAOAToUnits( double rawAOA );
 
 //=========================================================================//
 
+
 void init(const char* config)
 {
-	
 	s_luaVM = new LuaVM;
-	s_luaVM->dofile( config );
+
+	char configFile[200];
+	sprintf_s( configFile, 200, "%s/Config/config.lua", config );
+	s_luaVM->dofile( configFile );
 	s_luaVM->getSplines( "splines", s_splines );
 
 	s_state = new Scooter::AircraftState;
@@ -355,9 +359,10 @@ void ed_fm_set_command
 	case Scooter::Control::RIGHT_BRAKE:
 		s_input->brakeRight( value );
 		break;
-	/*case Scooter::Control::HOOK_TOGGLE:
-		s_input->hook() = !s_input->hook();
-		break;*/
+	case DEVICE_COMMANDS_WHEELBRAKE_AXIS:
+		s_input->brakeLeft( value );
+		s_input->brakeRight( value );
+		break;
 	case Scooter::Control::RUDDER_LEFT_START:
 		s_input->yawAxis().keyDecrease();
 		break;
@@ -429,7 +434,7 @@ void ed_fm_set_command
 		s_radio->toggleRadioMenu();
 		break;
 	default:
-		; //printf( "number %d: %lf\n", command, value );
+		printf( "number %d: %lf\n", command, value );
 	}
 }
 
@@ -797,10 +802,7 @@ void ed_fm_set_plugin_data_install_path ( const char* path )
 	LOG( "Begin Log, %s\n", srcvers );
 	LOG( "Initialising Components...\n" );
 
-	char configFile[200];
-	sprintf_s( configFile, 200, "%s/Config/config.lua", path );
-
-	init(configFile);
+	init(path);
 
 	g_safeToRun = isSafeContext();
 }

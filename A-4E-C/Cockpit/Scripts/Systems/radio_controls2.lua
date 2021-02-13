@@ -13,9 +13,9 @@ dev:listen_command(device_commands.arc51_xmitmode)
 dev:listen_command(device_commands.arc51_volume)
 dev:listen_command(device_commands.arc51_squelch)
 dev:listen_command(device_commands.arc51_freq_preset)
-dev:listen_command(device_commands.arc51_freq_XXxxx)
-dev:listen_command(device_commands.arc51_freq_xxXxx)
-dev:listen_command(device_commands.arc51_freq_xxxXX)
+dev:listen_command(device_commands.arc51_freq_XXooo)
+dev:listen_command(device_commands.arc51_freq_ooXoo)
+dev:listen_command(device_commands.arc51_freq_oooXX)
 --dev:listen_command(Keys.radio_ptt)
 
 efm_data_bus = get_efm_data_bus()
@@ -140,9 +140,9 @@ local command_table = {
     [device_commands.arc51_volume] = fnc_arc51_volume,
     [device_commands.arc51_squelch] = fnc_arc51_squelch,
     [device_commands.arc51_freq_preset] = fnc_arc51_freq_preset,
-    [device_commands.arc51_freq_XXxxx] = fnc_arc51_freq_XXxxx,
-    [device_commands.arc51_freq_xxXxx] = fnc_arc51_freq_xxXxx,
-    [device_commands.arc51_freq_xxxXX] = fnc_arc51_freq_xxxXX,
+    [device_commands.arc51_freq_XXooo] = fnc_arc51_freq_XXxxx,
+    [device_commands.arc51_freq_ooXoo] = fnc_arc51_freq_xxXxx,
+    [device_commands.arc51_freq_oooXX] = fnc_arc51_freq_xxxXX,
 }
 
 function SetCommand(command,value)
@@ -180,9 +180,9 @@ function arc51_set_knobs_to_frequency(value)
 	xxxXX = round( (value % 1) * 100 )
 	
 	
-	dev:performClickableAction(device_commands.arc51_freq_XXxxx, XXxxx / 20, false)
-	dev:performClickableAction(device_commands.arc51_freq_xxXxx, xxXxx / 10, false)
-	dev:performClickableAction(device_commands.arc51_freq_xxxXX, xxxXX / 100, false)
+	dev:performClickableAction(device_commands.arc51_freq_XXooo, XXxxx / 20, false)
+	dev:performClickableAction(device_commands.arc51_freq_ooXoo, xxXxx / 10, false)
+	dev:performClickableAction(device_commands.arc51_freq_oooXX, xxxXX / 100, false)
 end
 
 function arc51_update_frequency()

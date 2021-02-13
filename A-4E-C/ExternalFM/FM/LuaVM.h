@@ -14,11 +14,13 @@ public:
 	
 	bool dofile( const char* path );
 	double getGlobalNumber(const char* name);
-	double getGlobalTableNumber( const char* table, const char* key, bool& success );
+	bool getGlobalTableNumber( const char* table, const char* key, float& result );
 	void getSplines( const char* name, std::vector<LERX>& vec );
+	bool outputCommands( const char* name );
 
 private:
 
+	bool writeTableKeysToFile( FILE* file, const char* name );
 
 	void getSpline( std::vector<LERX_vortex_spline_point>& vec );
 	bool getTableVec3(const char* name, float* vec);

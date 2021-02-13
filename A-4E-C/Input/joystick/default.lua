@@ -426,7 +426,7 @@ join(res.axisCommands,{
     {combos = defaultDeviceAssignmentFor("pitch"),  action = iCommandPlanePitch,                                                            name = _('Pitch'),             category = {_('Flight Control')}},
 	{combos = defaultDeviceAssignmentFor("rudder"), action = iCommandPlaneRudder,																	name = _('Rudder'),            category = {_('Flight Control')}},
 	{combos = defaultDeviceAssignmentFor("thrust"), action = iCommandPlaneThrustCommon,    														name = _('Thrust'),            category = {_('Flight Control')}},
-    {action = device_commands.wheelbrake_AXIS,       cockpit_device_id = devices.AIRBRAKES ,  name = _('Wheel Brake'),       category = {_('Systems')}},
+    {action = device_commands.wheelbrake_AXIS,      name = _('Wheel Brake'),       category = {_('Systems')}},
     {action = device_commands.left_wheelbrake_AXIS,  name = _('Wheel Brake Left'),  category = {_('Systems')}},
     {action = device_commands.right_wheelbrake_AXIS,  name = _('Wheel Brake Right'), category = {_('Systems')}},
     

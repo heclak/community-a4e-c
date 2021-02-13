@@ -17,12 +17,11 @@ LuaVM::~LuaVM()
 	m_state = NULL;
 }
 
-double LuaVM::getGlobalTableNumber( const char* table, const char* key, bool& success )
+bool LuaVM::getGlobalTableNumber( const char* table, const char* key, float& result )
 {
 	lua_getglobal( m_state, table );
-	float result;
-	success = getTableNumber( key, result );
-	return result;
+
+	return getTableNumber( key, result );
 }
 
 bool LuaVM::getTableValue( const char* key )
@@ -141,7 +140,7 @@ bool LuaVM::getTableVec3( const char* name, float* vec )
 		if ( ! lua_isnumber( m_state, -1 ) )
 			return false;
 
-		vec[i] = lua_tonumber( m_state, -1 );
+		vec[i] = (float)lua_tonumber( m_state, -1 );
 		lua_pop( m_state, 1 );
 	}
 	
@@ -165,4 +164,86 @@ bool LuaVM::processSplinePoint( LERX_vortex_spline_point& point )
 		return false;
 	
 	return true;
+}
+
+static void toUpper( char* str, size_t size, const char* category, const char* command )
+{
+	if ( ! category || ! command )
+		return;
+
+	int i;
+	for ( i = 0; category[i]; i++ )
+	{
+		str[i] = toupper( category[i] );
+	}
+
+	str[i++] = '_';
+	
+	int j;
+	for ( j = 0; command[j]; j++ )
+	{
+		str[j + i] = toupper( command[j] );
+	}
+
+	str[i + j] = 0;
+}
+
+bool LuaVM::writeTableKeysToFile( FILE* file, const char* name )
+{
+	lua_getglobal( m_state, name );
+
+	if ( ! lua_istable( m_state, -1 ) )
+	{
+		return false;
+	}
+
+	int tableIdx = lua_gettop( m_state );
+
+	lua_pushnil( m_state );
+
+	char line[200];
+
+	while ( lua_next( m_state, tableIdx ) )
+	{
+
+		if ( ! lua_isstring( m_state, -2 ) || ! lua_isnumber( m_state, -1 ) )
+		{
+			continue;
+		}
+
+		const char* str = lua_tostring( m_state, -2 );
+		int command = (int)lua_tonumber( m_state, -1 );
+		toUpper( line, 200, name, str );
+
+		fprintf( file, "%s = %d,\n", line, command );
+
+		lua_pop( m_state, 1 );
+	}
+
+	return true;
+}
+
+bool LuaVM::outputCommands( const char* name )
+{
+
+	FILE* file = fopen( name, "w+" );
+
+	if ( ! file )
+		return false;
+
+	fprintf( file,  "enum Command\n{\n" );
+
+	if ( ! writeTableKeysToFile( file, "Keys" ) )
+	{
+		printf( "ERROR: Couldn't get Keys table." );
+	}
+
+	if ( ! writeTableKeysToFile( file, "device_commands" ) )
+	{
+		printf( "ERROR: Couldn't get device_commands table." );
+	}
+
+	fprintf( file, "};\n" );
+
+	fclose( file );
 }
