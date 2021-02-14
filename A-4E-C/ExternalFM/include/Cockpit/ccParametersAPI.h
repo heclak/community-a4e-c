@@ -1,16 +1,6 @@
 #pragma once
 #include <windows.h>
 
-extern "C"
-{
-#define LUA_BUILD_AS_DLL
-#include "../lua/lua.h"
-#include "../lua/lauxlib.h"
-#include "../lua/lualib.h"
-}
-
-#pragma comment(lib, "../include/lua/lib/lua.lib")
-
 namespace cockpit
 {
 	struct avUHF_ARC_164;
@@ -50,8 +40,8 @@ typedef bool  (*PFN_IS_ON)(void*);
 typedef void  (*PFN_SET_ON)(void*, bool);
 typedef void* (*PFN_GET_HUMAN_COMMUNICATOR)(void);
 typedef void  (*PFN_OPEN_RADIO_MENU)(void*);
-typedef lua_State* (*PFN_CREATE_LUA_VM)(void);
-typedef void (*PFN_DESTROY_LUA_VM)(lua_State*);
+//typedef lua_State* (*PFN_CREATE_LUA_VM)(void);
+//typedef void (*PFN_DESTROY_LUA_VM)(lua_State*);
 
 
 /* usage
@@ -101,8 +91,8 @@ struct cockpit_param_api
 	PFN_SET_ON pfn_set_receiver_on;
 	PFN_SET_ON pfn_send_net_message;
 	PFN_GET_HUMAN_COMMUNICATOR pfn_get_human_communicator;
-	PFN_CREATE_LUA_VM pfn_create_lua_vm;
-	PFN_DESTROY_LUA_VM pfn_destroy_lua_vm;
+	//PFN_CREATE_LUA_VM pfn_create_lua_vm;
+	//PFN_DESTROY_LUA_VM pfn_destroy_lua_vm;
 	
 	void** device_array;
 };
@@ -148,8 +138,8 @@ inline cockpit_param_api  ed_get_cockpit_param_api()
 	ret.pfn_send_net_message = (PFN_SET_ON)GetProcAddress( cockpit_dll, "?sendNetMessage@avCommunicator@cockpit@@IEAAX_N@Z" );
 	ret.pfn_get_human_communicator = (PFN_GET_HUMAN_COMMUNICATOR)GetProcAddress( cockpit_dll, "?c_get_communicator@cockpit@@YAPEAVwHumanCommunicator@@XZ" );
 
-	ret.pfn_create_lua_vm = (PFN_CREATE_LUA_VM)GetProcAddress( cockpit_dll, "ed_cockpit_open_lua_state" );
-	ret.pfn_destroy_lua_vm = (PFN_DESTROY_LUA_VM)GetProcAddress( cockpit_dll, "ed_cockpit_close_lua_state" );
+	//ret.pfn_create_lua_vm = (PFN_CREATE_LUA_VM)GetProcAddress( cockpit_dll, "ed_cockpit_open_lua_state" );
+	//ret.pfn_destroy_lua_vm = (PFN_DESTROY_LUA_VM)GetProcAddress( cockpit_dll, "ed_cockpit_close_lua_state" );
 
 	//?makeSetupForCommunicator@avIntercom@cockpit@@MEAA_NI@Z
 	//?trySetCommunicator@avIntercom@cockpit@@MEAAXI@Z

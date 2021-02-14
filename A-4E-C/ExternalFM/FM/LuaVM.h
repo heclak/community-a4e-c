@@ -4,6 +4,17 @@
 #include <vector>
 #include "Vec3.h"
 #include "LERX.h"
+
+extern "C"
+{
+#define LUA_BUILD_AS_DLL
+#include "../include/lua/lua.h"
+#include "../include/lua/lauxlib.h"
+#include "../include/lua/lualib.h"
+}
+
+#pragma comment(lib, "../include/lua/lib/lua.lib")
+
 class LuaVM
 {
 public:

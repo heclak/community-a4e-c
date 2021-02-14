@@ -434,7 +434,7 @@ void ed_fm_set_command
 		s_radio->toggleRadioMenu();
 		break;
 	default:
-		printf( "number %d: %lf\n", command, value );
+		;// printf( "number %d: %lf\n", command, value );
 	}
 }
 
