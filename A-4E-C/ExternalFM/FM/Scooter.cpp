@@ -43,7 +43,7 @@ static LuaVM* s_luaVM = NULL;
 static std::vector<LERX> s_splines;
 
 //========================== Static Functions =============================//
-static void init();
+static void init( const char* config );
 static void cleanup();
 static inline double rawAOAToUnits( double rawAOA );
 

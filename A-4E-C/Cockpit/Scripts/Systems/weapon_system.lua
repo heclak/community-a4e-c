@@ -284,6 +284,8 @@ end
 local time_ticker = 0 -- total time passed, in seconds
 local weapon_release_ticker = 0 -- time passed since last release
 local weapon_release_count = 0 -- number of weapons that have been released
+local smoke_enable_count = 0
+local max_smoke_enable_count = 0
 local max_weapon_release_count = 0  -- number of weapons to release with each pulse
 local last_weapon_released = false -- true when last weapon in sequence has been released
 local ripple_sequence_position = 0 -- number of ripples that have been released
@@ -305,6 +307,7 @@ local fuel_tank_capacity = {
 
 function prepare_weapon_release()
     weapon_release_count = 0
+    smoke_enable_count = 0
     max_weapon_release_count = 0
     if AWRS_mode == AWRS_mode_ripple_salvo or AWRS_mode == AWRS_mode_step_salvo then
         -- check number of readied stations
@@ -321,6 +324,39 @@ function prepare_weapon_release()
     elseif AWRS_mode == AWRS_mode_ripple_pairs or AWRS_mode == AWRS_mode_step_pairs then
         max_weapon_release_count = 2
     end
+
+end
+
+function check_smoke_for_enable()
+    smoke_enable_count = 0
+    max_smoke_enable_count = 0
+
+    for i = 1, num_stations do
+
+        local station_info = WeaponSystem:get_station_info(i-1)
+
+        if station_info.level2 == wsType_GContainer and station_info.level3 == wsType_Smoke_Cont and station_states[i] == STATION_READY and station_info.count > 0 then
+            max_smoke_enable_count = max_smoke_enable_count + 1
+        end
+    end
+
+end
+
+function enable_smoke()
+
+    for i = 1, num_stations do
+        if smoke_enable_count >= max_smoke_enable_count then
+            return
+        end
+
+        local station_info = WeaponSystem:get_station_info(i-1)
+
+        if station_info.level2 == wsType_GContainer and station_info.level3 == wsType_Smoke_Cont and station_states[i] == STATION_READY and station_info.count > 0 then
+            smoke_enable_count = smoke_enable_count + 1
+            WeaponSystem:launch_station(i-1)
+        end
+    end
+
 end
 
 local ir_missile_lock_param = get_param_handle("WS_IR_MISSILE_LOCK")
@@ -477,22 +513,13 @@ function update()
         if weapon_release_ticker >= weapon_interval then
             weapon_release_ticker = 0
             prepare_weapon_release()
+            check_smoke_for_enable()
         end
 
         -- check that number of weapons released in current sequence has not exceeded total number of weapons to be released
         if weapon_release_count < max_weapon_release_count then
             weap_release = true
         end
-
-        -- this was used to output the station info. only used for debugging.
-        -- if not once then
-        --     print_message_to_user("once")
-        --     once=true
-        --     for i=1, num_stations, 1 do
-        --         local station = WeaponSystem:get_station_info(i-1)
-        --         print_message_to_user("station "..tostring(i)..": count="..tostring(station.count)..",state="..tostring(station_states[i])..",l2="..tostring(station.weapon.level2)..",l3="..tostring(station.weapon.level3)..",l4="..tostring(station.weapon.level4))
-        --     end
-        -- end
 
         -- check if readied weapon stations are empty. check for number of readied stations which are cbu
         local readied_stations_empty = true
@@ -513,11 +540,14 @@ function update()
             ripple_sequence_end()
             -- break
         end
-		
+
+        --Acutally turn on smoke if we have any prepared.
+        enable_smoke()
+        
         for py = 1, num_stations, 1 do
 
             if weapon_release_count >= max_weapon_release_count and function_selector ~= FUNC_OFF then
-				break
+                break
 				  
             end
 
@@ -549,7 +579,7 @@ function update()
                     break
                 end
             end
-            
+
             if station_states[i] == STATION_READY then
                 if station.count > 0 and (
                 (station.weapon.level2 == wsType_NURS and ((trigger_engaged and function_selector == FUNC_ROCKETS) or (pickle_engaged and function_selector == FUNC_GM_UNARM)) and weap_release) or -- launch unguided rockets
