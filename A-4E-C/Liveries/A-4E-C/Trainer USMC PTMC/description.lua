@@ -12,7 +12,7 @@ livery =
     -- three digit, smaller nose numbers, used on most liveries
     {"nose_001", 0, "a4e_bort_black", true};
     {"nose_010", 0, "a4e_bort_black", true};
-    {"nose_100", 0, "a4e_bort_black", true};
+    {"nose_100", 0, "empty", true};
 
     -- two digit top-of-tail, used on most USMC liveries
     {"tail_aggressor_001", 0, "empty", true};
