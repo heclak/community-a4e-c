@@ -625,7 +625,7 @@ double ed_fm_get_param(unsigned index)
 	case ED_FM_SUSPENSION_0_WHEEL_SELF_ATTITUDE:
 		return s_interface->getNWS() > 0.5 ? 0.0 : 1.0;
 	case ED_FM_SUSPENSION_0_WHEEL_YAW:
-		return s_interface->getNWS() > 0.5 ? -s_input->yaw()/4.0 : 0.0;
+		return s_interface->getNWS() > 0.5 ? -s_input->yaw() * 0.5 : 0.0; //rotation to 45 degrees, half 90 (range of the wheel)
 	case ED_FM_STICK_FORCE_CENTRAL_PITCH:  // i.e. trimmered position where force feeled by pilot is zero
 		s_input->setFFBEnabled(true);
 		return s_airframe->getElevatorZeroForceDeflection();
