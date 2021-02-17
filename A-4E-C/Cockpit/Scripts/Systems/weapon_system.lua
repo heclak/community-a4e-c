@@ -335,7 +335,7 @@ function check_smoke_for_enable()
 
         local station_info = WeaponSystem:get_station_info(i-1)
 
-        if station_info.level2 == wsType_GContainer and station_info.level3 == wsType_Smoke_Cont and station_states[i] == STATION_READY and station_info.count > 0 then
+        if station_info.weapon.level2 == wsType_GContainer and station_info.weapon.level3 == wsType_Smoke_Cont and station_states[i] == STATION_READY and station_info.count > 0 then
             max_smoke_enable_count = max_smoke_enable_count + 1
         end
     end
@@ -344,6 +344,7 @@ end
 
 function enable_smoke()
 
+
     for i = 1, num_stations do
         if smoke_enable_count >= max_smoke_enable_count then
             return
@@ -351,7 +352,7 @@ function enable_smoke()
 
         local station_info = WeaponSystem:get_station_info(i-1)
 
-        if station_info.level2 == wsType_GContainer and station_info.level3 == wsType_Smoke_Cont and station_states[i] == STATION_READY and station_info.count > 0 then
+        if station_info.weapon.level2 == wsType_GContainer and station_info.weapon.level3 == wsType_Smoke_Cont and station_states[i] == STATION_READY and station_info.count > 0 then
             smoke_enable_count = smoke_enable_count + 1
             WeaponSystem:launch_station(i-1)
         end
