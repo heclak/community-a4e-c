@@ -19,6 +19,11 @@ Scooter::Radio::Radio(Interface& inter):
 	m_api = ed_get_cockpit_param_api();
 }
 
+Scooter::Radio::~Radio()
+{
+	
+}
+
 // Steps for setting radio up
 //
 // The following steps were found by TheRealHarold.

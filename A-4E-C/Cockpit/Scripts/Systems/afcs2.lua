@@ -437,8 +437,7 @@ function afcs_get_current_state()
     end
 end
 
-function afcs_transition_state(from, to)
---[[
+function print_state_transition(from, to)
     state_names = {}
 
     state_names[AFCS_STATE_OFF] = "AFCS_STATE_OFF"
@@ -451,7 +450,12 @@ function afcs_transition_state(from, to)
     state_names[AFCS_STATE_WARMUP] = "AFCS_STATE_WARMUP"
     
     print_message_to_user(tostring(state_names[from]).." -> "..tostring(state_names[to]))
-]]--
+end
+
+function afcs_transition_state(from, to)
+
+    
+    --print_state_transition(from, to)
 
     if to == AFCS_STATE_ALTITUDE_ONLY then
         afcs_bank_angle_hold = math.deg(sensor_data.getRoll())
@@ -566,17 +570,26 @@ function afcs_auto_trim_pitch()
 end
 
 function afcs_find_heading_desired_bank_angle()
+    
+    local current_state = afcs_get_current_state()
+
+    local desired_heading_hold = afcs_heading_hold
+
+    if current_state ~= AFCS_STATE_ATTITUDE_HDG and current_state ~= AFCS_STATE_ALTITUDE_HDG then
+        desired_heading_hold = sensor_data.getMagneticHeading()
+    end
+    
     local heading = math.deg(sensor_data.getMagneticHeading()) % 360
 
-    local left = (heading - afcs_heading_hold) % 360
-    local right = (afcs_heading_hold - heading) % 360
+    local left = (heading - desired_heading_hold) % 360
+    local right = (desired_heading_hold - heading) % 360
 
     local bank_angle
     local delta_hdg
 
     local current_bank_angle = math.deg(sensor_data.getRoll())
 
-    local bank_rate = 2
+    local bank_rate = 1
 
     if left < right then
         delta_hdg = -left
@@ -726,6 +739,21 @@ function update_afcs()
     
 end
 
+function afcs_update_transition(from, to)
+
+    if to == AFCS_STATE_ALTITUDE_ONLY then
+        if from == AFCS_STATE_ALTITUDE_HDG and math.abs(sensor_data.getRoll()) > 0.01 then
+            return false
+        end
+    elseif to == AFCS_STATE_ATTITUDE_ONLY then
+        if from == AFCS_STATE_ATTITUDE_HDG and math.abs(sensor_data.getRoll()) > 0.01 then
+            return false
+        end
+    end
+
+    return true
+end
+
 function update()
 
     afcs_check_switches()
@@ -739,7 +767,7 @@ function update()
         --Update the possible new state
         temp_state = afcs_get_current_state()
         --Actually transition if this state is not the same as our current state.
-        if temp_state ~= afcs_state then
+        if temp_state ~= afcs_state and afcs_update_transition(afcs_state, temp_state) then
             afcs_transition_state(afcs_state, temp_state)
             --Update state after transition
             afcs_state = temp_state

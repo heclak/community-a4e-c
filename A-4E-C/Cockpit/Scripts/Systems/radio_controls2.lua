@@ -75,7 +75,7 @@ function post_initialize()
     uhf_radio_device = GetDevice(devices.UHF_RADIO)
 	arc51_set_knobs_to_frequency(arc51_radio_presets[1])
 
-	dev:performClickableAction(device_commands.arc51_volume, 0.8, false)
+	dev:performClickableAction(device_commands.arc51_volume, 0.7, false)
     local birth = LockOn_Options.init_conditions.birth_place
 
     if birth == "GROUND_HOT" or birth == "AIR_HOT" then

@@ -333,6 +333,8 @@ join(res.keyCommands,{
     {combos = {{key = '6', reformers = {'RShift','RAlt'}}},		down = Keys.ChangeCmsSalvos,        value_down = 1, name = _('ALE-29A Programmer Countermeasures Salvos'),                      category = {_('Kneeboard'), _('ALE-29A Programmer')}},
     {combos = {{key = '7', reformers = {'RShift','RAlt'}}},		down = Keys.ChangeSalvoInterval,    value_down = 1, name = _('ALE-29A Programmer Countermeasures Salvo Interval'),              category = {_('Kneeboard'), _('ALE-29A Programmer')}},
 	
+    --{combos = {{key = 'D'}},						down = iCommandPlaneChangeWeapon,						name = _('Weapon Change'),		category = _('Weapons')},
+
     --NightVision
     {combos = {{key = 'H', reformers = {'RShift'}}}        , down = iCommandViewNightVisionGogglesOn   , name = _('Night Vision Goggle - Toggle'), category = _('Sensors')},
     {combos = {{key = 'H', reformers = {'RShift','RCtrl'}}}, down = iCommandPlane_Helmet_Brightess_Up  , name = _('Goggle Gain - Inc'),            category = _('Sensors')},

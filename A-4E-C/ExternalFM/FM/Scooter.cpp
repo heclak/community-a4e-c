@@ -24,9 +24,11 @@
 #include "Interface.h"
 #include "AircraftState.h"
 #include "Radio.h"
+#include "FuelSystem2.h"
 #include "Maths.h"
 #include "LuaVM.h"
 #include "LERX.h"
+#include "ILS.h"
 #include "Commands.h"
 
 //============================= Statics ===================================//
@@ -38,7 +40,9 @@ static Scooter::Airframe* s_airframe = NULL;
 static Scooter::FlightModel* s_fm = NULL;
 static Scooter::Avionics* s_avionics = NULL;
 static Scooter::Radio* s_radio = NULL;
+static Scooter::FuelSystem2* s_fuelSystem = NULL;
 static LuaVM* s_luaVM = NULL;
+static Scooter::ILS* s_ils = NULL;
 
 static std::vector<LERX> s_splines;
 
@@ -49,6 +53,14 @@ static inline double rawAOAToUnits( double rawAOA );
 
 //=========================================================================//
 
+//Courtesy of SilentEagle
+static inline int decodeClick( float& value )
+{
+	float deviceID;
+	float normalised = modf( value, &deviceID );
+	value = normalised * 8.0f - 2.0f;
+	return (int)deviceID;
+}
 
 void init(const char* config)
 {
@@ -67,6 +79,10 @@ void init(const char* config)
 	s_avionics = new Scooter::Avionics( *s_input, *s_state );
 	s_fm = new Scooter::FlightModel( *s_state, *s_input, *s_airframe, *s_engine, *s_interface, s_splines );
 	s_radio = new Scooter::Radio(*s_interface);
+	s_ils = new Scooter::ILS(*s_interface);
+	s_fuelSystem = new Scooter::FuelSystem2( *s_engine );
+
+	
 }
 
 void cleanup()
@@ -80,6 +96,8 @@ void cleanup()
 	delete s_avionics;
 	delete s_fm;
 	delete s_radio;
+	delete s_ils;
+	delete s_fuelSystem;
 
 	s_luaVM = NULL;
 	s_state = NULL;
@@ -90,6 +108,8 @@ void cleanup()
 	s_avionics = NULL;
 	s_fm = NULL;
 	s_radio = NULL;
+	s_ils = NULL;
+	s_fuelSystem = NULL;
 
 	s_splines.clear();
 }
@@ -139,6 +159,8 @@ void ed_fm_simulate(double dt)
 	//Pre update
 	if ( s_interface->getAvionicsAlive() )
 	{
+		//s_ils->test();
+		//s_ils->update();
 		s_state->setRadarAltitude( s_interface->getRadarAltitude() );
 		s_avionics->setYawDamperPower( s_interface->getYawDamper() > 0.5 );
 		s_fm->setCockpitShakeModifier( s_interface->getCockpitShake() );
@@ -148,9 +170,8 @@ void ed_fm_simulate(double dt)
 		s_airframe->setGearLPosition( s_interface->getGearLeft() );
 		s_airframe->setGearRPosition( s_interface->getGearRight() );
 		s_airframe->setGearNPosition( s_interface->getGearNose() );
-		s_airframe->setDumpingFuel( s_interface->getDumpingFuel() );
 
-		s_airframe->setFuelCapacity( 
+		s_fuelSystem->setFuelCapacity( 
 			s_interface->getLTankCapacity(),
 			s_interface->getCTankCapacity(),
 			s_interface->getRTankCapacity() 
@@ -176,6 +197,7 @@ void ed_fm_simulate(double dt)
 	s_radio->update();
 	s_engine->updateEngine(dt);
 	s_airframe->airframeUpdate(dt);
+	s_fuelSystem->update( dt );
 	s_avionics->updateAvionics(dt);
 	s_fm->calculateAero(dt);
 
@@ -191,8 +213,8 @@ void ed_fm_simulate(double dt)
 	s_interface->setStickInputPitch( s_input->pitch() );
 	s_interface->setStickInputRoll( s_input->roll() );
 
-	s_interface->setInternalFuel(s_airframe->getFuelQty(Scooter::Airframe::Tank::INTERNAL));
-	s_interface->setExternalFuel(s_airframe->getFuelQtyExternal());
+	s_interface->setInternalFuel( s_fuelSystem->getFuelQtyInternal() );
+	s_interface->setExternalFuel( s_fuelSystem->getFuelQtyExternal() );
 	s_interface->setAOA( s_state->getAOA() );
 	s_interface->setBeta( s_state->getBeta() );
 	s_interface->setAOAUnits( rawAOAToUnits(s_state->getAOA()) );
@@ -434,7 +456,21 @@ void ed_fm_set_command
 		s_radio->toggleRadioMenu();
 		break;
 	default:
-		;// printf( "number %d: %lf\n", command, value );
+		; //printf( "number %d: %lf\n", command, value );
+	}
+
+	if ( command >= 3000 && command < 4000 )
+	{
+		int deviceId = decodeClick( value );
+
+		//Do this when we have more than one device to check.
+		/*switch ( deviceId )
+		{
+
+		}*/
+
+		if ( s_fuelSystem->handleInput( command, value ) )
+			return;
 	}
 }
 
@@ -468,23 +504,23 @@ bool ed_fm_change_mass  (double & delta_mass,
 						double & delta_mass_moment_of_inertia_z
 						)
 {
-	Scooter::Airframe::Tank tank = s_airframe->getSelectedTank();
-	if ( tank == Scooter::Airframe::Tank::DONT_TOUCH )
+	Scooter::FuelSystem2::Tank tank = s_fuelSystem->getSelectedTank();
+	if ( tank == Scooter::FuelSystem2::NUMBER_OF_TANKS )
 	{
-		s_airframe->setSelectedTank( Scooter::Airframe::Tank::INTERNAL );
+		s_fuelSystem->setSelectedTank( Scooter::FuelSystem2::TANK_FUSELAGE );
 		return false;
 	}
 
-	Vec3 pos = s_airframe->getFuelPos(tank);
+	Vec3 pos = s_fuelSystem->getFuelPos(tank);
 	//Vec3 r = pos - s_state->getCOM();
 	
-	delta_mass = s_airframe->getFuelQtyDelta(tank);
-	s_airframe->setFuelPrevious( tank );
+	delta_mass = s_fuelSystem->getFuelQtyDelta(tank);
+	s_fuelSystem->setFuelPrevious( tank );
 	delta_mass_pos_x = pos.x;
 	delta_mass_pos_y = pos.y;
 	delta_mass_pos_z = pos.z;
 
-	s_airframe->setSelectedTank((Scooter::Airframe::Tank)((int)tank + 1));
+	s_fuelSystem->setSelectedTank((Scooter::FuelSystem2::Tank)((int)tank + 1));
 	return true;
 }
 /*
@@ -493,12 +529,13 @@ bool ed_fm_change_mass  (double & delta_mass,
 */
 void ed_fm_set_internal_fuel(double fuel)
 {
-	s_airframe->setFuelState(Scooter::Airframe::Tank::INTERNAL, s_state->getCOM(), fuel);
+	s_fuelSystem->setInternal( fuel );
 }
 
 void ed_fm_refueling_add_fuel( double fuel )
 {
-	s_airframe->addFuel( fuel );
+	bool airborne = ! (s_airframe->getNoseCompression() > 0.0) ;
+	s_fuelSystem->addFuel( fuel, airborne );
 }
 
 /*
@@ -506,7 +543,7 @@ void ed_fm_refueling_add_fuel( double fuel )
 */
 double ed_fm_get_internal_fuel()
 {
-	return s_airframe->getFuelQty(Scooter::Airframe::Tank::INTERNAL);
+	return s_fuelSystem->getFuelQtyInternal();
 }
 /*
 	set external fuel volume for each payload station , called for weapon init and on reload
@@ -517,15 +554,15 @@ void  ed_fm_set_external_fuel (int	 station,
 								double y,
 								double z)
 {
-	//printf( "Station: %d, Fuel: %lf, Z: %lf, COM %lf\n", station, fuel, z, s_state->getCOM().z );
-	s_airframe->setFuelState((Scooter::Airframe::Tank)station, Vec3(x, y, z), fuel);
+	printf( "Station: %d, Fuel: %lf, Z: %lf, COM %lf\n", station, fuel, z, s_state->getCOM().z );
+	s_fuelSystem->setFuelQty( (Scooter::FuelSystem2::Tank)(station+1), Vec3( x, y, z ), fuel );
 }
 /*
 	get external fuel volume 
 */
 double ed_fm_get_external_fuel ()
 {
-	return s_airframe->getFuelQty(Scooter::Airframe::Tank::LEFT_EXT) + s_airframe->getFuelQty(Scooter::Airframe::Tank::CENTRE_EXT) + s_airframe->getFuelQty(Scooter::Airframe::Tank::RIGHT_EXT);
+	return s_fuelSystem->getFuelQtyExternal();
 }
 
 void ed_fm_set_draw_args (EdDrawArgument * drawargs,size_t size)

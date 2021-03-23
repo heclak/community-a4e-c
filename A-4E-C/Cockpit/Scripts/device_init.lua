@@ -47,10 +47,14 @@ MainPanel = {"ccMainPanel",LockOn_Options.script_path.."mainpanel_init.lua",
 --						  <{{"NAME_OF_INDICATOR_CLASS", "INDICATOR_SCRIPT_FILE"}, ...}>
 --						 }
 creators                          = {}
+creators[devices.ILS]           = {"avILS",               LockOn_Options.script_path.."Systems/ils.lua", {devices.ELECTRIC_SYSTEM}}
+--creators[devices.TACAN]           = {"eqSidewinder",               LockOn_Options.script_path.."Systems/tacan.lua", {devices.INTERCOM, devices.ELECTRIC_SYSTEM}}
+--creators[devices.TACAN]           = {"avTACAN_ARN118",               LockOn_Options.script_path.."Systems/tacan.lua", {devices.ELECTRIC_SYSTEM}}
+--creators[devices.TACAN_CTRL]      = {"avTACAN_ARN118_CtrlPanel",               LockOn_Options.script_path.."Systems/tacan_ctrl.lua", {devices.TACAN}}
 creators[devices.WEAPON_SYSTEM]   = {"avSimpleWeaponSystem"  ,LockOn_Options.script_path.."Systems/weapon_system.lua"}
 creators[devices.AVIONICS]        = {"avLuaDevice"           ,LockOn_Options.script_path.."Systems/avionics.lua"}
 creators[devices.CLOCK]           = {"avLuaDevice"           ,LockOn_Options.script_path.."clock.lua"}
-creators[devices.ELECTRIC_SYSTEM] = {"avSimpleElectricSystem",LockOn_Options.script_path.."Systems/electric_system.lua"}
+creators[devices.ELECTRIC_SYSTEM] = {"avSimpleElectricSystem",LockOn_Options.script_path.."Systems/electric_system.lua",}
 creators[devices.HYDRAULIC_SYSTEM]= {"avLuaDevice"           ,LockOn_Options.script_path.."Systems/hydraulic_system.lua"}
 creators[devices.SLATS]           = {"avLuaDevice"           ,LockOn_Options.script_path.."Systems/slats.lua"}
 creators[devices.AIRBRAKES]       = {"avLuaDevice"           ,LockOn_Options.script_path.."Systems/airbrakes.lua"}
@@ -79,7 +83,7 @@ creators[devices.COUNTERMEASURES] = {"avSimpleWeaponSystem"  ,LockOn_Options.scr
 --creators[devices.SFMEXTENDER]     = {"avLuaDevice"           ,LockOn_Options.script_path.."Systems/sfm_extender.lua"}
 creators[devices.SHRIKE]          = {"avLuaDevice"           ,LockOn_Options.script_path.."Systems/shrike.lua"                        ,{devices.RWR}}
 creators[devices.SOUNDSYSTEM]     = {"avLuaDevice"           ,LockOn_Options.script_path.."Systems/sound_system.lua"}
-creators[devices.ILS]             = {"avLuaDevice"           ,LockOn_Options.script_path.."Nav/ils.lua"}
+--creators[devices.ILS]             = {"avLuaDevice"           ,LockOn_Options.script_path.."Nav/ils.lua"}
 creators[devices.NVG]             = {"avNightVisionGoggles"  ,LockOn_Options.script_path.."HELMET/NVG.lua"                            ,{}}
 creators[devices.EFM_DATA_BUS]		= {"avLuaDevice", LockOn_Options.script_path.."EFM_Data_Bus.lua"}
 

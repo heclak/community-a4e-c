@@ -137,7 +137,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ED_FM_TEMPLATE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AssemblerOutput>All</AssemblerOutput>
+      <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -167,14 +167,24 @@
     <ClInclude Include="Commands.h" />
     <ClInclude Include="CP741.h" />
     <ClInclude Include="Data.h" />
+    <ClInclude Include="Edge.h" />
     <ClInclude Include="Engine2.h" />
+    <ClInclude Include="FuelSource.h" />
+    <ClInclude Include="FuelSystem.h" />
+    <ClInclude Include="FuelSystem2.h" />
+    <ClInclude Include="FuelTank.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Hashes.h" />
+    <ClInclude Include="ILS.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Interface.h" />
+    <ClInclude Include="Junction.h" />
     <ClInclude Include="LERX.h" />
     <ClInclude Include="LuaVM.h" />
     <ClInclude Include="Maths.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="Pipe.h" />
+    <ClInclude Include="Pump.h" />
     <ClInclude Include="Radio.h" />
     <ClInclude Include="Scooter.h" />
     <ClInclude Include="ED_FM_API.h" />
@@ -182,6 +192,7 @@
     <ClInclude Include="FlightModel.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Table.h" />
+    <ClInclude Include="Tacan.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Vec3.h" />
@@ -208,10 +219,18 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Edge.cpp" />
     <ClCompile Include="Engine2.cpp" />
+    <ClCompile Include="FuelSource.cpp" />
+    <ClCompile Include="FuelSystem.cpp" />
+    <ClCompile Include="FuelSystem2.cpp" />
+    <ClCompile Include="FuelTank.cpp" />
+    <ClCompile Include="ILS.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Junction.cpp" />
     <ClCompile Include="LuaVM.cpp" />
     <ClCompile Include="Maths.cpp" />
+    <ClCompile Include="Node.cpp" />
     <ClCompile Include="Radio.cpp" />
     <ClCompile Include="Safe.cpp" />
     <ClCompile Include="Shake.cpp" />
@@ -226,8 +245,8 @@
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <MASM Include="RCX_Hack.asm">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    <MASM Include="hack.asm">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </MASM>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -71,6 +71,13 @@ local function get_outboard_weapons( side )
     end
 
     local tbl = {
+	
+		--AIR AIR--
+        { CLSID = "{GAR-8}",                                 connector = rocketConnector, arg_value = 0.2 },  -- AIM-9B, aligned to -3deg armament datum
+        { CLSID = "{AIM-9P-ON-ADAPTER}",                     connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P
+        { CLSID = "{AIM-9P5-ON-ADAPTER}",                    connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P5
+        { CLSID = "{AIM-9X-ON-ADAPTER}",                    connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P5
+	
         --ROCKETS--
         --{ CLSID =   "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}" }, -- LAU-61, M151 HE
         --{ CLSID =   "{174C6E6D-0C3D-42ff-BCB3-0853CB371F5C}" }, -- LAU 68, MK5 HE

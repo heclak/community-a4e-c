@@ -1,3 +1,3 @@
 @ECHO OFF
-python generate_hashes.py
+C:\Python27\python.exe generate_hashes.py
 pause

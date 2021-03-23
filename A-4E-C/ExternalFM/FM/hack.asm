@@ -1,5 +1,14 @@
 _TEXT SEGMENT
 
+;This is just to bypass the annoying as fuck
+;C++ compiler.
+_find_vfptr_fnc PROC
+	mov rax, QWORD PTR [rcx] ; get table
+	add rax, rdx ; add table offset
+	mov rax, QWORD PTR [rax]
+	ret
+_find_vfptr_fnc ENDP
+
 _set_radio PROC; first integer param is passed on the rcx register
 	mov rdi, QWORD PTR [rcx]
 	add rdi, 58h ;function offset; 58h is elec Mac power.

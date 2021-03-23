@@ -247,7 +247,7 @@ function SetCommand(command,value)
             --dispatch_action(nil, iCommandPlaneFuelOff)
         end
     elseif command == device_commands.ENGINE_fuel_control_sw then
-        -- print_message_to_user("Fuel Control Switch: "..value)
+        --print_message_to_user("Fuel Control Switch: "..value)
         if value == 1 then
             -- position: manual
             manual_fuel_control_mode_sw = 1
@@ -256,7 +256,7 @@ function SetCommand(command,value)
             manual_fuel_control_mode_sw = 0
         end
     elseif command == device_commands.ENGINE_drop_tanks_sw then
-        -- print_message_to_user("Drop Tanks Switch: "..value)
+        --print_message_to_user("Drop Tanks Switch: "..value)
         if value == 1 then
             -- position: off
             -- TODO implement logic

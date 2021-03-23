@@ -29,6 +29,7 @@ typedef bool  (*GET_SOMETHING)									(void);
 typedef int   (*GET_SOMETHING_INT)								(void);
 typedef void* (*PFN_ED_COCKPIT_SET_ACTION_DIGITAL)(int value);
 typedef void  (*PFN_CONNECT_ELECTRIC)(void*, void*);
+typedef void  (*PFN_CONNECT_BOTH_ELECTRIC)(void*, void*, void*);
 typedef void  (*PFN_SET_ELEC_POWER)(void*, bool);
 typedef void*  (*PFN_GET_COMMUNICATOR)(void*);
 typedef void  (*PFN_SET_COMMUNICATOR_AS_CURRENT)(void*);
@@ -40,6 +41,9 @@ typedef bool  (*PFN_IS_ON)(void*);
 typedef void  (*PFN_SET_ON)(void*, bool);
 typedef void* (*PFN_GET_HUMAN_COMMUNICATOR)(void);
 typedef void  (*PFN_OPEN_RADIO_MENU)(void*);
+typedef double (*PFN_GET_DOUBLE)(void*);
+typedef void  (*PFN_SET_INT)(void*, int);
+
 //typedef lua_State* (*PFN_CREATE_LUA_VM)(void);
 //typedef void (*PFN_DESTROY_LUA_VM)(lua_State*);
 
@@ -91,6 +95,14 @@ struct cockpit_param_api
 	PFN_SET_ON pfn_set_receiver_on;
 	PFN_SET_ON pfn_send_net_message;
 	PFN_GET_HUMAN_COMMUNICATOR pfn_get_human_communicator;
+	PFN_SET_ON pfn_set_ils_on;
+	PFN_CONNECT_BOTH_ELECTRIC pfn_connect_ils_electric;
+	PFN_IS_ON pfn_is_ils_on;
+	PFN_SET_INT pfn_set_MHz;
+	PFN_SET_INT pfn_set_KHz;
+	PFN_GET_DOUBLE pfn_get_loc;
+	PFN_GET_DOUBLE pfn_get_gs;
+
 	//PFN_CREATE_LUA_VM pfn_create_lua_vm;
 	//PFN_DESTROY_LUA_VM pfn_destroy_lua_vm;
 	
@@ -134,10 +146,21 @@ inline cockpit_param_api  ed_get_cockpit_param_api()
 
 	ret.pfn_set_communicator_on = (PFN_SET_ON)GetProcAddress( cockpit_dll, "?setOnOff@avCommunicator@cockpit@@QEAAX_N@Z" );
 	ret.pfn_set_receiver_on = (PFN_SET_ON)GetProcAddress( cockpit_dll, "?setReceiverOnOff@avCommunicator@cockpit@@QEAAX_N@Z" );
+	ret.pfn_set_receiver_on = (PFN_SET_ON)GetProcAddress( cockpit_dll, "?setReceiverOnOff@avCommunicator@cockpit@@QEAAX_N@Z" );
 	ret.pfn_set_transmitter_on = (PFN_SET_ON)GetProcAddress( cockpit_dll, "?setTransmitterOnOff@avCommunicator@cockpit@@QEAAX_N@Z" );
 	ret.pfn_send_net_message = (PFN_SET_ON)GetProcAddress( cockpit_dll, "?sendNetMessage@avCommunicator@cockpit@@IEAAX_N@Z" );
 	ret.pfn_get_human_communicator = (PFN_GET_HUMAN_COMMUNICATOR)GetProcAddress( cockpit_dll, "?c_get_communicator@cockpit@@YAPEAVwHumanCommunicator@@XZ" );
 
+	ret.pfn_set_receiver_on = (PFN_SET_ON)GetProcAddress( cockpit_dll, "?setElecPower@avILS@cockpit@@QEAAX_N@Z" );
+	ret.pfn_connect_ils_electric = (PFN_CONNECT_BOTH_ELECTRIC)GetProcAddress( cockpit_dll, "?connectElecPower@avILS@cockpit@@UEAAXAEAVItemBase@Elec@EagleFM@@0@Z" );
+	ret.pfn_is_ils_on = (PFN_IS_ON)GetProcAddress( cockpit_dll, "?getElecPower@avILS@cockpit@@UEBA_NXZ" );
+	
+	ret.pfn_set_MHz = (PFN_SET_INT)GetProcAddress( cockpit_dll, "?setFrequencyMHz@avILS@cockpit@@QEAAXH@Z" );
+	ret.pfn_set_KHz = (PFN_SET_INT)GetProcAddress( cockpit_dll, "?setFrequencyKHz@avILS@cockpit@@QEAAXH@Z" );
+	ret.pfn_get_loc = (PFN_GET_DOUBLE)GetProcAddress( cockpit_dll, "?getLocalizerDeviation@avILS@cockpit@@QEBANXZ" );
+	ret.pfn_get_gs = (PFN_GET_DOUBLE)GetProcAddress( cockpit_dll, "?getGlideslopeDeviation@avILS@cockpit@@QEBANXZ" );
+	
+	
 	//ret.pfn_create_lua_vm = (PFN_CREATE_LUA_VM)GetProcAddress( cockpit_dll, "ed_cockpit_open_lua_state" );
 	//ret.pfn_destroy_lua_vm = (PFN_DESTROY_LUA_VM)GetProcAddress( cockpit_dll, "ed_cockpit_close_lua_state" );
 

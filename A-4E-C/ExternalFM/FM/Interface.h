@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "../include/Cockpit/ccParametersAPI.h"
+#include "Globals.h"
 
 //=========================================================================//
 
@@ -146,6 +147,7 @@ public:
 		char buffer[20];
 		uintptr_t ptr = NULL;
 		getParamString( handle, buffer, 20 );
+		printf( "%s\n", buffer );
 		//printf( "%s\n", buffer );
 		if ( sscanf_s( buffer, "%p.0", &ptr ) )
 		{
@@ -159,22 +161,29 @@ public:
 				return (void*)(ptr - 0x20);
 			}
 		}
+		else
+		{
+			LOG("Pointer could not be found from string: %s\n", buffer)
+		}
 
 		return NULL;
 	}
 
 	inline void* getIntercomPointer()
 	{
+		printf( "Intercom: " );
 		return getPointer( m_intercom );
 	}
 
 	inline void* getRadioPointer()
 	{
+		printf( "Radio: " );
 		return getPointer( m_radio );
 	}
 
 	inline void* getElecPointer()
 	{
+		printf( "Elec: " );
 		return getPointer( m_elec );
 	}
 

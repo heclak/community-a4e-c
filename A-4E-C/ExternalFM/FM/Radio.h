@@ -24,6 +24,7 @@ class Radio
 {
 public:
 	Radio(Interface& inter);
+	~Radio();
 	
 	void setup(void* radio, void* electricalSystem, void* intercom);
 	void update();

@@ -35,6 +35,9 @@ function get_ils_data_in_format()
                 position = {x = v.position[1], y = v.position[2], z = v.position[3]},
                 far = far,
             }
+        else
+          --print_message_to_user("BEACON: "..tostring(getTACANFrequency(31, 'X')*1e-6).." TYPE: "..tostring(v.type))
+
         end
   
       end
