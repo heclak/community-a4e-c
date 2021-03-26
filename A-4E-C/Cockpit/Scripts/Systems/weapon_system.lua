@@ -222,7 +222,8 @@ local cbu2ba_quantity_array_pos = 0
 local this_weapon_ptr = get_param_handle("THIS_WEAPON_PTR")
 
 function post_initialize()
-	this_weapon_ptr:set(string.sub(tostring(WeaponSystem.link),10))
+    --print_message_to_user(find_lua_device_ptr(WeaponSystem))
+	this_weapon_ptr:set(find_lua_device_ptr(WeaponSystem))
     startup_print("weapon_system: postinit start")
 
     sndhost = create_sound_host("COCKPIT_ARMS","HEADPHONES",0,0,0)

@@ -122,6 +122,11 @@ public:
 
 	}
 
+	cockpit_param_api& api()
+	{
+		return m_api;
+	}
+
 	inline void coldInit()
 	{
 
@@ -185,6 +190,12 @@ public:
 	{
 		printf( "Elec: " );
 		return getPointer( m_elec );
+	}
+
+	inline void* getWeapPointer()
+	{
+		printf( "Weapon: " );
+		return getPointer( m_weapon );
 	}
 
 	inline void setLeftSlat( double number )

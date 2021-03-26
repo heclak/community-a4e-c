@@ -313,7 +313,7 @@ namespace UnitTests
 			system.update( 1.0 );
 
 			Assert::AreEqual( 731.0, system.m_fuel[Scooter::FuelSystem2::TANK_FUSELAGE], L"Fuselage tank not at correct value." ); // tank has 1.8 transfered to it from wing
-			Assert::AreEqual( 1732.78, system.m_fuel[Scooter::FuelSystem2::TANK_WING], FLOAT_TOLERANCE, L"Wing tank not at correct value." ); // tank is filled by external tanks
+			Assert::AreEqual( 1736.78, system.m_fuel[Scooter::FuelSystem2::TANK_WING], FLOAT_TOLERANCE, L"Wing tank not at correct value." ); // tank is filled by external tanks
 			Assert::AreEqual( 98.8, system.m_fuel[Scooter::FuelSystem2::TANK_EXTERNAL_LEFT], FLOAT_TOLERANCE, L"Left External tank not at correct value." );
 			Assert::AreEqual( 98.62, system.m_fuel[Scooter::FuelSystem2::TANK_EXTERNAL_CENTRE], FLOAT_TOLERANCE, L"Centre External tank not at correct value." );
 			Assert::AreEqual( 98.8, system.m_fuel[Scooter::FuelSystem2::TANK_EXTERNAL_RIGHT], FLOAT_TOLERANCE, L"Right External tank not at correct value." );

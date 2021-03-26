@@ -81,7 +81,6 @@ void init(const char* config)
 	s_radio = new Scooter::Radio(*s_interface);
 	s_ils = new Scooter::ILS(*s_interface);
 	s_fuelSystem = new Scooter::FuelSystem2( *s_engine );
-
 	
 }
 
@@ -159,6 +158,8 @@ void ed_fm_simulate(double dt)
 	//Pre update
 	if ( s_interface->getAvionicsAlive() )
 	{
+		//s_sidewinder->init();
+		//s_sidewinder->update();
 		//s_ils->test();
 		//s_ils->update();
 		s_state->setRadarAltitude( s_interface->getRadarAltitude() );
@@ -401,13 +402,13 @@ void ed_fm_set_command
 		s_input->rollAxis().keyDecrease();
 		break;
 	case Scooter::Control::ROLL_LEFT_STOP:
-		s_input->rollAxis().stop();
+		s_input->rollAxis().reset();
 		break;
 	case Scooter::Control::ROLL_RIGHT_START:
 		s_input->rollAxis().keyIncrease();
 		break;
 	case Scooter::Control::ROLL_RIGHT_STOP:
-		s_input->rollAxis().stop();
+		s_input->rollAxis().reset();
 		break;
 	case Scooter::Control::PITCH_DOWN_START:
 		s_input->pitchAxis().keyDecrease();

@@ -1,5 +1,6 @@
 #pragma once
 #include <windows.h>
+#include <cinttypes>
 
 namespace cockpit
 {
@@ -43,6 +44,7 @@ typedef void* (*PFN_GET_HUMAN_COMMUNICATOR)(void);
 typedef void  (*PFN_OPEN_RADIO_MENU)(void*);
 typedef double (*PFN_GET_DOUBLE)(void*);
 typedef void  (*PFN_SET_INT)(void*, int);
+typedef void  (*PFN_SET_DOUBLE)(void*, double);
 
 //typedef lua_State* (*PFN_CREATE_LUA_VM)(void);
 //typedef void (*PFN_DESTROY_LUA_VM)(lua_State*);
@@ -102,6 +104,7 @@ struct cockpit_param_api
 	PFN_SET_INT pfn_set_KHz;
 	PFN_GET_DOUBLE pfn_get_loc;
 	PFN_GET_DOUBLE pfn_get_gs;
+	PFN_SET_DOUBLE pfn_set_radius;
 
 	//PFN_CREATE_LUA_VM pfn_create_lua_vm;
 	//PFN_DESTROY_LUA_VM pfn_destroy_lua_vm;
@@ -159,8 +162,8 @@ inline cockpit_param_api  ed_get_cockpit_param_api()
 	ret.pfn_set_KHz = (PFN_SET_INT)GetProcAddress( cockpit_dll, "?setFrequencyKHz@avILS@cockpit@@QEAAXH@Z" );
 	ret.pfn_get_loc = (PFN_GET_DOUBLE)GetProcAddress( cockpit_dll, "?getLocalizerDeviation@avILS@cockpit@@QEBANXZ" );
 	ret.pfn_get_gs = (PFN_GET_DOUBLE)GetProcAddress( cockpit_dll, "?getGlideslopeDeviation@avILS@cockpit@@QEBANXZ" );
-	
-	
+	ret.pfn_set_radius = (PFN_SET_DOUBLE)GetProcAddress( cockpit_dll, "?setScanRadius@avSidewinderSeeker@cockpit@@QEAAXN@Z" );
+
 	//ret.pfn_create_lua_vm = (PFN_CREATE_LUA_VM)GetProcAddress( cockpit_dll, "ed_cockpit_open_lua_state" );
 	//ret.pfn_destroy_lua_vm = (PFN_DESTROY_LUA_VM)GetProcAddress( cockpit_dll, "ed_cockpit_close_lua_state" );
 

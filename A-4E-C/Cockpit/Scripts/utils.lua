@@ -616,3 +616,16 @@ for k,v in ipairs(target_cur) do
 end
 --]]
 ---------------------------------------------
+
+--[[
+Description
+Fetch the pointer to the vfptr table for the lua device of a device. This
+is used in the 'hacks' to make the radio (and potentially the ILS) work.
+
+@param[in] avDevice   Device for which to fetch the ptr.
+@return STRING        String containing the address to the lua device vfptr table.
+]]--
+function find_lua_device_ptr(device)
+  str_ptr = string.sub(tostring(device.link),10)
+  return str_ptr
+end
