@@ -39,7 +39,7 @@ namespace UnitTests
 			Scooter::AircraftState state;
 			Scooter::Engine2 engine(state);
 
-			Scooter::FuelSystem2 system(engine);
+			Scooter::FuelSystem2 system(engine, state );
 			system.addFuel( 1000.0, true );
 
 			Assert::AreEqual( 1000.0, system.m_fuel[Scooter::FuelSystem2::TANK_WING], L"Wing tank not filled correctly.");
@@ -53,7 +53,7 @@ namespace UnitTests
 			Scooter::AircraftState state;
 			Scooter::Engine2 engine( state );
 
-			Scooter::FuelSystem2 system( engine );
+			Scooter::FuelSystem2 system( engine, state );
 			system.addFuel( 2000.0, true );
 
 			Assert::AreEqual( system.m_fuelCapacity[Scooter::FuelSystem2::TANK_WING], system.m_fuel[Scooter::FuelSystem2::TANK_WING], L"Wing tank not completely filled." );
@@ -68,7 +68,7 @@ namespace UnitTests
 			Scooter::AircraftState state;
 			Scooter::Engine2 engine( state );
 
-			Scooter::FuelSystem2 system( engine );
+			Scooter::FuelSystem2 system( engine, state );
 			//Set 1000 kg tank on centreline.
 			system.setFuelCapacity( 0.0, 1000.0, 0.0 );
 
@@ -89,7 +89,7 @@ namespace UnitTests
 			Scooter::AircraftState state;
 			Scooter::Engine2 engine( state );
 
-			Scooter::FuelSystem2 system( engine );
+			Scooter::FuelSystem2 system( engine, state );
 			//Set 500 kg tank on wing tanks.
 			system.setFuelCapacity( 500.0, 0.0, 500.0 );
 
@@ -111,7 +111,7 @@ namespace UnitTests
 		{
 			Scooter::AircraftState state;
 			Scooter::Engine2 engine( state );
-			Scooter::FuelSystem2 system( engine );
+			Scooter::FuelSystem2 system( engine, state );
 
 			system.setInternal( 500.0 );
 
@@ -126,7 +126,7 @@ namespace UnitTests
 		{
 			Scooter::AircraftState state;
 			Scooter::Engine2 engine( state );
-			Scooter::FuelSystem2 system( engine );
+			Scooter::FuelSystem2 system( engine, state );
 
 			system.setInternal( 1000.0 );
 
@@ -141,7 +141,7 @@ namespace UnitTests
 		{
 			Scooter::AircraftState state;
 			Scooter::Engine2 engine( state );
-			Scooter::FuelSystem2 system( engine );
+			Scooter::FuelSystem2 system( engine, state );
 
 			//Overfill the tanks.
 			system.setInternal( 3000 );
@@ -158,7 +158,7 @@ namespace UnitTests
 			Scooter::AircraftState state;
 			Scooter::Engine2 engine( state );
 
-			Scooter::FuelSystem2 system( engine );
+			Scooter::FuelSystem2 system( engine, state );
 			system.setInternal( 200 );
 
 			system.addFuel( -100.0 );
@@ -175,7 +175,7 @@ namespace UnitTests
 			Scooter::AircraftState state;
 			Scooter::Engine2 engine( state );
 
-			Scooter::FuelSystem2 system( engine );
+			Scooter::FuelSystem2 system( engine, state );
 
 			//Fuselage tank is full and wing tank is partially filled
 			system.setInternal( 1000 );
@@ -197,7 +197,7 @@ namespace UnitTests
 			Scooter::AircraftState state;
 			Scooter::Engine2 engine( state );
 
-			Scooter::FuelSystem2 system( engine );
+			Scooter::FuelSystem2 system( engine, state );
 
 			//Fuselage tank is full and wing tank is partially filled
 			system.setInternal( 500 );
@@ -222,7 +222,7 @@ namespace UnitTests
 			Scooter::AircraftState state;
 			Scooter::Engine2 engine( state );
 
-			Scooter::FuelSystem2 system( engine );
+			Scooter::FuelSystem2 system( engine, state );
 
 			//Fuselage tank is full and wing tank is partially filled
 			system.setInternal( 500 );
@@ -251,7 +251,7 @@ namespace UnitTests
 			engine.m_hpOmega = 1000;
 			engine.m_lpOmega = 1000;
 
-			Scooter::FuelSystem2 system( engine );
+			Scooter::FuelSystem2 system( engine, state );
 			system.setInternal( 500 );
 			engine.m_correctedFuelFlow = 1.0;
 			engine.m_fuelFlow = 1.0;
@@ -275,7 +275,7 @@ namespace UnitTests
 			engine.m_lpOmega = 1000;
 			engine.m_fuelFlow = 100.0;
 
-			Scooter::FuelSystem2 system( engine );
+			Scooter::FuelSystem2 system( engine, state );
 			system.setInternal( 800 );
 			engine.m_correctedFuelFlow = 1.0;
 			engine.m_fuelFlow = 1.0;
@@ -298,7 +298,7 @@ namespace UnitTests
 			engine.m_hpOmega = 1000;
 			engine.m_lpOmega = 1000;
 
-			Scooter::FuelSystem2 system( engine );
+			Scooter::FuelSystem2 system( engine, state );
 			system.setInternal( 3000 );
 			system.setFuelCapacity( 100.0, 100.0, 100.0 );
 			system.setFuelQty( Scooter::FuelSystem2::TANK_EXTERNAL_LEFT, Vec3(), 100.0 );

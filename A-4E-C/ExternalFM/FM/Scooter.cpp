@@ -80,7 +80,7 @@ void init(const char* config)
 	s_fm = new Scooter::FlightModel( *s_state, *s_input, *s_airframe, *s_engine, *s_interface, s_splines );
 	s_radio = new Scooter::Radio(*s_interface);
 	s_ils = new Scooter::ILS(*s_interface);
-	s_fuelSystem = new Scooter::FuelSystem2( *s_engine );
+	s_fuelSystem = new Scooter::FuelSystem2( *s_engine, *s_state );
 	
 }
 
@@ -191,6 +191,10 @@ void ed_fm_simulate(double dt)
 		s_engine->setThrottle( s_interface->getEngineThrottlePosition() );
 		s_engine->setBleedAir( s_interface->getBleedAir() > 0.1 );
 		s_engine->setIgnitors( s_interface->getIgnition() > 0.1 );
+
+		s_state->setGForce( s_interface->getGForce() );
+
+		s_fuelSystem->setBoostPumpPower( s_interface->getElecMonitoredAC() );
 	}
 
 	//Update
@@ -227,6 +231,11 @@ void ed_fm_simulate(double dt)
 	s_interface->setRightSlat( s_airframe->getSlatRPosition() );
 
 	s_interface->setUsingFFB( s_input->getFFBEnabled() );
+
+	//Starting to try to move some of these tests into the cpp. Make it less spaghetti.
+	//Ultimately we should move this into the avionics class.
+	s_interface->setFuelTransferCaution( s_interface->getElecPrimaryAC() && (s_interface->getMasterTest() || s_fuelSystem->getFuelTransferCaution()) );
+	s_interface->setFuelBoostCaution( s_interface->getElecPrimaryAC() && (s_interface->getMasterTest() || s_fuelSystem->getFuelBoostCaution()) );
 }
 
 void ed_fm_set_atmosphere(
@@ -257,6 +266,7 @@ void ed_fm_set_current_mass_state
 	double moment_of_inertia_z
 )
 {
+	//printf( "Mass: %lf\n", mass );
 	s_airframe->setMass(mass);
 	Vec3 com = Vec3( center_of_mass_x, center_of_mass_y, center_of_mass_z );
 	s_state->setCOM( com );
@@ -517,6 +527,9 @@ bool ed_fm_change_mass  (double & delta_mass,
 	
 	delta_mass = s_fuelSystem->getFuelQtyDelta(tank);
 	s_fuelSystem->setFuelPrevious( tank );
+
+	//printf( "Tank %d, Pos: %lf, %lf, %lf, dm: %lf\n", tank, pos.x, pos.y, pos.z, delta_mass );
+
 	delta_mass_pos_x = pos.x;
 	delta_mass_pos_y = pos.y;
 	delta_mass_pos_z = pos.z;
@@ -530,11 +543,13 @@ bool ed_fm_change_mass  (double & delta_mass,
 */
 void ed_fm_set_internal_fuel(double fuel)
 {
+	//printf( "Set internal fuel: %lf\n", fuel );
 	s_fuelSystem->setInternal( fuel );
 }
 
 void ed_fm_refueling_add_fuel( double fuel )
 {
+	//printf( "Add fuel: %lf\n", fuel);
 	bool airborne = ! (s_airframe->getNoseCompression() > 0.0) ;
 	s_fuelSystem->addFuel( fuel, airborne );
 }
@@ -555,7 +570,7 @@ void  ed_fm_set_external_fuel (int	 station,
 								double y,
 								double z)
 {
-	printf( "Station: %d, Fuel: %lf, Z: %lf, COM %lf\n", station, fuel, z, s_state->getCOM().z );
+	//printf( "Station: %d, Fuel: %lf, Z: %lf, COM %lf\n", station, fuel, z, s_state->getCOM().z );
 	s_fuelSystem->setFuelQty( (Scooter::FuelSystem2::Tank)(station+1), Vec3( x, y, z ), fuel );
 }
 /*

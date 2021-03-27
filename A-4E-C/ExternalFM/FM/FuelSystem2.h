@@ -11,6 +11,14 @@
 #define c_fuelTransferRateExternCentreToWing 0.69
 #define c_fuelTransferRateWingToFuseEmergency 1.1
 
+//Pressure at which, with no boost pump, we start to lose engine power
+//due to not being able to provide enough fuel to the engine.
+#define c_lowFuelFlowPressure 81000.0
+#define c_lowFuelFlowPressure50Percent 30000.0
+//#define c_fuelTransferLowRate  
+
+#define c_fuelInLines 10.0
+
 namespace Scooter
 {
 
@@ -18,7 +26,7 @@ class FuelSystem2 : public BaseComponent
 {
 public:
 
-	FuelSystem2( Scooter::Engine2& engine );
+	FuelSystem2( Scooter::Engine2& engine, Scooter::AircraftState& state );
 	virtual void zeroInit();
 	virtual void coldInit();
 	virtual void hotInit();
@@ -49,6 +57,7 @@ public:
 	inline void setMechPumpPressure( bool pressure );
 	inline void setWingTankPressure( bool pressure );
 	inline void setWingTankBypass( bool bypass );
+	inline void setBoostPumpPower( bool power );
 
 	inline double getFuelQty( Tank tank ) const;
 	inline double getFuelQtyExternal() const;
@@ -56,6 +65,8 @@ public:
 	inline double getFuelQtyDelta( Tank tank ) const;
 	inline const Vec3& getFuelPos( Tank tank ) const;
 	inline Tank getSelectedTank() const;
+	inline bool getFuelTransferCaution() const;
+	inline bool getFuelBoostCaution() const;
 	inline void setFuelQty( Tank tank, const Vec3& position, double value );
 	inline void setInternal( double value );
 	inline void setFuelCapacity( double l, double c, double r );
@@ -70,6 +81,9 @@ private:
 	double m_fuelCapacity[NUMBER_OF_TANKS] = { 731.0, 1737.0, 0.0, 0.0, 0.0 }; //changed it to 1737 to match the values from the entry.
 	Vec3 m_fuelPos[NUMBER_OF_TANKS] = { Vec3(), Vec3(), Vec3(), Vec3(), Vec3() };
 
+	bool m_enginePump = true;
+	bool m_boostPump = true;
+	bool m_boostPumpPressure = false;
 	bool m_externalTankPressure = true;
 	bool m_mechPumpPressure = true; //is the mechanical pump working
 	bool m_wingTankPressure = false; //emergency pressure
@@ -78,10 +92,20 @@ private:
 	bool m_hasFuel = true; //this is false is the fuel cannot be delivered or we are out of fuel.
 	bool m_dumpingFuel = false;
 
+	bool m_fuelTransferCaution = false;
+
+	double m_fuelInLines = c_fuelInLines;
+
 	Tank m_selectedTank = TANK_FUSELAGE;
 
 	Scooter::Engine2& m_engine;
+	Scooter::AircraftState& m_state;
 };
+
+void FuelSystem2::setBoostPumpPower( bool power )
+{
+	m_boostPump = power;
+}
 
 void FuelSystem2::setExternalTankPressure( bool pressure )
 {
@@ -150,6 +174,16 @@ void FuelSystem2::setSelectedTank( Tank tank )
 void FuelSystem2::setFuelDumping( bool dumping )
 {
 	m_dumpingFuel = dumping;
+}
+
+bool FuelSystem2::getFuelTransferCaution() const
+{
+	return m_fuelTransferCaution;
+}
+
+bool FuelSystem2::getFuelBoostCaution() const
+{
+	return ! m_boostPumpPressure;
 }
 
 double FuelSystem2::getFuelQtyDelta( Tank tank ) const

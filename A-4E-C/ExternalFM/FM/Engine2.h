@@ -65,6 +65,7 @@ public:
 	inline void setTemperature( double temperature );
 	inline void setCompressorDamage( double damage );
 	inline void setTurbineDamage( double damage );
+	inline void setMaxDeliverableFuelFlowFraction( double fraction );
 
 	inline double getThrust();
 	inline double getFuelFlow();
@@ -100,6 +101,7 @@ private:
 	double m_throttle = 0.0;
 	double m_fuelFlow = 0.0;
 	double m_correctedFuelFlow = 0.0;
+	double m_maxDeliverableFuelFlow = c_fuelFlowMax;
 
 	double m_massFlow = 0.0;
 	double m_thrust = 0.0;
@@ -129,6 +131,11 @@ private:
 	inline void updateShafts(double hpTarget, double lowOmegaInertia, double dt);
 	inline void updateShaftsDynamic( double dt );
 };
+
+void Engine2::setMaxDeliverableFuelFlowFraction( double fraction )
+{
+	m_maxDeliverableFuelFlow = c_fuelFlowMax * fraction;
+}
 
 void Engine2::setThrottle( double throttle )
 {

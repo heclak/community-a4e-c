@@ -38,6 +38,7 @@ public:
 	inline void setMach( double mach );
 	inline void setRadarAltitude( double altitude );
 	inline void setCOM( const Vec3& com );
+	inline void setGForce( const double gs );
 
 	inline const Vec3& getWorldPosition() const;
 	inline const Vec3& getWorldVelocity() const;
@@ -63,6 +64,10 @@ public:
 
 	inline const Vec3& getCOM() const;
 
+	//This comes from lua, if you need faster updating g-force
+	//Then calculate it from the global acceleration values.
+	inline const double getGForce() const;
+
 
 
 
@@ -86,6 +91,7 @@ private:
 	double m_temperature;
 	double m_pressure;
 	double m_radarAltitude;
+	double m_gs;
 };
 
 	
@@ -144,6 +150,11 @@ void AircraftState::setMach( double mach )
 void AircraftState::setCOM( const Vec3& com )
 {
 	m_com = com;
+}
+
+void AircraftState::setGForce( const double gs )
+{
+	m_gs = gs;
 }
 
 const Vec3& AircraftState::getWorldWindVelocity() const
@@ -248,6 +259,11 @@ const double AircraftState::getRadarAltitude() const
 const Vec3& AircraftState::getCOM() const
 {
 	return m_com;
+}
+
+const double AircraftState::getGForce() const
+{
+	return m_gs;
 }
 
 }

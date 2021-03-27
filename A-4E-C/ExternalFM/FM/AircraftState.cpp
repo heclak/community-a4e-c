@@ -43,6 +43,7 @@ void Scooter::AircraftState::zeroInit()
 	m_temperature = 0.0;
 	m_speedOfSound = 0.0;
 	m_radarAltitude = 0.0;
+	m_gs = 0.0;
 }
 
 void Scooter::AircraftState::coldInit()

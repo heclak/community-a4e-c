@@ -130,6 +130,10 @@ void Scooter::Engine2::updateEngine( double dt )
 
 
 		m_fuelFlow += (desired - m_fuelFlow) * dt / c_fuelFlowInertia;
+
+		//If we have a boost pump failure we cannot maintain the flow.
+		m_fuelFlow = clamp( m_fuelFlow, 0.0, m_maxDeliverableFuelFlow );
+
 		//printf( "FF %lf\n", m_fuelFlow * 2.2 * 3600.0 );
 		//m_fuelFlow += (std::max( std::min( desiredFuelFlow, c_fuelFlowMax ), 0.0 ) - m_fuelFlow) * dt / c_fuelFlowInertia;
 	}

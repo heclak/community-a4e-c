@@ -4,8 +4,9 @@
 namespace Scooter
 {
 
-FuelSystem2::FuelSystem2( Scooter::Engine2& engine ) :
-	m_engine( engine )
+FuelSystem2::FuelSystem2( Scooter::Engine2& engine, Scooter::AircraftState& state ) :
+	m_engine( engine ),
+	m_state( state )
 {
 
 }
@@ -114,7 +115,7 @@ void FuelSystem2::update( double dt )
 	double enginePower = m_engine.getRPMNorm() > 0.40;
 
 	//Draw from the Fuselage Tank to the engine, minimum usable fuel.
-	if ( m_fuel[TANK_FUSELAGE] > 15.0 )
+	if ( m_fuel[TANK_FUSELAGE] > 15.0 && m_enginePump )
 	{
 		if ( dm > 0.0 )
 			m_fuel[TANK_FUSELAGE] -= dm;
@@ -124,6 +125,51 @@ void FuelSystem2::update( double dt )
 	else
 	{
 		m_hasFuel = false;
+	}
+	
+
+	if ( m_boostPump )
+	{
+		m_engine.setMaxDeliverableFuelFlowFraction( 1.0 ); //we can deliver as much fuel as we so please.
+
+		//As far as I can tell from the manual this takes longer for flamout
+		//for 0.5 > ff > -0.5
+		if ( m_state.getGForce() < 0.5 )
+		{
+			if ( m_state.getGForce() > -0.5 )
+				m_fuelInLines -= dm / 3.0;
+			else
+				m_fuelInLines -= dm;
+		}
+		else
+		{
+			m_fuelInLines += dt * c_fuelFlowMax;
+		}
+
+		m_fuelInLines = clamp( m_fuelInLines, 0.0, c_fuelInLines );
+
+		if ( m_fuelInLines < 1.0 )
+		{
+			m_boostPumpPressure = false;
+			if ( m_fuelInLines < 0.001 )
+				m_hasFuel = false;
+		}
+		else
+			m_boostPumpPressure = true;
+	}
+	else
+	{
+		m_boostPumpPressure = false;
+		double weight = (-m_state.getPressure() + c_lowFuelFlowPressure) / (c_lowFuelFlowPressure - c_lowFuelFlowPressure50Percent);
+		//Just a total guess of about 40% fuel flow at 35kft.
+		double maxDeliverable = clamp(lerpWeight( 1.0, 0.4, weight ), 0.0, 1.0);
+		//printf( "Weight %lf, Max Deliverable %lf\n", weight, maxDeliverable );
+		m_engine.setMaxDeliverableFuelFlowFraction( maxDeliverable );
+
+		//printf( "g: %lf\n", m_state.getGForce() );
+		//Less than 0.5 g cut the fuel since we have no boost pump, it's entirely gravity fed.
+		if ( m_state.getGForce() < 0.5 )
+			m_hasFuel = false;
 	}
 
 	m_engine.setHasFuel( m_hasFuel );
@@ -135,10 +181,15 @@ void FuelSystem2::update( double dt )
 	if ( m_wingTankPressure )
 		wingTransferRate += c_fuelTransferRateWingToFuseEmergency * rateFactor;
 
-	wingTransferRate *= dt;
-
 	if ( ! enginePower )
 		wingTransferRate = 0.0;
+
+	if ( wingTransferRate < 1.8 || m_fuel[TANK_WING] < 15.0 )
+		m_fuelTransferCaution = true;
+	else
+		m_fuelTransferCaution = false;
+
+	wingTransferRate *= dt;
 
 	transferFuel( TANK_WING, TANK_FUSELAGE, wingTransferRate );
 
@@ -168,7 +219,7 @@ void FuelSystem2::update( double dt )
 		}
 	}
 
-	printf( "Fus: %lf, Wing: %lf, Ex L: %lf, Ex C: %lf, Ex R: %lf\n", m_fuel[0], m_fuel[1], m_fuel[2], m_fuel[3], m_fuel[4] );
+	//printf( "Fus: %lf, Wing: %lf, Ex L: %lf, Ex C: %lf, Ex R: %lf\n", m_fuel[0], m_fuel[1], m_fuel[2], m_fuel[3], m_fuel[4] );
 }
 
 }//end scooter namespace

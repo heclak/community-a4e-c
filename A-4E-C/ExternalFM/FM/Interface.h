@@ -120,6 +120,16 @@ public:
 
 		m_usingFFB = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_USING_FFB" );
 
+		m_elecPrimaryAC = m_api.pfn_ed_cockpit_get_parameter_handle( "ELEC_PRIMARY_AC_OK" );
+		m_elecPrimaryDC = m_api.pfn_ed_cockpit_get_parameter_handle( "ELEC_PRIMARY_DC_OK" );
+		m_elecMonitoredAC = m_api.pfn_ed_cockpit_get_parameter_handle( "ELEC_AFT_MON_AC_OK" );
+		m_masterTest = m_api.pfn_ed_cockpit_get_parameter_handle( "D_MASTER_TEST" );
+
+		m_fuelTransferCaution = m_api.pfn_ed_cockpit_get_parameter_handle( "D_FUELTRANS_CAUTION" );
+		m_fuelBoostCaution = m_api.pfn_ed_cockpit_get_parameter_handle( "D_FUELBOOST_CAUTION" );
+
+		m_gForce = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_GFORCE" );
+
 	}
 
 	cockpit_param_api& api()
@@ -308,9 +318,44 @@ public:
 		setParamNumber( m_inRange, (double)inRange );
 	}
 
+	inline void setFuelTransferCaution( bool caution )
+	{
+		setParamNumber( m_fuelTransferCaution, (double)caution );
+	}
+
+	inline void setFuelBoostCaution( bool caution )
+	{
+		setParamNumber( m_fuelBoostCaution, (double)caution );
+	}
+
+	inline double getGForce()
+	{
+		return getParamNumber( m_gForce );
+	}
+
 	inline bool getCP741Power()
 	{
 		return getParamNumber( m_cp741Power ) > 0.5;
+	}
+
+	inline bool getElecPrimaryAC()
+	{
+		return getParamNumber( m_elecPrimaryAC ) > 0.5;
+	}
+
+	inline bool getElecPrimaryDC()
+	{
+		return getParamNumber( m_elecPrimaryDC ) > 0.5;
+	}
+
+	inline bool getElecMonitoredAC()
+	{
+		return getParamNumber( m_elecMonitoredAC ) > 0.5;
+	}
+
+	inline bool getMasterTest()
+	{
+		return getParamNumber( m_masterTest ) > 0.5;
 	}
 
 	inline bool getRadioPower()
@@ -537,6 +582,17 @@ private:
 
 	void* m_usingFFB = NULL;
 
+	//Electrics
+	void* m_fuelTransferCaution = NULL;
+	void* m_fuelBoostCaution = NULL;
+
+	void* m_elecPrimaryAC = NULL;
+	void* m_elecPrimaryDC = NULL;
+	void* m_elecMonitoredAC = NULL;
+
+	void* m_masterTest = NULL;
+
+	void* m_gForce = NULL;
 };
 
 

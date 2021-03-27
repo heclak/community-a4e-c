@@ -46,3 +46,9 @@ static inline double clamp( double value, double min, double max )
 {
 	return std::max( std::min( value, max ), min );
 }
+
+//Weight goes from 0 -> 1
+static inline double lerpWeight( double v0, double v1, double w )
+{
+	return v0 + w * (v1 - v0);
+}

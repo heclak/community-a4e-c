@@ -69,6 +69,8 @@ local fm_slat_right = get_param_handle("FM_SLAT_RIGHT")
 
 local fm_using_FFB = get_param_handle("FM_USING_FFB")
 
+local fm_gForce = get_param_handle("FM_GFORCE")
+
 local tanks = {
     [1] = fm_l_tank_capacity,
     [2] = fm_c_tank_capacity,
@@ -78,6 +80,10 @@ local tanks = {
 --Mask for tank states
 function fm_setTankState(idx, value)
     tanks[idx]:set(value)
+end
+
+function fm_setGForce(value)
+    fm_gForce:set(value)
 end
 
 function fm_setRadioPTR(value)
@@ -288,6 +294,7 @@ function get_efm_data_bus()
     efm_data_bus.fm_setRadioPTR = fm_setRadioPTR
     efm_data_bus.fm_setTankState = fm_setTankState
     efm_data_bus.fm_setCP741Power = fm_setCP741Power
+    efm_data_bus.fm_setGForce = fm_setGForce
 
 
     efm_data_bus.fm_getGunsightAngle = fm_getGunsightAngle

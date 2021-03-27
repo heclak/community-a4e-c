@@ -895,8 +895,8 @@ function update_test()
         test_glare_iff:set(1)
         test_glare_fire:set(1)
         glareshield_WHEELS:set(1)
-        test_ladder_fuelboost:set(1)
-        test_ladder_fueltrans:set(1)
+        --test_ladder_fuelboost:set(1)
+        --test_ladder_fueltrans:set(1)
         test_oil_low:set(1)
         test_advisory_inrange:set(1)
         test_advisory_setrange:set(1)
@@ -909,8 +909,8 @@ function update_test()
 	    test_glare_iff:set(0)
         test_glare_fire:set(0)
         --glareshield_WHEELS:set(glareshield_wheels_value)
-        test_ladder_fuelboost:set(0)
-        test_ladder_fueltrans:set(0)
+        --test_ladder_fuelboost:set(0)
+        --test_ladder_fueltrans:set(0)
         test_oil_low:set(0)
         --test_advisory_inrange:set(0)
         test_advisory_setrange:set(0)
@@ -1111,6 +1111,10 @@ function update_vvi()
     vvi:set(vvi_wma:get_WMA(v))
 end
 
+function update_fuel_lights()
+
+end
+
 local LADDER_BRIGHTNESS_HIGH = 1.0
 local LADDER_BRIGHTNESS_LOW = 0.2
 local GLARESHIELD_BRIGHTNESS_HIGH = 1.0
@@ -1119,6 +1123,7 @@ local GLARESHIELD_BRIGHTNESS_LOW = 0.5
 -- master update function for all avionics
 ---
 function update()
+    efm_data_bus.fm_setGForce(sensor_data.getVerticalAcceleration())
 	efm_data_bus.fm_setRadarAltitude(sensor_data.getRadarAltitude())
 
     update_avionics_power()
