@@ -2,12 +2,12 @@ name = "USN VC-8 Redtails"
 countries = {"USA"}
 
 livery = {
-  {"Top", 0, "fus_top_v494", true};
-  {"Top", ROUGHNESS_METALLIC, "a4e-trn-usn-vc-8-redtails-top", true};
+  {"Top", 0, "a4e-trn-usn-vc-8-redtails-top", true};
+  {"Top", ROUGHNESS_METALLIC, "fus_top_v494_RoughMet_lo", true};
   {"Bottom", 0, "a4e-trn-usn-vc-8-redtails-bot", true};
   {"Bottom", ROUGHNESS_METALLIC, "fus_bot_v472_RoughMet_lo", true};
-  {"Gear and metal", 0, "fus_bot_v472", true};
-  {"Cockpit", 0, "fus_bot_v472", true};
+  {"Gear and metal", 0, "a4e-trn-usn-vc-8-redtails-bot", true};
+  {"Cockpit", 0, "a4e-trn-usn-vc-8-redtails-bot", true};
   --{"Front",	0, "fus_front", true};
   --{"cockpitWheelHardpoints", 0, "details1cockpitwheelshardpoints", true};
   --{"Gear Bay", 0, "details1cockpitwheelshardpoints", true};
