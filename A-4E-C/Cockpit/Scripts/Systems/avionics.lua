@@ -15,6 +15,8 @@ startup_print("avionics: load")
 
 local once_per_second_refresh = 1/update_time_step
 local once_per_second = once_per_second_refresh
+local four_times_per_second_refresh = 1/update_time_step
+local four_times_per_second = four_times_per_second_refresh
 
 local sensor_data = get_efm_sensor_data_overrides()
 local efm_data_bus = get_efm_data_bus()
@@ -103,6 +105,7 @@ local fuelLastQtyExternal = 0 -- used to pin the external fuel amount when engin
 
 local totalFuel = 0
 local lastFuel = 0
+local slowFuel = 10000
 
 local initINT = 0
 local initEXT = 0
@@ -485,6 +488,7 @@ function update_fuel_gauge()
     if flow == 0 and tas == 0 and lastFuel ~= totalFuel then
         -- limited to changes in fuel levels when motionless with no fuel flow
         local delta = lastFuel - totalFuel  -- negative delta means fuel was removed during refueling
+
         if math.abs(delta) >= refueling_rate_lower_limit and math.abs(delta) <= refueling_rate_upper_limit then
             -- internal refueling in progress, update as normally
             refuelingOccurred = 1 -- trigger full recalc on engine restart
@@ -494,7 +498,7 @@ function update_fuel_gauge()
             refuelingOccurred = 1 -- trigger full recalc on engine restart
         end
     end
-
+    
     lastFuel = totalFuel
 
     if flow == 0 then
@@ -547,6 +551,17 @@ function update_fuel_gauge()
     end
 
     fuelflowgauge:set(gauge_fuel_flow:get_WMA(flow))
+end
+
+function update_fuel_4s()
+    --fuel intake detected, play fuel slosh
+    if slowFuel < lastFuel then
+        -- fuel is flowing in
+        sound_params.snd_cont_fuel_intake:set(1.0)
+    elseif slowFuel >= lastFuel then
+        sound_params.snd_cont_fuel_intake:set(0.0)
+    end    
+    slowFuel = totalFuel
 end
 
 function update_ias_mach()
@@ -1164,6 +1179,13 @@ function update()
         update_oxygen_1s()
         -- add others here
         once_per_second = once_per_second_refresh
+    end
+
+    four_times_per_second = four_times_per_second - 1
+    if four_times_per_second % 5 == 0 then
+        --print_message_to_user("Ping - 4 times per second!")
+        update_fuel_4s()
+        four_times_per_second = four_times_per_second_refresh
     end
 
     if refuelingOccurred then

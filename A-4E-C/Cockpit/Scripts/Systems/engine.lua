@@ -336,7 +336,7 @@ end
 function update_engine_noise()
     -- airway valve opens to allow huffer air for the first time
     local rpm = sensor_data.getEngineLeftRPM()
-    if rpm > 0 then
+    if rpm > 1 then
         sound_params.snd_inst_engine_wind_up:set(1.0)
     else
         sound_params.snd_inst_engine_wind_up:set(0.0)
