@@ -1,0 +1,4 @@
+wave = "Effects/Aircrafts/A-4E-C/bombtone.wav"
+gain = 1.0
+pitch = 1.0
+lowpass = 24000.0

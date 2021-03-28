@@ -10,7 +10,6 @@ lowpass = 24000.0
 
 -- play: engine in operation
 -- continuous
--- lowpass = 24000.0
--- inaudible under ~15% RPM
+-- inaudible under ~22% RPM
 -- utilize the pitch variable to play higher in proportion to RPM (range of ~3.5 semitones) 
 -- pitch 1.0 at 55% RPM (idle)

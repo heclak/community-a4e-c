@@ -333,7 +333,35 @@ function update_rpm()
     rpm_deci:set(rpm)
 end
 
-
+function update_engine_noise()
+    -- airway valve opens to allow huffer air for the first time
+    local rpm = sensor_data.getEngineLeftRPM()
+    if rpm > 0 then
+        sound_params.snd_inst_engine_wind_up:set(1.0)
+    else
+        sound_params.snd_inst_engine_wind_up:set(0.0)
+    end
+    -- engine continuous sounds share the following properties:
+    -- pitch 0.0 at 0% rpm
+    -- pitch 1.0 at 55% rpm (not sure how best to curve this change out)
+    -- pitch 1.235 at 100% rpm (this change seems more or less linear)
+    -- is there a way to smooth out pitch changes? i noice some jets are granular to the rpm percentage.
+    -- engine sound volumes are different depending on rpm.
+    -- we will likely want to be able to tune these numbers individually.
+    -- there may be a need to add one more sound to sweeten everything if it's sounding too tinny (e.g. a continuous low rumble).
+    -- engine turbine turning, audible by 5-10% rpm
+        -- sound_params.snd_alwys_engine_wind_on:set(1.0)
+        -- sound_params.snd_alwys_engine_wind_on:set(0.0)
+    -- engine operation low rpm, audible by 20-25% rpm
+        -- sound_params.snd_alws_engine_operation_lo:set(1.0)
+        -- sound_params.snd_alws_engine_operation_lo:set(0.0)
+    -- engine operation high rpm, audible by 75-80% rpm
+        -- sound_params.snd_alws_engine_operation_hi:set(1.0)
+       -- sound_params.snd_alws_engine_operation_hi:set(0.0)
+    -- engine turbine spool-down (depending on how these other sounds shake out, this might not be needed)
+        -- sound_params.snd_inst_engine_wind_down:set(1.0)
+        -- sound_params.snd_inst_engine_wind_down:set(0.0)
+end
 
 local oil_pressure_psi=WMA(0.15,0)
 --[[
@@ -475,6 +503,7 @@ function update()
 
     update_igniter()
     update_rpm()
+    update_engine_noise()
     update_oil_pressure()
     update_pressure_ratio()
     update_egt()
