@@ -15,8 +15,8 @@ startup_print("avionics: load")
 
 local once_per_second_refresh = 1/update_time_step
 local once_per_second = once_per_second_refresh
-local four_times_per_second_refresh = 1/update_time_step
-local four_times_per_second = four_times_per_second_refresh
+local five_times_per_second_refresh = 1/update_time_step
+local five_times_per_second = five_times_per_second_refresh
 
 local sensor_data = get_efm_sensor_data_overrides()
 local efm_data_bus = get_efm_data_bus()
@@ -498,7 +498,12 @@ function update_fuel_gauge()
             refuelingOccurred = 1 -- trigger full recalc on engine restart
         end
     end
-    
+
+    if slowFuel < lastFuel then
+        -- fuel is flowing in, begin fuel sloshing
+        sound_params.snd_cont_fuel_intake:set(1.0)
+    end
+
     lastFuel = totalFuel
 
     if flow == 0 then
@@ -553,12 +558,9 @@ function update_fuel_gauge()
     fuelflowgauge:set(gauge_fuel_flow:get_WMA(flow))
 end
 
-function update_fuel_4s()
-    --fuel intake detected, play fuel slosh
-    if slowFuel < lastFuel then
-        -- fuel is flowing in
-        sound_params.snd_cont_fuel_intake:set(1.0)
-    elseif slowFuel >= lastFuel then
+function update_fuel_5s()
+    --fuel intake dropoff, release fuel sloshing
+    if slowFuel >= lastFuel then
         sound_params.snd_cont_fuel_intake:set(0.0)
     end    
     slowFuel = totalFuel
@@ -1181,11 +1183,11 @@ function update()
         once_per_second = once_per_second_refresh
     end
 
-    four_times_per_second = four_times_per_second - 1
-    if four_times_per_second % 5 == 0 then
+    five_times_per_second = five_times_per_second - 1
+    if five_times_per_second % 4 == 0 then
         --print_message_to_user("Ping - 4 times per second!")
-        update_fuel_4s()
-        four_times_per_second = four_times_per_second_refresh
+        update_fuel_5s()
+        five_times_per_second = five_times_per_second_refresh
     end
 
     if refuelingOccurred then
