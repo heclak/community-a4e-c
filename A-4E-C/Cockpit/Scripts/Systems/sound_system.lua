@@ -41,7 +41,8 @@ function post_initialize()
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_DamageGearOverspeed", "SND_INST_DAMAGE_GEAR_OVERSPEED", SOUND_ONCE),
         --engine
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitAvionics", "SND_INST_AVIONICS_WHINE", SOUND_ONCE),
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineIgniter", "SND_INST_ENGINE_IGNITER", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineIgniterWhirr", "SND_INST_ENGINE_IGNITER_WHIRR", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineIgniterSpark", "SND_ALWS_ENGINE_IGNITER_SPARK", SOUND_ALWAYS, 0.1, 0.2),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineWindUp", "SND_INST_ENGINE_WIND_UP", SOUND_ONCE),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineWindDown", "SND_INST_ENGINE_WIND_DOWN", SOUND_ONCE),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineWindConstant", "SND_CONT_ENGINE_WIND_ON", SOUND_CONTINUOUS),

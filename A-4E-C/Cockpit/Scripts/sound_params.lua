@@ -5,7 +5,8 @@ sound_params = {
     snd_inst_damage_gear_overspeed = get_param_handle("SND_INST_DAMAGE_GEAR_OVERSPEED"),
     --engine
     snd_inst_avionics_whine = get_param_handle("SND_INST_AVIONICS_WHINE"),
-    snd_inst_engine_igniter = get_param_handle("SND_INST_ENGINE_IGNITER"),
+    snd_inst_engine_igniter_whirr = get_param_handle("SND_INST_ENGINE_IGNITER_WHIRR"),
+    snd_alws_engine_igniter_spark = get_param_handle("SND_ALWS_ENGINE_IGNITER_SPARK"),
     snd_inst_engine_wind_up = get_param_handle("SND_INST_ENGINE_WIND_UP"),
     snd_inst_engine_wind_down = get_param_handle("SND_INST_ENGINE_WIND_DOWN"),
     snd_inst_engine_wind_on = get_param_handle("SND_CONT_ENGINE_WIND_ON"),

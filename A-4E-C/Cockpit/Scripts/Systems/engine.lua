@@ -310,8 +310,15 @@ function update_egt()
     egt_c:set(egt_c_val:get_WMA(output_egt))
 end
 
-
-
+function update_igniter()
+    if get_elec_primary_ac_ok() and get_elec_primary_dc_ok() and throttle_state==THROTTLE_IGN then
+        sound_params.snd_inst_engine_igniter_whirr:set(1.0)
+        sound_params.snd_alws_engine_igniter_spark:set(1.0)
+    else
+        sound_params.snd_inst_engine_igniter_whirr:set(0.0)
+        sound_params.snd_alws_engine_igniter_spark:set(0.0)
+    end
+end
 
 local rpm_deci = get_param_handle("RPM_DECI")
 
@@ -466,7 +473,7 @@ function update()
     local throttle = sensor_data.getThrottleLeftPosition()
     local gear = get_aircraft_draw_argument_value(0) -- nose gear
 
-
+    update_igniter()
     update_rpm()
     update_oil_pressure()
     update_pressure_ratio()
@@ -500,7 +507,6 @@ function update()
             end
         else
             if rpm>=5 and engine_state == ENGINE_OFF then
-                sound_params.snd_inst_engine_igniter:set(0.0)
                 if rpm>14 and get_cockpit_draw_argument_value(100)>0.99 then
                     debug_print("failed to ignite engine")
                     dispatch_action(nil,iCommandEnginesStop)
@@ -508,7 +514,6 @@ function update()
                 elseif throttle_state==THROTTLE_IGN and get_cockpit_draw_argument_value(100)>0.99 then
                     engine_state = ENGINE_IGN
                     debug_print("igniting engine")
-                    sound_params.snd_inst_engine_igniter:set(1.0)
                 end
             end
             if rpm>=22 and (engine_state == ENGINE_IGN or throttle_state ~= THROTTLE_ADJUST) and get_cockpit_draw_argument_value(100)>0.99 then
