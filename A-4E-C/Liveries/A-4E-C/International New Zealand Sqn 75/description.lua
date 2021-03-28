@@ -1,8 +1,16 @@
+name = "RNZAF Squadron 75"
+countries = {"USA", "AUS"}
+
 livery = {
-    {"Bottom", 0, "a4e-rnzaf-sqn75-bot", true};
-    {"Top", 0, "a4e-rnzaf-sqn75-top", true};
-    {"Bottom", ROUGHNESS_METALLIC, "fus_bot_v472_RoughMet_lo", true};
-    {"Top", ROUGHNESS_METALLIC, "fus_top_v494_RoughMet_lo", true};
+  {"Top", 0, "a4e-rnzaf-sqn75-top", true};
+  {"Top", ROUGHNESS_METALLIC, "fus_top_v494_RoughMet_lo", true};
+  {"Bottom", 0, "a4e-rnzaf-sqn75-bot", true};
+  {"Bottom", ROUGHNESS_METALLIC, "fus_bot_v472_RoughMet_lo", true};
+  --{"Gear and metal", 0, "fus_bot_v472", true};
+  --{"Cockpit", 0, "fus_bot_v472", true};
+  --{"Front",	0, "fus_front", true};
+  --{"cockpitWheelHardpoints", 0, "details1cockpitwheelshardpoints", true};
+  --{"Gear Bay", 0, "details1cockpitwheelshardpoints", true};
 
     -- flaps, used on most liveries
     {"flaps_001", 0, "a4e_bort_white_smooth", true};
@@ -47,8 +55,3 @@ livery = {
     {"fuel_300c_a4e", 0, "a4e-rnzaf-sqn75-ft", true};
 
 }
-
-name = "RNZAF Squadron 75"
---name_xx = ""
---[[ assign the countries ]]
-countries = {"USA", "AUS"}
