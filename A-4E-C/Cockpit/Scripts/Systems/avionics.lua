@@ -889,6 +889,37 @@ function update_wheels_light()
     glareshield_WHEELS:set(glareshield_wheels_value)
 end
 
+function update_gear_wow()
+    -- landing touchdown wheel noise
+    local wown = sensor_data.getWOW_NoseLandingGear()
+    local wowl = sensor_data.getWOW_LeftMainLandingGear()
+    local wowr = sensor_data.getWOW_RightMainLandingGear()
+    if wown == 1 then
+        --print_message_to_user("N: ".. wown)
+        sound_params.snd_inst_wheels_touchdown_n:set(1.0)
+    end
+    if wowl == 1 then
+        --print_message_to_user("L: ".. wown)
+        sound_params.snd_inst_wheels_touchdown_l:set(1.0)
+    end
+    if wowr == 1 then
+        --print_message_to_user("R: ".. wown)
+        sound_params.snd_inst_wheels_touchdown_r:set(1.0)
+    end
+end
+
+function update_gear_wow_1s()
+    -- landing touchdown wheel noise
+    local wown = sensor_data.getWOW_NoseLandingGear()
+    local wowl = sensor_data.getWOW_LeftMainLandingGear()
+    local wowr = sensor_data.getWOW_RightMainLandingGear()
+    if wown == 0 and wowl == 0 and wowr == 0 then
+        sound_params.snd_inst_wheels_touchdown_n:set(0.0)
+        sound_params.snd_inst_wheels_touchdown_l:set(0.0)
+        sound_params.snd_inst_wheels_touchdown_r:set(0.0)
+    end
+end
+
 -- temporary functions to deal with master test of lights that aren't handled elsewhere yet
 local test_glare_labs       = get_param_handle("D_GLARE_LABS")
 local test_glare_iff        = get_param_handle("D_GLARE_IFF")
@@ -1155,6 +1186,7 @@ function update()
     update_oxygen()
     update_test()
     update_wheels_light()
+    update_gear_wow()
     update_aoa_ladder()
     update_int_lights()
 
@@ -1177,16 +1209,18 @@ function update()
     -- group once-per-second updates into a single call conditional for efficiency, to be used for slowly-updating gauges
     once_per_second = once_per_second - 1
     if once_per_second % 20 == 0 then
-        --print_message_to_user("anim: "..get_cockpit_draw_argument_value(111)) -- flood light animation arg
+        -- print_message_to_user("1 time per second!")
         update_oxygen_1s()
+        update_gear_wow_1s()
         -- add others here
         once_per_second = once_per_second_refresh
     end
 
     five_times_per_second = five_times_per_second - 1
     if five_times_per_second % 4 == 0 then
-        --print_message_to_user("Ping - 4 times per second!")
+        --print_message_to_user("5 times per second!")
         update_fuel_5s()
+        -- add others here
         five_times_per_second = five_times_per_second_refresh
     end
 

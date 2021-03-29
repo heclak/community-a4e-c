@@ -80,7 +80,9 @@ function post_initialize()
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitSlatsRightIn", "SND_INST_R_SLAT_IN", SOUND_ONCE),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitSlatsRightOut", "SND_INST_R_SLAT_OUT", SOUND_ONCE),
         --wheels
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitTouchdown", "SND_INST_WHEELS_TOUCHDOWN", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitTouchdownN", "SND_INST_WHEELS_TOUCHDOWN_N", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitTouchdownL", "SND_INST_WHEELS_TOUCHDOWN_L", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitTouchdownR", "SND_INST_WHEELS_TOUCHDOWN_R", SOUND_ONCE),
 
         --HYDRAULICS
         --canopy

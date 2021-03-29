@@ -39,6 +39,10 @@ sound_params = {
     snd_inst_l_slat_out = get_param_handle("SND_INST_L_SLAT_OUT"),
     snd_inst_r_slat_in = get_param_handle("SND_INST_R_SLAT_IN"),
     snd_inst_r_slat_out = get_param_handle("SND_INST_R_SLAT_OUT"),
+    --wheels
+    snd_inst_wheels_touchdown_n = get_param_handle("SND_INST_WHEELS_TOUCHDOWN_N"),
+    snd_inst_wheels_touchdown_l = get_param_handle("SND_INST_WHEELS_TOUCHDOWN_L"),
+    snd_inst_wheels_touchdown_r = get_param_handle("SND_INST_WHEELS_TOUCHDOWN_R"),
 
     --HYDRAULICS
     --canopy
