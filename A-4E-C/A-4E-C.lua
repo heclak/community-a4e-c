@@ -349,7 +349,7 @@ A_4E_C =  {
     ViewSettings        = ViewSettings,
 
     -- enable A-4 for all countries.  It is CHEAP and easy to maintain
-	Countries = {"Abkhazia","Argentina","Australia","Austria","Belarus","Belgium","Brazil","Bulgaria","Canada","China","Croatia",
+	Countries = {"Abkhazia","Argentina","Australia","Austria","Belarus","Belgium","Brazil","Bulgaria","Canada","China", "Chile","Croatia",
                  "Czech Republic","Denmark","Egypt","Finland","France","Georgia","Germany","Greece","Hungary",
                  "India","Insurgents","Iran","Iraq","Israel","Italy","Japan","Kazakhstan","The Netherlands","North Korea",
                  "Norway","Pakistan","Poland","Romania","Russia","Saudi Arabia","Serbia","Slovakia","South Korea",
