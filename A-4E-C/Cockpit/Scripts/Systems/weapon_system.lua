@@ -303,6 +303,12 @@ local fuel_tank_capacity = {
     ["{DFT-300gal}"] = GALLON_TO_KG * 300,
     ["{DFT-300gal_LR}"] = GALLON_TO_KG * 300,
     ["{DFT-150gal}"] = GALLON_TO_KG * 150,
+
+    --EMPTY FUEL TANK CAPACITY
+    ["{DFT-400gal_EMPTY}"] = GALLON_TO_KG * 400,
+    ["{DFT-300gal_EMPTY}"] = GALLON_TO_KG * 300,
+    ["{DFT-300gal_LR_EMPTY}"] = GALLON_TO_KG * 300,
+    ["{DFT-150gal_EMPTY}"] = GALLON_TO_KG * 150,
 }
 
 

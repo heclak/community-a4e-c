@@ -142,8 +142,10 @@ local function get_inboard_weapons( side )
     local tbl = {
         --FUEL TANKS--
         { CLSID = "{DFT-300gal_LR}" },
+        { CLSID = "{DFT-300gal_LR_EMPTY}" },
         -- { CLSID = "{DFT-300gal_LR}",attach_point_position = { -0.10, -0.008, 0.0}},  --another (proper?) posibility to fix 300 gal tank position/angle ?
         { CLSID = "{DFT-150gal}" },
+        { CLSID = "{DFT-150gal_EMPTY}" },
 
         --AIR AIR--
         { CLSID = "{GAR-8}",                                 connector = rocketConnector, arg_value = 0.2 },  -- AIM-9B, aligned to -3deg armament datum
@@ -239,6 +241,10 @@ local function get_centerline_weapons( side )
         { CLSID = "{DFT-400gal}" },
         { CLSID = "{DFT-300gal}" },
         { CLSID = "{DFT-150gal}" },
+
+        { CLSID = "{DFT-400gal_EMPTY}" },
+        { CLSID = "{DFT-300gal_EMPTY}" },
+        { CLSID = "{DFT-150gal_EMPTY}" },
         -- { CLSID = "{D-704_BUDDY_POD}" },
 
         --ROCKETS--
