@@ -26,8 +26,8 @@ Please list the changes you've made in this file. We should try to follow the gu
 
 - AFCS rolls out when disabling heading mode
 - Empty Fuel Tanks
-- Sidewinders to outboard stations (thanks to the evidence of VF-45).
-- Slats lock to ground radio menu (for fomation flying)
+- Sidewinders to outboard stations (thanks to the evidence of VF-45)
+- Slats lock toggle keybind (for fomation flying)
 - Added Chile to list of Countries.
 
 ### Changed
