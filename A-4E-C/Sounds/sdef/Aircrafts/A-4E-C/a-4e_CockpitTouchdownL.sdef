@@ -6,9 +6,9 @@ wave = {
 }
 inner_radius = 20
 outer_radius = 150
-gain = 6.0
+gain = 30.0
 listmode = RANDOM
-position = {0, -0.7, 0}
+position = {-2.5, -2.5, -1.75}
 pitch_random = 0.1
 gain_random = 0.1
 

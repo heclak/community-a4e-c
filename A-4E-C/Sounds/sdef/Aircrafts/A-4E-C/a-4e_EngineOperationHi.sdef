@@ -4,12 +4,12 @@ outer_radius = 100
 gain = 6.0
 attack = 0.1
 release = 0.1
-position = {-1, 0.5, 0}
+position = {-1, -0.25, 0}
 pitch = 1.0
+lowpass = 24000.0
 
 -- play: engine in operation
 -- continuous
--- lowpass = 24000.0
 -- inaudible under ~78% RPM
 -- utilize the pitch variable to play higher in proportion to RPM (range of ~3.5 semitones) 
 -- pitch 1.0 at 55% RPM (idle)

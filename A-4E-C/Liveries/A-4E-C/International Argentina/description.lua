@@ -1,8 +1,16 @@
+name = "Argentine Navy 309"
+countries = {"USA", "ARG"}
+
 livery = {
-    {"Bottom", 0, "a4e-arg-bot", true};
-    {"Top", 0, "a4e-arg-top", true};
-    {"Bottom", ROUGHNESS_METALLIC, "fus_bot_v472_RoughMet_lo", true};
-    {"Top", ROUGHNESS_METALLIC, "fus_top_v494_RoughMet_lo", true};
+  {"Top", 0, "a4e-arg-top", true};
+  {"Top", ROUGHNESS_METALLIC, "fus_top_v494_RoughMet_lo", true};
+  {"Bottom", 0, "a4e-arg-bot", true};
+  {"Bottom", ROUGHNESS_METALLIC, "fus_bot_v472_RoughMet_lo", true};
+  {"Gear and metal", 0, "a4e-arg-bot", true};
+  {"Cockpit", 0, "a4e-arg-bot", true};
+  --{"Front",	0, "fus_front", true};
+  --{"cockpitWheelHardpoints", 0, "details1cockpitwheelshardpoints", true};
+  --{"Gear Bay", 0, "details1cockpitwheelshardpoints", true};
 
     -- flaps, used on most liveries
     {"flaps_001", 0, "a4e_bort_white", true};
@@ -39,27 +47,13 @@ livery = {
 
     -- custom fuel tanks: 150 gallon
     {"fuel_150_a4e", 0, "uvmapsfueltank_dft150_dft300-black", true};
-    --{"fuel_150_a4e", 2, "uvmapsfueltank_dft150_dft300_spec", true};
-    --{"fuel_150_a4e", 12, "uvmapsfueltank_dft150_dft300_spec", true};
 
     -- custom fuel tank: 300 gallon left/right
     {"fuel_300lr_a4e", 0, "uvmapsfueltank_dft150_dft300-black", true};
-    --{"fuel_300lr_a4e", 2, "uvmapsfueltank_dft150_dft300_spec", true};
-    --{"fuel_300lr_a4e", 12, "uvmapsfueltank_dft150_dft300_spec", true};
 
     -- custom fuel tank: 300 gallon center
     --{"fuel_300c_a4e", 0, "uvmapsfueltank_dft150_dft300", true};
-    --{"fuel_300c_a4e", 2, "uvmapsfueltank_dft150_dft300_spec", true};
-    --{"fuel_300c_a4e", 12, "uvmapsfueltank_dft150_dft300_spec", true};
 
     -- custom fuel tank: 400 gallon
     --{"fuel_400_a4e", 0, "uvmapsfueltank_dft400", true};
-    --{"fuel_400_a4e", 2, "uvmapsfueltank_dft400_spec", true};
-    --{"fuel_400_a4e", 12, "uvmapsfueltank_dft400_spec", true};
-
-}
-
-name = "Argentine Navy 309"
---name_xx = ""
---[[ assign the countries ]]
-countries = {"USA", "ARG"}
+  }

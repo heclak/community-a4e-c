@@ -26,6 +26,12 @@ function post_initialize()
 
 
     sounds = {
+        --DEBUG TEST SOUNDS
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-debugtest05", "SND_CONT_TEST_05", SOUND_CONTINUOUS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-debugtest10", "SND_CONT_TEST_10", SOUND_CONTINUOUS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-debugtest15", "SND_CONT_TEST_15", SOUND_CONTINUOUS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-debugtest20", "SND_CONT_TEST_20", SOUND_CONTINUOUS),
+
         --AIRFLOW ADDITIVES
         --adjustable surfaces
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowSpoiler", "FM_SPOILERS", SOUND_ALWAYS, 18.0, 51.5),
@@ -41,12 +47,13 @@ function post_initialize()
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_DamageGearOverspeed", "SND_INST_DAMAGE_GEAR_OVERSPEED", SOUND_ONCE),
         --engine
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitAvionics", "SND_INST_AVIONICS_WHINE", SOUND_ONCE),
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineIgniter", "SND_INST_ENGINE_IGNITER", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineIgniterWhirr", "SND_INST_ENGINE_IGNITER_WHIRR", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineIgniterSpark", "SND_ALWS_ENGINE_IGNITER_SPARK", SOUND_ALWAYS, nil, nil, 1.0, 0.1),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineWindUp", "SND_INST_ENGINE_WIND_UP", SOUND_ONCE),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineWindDown", "SND_INST_ENGINE_WIND_DOWN", SOUND_ONCE),
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineWindConstant", "SND_CONT_ENGINE_WIND_ON", SOUND_CONTINUOUS),
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineOperationLo", "SND_CONT_ENGINE_OPERATION_LO", SOUND_CONTINUOUS),
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineOperationHi", "SND_CONT_ENGINE_OPERATION_HI", SOUND_CONTINUOUS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineWindConstant", "SND_ALWS_ENGINE_WIND_ON", SOUND_ALWAYS, nil, nil),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineOperationLo", "SND_ALWS_ENGINE_OPERATION_LO", SOUND_ALWAYS, nil, nil),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineOperationHi", "SND_ALWS_ENGINE_OPERATION_HI", SOUND_ALWAYS, nil, nil),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineCompressorStall", "SND_INST_ENGINE_STALL", SOUND_ONCE),
         --gear pod doors
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearPodClose_L", "SND_INST_L_GEAR_POD_CLOSE", SOUND_ONCE),
@@ -73,7 +80,9 @@ function post_initialize()
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitSlatsRightIn", "SND_INST_R_SLAT_IN", SOUND_ONCE),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitSlatsRightOut", "SND_INST_R_SLAT_OUT", SOUND_ONCE),
         --wheels
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitTouchdown", "SND_INST_WHEELS_TOUCHDOWN", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitTouchdownN", "SND_INST_WHEELS_TOUCHDOWN_N", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitTouchdownL", "SND_INST_WHEELS_TOUCHDOWN_L", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitTouchdownR", "SND_INST_WHEELS_TOUCHDOWN_R", SOUND_ONCE),
 
         --HYDRAULICS
         --canopy

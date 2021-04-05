@@ -310,8 +310,15 @@ function update_egt()
     egt_c:set(egt_c_val:get_WMA(output_egt))
 end
 
-
-
+function update_igniter()
+    if get_elec_primary_ac_ok() and get_elec_primary_dc_ok() and throttle_state==THROTTLE_IGN then
+        sound_params.snd_inst_engine_igniter_whirr:set(1.0)
+        sound_params.snd_alws_engine_igniter_spark:set(1.0)
+    else
+        sound_params.snd_inst_engine_igniter_whirr:set(0.0)
+        sound_params.snd_alws_engine_igniter_spark:set(0.0)
+    end
+end
 
 local rpm_deci = get_param_handle("RPM_DECI")
 
@@ -326,7 +333,35 @@ function update_rpm()
     rpm_deci:set(rpm)
 end
 
-
+function update_engine_noise()
+    -- airway valve opens to allow huffer air for the first time
+    local rpm = sensor_data.getEngineLeftRPM()
+    if rpm > 1 then
+        sound_params.snd_inst_engine_wind_up:set(1.0)
+    else
+        sound_params.snd_inst_engine_wind_up:set(0.0)
+    end
+    -- engine continuous sounds share the following properties:
+    -- pitch 0.0 at 0% rpm
+    -- pitch 1.0 at 55% rpm (not sure how best to curve this change out)
+    -- pitch 1.235 at 100% rpm (this change seems more or less linear)
+    -- is there a way to smooth out pitch changes? i noice some jets are granular to the rpm percentage.
+    -- engine sound volumes are different depending on rpm.
+    -- we will likely want to be able to tune these numbers individually.
+    -- there may be a need to add one more sound to sweeten everything if it's sounding too tinny (e.g. a continuous low rumble).
+    -- engine turbine turning, audible by 5-10% rpm
+        -- sound_params.snd_alwys_engine_wind_on:set(1.0)
+        -- sound_params.snd_alwys_engine_wind_on:set(0.0)
+    -- engine operation low rpm, audible by 20-25% rpm
+        -- sound_params.snd_alws_engine_operation_lo:set(1.0)
+        -- sound_params.snd_alws_engine_operation_lo:set(0.0)
+    -- engine operation high rpm, audible by 75-80% rpm
+        -- sound_params.snd_alws_engine_operation_hi:set(1.0)
+       -- sound_params.snd_alws_engine_operation_hi:set(0.0)
+    -- engine turbine spool-down (depending on how these other sounds shake out, this might not be needed)
+        -- sound_params.snd_inst_engine_wind_down:set(1.0)
+        -- sound_params.snd_inst_engine_wind_down:set(0.0)
+end
 
 local oil_pressure_psi=WMA(0.15,0)
 --[[
@@ -466,8 +501,9 @@ function update()
     local throttle = sensor_data.getThrottleLeftPosition()
     local gear = get_aircraft_draw_argument_value(0) -- nose gear
 
-
+    update_igniter()
     update_rpm()
+    update_engine_noise()
     update_oil_pressure()
     update_pressure_ratio()
     update_egt()
@@ -500,7 +536,6 @@ function update()
             end
         else
             if rpm>=5 and engine_state == ENGINE_OFF then
-                sound_params.snd_inst_engine_igniter:set(0.0)
                 if rpm>14 and get_cockpit_draw_argument_value(100)>0.99 then
                     debug_print("failed to ignite engine")
                     dispatch_action(nil,iCommandEnginesStop)
@@ -508,7 +543,6 @@ function update()
                 elseif throttle_state==THROTTLE_IGN and get_cockpit_draw_argument_value(100)>0.99 then
                     engine_state = ENGINE_IGN
                     debug_print("igniting engine")
-                    sound_params.snd_inst_engine_igniter:set(1.0)
                 end
             end
             if rpm>=22 and (engine_state == ENGINE_IGN or throttle_state ~= THROTTLE_ADJUST) and get_cockpit_draw_argument_value(100)>0.99 then

@@ -1,0 +1,17 @@
+wave = {
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitTouchdown_01.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitTouchdown_02.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitTouchdown_03.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_CockpitTouchdown_04.ogg"
+}
+inner_radius = 20
+outer_radius = 150
+gain = 30.0
+listmode = RANDOM
+position = {1.5, -2.5, 0}
+pitch_random = 0.1
+gain_random = 0.1
+
+-- play: from flight, weight hits wheels
+-- once
+-- lowpass = 24000.0

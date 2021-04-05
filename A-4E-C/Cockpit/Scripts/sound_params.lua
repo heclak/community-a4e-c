@@ -1,16 +1,22 @@
 sound_params = {
 
     --ENVIRONMENTAL
+    --debug test sounds
+    snd_cont_test_05 = get_param_handle("SND_CONT_TEST_05"),
+    snd_cont_test_10 = get_param_handle("SND_CONT_TEST_10"),
+    snd_cont_test_15 = get_param_handle("SND_CONT_TEST_15"),
+    snd_cont_test_20 = get_param_handle("SND_CONT_TEST_20"),
     --damage
     snd_inst_damage_gear_overspeed = get_param_handle("SND_INST_DAMAGE_GEAR_OVERSPEED"),
     --engine
     snd_inst_avionics_whine = get_param_handle("SND_INST_AVIONICS_WHINE"),
-    snd_inst_engine_igniter = get_param_handle("SND_INST_ENGINE_IGNITER"),
+    snd_inst_engine_igniter_whirr = get_param_handle("SND_INST_ENGINE_IGNITER_WHIRR"),
+    snd_alws_engine_igniter_spark = get_param_handle("SND_ALWS_ENGINE_IGNITER_SPARK"),
     snd_inst_engine_wind_up = get_param_handle("SND_INST_ENGINE_WIND_UP"),
     snd_inst_engine_wind_down = get_param_handle("SND_INST_ENGINE_WIND_DOWN"),
-    snd_inst_engine_wind_on = get_param_handle("SND_CONT_ENGINE_WIND_ON"),
-    snd_inst_engine_operation_lo = get_param_handle("SND_CONT_ENGINE_OPERATION_LO"),
-    snd_inst_engine_operation_hi = get_param_handle("SND_CONT_ENGINE_OPERATION_HI"),
+    snd_alws_engine_wind_on = get_param_handle("SND_ALWS_ENGINE_WIND_ON"),
+    snd_alws_engine_operation_lo = get_param_handle("SND_ALWS_ENGINE_OPERATION_LO"),
+    snd_alws_engine_operation_hi = get_param_handle("SND_ALWS_ENGINE_OPERATION_HI"),
     snd_inst_engine_stall = get_param_handle("SND_INST_ENGINE_STALL"),
     --gear pod doors
     snd_inst_l_gear_pod_open = get_param_handle("SND_INST_L_GEAR_POD_OPEN"),
@@ -33,6 +39,10 @@ sound_params = {
     snd_inst_l_slat_out = get_param_handle("SND_INST_L_SLAT_OUT"),
     snd_inst_r_slat_in = get_param_handle("SND_INST_R_SLAT_IN"),
     snd_inst_r_slat_out = get_param_handle("SND_INST_R_SLAT_OUT"),
+    --wheels
+    snd_inst_wheels_touchdown_n = get_param_handle("SND_INST_WHEELS_TOUCHDOWN_N"),
+    snd_inst_wheels_touchdown_l = get_param_handle("SND_INST_WHEELS_TOUCHDOWN_L"),
+    snd_inst_wheels_touchdown_r = get_param_handle("SND_INST_WHEELS_TOUCHDOWN_R"),
 
     --HYDRAULICS
     --canopy

@@ -1,0 +1,15 @@
+wave = {
+"Effects/Aircrafts/A-4E-C/a-4e_EngineIgniterWhirr.ogg"
+}
+inner_radius = 50
+outer_radius = 150
+gain = 0.7
+pitch = 1.0
+detached = true
+position = {-0.7, 0.2, 0}
+listmode = RANDOM
+
+-- play: engine ignition whirr
+-- once
+-- lowpass = 24000.0
+-- later: it is appropriate to broadcast this event so to be audible a few parked aircraft away
