@@ -166,34 +166,33 @@ AFC 423: Disable LAWS Unreliability Tone with APR-27 Installed (Wiring Mod.)
     RALT_idx:set(warning_altitude_gauge_idx:get_WMA(warning_altitude))
 end
 
+function get_warn_idx_delta(warn_alt)
+    local warn_idx_delta = 500/4
+
+    if warn_alt < 225 then
+        warn_idx_delta = 10/4
+    elseif warn_alt < 650 then
+        warn_idx_delta = 50/4
+    elseif warn_alt < 2250 then
+        warn_idx_delta = 100/4
+    end
+
+    return warn_idx_delta
+end
+
 function SetCommand(command,value)
 -- Radar altitude indicator, the indicator dial face is marked in 10-foot increments up to 200 feet,
 -- 50-foot increments from 200 to 600 feet, 100-foot increments from 600 to 2000 feet, and 500-foot increments from 2000 to 5000 feet
     local warn_idx_delta
     if (command == Keys.RadarAltWarningDown) or (command == device_commands.radar_alt_indexer and value<0) then
-        if warning_altitude < 225 then
-            warn_idx_delta = 10/2
-        elseif warning_altitude < 650 then
-            warn_idx_delta = 50/2
-        elseif warning_altitude < 2250 then
-            warn_idx_delta = 100/2
-        else
-            warn_idx_delta = 500/2
-        end
+        warn_idx_delta = get_warn_idx_delta(warning_altitude)
         warning_altitude = warning_altitude - warn_idx_delta
+
         if warning_altitude < 0 then
             warning_altitude = 0
         end
     elseif (command == Keys.RadarAltWarningUp) or (command == device_commands.radar_alt_indexer and value>0) then
-        if warning_altitude < 200 then
-            warn_idx_delta = 10/2
-        elseif warning_altitude < 600 then
-            warn_idx_delta = 50/2
-        elseif warning_altitude < 2000 then
-            warn_idx_delta = 100/2
-        else
-            warn_idx_delta = 500/2
-        end
+        warn_idx_delta = get_warn_idx_delta(warning_altitude)
         warning_altitude = warning_altitude + warn_idx_delta
         if warning_altitude > 4500 then
             warning_altitude = 4500

@@ -257,7 +257,7 @@ function default_button_axis(hint_, device_, command_1, command_2, arg_1, arg_2,
         arg                 = {arg_1, arg_2},
         arg_value           = {1, 0.5},
         arg_lim             = {{0, limit_1_}, {0, limit_2_}},
-        animated            = {false, true},
+        animated            = {false, false},  --animated can make the knob wait for the animation to complete before another command is sent, leave this false otherwise big actions will make the movement strange.
         animation_speed     = {0, 0.4},
         gain                = {1.0, 0.1},
         relative            = {false, false},
