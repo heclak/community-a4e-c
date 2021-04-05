@@ -75,6 +75,10 @@ enum Control
 	BRAKE_RIGHT_STOP = 10183,
 	RADIO_MENU = 179, //iCommandToggleCommandMenu
 	RADIO_PTT = 10179,
+
+	//If the comms menu is changed these need to be found again.
+	LOCK_SLATS_RADIO_MENU = 966,
+	UNLOCK_SLATS_RADIO_MENU = 967,
 };
 
 class Input : public BaseComponent

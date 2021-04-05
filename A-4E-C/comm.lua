@@ -1,7 +1,26 @@
+io = data.base.io
+table = data.base.table
+tostring = data.base.tostring
+type = data.base.type
+getmetatable = data.base.getmetatable
+
+--dofile(LockOn_Options.script_path.."command_defs.lua")
 local openFormation = true
 
 function specialEvent(params) 
 	return staticParamsEvent(Message.wMsgLeaderSpecialCommand, params)
+end
+
+function dummy()
+	--recursively_print(data, 100, 1000, "C:/tmp/comm.txt")
+end
+
+function getCommand(command)
+	return {
+		perform = function(self, parameters)
+			command(parameters)
+		end
+	}
 end
 
 local menus = data.menus
@@ -67,6 +86,26 @@ menus['Wheel chocks'] = {
 		}
 	}
 }
+
+--Do not change the order of these, it will break the slats lock.
+menus['Slats'] = {
+	name = _('Slats Config'),
+	items = {
+		[1] = {
+			name = _('Lock Slats'),
+			command = getCommand(dummy),
+		},
+		[2] = {
+			name = _('Unlock Slats'),
+			command = getCommand(dummy),
+		},
+	}
+}
+
+
 menus['Ground Crew'].items[4] = { name = _('Wheel chocks'), submenu = menus['Wheel chocks']}
 menus['Ground Crew'].items[5] = { name = _('Salute!'), command = sendMessage.new(Message.wMsgLeaderGroundGestureSalut, true)}
 menus['Ground Crew'].items[6] = { name = _('Request Launch'), command = sendMessage.new(Message.wMsgLeaderGroundRequestLaunch, true)}
+
+--Do not change the order of these, it will break the slats lock.
+menus['Ground Crew'].items[7] = { name = _('Slats Config'), submenu = menus['Slats']}

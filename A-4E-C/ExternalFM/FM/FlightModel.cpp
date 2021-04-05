@@ -452,6 +452,18 @@ void Scooter::FlightModel::calculateElements()
 
 void Scooter::FlightModel::slats(double& dt)
 {
+	if ( m_airframe.getSlatsLocked() )
+	{
+		m_LslatVel = 0.0;
+		m_RslatVel = 0.0;
+		m_airframe.setSlatLPosition( 0.0 );
+		m_airframe.setSlatRPosition( 0.0 );
+
+		return;
+	}
+
+
+
 	double forceL = (m_elementLSlat.get_kElem() / m_totalWingArea) * m_slatArea * slatCL(m_elementLSlat.getAOA());
 	double forceR = (m_elementLSlat.get_kElem() / m_totalWingArea) * m_slatArea * slatCL(m_elementRSlat.getAOA());
 

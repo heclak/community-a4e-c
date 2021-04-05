@@ -340,6 +340,7 @@ public:
 	inline float getIntegrityElement(Damage element);
 	inline void setDamageDelta( Damage element, float delta );
 	inline bool processDamageStack( Damage& element, float& damage );
+	inline void setSlatsLocked( bool locked );
 
 	void resetDamage();
 
@@ -368,6 +369,7 @@ public:
 	inline double getNoseCompression() const;
 
 	inline double getElevatorZeroForceDeflection() const;
+	inline bool getSlatsLocked() const;
 
 private:
 
@@ -417,6 +419,7 @@ private:
 
 	CatapultState m_catapultState = OFF_CAT;
 	bool m_catStateSent = false;
+	bool m_slatsLocked = false;
 	double m_catMoment = 0.0;
 	double m_catForce = 0.0;
 	double m_catMomentVelocity = 0.0;
@@ -515,6 +518,11 @@ void Airframe::setNoseWheelAngle( double angle )
 void Airframe::setCatAngle( double angle )
 {
 	m_catAngle = angle;
+}
+
+void Airframe::setSlatsLocked( bool locked )
+{
+	m_slatsLocked = locked;
 }
 
 double Airframe::getNoseWheelAngle() const
@@ -788,6 +796,11 @@ inline float Airframe::getFlapDamage() const
 double Airframe::getNoseCompression() const
 {
 	return m_noseCompression;
+}
+
+bool Airframe::getSlatsLocked() const
+{
+	return m_slatsLocked;
 }
 
 } // end namespace

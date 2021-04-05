@@ -466,8 +466,14 @@ void ed_fm_set_command
 	case Scooter::Control::RADIO_PTT:
 		s_radio->toggleRadioMenu();
 		break;
+	case Scooter::Control::LOCK_SLATS_RADIO_MENU:
+		s_airframe->setSlatsLocked( true );
+		break;
+	case Scooter::Control::UNLOCK_SLATS_RADIO_MENU:
+		s_airframe->setSlatsLocked( false );
+		break;
 	default:
-		; //printf( "number %d: %lf\n", command, value );
+		;//printf( "number %d: %lf\n", command, value );
 	}
 
 	if ( command >= 3000 && command < 4000 )
