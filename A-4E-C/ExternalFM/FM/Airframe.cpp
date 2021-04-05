@@ -94,6 +94,7 @@ void Scooter::Airframe::zeroInit()
 	m_noseCompression = 0.0;
 
 	m_damageStack.clear();
+	m_slatsLocked = false;
 }
 
 void Scooter::Airframe::coldInit()

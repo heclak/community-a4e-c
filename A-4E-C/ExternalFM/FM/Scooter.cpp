@@ -466,11 +466,10 @@ void ed_fm_set_command
 	case Scooter::Control::RADIO_PTT:
 		s_radio->toggleRadioMenu();
 		break;
-	case Scooter::Control::LOCK_SLATS_RADIO_MENU:
-		s_airframe->setSlatsLocked( true );
-		break;
-	case Scooter::Control::UNLOCK_SLATS_RADIO_MENU:
-		s_airframe->setSlatsLocked( false );
+	case KEYS_TOGGLESLATSLOCK:
+		//Weight on wheels plus lower than 50 kts.
+		if ( s_airframe->getNoseCompression() > 0.01 && magnitude(s_state->getLocalSpeed()) < 25.0 )
+			s_airframe->toggleSlatsLocked();
 		break;
 	default:
 		;//printf( "number %d: %lf\n", command, value );

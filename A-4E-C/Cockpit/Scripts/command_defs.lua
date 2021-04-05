@@ -300,6 +300,7 @@ Keys =
     BrakesOffLeft                  = __custom_counter(),
     BrakesOnRight                  = __custom_counter(),
     BrakesOffRight                 = __custom_counter(),
+    ToggleSlatsLock                = __custom_counter(),
 	--END EFM SPECIFIC BINDS
 }
 

@@ -17,6 +17,7 @@ join(res.keyCommands,{
     {combos = {{key = 'U'}}, down = iCommandPlaneShipTakeOff,                                                            name = _('Ship Take Off Position'),           category = {_('General')}},
     -- {combos = {{key = 'P', reformers = {'RShift'}}}, down = iCommandCockpitShowPilotOnOff,                            name = _('Show Pilot Body'),                  category = _('General')},
     {combos = {{key = 'T'}}, down = iCommandPlaneWingtipSmokeOnOff,                                                      name = _('Smoke - ON/OFF'),                   category = {_('General')}},
+    {combos = {{key = 'S', reformers = {'LShift', 'LAlt'}}}, down = Keys.ToggleSlatsLock, name = _('Lock/Unlock Slats'), category = {_('General')}},
 
     ---------------------------------------------
     -- View Cockpit -----------------------------

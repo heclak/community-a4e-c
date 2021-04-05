@@ -341,6 +341,7 @@ public:
 	inline void setDamageDelta( Damage element, float delta );
 	inline bool processDamageStack( Damage& element, float& damage );
 	inline void setSlatsLocked( bool locked );
+	inline void toggleSlatsLocked();
 
 	void resetDamage();
 
@@ -523,6 +524,11 @@ void Airframe::setCatAngle( double angle )
 void Airframe::setSlatsLocked( bool locked )
 {
 	m_slatsLocked = locked;
+}
+
+void Airframe::toggleSlatsLocked()
+{
+	m_slatsLocked = ! m_slatsLocked;
 }
 
 double Airframe::getNoseWheelAngle() const

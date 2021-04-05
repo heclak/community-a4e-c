@@ -11,7 +11,9 @@ function specialEvent(params)
 	return staticParamsEvent(Message.wMsgLeaderSpecialCommand, params)
 end
 
-function dummy()
+function performCommand()
+	dev = data.base.GetDevice(11)
+	dev:performClickableAction(2000, 0.0, true)
 	--recursively_print(data, 100, 1000, "C:/tmp/comm.txt")
 end
 
@@ -87,25 +89,27 @@ menus['Wheel chocks'] = {
 	}
 }
 
+-- TODO Try to find a way to use the radio menu for this.
 --Do not change the order of these, it will break the slats lock.
+--[[
 menus['Slats'] = {
 	name = _('Slats Config'),
 	items = {
 		[1] = {
 			name = _('Lock Slats'),
-			command = getCommand(dummy),
+			command = getCommand(performCommand),
 		},
 		[2] = {
 			name = _('Unlock Slats'),
-			command = getCommand(dummy),
+			command = getCommand(performCommand),
 		},
 	}
 }
-
+--]]
 
 menus['Ground Crew'].items[4] = { name = _('Wheel chocks'), submenu = menus['Wheel chocks']}
 menus['Ground Crew'].items[5] = { name = _('Salute!'), command = sendMessage.new(Message.wMsgLeaderGroundGestureSalut, true)}
 menus['Ground Crew'].items[6] = { name = _('Request Launch'), command = sendMessage.new(Message.wMsgLeaderGroundRequestLaunch, true)}
 
 --Do not change the order of these, it will break the slats lock.
-menus['Ground Crew'].items[7] = { name = _('Slats Config'), submenu = menus['Slats']}
+--menus['Ground Crew'].items[7] = { name = _('Slats Config'), submenu = menus['Slats']}

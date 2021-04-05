@@ -4,6 +4,63 @@ Please list the changes you've made in this file. We should try to follow the gu
 
 #### Warning you will need to delete and rebind your control bindings as described in the installation steps IF you are upgrading from the SFM.
 
+## Version 2.0.0-beta-3 - 05 April 2021
+
+### Added
+- Sounds
+  - New engine igniter sound scheme
+  - Huffer airflow valve
+  - Fuel sloshing
+  - Added touchdown sound
+
+- New fuel system
+  - Fuel system simulates all the pumps in the system. This lays the ground work for some interesting failures/damage
+  - Negative g effects on fuel flow
+  - Zero g effects on fuel flow
+  - Boost pump failure effects
+  - Engine pump failure effects
+  - Wing pump failure effects
+  - Emergency transfer simulated
+  - Enabled lights for boost and transfer
+  - Implemented fuel panel switch functions
+
+- AFCS rolls out when disabling heading mode
+- Empty Fuel Tanks
+- Sidewinders to outboard stations (thanks to the evidence of VF-45).
+- Slats lock to ground radio menu (for fomation flying)
+- Added Chile to list of Countries.
+
+### Changed
+- Updated main menu intro sound
+- Nosewheel steering range adjusted to match animation
+- Standardised liveries lua
+- Keyboard: aileron response now resets.
+- Sound mixing.
+
+### Deprecated
+
+### Removed
+- Old fuel system
+
+### Fixed
+- USMC Livery fixes
+- Fixed bort numbers on some USMC liveries
+- Readme PDF corruption in official build
+- Smokewinders
+- Brake issue causing brakes to jump to 50% application
+- Radar altimiter index knob.
+
+
+### Known Issues
+- Chocks do not stop the aircraft
+- Pilot can blackout from cat shot
+- Pilot can blackout from rolling too fast
+- APC may not respond fast enough
+- Connecting to the super carrier will get you stuck for a bit, just keep the power high and you will move into position after 30 seconds or so.
+- The CMPTR switch has not been animated yet please use the LABS switch in the meantime.
+
+#### Warning you will need to delete and rebind your control bindings as described in the installation steps IF you are upgrading from the SFM.
+
 ## Version 2.0.0-beta-2 - 13 February 2021
 
 ### Added
