@@ -2,9 +2,9 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
-#### Warning you will need to delete and rebind your control bindings as described in the installation steps IF you are upgrading from the SFM.
-
 ## Version 2.0.0-beta-3 - 05 April 2021
+
+#### Warning you will need to delete and rebind your control bindings as described in the installation steps IF you are upgrading from the SFM.
 
 ### Added
 - Sounds
