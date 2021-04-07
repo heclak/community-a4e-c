@@ -8,6 +8,7 @@ sound_params = {
     snd_cont_test_20 = get_param_handle("SND_CONT_TEST_20"),
     --damage
     snd_inst_damage_gear_overspeed = get_param_handle("SND_INST_DAMAGE_GEAR_OVERSPEED"),
+    snd_alws_damage_airframe_stress = get_param_handle("SND_ALWS_DAMAGE_AIRFRAME_STRESS"),
     --engine
     snd_inst_avionics_whine = get_param_handle("SND_INST_AVIONICS_WHINE"),
     snd_inst_engine_igniter_whirr = get_param_handle("SND_INST_ENGINE_IGNITER_WHIRR"),
