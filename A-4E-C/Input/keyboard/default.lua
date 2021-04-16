@@ -53,8 +53,8 @@ join(res.keyCommands,{
     {combos = {{key = '/', reformers = {'RCtrl'}}}, pressed = Keys.TrimRight, up = Keys.TrimStop,                        name = _('Trimmer Switch - RIGHT WING DOWN'), category = {_('Stick'), _('Flight Control')}},
     {combos = {{key = 'T', reformers = {'LCtrl'}}}, down = Keys.TrimCancel,                                              name = _('Trim: Reset'),                      category = {_('Stick'), _('Flight Control')}},
     {combos = {{key = 'Space'}}, down = Keys.PlaneFireOn, up = Keys.PlaneFireOff,                                        name = _('Gun-Rocket Trigger'),               category = {_('Stick')}},
-    {combos = {{key = 'Space', reformers = {'LAlt'}}}, down = Keys.PickleOn,	up = Keys.PickleOff,                       name = _('Bomb Release Button'),              category = {_('Stick')}},
-    {down = Keys.AFCSOverride,                                                                                           name = _('AFCS Override Button'),             category = {_('Stick')}},
+    {combos = {{key = 'Space', reformers = {'LAlt'}}}, down = Keys.PickleOn,	up = Keys.PickleOff,                     name = _('Bomb Release Button'),              category = {_('Stick')}},
+    {{combos = {{key = 'A', reformers = {'LCtrl'}}}, down = Keys.AFCSOverride,                                           name = _('AFCS Override Button'),             category = {_('Stick')}},
 
     {down = Keys.ToggleStick,                                                                                            name = _('Control Stick - HIDE/SHOW'),        category = {_('Stick')}},
 	  {down = Keys.nws_engage, up = Keys.nws_disengage,                                              name = _('Nose Wheel Steering'),              category = {_('Stick')}},
@@ -280,7 +280,11 @@ join(res.keyCommands,{
     -- {combos = {{key = '=', reformers = {'LCtrl'}}}, down = Keys.NavNDBNext, name = _('NDB Channel: Next'),             category = {_('Systems')}},
     {combos = {{key = '-', reformers = {'LShift'}}}, down = Keys.NavILSPrev,   name = _('ILS Channel: Previous'),         category = {_('Systems')}},
     {combos = {{key = '=', reformers = {'LShift'}}}, down = Keys.NavILSNext,   name = _('ILS Channel: Next'),             category = {_('Systems')}},
- 
+    {down = Keys.TacanChMajorInc,                                              name = _('TACAN Channel 10s - Increase'),  category = {_('Systems')}},
+    {down = Keys.TacanChMajorDec,                                              name = _('TACAN Channel 10s - Decrease'),  category = {_('Systems')}},
+    {down = Keys.TacanChMinorInc,                                              name = _('TACAN Channel 1s - Increase'),  category = {_('Systems')}},
+    {down = Keys.TacanChMinorDec,                                              name = _('TACAN Channel 1s - Decrease'),  category = {_('Systems')}},
+
     -- Interior Lights Panel
     {down = device_commands.intlight_whiteflood_CHANGE,     cockpit_device_id = devices.AVIONICS,  value_down = 0.1,  name = _('White Floodlight Control Knob - CW/Increase'),  category = {_('Right Console'), _('Interior Lights Control Panel')}},
     {down = device_commands.intlight_whiteflood_CHANGE,     cockpit_device_id = devices.AVIONICS,  value_down = -0.1, name = _('White Floodlight Control Knob - CCW/Decrease'), category = {_('Right Console'), _('Interior Lights Control Panel')}},
