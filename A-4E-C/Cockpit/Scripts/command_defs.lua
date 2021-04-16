@@ -302,6 +302,7 @@ Keys =
     BrakesOffRight                 = __custom_counter(),
     ToggleSlatsLock                = __custom_counter(),
 	--END EFM SPECIFIC BINDS
+    AFCSStabAugToggle              = __custom_counter(),
 }
 
 start_command   = 3000
