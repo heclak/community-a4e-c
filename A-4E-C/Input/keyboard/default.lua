@@ -54,7 +54,7 @@ join(res.keyCommands,{
     {combos = {{key = 'T', reformers = {'LCtrl'}}}, down = Keys.TrimCancel,                                              name = _('Trim: Reset'),                      category = {_('Stick'), _('Flight Control')}},
     {combos = {{key = 'Space'}}, down = Keys.PlaneFireOn, up = Keys.PlaneFireOff,                                        name = _('Gun-Rocket Trigger'),               category = {_('Stick')}},
     {combos = {{key = 'Space', reformers = {'LAlt'}}}, down = Keys.PickleOn,	up = Keys.PickleOff,                     name = _('Bomb Release Button'),              category = {_('Stick')}},
-    {{combos = {{key = 'A', reformers = {'LCtrl'}}}, down = Keys.AFCSOverride,                                           name = _('AFCS Override Button'),             category = {_('Stick')}},
+    {combos = {{key = 'A', reformers = {'LCtrl'}}}, down = Keys.AFCSOverride,                                           name = _('AFCS Override Button'),             category = {_('Stick')}},
 
     {down = Keys.ToggleStick,                                                                                            name = _('Control Stick - HIDE/SHOW'),        category = {_('Stick')}},
 	  {down = Keys.nws_engage, up = Keys.nws_disengage,                                              name = _('Nose Wheel Steering'),              category = {_('Stick')}},
@@ -204,6 +204,8 @@ join(res.keyCommands,{
     {combos = {{key = 'R'}}, down = iCommandPlaneFuelOn, up = iCommandPlaneFuelOff, name = _('Fuel Dump'),                        category = {_('Left Console'), _('Engine Control Panel')}},
     {combos = {{key = 'Home', reformers = {'RShift'}}}, down = Keys.Engine_Start,   name = _('Engine Starter Switch - START'),    category = {_('Left Console'), _('Engine Control Panel')}},
     {combos = {{key = 'End', reformers = {'RShift'}}}, down = Keys.Engine_Stop,     name = _('Engine Starter Switch - ABORT'),    category = {_('Left Console'), _('Engine Control Panel')}},
+    {down = device_commands.ENGINE_drop_tanks_sw, up = device_commands.ENGINE_drop_tanks_sw, value_down = 1, value_up = 0, cockpit_device_id = devices.ENGINE, name = _('Drop Tanks Pressurization and Flight Refuel - Up'), category = {_('Left Console'), _('Engine Control Panel')}},
+    {down = device_commands.ENGINE_drop_tanks_sw, up = device_commands.ENGINE_drop_tanks_sw, value_down = -1, value_up = 0, cockpit_device_id = devices.ENGINE, name = _('Drop Tanks Pressurization and Flight Refuel - Down'), category = {_('Left Console'), _('Engine Control Panel')}},
 
     -- Radar Control Panel
     {down = Keys.RadarModeOFF,                  name = _('Radar Mode Selector Switch Knob - OFF'),               category = {_('Left Console'), _('Radar Control Panel')}},
