@@ -65,7 +65,7 @@ elements["PNT_131"] = default_2_position_tumb("Manual Fuel Shutoff Catch",device
 --elements["PNT_201"] = default_3_position_tumb("Throttle cutoff",devices.ENGINE, device_commands.throttle,201,false)
 
 -- OXYGEN and ANTI-G PANEL
-elements["PNT_125"] = default_2_position_tumb("Oxygen Switch",devices.AVIONICS, device_commands.oxygen_switch, 125, TOGGLECLICK_LEFT_MID)
+elements["PNT_125"] = default_2_position_tumb("Oxygen Switch", devices.AVIONICS, device_commands.oxygen_switch, 125, TOGGLECLICK_LEFT_MID)
 
 -- RADAR CONTROL PANEL #6
 elements["PNT_120"] = multiposition_switch_limited( "Radar Mode", devices.RADAR, device_commands.radar_mode, 120, 5, 0.10, nil, nil, KNOBCLICK_LEFT_MID )

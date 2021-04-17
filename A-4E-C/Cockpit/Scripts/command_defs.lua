@@ -303,6 +303,7 @@ Keys =
     ToggleSlatsLock                = __custom_counter(),
 	--END EFM SPECIFIC BINDS
     AFCSStabAugToggle              = __custom_counter(),
+    OxygenToggle                   = __custom_counter(),
 }
 
 start_command   = 3000

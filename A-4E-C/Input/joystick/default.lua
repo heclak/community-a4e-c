@@ -108,7 +108,8 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- ECM Control Panel ------------------------
     ---------------------------------------------
-    {down = Keys.ecm_apr25_off, value_down = 1.0,value_up = 0.0, name = _('APR-25 Power Switch - ON/OFF'),       category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_apr25_off, value_down = 1.0,value_up = 0.0, name = _('APR-25 Power Switch - ON/OFF'),   category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_apr27_off, value_down = 1.0,value_up = 0.0, name = _('APR-27 Power Switch - ON/OFF'),   category = {_('ECM Control Panel')}},
 
     ---------------------------------------------
     -- Instrument Panel -------------------------
@@ -227,8 +228,8 @@ join(res.keyCommands,{
     {down = iCommandPlaneFuelOn, up = iCommandPlaneFuelOff,                                   name = _('Fuel Dump'),                             category = {_('Left Console'), _('Engine Control Panel')}},
     {down = Keys.Engine_Start,                                                                name = _('Engine Starter Switch - START'),         category = {_('Left Console'), _('Engine Control Panel')}},
     {down = Keys.Engine_Stop,                                                                 name = _('Engine Starter Switch - ABORT'),         category = {_('Left Console'), _('Engine Control Panel')}},
-    {down = device_commands.ENGINE_drop_tanks_sw, up = device_commands.ENGINE_drop_tanks_sw, value_down = 1, value_up = 0, cockpit_device_id = devices.ENGINE, name = _('Drop Tanks Pressurization and Flight Refuel - Up'), category = {_('Left Console'), _('Engine Control Panel')}},
-    {down = device_commands.ENGINE_drop_tanks_sw, up = device_commands.ENGINE_drop_tanks_sw, value_down = -1, value_up = 0, cockpit_device_id = devices.ENGINE, name = _('Drop Tanks Pressurization and Flight Refuel - Down'), category = {_('Left Console'), _('Engine Control Panel')}},
+    {down = device_commands.ENGINE_drop_tanks_sw, up = device_commands.ENGINE_drop_tanks_sw, value_down = 1, value_up = 0, cockpit_device_id = devices.ENGINE, name = _('Pressurization - UP/DROP TANKS'), category = {_('Left Console'), _('Engine Control Panel')}},
+    {down = device_commands.ENGINE_drop_tanks_sw, up = device_commands.ENGINE_drop_tanks_sw, value_down = -1, value_up = 0, cockpit_device_id = devices.ENGINE, name = _('Pressurization - DOWN/FLIGHT REFUEL'), category = {_('Left Console'), _('Engine Control Panel')}},
 
     -- Radar Control Panel
     {down = Keys.RadarModeOFF,                                                          name = _('Radar Mode Selector Switch Knob - OFF'),                       category = {_('Left Console'), _('Radar Control Panel')}},
@@ -270,6 +271,9 @@ join(res.keyCommands,{
     {down = Keys.AFCSHotasEngage,                                                       name = _('AFCS Engage (Warthog Throttle)'),                              category = {_('Left Console'), _('AFCS Panel'), _('Special For Joystick')}},
 
     -- Oxygen and Anti-G Panel
+    {down = device_commands.oxygen_switch, value_down = 1, cockpit_device_id = devices.AVIONICS, name = _('Oxygen Switch - ON'), category = {_('Left Console'), _('Oxygen')}},
+    {down = device_commands.oxygen_switch, value_down = 0, cockpit_device_id = devices.AVIONICS, name = _('Oxygen Switch - OFF'), category = {_('Left Console'), _('Oxygen')}},
+    {down = Keys.OxygenToggle, name = _('Oxygen Switch - OFF/ON'), category = {_('Left Console'), _('Oxygen')}},
 
     -- Canopy Control
     {down = iCommandPlaneFonar,                                                         name = _('Canopy Open/Close'),                                   category = {_('Left Console')}},
