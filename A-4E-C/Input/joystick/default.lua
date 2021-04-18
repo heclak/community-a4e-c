@@ -14,7 +14,7 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- General ----------------------------------
     ---------------------------------------------
-    {down = iCommandPlaneShipTakeOff,                                                name = _('Ship Take Off Position'),           category = {_('General')}},
+    {down = iCommandPlaneShipTakeOff,                                                name = _('Catapult Hook-Up'),           category = {_('General')}},
     -- {down = iCommandCockpitShowPilotOnOff,                                        name = _('Show Pilot Body'),                  category = _('General')},
     {down = iCommandPlaneWingtipSmokeOnOff,                                          name = _('Smoke - ON/OFF'), category = {_('General')}},
 
