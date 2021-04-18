@@ -305,10 +305,12 @@ local fuel_tank_capacity = {
     ["{DFT-150gal}"] = GALLON_TO_KG * 150,
 
     --EMPTY FUEL TANK CAPACITY
-    ["{DFT-400gal_EMPTY}"] = GALLON_TO_KG * 400,
-    ["{DFT-300gal_EMPTY}"] = GALLON_TO_KG * 300,
-    ["{DFT-300gal_LR_EMPTY}"] = GALLON_TO_KG * 300,
-    ["{DFT-150gal_EMPTY}"] = GALLON_TO_KG * 150,
+    --EMPTY tanks have negative capacity, this is so the EFM
+    --knows to empty the fuel when they are loaded in.
+    ["{DFT-400gal_EMPTY}"] = -GALLON_TO_KG * 400,
+    ["{DFT-300gal_EMPTY}"] = -GALLON_TO_KG * 300,
+    ["{DFT-300gal_LR_EMPTY}"] = -GALLON_TO_KG * 300,
+    ["{DFT-150gal_EMPTY}"] = -GALLON_TO_KG * 150,
 }
 
 
@@ -400,6 +402,8 @@ function update_fuel_tanks()
         if tank ~= nil and tank.weapon.level3 == wsType_FuelTank then
             local type = tank["CLSID"]
             efm_data_bus.fm_setTankState(i, fuel_tank_capacity[type])
+        else
+            efm_data_bus.fm_setTankState(i, 0.0)
         end
     end
 end

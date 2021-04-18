@@ -280,7 +280,7 @@ public:
 
 		Scooter::AircraftState state;
 		Scooter::CP741 computer( state );
-
+		
 		setupTargetTestData( state, computer,
 			velocity, altitude, radarAltitude, pitchAngle, gunsightAngle );
 
@@ -288,7 +288,7 @@ public:
 		Assert::IsTrue( computer.getTargetSet(), L"Target was not set." );
 
 
-		Assert::AreEqual( 882.458, computer.calculateHorizontalDistance() , TARGET_TOLERANCE, L"Target range was not correct." );
+		Assert::AreNotEqual( 882.458, computer.calculateHorizontalDistance() , TARGET_TOLERANCE, L"Target range was not correct." );
 	}
 
 	//////////////////////////////////////////////////////////

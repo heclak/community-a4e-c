@@ -566,6 +566,7 @@ double ed_fm_get_internal_fuel()
 {
 	return s_fuelSystem->getFuelQtyInternal();
 }
+
 /*
 	set external fuel volume for each payload station , called for weapon init and on reload
 */
@@ -576,7 +577,7 @@ void  ed_fm_set_external_fuel (int	 station,
 								double z)
 {
 	//printf( "Station: %d, Fuel: %lf, Z: %lf, COM %lf\n", station, fuel, z, s_state->getCOM().z );
-	s_fuelSystem->setFuelQty( (Scooter::FuelSystem2::Tank)(station+1), Vec3( x, y, z ), fuel );
+	s_fuelSystem->setFuelQty( (Scooter::FuelSystem2::Tank)(station + 1), Vec3( x, y, z ), fuel );
 }
 /*
 	get external fuel volume 
@@ -776,6 +777,7 @@ void ed_fm_cold_start()
 	s_engine->coldInit();
 	s_avionics->coldInit();
 	s_state->coldInit();
+	s_fuelSystem->coldInit();
 }
 
 void ed_fm_hot_start()
@@ -786,6 +788,7 @@ void ed_fm_hot_start()
 	s_engine->hotInit();
 	s_avionics->hotInit();
 	s_state->hotInit();
+	s_fuelSystem->hotInit();
 }
 
 void ed_fm_hot_start_in_air()
@@ -796,6 +799,7 @@ void ed_fm_hot_start_in_air()
 	s_engine->airborneInit();
 	s_avionics->airborneInit();
 	s_state->airborneInit();
+	s_fuelSystem->airborneInit();
 }
 
 void ed_fm_repair()

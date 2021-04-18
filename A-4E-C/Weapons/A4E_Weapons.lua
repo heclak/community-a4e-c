@@ -140,7 +140,7 @@ declare_loadout(	--400 gal tank
 		Picture			= "fuel400.png",
 		displayName		= _("Fuel Tank 400 gallons (EMPTY)"),
 		Weight_Empty	= 240*POUNDS_TO_KG,                         -- "bobtail" configuration
-		Weight			= 240*POUNDS_TO_KG,
+		Weight			= 240*POUNDS_TO_KG + 400*GALLON_TO_KG,
 		Cx_pil			= 0.0020,
 		shape_table_data =
 		{
@@ -170,7 +170,7 @@ declare_loadout(	--300 gal tank
 		Picture			= "fuel300.png",
 		displayName		= _("Fuel Tank 300 gallons (EMPTY)"),
 		Weight_Empty	= 183*POUNDS_TO_KG,                       -- 2 fin configuration
-		Weight			= 183*POUNDS_TO_KG,
+		Weight			= 183*POUNDS_TO_KG + 300*GALLON_TO_KG,
 		Cx_pil			= 0.0015,
 		shape_table_data =
 		{
@@ -200,7 +200,7 @@ declare_loadout(	--300 gal tank LEFT RIGHT
 		Picture			= "fuel300.png",
 		displayName		= _("Fuel Tank 300 gallons (EMPTY)"),
 		Weight_Empty	= 199*POUNDS_TO_KG,                       -- 2 fin configuration
-		Weight			= 199*POUNDS_TO_KG,
+		Weight			= 199*POUNDS_TO_KG + 300*GALLON_TO_KG,
 		Cx_pil			= 0.0014,
 		shape_table_data =
 		{
@@ -230,7 +230,7 @@ declare_loadout(	--150 gal tank
 		Picture			= "fuel150.png",
 		displayName		= _("Fuel Tank 150 gallons (EMPTY)"),
 		Weight_Empty	= 136*POUNDS_TO_KG,
-		Weight			= 136*POUNDS_TO_KG,
+		Weight			= 136*POUNDS_TO_KG + 150*GALLON_TO_KG,
 		Cx_pil			= 0.0010,
 		shape_table_data =
 		{

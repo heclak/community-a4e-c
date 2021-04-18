@@ -52,6 +52,7 @@ public:
 	inline double transferFuel( Tank from, Tank to, double dm );
 	inline double addFuelToTank( Tank tank, double dm, double min = 0.0 );
 	inline double transferRateFactor();
+	inline bool externalFull() const;
 
 	inline void setExternalTankPressure( bool pressure );
 	inline void setMechPumpPressure( bool pressure );
@@ -67,6 +68,7 @@ public:
 	inline Tank getSelectedTank() const;
 	inline bool getFuelTransferCaution() const;
 	inline bool getFuelBoostCaution() const;
+	inline double getTotalCapacity() const;
 	inline void setFuelQty( Tank tank, const Vec3& position, double value );
 	inline void setInternal( double value );
 	inline void setFuelCapacity( double l, double c, double r );
@@ -75,8 +77,11 @@ public:
 	inline void setFuelDumping(bool dumping);
 
 private:
+
 	double m_fuel[NUMBER_OF_TANKS] = { 0.0, 0.0, 0.0, 0.0, 0.0 };
 	double m_fuelPrevious[NUMBER_OF_TANKS] = { 0.0, 0.0, 0.0, 0.0, 0.0 };
+	bool m_fuelEmpty[NUMBER_OF_TANKS] = { false, false, false, false, false };
+	bool m_fuelSet[NUMBER_OF_TANKS] = { false, false, false, false, false }; //Has the fuel been loaded on. This is to check for empty tanks.
 	//										fuselage wing     l    c   r
 	double m_fuelCapacity[NUMBER_OF_TANKS] = { 731.0, 1737.0, 0.0, 0.0, 0.0 }; //changed it to 1737 to match the values from the entry.
 	Vec3 m_fuelPos[NUMBER_OF_TANKS] = { Vec3(), Vec3(), Vec3(), Vec3(), Vec3() };
@@ -129,6 +134,7 @@ void FuelSystem2::setWingTankBypass( bool bypass )
 
 void FuelSystem2::setFuelQty( Tank tank, const Vec3& position, double value )
 {
+	m_fuelSet[tank] = true; //This tank has just been added.
 	m_fuel[tank] = value;
 	m_fuelPos[tank] = position;
 }
@@ -161,9 +167,38 @@ void FuelSystem2::setInternal( double value )
 
 void FuelSystem2::setFuelCapacity( double l, double c, double r )
 {
-	m_fuelCapacity[TANK_EXTERNAL_LEFT] = l;
-	m_fuelCapacity[TANK_EXTERNAL_CENTRE] = c;
-	m_fuelCapacity[TANK_EXTERNAL_RIGHT] = r;
+	m_fuelEmpty[TANK_EXTERNAL_LEFT] = l < 0.0;
+	m_fuelEmpty[TANK_EXTERNAL_CENTRE] = c < 0.0;
+	m_fuelEmpty[TANK_EXTERNAL_RIGHT] = r < 0.0;
+
+	// Check each of the external tanks for negative fuel capacity.
+	// This means it is an empty tank.
+	// Empty tanks need to have their fuel removed. They don't start empty so DCS
+	// knows how much fuel the aircraft should have when fully fueled (taking fuel from tanker).
+	// If the fuel has just been set then we need to jump into action to remove the fuel from the
+	// tank if it is an empty tank. We then need to make sure this doesn't happen again so set the fuelSet
+	// to false for this specific tank.
+	if ( m_fuelSet[TANK_EXTERNAL_LEFT] && l < 0.0 )
+	{
+		m_fuel[TANK_EXTERNAL_LEFT] = 0.0;
+		m_fuelSet[TANK_EXTERNAL_LEFT] = false;
+	}
+
+	if ( m_fuelSet[TANK_EXTERNAL_CENTRE] && c < 0.0 )
+	{
+		m_fuel[TANK_EXTERNAL_CENTRE] = 0.0;
+		m_fuelSet[TANK_EXTERNAL_CENTRE] = false;
+	}
+
+	if ( m_fuelSet[TANK_EXTERNAL_RIGHT] && r < 0.0 )
+	{
+		m_fuel[TANK_EXTERNAL_RIGHT] = 0.0;
+		m_fuelSet[TANK_EXTERNAL_RIGHT] = false;
+	}
+		
+	m_fuelCapacity[TANK_EXTERNAL_LEFT] = abs(l);
+	m_fuelCapacity[TANK_EXTERNAL_CENTRE] = abs(c);
+	m_fuelCapacity[TANK_EXTERNAL_RIGHT] = abs(r);
 }
 
 void FuelSystem2::setSelectedTank( Tank tank )
@@ -216,9 +251,29 @@ FuelSystem2::Tank FuelSystem2::getSelectedTank() const
 	return m_selectedTank;
 }
 
+double FuelSystem2::getTotalCapacity() const
+{
+	double total = 0.0;
+	for ( int i = 0; i < NUMBER_OF_TANKS; i++ )
+	{
+		total += m_fuelCapacity[i];
+	}
+
+	total += 1.0;
+
+	return total;
+}
+
 bool FuelSystem2::hasFuel() const
 {
 	return m_hasFuel;
+}
+
+bool FuelSystem2::externalFull() const
+{
+	return m_fuel[TANK_EXTERNAL_LEFT] == m_fuelCapacity[TANK_EXTERNAL_LEFT] &&
+		   m_fuel[TANK_EXTERNAL_CENTRE] == m_fuelCapacity[TANK_EXTERNAL_CENTRE] &&
+		   m_fuel[TANK_EXTERNAL_RIGHT] == m_fuelCapacity[TANK_EXTERNAL_RIGHT];
 }
 
 void FuelSystem2::updateMechPumpPressure()
