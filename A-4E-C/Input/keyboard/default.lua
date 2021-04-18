@@ -102,7 +102,8 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- ECM Control Panel ------------------------
     ---------------------------------------------
-    {down = Keys.ecm_apr25_off, value_down = 1.0,value_up = 0.0,                                    name = _('APR-25 Power Switch - ON/OFF'),   category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_apr25_off, value_down = 1.0,value_up = 0.0,                                    name = _('APR-25 - ON/OFF'),   category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_apr27_off, value_down = 1.0,value_up = 0.0,                                    name = _('APR-27 - ON/OFF'),   category = {_('ECM Control Panel')}},
 
     ---------------------------------------------
     -- Instrument Panel -------------------------
@@ -117,11 +118,11 @@ join(res.keyCommands,{
     {combos = {{key = '-', reformers = {'RShift'}}}, down = Keys.AltPressureDec,                    name = _('Altimeter Pressure - Decrease'),  category = {_('Instrument Panel')}},
 
     -- Radar Altimeter
-    {combos = {{key = '-', reformers = {'RCtrl','RShift'}}}, down = Keys.RadarAltToggle,            name = _('Radar Altitude Warning - ON/OFF'), category = {_('Instrument Panel')}},
-    {down = Keys.RadarAltWarningUp,                                                                 name = _('Radar Altitude Warning - Raise Increment'), category = {_('Instrument Panel')}},
-    {down = Keys.RadarAltWarningDown,                                                               name = _('Radar Altitude Warning - Lower Increment'), category = {_('Instrument Panel')}},
-    {combos = {{key = '=', reformers = {'RCtrl'}}}, down = Keys.RadarAltWarningStartUp, up = Keys.RadarAltWarningStop, name = _('Radar Altitude Warning - Raise Continuous'), category = {_('Instrument Panel')}},
-    {combos = {{key = '-', reformers = {'RCtrl'}}}, down = Keys.RadarAltWarningStartDown, up = Keys.RadarAltWarningStop, name = _('Radar Altitude Warning - Lower Continuous'), category = {_('Instrument Panel')}},
+    {combos = {{key = '-', reformers = {'RCtrl','RShift'}}}, down = Keys.RadarAltToggle,                                    name = _('Radar Altitude Warning - ON/OFF'), category = {_('Instrument Panel')}},
+    {down = Keys.RadarAltWarningUp,                                                                                         name = _('Radar Altitude Warning - Raise Increment'), category = {_('Instrument Panel')}},
+    {down = Keys.RadarAltWarningDown,                                                                                       name = _('Radar Altitude Warning - Lower Increment'), category = {_('Instrument Panel')}},
+    {combos = {{key = '=', reformers = {'RCtrl'}}}, down = Keys.RadarAltWarningStartUp, up = Keys.RadarAltWarningStop,      name = _('Radar Altitude Warning - Raise Continuous'), category = {_('Instrument Panel')}},
+    {combos = {{key = '-', reformers = {'RCtrl'}}}, down = Keys.RadarAltWarningStartDown, up = Keys.RadarAltWarningStop,    name = _('Radar Altitude Warning - Lower Continuous'), category = {_('Instrument Panel')}},
 
     -- Landing Gear Handle
     {combos = {{key = 'G'}}, down = Keys.PlaneGear,                                                 name = _('Landing Gear Handle - UP/DOWN'),  category = {_('Instrument Panel')}},
@@ -207,8 +208,8 @@ join(res.keyCommands,{
     {combos = {{key = 'R'}}, down = iCommandPlaneFuelOn, up = iCommandPlaneFuelOff, name = _('Fuel Dump'),                        category = {_('Left Console'), _('Engine Control Panel')}},
     {combos = {{key = 'Home', reformers = {'RShift'}}}, down = Keys.Engine_Start,   name = _('Engine Starter Switch - START'),    category = {_('Left Console'), _('Engine Control Panel')}},
     {combos = {{key = 'End', reformers = {'RShift'}}}, down = Keys.Engine_Stop,     name = _('Engine Starter Switch - ABORT'),    category = {_('Left Console'), _('Engine Control Panel')}},
-    {down = device_commands.ENGINE_drop_tanks_sw, up = device_commands.ENGINE_drop_tanks_sw, value_down = 1, value_up = 0, cockpit_device_id = devices.ENGINE, name = _('Pressurization - UP/DROP TANKS'), category = {_('Left Console'), _('Engine Control Panel')}},
-    {down = device_commands.ENGINE_drop_tanks_sw, up = device_commands.ENGINE_drop_tanks_sw, value_down = -1, value_up = 0, cockpit_device_id = devices.ENGINE, name = _('Pressurization - DOWN/FLIGHT REFUEL'), category = {_('Left Console'), _('Engine Control Panel')}},
+    {down = device_commands.ENGINE_drop_tanks_sw, up = device_commands.ENGINE_drop_tanks_sw, value_down = 1, value_up = 0, cockpit_device_id = devices.ENGINE, name = _('Pressurization - DROP TANKS else PRESS'), category = {_('Left Console'), _('Engine Control Panel')}},
+    {down = device_commands.ENGINE_drop_tanks_sw, up = device_commands.ENGINE_drop_tanks_sw, value_down = -1, value_up = 0, cockpit_device_id = devices.ENGINE, name = _('Pressurization - DOWN/FLIGHT REFUEL else PRESS'), category = {_('Left Console'), _('Engine Control Panel')}},
 
     -- Radar Control Panel
     {down = Keys.RadarModeOFF,                  name = _('Radar Mode Selector Switch Knob - OFF'),               category = {_('Left Console'), _('Radar Control Panel')}},
