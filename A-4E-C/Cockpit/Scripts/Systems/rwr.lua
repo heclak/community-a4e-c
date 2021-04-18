@@ -125,6 +125,7 @@ dev:listen_command(device_commands.ecm_msl_alert_axis_inner)
 dev:listen_command(device_commands.ecm_msl_alert_axis_outer)
 
 dev:listen_command(Keys.ecm_apr25_off)
+dev:listen_command(Keys.ecm_apr27_off)
 
 local ECM_vis_param = get_param_handle("ECM_VIS")
 
@@ -194,6 +195,10 @@ function SetCommand(command,value)
 	-----------------
 	if command == Keys.ecm_apr25_off then
 		dev:performClickableAction((device_commands.ecm_apr25_off), ((rwr_apr25_power * -1) +1), false) -- currently off, so enable pylon
+	end
+
+	if command == Keys.ecm_apr27_off then
+		dev:performClickableAction((device_commands.ecm_apr27_off), ((rwr_apr27_status * -1) +1), false)
 	end
 	
 	-----------------
