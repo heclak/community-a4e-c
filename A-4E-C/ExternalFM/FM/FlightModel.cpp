@@ -298,7 +298,7 @@ void Scooter::FlightModel::calculateLocalPhysicsParams(double dt)
 	m_aoaDot = clamp(dAOA / dt, -10.0 * PI, 10.0 * PI);
 
 	//Nose compression + Lower than 50 kts.
-	if ( m_airframe.getNoseCompression() > 0.05 && m_scalarV < 25.0 )
+	if ( m_airframe.getNoseCompression() > 0.05 && magnitude(m_state.getLocalSpeed()) < 25.0 )
 	{
 		m_aoaDot = 0.0;
 	}

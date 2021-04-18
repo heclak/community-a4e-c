@@ -12,6 +12,9 @@
 //================================ Includes ===============================//
 #include "Avionics.h"
 #include "Maths.h"
+#include "Commands.h"
+#include "Devices.h"
+#include "cockpit_base_api.h"
 //=========================================================================//
 
 #define STAB_AUG_MAX_AUTHORITY 0.3
@@ -44,16 +47,31 @@ void Scooter::Avionics::zeroInit()
 void Scooter::Avionics::coldInit()
 {
 	zeroInit();
+	ed_cockpit_dispatch_action_to_device( DEVICES_AVIONICS, DEVICE_COMMANDS_OXYGEN_SWITCH, 0.0 );
 }
 
 void Scooter::Avionics::hotInit()
 {
 	zeroInit();
+	ed_cockpit_dispatch_action_to_device( DEVICES_AVIONICS, DEVICE_COMMANDS_OXYGEN_SWITCH, 1.0 );
 }
 
 void Scooter::Avionics::airborneInit()
 {
 	zeroInit();
+	ed_cockpit_dispatch_action_to_device( DEVICES_AVIONICS, DEVICE_COMMANDS_OXYGEN_SWITCH, 1.0 );
+}
+
+bool Scooter::Avionics::handleInput( int command, float value )
+{
+	switch ( command )
+	{
+	case DEVICE_COMMANDS_OXYGEN_SWITCH:
+		m_oxygen = (value == 1.0f);
+		return true;
+	}
+
+	return false;
 }
 
 void Scooter::Avionics::updateAvionics(double dt)

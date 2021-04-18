@@ -472,7 +472,7 @@ void ed_fm_set_command
 			s_airframe->toggleSlatsLocked();
 		break;
 	default:
-		;//printf( "number %d: %lf\n", command, value );
+		;// printf( "number %d: %lf\n", command, value );
 	}
 
 	if ( command >= 3000 && command < 4000 )
@@ -486,6 +486,9 @@ void ed_fm_set_command
 		}*/
 
 		if ( s_fuelSystem->handleInput( command, value ) )
+			return;
+
+		if ( s_avionics->handleInput( command, value ) )
 			return;
 	}
 }
@@ -566,6 +569,7 @@ double ed_fm_get_internal_fuel()
 {
 	return s_fuelSystem->getFuelQtyInternal();
 }
+
 /*
 	set external fuel volume for each payload station , called for weapon init and on reload
 */
@@ -576,7 +580,7 @@ void  ed_fm_set_external_fuel (int	 station,
 								double z)
 {
 	//printf( "Station: %d, Fuel: %lf, Z: %lf, COM %lf\n", station, fuel, z, s_state->getCOM().z );
-	s_fuelSystem->setFuelQty( (Scooter::FuelSystem2::Tank)(station+1), Vec3( x, y, z ), fuel );
+	s_fuelSystem->setFuelQty( (Scooter::FuelSystem2::Tank)(station + 1), Vec3( x, y, z ), fuel );
 }
 /*
 	get external fuel volume 
@@ -657,10 +661,10 @@ double ed_fm_get_param(unsigned index)
 		return 600.0;
 
 	case ED_FM_OXYGEN_SUPPLY:
-		return 101000.0;
+		return s_avionics->getOxygen() ? 101000.0 : 0.0;
 
 	case ED_FM_FLOW_VELOCITY:
-		return 1.0;
+		return s_avionics->getOxygen() ? 1.0 : 0.0;
 
 	case ED_FM_ENGINE_1_FUEL_FLOW:
 		return s_engine->getFuelFlow();
@@ -776,6 +780,7 @@ void ed_fm_cold_start()
 	s_engine->coldInit();
 	s_avionics->coldInit();
 	s_state->coldInit();
+	s_fuelSystem->coldInit();
 }
 
 void ed_fm_hot_start()
@@ -786,6 +791,7 @@ void ed_fm_hot_start()
 	s_engine->hotInit();
 	s_avionics->hotInit();
 	s_state->hotInit();
+	s_fuelSystem->hotInit();
 }
 
 void ed_fm_hot_start_in_air()
@@ -796,6 +802,7 @@ void ed_fm_hot_start_in_air()
 	s_engine->airborneInit();
 	s_avionics->airborneInit();
 	s_state->airborneInit();
+	s_fuelSystem->airborneInit();
 }
 
 void ed_fm_repair()

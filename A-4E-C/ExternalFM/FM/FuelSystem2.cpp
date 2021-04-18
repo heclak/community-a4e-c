@@ -18,17 +18,17 @@ void FuelSystem2::zeroInit()
 
 void FuelSystem2::coldInit()
 {
-
+	zeroInit();
 }
 
 void FuelSystem2::hotInit()
 {
-
+	zeroInit();
 }
 
 void FuelSystem2::airborneInit()
 {
-
+	zeroInit();
 }
 
 void FuelSystem2::drawFuel( double dm )

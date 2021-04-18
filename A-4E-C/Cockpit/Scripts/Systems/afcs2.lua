@@ -443,6 +443,21 @@ function afcs_get_current_state()
     end
 end
 
+function print_state(state)
+    state_names = {}
+
+    state_names[AFCS_STATE_OFF] = "AFCS_STATE_OFF"
+    state_names[AFCS_STATE_STBY] = "AFCS_STATE_STBY"
+    state_names[AFCS_STATE_ATTITUDE_ONLY] = "AFCS_STATE_ATTITUDE_ONLY"
+    state_names[AFCS_STATE_ATTITUDE_HDG] = "AFCS_STATE_ATTITUDE_HDG"
+    state_names[AFCS_STATE_ALTITUDE_ONLY] = "AFCS_STATE_ALTITUDE_ONLY"
+    state_names[AFCS_STATE_ALTITUDE_HDG] = "AFCS_STATE_ALTITUDE_HDG"
+    state_names[AFCS_STATE_CSS] = "AFCS_STATE_CSS"
+    state_names[AFCS_STATE_WARMUP] = "AFCS_STATE_WARMUP"
+
+    print_message_to_user(state_names[state])
+end
+
 function print_state_transition(from, to)
     state_names = {}
 
@@ -581,8 +596,11 @@ function afcs_find_heading_desired_bank_angle()
 
     local desired_heading_hold = afcs_heading_hold
 
+    --Are we rolling out because we are no longer in heading mode.
+    local rolling_out = false
     if current_state ~= AFCS_STATE_ATTITUDE_HDG and current_state ~= AFCS_STATE_ALTITUDE_HDG then
-        desired_heading_hold = sensor_data.getMagneticHeading()
+        desired_heading_hold = math.deg(sensor_data.getMagneticHeading())
+        rolling_out = true
     end
     
     local heading = math.deg(sensor_data.getMagneticHeading()) % 360
@@ -608,8 +626,9 @@ function afcs_find_heading_desired_bank_angle()
 
     --bank_angle = bank_angle * (clamp(math.abs(current_bank_angle / 27.5), 0.0, 1.0) + 0.1)
 
-    if (math.abs(delta_hdg) < 4 ) then
+    if (math.abs(delta_hdg) < 4 and not rolling_out ) then
         bank_angle = bank_angle * math.abs(delta_hdg) / 5.0 --this is just a P from a PID loop
+        --bank_angle = bank_angle + (desired_bank_angle - bank_angle) / 100.0
     end
 
     return bank_angle

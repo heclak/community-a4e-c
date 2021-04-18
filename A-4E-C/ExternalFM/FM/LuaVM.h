@@ -28,6 +28,7 @@ public:
 	bool getGlobalTableNumber( const char* table, const char* key, float& result );
 	void getSplines( const char* name, std::vector<LERX>& vec );
 	bool outputCommands( const char* name );
+	bool outputDevices( const char* name );
 
 private:
 

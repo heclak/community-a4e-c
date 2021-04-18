@@ -100,7 +100,6 @@ namespace UnitTests
 
 			Assert::AreEqual( 250.0, system.m_fuel[Scooter::FuelSystem2::TANK_EXTERNAL_LEFT], L"Left tank not filled correctly." );
 			Assert::AreEqual( 250.0, system.m_fuel[Scooter::FuelSystem2::TANK_EXTERNAL_RIGHT], L"Right tank not filled correctly." );
-
 			Assert::AreEqual( 0.0, system.m_fuel[Scooter::FuelSystem2::TANK_FUSELAGE], L"Fuselage not empty." );
 		}
 
