@@ -219,7 +219,7 @@ void FuelSystem2::update( double dt )
 		}
 	}
 
-	printf( "Fus: %lf, Wing: %lf, Ex L: %lf, Ex C: %lf, Ex R: %lf\n", m_fuel[0], m_fuel[1], m_fuel[2], m_fuel[3], m_fuel[4] );
+	//printf( "Fus: %lf, Wing: %lf, Ex L: %lf, Ex C: %lf, Ex R: %lf\n", m_fuel[0], m_fuel[1], m_fuel[2], m_fuel[3], m_fuel[4] );
 }
 
 }//end scooter namespace

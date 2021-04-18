@@ -472,7 +472,7 @@ void ed_fm_set_command
 			s_airframe->toggleSlatsLocked();
 		break;
 	default:
-		;//printf( "number %d: %lf\n", command, value );
+		;// printf( "number %d: %lf\n", command, value );
 	}
 
 	if ( command >= 3000 && command < 4000 )
@@ -486,6 +486,9 @@ void ed_fm_set_command
 		}*/
 
 		if ( s_fuelSystem->handleInput( command, value ) )
+			return;
+
+		if ( s_avionics->handleInput( command, value ) )
 			return;
 	}
 }
@@ -658,10 +661,10 @@ double ed_fm_get_param(unsigned index)
 		return 600.0;
 
 	case ED_FM_OXYGEN_SUPPLY:
-		return 101000.0;
+		return s_avionics->getOxygen() ? 101000.0 : 0.0;
 
 	case ED_FM_FLOW_VELOCITY:
-		return 1.0;
+		return s_avionics->getOxygen() ? 1.0 : 0.0;
 
 	case ED_FM_ENGINE_1_FUEL_FLOW:
 		return s_engine->getFuelFlow();

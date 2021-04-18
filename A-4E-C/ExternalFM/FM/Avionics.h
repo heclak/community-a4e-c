@@ -36,6 +36,9 @@ public:
 	void updateAvionics(double dt);
 	inline void setYawDamperPower( bool power );
 	inline bool getValidBombingSolution();
+	inline bool getOxygen();
+	
+	bool handleInput( int command, float value );
 
 	inline CP741& getComputer();
 private:
@@ -52,7 +55,14 @@ private:
 	CP741 m_bombingComputer;
 
 	bool m_damperEnabled = false;
+
+	bool m_oxygen = true;
 };
+
+bool Avionics::getOxygen()
+{
+	return m_oxygen;
+}
 
 double Avionics::washoutFilter(double input, double dt)
 {

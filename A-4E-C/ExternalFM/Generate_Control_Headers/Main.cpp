@@ -3,7 +3,8 @@
 
 #define STR_LEN 200
 
-static bool generateHeader( const char* root );
+static bool generateCommandsHeader( const char* root );
+static bool generateDevicesHeader( const char* root );
 
 int main(int argc, char** argv)
 {
@@ -27,13 +28,29 @@ int main(int argc, char** argv)
 
 	
 
-	generateHeader( path );
-
+	generateCommandsHeader( path );
+	generateDevicesHeader( path );
 
 	return 0;
 }
 
-bool generateHeader( const char* root )
+bool generateDevicesHeader( const char* root )
+{
+	char out[STR_LEN];
+	char devices[STR_LEN];
+
+	strcpy_s( out, STR_LEN, root );
+	strcpy_s( devices, STR_LEN, root );
+
+	strcat_s( devices, STR_LEN, "/Cockpit/Scripts/devices.lua" );
+	strcat_s( out, STR_LEN, "/ExternalFM/FM/Devices.h" );
+
+	LuaVM vm;
+	vm.dofile( devices );
+	return vm.outputDevices( out );
+}
+
+bool generateCommandsHeader( const char* root )
 {
 	char out[STR_LEN];
 	char commands[STR_LEN];

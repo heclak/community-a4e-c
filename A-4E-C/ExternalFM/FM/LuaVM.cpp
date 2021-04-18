@@ -246,4 +246,26 @@ bool LuaVM::outputCommands( const char* name )
 	fprintf( file, "};\n" );
 
 	fclose( file );
+
+	return true;
+}
+
+bool LuaVM::outputDevices( const char* name )
+{
+	FILE* file = fopen( name, "w+" );
+
+	if ( ! file )
+		return false;
+
+	fprintf( file, "enum Devices\n{\n" );
+	if ( ! writeTableKeysToFile( file, "devices" ) )
+	{
+		printf( "ERROR: Couldn't get devices table." );
+	}
+
+	fprintf( file, "};\n" );
+
+	fclose( file );
+
+	return true;
 }
