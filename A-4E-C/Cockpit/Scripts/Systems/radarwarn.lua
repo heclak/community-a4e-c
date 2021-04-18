@@ -48,14 +48,22 @@ local current_RALT_valid=get_param_handle("D_RADAR_ALT_VALID")
 
 local master_test_param = get_param_handle("D_MASTER_TEST")
 
+local radar_alt_indexer_moving = 0
+
 dev:listen_command(Keys.RadarAltToggle)
 dev:listen_command(Keys.RadarAltWarningDown)
 dev:listen_command(Keys.RadarAltWarningUp)
+dev:listen_command(Keys.RadarAltWarningStartDown)
+dev:listen_command(Keys.RadarAltWarningStartUp)
+dev:listen_command(Keys.RadarAltWarningStop)
 
 function update()
     local valid_radar=true
     local altitude_meters = sensor_data.getRadarAltitude()
     local altitude_feet = altitude_meters*3.28084
+
+    warn_idx_delta = get_warn_idx_delta(warning_altitude) * radar_alt_indexer_moving * 0.3
+    warning_altitude = warning_altitude + warn_idx_delta
 
     if altitude_meters > 1600 then
         -- DCS seems to cap the sensor value at 1600.05meters
@@ -162,6 +170,7 @@ AFC 423: Disable LAWS Unreliability Tone with APR-27 Installed (Wiring Mod.)
     RALT_warn:set(RALT_warn_val)
     current_RALT:set(gauge_altitude:get_WMA(altitude_feet))
     RALT_idx:set(warning_altitude_gauge_idx:get_WMA(warning_altitude))
+    
 end
 
 function get_warn_idx_delta(warn_alt)
@@ -206,6 +215,12 @@ function SetCommand(command,value)
             -- TODO: test mode
             radar_enabled=true
         end
+    elseif command == Keys.RadarAltWarningStartUp then
+        radar_alt_indexer_moving = 1
+    elseif command == Keys.RadarAltWarningStartDown then
+        radar_alt_indexer_moving = -1
+    elseif command == Keys.RadarAltWarningStop then
+        radar_alt_indexer_moving = 0
     end
 end
 
