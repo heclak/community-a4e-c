@@ -255,13 +255,8 @@ dev:listen_command(Keys.IntLightInstruments)
 dev:listen_command(Keys.IntLightConsole)
 dev:listen_command(Keys.IntLightBrightness)
 --plusnine oxygen system
---listen (used from clickabledata.lua)
 dev:listen_command(device_commands.oxygen_switch)
 dev:listen_command(Keys.OxygenToggle)
-
---plusnine oxygen system
---initialize default
-local oxygen_enabled = false
 
 function dump_table(t)
     for key,value in pairs(t) do
@@ -295,13 +290,6 @@ function enumerate_fueltanks()
     gauge_fuel_flow:set_current_val(sensor_data.getEngineLeftFuelConsumption())
 end
 
---plusnine oxygen system
---added device commands and keys
-local command_table = {
-    [device_commands.oxygen_switch] = oxygen_enabled,
-    [Keys.OxygenToggle] = oxygen_toggle,
-}
-
 function post_initialize()
 
     local abstime = get_absolute_model_time()
@@ -324,18 +312,15 @@ function post_initialize()
     --plusnine oxygen system
     --hot/air vs cold/ground start switch positioning
     if birth == "GROUND_HOT" or birth == "AIR_HOT" then
-        --Enable the oxygen switches
+        --enable the oxygen switch
         oxygen_enabled = true
-
     elseif birth == "GROUND_COLD" then
+        --leave the oxygen switch disabled
         oxygen_enabled = false
     end
 
     startup_print("avionics: postinit end")
 
-    --plusnine oxygen system
-    --switches are synced to the states stored on load
-    sync_switches()
 end
 
 
@@ -500,15 +485,14 @@ function SetCommand(command,value)
         end
     elseif command == device_commands.AOA_dimming_wheel_AXIS then
         AOA_indexer_brightness = LinearTodB((value + 1) / 2)
+    --plusnine oxygen system
+    elseif command == device_commands.oxygen_switch then
+        oxygen_enabled = true
+    elseif command == Keys.OxygenToggle then
+        dev:performClickableAction(device_commands.oxygen_switch,oxygen_enabled and 0 or 1,false)
     else
         print("Unknown command:"..command.." Value:"..value)
     end
-end
-
---plusnine oxygen system
---sync switch according to mission start
-function sync_switches()
-    dev:performClickableAction(device_commands.oxygen_switch, oxygen_enabled and 1 or 0, false)
 end
 
 local currentDisplayedFuel=WMA(0.15,initINT)
@@ -858,13 +842,11 @@ function update_oxygen_1s()
         lo2_flag:set(0)
     end
 
-    --plusnine oxygen system
-    --testing printouts
+    --plusnine oxygen system testing printouts
     if oxygen_enabled == true then
-        print_message_to_user("oxy ON")
-    end
-    if oxygen_enabled == false then
-        print_message_to_user("oxy OFF")
+        --print_message_to_user("oxygen ON")
+    elseif oxygen_enabled == false then
+        --print_message_to_user("oxygen OFF")
     end
 end
 
@@ -895,18 +877,6 @@ function update_oxygen()
             oxygen_test=0
         end
     end
-end
-
---plusnine oxygen system
---command callback
-function oxygen_toggle()
-    dev:performClickableAction(device_commands.oxygen_switch,oxygen_enabled and 0 or 1,false)
-end
-
---plusnine oxygen system
---manipulate the panel
-function oxygen_enabled(value)
-    oxygen_enabled = (value == 1)
 end
 
 local wf_counter = 0
