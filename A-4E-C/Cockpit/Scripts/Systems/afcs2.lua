@@ -78,6 +78,7 @@ dev:listen_command(device_commands.afcs_ail_trim)
 --Keys to manipulate the panel
 dev:listen_command(Keys.AFCSOverride)
 dev:listen_command(Keys.AFCSStandbyToggle)
+dev:listen_command(Keys.AFCSStabAugToggle)
 dev:listen_command(Keys.AFCSEngageToggle)
 dev:listen_command(Keys.AFCSAltitudeToggle)
 dev:listen_command(Keys.AFCSHeadingToggle)
@@ -222,6 +223,10 @@ function afcs_standby_toggle()
     dev:performClickableAction(device_commands.afcs_standby,afcs_standby_enabled and 0 or 1,false)
 end
 
+function afcs_stab_aug_toggle()
+    dev:performClickableAction(device_commands.afcs_stab_aug,afcs_stab_aug_enabled and 0 or 1,false)
+end
+
 function afcs_engage_toggle()
     dev:performClickableAction(device_commands.afcs_engage,afcs_engage_enabled_switch and 0 or 1,false)
 end
@@ -305,6 +310,7 @@ local command_table = {
     --Keys
     [Keys.AFCSOverride] = afcs_override,
     [Keys.AFCSStandbyToggle] = afcs_standby_toggle,
+    [Keys.AFCSStabAugToggle] = afcs_stab_aug_toggle,
     [Keys.AFCSEngageToggle] = afcs_engage_toggle,
     [Keys.AFCSAltitudeToggle] = afcs_altitude_toggle,
     [Keys.AFCSHeadingToggle] = afcs_heading_toggle,

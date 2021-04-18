@@ -14,7 +14,7 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- General ----------------------------------
     ---------------------------------------------
-    {down = iCommandPlaneShipTakeOff,                                                name = _('Ship Take Off Position'),           category = {_('General')}},
+    {down = iCommandPlaneShipTakeOff,                                                name = _('Catapult Hook-Up'),           category = {_('General')}},
     -- {down = iCommandCockpitShowPilotOnOff,                                        name = _('Show Pilot Body'),                  category = _('General')},
     {down = iCommandPlaneWingtipSmokeOnOff,                                          name = _('Smoke - ON/OFF'), category = {_('General')}},
 
@@ -108,7 +108,8 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- ECM Control Panel ------------------------
     ---------------------------------------------
-    {down = Keys.ecm_apr25_off, value_down = 1.0,value_up = 0.0, name = _('APR-25 Power Switch - ON/OFF'),       category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_apr25_off, value_down = 1.0,value_up = 0.0, name = _('APR-25 Power Switch - ON/OFF'),   category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_apr27_off, value_down = 1.0,value_up = 0.0, name = _('APR-27 Power Switch - ON/OFF'),   category = {_('ECM Control Panel')}},
 
     ---------------------------------------------
     -- Instrument Panel -------------------------
@@ -120,8 +121,6 @@ join(res.keyCommands,{
     {down = Keys.AltPressureDec,                             name = _('Altimeter Pressure - Decrease'),      category = {_('Instrument Panel')}},
 
     -- Radar Altimeter
-    {down = Keys.RadarAltWarningUp,                          name = _('Radar Altitude Warning - Raise'),     category = {_('Instrument Panel')}},
-    {down = Keys.RadarAltWarningDown,                        name = _('Radar Altitude Warning - Lower'),     category = {_('Instrument Panel')}},
 
     -- Landing Gear Handle
     {down = iCommandPlaneGear,                               name = _('Landing Gear Handle - UP/DOWN'),      category = {_('Instrument Panel')}},
@@ -227,6 +226,8 @@ join(res.keyCommands,{
     {down = iCommandPlaneFuelOn, up = iCommandPlaneFuelOff,                                   name = _('Fuel Dump'),                             category = {_('Left Console'), _('Engine Control Panel')}},
     {down = Keys.Engine_Start,                                                                name = _('Engine Starter Switch - START'),         category = {_('Left Console'), _('Engine Control Panel')}},
     {down = Keys.Engine_Stop,                                                                 name = _('Engine Starter Switch - ABORT'),         category = {_('Left Console'), _('Engine Control Panel')}},
+    {down = device_commands.ENGINE_drop_tanks_sw, up = device_commands.ENGINE_drop_tanks_sw, value_down = 1, value_up = 0, cockpit_device_id = devices.ENGINE, name = _('Pressurization - UP/DROP TANKS'), category = {_('Left Console'), _('Engine Control Panel')}},
+    {down = device_commands.ENGINE_drop_tanks_sw, up = device_commands.ENGINE_drop_tanks_sw, value_down = -1, value_up = 0, cockpit_device_id = devices.ENGINE, name = _('Pressurization - DOWN/FLIGHT REFUEL'), category = {_('Left Console'), _('Engine Control Panel')}},
 
     -- Radar Control Panel
     {down = Keys.RadarModeOFF,                                                          name = _('Radar Mode Selector Switch Knob - OFF'),                       category = {_('Left Console'), _('Radar Control Panel')}},
@@ -249,6 +250,9 @@ join(res.keyCommands,{
     
     -- AFCS Panel
     {down = Keys.AFCSStandbyToggle,                                                     name = _('AFCS Standby Switch - OFF/STANDBY'),                           category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_stab_aug, value_down = 1, cockpit_device_id = devices.AFCS, name = _('AFCS Yaw Damper - STAB AUG'), category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_stab_aug, value_down = 0, cockpit_device_id = devices.AFCS, name = _('AFCS Yaw Damper - OFF'), category = {_('Left Console'), _('AFCS Panel')}},
+    {down = Keys.AFCSStabAugToggle,                                                     name = _('AFCS Yaw Damper - OFF/STAB AUG'),                              category = {_('Left Console'), _('AFCS Panel')}},
     {down = Keys.AFCSEngageToggle,                                                      name = _('AFCS Engage Switch - OFF/ENGAGE'),                             category = {_('Left Console'), _('AFCS Panel')}},
     {down = Keys.AFCSAltitudeToggle,                                                    name = _('AFCS Altitude Switch - OFF/ALT'),                              category = {_('Left Console'), _('AFCS Panel')}},
     {down = Keys.AFCSHeadingToggle,                                                     name = _('AFCS Heading Select Switch - OFF/HDG SEL'),                    category = {_('Left Console'), _('AFCS Panel')}},
@@ -265,6 +269,9 @@ join(res.keyCommands,{
     {down = Keys.AFCSHotasEngage,                                                       name = _('AFCS Engage (Warthog Throttle)'),                              category = {_('Left Console'), _('AFCS Panel'), _('Special For Joystick')}},
 
     -- Oxygen and Anti-G Panel
+    {down = device_commands.oxygen_switch, value_down = 1, cockpit_device_id = devices.AVIONICS, name = _('Oxygen Switch - ON'), category = {_('Left Console'), _('Oxygen')}},
+    {down = device_commands.oxygen_switch, value_down = 0, cockpit_device_id = devices.AVIONICS, name = _('Oxygen Switch - OFF'), category = {_('Left Console'), _('Oxygen')}},
+    {down = Keys.OxygenToggle, name = _('Oxygen Switch - OFF/ON'), category = {_('Left Console'), _('Oxygen')}},
 
     -- Canopy Control
     {down = iCommandPlaneFonar,                                                         name = _('Canopy Open/Close'),                                   category = {_('Left Console')}},
@@ -307,7 +314,11 @@ join(res.keyCommands,{
     -- {down = Keys.NavNDBNext,     name = _('NDB Channel: Next'),                                          category = {_('Systems')}},
     {down = Keys.NavILSPrev,        name = _('ILS Channel: Previous'),                                      category = {_('Systems')}},
     {down = Keys.NavILSNext,        name = _('ILS Channel: Next'),                                          category = {_('Systems')}},
- 
+    {down = Keys.TacanChMajorInc,                                              name = _('TACAN Channel 10s - Increase'),  category = {_('Systems')}},
+    {down = Keys.TacanChMajorDec,                                              name = _('TACAN Channel 10s - Decrease'),  category = {_('Systems')}},
+    {down = Keys.TacanChMinorInc,                                              name = _('TACAN Channel 1s - Increase'),  category = {_('Systems')}},
+    {down = Keys.TacanChMinorDec,                                              name = _('TACAN Channel 1s - Decrease'),  category = {_('Systems')}},
+
     -- Interior Lights Panel
     {down = device_commands.intlight_whiteflood_CHANGE,     cockpit_device_id = devices.AVIONICS,  value_down = 0.1,  name = _('White Floodlight Control Knob - CW/Increase'),  category = {_('Right Console'), _('Interior Lights Control Panel')}},
     {down = device_commands.intlight_whiteflood_CHANGE,     cockpit_device_id = devices.AVIONICS,  value_down = -0.1, name = _('White Floodlight Control Knob - CCW/Decrease'), category = {_('Right Console'), _('Interior Lights Control Panel')}},

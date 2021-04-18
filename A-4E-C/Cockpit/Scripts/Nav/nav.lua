@@ -234,6 +234,12 @@ dev:listen_command(Keys.NavNDBNext)
 dev:listen_command(Keys.NavNDBPrev)
 dev:listen_command(Keys.PlaneChgTargetNext)
 dev:listen_command(Keys.PlaneChgTargetPrev)
+dev:listen_command(Keys.TacanModeInc)
+dev:listen_command(Keys.TacanModeDec)
+dev:listen_command(Keys.TacanChMajorInc)
+dev:listen_command(Keys.TacanChMajorDec)
+dev:listen_command(Keys.TacanChMinorInc)
+dev:listen_command(Keys.TacanChMinorDec)
 dev:listen_command(device_commands.doppler_select)
 dev:listen_command(device_commands.doppler_memory_test)
 dev:listen_command(device_commands.nav_select)
@@ -533,6 +539,14 @@ function SetCommand(command,value)
             morse_dot_snd:update(nil,tacan_volume,nil)
             morse_dash_snd:update(nil,tacan_volume,nil)
         end
+    elseif command == Keys.TacanChMajorInc then
+        dev:performClickableAction(device_commands.tacan_ch_major, clamp(tacan_ch_major / 20 + 0.05, 0, 0.6), false) -- increment as as per amounts and limits set above
+    elseif command == Keys.TacanChMajorDec then
+        dev:performClickableAction(device_commands.tacan_ch_major, clamp(tacan_ch_major / 20 - 0.05, 0, 0.6), false) -- decrement as as per amounts and limits set above
+    elseif command == Keys.TacanChMinorInc then
+        dev:performClickableAction(device_commands.tacan_ch_minor, clamp(tacan_ch_minor / 10 + 0.10, 0, 0.9), false) -- increment as as per amounts and limits set above
+    elseif command == Keys.TacanChMinorDec then
+        dev:performClickableAction(device_commands.tacan_ch_minor, clamp(tacan_ch_minor / 10 - 0.10, 0, 0.9), false) -- decrement as as per amounts and limits set above
     end
 end
 

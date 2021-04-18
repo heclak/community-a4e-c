@@ -144,6 +144,9 @@ local lo2_flag = get_param_handle("D_OXYGEN_OFF")
 local oxygen_reset = 9.7
 local oxygen = oxygen_reset
 local oxygen_gauge_val = WMA(0.15,oxygen)
+--plusnine oxygen system
+--enabled variable for system use (switch on)
+local oxygen_enabled = false
 
 -----------------------------------------------------------------------------
 -- glareshield wheels light (arg #154)
@@ -251,6 +254,9 @@ dev:listen_command(Keys.IntLightWhiteFlood)
 dev:listen_command(Keys.IntLightInstruments)
 dev:listen_command(Keys.IntLightConsole)
 dev:listen_command(Keys.IntLightBrightness)
+--plusnine oxygen system
+dev:listen_command(device_commands.oxygen_switch)
+dev:listen_command(Keys.OxygenToggle)
 
 function dump_table(t)
     for key,value in pairs(t) do
@@ -303,7 +309,13 @@ function post_initialize()
     dev:performClickableAction(device_commands.stby_att_index_knob, standby_val, false)
     dev:performClickableAction(device_commands.AOA_dimming_wheel_AXIS, AOA_indexer_brightness, false)
 
+    -- add hot or cold start differences here
+    if birth == "GROUND_HOT" or birth == "AIR_HOT" then
+    elseif birth == "GROUND_COLD" then
+    end
+
     startup_print("avionics: postinit end")
+
 end
 
 
@@ -468,6 +480,17 @@ function SetCommand(command,value)
         end
     elseif command == device_commands.AOA_dimming_wheel_AXIS then
         AOA_indexer_brightness = LinearTodB((value + 1) / 2)
+    --plusnine oxygen system
+    elseif command == device_commands.oxygen_switch then
+        oxygen_enabled = (value == 1.0)
+        --more verbose version
+        --if value == 1.0 then
+        --    oxygen_enabled = true
+        --  else
+        --    oxygen_enabled = false
+        --  end
+    elseif command == Keys.OxygenToggle then
+        dev:performClickableAction(device_commands.oxygen_switch,oxygen_enabled and 0 or 1,false)
     else
         print("Unknown command:"..command.." Value:"..value)
     end
@@ -819,6 +842,7 @@ function update_oxygen_1s()
     else
         lo2_flag:set(0)
     end
+
 end
 
 local oxygen_test=0
@@ -849,7 +873,6 @@ function update_oxygen()
         end
     end
 end
-
 
 local wf_counter = 0
 local wf_fpmin = 120

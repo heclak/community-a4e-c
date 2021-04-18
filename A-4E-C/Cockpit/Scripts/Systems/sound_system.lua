@@ -45,6 +45,7 @@ function post_initialize()
         --ENVIRONMENTAL
         --damage
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_DamageGearOverspeed", "SND_INST_DAMAGE_GEAR_OVERSPEED", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitStructuralDamage", "SND_ALWS_DAMAGE_AIRFRAME_STRESS", SOUND_ALWAYS, nil, nil, 1.0, 0.25),
         --engine
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitAvionics", "SND_INST_AVIONICS_WHINE", SOUND_ONCE),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineIgniterWhirr", "SND_INST_ENGINE_IGNITER_WHIRR", SOUND_ONCE),
