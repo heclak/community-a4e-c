@@ -117,6 +117,7 @@ join(res.keyCommands,{
     {combos = {{key = '-', reformers = {'RShift'}}}, down = Keys.AltPressureDec,                    name = _('Altimeter Pressure - Decrease'),  category = {_('Instrument Panel')}},
 
     -- Radar Altimeter
+    {combos = {{key = '-', reformers = {'RCtrl','RShift'}}}, down = Keys.RadarAltToggle,            name = _('Radar Altitude Warning - ON/OFF'), category = {_('Instrument Panel')}},
     {combos = {{key = '=', reformers = {'RCtrl'}}}, down = Keys.RadarAltWarningUp,                  name = _('Radar Altitude Warning - Raise'), category = {_('Instrument Panel')}},
     {combos = {{key = '-', reformers = {'RCtrl'}}}, down = Keys.RadarAltWarningDown,                name = _('Radar Altitude Warning - Lower'), category = {_('Instrument Panel')}},
 

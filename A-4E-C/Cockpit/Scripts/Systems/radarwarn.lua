@@ -48,11 +48,9 @@ local current_RALT_valid=get_param_handle("D_RADAR_ALT_VALID")
 
 local master_test_param = get_param_handle("D_MASTER_TEST")
 
-
+dev:listen_command(Keys.RadarAltToggle)
 dev:listen_command(Keys.RadarAltWarningDown)
 dev:listen_command(Keys.RadarAltWarningUp)
-
-
 
 function update()
     local valid_radar=true
@@ -197,6 +195,8 @@ function SetCommand(command,value)
         if warning_altitude > 4500 then
             warning_altitude = 4500
         end
+    elseif command == Keys.RadarAltToggle then
+        dev:performClickableAction(device_commands.radar_alt_switch,radar_enabled and -1 or 0,false)
     elseif command == device_commands.radar_alt_switch then
         if (value==-1) then
             radar_enabled=false
