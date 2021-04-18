@@ -309,14 +309,9 @@ function post_initialize()
     dev:performClickableAction(device_commands.stby_att_index_knob, standby_val, false)
     dev:performClickableAction(device_commands.AOA_dimming_wheel_AXIS, AOA_indexer_brightness, false)
 
-    --plusnine oxygen system
-    --hot/air vs cold/ground start switch positioning
+    -- add hot or cold start differences here
     if birth == "GROUND_HOT" or birth == "AIR_HOT" then
-        --enable the oxygen switch
-        oxygen_enabled = true
     elseif birth == "GROUND_COLD" then
-        --leave the oxygen switch disabled
-        oxygen_enabled = false
     end
 
     startup_print("avionics: postinit end")
@@ -487,7 +482,13 @@ function SetCommand(command,value)
         AOA_indexer_brightness = LinearTodB((value + 1) / 2)
     --plusnine oxygen system
     elseif command == device_commands.oxygen_switch then
-        oxygen_enabled = true
+        oxygen_enabled = (value == 1.0)
+        --more verbose version
+        --if value == 1.0 then
+        --    oxygen_enabled = true
+        --  else
+        --    oxygen_enabled = false
+        --  end
     elseif command == Keys.OxygenToggle then
         dev:performClickableAction(device_commands.oxygen_switch,oxygen_enabled and 0 or 1,false)
     else
@@ -842,12 +843,6 @@ function update_oxygen_1s()
         lo2_flag:set(0)
     end
 
-    --plusnine oxygen system testing printouts
-    if oxygen_enabled == true then
-        --print_message_to_user("oxygen ON")
-    elseif oxygen_enabled == false then
-        --print_message_to_user("oxygen OFF")
-    end
 end
 
 local oxygen_test=0
