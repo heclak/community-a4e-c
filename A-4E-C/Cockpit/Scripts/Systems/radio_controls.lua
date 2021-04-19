@@ -18,13 +18,12 @@ dev:listen_command(device_commands.arc51_freq_ooXoo)
 dev:listen_command(device_commands.arc51_freq_oooXX)
 --dev:listen_command(Keys.radio_ptt)
 --plusnine uhf frequency keybinds
-dev:listen_command(Keys.UHFSquelchToggle)
-dev:listen_command(Keys.UHF10MhzInc)
-dev:listen_command(Keys.UHF10MhzDec)
-dev:listen_command(Keys.UHF1MhzInc)
-dev:listen_command(Keys.UHF1MhzDec)
-dev:listen_command(Keys.UHF50khzInc)
-dev:listen_command(Keys.UHF50KhzDec)
+dev:listen_command(Keys.UHF10MHzInc)
+dev:listen_command(Keys.UHF10MHzDec)
+dev:listen_command(Keys.UHF1MHzInc)
+dev:listen_command(Keys.UHF1MHzDec)
+dev:listen_command(Keys.UHF50kHzInc)
+dev:listen_command(Keys.UHF50kHzDec)
 
 efm_data_bus = get_efm_data_bus()
 
@@ -99,9 +98,6 @@ function SetCommand(command,value)
     elseif command == device_commands.arc51_freq_oooXX then
         arc51_freq_xxxXX = value
     --manual frequency keybinds
-    elseif command == Keys.UHFSquelchToggle then
-        dev:performClickableAction(device_commands.arc51_squelch,arc51_squelch and 0 or 1,false)
-        print_message_to_user('ARC-51 Squelch Disable Toggled')
     elseif command == Keys.UHF10MHzInc then
         print_message_to_user('ARC-51 UHF 10 MHz inc')
     elseif command == Keys.UHF10MHzDec then

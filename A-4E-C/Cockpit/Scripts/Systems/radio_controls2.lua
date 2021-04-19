@@ -17,6 +17,13 @@ dev:listen_command(device_commands.arc51_freq_XXooo)
 dev:listen_command(device_commands.arc51_freq_ooXoo)
 dev:listen_command(device_commands.arc51_freq_oooXX)
 --dev:listen_command(Keys.radio_ptt)
+--plusnine uhf frequency keybinds
+dev:listen_command(Keys.UHF10MHzInc)
+dev:listen_command(Keys.UHF10MHzDec)
+dev:listen_command(Keys.UHF1MHzInc)
+dev:listen_command(Keys.UHF1MHzDec)
+dev:listen_command(Keys.UHF50kHzInc)
+dev:listen_command(Keys.UHF50kHzDec)
 
 efm_data_bus = get_efm_data_bus()
 
@@ -148,7 +155,21 @@ local command_table = {
 function SetCommand(command,value)
     if command_table[command] ~= nil then
         command_table[command](value)
+    --manual frequency keybinds
+    elseif command == Keys.UHF10MHzInc and arc51_freq_XXxxx < 0.85 then
+        dev:performClickableAction(device_commands.arc51_freq_XXooo, arc51_freq_XXxxx + 0.05,false)
+    elseif command == Keys.UHF10MHzDec and arc51_freq_XXxxx > 0 then
+        dev:performClickableAction(device_commands.arc51_freq_XXooo, arc51_freq_XXxxx - 0.05,false)
+    elseif command == Keys.UHF1MHzInc and arc51_freq_xxXxx < 0.9 then
+        dev:performClickableAction(device_commands.arc51_freq_ooXoo, arc51_freq_xxXxx + 0.10,false)
+    elseif command == Keys.UHF1MHzDec and arc51_freq_xxXxx > 0 then
+        dev:performClickableAction(device_commands.arc51_freq_ooXoo, arc51_freq_xxXxx - 0.10,false)
+    elseif command == Keys.UHF50kHzInc and arc51_freq_xxxXX < 0.95 then
+        dev:performClickableAction(device_commands.arc51_freq_oooXX, arc51_freq_xxxXX + 0.05,false)
+    elseif command == Keys.UHF50kHzDec and arc51_freq_xxxXX > 0 then
+        dev:performClickableAction(device_commands.arc51_freq_oooXX, arc51_freq_xxxXX - 0.05,false)
     end
+
 end
 
 function arc51_get_current_state()

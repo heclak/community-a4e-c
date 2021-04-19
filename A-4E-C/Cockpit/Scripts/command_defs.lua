@@ -308,7 +308,6 @@ Keys =
     RadarAltWarningStartUp         = __custom_counter(),
     RadarAltWarningStartDown       = __custom_counter(),
     RadarAltWarningStop            = __custom_counter(),
-    UHFSquelchToggle               = __custom_counter(),
     UHF10MHzInc                    = __custom_counter(),
     UHF10MHzDec                    = __custom_counter(),
     UHF1MHzInc                     = __custom_counter(),

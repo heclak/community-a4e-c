@@ -398,7 +398,6 @@ join(res.keyCommands,{
     
 	-- Radio
 	{down = Keys.radio_ptt   , name = _('ARC-51 Push to Talk (PTT)'), category = _('Radio')},
-    {down = Keys.UHFSquelchToggle, name = _('ARC-51 UHF Squelch Disable - ON/OFF'), category = _('Radio')},
     {down = Keys.UHF10MHzInc, name = _('ARC-51 UHF Frequency 10 MHz - Increase'), category = _('Radio')},
     {down = Keys.UHF10MHzDec, name = _('ARC-51 UHF Frequency 10 MHz - Decrease'), category = _('Radio')},    
     {down = Keys.UHF1MHzInc, name = _('ARC-51 UHF Frequency 1 MHz - Increase'), category = _('Radio')},

@@ -353,19 +353,18 @@ join(res.keyCommands,{
     --{combos = {{key = 'D'}},						down = iCommandPlaneChangeWeapon,						name = _('Weapon Change'),		category = _('Weapons')},
 
     --NightVision
-    {combos = {{key = 'H', reformers = {'RShift'}}}        , down = iCommandViewNightVisionGogglesOn   , name = _('Night Vision Goggle - Toggle'), category = _('Sensors')},
+    {combos = {{key = 'H', reformers = {'RShift'}}},         down = iCommandViewNightVisionGogglesOn   , name = _('Night Vision Goggle - Toggle'), category = _('Sensors')},
     {combos = {{key = 'H', reformers = {'RShift','RCtrl'}}}, down = iCommandPlane_Helmet_Brightess_Up  , name = _('Goggle Gain - Inc'),            category = _('Sensors')},
     {combos = {{key = 'H', reformers = {'RShift','RAlt'}}} , down = iCommandPlane_Helmet_Brightess_Down, name = _('Goggle Gain - Dec'),            category = _('Sensors')},
   
 	-- Radio
 	{combos = {{key = '\\', reformers = {'RCtrl'}}}, down = Keys.radio_ptt, name = _('Radio Push to Talk (PTT)'), category = _('Radio')},
-    {down = Keys.UHFSquelchToggle, name = _('ARC-51 UHF Squelch Disable - ON/OFF'), category = _('Radio')},
-    {down = Keys.UHF10MHzInc, name = _('ARC-51 UHF Frequency 10 MHz - Increase'), category = _('Radio')},
-    {down = Keys.UHF10MHzDec, name = _('ARC-51 UHF Frequency 10 MHz - Decrease'), category = _('Radio')},    
-    {down = Keys.UHF1MHzInc, name = _('ARC-51 UHF Frequency 1 MHz - Increase'), category = _('Radio')},
-    {down = Keys.UHF1MHzDec, name = _('ARC-51 UHF Frequency 1 MHz - Decrease'), category = _('Radio')}, 
-    {down = Keys.UHF50kHzInc, name = _('ARC-51 UHF Frequency 50 kHz - Increase'), category = _('Radio')},
-    {down = Keys.UHF50kHzDec, name = _('ARC-51 UHF Frequency 50 kHz - Decrease'), category = _('Radio')}, 
+    {combos = {{key = 'I', reformers = {'RCtrl'}}}, down = Keys.UHF10MHzInc, name = _('ARC-51 UHF Frequency 10 MHz - Increase'), category = _('Radio')},
+    {combos = {{key = 'I', reformers = {'RAlt'}}}, down = Keys.UHF10MHzDec, name = _('ARC-51 UHF Frequency 10 MHz - Decrease'), category = _('Radio')},    
+    {combos = {{key = 'O', reformers = {'RCtrl'}}}, down = Keys.UHF1MHzInc, name = _('ARC-51 UHF Frequency 1 MHz - Increase'), category = _('Radio')},
+    {combos = {{key = 'O', reformers = {'RAlt'}}}, down = Keys.UHF1MHzDec, name = _('ARC-51 UHF Frequency 1 MHz - Decrease'), category = _('Radio')}, 
+    {combos = {{key = 'P', reformers = {'RCtrl'}}}, down = Keys.UHF50kHzInc, name = _('ARC-51 UHF Frequency 50 kHz - Increase'), category = _('Radio')},
+    {combos = {{key = 'P', reformers = {'RAlt'}}}, down = Keys.UHF50kHzDec, name = _('ARC-51 UHF Frequency 50 kHz - Decrease'), category = _('Radio')}, 
   
     -- PID tuning
     {down = Keys.Tune1, value_down = 0.1,                                                                name = _('Tune1: +0.1'),                  category = _('Debug')},
