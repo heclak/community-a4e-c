@@ -319,8 +319,10 @@ join(res.keyCommands,{
     {down = Keys.TacanModeDec,      name = _('TACAN Mode - CCW'),                                           category = {_('Systems')}},
     {down = Keys.TacanChMajorInc,   name = _('TACAN Channel 10s - Increase'),                               category = {_('Systems')}},
     {down = Keys.TacanChMajorDec,   name = _('TACAN Channel 10s - Decrease'),                               category = {_('Systems')}},
-    {down = Keys.TacanChMinorInc,   name = _('TACAN Channel 1s - Increase'),                                category = {_('Systems')}},
-    {down = Keys.TacanChMinorDec,   name = _('TACAN Channel 1s - Decrease'),                                category = {_('Systems')}},
+    {down = Keys.TacanVolumeInc,    name = _('TACAN Volume - Increase'),                                    category = {_('Systems')}},
+    {down = Keys.TacanVolumeDec,    name = _('TACAN Volume - Decrease'),                                    category = {_('Systems')}},
+    {down = Keys.TacanVolumeStartUp, up = Keys.TacanVolumeStop, name = _('TACAN Volume - Continuous Increase'), category = {_('Systems')}},
+    {down = Keys.TacanVolumeStartDown, up = Keys.TacanVolumeStop, name = _('TACAN Volume - Continuous Decrease'), category = {_('Systems')}},
 
     -- Interior Lights Panel
     {down = device_commands.intlight_whiteflood_CHANGE,     cockpit_device_id = devices.AVIONICS,  value_down = 0.1,  name = _('White Floodlight Control Knob - CW/Increase'),  category = {_('Right Console'), _('Interior Lights Control Panel')}},
@@ -404,6 +406,10 @@ join(res.keyCommands,{
     {down = Keys.UHF50kHzDec, name = _('ARC-51 UHF Frequency 50 kHz - Decrease'), category = _('Radio')}, 
     {down = Keys.UHFModeInc, name = _('ARC-51 UHF Mode - CW'), category = _('Radio')},
     {down = Keys.UHFModeDec, name = _('ARC-51 UHF Mode - CCW'), category = _('Radio')},    
+    {down = Keys.UHFVolumeInc, name = _('ARC-51 UHF Volume - Increase'), category = _('Radio')},
+    {down = Keys.UHFVolumeDec, name = _('ARC-51 UHF Volume - Decrease'), category = _('Radio')},    
+    {down = Keys.UHFVolumeStartUp, up = Keys.UHFVolumeStop, name = _('ARC-51 UHF Volume - Continuous Increase'), category = _('Radio')},
+    {down = Keys.UHFVolumeStartDown, up = Keys.UHFVolumeStop, name = _('ARC-51 UHF Volume - Continuous Decrease'), category = _('Radio')},    
 
     -- PID tuning
     {down = Keys.Tune1, value_down = 0.1,          name = _('Tune1: +0.1'),                  category = _('Debug')},

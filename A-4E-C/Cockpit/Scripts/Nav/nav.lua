@@ -185,6 +185,7 @@ local bdhi_dme_xxX = get_param_handle("BDHI_DME_xxX")
 tacan_modelist = {"OFF", "REC", "T/R", "ILS"}
 local tacan_mode = "OFF"
 local tacan_volume = 0
+local tacan_volume_moving = 0
 local tacan_ch_major = 0
 local tacan_ch_minor = 1
 local tacan_channel = 1
@@ -240,6 +241,11 @@ dev:listen_command(Keys.TacanChMajorInc)
 dev:listen_command(Keys.TacanChMajorDec)
 dev:listen_command(Keys.TacanChMinorInc)
 dev:listen_command(Keys.TacanChMinorDec)
+dev:listen_command(Keys.TacanVolumeInc)
+dev:listen_command(Keys.TacanVolumeDec)
+dev:listen_command(Keys.TacanVolumeStartUp)
+dev:listen_command(Keys.TacanVolumeStartDown)
+dev:listen_command(Keys.TacanVolumeStop)
 dev:listen_command(device_commands.doppler_select)
 dev:listen_command(device_commands.doppler_memory_test)
 dev:listen_command(device_commands.nav_select)
@@ -564,6 +570,19 @@ function SetCommand(command,value)
         dev:performClickableAction(device_commands.tacan_ch_minor, clamp(tacan_ch_minor / 10 + 0.10, 0, 0.9), false) -- increment as as per amounts and limits set above
     elseif command == Keys.TacanChMinorDec then
         dev:performClickableAction(device_commands.tacan_ch_minor, clamp(tacan_ch_minor / 10 - 0.10, 0, 0.9), false) -- decrement as as per amounts and limits set above
+    elseif command == Keys.TacanVolumeInc then
+        dev:performClickableAction(device_commands.tacan_volume, clamp(tacan_volume + 0.03, 0.2, 0.8), false)
+    elseif command == Keys.TacanVolumeDec then
+        dev:performClickableAction(device_commands.tacan_volume, clamp(tacan_volume - 0.03, 0.2, 0.8), false)
+    elseif command == Keys.TacanVolumeStartUp then
+        tacan_volume_moving = 1
+        print_message_to_user('TACAN volume up:' ..tacan_volume)
+    elseif command == Keys.TacanVolumeStartDown then
+        tacan_volume_moving = -1
+        print_message_to_user('TACAN volume down:' ..tacan_volume)
+    elseif command == Keys.TacanVolumeStop then
+        tacan_volume_moving = 0
+        print_message_to_user('TACAN volume stop:' ..tacan_volume)
     end
 end
 
@@ -1973,6 +1992,10 @@ function update()
     if tacan_audio_active then
         --update_morse_playback()
         update_morse_playback_2()
+    end
+
+    if tacan_volume_moving ~= 0 then
+        dev:performClickableAction(device_commands.tacan_volume, clamp(tacan_volume + 0.01 * tacan_volume_moving, 0.2, 0.8), false)
     end
 end
 

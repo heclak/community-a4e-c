@@ -316,6 +316,14 @@ Keys =
     UHF1MHzDec                     = __custom_counter(),
     UHF50kHzInc                    = __custom_counter(),
     UHF50kHzDec                    = __custom_counter(),
+    UHFVolumeInc                   = __custom_counter(),
+    UHFVolumeDec                   = __custom_counter(),
+    UHFVolumeStartUp               = __custom_counter(),
+    UHFVolumeStartDown             = __custom_counter(),
+    UHFVolumeStop                  = __custom_counter(),
+    TacanVolumeStartUp             = __custom_counter(),
+    TacanVolumeStartDown           = __custom_counter(),
+    TacanVolumeStop                = __custom_counter(),
 }
 
 start_command   = 3000
