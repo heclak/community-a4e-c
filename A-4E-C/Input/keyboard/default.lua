@@ -359,12 +359,14 @@ join(res.keyCommands,{
   
 	-- Radio
 	{combos = {{key = '\\', reformers = {'RCtrl'}}}, down = Keys.radio_ptt, name = _('Radio Push to Talk (PTT)'), category = _('Radio')},
-    {combos = {{key = 'I', reformers = {'RCtrl'}}}, down = Keys.UHF10MHzInc, name = _('ARC-51 UHF Frequency 10 MHz - Increase'), category = _('Radio')},
-    {combos = {{key = 'I', reformers = {'RAlt'}}}, down = Keys.UHF10MHzDec, name = _('ARC-51 UHF Frequency 10 MHz - Decrease'), category = _('Radio')},    
-    {combos = {{key = 'O', reformers = {'RCtrl'}}}, down = Keys.UHF1MHzInc, name = _('ARC-51 UHF Frequency 1 MHz - Increase'), category = _('Radio')},
-    {combos = {{key = 'O', reformers = {'RAlt'}}}, down = Keys.UHF1MHzDec, name = _('ARC-51 UHF Frequency 1 MHz - Decrease'), category = _('Radio')}, 
-    {combos = {{key = 'P', reformers = {'RCtrl'}}}, down = Keys.UHF50kHzInc, name = _('ARC-51 UHF Frequency 50 kHz - Increase'), category = _('Radio')},
-    {combos = {{key = 'P', reformers = {'RAlt'}}}, down = Keys.UHF50kHzDec, name = _('ARC-51 UHF Frequency 50 kHz - Decrease'), category = _('Radio')}, 
+    {combos = {{key = 'U', reformers = {'RCtrl'}}}, down = Keys.UHF10MHzInc, name = _('ARC-51 UHF Frequency 10 MHz - Increase'), category = _('Radio')},
+    {combos = {{key = 'U', reformers = {'RAlt'}}}, down = Keys.UHF10MHzDec, name = _('ARC-51 UHF Frequency 10 MHz - Decrease'), category = _('Radio')},    
+    {combos = {{key = 'I', reformers = {'RCtrl'}}}, down = Keys.UHF1MHzInc, name = _('ARC-51 UHF Frequency 1 MHz - Increase'), category = _('Radio')},
+    {combos = {{key = 'I', reformers = {'RAlt'}}}, down = Keys.UHF1MHzDec, name = _('ARC-51 UHF Frequency 1 MHz - Decrease'), category = _('Radio')}, 
+    {combos = {{key = 'O', reformers = {'RCtrl'}}}, down = Keys.UHF50kHzInc, name = _('ARC-51 UHF Frequency 50 kHz - Increase'), category = _('Radio')},
+    {combos = {{key = 'O', reformers = {'RAlt'}}}, down = Keys.UHF50kHzDec, name = _('ARC-51 UHF Frequency 50 kHz - Decrease'), category = _('Radio')}, 
+    {combos = {{key = 'P', reformers = {'RCtrl'}}}, down = Keys.UHFModeInc, name = _('ARC-51 UHF Mode - CW'), category = _('Radio')},
+    {combos = {{key = 'P', reformers = {'RAlt'}}}, down = Keys.UHFModeDec, name = _('ARC-51 UHF Mode - CCW'), category = _('Radio')},    
   
     -- PID tuning
     {down = Keys.Tune1, value_down = 0.1,                                                                name = _('Tune1: +0.1'),                  category = _('Debug')},

@@ -18,6 +18,8 @@ dev:listen_command(device_commands.arc51_freq_ooXoo)
 dev:listen_command(device_commands.arc51_freq_oooXX)
 --dev:listen_command(Keys.radio_ptt)
 --plusnine uhf frequency keybinds
+dev:listen_command(Keys.UHFModeInc)
+dev:listen_command(Keys.UHFModeDec)
 dev:listen_command(Keys.UHF10MHzInc)
 dev:listen_command(Keys.UHF10MHzDec)
 dev:listen_command(Keys.UHF1MHzInc)
@@ -155,7 +157,15 @@ local command_table = {
 function SetCommand(command,value)
     if command_table[command] ~= nil then
         command_table[command](value)
-    --manual frequency keybinds
+    --ARC-51 UHF keybinds added by plusnine
+    elseif command == Keys.UHFModeInc and arc51_mode < 3 then
+        dev:performClickableAction(device_commands.arc51_mode, arc51_mode / 10.0 + 0.1,false)
+    elseif command == Keys.UHFModeDec and arc51_mode > 0 then
+        dev:performClickableAction(device_commands.arc51_mode, arc51_mode / 10.0 - 0.1,false)
+    elseif command == Keys.UHF10MHzInc and arc51_freq_XXxxx < 0.85 then
+        dev:performClickableAction(device_commands.arc51_freq_XXooo, arc51_freq_XXxxx + 0.05,false)
+    elseif command == Keys.UHF10MHzDec and arc51_freq_XXxxx > 0 then
+        dev:performClickableAction(device_commands.arc51_freq_XXooo, arc51_freq_XXxxx - 0.05,false)
     elseif command == Keys.UHF10MHzInc and arc51_freq_XXxxx < 0.85 then
         dev:performClickableAction(device_commands.arc51_freq_XXooo, arc51_freq_XXxxx + 0.05,false)
     elseif command == Keys.UHF10MHzDec and arc51_freq_XXxxx > 0 then
