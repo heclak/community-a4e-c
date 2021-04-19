@@ -313,16 +313,14 @@ join(res.keyCommands,{
 
     -- ARN-52 TACAN Control Panel
     {down = Keys.NavReset,          name = _('Reset Both TCN & NDB Channels'),                              category = {_('Systems')}},
-    -- {down = Keys.NavTCNPrev,     name = _('TACAN Channel: Previous'),                                    category = {_('Systems')}},
-    -- {down = Keys.NavTCNNext,     name = _('TACAN Channel: Next'),                                        category = {_('Systems')}},
-    -- {down = Keys.NavNDBPrev,     name = _('NDB Channel: Previous'),                                      category = {_('Systems')}},
-    -- {down = Keys.NavNDBNext,     name = _('NDB Channel: Next'),                                          category = {_('Systems')}},
     {down = Keys.NavILSPrev,        name = _('ILS Channel: Previous'),                                      category = {_('Systems')}},
     {down = Keys.NavILSNext,        name = _('ILS Channel: Next'),                                          category = {_('Systems')}},
-    {down = Keys.TacanChMajorInc,                                              name = _('TACAN Channel 10s - Increase'),  category = {_('Systems')}},
-    {down = Keys.TacanChMajorDec,                                              name = _('TACAN Channel 10s - Decrease'),  category = {_('Systems')}},
-    {down = Keys.TacanChMinorInc,                                              name = _('TACAN Channel 1s - Increase'),  category = {_('Systems')}},
-    {down = Keys.TacanChMinorDec,                                              name = _('TACAN Channel 1s - Decrease'),  category = {_('Systems')}},
+    {down = Keys.TacanModeInc,      name = _('TACAN Mode - CW'),                                            category = {_('Systems')}},
+    {down = Keys.TacanModeDec,      name = _('TACAN Mode - CCW'),                                           category = {_('Systems')}},
+    {down = Keys.TacanChMajorInc,   name = _('TACAN Channel 10s - Increase'),                               category = {_('Systems')}},
+    {down = Keys.TacanChMajorDec,   name = _('TACAN Channel 10s - Decrease'),                               category = {_('Systems')}},
+    {down = Keys.TacanChMinorInc,   name = _('TACAN Channel 1s - Increase'),                                category = {_('Systems')}},
+    {down = Keys.TacanChMinorDec,   name = _('TACAN Channel 1s - Decrease'),                                category = {_('Systems')}},
 
     -- Interior Lights Panel
     {down = device_commands.intlight_whiteflood_CHANGE,     cockpit_device_id = devices.AVIONICS,  value_down = 0.1,  name = _('White Floodlight Control Knob - CW/Increase'),  category = {_('Right Console'), _('Interior Lights Control Panel')}},

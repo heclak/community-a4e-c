@@ -539,6 +539,23 @@ function SetCommand(command,value)
             morse_dot_snd:update(nil,tacan_volume,nil)
             morse_dash_snd:update(nil,tacan_volume,nil)
         end
+    --plusnine added mode switch (could probably be more efficient, but it works)
+    elseif command == Keys.TacanModeInc then
+        if tacan_mode == "OFF" then
+            dev:performClickableAction(device_commands.tacan_mode, 0.1, false) -- set REC
+        elseif tacan_mode == "REC" then
+            dev:performClickableAction(device_commands.tacan_mode, 0.2, false) -- set T/R
+        elseif tacan_mode == "T/R" then
+            dev:performClickableAction(device_commands.tacan_mode, 0.3, false) -- set ILS
+        end
+    elseif command == Keys.TacanModeDec then
+        if tacan_mode == "ILS" then
+            dev:performClickableAction(device_commands.tacan_mode, 0.2, false) -- set T/R
+        elseif tacan_mode == "T/R" then
+            dev:performClickableAction(device_commands.tacan_mode, 0.1, false) -- set REC
+        elseif tacan_mode == "REC" then
+            dev:performClickableAction(device_commands.tacan_mode, 0.0, false) -- set OFF
+        end
     elseif command == Keys.TacanChMajorInc then
         dev:performClickableAction(device_commands.tacan_ch_major, clamp(tacan_ch_major / 20 + 0.05, 0, 0.6), false) -- increment as as per amounts and limits set above
     elseif command == Keys.TacanChMajorDec then

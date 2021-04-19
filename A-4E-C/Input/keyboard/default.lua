@@ -283,12 +283,10 @@ join(res.keyCommands,{
 
     -- ARN-52 TACAN Control Panel
     {combos = {{key = '0', reformers = {'LCtrl'}}}, down = Keys.NavReset,      name = _('Reset Both TCN & NDB Channels'), category = {_('Systems')}},
-    --{combos = {{key = '-', reformers = {'LAlt'}}}, down = Keys.NavTCNPrev,   name = _('TACAN Channel: Previous'),       category = {_('Systems')}},
-    --{combos = {{key = '=', reformers = {'LAlt'}}}, down = Keys.NavTCNNext,   name = _('TACAN Channel: Next'),           category = {_('Systems')}},
-    -- {combos = {{key = '-', reformers = {'LCtrl'}}}, down = Keys.NavNDBPrev, name = _('NDB Channel: Previous'),         category = {_('Systems')}},
-    -- {combos = {{key = '=', reformers = {'LCtrl'}}}, down = Keys.NavNDBNext, name = _('NDB Channel: Next'),             category = {_('Systems')}},
     {combos = {{key = '-', reformers = {'LShift'}}}, down = Keys.NavILSPrev,   name = _('ILS Channel: Previous'),         category = {_('Systems')}},
     {combos = {{key = '=', reformers = {'LShift'}}}, down = Keys.NavILSNext,   name = _('ILS Channel: Next'),             category = {_('Systems')}},
+    {combos = {{key = 'T', reformers = {'RCtrl'}}}, down = Keys.TacanModeInc,  name = _('TACAN Mode - CW'),  category = {_('Systems')}},
+    {combos = {{key = 'T', reformers = {'RAlt'}}}, down = Keys.TacanModeDec,   name = _('TACAN Mode - CCW'),  category = {_('Systems')}},
     {down = Keys.TacanChMajorInc,                                              name = _('TACAN Channel 10s - Increase'),  category = {_('Systems')}},
     {down = Keys.TacanChMajorDec,                                              name = _('TACAN Channel 10s - Decrease'),  category = {_('Systems')}},
     {down = Keys.TacanChMinorInc,                                              name = _('TACAN Channel 1s - Increase'),  category = {_('Systems')}},

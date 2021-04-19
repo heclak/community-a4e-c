@@ -159,9 +159,9 @@ function SetCommand(command,value)
         command_table[command](value)
     --ARC-51 UHF keybinds added by plusnine
     elseif command == Keys.UHFModeInc and arc51_mode < 3 then
-        dev:performClickableAction(device_commands.arc51_mode, arc51_mode / 10.0 + 0.1,false)
+        dev:performClickableAction(device_commands.arc51_mode, clamp(arc51_mode / 10 + 0.1, 0, 0.3), false)
     elseif command == Keys.UHFModeDec and arc51_mode > 0 then
-        dev:performClickableAction(device_commands.arc51_mode, arc51_mode / 10.0 - 0.1,false)
+        dev:performClickableAction(device_commands.arc51_mode, clamp(arc51_mode / 10 - 0.1, 0, 0.3), false)
     elseif command == Keys.UHF10MHzInc and arc51_freq_XXxxx < 0.85 then
         dev:performClickableAction(device_commands.arc51_freq_XXooo, arc51_freq_XXxxx + 0.05,false)
     elseif command == Keys.UHF10MHzDec and arc51_freq_XXxxx > 0 then
