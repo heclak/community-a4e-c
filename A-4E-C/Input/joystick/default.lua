@@ -6,11 +6,6 @@ local res = external_profile("Config/Input/Aircrafts/common_joystick_binding.lua
 
 join(res.keyCommands,{
 
-    {down = iCommandChat,                                                            name = _('Multiplayer chat - mode All'),      category = _('General')},
-    {down = iCommandFriendlyChat,                                                    name = _('Multiplayer chat - mode Allies'),   category = _('General')},
-    {down = iCommandAllChat,                                                         name = _('Chat read/write All'),              category = _('General')},
-    {down = iCommandChatShowHide,                                                    name = _('Chat show/hide'),                   category = _('General')},
-
     ---------------------------------------------
     -- General ----------------------------------
     ---------------------------------------------

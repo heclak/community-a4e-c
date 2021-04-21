@@ -6,11 +6,6 @@ local res = external_profile("Config/Input/Aircrafts/common_keyboard_binding.lua
 
 join(res.keyCommands,{
 
-    {combos = {{key = 'Tab'}}, down = iCommandChat,                                                                      name = _('Multiplayer chat - mode All'),      category = _('General')},
-    {combos = {{key = 'Tab', reformers = {'LCtrl'}}}, down = iCommandFriendlyChat,                                       name = _('Multiplayer chat - mode Allies'),   category = _('General')},
-    {combos = {{key = 'Tab', reformers = {'LShift'}}}, down = iCommandAllChat,                                           name = _('Chat read/write All'),              category = _('General')},
-    {combos = {{key = 'Y', reformers = {'LCtrl', 'LShift'}}}, down = iCommandChatShowHide,                               name = _('Chat show/hide'),                   category = _('General')},
-
     ---------------------------------------------
     -- General ----------------------------------
     ---------------------------------------------
@@ -47,17 +42,17 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- Stick ------------------------------------
     ---------------------------------------------
-    {combos = {{key = '.', reformers = {'RCtrl'}}}, pressed = Keys.TrimUp, up = Keys.TrimStop,                           name = _('Trimmer Switch - NOSE UP'),         category = {_('Stick'), _('Flight Control')}},
-    {combos = {{key = ';', reformers = {'RCtrl'}}}, pressed = Keys.TrimDown, up = Keys.TrimStop,                         name = _('Trimmer Switch - NOSE DOWN'),       category = {_('Stick'), _('Flight Control')}},
-    {combos = {{key = ',', reformers = {'RCtrl'}}}, pressed = Keys.TrimLeft, up = Keys.TrimStop,                         name = _('Trimmer Switch - LEFT WING DOWN'),  category = {_('Stick'), _('Flight Control')}},
-    {combos = {{key = '/', reformers = {'RCtrl'}}}, pressed = Keys.TrimRight, up = Keys.TrimStop,                        name = _('Trimmer Switch - RIGHT WING DOWN'), category = {_('Stick'), _('Flight Control')}},
-    {combos = {{key = 'T', reformers = {'LCtrl'}}}, down = Keys.TrimCancel,                                              name = _('Trim: Reset'),                      category = {_('Stick'), _('Flight Control')}},
-    {combos = {{key = 'Space'}}, down = Keys.PlaneFireOn, up = Keys.PlaneFireOff,                                        name = _('Gun-Rocket Trigger'),               category = {_('Stick')}},
-    {combos = {{key = 'Space', reformers = {'LAlt'}}}, down = Keys.PickleOn,	up = Keys.PickleOff,                     name = _('Bomb Release Button'),              category = {_('Stick')}},
-    {combos = {{key = 'A', reformers = {'LCtrl'}}}, down = Keys.AFCSOverride,                                           name = _('AFCS Override Button'),             category = {_('Stick')}},
+    {combos = {{key = '.', reformers = {'RCtrl'}}}, pressed = Keys.TrimUp, up = Keys.TrimStop,       name = _('Trimmer Switch - NOSE UP'),         category = {_('Stick'), _('Flight Control')}},
+    {combos = {{key = ';', reformers = {'RCtrl'}}}, pressed = Keys.TrimDown, up = Keys.TrimStop,     name = _('Trimmer Switch - NOSE DOWN'),       category = {_('Stick'), _('Flight Control')}},
+    {combos = {{key = ',', reformers = {'RCtrl'}}}, pressed = Keys.TrimLeft, up = Keys.TrimStop,     name = _('Trimmer Switch - LEFT WING DOWN'),  category = {_('Stick'), _('Flight Control')}},
+    {combos = {{key = '/', reformers = {'RCtrl'}}}, pressed = Keys.TrimRight, up = Keys.TrimStop,    name = _('Trimmer Switch - RIGHT WING DOWN'), category = {_('Stick'), _('Flight Control')}},
+    {combos = {{key = 'T', reformers = {'LCtrl'}}}, down = Keys.TrimCancel,                          name = _('Trim: Reset'),                      category = {_('Stick'), _('Flight Control')}},
+    {combos = {{key = 'Space'}}, down = Keys.PlaneFireOn, up = Keys.PlaneFireOff,                    name = _('Gun-Rocket Trigger'),               category = {_('Stick')}},
+    {combos = {{key = 'Space', reformers = {'LAlt'}}}, down = Keys.PickleOn,	up = Keys.PickleOff, name = _('Bomb Release Button'),              category = {_('Stick')}},
+    {combos = {{key = 'A', reformers = {'LCtrl'}}}, down = Keys.AFCSOverride,                        name = _('AFCS Override Button'),             category = {_('Stick')}},
 
-    {down = Keys.ToggleStick,                                                                                            name = _('Control Stick - HIDE/SHOW'),        category = {_('Stick')}},
-	  {down = Keys.nws_engage, up = Keys.nws_disengage,                                              name = _('Nose Wheel Steering'),              category = {_('Stick')}},
+    {combos = {{key = 'Back'}}, down = Keys.ToggleStick,                                             name = _('Control Stick - HIDE/SHOW'),        category = {_('Stick')}},
+	{down = Keys.nws_engage, up = Keys.nws_disengage,                                                name = _('Nose Wheel Steering'),              category = {_('Stick')}},
     ---------------------------------------------
     -- Throttle Quadrant ------------------------
     ---------------------------------------------
