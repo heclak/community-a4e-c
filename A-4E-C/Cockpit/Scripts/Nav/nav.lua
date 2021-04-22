@@ -233,6 +233,18 @@ dev:listen_command(Keys.NavReset)
 --dev:listen_command(Keys.NavTCNPrev)
 dev:listen_command(Keys.NavNDBNext)
 dev:listen_command(Keys.NavNDBPrev)
+dev:listen_command(Keys.NavPPosLatInc)
+dev:listen_command(Keys.NavPPosLatDec)
+dev:listen_command(Keys.NavPPosLonInc)
+dev:listen_command(Keys.NavPPosLonDec)
+dev:listen_command(Keys.NavDestLatInc)
+dev:listen_command(Keys.NavDestLatDec)
+dev:listen_command(Keys.NavDestLonInc)
+dev:listen_command(Keys.NavDestLonDec)
+dev:listen_command(Keys.NavSelectCW)
+dev:listen_command(Keys.NavSelectCCW)
+dev:listen_command(Keys.NavDopplerCW)
+dev:listen_command(Keys.NavDopplerCCW)
 dev:listen_command(Keys.PlaneChgTargetNext)
 dev:listen_command(Keys.PlaneChgTargetPrev)
 dev:listen_command(Keys.TacanModeInc)
@@ -434,7 +446,27 @@ function SetCommand(command,value)
         asn41_input = asn41_inputlist[ round((value*10)+1,0) ]
     elseif command == device_commands.bdhi_mode then
         bdhi_mode = bdhi_modelist[ value+2 ]   -- -1,0,1
-
+    --plusnine added mode switch (could probably be more efficient, but it works)
+    elseif command == Keys.NavDopplerCW then
+        if apn153_input == "OFF" then
+            dev:performClickableAction(device_commands.doppler_select, 0.1, false) -- set STBY
+        elseif apn153_input == "STBY" then
+            dev:performClickableAction(device_commands.doppler_select, 0.2, false) -- set LAND
+        elseif apn153_input == "LAND" then
+            dev:performClickableAction(device_commands.doppler_select, 0.3, false) -- set SEA
+        elseif apn153_input == "SEA" then
+            dev:performClickableAction(device_commands.doppler_select, 0.4, false) -- set TEST
+        end
+    elseif command == Keys.NavDopplerCCW then
+        if apn153_input == "TEST" then
+            dev:performClickableAction(device_commands.doppler_select, 0.3, false) -- set SEA
+        elseif apn153_input == "SEA" then
+            dev:performClickableAction(device_commands.doppler_select, 0.2, false) -- set LAND
+        elseif apn153_input == "LAND" then
+            dev:performClickableAction(device_commands.doppler_select, 0.1, false) -- set STBY
+        elseif apn153_input == "STBY" then
+            dev:performClickableAction(device_commands.doppler_select, 0.0, false) -- set OFF
+        end
 
     ----------------------------------
     -- NAV panel knob pushstates
@@ -521,7 +553,27 @@ function SetCommand(command,value)
             mridx = #mr
         end
         set_d1_xy(mr[mridx].x, mr[mridx].y)
-
+    --plusnine added mode switch (could probably be more efficient, but it works)
+    elseif command == Keys.NavSelectCW then
+        if asn41_input == "TEST" then
+            dev:performClickableAction(device_commands.nav_select, 0.1, false) -- set OFF
+        elseif asn41_input == "OFF" then
+            dev:performClickableAction(device_commands.nav_select, 0.2, false) -- set STBY
+        elseif asn41_input == "STBY" then
+            dev:performClickableAction(device_commands.nav_select, 0.3, false) -- set D1
+        elseif asn41_input == "D1" then
+            dev:performClickableAction(device_commands.nav_select, 0.4, false) -- set D2
+        end
+    elseif command == Keys.NavSelectCCW then
+        if asn41_input == "D2" then
+            dev:performClickableAction(device_commands.nav_select, 0.3, false) -- set D1
+        elseif asn41_input == "D1" then
+            dev:performClickableAction(device_commands.nav_select, 0.2, false) -- set STBY
+        elseif asn41_input == "STBY" then
+            dev:performClickableAction(device_commands.nav_select, 0.1, false) -- set OFF
+        elseif asn41_input == "OFF" then
+            dev:performClickableAction(device_commands.nav_select, 0.0, false) -- set TEST
+        end
     ---------------------------------------------
     -- ARN-52(V) TACAN BEARING-DISTANCE EQUIPMENT
     ---------------------------------------------

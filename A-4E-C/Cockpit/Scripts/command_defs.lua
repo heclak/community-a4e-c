@@ -129,27 +129,19 @@ Keys =
 
     NavPPosLatInc                   = __custom_counter(),  -- increment present position latitude (north)
     NavPPosLatDec                   = __custom_counter(),
+    NavPPosLatUp                    = __custom_counter(),
     NavPPosLonInc                   = __custom_counter(),  -- increment present position longitude (east)
     NavPPosLonDec                   = __custom_counter(),
+    NavPPosLonUp                    = __custom_counter(),
     NavDestLatInc                   = __custom_counter(),  -- increment destination latitude (north)
     NavDestLatDec                   = __custom_counter(),
+    NavDestLatUp                    = __custom_counter(),
     NavDestLonInc                   = __custom_counter(),  -- increment destination longitude (east)
     NavDestLonDec                   = __custom_counter(),
-
-    NavDopplerOff                   = __custom_counter(),
-    NavDopplerStandby               = __custom_counter(),
-    NavDopplerLand                  = __custom_counter(),
-    NavDopplerSea                   = __custom_counter(),
-    NavDopplerTest                  = __custom_counter(),
+    NavDestLonUp                    = __custom_counter(),
 
     NavDopplerCW                    = __custom_counter(),
     NavDopplerCCW                   = __custom_counter(),
-
-    NavSelectTest                   = __custom_counter(),
-    NavSelectOff                    = __custom_counter(),
-    NavSelectStandby                = __custom_counter(),
-    NavSelectD1                     = __custom_counter(),
-    NavSelectD2                     = __custom_counter(),
 
     NavSelectCW                     = __custom_counter(),
     NavSelectCCW                    = __custom_counter(),
