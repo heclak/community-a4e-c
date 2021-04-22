@@ -129,16 +129,12 @@ Keys =
 
     NavPPosLatInc                   = __custom_counter(),  -- increment present position latitude (north)
     NavPPosLatDec                   = __custom_counter(),
-    NavPPosLatUp                    = __custom_counter(),
     NavPPosLonInc                   = __custom_counter(),  -- increment present position longitude (east)
     NavPPosLonDec                   = __custom_counter(),
-    NavPPosLonUp                    = __custom_counter(),
     NavDestLatInc                   = __custom_counter(),  -- increment destination latitude (north)
     NavDestLatDec                   = __custom_counter(),
-    NavDestLatUp                    = __custom_counter(),
     NavDestLonInc                   = __custom_counter(),  -- increment destination longitude (east)
     NavDestLonDec                   = __custom_counter(),
-    NavDestLonUp                    = __custom_counter(),
 
     NavDopplerCW                    = __custom_counter(),
     NavDopplerCCW                   = __custom_counter(),
@@ -316,6 +312,10 @@ Keys =
     TacanVolumeStartUp             = __custom_counter(),
     TacanVolumeStartDown           = __custom_counter(),
     TacanVolumeStop                = __custom_counter(),
+    NavPPosLatUp                    = __custom_counter(),
+    NavPPosLonUp                    = __custom_counter(),
+    NavDestLatUp                    = __custom_counter(),
+    NavDestLonUp                    = __custom_counter(),
 }
 
 start_command   = 3000

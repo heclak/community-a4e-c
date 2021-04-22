@@ -628,13 +628,10 @@ function SetCommand(command,value)
         dev:performClickableAction(device_commands.tacan_volume, clamp(tacan_volume - 0.03, 0.2, 0.8), false)
     elseif command == Keys.TacanVolumeStartUp then
         tacan_volume_moving = 1
-        print_message_to_user('TACAN volume up:' ..tacan_volume)
     elseif command == Keys.TacanVolumeStartDown then
         tacan_volume_moving = -1
-        print_message_to_user('TACAN volume down:' ..tacan_volume)
     elseif command == Keys.TacanVolumeStop then
         tacan_volume_moving = 0
-        print_message_to_user('TACAN volume stop:' ..tacan_volume)
     end
 end
 
