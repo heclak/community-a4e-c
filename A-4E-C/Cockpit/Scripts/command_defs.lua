@@ -314,6 +314,16 @@ Keys =
     TacanVolumeStop                = __custom_counter(),
     ecm_select_cw                  = __custom_counter();
     ecm_select_ccw                 = __custom_counter();
+    ecm_InnerKnobInc               = __custom_counter();
+    ecm_InnerKnobDec               = __custom_counter();
+    ecm_InnerKnobStartUp           = __custom_counter();
+    ecm_InnerKnobStartDown         = __custom_counter();
+    ecm_InnerKnobStop              = __custom_counter();
+    ecm_OuterKnobInc               = __custom_counter();
+    ecm_OuterKnobDec               = __custom_counter();
+    ecm_OuterKnobStartUp           = __custom_counter();
+    ecm_OuterKnobStartDown         = __custom_counter();
+    ecm_OuterKnobStop              = __custom_counter();
 
 }
 

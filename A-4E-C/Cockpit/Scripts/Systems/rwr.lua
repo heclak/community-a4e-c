@@ -87,6 +87,11 @@ local rwr_apr25_power = 0 	--1 = on
 local volume_prf = 0		--0-2		--inner
 local volume_msl = 0		--0-2		--outer
 local prf_audio_state  = 1		---1 = on
+
+local volume_msl_pos = 0
+local volume_prf_pos = 0
+local rwr_inner_knob_moving = 0 
+local rwr_outer_knob_moving = 0 
 	
 local rwr_apr25_alq_audio = 0
 local rwr_apr27_status = 0
@@ -128,6 +133,18 @@ dev:listen_command(Keys.ecm_apr25_off)
 dev:listen_command(Keys.ecm_apr27_off)
 dev:listen_command(Keys.ecm_select_cw)
 dev:listen_command(Keys.ecm_select_ccw)
+
+dev:listen_command(Keys.ecm_InnerKnobInc)
+dev:listen_command(Keys.ecm_InnerKnobDec)
+dev:listen_command(Keys.ecm_InnerKnobStartUp)
+dev:listen_command(Keys.ecm_InnerKnobStartDown)
+dev:listen_command(Keys.ecm_InnerKnobStop)
+
+dev:listen_command(Keys.ecm_OuterKnobInc)
+dev:listen_command(Keys.ecm_OuterKnobDec)
+dev:listen_command(Keys.ecm_OuterKnobStartUp)
+dev:listen_command(Keys.ecm_OuterKnobStartDown)
+dev:listen_command(Keys.ecm_OuterKnobStop)
 
 
 local ECM_vis_param = get_param_handle("ECM_VIS")
@@ -198,13 +215,10 @@ function SetCommand(command,value)
 	-----------------
 	if command == Keys.ecm_apr25_off then
 		dev:performClickableAction((device_commands.ecm_apr25_off), ((rwr_apr25_power * -1) +1), false) -- currently off, so enable pylon
-	end
-
-	if command == Keys.ecm_apr27_off then
+	elseif command == Keys.ecm_apr27_off then
 		dev:performClickableAction((device_commands.ecm_apr27_off), ((rwr_apr27_status * -1) +1), false)
-	end
 	-- plusnine mode selector - could be more efficient, but it works.
-	if command == Keys.ecm_select_cw then
+	elseif command == Keys.ecm_select_cw then
 		if ALQ_MODE == 0 then
 			dev:performClickableAction(device_commands.ecm_selector_knob, 0.33)
 		elseif ALQ_MODE == 1 then
@@ -212,9 +226,7 @@ function SetCommand(command,value)
 		elseif ALQ_MODE == 2 then
 			dev:performClickableAction(device_commands.ecm_selector_knob, 0.99)
 		end
-	end
-
-	if command == Keys.ecm_select_ccw then
+	elseif command == Keys.ecm_select_ccw then
 		if ALQ_MODE == 3 then
 			dev:performClickableAction(device_commands.ecm_selector_knob, 0.66)
 		elseif ALQ_MODE == 2 then
@@ -222,6 +234,30 @@ function SetCommand(command,value)
 		elseif ALQ_MODE == 1 then
 			dev:performClickableAction(device_commands.ecm_selector_knob, 0.00)
 		end
+	-- plusnine volume keybinds
+	elseif command == Keys.ecm_InnerKnobInc then
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_inner, clamp(volume_prf_pos + 0.05, -0.8, 0.8))
+	elseif command == Keys.ecm_InnerKnobDec then
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_inner, clamp(volume_prf_pos - 0.05, -0.8, 0.8))
+	elseif command == Keys.ecm_InnerKnobStartUp then
+		rwr_inner_knob_moving = 1
+		print_message_to_user('inner up' ..volume_prf_pos)
+	elseif command == Keys.ecm_InnerKnobStartDown then
+		rwr_inner_knob_moving = -1
+		print_message_to_user('inner down' ..volume_prf_pos)
+	elseif command == Keys.ecm_InnerKnobStop then
+		rwr_inner_knob_moving = 0
+		print_message_to_user('inner stop' ..volume_prf_pos)
+	elseif command == Keys.ecm_OuterKnobInc then
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_outer, clamp(volume_msl_pos + 0.10, -0.8, 0.8))
+	elseif command == Keys.ecm_OuterKnobDec then
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_outer, clamp(volume_msl_pos - 0.10, -0.8, 0.8))
+	elseif command == Keys.ecm_OuterKnobStartUp then
+		rwr_outer_knob_moving = 1
+	elseif command == Keys.ecm_OuterKnobStartDown then
+		rwr_outer_knob_moving = -1
+	elseif command == Keys.ecm_OuterKnobStop then
+		rwr_outer_knob_moving = 0
 	end
 
 	-----------------
@@ -248,10 +284,12 @@ function SetCommand(command,value)
 	-- PRF Volume Knob
 	elseif command == device_commands.ecm_msl_alert_axis_inner then
 		volume_prf = LinearTodB(((round(value/0.8,2))+1	)*0.5)
+		volume_prf_pos = value
 	
 	-- MSL Volume Knob			
 	elseif command == device_commands.ecm_msl_alert_axis_outer then
 		volume_msl = LinearTodB(((round(value/0.8,2))+1	)*0.5)
+		volume_msl_pos = value
 	
 	-- ALQ Rotary Control Switch
 	elseif command == device_commands.ecm_selector_knob then
@@ -444,6 +482,14 @@ function update()
 	
 	end	
 	
+    if rwr_inner_knob_moving ~= 0 then
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_inner, clamp(volume_prf_pos + rwr_inner_knob_moving * 0.01, -0.8, 0.8))
+    end
+
+	if rwr_outer_knob_moving ~= 0 then
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_outer, clamp(volume_msl_pos + rwr_outer_knob_moving * 0.01, -0.8, 0.8))
+    end
+
 	update_ALQ()
 	alq_bit_test()
 end

@@ -104,8 +104,18 @@ join(res.keyCommands,{
     {down = Keys.ecm_select_cw, name = _('ECM Function Selector Switch - CW'), category = {_('ECM Control Panel')}},
     {down = Keys.ecm_select_ccw, name = _('ECM Function Selector Switch - CCW'), category = {_('ECM Control Panel')}},
     {down = Keys.ecm_apr27_off, value_down = 1.0, value_up = 0.0, name = _('APR-27 - ON/OFF'), category = {_('ECM Control Panel')}},
+    {down = device_commands.ecm_apr27_off, up = device_commands.ecm_apr27_off, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.RWR, name = _('APR-27 - ON else OFF'), category = {_('ECM Control Panel')}},
     {down = Keys.ecm_apr25_off, value_down = 1.0, value_up = 0.0, name = _('APR-25 - ON/OFF'), category = {_('ECM Control Panel')}},
-
+    {down = device_commands.ecm_apr25_off, up = device_commands.ecm_apr25_off, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.RWR, name = _('APR-25 - ON else OFF'), category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_OuterKnobInc, name = _('MSL Volume (Outer Knob) - Increase'), category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_OuterKnobDec, name = _('MSL Volume (Outer Knob) - Decrease'), category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_OuterKnobStartUp, up = Keys.ecm_OuterKnobStop, name = _('MSL Volume (Outer Knob) - Continuous Increase'),   category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_OuterKnobStartDown, up = Keys.ecm_OuterKnobStop, name = _('MSL Volume (Outer Knob) - Continuous Decrease'),   category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_InnerKnobInc, name = _('PRF Volume (Inner Knob) - Increase'), category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_InnerKnobDec, name = _('PRF Volume (Inner Knob) - Decrease'), category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_InnerKnobStartUp, up = Keys.ecm_InnerKnobStop, name = _('PRF Volume (Inner Knob) - Continuous Increase'),   category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_InnerKnobStartDown, up = Keys.ecm_InnerKnobStop, name = _('PRF Volume (Inner Knob) - Continuous Decrease'),   category = {_('ECM Control Panel')}},
+    
     ---------------------------------------------
     -- Instrument Panel -------------------------
     ---------------------------------------------
