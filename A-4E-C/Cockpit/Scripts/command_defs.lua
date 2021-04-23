@@ -312,10 +312,9 @@ Keys =
     TacanVolumeStartUp             = __custom_counter(),
     TacanVolumeStartDown           = __custom_counter(),
     TacanVolumeStop                = __custom_counter(),
-    NavPPosLatUp                    = __custom_counter(),
-    NavPPosLonUp                    = __custom_counter(),
-    NavDestLatUp                    = __custom_counter(),
-    NavDestLonUp                    = __custom_counter(),
+    ecm_select_cw                  = __custom_counter();
+    ecm_select_ccw                 = __custom_counter();
+
 }
 
 start_command   = 3000

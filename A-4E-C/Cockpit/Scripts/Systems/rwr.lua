@@ -126,6 +126,9 @@ dev:listen_command(device_commands.ecm_msl_alert_axis_outer)
 
 dev:listen_command(Keys.ecm_apr25_off)
 dev:listen_command(Keys.ecm_apr27_off)
+dev:listen_command(Keys.ecm_select_cw)
+dev:listen_command(Keys.ecm_select_ccw)
+
 
 local ECM_vis_param = get_param_handle("ECM_VIS")
 
@@ -200,7 +203,27 @@ function SetCommand(command,value)
 	if command == Keys.ecm_apr27_off then
 		dev:performClickableAction((device_commands.ecm_apr27_off), ((rwr_apr27_status * -1) +1), false)
 	end
-	
+	-- plusnine mode selector - could be more efficient, but it works.
+	if command == Keys.ecm_select_cw then
+		if ALQ_MODE == 0 then
+			dev:performClickableAction(device_commands.ecm_selector_knob, 0.33)
+		elseif ALQ_MODE == 1 then
+			dev:performClickableAction(device_commands.ecm_selector_knob, 0.66)
+		elseif ALQ_MODE == 2 then
+			dev:performClickableAction(device_commands.ecm_selector_knob, 0.99)
+		end
+	end
+
+	if command == Keys.ecm_select_ccw then
+		if ALQ_MODE == 3 then
+			dev:performClickableAction(device_commands.ecm_selector_knob, 0.66)
+		elseif ALQ_MODE == 2 then
+			dev:performClickableAction(device_commands.ecm_selector_knob, 0.33)
+		elseif ALQ_MODE == 1 then
+			dev:performClickableAction(device_commands.ecm_selector_knob, 0.00)
+		end
+	end
+
 	-----------------
 	-- clickable	
 	-----------------

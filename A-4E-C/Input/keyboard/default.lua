@@ -97,8 +97,14 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- ECM Control Panel ------------------------
     ---------------------------------------------
-    {down = Keys.ecm_apr25_off, value_down = 1.0,value_up = 0.0,                                    name = _('APR-25 - ON/OFF'),   category = {_('ECM Control Panel')}},
-    {down = Keys.ecm_apr27_off, value_down = 1.0,value_up = 0.0,                                    name = _('APR-27 - ON/OFF'),   category = {_('ECM Control Panel')}},
+    {down = device_commands.ecm_selector_knob, value_down = 0.0, cockpit_device_id = devices.RWR, name = _('ECM Function Selector Mode - OFF'), category = {_('ECM Control Panel')}},
+    {down = device_commands.ecm_selector_knob, value_down = 0.33, cockpit_device_id = devices.RWR, name = _('ECM Function Selector Mode - STBY'), category = {_('ECM Control Panel')}},
+    {down = device_commands.ecm_selector_knob, value_down = 0.66, cockpit_device_id = devices.RWR, name = _('ECM Function Selector Mode - REC'), category = {_('ECM Control Panel')}},
+    {down = device_commands.ecm_selector_knob, value_down = 0.99, cockpit_device_id = devices.RWR, name = _('ECM Function Selector Mode - RPT'), category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_select_cw, name = _('ECM Function Selector Switch - CW'), category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_select_ccw, name = _('ECM Function Selector Switch - CCW'), category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_apr27_off, value_down = 1.0, value_up = 0.0, name = _('APR-27 - ON/OFF'), category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_apr25_off, value_down = 1.0, value_up = 0.0, name = _('APR-25 - ON/OFF'), category = {_('ECM Control Panel')}},
 
     ---------------------------------------------
     -- Instrument Panel -------------------------
