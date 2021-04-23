@@ -88,7 +88,7 @@ local alt_adj_xxNx = get_param_handle("ALT_ADJ_xxNx") -- 3rd digit, 0-10 input
 local alt_adj_xxxN = get_param_handle("ALT_ADJ_xxxN") -- 4th digit, 0-10 input
 
 local alt_setting = ALT_PRESSURE_STD
-
+local alt_pressure_moving = 0
 -----------------------------------------------------------------------------
 -- fuel gauge (gauge #29)
 
@@ -257,6 +257,9 @@ dev:listen_command(Keys.IntLightBrightness)
 --plusnine oxygen system
 dev:listen_command(device_commands.oxygen_switch)
 dev:listen_command(Keys.OxygenToggle)
+dev:listen_command(Keys.AltPressureStartUp)
+dev:listen_command(Keys.AltPressureStartDown)
+dev:listen_command(Keys.AltPressureStop)
 
 function dump_table(t)
     for key,value in pairs(t) do
@@ -352,6 +355,12 @@ function SetCommand(command,value)
         elseif alt_setting <= ALT_PRESSURE_MIN then
             alt_setting = ALT_PRESSURE_MIN
         end
+    elseif command == Keys.AltPressureStartUp then
+        alt_pressure_moving = 1
+    elseif command == Keys.AltPressureStartDown then
+        alt_pressure_moving = -1
+    elseif command == Keys.AltPressureStop then
+        alt_pressure_moving = 0
     elseif command == device_commands.ias_index_button then
         IAS_index_pushed=true and value==1 or false
     elseif command == device_commands.ias_index_knob then
@@ -749,6 +758,11 @@ function update_altimeter()
     alt_1k:set((alt+alt_adj) % 10000)
     alt_100s:set((alt+alt_adj) % 1000)
     alt_needle:set((alt+alt_adj) % 1000)
+
+    --continuous knob motion
+    if alt_pressure_moving ~= 0 then
+        alt_setting = clamp(alt_setting + 0.005 * alt_pressure_moving, ALT_PRESSURE_MIN, ALT_PRESSURE_MAX)
+    end
 end
 
 

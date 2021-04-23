@@ -176,7 +176,7 @@ elements["PNT_744"] = multiposition_switch_limited("AWRS mode",devices.WEAPON_SY
 elements["PNT_720"] = default_button("Show EXT Fuel", devices.AVIONICS, device_commands.FuelGaugeExtButton, 720)
 elements["PNT_723"] = default_button("Master test", devices.AVIONICS, device_commands.master_test, 723)
 elements["PNT_725"] = multiposition_switch_limited( "Shrike Selector Knob", devices.WEAPON_SYSTEM, device_commands.shrike_selector, 725, 5, 0.1, false, nil, KNOBCLICK_MID_FWD, 2)
-elements["PNT_726"] = default_axis_limited( "Sidewinder Volume Knob", devices.WEAPON_SYSTEM, device_commands.shrike_sidewinder_volume, 726, 0, 0.1, false, false, {-1.0,1.0} )
+elements["PNT_726"] = default_axis_limited( "Missile Volume Knob", devices.WEAPON_SYSTEM, device_commands.shrike_sidewinder_volume, 726, 0, 0.1, false, false, {-1.0,1.0} )
 
 
 -- ALTIMETER PANEL #41

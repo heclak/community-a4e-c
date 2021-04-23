@@ -335,6 +335,14 @@ Keys =
     GunsightBrightnessStartDown    = __custom_counter();
     GunsightBrightnessStop         = __custom_counter();
     GunsightDayNightToggle         = __custom_counter();
+    MissileVolumeInc               = __custom_counter();
+    MissileVolumeDec               = __custom_counter();
+    MissileVolumeStartUp           = __custom_counter();
+    MissileVolumeStartDown         = __custom_counter();
+    MissileVolumeStop              = __custom_counter();
+    AltPressureStartUp             = __custom_counter();
+    AltPressureStartDown           = __custom_counter();
+    AltPressureStop                = __custom_counter();
 }
 
 start_command   = 3000

@@ -187,6 +187,13 @@ WeaponSystem:listen_command(Keys.Station5)
 WeaponSystem:listen_command(Keys.ArmsFuncSelectorCCW)
 WeaponSystem:listen_command(Keys.ArmsFuncSelectorCW)
 WeaponSystem:listen_command(Keys.GunsReadyToggle)
+
+WeaponSystem:listen_command(Keys.MissileVolumeInc)
+WeaponSystem:listen_command(Keys.MissileVolumeDec)
+WeaponSystem:listen_command(Keys.MissileVolumeStartUp)
+WeaponSystem:listen_command(Keys.MissileVolumeStartDown)
+WeaponSystem:listen_command(Keys.MissileVolumeStop)
+
 WeaponSystem:listen_command(device_commands.shrike_sidewinder_volume)
 WeaponSystem:listen_command(device_commands.shrike_selector)
 
@@ -209,6 +216,8 @@ WeaponSystem:listen_command(device_commands.JATO_jettison)
 WeaponSystem:listen_command(Keys.JATOFiringButton)
 
 local shrike_sidewinder_volume = get_param_handle("SHRIKE_SIDEWINDER_VOLUME")
+local missile_volume_pos = 0
+local missile_volume_moving = 0
 
 local cbu1a_quantity = get_param_handle("CBU1A_QTY")
 local cbu2a_quantity = get_param_handle("CBU2A_QTY")
@@ -719,6 +728,11 @@ function update()
             end
             -- print_message_to_user("lock az:"..tostring(ir_missile_az_param:get())..",el:"..tostring(ir_missile_el_param:get()))
         end
+    end
+
+    -- coninous volume knob movement
+    if missile_volume_moving ~= 0 then
+        WeaponSystem:performClickableAction(device_commands.shrike_sidewinder_volume, clamp(missile_volume_pos + 0.005 * missile_volume_moving, 0, 1), false)
     end
 
     release_cbu_bomblets()
@@ -1281,6 +1295,7 @@ function SetCommand(command,value)
         debug_print("shrike_sidewinder_volume: "..value)
         shrike_sidewinder_volume:set(value)
         aim9seek:update(nil, LinearTodB(shrike_sidewinder_volume:get()), nil)
+        missile_volume_pos = value
     elseif command == device_commands.shrike_selector then
         -- print_message_to_user(value)
 	elseif command == Keys.JATOFiringButton then
@@ -1288,7 +1303,17 @@ function SetCommand(command,value)
 	elseif command == device_commands.JATO_arm then
 		check_jato_armed_and_full(value)
 	elseif command == device_commands.JATO_jettison then
-		
+
+    elseif command == Keys.MissileVolumeInc then
+        WeaponSystem:performClickableAction(device_commands.shrike_sidewinder_volume, clamp(missile_volume_pos + 0.05, 0, 1), false)
+    elseif command == Keys.MissileVolumeDec then
+        WeaponSystem:performClickableAction(device_commands.shrike_sidewinder_volume, clamp(missile_volume_pos - 0.05, 0, 1), false)
+    elseif command == Keys.MissileVolumeStartUp then
+        missile_volume_moving = 1
+    elseif command == Keys.MissileVolumeStartDown then
+        missile_volume_moving = -1
+    elseif command == Keys.MissileVolumeStop then
+        missile_volume_moving = 0
     end
 end
 

@@ -132,8 +132,10 @@ join(res.keyCommands,{
     {down = device_commands.GunsightDayNight, up = device_commands.GunsightDayNight, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.GUNSIGHT, name = _('Gunsight Brightness Switch - DAY else NIGHT'), category = {_('Gunsight Panel')}},
 
     -- Altimeter
-    {combos = {{key = '=', reformers = {'RShift'}}}, down = Keys.AltPressureInc,                    name = _('Altimeter Pressure - Increase'),  category = {_('Instrument Panel')}},
-    {combos = {{key = '-', reformers = {'RShift'}}}, down = Keys.AltPressureDec,                    name = _('Altimeter Pressure - Decrease'),  category = {_('Instrument Panel')}},
+    {combos = {{key = '=', reformers = {'RShift'}}}, down = Keys.AltPressureInc, name = _('Altimeter Pressure - Increment'),  category = {_('Instrument Panel')}},
+    {combos = {{key = '-', reformers = {'RShift'}}}, down = Keys.AltPressureDec, name = _('Altimeter Pressure - Decrement'),  category = {_('Instrument Panel')}},
+    {down = Keys.AltPressureStartUp, up = Keys.AltPressureStop,                  name = _('Altimeter Pressure - Continuous Increase'),  category = {_('Instrument Panel')}},
+    {down = Keys.AltPressureStartDown, up = Keys.AltPressureStop,                name = _('Altimeter Pressure - Continuous Decrease'),  category = {_('Instrument Panel')}},
 
     -- Radar Altimeter
     {combos = {{key = '-', reformers = {'RCtrl','RShift'}}}, down = Keys.RadarAltToggle,                                    name = _('Radar Altitude Warning - ON/OFF'), category = {_('Instrument Panel')}},
@@ -163,10 +165,18 @@ join(res.keyCommands,{
     {down = device_commands.bdhi_mode, value_down = 1, cockpit_device_id = devices.NAV,           name = _('BDHI Switch - NAV CMPTR'),                category = {_('Instrument Panel'), _('Misc Switches Panel')}},
     {down = device_commands.bdhi_mode, value_down = 0, cockpit_device_id = devices.NAV,           name = _('BDHI Switch - TACAN'),                    category = {_('Instrument Panel'), _('Misc Switches Panel')}},
     {down = device_commands.bdhi_mode, value_down = -1, cockpit_device_id = devices.NAV,          name = _('BDHI Switch - NAV PAC'),                  category = {_('Instrument Panel'), _('Misc Switches Panel')}},
-    
+
+    {down = device_commands.master_test, up = device_commands.master_test, value_down = 1, value_up = 0, cockpit_device_id = devices.AVIONICS, name = _('Master Test Button'), category = {_('Instrument Panel'), _('Misc Switches Panel')}},
+
+    {down = Keys.MissileVolumeInc, name = _('Missile Volume Knob - Increment'), category = {_('Instrument Panel'), _('Misc Switches Panel')}},
+    {down = Keys.MissileVolumeDec, name = _('Missile Volume Knob - Decrement'), category = {_('Instrument Panel'), _('Misc Switches Panel')}},
+    {down = Keys.MissileVolumeStartUp, up = Keys.MissileVolumeStop, name = _('Missile Volume Knob - Continuous Increase'), category = {_('Instrument Panel'), _('Misc Switches Panel')}},
+    {down = Keys.MissileVolumeStartDown, up = Keys.MissileVolumeStop, name = _('Missile Volume Knob - Continuous Decrease'), category = {_('Instrument Panel'), _('Misc Switches Panel')}},
+
     {down = Keys.FuelGaugeExt,                                                                    name = _('Internal-External Fuel Switch - EXT'),    category = {_('Instrument Panel'), _('Misc Switches Panel')}},
     {down = Keys.FuelGaugeInt,                                                                    name = _('Internal-External Fuel Switch - INT'),    category = {_('Instrument Panel'), _('Misc Switches Panel')}},
-    
+    {down = Keys.FuelGaugeExt, up = Keys.FuelGaugeInt,                                            name = _('Internal-External Fuel Switch - EXT else INT'),category = {_('Instrument Panel'), _('Misc Switches Panel')}},
+
     -- Armament Panel 
     {down = device_commands.arm_bomb, value_down = 1, cockpit_device_id = devices.WEAPON_SYSTEM,  name = _('BOMB ARM - NOSE & TAIL'),                 category = {_('Instrument Panel'), _('Armament Panel')}},
     {down = device_commands.arm_bomb, value_down = 0, cockpit_device_id = devices.WEAPON_SYSTEM,  name = _('BOMB ARM - OFF'),                         category = {_('Instrument Panel'), _('Armament Panel')}},
