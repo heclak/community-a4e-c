@@ -105,6 +105,10 @@ local asn41_magvar_push_state = 0
 local asn41_windspeed_push_state = 0
 local asn41_winddir_push_state = 0
 
+local dest_lat_slew_state = 0
+local dest_lon_slew_state = 0
+local asn41_slew_rate = 1
+
 -- asn-41 shared output data
 local asn41_valid = get_param_handle("ASN41-VALID")
 local asn41_bearing = get_param_handle("ASN41-BEARING")     -- calculated magnetic bearing to target
@@ -504,27 +508,31 @@ function SetCommand(command,value)
     -- NAV panel knobs
     ----------------------------------
     elseif command == device_commands.ppos_lat then
+        value = round(value, 3) -- round the returned value. smallest increment is 0.015
         if asn41_state ~= "asn41-test" and ppos_lat_push_state == 1 then
             -- gain 0.1 so 0.015 per "tick", we want increments of 0.01 or less
             -- divide by 15 = 0.001 per tick, then multiply by 10
             asn41_ppos_lat_offset = asn41_ppos_lat_offset + (value*10/15)
         end
     elseif command == device_commands.ppos_lon then
+        value = round(value, 3) -- round the returned value. smallest increment is 0.015
         if asn41_state ~= "asn41-test" and ppos_lon_push_state == 1 then
             asn41_ppos_lon_offset = asn41_ppos_lon_offset - (value*10/15) -- "positive" input = west which is negative lon
         end
     elseif command == device_commands.dest_lat then
-        if dest_lat_push_state == 1 and asn41_state == "asn41-off" or asn41_state == "asn41-stby" or asn41_state == "asn41-d1" then
+        value = round(value, 3) -- round the returned value. smallest increment is 0.015
+        if dest_lat_push_state == 1 and asn41_state == "asn41-off" or asn41_state == "asn41-stby" then
             asn41_d1_lat_offset = asn41_d1_lat_offset + (value*10/15)
-        elseif asn41_state == "asn41-d2" and dest_lat_push_state == 1 then
-            asn41_d2_lat_offset = asn41_d2_lat_offset + (value*10/15)
         end
     elseif command == device_commands.dest_lon then
-        if dest_lon_push_state == 1 and asn41_state == "asn41-off" or asn41_state == "asn41-stby" or asn41_state == "asn41-d1" then
+        value = round(value, 3) -- round the returned value. smallest increment is 0.015
+        if dest_lon_push_state == 1 and asn41_state == "asn41-off" or asn41_state == "asn41-stby" then
             asn41_d1_lon_offset = asn41_d1_lon_offset - (value*10/15) -- "positive" input = west which is negative lon
-        elseif asn41_state == "asn41-d2" and dest_lon_push_state == 1 then
-            asn41_d2_lon_offset = asn41_d2_lon_offset - (value*10/15) -- "positive" input = west which is negative lon
         end
+    elseif command == device_commands.dest_lat_slew then
+        dest_lat_slew_state = value
+    elseif command == device_commands.dest_lon_slew then
+        dest_lon_slew_state = value
     elseif command == device_commands.asn41_magvar then
         if asn41_state ~= "asn41-test" and asn41_magvar_push_state == 1 then
             asn41_magvar_offset = asn41_magvar_offset + (value*100/15) -- 0.015 per click * 100/15 = ~0.1
@@ -837,6 +845,44 @@ function set_d2_xy(x, y)
     asn41_d2_lon = geopos.lon
 end
 
+local function asn41_slew(lat_to_update, lon_to_update)
+
+    local function ramp_slew_rate(slew_rate)
+        return slew_rate * (1 + (0.1* update_time_step)) -- maybe there should be a max slew rate?
+    end
+
+    -- check if slews are active
+    if dest_lat_slew_state == 0 and dest_lon_slew_state == 0 then
+        asn41_slew_rate = 1
+        return lat_to_update, lon_to_update
+    end
+
+    -- check if ASN-41 is in correct mode for slew
+    if asn41_state == "asn41-off" or asn41_state == "asn41-test" then
+        dest_lat_slew_state = 0
+        dest_lon_slew_state = 0
+        asn41_slew_rate = 1
+        return lat_to_update, lon_to_update
+    end
+
+    if dest_lat_slew_state == 1 then
+        lat_to_update = lat_to_update + (0.005 * asn41_slew_rate)
+    elseif dest_lat_slew_state == -1 then
+        lat_to_update = lat_to_update - (0.005 * asn41_slew_rate)
+    end
+
+    if dest_lon_slew_state == 1 then
+        lon_to_update = lon_to_update - (0.005 * asn41_slew_rate)
+    elseif dest_lon_slew_state == -1 then
+        lon_to_update = lon_to_update + (0.005 * asn41_slew_rate)
+    end
+
+    asn41_slew_rate = ramp_slew_rate(asn41_slew_rate)
+
+    return lat_to_update, lon_to_update
+
+end
+
 --[[
 AN/ASN-41 Navigational Computer Design
 
@@ -1043,6 +1089,7 @@ function update_asn41()
             asn41_bearing:set(0)
             asn41_track:set(0)
             -- asn41-stby draw
+            asn41_d1_lat_offset, asn41_d1_lon_offset = asn41_slew(asn41_d1_lat_offset, asn41_d1_lon_offset)
             asn41_draw_windspeed( asn41_windspeed_offset )
             asn41_draw_winddir( asn41_winddir_offset )
             asn41_draw_magvar( asn41_magvar_offset )
@@ -1058,6 +1105,7 @@ function update_asn41()
             end
         else
             -- asn41-d1 output
+            asn41_d1_lat_offset, asn41_d1_lon_offset = asn41_slew(asn41_d1_lat_offset, asn41_d1_lon_offset)
             asn41_update_range_and_bearing(1)
             -- asn41-d1 draw
             -- asn41_draw_windspeed( asn41_windspeed_offset )
@@ -1077,6 +1125,7 @@ function update_asn41()
             end
         else
             -- asn41-d2 output
+            asn41_d2_lat_offset, asn41_d2_lon_offset = asn41_slew(asn41_d2_lat_offset, asn41_d2_lon_offset)
             asn41_update_range_and_bearing(2)
             -- asn41-d2 draw
             -- asn41_draw_windspeed( asn41_windspeed_offset )

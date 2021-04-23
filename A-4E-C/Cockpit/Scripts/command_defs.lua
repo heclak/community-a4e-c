@@ -520,4 +520,7 @@ device_commands =
     right_wheelbrake_AXIS           = __counter(),
 
     AOA_dimming_wheel_AXIS          = __counter(),
+
+    dest_lat_slew                   = __counter(),
+    dest_lon_slew                   = __counter(),
 }

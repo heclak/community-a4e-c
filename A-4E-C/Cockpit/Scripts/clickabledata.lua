@@ -210,30 +210,38 @@ elements["PNT_247"] = default_button("APN-153 Memory Light Test", devices.NAV, d
 elements["PNT_176"] = multiposition_switch_limited("ASN-41 Function Selector Switch",devices.NAV, device_commands.nav_select,176,5,0.1,false,nil, KNOBCLICK_RIGHT_FWD)
 elements["PNT_176"].animated        = {true, true}
 elements["PNT_176"].animation_speed = {4, 4}  -- multiply these numbers by the base 1.0 second animation speed to get final speed.  4 means animates in 0.25 seconds.
+
 elements["PNT_177"] = default_button_axis("ASN-41 Present Position - Latitude Knob", devices.NAV, device_commands.ppos_lat_push, device_commands.ppos_lat, 236, 177, 1, 1)
 elements["PNT_177"].relative[2] = true
 elements["PNT_177"].arg_value[2] = 1
 elements["PNT_177"].animated = {true, false}
 elements["PNT_177"].animation_speed = {16.0, 0}
 elements["PNT_177"].sound = {{KNOBCLICK_RIGHT_FWD}, {KNOBCLICK_RIGHT_MID}}
+
 elements["PNT_183"] = default_button_axis("ASN-41 Present Position - Longitude Knob", devices.NAV, device_commands.ppos_lon_push, device_commands.ppos_lon, 237, 183, 1, 1)
 elements["PNT_183"].relative[2] = true
 elements["PNT_183"].arg_value[2] = 1
 elements["PNT_183"].animated = {true, false}
 elements["PNT_183"].animation_speed = {16.0, 0}
 elements["PNT_183"].sound = {{KNOBCLICK_RIGHT_FWD}, {KNOBCLICK_RIGHT_MID}}
+
 elements["PNT_190"] = default_button_axis("ASN-41 Destination - Latitude Knob", devices.NAV, device_commands.dest_lat_push, device_commands.dest_lat, 238, 190, 1, 1)
 elements["PNT_190"].relative[2] = true
 elements["PNT_190"].arg_value[2] = 1
 elements["PNT_190"].animated = {true, false}
 elements["PNT_190"].animation_speed = {16.0, 0}
 elements["PNT_190"].sound = {{KNOBCLICK_RIGHT_FWD}, {KNOBCLICK_RIGHT_MID}}
+
+elements["PNT_248"] = springloaded_3_pos_tumb("ASN-41 Destination - Latitude Slew", devices.NAV, device_commands.dest_lat_slew, 248, true, KNOBCLICK_RIGHT_MID)
+
 elements["PNT_196"] = default_button_axis("ASN-41 Destination - Longitude Knob", devices.NAV, device_commands.dest_lon_push, device_commands.dest_lon, 239, 196, 1, 1)
 elements["PNT_196"].relative[2] = true
 elements["PNT_196"].arg_value[2] = 1
 elements["PNT_196"].animated = {true, false}
 elements["PNT_196"].animation_speed = {16.0, 0}
 elements["PNT_196"].sound = {{KNOBCLICK_RIGHT_FWD}, {KNOBCLICK_RIGHT_MID}}
+
+elements["PNT_249"] = springloaded_3_pos_tumb("ASN-41 Destination - Longitude Slew", devices.NAV, device_commands.dest_lon_slew, 249, true, KNOBCLICK_RIGHT_MID)
 
 elements["PNT_203"] = default_button_axis("ASN-41 Magnetic Variation Knob", devices.NAV, device_commands.asn41_magvar_push, device_commands.asn41_magvar, 240, 203, 1, 1)
 elements["PNT_203"].relative[2] = true
