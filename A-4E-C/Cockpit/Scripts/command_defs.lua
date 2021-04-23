@@ -324,7 +324,17 @@ Keys =
     ecm_OuterKnobStartUp           = __custom_counter();
     ecm_OuterKnobStartDown         = __custom_counter();
     ecm_OuterKnobStop              = __custom_counter();
-
+    GunsightElevationInc           = __custom_counter();
+    GunsightElevationDec           = __custom_counter();
+    GunsightElevationStartUp       = __custom_counter();
+    GunsightElevationStartDown     = __custom_counter();
+    GunsightElevationStop          = __custom_counter();
+    GunsightBrightnessInc          = __custom_counter();
+    GunsightBrightnessDec          = __custom_counter();
+    GunsightBrightnessStartUp      = __custom_counter();
+    GunsightBrightnessStartDown    = __custom_counter();
+    GunsightBrightnessStop         = __custom_counter();
+    GunsightDayNightToggle         = __custom_counter();
 }
 
 start_command   = 3000

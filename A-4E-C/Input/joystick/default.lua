@@ -113,19 +113,29 @@ join(res.keyCommands,{
     {down = device_commands.ecm_apr27_off, up = device_commands.ecm_apr27_off, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.RWR, name = _('APR-27 - ON else OFF'), category = {_('ECM Control Panel')}},
     {down = Keys.ecm_apr25_off, value_down = 1.0, value_up = 0.0, name = _('APR-25 - ON/OFF'), category = {_('ECM Control Panel')}},
     {down = device_commands.ecm_apr25_off, up = device_commands.ecm_apr25_off, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.RWR, name = _('APR-25 - ON else OFF'), category = {_('ECM Control Panel')}},
-    {down = Keys.ecm_OuterKnobInc, name = _('MSL Volume (Outer Knob) - Increase'), category = {_('ECM Control Panel')}},
-    {down = Keys.ecm_OuterKnobDec, name = _('MSL Volume (Outer Knob) - Decrease'), category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_OuterKnobInc, name = _('MSL Volume (Outer Knob) - Increment'), category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_OuterKnobDec, name = _('MSL Volume (Outer Knob) - Decrement'), category = {_('ECM Control Panel')}},
     {down = Keys.ecm_OuterKnobStartUp, up = Keys.ecm_OuterKnobStop, name = _('MSL Volume (Outer Knob) - Continuous Increase'),   category = {_('ECM Control Panel')}},
     {down = Keys.ecm_OuterKnobStartDown, up = Keys.ecm_OuterKnobStop, name = _('MSL Volume (Outer Knob) - Continuous Decrease'),   category = {_('ECM Control Panel')}},
-    {down = Keys.ecm_InnerKnobInc, name = _('PRF Volume (Inner Knob) - Increase'), category = {_('ECM Control Panel')}},
-    {down = Keys.ecm_InnerKnobDec, name = _('PRF Volume (Inner Knob) - Decrease'), category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_InnerKnobInc, name = _('PRF Volume (Inner Knob) - Increment'), category = {_('ECM Control Panel')}},
+    {down = Keys.ecm_InnerKnobDec, name = _('PRF Volume (Inner Knob) - Decrement'), category = {_('ECM Control Panel')}},
     {down = Keys.ecm_InnerKnobStartUp, up = Keys.ecm_InnerKnobStop, name = _('PRF Volume (Inner Knob) - Continuous Increase'),   category = {_('ECM Control Panel')}},
     {down = Keys.ecm_InnerKnobStartDown, up = Keys.ecm_InnerKnobStop, name = _('PRF Volume (Inner Knob) - Continuous Decrease'),   category = {_('ECM Control Panel')}}, 
         
     ---------------------------------------------
     -- Instrument Panel -------------------------
     ---------------------------------------------
-    -- Gunsight Panel(TODO)
+    -- Gunsight Panel
+    {down = Keys.GunsightElevationInc, value_down = 1.0, value_up = 0.0,        name = _('Gunsight Elevation Knob - Increment'),             category = {_('Gunsight Panel')}},
+    {down = Keys.GunsightElevationDec, value_down = 1.0, value_up = 0.0,        name = _('Gunsight Elevation Knob - Decrement'),             category = {_('Gunsight Panel')}},
+    {down = Keys.GunsightElevationStartUp, up = Keys.GunsightElevationStop,     name = _('Gunsight Elevation Knob - Continuous Increase'),   category = {_('Gunsight Panel')}},
+    {down = Keys.GunsightElevationStartDown, up = Keys.GunsightElevationStop,   name = _('Gunsight Elevation Knob - Continuous Decrease'),   category = {_('Gunsight Panel')}},
+    {down = Keys.GunsightBrightnessInc, value_down = 1.0, value_up = 0.0,       name = _('Gunsight Brightness Knob - Increment'),            category = {_('Gunsight Panel')}},
+    {down = Keys.GunsightBrightnessDec, value_down = 1.0, value_up = 0.0,       name = _('Gunsight Brightness Knob - Decrement'),            category = {_('Gunsight Panel')}},
+    {down = Keys.GunsightBrightnessStartUp, up = Keys.GunsightBrightnessStop,   name = _('Gunsight Brightness Knob - Continuous Increase'),  category = {_('Gunsight Panel')}},
+    {down = Keys.GunsightBrightnessStartDown, up = Keys.GunsightBrightnessStop, name = _('Gunsight Brightness Knob - Continuous Decrease'),  category = {_('Gunsight Panel')}},
+    {down = Keys.GunsightDayNightToggle, name = _('Gunsight Brightness Switch - DAY/NIGHT'), category = {_('Gunsight Panel')}},
+    {down = device_commands.GunsightDayNight, up = device_commands.GunsightDayNight, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.GUNSIGHT, name = _('Gunsight Brightness Switch - DAY else NIGHT'), category = {_('Gunsight Panel')}},
 
     -- Altimeter
     {down = Keys.AltPressureInc,                             name = _('Altimeter Pressure - Increase'),      category = {_('Instrument Panel')}},

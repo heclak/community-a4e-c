@@ -12,9 +12,22 @@ make_default_activity(update_time_step)
 local sensor_data = get_base_data()
 local efm_data_bus = get_efm_data_bus()
 
+dev:listen_command(Keys.GunsightElevationInc)
+dev:listen_command(Keys.GunsightElevationDec)
+dev:listen_command(Keys.GunsightElevationStartUp)
+dev:listen_command(Keys.GunsightElevationStartDown)
+dev:listen_command(Keys.GunsightElevationStop)
+dev:listen_command(Keys.GunsightBrightnessInc)
+dev:listen_command(Keys.GunsightBrightnessDec)
+dev:listen_command(Keys.GunsightBrightnessStartUp)
+dev:listen_command(Keys.GunsightBrightnessStartDown)
+dev:listen_command(Keys.GunsightBrightnessStop)
+dev:listen_command(Keys.GunsightDayNightToggle)
+
 dev:listen_command(device_commands.GunsightKnob)
 dev:listen_command(device_commands.GunsightDayNight)
 dev:listen_command(device_commands.GunsightBrightness)
+
 local reflector_pos = 1
 local reflector_pos_wma = WMA(0.25, 1-reflector_pos)
 local daynight = 0  -- 0=day, 1=night. Night mode adds a 10ohm resistor in series with 150ohm variable resistor
@@ -28,6 +41,12 @@ local gunsight_reflector_rot_param = get_param_handle("D_GUNSIGHT_REFLECTOR_ROT"
 local gunsight_daynight_param = get_param_handle("D_GUNSIGHT_DAYNIGHT")
 local gunsight_mil_param = get_param_handle("GUNSIGHT_MIL_ANGLE") -- used for knob mil scale indication eventually
 local gunsight_visible = get_param_handle("D_GUNSIGHT_VISIBLE")
+
+-- position variables for keybinds
+local gunsight_elevation_pos = 0
+local gunsight_elevation_moving = 0
+local gunsight_brightness_pos = 0
+local gunsight_brightness_moving = 0
 
 gunsight_reflector_param:set(reflector_pos_wma:get_current_val())
 gunsight_reflector_rot_param:set(1-reflector_pos_wma:get_current_val())
@@ -73,6 +92,7 @@ function SetCommand(command,value)
         gunsight_mil=math.floor(gunsight_mil*1000)/1000.0  -- restrict to 3 decimal places
         gunsight_mil_param:set(gunsight_mil)
         reflector_pos=1-value
+        gunsight_elevation_pos = value
     elseif (command == device_commands.GunsightElevationControl_AXIS) then
         local normalisedValue = ( ( value + 1 ) / 2 ) * 1.0 -- normalised {-1 to 1} to {0 - 1.0}
         dev:performClickableAction(device_commands.GunsightKnob, normalisedValue, false)
@@ -81,6 +101,7 @@ function SetCommand(command,value)
         adjusted_brightness = (daynight==1) and (brightness*0.5) or (brightness)
         --gunsight_daynight_param:set(adjusted_brightness)
     elseif (command == device_commands.GunsightBrightness) then
+        gunsight_brightness_pos = value
         -- off from 0 to 45deg, brighter from 45 to 135deg, brightest from 135 to 170 deg  (bulb 1)
         -- off from 170deg to 225 deg, brighter until 315 deg, brightest until 350deg, then off  (bulb 2)
         brightness=0
@@ -95,6 +116,31 @@ function SetCommand(command,value)
         end
         adjusted_brightness = (daynight==1) and (brightness*0.5) or (brightness)
         --gunsight_daynight_param:set(adjusted_brightness)
+    end
+
+    -- keybinds
+    if command == Keys.GunsightElevationInc then
+        dev:performClickableAction(device_commands.GunsightKnob, clamp(gunsight_elevation_pos + 0.013875, 0, 1), false)
+    elseif command == Keys.GunsightElevationDec then
+        dev:performClickableAction(device_commands.GunsightKnob, clamp(gunsight_elevation_pos - 0.013875, 0, 1), false)
+    elseif command == Keys.GunsightElevationStartUp then
+        gunsight_elevation_moving = 1
+    elseif command == Keys.GunsightElevationStartDown then
+        gunsight_elevation_moving = -1
+    elseif command == Keys.GunsightElevationStop then
+        gunsight_elevation_moving = 0
+    elseif command == Keys.GunsightBrightnessInc then
+        dev:performClickableAction(device_commands.GunsightBrightness, clamp(gunsight_brightness_pos + 0.025, 0, 1), false)
+    elseif command == Keys.GunsightBrightnessDec then
+        dev:performClickableAction(device_commands.GunsightBrightness, clamp(gunsight_brightness_pos - 0.025, 0, 1), false)
+    elseif command == Keys.GunsightBrightnessStartUp then
+        gunsight_brightness_moving = 1
+    elseif command == Keys.GunsightBrightnessStartDown then
+        gunsight_brightness_moving = -1
+    elseif command == Keys.GunsightBrightnessStop then
+        gunsight_brightness_moving = 0
+    elseif command == Keys.GunsightDayNightToggle then
+		dev:performClickableAction((device_commands.GunsightDayNight), ((daynight * -1) +1), false)
     end
 end
 
@@ -125,6 +171,14 @@ function update()
         power_on = false
     end
 	
+    -- continuous movement for keybinds
+    if gunsight_elevation_moving ~= 0 then
+        dev:performClickableAction(device_commands.GunsightKnob, clamp(gunsight_elevation_pos + 0.00333 * gunsight_elevation_moving, 0, 1), false)
+    end
+    if gunsight_brightness_moving ~= 0 then
+        dev:performClickableAction(device_commands.GunsightBrightness, clamp(gunsight_brightness_pos + 0.08 * gunsight_brightness_moving, 0, 1), false)
+    end
+
 	efm_data_bus.fm_setGunsightAngle(gunsightAngleToRads())
 end
 
