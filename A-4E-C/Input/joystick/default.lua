@@ -324,6 +324,18 @@ join(res.keyCommands,{
     {down = device_commands.dest_lon_slew, up = device_commands.dest_lon_slew, cockpit_device_id = devices.NAV, value_down = -1, value_up = 0, name = _('Destination Longitude Slew Knob - CCW'),              category = {_('Right Console'), _('Navigation Control Panel')}},
     {down = device_commands.dest_lon_slew, up = device_commands.dest_lon_slew, cockpit_device_id = devices.NAV, value_down = 1,  value_up = 0, name = _('Destination Longitude Slew Knob - CW'),               category = {_('Right Console'), _('Navigation Control Panel')}},
 
+    {down = device_commands.asn41_magvar_push,    up = device_commands.asn41_magvar_push,    cockpit_device_id = devices.NAV, value_down = 1,  value_up = 0, name = _('Magnetic Variation Push-to-set Knob - PUSH'), category = {_('Right Console'), _('Navigation Control Panel')}},
+    {pressed = device_commands.asn41_magvar,                                                 cockpit_device_id = devices.NAV, value_pressed = -0.015,        name = _('Magnetic Variation Push-to-set Knob - CCW'),  category = {_('Right Console'), _('Navigation Control Panel')}},
+    {pressed = device_commands.asn41_magvar,                                                 cockpit_device_id = devices.NAV, value_pressed = 0.015,         name = _('Magnetic Variation Push-to-set Knob - CW'),   category = {_('Right Console'), _('Navigation Control Panel')}},
+
+    {down = device_commands.asn41_windspeed_push, up = device_commands.asn41_windspeed_push, cockpit_device_id = devices.NAV, value_down = 1,  value_up = 0, name = _('Wind Speed Push-to-set Knob - PUSH'),         category = {_('Right Console'), _('Navigation Control Panel')}},
+    {pressed = device_commands.asn41_windspeed,                                              cockpit_device_id = devices.NAV, value_pressed = -0.015,        name = _('Wind Speed Push-to-set Knob - CCW'),          category = {_('Right Console'), _('Navigation Control Panel')}},
+    {pressed = device_commands.asn41_windspeed,                                              cockpit_device_id = devices.NAV, value_pressed = 0.015,         name = _('Wind Speed Push-to-set Knob - CW'),           category = {_('Right Console'), _('Navigation Control Panel')}},
+
+    {down = device_commands.asn41_winddir_push,   up = device_commands.asn41_winddir_push,   cockpit_device_id = devices.NAV, value_down = 1,  value_up = 0, name = _('Wind Direction Push-to-set Knob - PUSH'),     category = {_('Right Console'), _('Navigation Control Panel')}},
+    {pressed = device_commands.asn41_winddir,                                                cockpit_device_id = devices.NAV, value_pressed = -0.015,        name = _('Wind Direction Push-to-set Knob - CCW'),      category = {_('Right Console'), _('Navigation Control Panel')}},
+    {pressed = device_commands.asn41_winddir,                                                cockpit_device_id = devices.NAV, value_pressed = 0.015,         name = _('Wind Direction Push-to-set Knob - CW'),       category = {_('Right Console'), _('Navigation Control Panel')}},
+
     {down = device_commands.nav_select, value_down = 0.0, cockpit_device_id = devices.NAV, name = _('Navigation Computer Selector Switch - TEST'), category = {_('Right Console'), _('Navigation Control Panel')}},
     {down = device_commands.nav_select, value_down = 0.1, cockpit_device_id = devices.NAV, name = _('Navigation Computer Selector Switch - OFF'), category = {_('Right Console'), _('Navigation Control Panel')}},
     {down = device_commands.nav_select, value_down = 0.2, cockpit_device_id = devices.NAV, name = _('Navigation Computer Selector Switch - STBY'), category = {_('Right Console'), _('Navigation Control Panel')}},
