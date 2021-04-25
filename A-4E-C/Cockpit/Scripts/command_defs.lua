@@ -127,14 +127,14 @@ Keys =
     NavILSNext                      = __custom_counter(),
     NavILSPrev                      = __custom_counter(),
 
-    NavPPosLatInc                   = __custom_counter(),  -- increment present position latitude (north)
-    NavPPosLatDec                   = __custom_counter(),
-    NavPPosLonInc                   = __custom_counter(),  -- increment present position longitude (east)
-    NavPPosLonDec                   = __custom_counter(),
-    NavDestLatInc                   = __custom_counter(),  -- increment destination latitude (north)
-    NavDestLatDec                   = __custom_counter(),
-    NavDestLonInc                   = __custom_counter(),  -- increment destination longitude (east)
-    NavDestLonDec                   = __custom_counter(),
+    NavPPosLatInc                   = __custom_counter(),  -- no longer used. ready for removal
+    NavPPosLatDec                   = __custom_counter(),  -- no longer used. ready for removal
+    NavPPosLonInc                   = __custom_counter(),  -- no longer used. ready for removal
+    NavPPosLonDec                   = __custom_counter(),  -- no longer used. ready for removal
+    NavDestLatInc                   = __custom_counter(),  -- no longer used. ready for removal
+    NavDestLatDec                   = __custom_counter(),  -- no longer used. ready for removal
+    NavDestLonInc                   = __custom_counter(),  -- no longer used. ready for removal
+    NavDestLonDec                   = __custom_counter(),  -- no longer used. ready for removal
 
     NavDopplerCW                    = __custom_counter(),
     NavDopplerCCW                   = __custom_counter(),
