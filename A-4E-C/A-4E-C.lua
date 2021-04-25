@@ -473,7 +473,7 @@ A_4E_C =  {
     range                       =  3200,                  -- Max range in km (for AI)
 
     thrust_sum_max              =  9300*POUNDS_TO_KG,     -- thrust in kg (J52 P8A: 9300 lb)**
-    has_afteburner              =  true,
+    has_afteburner              =  false,
     has_differential_stabilizer =  false,
     thrust_sum_ab               =  9300*POUNDS_TO_KG,     -- thrust in kg (kN)**
     average_fuel_consumption    =  0.86,                  -- 0.86 TSFC
