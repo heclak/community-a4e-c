@@ -237,14 +237,6 @@ dev:listen_command(Keys.NavReset)
 --dev:listen_command(Keys.NavTCNPrev)
 dev:listen_command(Keys.NavNDBNext)
 dev:listen_command(Keys.NavNDBPrev)
-dev:listen_command(Keys.NavPPosLatInc)
-dev:listen_command(Keys.NavPPosLatDec)
-dev:listen_command(Keys.NavPPosLonInc)
-dev:listen_command(Keys.NavPPosLonDec)
-dev:listen_command(Keys.NavDestLatInc)
-dev:listen_command(Keys.NavDestLatDec)
-dev:listen_command(Keys.NavDestLonInc)
-dev:listen_command(Keys.NavDestLonDec)
 dev:listen_command(Keys.NavSelectCW)
 dev:listen_command(Keys.NavSelectCCW)
 dev:listen_command(Keys.NavDopplerCW)
@@ -521,12 +513,12 @@ function SetCommand(command,value)
         end
     elseif command == device_commands.dest_lat then
         value = round(value, 3) -- round the returned value. smallest increment is 0.015
-        if dest_lat_push_state == 1 and asn41_state == "asn41-off" or asn41_state == "asn41-stby" then
+        if dest_lat_push_state == 1 and (asn41_state == "asn41-off" or asn41_state == "asn41-stby") then
             asn41_d1_lat_offset = asn41_d1_lat_offset + (value*10/15)
         end
     elseif command == device_commands.dest_lon then
         value = round(value, 3) -- round the returned value. smallest increment is 0.015
-        if dest_lon_push_state == 1 and asn41_state == "asn41-off" or asn41_state == "asn41-stby" then
+        if dest_lon_push_state == 1 and (asn41_state == "asn41-off" or asn41_state == "asn41-stby") then
             asn41_d1_lon_offset = asn41_d1_lon_offset - (value*10/15) -- "positive" input = west which is negative lon
         end
     elseif command == device_commands.dest_lat_slew then
