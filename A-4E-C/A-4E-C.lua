@@ -481,6 +481,8 @@ A_4E_C =  {
     tanker_type                 =  2,                     -- Tanker type if the plane is tanker
     air_refuel_receptacle_pos   =  {6.966, -0.366, 0.486},
 
+    launch_bar_connected_arg_value	= 0.87,
+
 	-----------------------------------------------------------------------
 	----------------- SUSPENSION CODE BEGINS
 	-----------------------------------------------------------------------
@@ -546,6 +548,40 @@ A_4E_C =  {
 			g_suit 			   =  5.0 -- I'm assuming there are different levels of suits which black you out at different G's. We should try and experiment with different ones.
         }, -- end of [1]
     }, -- end of crew_members
+
+    mechanimations = {
+        Door0 = {
+            {Transition = {"Close", "Open"},  Sequence = {{C = {{"Arg", 38, "to", 0.9, "in", 9.5},},},}, Flags = {"Reversible"},},
+            {Transition = {"Open", "Close"},  Sequence = {{C = {{"Arg", 38, "to", 0.0, "in", 5.0},},},}, Flags = {"Reversible", "StepsBackwards"},},
+            {Transition = {"Any", "Bailout"}, Sequence = {{C = {{"JettisonCanopy", 0},},},},},
+        },
+        -- dummy animation for carrier ops. array sizes need to match or the animator will throw an error.
+        -- animations need to be defined with a dummy arg even if they are not applicable.
+        -- both launchbar and foldable wings are required.
+        LaunchBar = { 
+			{Transition = {"Retract", "Extend"}, Sequence = {{C = {{"ChangeDriveTo", "HydraulicGravityAssisted"}, {"VelType", 3}, {"Arg", 85, "to", 0.881, "in", 4.4}}}}},
+			{Transition = {"Retract", "Stage"},  Sequence = {{C = {{"ChangeDriveTo", "HydraulicGravityAssisted"}, {"VelType", 3}, {"Arg", 85, "to", 0.815, "in", 4.4}}}}},
+			{Transition = {"Any", "Retract"},  Sequence = {{C = {{"ChangeDriveTo", "Hydraulic"}, {"VelType", 2}, {"Arg", 85, "to", 0.000, "in", 4.5}}}}},
+			{Transition = {"Extend", "Stage"},   Sequence = {
+					{C = {{"ChangeDriveTo", "Mechanical"}, {"Sleep", "for", 0.000}}},
+					{C = {{"Arg", 85, "from", 0.881, "to", 0.766, "in", 0.600}}},
+					{C = {{"Arg", 85, "from", 0.766, "to", 0.753, "in", 0.200}}},
+					{C = {{"Sleep", "for", 0.15}}},
+					{C = {{"Arg", 85, "from", 0.753, "to", 0.784, "in", 0.1, "sign", 2}}},
+					{C = {{"Arg", 85, "from", 0.784, "to", 0.881, "in", 1.0}}},
+				},
+			},
+			{Transition = {"Stage", "Pull"},  Sequence = {
+					{C = {{"ChangeDriveTo", "Mechanical"}, {"VelType", 2}, {"Arg", 85,"from", 0.881, "to", launch_bar_connected_arg_value_, "in", 0.27}}},
+					}
+			},
+			{Transition = {"Stage", "Extend"},   Sequence = {{C = {{"ChangeDriveTo", "HydraulicGravityAssisted"}, {"VelType", 3}, {"Arg", 85, "from", 0.815, "to", 0.881, "in", 0.2}}}}},
+		},
+        FoldableWings = {
+            {Transition = {"Retract", "Extend"}, Sequence = {{C = {{"Arg", 85, "to", 0.0, "in", 5.0}}}}, Flags = {"Reversible"}},
+            {Transition = {"Extend", "Retract"}, Sequence = {{C = {{"Arg", 85, "to", 1.0, "in", 5.0}}}}, Flags = {"Reversible", "StepsBackwards"}},
+        },
+    },
 ---------------------------------------------------------------------------------------------------------------------------------------------
     fires_pos =
     {
