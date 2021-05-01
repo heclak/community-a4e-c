@@ -64,5 +64,4 @@ sound_params = {
     snd_inst_emer_speedbrake_out = get_param_handle("SND_INST_EMER_SPEEDBRAKE_OUT"),
     snd_cont_hydraulic_mov = get_param_handle("SND_CONT_HYD_MOV"),
     snd_inst_hydraulic_stop = get_param_handle("SND_INST_HYD_STOP"),
-
 }

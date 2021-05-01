@@ -25,6 +25,44 @@ function post_initialize()
     sndhost_cockpit             = create_sound_host("COCKPIT","2D",0,0,0) -- TODO: look into defining this sound host for HEADPHONES/HELMET
 
 
+    engine_wind_pitch = {
+        curve = {0.0, 1.0, 1.235},
+        min = 0.0,
+        max = 100.0,
+    }
+
+    engine_wind_volume = {
+        curve = {0.0, 1.0},
+        min = 0.0,
+        max = 100.0,
+    }
+
+    engine_low_pitch = {
+        curve = {0.0},
+        min = 0.0,
+        max = 100.0,
+    }
+
+    engine_low_volume = {
+        curve = {0.0},
+        min = 0.0,
+        max = 100.0,
+    }
+
+    engine_high_pitch = {
+        curve = {0.0},
+        min = 0.0,
+        max = 100.0,
+    }
+
+    engine_high_volume = {
+        curve = {0.0},
+        min = 70.0,
+        max = 100.0,
+    }
+
+
+
     sounds = {
         --DEBUG TEST SOUNDS
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-debugtest05", "SND_CONT_TEST_05", SOUND_CONTINUOUS),
@@ -52,9 +90,12 @@ function post_initialize()
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineIgniterSpark", "SND_ALWS_ENGINE_IGNITER_SPARK", SOUND_ALWAYS, nil, nil, 1.0, 0.1),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineWindUp", "SND_INST_ENGINE_WIND_UP", SOUND_ONCE),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineWindDown", "SND_INST_ENGINE_WIND_DOWN", SOUND_ONCE),
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineWindConstant", "SND_ALWS_ENGINE_WIND_ON", SOUND_ALWAYS, nil, nil),
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineOperationLo", "SND_ALWS_ENGINE_OPERATION_LO", SOUND_ALWAYS, nil, nil),
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineOperationHi", "SND_ALWS_ENGINE_OPERATION_HI", SOUND_ALWAYS, nil, nil),
+
+
+        Sound_Player.new_always_controlled(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineWindConstant", "RPM", engine_wind_volume, engine_wind_pitch),
+        Sound_Player.new_always_controlled(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineOperationLo", "RPM", engine_low_volume, engine_low_pitch),
+        Sound_Player.new_always_controlled(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineOperationHi", "RPM", engine_high_volume, engine_high_pitch),
+
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineCompressorStall", "SND_INST_ENGINE_STALL", SOUND_ONCE),
         --gear pod doors
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearPodClose_L", "SND_INST_L_GEAR_POD_CLOSE", SOUND_ONCE),

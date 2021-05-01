@@ -1,5 +1,51 @@
 
+Curve = {}
+Curve.__index = Curve
+setmetatable(Curve,
+{
+    __call = function (cls, ...)
+        return cls.new(...)
+    end
+})
 
+function Curve.new(curve, min, max)
+    local self = setmetatable({}, Curve)
+
+    self.min = min
+    self.max = max
+    self.curve = curve
+    self.dx = ( max - min ) / (#curve - 1.0)
+
+    return self
+end
+
+function Curve:value(x)
+    if #self.curve == 1 then
+        return self.curve[1]
+    end
+
+
+    local index = (x - self.min) / self.dx
+    local lower = math.floor(index)
+    local upper = math.ceil(index)
+
+    if lower == upper then
+        upper = upper + 1
+    end
+
+    if lower < 0 then
+        return self.curve[1]
+    end
+
+    if upper > #self.curve then
+        return self.curve[#self.curve]
+    end
+
+    local lowerX = lower * self.dx + self.min
+    local upperX = upper * self.dx + self.min
+
+    return (x - lowerX) * ((self.curve[upper+1] - self.curve[lower+1]) / (upperX - lowerX)) + self.curve[lower+1]
+end
 
 
 Sound_Player = {}
@@ -14,6 +60,7 @@ setmetatable(Sound_Player,
 SOUND_CONTINUOUS = 1
 SOUND_ONCE = 2
 SOUND_ALWAYS = 3
+SOUND_ALWAYS_CONTROLLED = 4
 
 function Sound_Player.new(sndhost, sound_file, param, type, min_speed, max_speed, factor, fade)
     local self = setmetatable({}, Sound_Player)
@@ -28,6 +75,31 @@ function Sound_Player.new(sndhost, sound_file, param, type, min_speed, max_speed
     self.fade = fade or 0.0
     self.volume = 0.0
     self.airspeed_param = get_param_handle("FM_AIRSPEED")
+
+    --self.update_fnc = nil
+
+    if self.type == SOUND_CONTINUOUS then
+        self.update = self.updateContinuous
+    elseif self.type == SOUND_ONCE then
+        self.update = self.updateOnce
+    elseif self.type == SOUND_ALWAYS then
+        self.update = self.updateAlways
+    end
+
+    return self
+end
+
+function Sound_Player.new_always_controlled(sndhost, sound_file, param, volume, pitch)
+    local self = setmetatable({}, Sound_Player)
+    self.sound = sndhost:create_sound(sound_file)
+    self.type = SOUND_ALWAYS_CONTROLLED
+    self.param = get_param_handle(param)
+    self.param_string = param
+
+    self.volume_curve = Curve(volume.curve, volume.min, volume.max)
+    self.pitch_curve = Curve(pitch.curve, pitch.min, pitch.max)
+
+    self.update = self.updateAlwaysControlled
     return self
 end
 
@@ -84,14 +156,18 @@ function Sound_Player:updateAlways()
     self.sound:update(nil, math.pow(self.volume,self.factor) * self:airspeedGain() , 0.0)
 end
 
-function Sound_Player:update()
-    if self.type == SOUND_CONTINUOUS then
-        self:updateContinuous()
-    elseif self.type == SOUND_ONCE then
-        self:updateOnce()
-    elseif self.type == SOUND_ALWAYS then
-        self:updateAlways()
+function Sound_Player:updateAlwaysControlled()
+    if not self.sound:is_playing() then
+        self.sound:play_continue()
     end
+
+    local x = self.param:get()
+    --print_message_to_user(self.volume_curve:value(x))
+
+    print_message_to_user(self.pitch_curve:value(x))
+
+    self.sound:update(self.pitch_curve:value(x), self.volume_curve:value(x), nil)
+    --self.sound:update(nil, nil, nil)
 end
 
 --Lerp the gain from the desired airspeeds
