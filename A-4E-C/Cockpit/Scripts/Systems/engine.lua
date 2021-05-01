@@ -55,6 +55,8 @@ local throttle_state = THROTTLE_ADJUST
 local manual_fuel_control_mode = 1
 local manual_fuel_control_mode_sw = 0
 
+local igniter_timer = 0
+
 ------------------------------------------------
 ----------------  CONSTANTS  -------------------
 ------------------------------------------------
@@ -310,11 +312,31 @@ function update_egt()
     egt_c:set(egt_c_val:get_WMA(output_egt))
 end
 
-function update_igniter()
-    if get_elec_primary_ac_ok() and get_elec_primary_dc_ok() and throttle_state==THROTTLE_IGN then
-        sound_params.snd_inst_engine_igniter_whirr:set(1.0)
-        sound_params.snd_alws_engine_igniter_spark:set(1.0)
-    else
+function update_igniter() 
+    -- this is just sound code and does not affect engine operation in any way
+    -- as-is, you have 20 seconds of sparks total once you move into IGN, 
+    -- if you move into ADJUST early, you can go back to IGN and use the remaining count-up. 
+    -- Once it's sparked for a total of 20 seconds, the throttle must be returned to the OFF position to play again.
+    local igniter_countup = igniter_timer
+    if throttle_state==THROTTLE_OFF then -- throttle OFF, reset system for a new startup attempt
+        sound_params.snd_inst_engine_igniter_whirr:set(0.0)
+        sound_params.snd_alws_engine_igniter_spark:set(0.0)
+        igniter_timer = 0
+    elseif throttle_state==THROTTLE_IGN and get_elec_primary_ac_ok() and get_elec_primary_dc_ok() then
+        if igniter_timer == 0 then
+            igniter_timer = 1  -- start ignition timer
+            sound_params.snd_inst_engine_igniter_whirr:set(1.0)
+        elseif igniter_timer >= 1 then
+            if igniter_timer < 400 then -- set timer maximum in seconds * 20
+                sound_params.snd_alws_engine_igniter_spark:set(1.0)
+                sound_params.snd_inst_engine_igniter_whirr:set(1.0) -- play initial sound again returning from ADJ
+                igniter_timer = igniter_countup + 1 -- count it up
+            else -- timer maximum, disable igniter sounds
+               sound_params.snd_inst_engine_igniter_whirr:set(0.0)
+               sound_params.snd_alws_engine_igniter_spark:set(0.0)
+            end
+        end
+    elseif throttle_state==THROTTLE_ADJUST then -- throttle in run, disable igniter sounds
         sound_params.snd_inst_engine_igniter_whirr:set(0.0)
         sound_params.snd_alws_engine_igniter_spark:set(0.0)
     end
