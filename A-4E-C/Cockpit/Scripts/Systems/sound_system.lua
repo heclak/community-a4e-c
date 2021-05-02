@@ -24,50 +24,41 @@ function post_initialize()
     -- initialise soundhosts
     sndhost_cockpit             = create_sound_host("COCKPIT","2D",0,0,0) -- TODO: look into defining this sound host for HEADPHONES/HELMET
 
-
     engine_wind_pitch = {
-        --curve = {0},
         curve = {0.0000, 0.8500, 0.9300, 0.9900, 1.0310, 1.0620, 1.1235},
         min = 0.0,
         max = 100.0,
     }
 
     engine_wind_volume = {
-        --curve = {0},
-        curve = {0, 0.72, 0.85, 0.93, 0.97, 0.99},
+        curve = {0.00, 0.72, 0.85, 0.93, 0.97, 0.99},
         min = 0.0,
         max = 100.0,
     }
 
     engine_low_pitch = {
-        --curve = {0},
         curve = {0.0000, 0.8500, 0.9300, 0.9900, 1.0310, 1.0620, 1.1235},
         min = 0.0,
         max = 100.0,
     }
 
     engine_low_volume = {
-        -- curve = {0},
         curve = {0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1},
         min = 15.0,
         max = 100.0,
     }
 
     engine_high_pitch = {
-        -- curve = {0},
         curve = {0.0000, 0.8500, 0.9300, 0.9900, 1.0310, 1.0620, 1.1235},
         min = 0.0,
         max = 100.0,
     }
 
     engine_high_volume = {
-        -- curve = {0},
         curve = {0.00, 0.10, 0.45, 0.67, 0.81, 0.93, 1.00},
-        min = 0.0,
+        min = 55.0,
         max = 100.0,
     }
-
-
 
     sounds = {
         --DEBUG TEST SOUNDS
