@@ -56,6 +56,7 @@ local manual_fuel_control_mode = 1
 local manual_fuel_control_mode_sw = 0
 
 local igniter_timer = 0
+local igniter_max = 400 -- set timer maximum in seconds * 20
 
 ------------------------------------------------
 ----------------  CONSTANTS  -------------------
@@ -315,8 +316,9 @@ end
 function update_igniter() 
     -- this is just sound code and does not affect engine operation in any way
     -- as-is, you have 20 seconds of sparks total once you move into IGN, 
-    -- if you move into ADJUST early, you can go back to IGN and use the remaining count-up. 
-    -- Once it's sparked for a total of 20 seconds, the throttle must be returned to the OFF position to play again.
+    -- If you move into ADJUST earlor if it's sparked for a total of 20 seconds, 
+    -- the throttle must be returned to the OFF position for this sound to play again.
+    -- Once an ignition hook from the EFM is complete, this code can go away with a clear and simple hook.
     local igniter_countup = igniter_timer
     if throttle_state==THROTTLE_OFF then -- throttle OFF, reset system for a new startup attempt
         sound_params.snd_inst_engine_igniter_whirr:set(0.0)
@@ -327,7 +329,7 @@ function update_igniter()
             igniter_timer = 1  -- start ignition timer
             sound_params.snd_inst_engine_igniter_whirr:set(1.0)
         elseif igniter_timer >= 1 then
-            if igniter_timer < 400 then -- set timer maximum in seconds * 20
+            if igniter_timer < igniter_max then -- set above
                 sound_params.snd_alws_engine_igniter_spark:set(1.0)
                 sound_params.snd_inst_engine_igniter_whirr:set(1.0) -- play initial sound again returning from ADJ
                 igniter_timer = igniter_countup + 1 -- count it up
@@ -339,6 +341,7 @@ function update_igniter()
     elseif throttle_state==THROTTLE_ADJUST then -- throttle in run, disable igniter sounds
         sound_params.snd_inst_engine_igniter_whirr:set(0.0)
         sound_params.snd_alws_engine_igniter_spark:set(0.0)
+        igniter_timer = igniter_max
     end
 end
 

@@ -1,4 +1,4 @@
-wave = "Effects/Aircrafts/A-4E-C/a-4e_EngineWindConstant.ogg"
+wave = "Effects/Aircrafts/A-4E-C/a-4e_EngineWindConstantBass.ogg"
 inner_radius = 100
 gain = 3.0
 attack = 0.1
