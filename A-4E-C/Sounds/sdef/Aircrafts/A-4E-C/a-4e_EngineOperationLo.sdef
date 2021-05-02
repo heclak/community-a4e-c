@@ -1,10 +1,9 @@
 wave = "Effects/Aircrafts/A-4E-C/a-4e_EngineOperationHi.ogg"
-inner_radius = 10
-outer_radius = 100
-gain = 6.0
+inner_radius = 100
+gain = 3.0
 attack = 0.1
 release = 0.1
-position = {-1, -0.25, 0}
+position = {-0.37, 0.0, 0.0} 
 pitch = 1.0
 lowpass = 24000.0
 

@@ -1,14 +1,13 @@
 wave = "Effects/Aircrafts/A-4E-C/a-4e_EngineWindConstant.ogg"
-inner_radius = 10
-outer_radius = 100
-gain = 6.0
+inner_radius = 100
+gain = 3.0
 attack = 0.1
 release = 0.1
-position = {-1, -0.25, 0}
+position = {-0.37, 0.0, 0.0} 
 pitch = 1.0
 lowpass = 24000.0
 
--- play: engine in operation, >10% RPM
+-- play: engine moving, full volume at >10% RPM
 -- continuous
 -- inaudible under ~5% RPM
 -- pitch 1.0 at 55% RPM (idle)

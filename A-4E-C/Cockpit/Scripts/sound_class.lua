@@ -164,7 +164,7 @@ function Sound_Player:updateAlwaysControlled()
     local x = self.param:get()
     --print_message_to_user(self.volume_curve:value(x))
 
-    print_message_to_user(self.pitch_curve:value(x))
+    --print_message_to_user(self.pitch_curve:value(x))
 
     self.sound:update(self.pitch_curve:value(x), self.volume_curve:value(x), nil)
     --self.sound:update(nil, nil, nil)
