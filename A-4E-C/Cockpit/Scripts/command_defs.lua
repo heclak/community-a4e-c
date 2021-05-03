@@ -75,6 +75,8 @@ Keys =
     BrakesOffLeft                  = __custom_counter(),
     BrakesOnRight                  = __custom_counter(),
     BrakesOffRight                 = __custom_counter(),
+    BrakesOn                        = __custom_counter(),
+    BrakesOff                       = __custom_counter(),
     ToggleSlatsLock                = __custom_counter(),
 	--END EFM SPECIFIC BINDS
 
@@ -235,11 +237,6 @@ Keys =
     AFCSHotasAltHdg                 = __custom_counter(),  -- for warthog hotas
     AFCSHotasAlt                    = __custom_counter(),  -- for warthog hotas
     AFCSHotasEngage                 = __custom_counter(),  -- for warthog hotas
-
-	--EFM SPECIFIC BINDS
-    BrakesOn                        = __custom_counter(),
-    BrakesOff                       = __custom_counter(),
-	--END EFM SPECIFIC BINDS
 
     Tune1                           = __custom_counter(),
     Tune2                           = __custom_counter(),

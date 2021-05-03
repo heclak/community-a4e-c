@@ -254,4 +254,6 @@ extern "C"
 	ED_FM_API void ed_fm_configure ( const char* cfg_path );
 
 	ED_FM_API bool ed_fm_LERX_vortex_update(unsigned idx, LERX_vortex& out);
+
+	ED_FM_API void ed_fm_set_immortal( bool value );
 };

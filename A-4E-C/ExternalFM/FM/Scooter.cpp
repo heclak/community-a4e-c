@@ -907,3 +907,9 @@ bool ed_fm_LERX_vortex_update( unsigned idx, LERX_vortex& out )
 
 	return false;
 }
+
+void ed_fm_set_immortal( bool value )
+{
+	if ( value )
+		printf( "Nice try!\n" );
+}
