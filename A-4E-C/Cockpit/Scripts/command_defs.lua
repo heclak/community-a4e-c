@@ -67,6 +67,19 @@ Keys =
     PlaneChgTargetPrev              = 1315,   -- iCommandPlaneUFC_STEER_DOWN
 
     -- add custom commands here --
+    --EFM SPECIFIC BINDS
+	nws_engage						 = __custom_counter(),
+	nws_disengage					 = __custom_counter(),
+    radio_ptt						 = __custom_counter(),
+    BrakesOnLeft                   = __custom_counter(),
+    BrakesOffLeft                  = __custom_counter(),
+    BrakesOnRight                  = __custom_counter(),
+    BrakesOffRight                 = __custom_counter(),
+    ToggleSlatsLock                = __custom_counter(),
+	--END EFM SPECIFIC BINDS
+
+
+
     PlaneFlapsStop                  = __custom_counter(),
     PlaneFlapsUpHotas               = __custom_counter(),
     PlaneFlapsDownHotas             = __custom_counter(),
@@ -280,16 +293,6 @@ Keys =
     AWRSModeSelCCW                  = __custom_counter(),
     AWRSModeSelCW                   = __custom_counter(),
 	
-	--EFM SPECIFIC BINDS
-	nws_engage						 = __custom_counter(),
-	nws_disengage					 = __custom_counter(),
-    radio_ptt						 = __custom_counter(),
-    BrakesOnLeft                   = __custom_counter(),
-    BrakesOffLeft                  = __custom_counter(),
-    BrakesOnRight                  = __custom_counter(),
-    BrakesOffRight                 = __custom_counter(),
-    ToggleSlatsLock                = __custom_counter(),
-	--END EFM SPECIFIC BINDS
     AFCSStabAugToggle              = __custom_counter(),
     OxygenToggle                   = __custom_counter(),
     RadarAltToggle                 = __custom_counter(),

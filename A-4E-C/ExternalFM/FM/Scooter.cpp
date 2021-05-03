@@ -442,28 +442,28 @@ void ed_fm_set_command
 	case Scooter::Control::THROTTLE_UP_START:
 		s_input->throttleAxis().keyDecrease();
 		break;
-	case Scooter::Control::BRAKE_ALL_START:
+	case KEYS_BRAKESON:
 		s_input->leftBrakeAxis().keyIncrease();
 		s_input->rightBrakeAxis().keyIncrease();
 		break;
-	case Scooter::Control::BRAKE_ALL_STOP:
+	case KEYS_BRAKESOFF:
 		s_input->leftBrakeAxis().reset();
 		s_input->rightBrakeAxis().reset();
 		break;
 
-	case Scooter::Control::BRAKE_LEFT_START:
+	case KEYS_BRAKESONLEFT:
 		s_input->leftBrakeAxis().keyIncrease();
 		break;
-	case Scooter::Control::BRAKE_LEFT_STOP:
+	case KEYS_BRAKESOFFLEFT:
 		s_input->leftBrakeAxis().reset();
 		break;
-	case Scooter::Control::BRAKE_RIGHT_START:
+	case KEYS_BRAKESONRIGHT:
 		s_input->rightBrakeAxis().keyIncrease();
 		break;
-	case Scooter::Control::BRAKE_RIGHT_STOP:
+	case KEYS_BRAKESOFFRIGHT:
 		s_input->rightBrakeAxis().reset();
 		break;
-	case Scooter::Control::RADIO_PTT:
+	case KEYS_RADIO_PTT:
 		s_radio->toggleRadioMenu();
 		break;
 	case KEYS_TOGGLESLATSLOCK:
