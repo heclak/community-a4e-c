@@ -56,7 +56,7 @@ function post_initialize()
 
     engine_high_volume = {
         curve = {0.00, 0.10, 0.45, 0.67, 0.81, 0.93, 1.00},
-        min = 56.01,
+        min = 56.0,
         max = 100.0,
     }
 
