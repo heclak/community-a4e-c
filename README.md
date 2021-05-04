@@ -24,6 +24,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Sidekick65, Talo, Gvad, Hel
 - Shrike anti-radiation missile
 - CP-741/a Bombing computer (CCRP)
 - Carrier landing and takeoff
+- Air-to-air refueling
 - New weapons:
   - AN- series WWII munitions: M66, M81, M88
   - MK4 HIPEG 20 mm gunpod
@@ -34,7 +35,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Sidekick65, Talo, Gvad, Hel
 ### Version 2.0 Changelog: Featured Items
 
 - Features: External Flight Model (EFM) with flight dynamics, suspension, slat simulation, cockpit shake, wing vapour and more.
-- Features: Realistics engine simulation (jnels, please add detail here!)
+- Features: Realistic engine simulation (jnels, please add detail here!)
 - Features: Added radio functions (jnels, please add detail here! - thanks, Harald?)
 - Features: Added ILS for ground stations
 - Features: Added SuperCarrier compatibility
@@ -43,6 +44,9 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Sidekick65, Talo, Gvad, Hel
 - Features: Added nosewheel steering and differential braking (be sure to reset your user inputs)
 - Features: Added SUU-25 Parachute illumination pod for night ops
 - Systems: AFCS Added stability augmentation (be sure to enable this yaw-dampening system on the AFCS panel before takeoff!)
+- Systems: Added sidewinders to loadout options on outer pylons
+- Systems: Added SUU-25 parachute illumination pod to loadout options
+- Systems: Added empty fuel tanks to loadout options
 - Systems: Added fuel flow system
 - Systems: Added oxygen system (pilots must now beware of hypooxia!)
 - Misions: Added instant action missions (thanks Sidekick65, Cubeboy)
@@ -53,9 +57,10 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Sidekick65, Talo, Gvad, Hel
 - Liveries: Reformatted livery description.lua templates (livery creators, see our updated paintkit)
 - Liveries: Inaccuracies corrected (within the available modex systems, with great apologies to the non-USN/USMC operators)
 - Quality of Life: Added new keybinds (thanks to the userbase for documenting many of these)
-- Quality of Life: Added in-cockpit sound and improved user feedback
+- Quality of Life: Added in-cockpit sounds and improved user feedback
+- Quality of Life: Revised special menu options (like screen shake)
 - Quality of Life: Fixed FFB stick support
-- Quality of Life: Slats locking for aerobatic performance teams
+- Quality of Life: Slats locking option for aerobatic performance teams
 - Quality of Life: Smokewinder pod easier to operate (weapon select independent)
 - Quality of Life: Lots, and lots, and we mean LOTS of bug fixes
 
