@@ -10,11 +10,11 @@ We thank the DCS World community for their support over the years, and dedicate 
 
 ## Contributing Developers
 
-Heclak, Joshua Nelson, plusnine, Farlander, Gospadin, gyrovague, kryb / Archimaede, Merker, Jones, Nero
+Gospadin, Heclak, Joshua Nelson, plusnine, Farlander, gyrovague, kryb / Archimaede, Merker, Jones, Nero
 
 ## Special Thanks
 
-SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Sidekick65, Talo, Gvad, HellesBelles, Luciano, Malamem, Sport, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
+SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Sidekick65, Talo, Gvad, HellesBelles, SPINEG, Sport, rudel-chw, Luciano, Malamem, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
 
 ## Features
 
@@ -84,7 +84,9 @@ Failure to perform these steps will result in DCS World not recognizing the modu
 
 ### STEP 1: Upgrading from an older release
 
-If you are upgrading from an older version of the A-4E-C, perform these following actions. You must delete the currently installed A-4E-C files before installing the new version, as some important files have been removed for this release, and your input binding must be reset and rebound in order to accommodate this release’s enhanced control scheme. If this is a new installation, skip this step and move on to Step 2.
+If you are upgrading from an older version of the A-4E-C, perform these following actions. You must completely delete the currently installed A-4E-C files before installing the new version, as some important files have been removed for this. 
+
+Additionally your input bindings must be reset and rebound in order to accommodate this release’s enhanced control scheme. If this is a new installation, you can skip this step and move on to Step 2.
 
 - Delete the contents of your old A-4E-C installation folder: `C:\Users\username\Saved Games\DCS\Mods\aircraft\A-4E-C`
 - Delete your A-4E-C input settings by opening the following folder: `C:\Users\username\Saved Games\DCS\Config\Input\A-4E-C`
@@ -102,7 +104,7 @@ Your correctly installed files should look something like the following image, s
 
 ### STEP 3: Launch DCS World and verify installation
 
-When you are confident your files are correctly installed, launch DCS World. If your installation was successful, the A-4E-C’s theme icon appears as a option in the main menu:
+When you are confident your files are correctly installed, launch DCS World. If your installation was successful, the A-4E-C theme icon appears as a option in the main menu:
 
 ![Image of DCS World Menu with A-4E installed](https://cdn.discordapp.com/attachments/518815071858589697/720094260699070464/unknown.png)
 
@@ -110,11 +112,15 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 - Never, ever install the A-4E-C files directly into your DCS World installation files! This will cause your DCS World to not locate the module, create conflicts with other modules, and other problems.
 
-- If you have multiple DCS-related folders in your `C:\Users\username\Saved Games`, for example, `DCS`, or `DCS.openbeta` , locate your DCS World installation folder and locate the `dcs_variant.txt` file. If this file is present, its contents determines the folder structure your DCS World installation is using.
+- If you have multiple DCS-related folders in your `C:\Users\username\Saved Games`, for example, `DCS`, or `DCS.openbeta`. If you are unsure which folder your DCS World installation is using, locate the `dcs_variant.txt` file in the game files. If this file is present, its contents determines the folder structure your DCS World installation is using.
 
-- If you are recieving an authorization error, you have installed the module incorrectly. Double check the installation instructions above, have installed the module to the correct folder, and do not have any improperly installed files remaining in your DCS world game files. Any conflicts will result in the persistence of this this error.
+- If you are recieving an authorization error, you have installed the module incorrectly. Double check the installation instructions above, ensure you have have installed the module to the correct folder, and do not have any improperly installed files remaining in your DCS world game files. Any conflicts will result in the persistence of this this error.
 
 - If you find you can't take control of the aircraft, ensure you have installed Microsoft's Visual Studio 2015, 2017 and 2019 Redistributable libraries. Windows users running DCS world are typically running x64, so you will want to download and install vc_redist.x64.exe (~15 MB) from the following page, install the library, and then restart your computer: (https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0)
+
+- If you cannot find the A-4E-C as a unit option in the Mission Editor, Ensure the historical mode filter is disabled in the mission editor by toggling the clock icon at the bottom of the screen, as shown in the following screenshot:
+
+![Image of the Mission Editor pointing out the location of the Historical Filter](https://cdn.discordapp.com/attachments/518814186739073024/759230033960763422/unknown.png)
 
 ## Frequently Asked Questions and Troubleshooting
 
@@ -124,7 +130,7 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 **Q: How large is the module?**
 
-- The download file is 678 MB. Installation size is 761 MB.
+- The download file is ~700 MB. Installation size is ~800 MB.
 
 **Q: Can I donate to the A-4E-C project?**
 
@@ -132,11 +138,11 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 **Q: Can I get involved with the A-4E-C project?**
 
-- Yes! Join our Discord server and introduce yourself! We can always use a hand from game artists, programmers or reliable testers as we move the project forward. If you think you have skills to contribute, don’t hesitate!
+- Yes! Join our Discord server and introduce yourself! We can always use a hand from game artists, programmers or reliable testers as we continue to move the project forward. If you think you have something to contribute, don’t hesitate!
 
 **Q: Is there a user manual or tutorials available?**
 
-- [Heclak's Community A-4E Guide](https://docs.google.com/presentation/d/1cUH7jpAoGHm-IzUDnv_NDhiZlvX55Q9WvpgR1d9ksYY/edit?usp=sharing) is a great resource
+- [Heclak's Community A-4E Guide](https://docs.google.com/presentation/d/1cUH7jpAoGHm-IzUDnv_NDhiZlvX55Q9WvpgR1d9ksYY/edit?usp=sharing) is a great resource, and [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt_8Jw9ByL10ar6b8rQg) features many good tutorials on systems and weaponry.
 
 **Q: Is there a paint kit I can use to create my own A-4E-C liveries?**
 
@@ -169,9 +175,9 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 - No, there are no plans nor keen interest to pursue this. The project will continue as a free and open-source resource you can download and install to enjoy.
 
-**Q: What's the song in the menu?**
-- Crow, by [Eric Haugen](https://erichaugen.bandcamp.com/releases)
-
-**Q: Why doesn't the A-4E-C work with my favorite mission or multiplayer scriptin system?**
+**Q: Why doesn't the A-4E-C work with my favorite mission or multiplayer scripting system?**
 
 - Some scripts or other utilities need to be informed of the A-4E-C's existence in order to accomodate it. If you have a favorite popular mod, script that should accomodate it, be sure to let the author know!
+
+**Q: What's the song in the menu?**
+- Crow, by [Eric Haugen](https://erichaugen.bandcamp.com/releases)
