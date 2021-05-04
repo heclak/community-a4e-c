@@ -885,8 +885,8 @@ A_4E_C =  {
         --aircraft_task(Reconnaissance),
         aircraft_task(GroundAttack),        -- Task #32
         aircraft_task(AFAC),                -- Task #16
-        --aircraft_task(RunwayAttack),
-        --aircraft_task(AntishipStrike),
+        aircraft_task(RunwayAttack),
+        aircraft_task(AntishipStrike),
         aircraft_task(Refueling),           -- Task #13
     },
     DefaultTask = aircraft_task(CAS),
