@@ -33,7 +33,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Sidekick65, Talo, Gvad, Hel
 
 ### Version 2.0 Changelog: Featured Items
 
-- Features: External Flight Model (EFM)
+- Features: External Flight Model (EFM) with flight dynamics, suspension, slat simulation, cockpit shake, wing vapour and more.
 - Features: Realistics engine simulation (jnels, please add detail here!)
 - Features: Added radio functions (jnels, please add detail here! - thanks, Harald?)
 - Features: Added ILS for ground stations
@@ -41,7 +41,9 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Sidekick65, Talo, Gvad, Hel
 - Features: Added CP-741/a bombing computer (set CMPTR on weapon selector and use slick bombs)
 - Features: Added air-to-air refueling capabilities
 - Features: Added nosewheel steering and differential braking (be sure to reset your user inputs)
+- Features: Added SUU-25 Parachute illumination pod for night ops
 - Systems: AFCS Added stability augmentation (be sure to enable this yaw-dampening system on the AFCS panel before takeoff!)
+- Systems: Added fuel flow system
 - Systems: Added oxygen system (pilots must now beware of hypooxia!)
 - Misions: Added instant action missions (thanks Sidekick65, Cubeboy)
 - Textures: Exterior texture improvements, added normal map (thanks HellesBelles)
@@ -52,9 +54,10 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Sidekick65, Talo, Gvad, Hel
 - Liveries: Inaccuracies corrected (within the available modex systems, with great apologies to the non-USN/USMC operators)
 - Quality of Life: Added new keybinds (thanks to the userbase for documenting many of these)
 - Quality of Life: Added in-cockpit sound and improved user feedback
+- Quality of Life: Fixed FFB stick support
 - Quality of Life: Slats locking for aerobatic performance teams
 - Quality of Life: Smokewinder pod easier to operate (weapon select independent)
-- Quality of Life: Lots and lots of bug fixes
+- Quality of Life: Lots, and lots, and we mean LOTS of bug fixes
 
 [See full changelog](https://github.com/heclak/community-a4e-c/blob/master/CHANGELOG.md)
 
