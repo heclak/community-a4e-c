@@ -47,7 +47,7 @@ local FUNC_GM_UNARM = 2
 local FUNC_SPRAY_TANK = 3
 local FUNC_LABS = 4
 local FUNC_BOMBS_GM_ARM = 5
-local FUNC_CMPTR = 4 --change to 6 when we its animated
+local FUNC_CMPTR = 6 --change to 6 when we its animated
 local selector_debug_text={"OFF","ROCKETS","GM UNARM","SPRAY TANK","LABS","BOMBS & GM ARM"}
 
 -- emergency selector switch constants
