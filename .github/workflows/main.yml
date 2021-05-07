@@ -20,6 +20,7 @@ jobs:
       - name: Set env
         run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
       - name: Install Dependancies
+        uses: actions/setup-python@v2
         with:
           python-version: '3.x'
         run: |
