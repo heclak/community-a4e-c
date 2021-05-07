@@ -194,6 +194,7 @@ join(res.keyCommands,{
     {down = device_commands.arm_func_selector,  cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.3, name = _('Function Selector Switch - SPRAY TANK'),     category = {_('Instrument Panel'), _('Armament Panel')}},
     {down = device_commands.arm_func_selector,  cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.4, name = _('Function Selector Switch - LABS'),           category = {_('Instrument Panel'), _('Armament Panel')}},
     {down = device_commands.arm_func_selector,  cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.5, name = _('Function Selector Switch - BOMBS & GM ARM'), category = {_('Instrument Panel'), _('Armament Panel')}},
+    {down = device_commands.arm_func_selector,  cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.6, name = _('Function Selector Switch - CMPTR'),          category = {_('Instrument Panel'), _('Armament Panel')}},
     {combos = {{key = '7'}}, down = Keys.ArmsFuncSelectorCCW,                                                name = _('Function Selector Switch - CCW'),            category = {_('Armament Panel')}},
     {combos = {{key = '8'}}, down = Keys.ArmsFuncSelectorCW,                                                 name = _('Function Selector Switch - CW'),             category = {_('Armament Panel')}},
     
