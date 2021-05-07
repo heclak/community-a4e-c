@@ -343,3 +343,16 @@ ASALocalRun/
 healthchecksdb
 A-4E-C/efm_log.txt
 A-4E-C/efm_log.txt
+
+# Binary files
+*.miz
+*.zip
+*.png
+*.lod
+*.lod.json
+
+#Binary Related Folders
+A-4E-C/Shapes/
+A-4E-C/Sounds/
+A-4E-C/Cockpit/Shapes/
+
