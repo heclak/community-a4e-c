@@ -19,6 +19,9 @@ def main():
         "yea": True
     }
 
+    if not os.path.exists("binaries"):
+        os.mkdir("binaries")
+
     if os.path.exists("binaries/bin.zip"):
         answer = input("Binaries already exist redownload?\n")
         if answer.lower() in yes_dict:
