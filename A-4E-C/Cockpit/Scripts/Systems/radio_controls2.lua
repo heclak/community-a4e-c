@@ -18,6 +18,8 @@ dev:listen_command(device_commands.arc51_freq_ooXoo)
 dev:listen_command(device_commands.arc51_freq_oooXX)
 --dev:listen_command(Keys.radio_ptt)
 --plusnine uhf frequency keybinds
+dev:listen_command(Keys.UHFPresetChannelInc)
+dev:listen_command(Keys.UHFPresetChannelDec)
 dev:listen_command(Keys.UHFFreqModeInc)
 dev:listen_command(Keys.UHFFreqModeDec)
 dev:listen_command(Keys.UHFModeInc)
@@ -166,15 +168,22 @@ local command_table = {
 function SetCommand(command,value)
     if command_table[command] ~= nil then
         command_table[command](value)
-    --ARC-51 UHF keybinds added by plusnine
+    -- mode switch
     elseif command == Keys.UHFModeInc and arc51_mode < 3 then
         dev:performClickableAction(device_commands.arc51_mode, clamp(arc51_mode / 10 + 0.1, 0, 0.3), false)
     elseif command == Keys.UHFModeDec and arc51_mode > 0 then
         dev:performClickableAction(device_commands.arc51_mode, clamp(arc51_mode / 10 - 0.1, 0, 0.3), false)
+    -- frequency xmit mode switch
     elseif command == Keys.UHFFreqModeInc and arc51_xmit_mode > 0 then
         dev:performClickableAction(device_commands.arc51_xmitmode, clamp(arc51_xmit_mode - 2, -1, 1), false)
     elseif command == Keys.UHFFreqModeDec and arc51_xmit_mode < 2 then
         dev:performClickableAction(device_commands.arc51_xmitmode, clamp(arc51_xmit_mode, -1, 1), false)
+    -- preset frequency select
+    elseif command == Keys.UHFPresetChannelInc and arc51_preset < 0.95 then
+        dev:performClickableAction(device_commands.arc51_freq_preset, clamp(arc51_preset + 0.05, 0, 0.95), false)
+    elseif command == Keys.UHFPresetChannelDec and arc51_preset > 0 then
+        dev:performClickableAction(device_commands.arc51_freq_preset, clamp(arc51_preset - 0.05, 0, 0.95), false)
+    -- manual freqency select
     elseif command == Keys.UHF10MHzInc and arc51_freq_XXxxx < 0.85 then
         dev:performClickableAction(device_commands.arc51_freq_XXooo, arc51_freq_XXxxx + 0.05,false)
     elseif command == Keys.UHF10MHzDec and arc51_freq_XXxxx > 0 then
@@ -191,6 +200,7 @@ function SetCommand(command,value)
         dev:performClickableAction(device_commands.arc51_freq_oooXX, arc51_freq_xxxXX + 0.05,false)
     elseif command == Keys.UHF50kHzDec and arc51_freq_xxxXX > 0 then
         dev:performClickableAction(device_commands.arc51_freq_oooXX, arc51_freq_xxxXX - 0.05,false)
+    -- volume
     elseif command == Keys.UHFVolumeInc and arc51_volume < 0.8 then
         dev:performClickableAction(device_commands.arc51_volume, arc51_volume + 0.02,false)
     elseif command == Keys.UHFVolumeDec and arc51_volume > 0.2 then
