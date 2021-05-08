@@ -343,6 +343,10 @@ Keys =
     AltPressureStartUp             = __custom_counter();
     AltPressureStartDown           = __custom_counter();
     AltPressureStop                = __custom_counter();
+    UHFFreqModeInc                 = __custom_counter(), -- adding commands to end per jnels suggestion
+    UHFFreqModeDec                 = __custom_counter(),
+    UHFPresetChannelInc            = __custom_counter(),
+    UHFPresetChannelDec            = __custom_counter(),
 }
 
 start_command   = 3000

@@ -55,7 +55,7 @@ livery =
 {
   {"Top", 0, "community-a4e3-top", true};
   {"Top", ROUGHNESS_METALLIC, "community-a4e3-top_RoughMet", true};
-  {"Bottom", 0, "community-a4e-bot", true};
+  {"Bottom", 0, "community-a4e3-bot", true};
   {"Bottom", ROUGHNESS_METALLIC, "community-a4e3-bot_RoughMet", true};
   {"Gear and metal", 0, "community-a4e3-bot", true};
   {"Cockpit", 0, "community-a4e-bot", true};
