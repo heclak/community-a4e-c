@@ -2,6 +2,85 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
+### You must rebind all your keys after updating to beta-4
+
+## Version 2.0.0-beta-4 - 08 May 2021
+
+### Added
+
+- Cockpit engine sounds (preliminary)
+- Normal Maps
+
+- Liveries:
+  - Community A-4E-C III "Forever Free"
+  - Argentine Brigada IV
+  - Argentine Brigada V
+
+- Weapon Function Selector: CMPTR Animation position. The CP-741/A is now on this position
+- Very basic oxygen system **(hypoxia is enabled)**
+
+
+- Keybinds:
+  - AFCS
+  - TACAN
+  - Fuel System
+  - Oxygen System
+  - Radar Altimeter
+  - ECM
+  - ARC-51 Radio
+  - Gunsight
+  - Master test switch
+  - Altimiter pressure
+  - Missile volume knob
+  - ASN-41 Keybinds
+  - Weapon Function Selector
+
+### Changed
+
+- Textures:
+  - Weapon Function Selector labels
+  - Canopy Seal
+  - Gunsight
+  - Roughmets
+  - Wheels and gear
+  - Engine Exhaust
+  - New weathering
+  - Cockpit metallic objects for 2.7
+  - Cockpit Radar screen for 2.7
+
+- Keybind:
+  - "Ship Takeoff Position" changed to "Catapult Hook-Up"
+  - Renamed fuel pressurisation
+
+- ASN-41 Navigation Computer:
+  - Slew knob can be used to change the destination lat/long in STBY, D1, and D2 modes
+  - push-to-set knobs will no longer change lat/long in D1 and D2 modes
+
+- Quickstart missions weather updated for 2.7
+- More realistic engine ignitor timing
+- Readme: installation and troubleshooting instructions
+- Moved keybinds to increase EFM maintainability: **this unforuntately destroys all your existing keybinds**
+
+### Deprecated
+
+### Removed
+- Duplicate multiplayer chat command
+
+### Fixed
+- Connecting to the SuperCarrier will no longer get stuck
+- Empty tanks fueling correctly at tanker
+- AFCS to roll out correctly when disabled during heading turn
+
+
+### Known Issues
+- Chocks do not stop the aircraft
+- Pilot can blackout from cat shot
+- Pilot can blackout from rolling too fast
+- APC may not respond fast enough
+- ASN-41 Navigation Computer - PPOS and Desintation knob keybindings do not work (the in-cockpit knobs still work perfectly fine)
+
+### You must rebind all your keys after updating to beta-4
+
 ## Version 2.0.0-beta-3 - 05 April 2021
 
 #### Warning you will need to delete and rebind your control bindings as described in the installation steps IF you are upgrading from the SFM.
