@@ -48,7 +48,7 @@ local FUNC_SPRAY_TANK = 3
 local FUNC_LABS = 4
 local FUNC_BOMBS_GM_ARM = 5
 local FUNC_CMPTR = 6 --change to 6 when we its animated
-local selector_debug_text={"OFF","ROCKETS","GM UNARM","SPRAY TANK","LABS","BOMBS & GM ARM"}
+local selector_debug_text={"OFF","ROCKETS","GM UNARM","SPRAY TANK","LABS","BOMBS & GM ARM","CMPTR"}
 
 -- emergency selector switch constants
 local EMER_WING = 0
@@ -1168,8 +1168,8 @@ function SetCommand(command,value)
 
         if function_selector < FUNC_OFF then
             function_selector = FUNC_OFF
-        elseif function_selector > FUNC_BOMBS_GM_ARM then
-            function_selector = FUNC_BOMBS_GM_ARM
+        elseif function_selector > FUNC_CMPTR then
+            function_selector = FUNC_CMPTR
         end
 
         check_sidewinder(_master_arm)
