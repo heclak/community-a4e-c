@@ -2,10 +2,10 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
+## Version 2.0.0-beta-4 - 08 May 2021
+
 ### You must delete and rebind all your keys after updating to beta-4
 See readme for instructions.
-
-## Version 2.0.0-beta-4 - 08 May 2021
 
 ### Added
 
