@@ -457,6 +457,8 @@ join(res.keyCommands,{
     {down = Keys.UHF1MHzDec, name = _('ARC-51 UHF Frequency 1 MHz - Decrease'), category = _('Radio')}, 
     {down = Keys.UHF50kHzInc, name = _('ARC-51 UHF Frequency 50 kHz - Increase'), category = _('Radio')},
     {down = Keys.UHF50kHzDec, name = _('ARC-51 UHF Frequency 50 kHz - Decrease'), category = _('Radio')}, 
+    {down = Keys.UHFFreqModeInc, name = _('ARC-51 UHF Frequency Mode - CW'), category = _('Radio')},
+    {down = Keys.UHFFreqModeDec, name = _('ARC-51 UHF Frequency Mode - CCW'), category = _('Radio')},    
     {down = Keys.UHFModeInc, name = _('ARC-51 UHF Mode - CW'), category = _('Radio')},
     {down = Keys.UHFModeDec, name = _('ARC-51 UHF Mode - CCW'), category = _('Radio')},    
     {down = Keys.UHFVolumeInc, name = _('ARC-51 UHF Volume - Increase'), category = _('Radio')},
