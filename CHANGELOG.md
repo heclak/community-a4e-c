@@ -61,6 +61,7 @@ See readme for instructions.
 - More realistic engine ignitor timing
 - Readme: installation and troubleshooting instructions
 - Moved keybinds to increase EFM maintainability: **this unforuntately destroys all your existing keybinds**
+- Icons
 
 ### Deprecated
 
