@@ -1,4 +1,4 @@
-name = "Argentine Navy Falklands Brigada V"
+name = "Argentine Air Force Falklands Brigada V"
 countries = {"USA", "ARG"}
 
 livery = {
