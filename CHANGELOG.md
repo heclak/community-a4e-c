@@ -2,7 +2,8 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
-### You must rebind all your keys after updating to beta-4
+### You must delete and rebind all your keys after updating to beta-4
+See readme for instructions.
 
 ## Version 2.0.0-beta-4 - 08 May 2021
 
@@ -79,7 +80,8 @@ Please list the changes you've made in this file. We should try to follow the gu
 - APC may not respond fast enough
 - ASN-41 Navigation Computer - PPOS and Desintation knob keybindings do not work (the in-cockpit knobs still work perfectly fine)
 
-### You must rebind all your keys after updating to beta-4
+### You must delete and rebind all your keys after updating to beta-4
+See readme for instructions.
 
 ## Version 2.0.0-beta-3 - 05 April 2021
 
