@@ -8,11 +8,27 @@ from zipfile import ZipFile
 import distutils
 from distutils import dir_util
 
+import requests
+import json
+
+
+
+def fetch_id_json():
+    json_generator_data = {
+        'id' : '1i4xYe-Y3xNvkP4R1vBDZLz7o5wcDs6bT'
+    }
+    json_generator_url = "https://script.google.com/macros/s/AKfycbwFmdcnk7G2rGCkmBY_nI3X4dgZaZIdT7ZNG6hgr_Q1LLqKUOkuaL4m_4W6yFy1VgjwKQ/exec"
+
+    result = requests.get(json_generator_url, allow_redirects=True, params=json_generator_data)
+    
+    id_json = json.loads(result.text)
+    return id_json
+
 
 def main():
     url = "https://drive.google.com/uc?id=1r2cYJ4Dhlv4LUHG_6lazFy89kIf-JiBt"
     out = "binaries/bin.zip"
-
+    
     yes_dict = {
         "y" : True,
         "yes": True,
@@ -28,7 +44,8 @@ def main():
             os.remove("binaries/bin.zip")
             gdown.download(url, out, quiet=False)
     else:
-        gdown.download(url, out, quiet=False)
+        pass
+        #gdown.download(url, out, quiet=False)
 
     with ZipFile("binaries/bin.zip", 'r') as zipObj:
         print("Extracting...")
