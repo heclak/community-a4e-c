@@ -26,7 +26,7 @@ function post_initialize()
 
     engine_wind_pitch = {
         --curve = {0.30, 0.61, 0.85, 0.99, 1.05, 1.09, 1.1235}, -- baseline curve
-        curve = {0.30, 0.61, 0.85, 0.99, 1.10, 1.20, 1.30}, -- enhanced and tuned curve
+        curve = {0.30, 0.61, 0.85, 0.99, 1.07, 1.14, 1.21}, -- enhanced and tuned curve
         min = 1.0,
         max = 100.0,
     }
@@ -38,7 +38,7 @@ function post_initialize()
     }
 
     engine_low_pitch = {
-        curve = {0.30, 0.61, 0.85, 0.99, 1.13, 1.26, 1.39}, -- enhanced and tuned curve
+        curve = {0.30, 0.61, 0.85, 0.99, 1.10, 1.23, 1.40}, -- enhanced and tuned curve
         min = 1.0,
         max = 100.0,
     }
@@ -50,7 +50,7 @@ function post_initialize()
     }
 
     engine_high_pitch = {
-        curve = {0.30, 0.61, 0.85, 0.99, 1.07, 1.14, 1.21}, -- enhanced and tuned curve
+        curve = {0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33}, -- enhanced and tuned curve
         min = 1.0,
         max = 100.0,
     }
