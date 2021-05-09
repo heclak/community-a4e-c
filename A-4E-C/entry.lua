@@ -89,7 +89,7 @@ mount_vfs_texture_path  (current_mod_path.."/Textures/a4e_aggr")
 mount_vfs_texture_path  (current_mod_path.."/Textures/a4e_intl")
 mount_vfs_texture_path  (current_mod_path.."/Textures/a4e_trainers")
 mount_vfs_texture_path  (current_mod_path.."/Textures/a4e_blueangels")
---mount_vfs_sound_path    (current_mod_path.."/Sounds")
+mount_vfs_sound_path    (current_mod_path.."/Sounds")
 
 -- Option Cockpit operationnel, HUD partiel
 if AFMenabled == true then

@@ -528,6 +528,9 @@ A_4E_C =  {
         }, -- end of [1]
     }, -- end of engines_nozzles
 
+    
+    sounderName         = "Aircraft/Planes/A-4E-C",
+
     crew_size    = 1,
     crew_members =
     {

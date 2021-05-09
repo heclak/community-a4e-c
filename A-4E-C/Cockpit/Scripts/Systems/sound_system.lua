@@ -46,7 +46,7 @@ function post_initialize()
     engine_low_volume = {
         curve = {0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1},
         min = 1.0,
-        max = 100.0,
+        max = 80.0,
     }
 
     engine_high_pitch = {

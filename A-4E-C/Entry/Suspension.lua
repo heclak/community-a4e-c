@@ -145,9 +145,9 @@ suspension =
 		--damper_coeff = damper_coeff_main_wheel,
 		--arg_post = 5,
 		arg_amortizer 							= 6,
-		arg_wheel_rotation 						= 77,
+		arg_wheel_rotation 						= 78,
 		arg_wheel_yaw 							= -1,
-		collision_shell_name 					= "WHEEL_R",
+		collision_shell_name 					= "WHEEL_L",
     },
 
     --MAINGEAR RIGHT

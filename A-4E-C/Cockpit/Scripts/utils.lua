@@ -1,4 +1,8 @@
+dofile(LockOn_Options.script_path.."../../Sounds/Sounders/Curve.lua")
+
 -- Utility functions/classes
+
+
 
 function startup_print(...)
     print(...)
