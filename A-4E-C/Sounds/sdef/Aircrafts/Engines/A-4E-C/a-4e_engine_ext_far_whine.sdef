@@ -1,0 +1,28 @@
+wave = "Effects/Aircrafts/Engines/A-4E-C/a-4e_engine_ext_far_whine"
+
+-- PITCH
+pitch = 1.0
+
+-- VOLUME
+gain = 1.0
+attack = 0.2
+release = 0.2
+
+-- DISTANCE
+silent_radius = 500
+peak_radius = 750
+inner_radius = 1000
+outer_radius = 3000
+
+-- DIRECTIONALITY
+position = {0, 0, 0}
+-- direction = {1, 0, 0}
+-- cone_inner_angle = 90
+-- cone_outer_angle = 55
+-- cone_inner_gain = 1.0
+-- cone_outer_gain = 0
+
+-- MISC FLAGS
+nodoppler = false
+auto_width = false
+distance_filter_offset = 1000

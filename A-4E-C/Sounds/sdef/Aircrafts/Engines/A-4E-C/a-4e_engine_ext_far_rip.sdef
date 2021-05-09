@@ -1,0 +1,28 @@
+wave = "Effects/Aircrafts/Engines/A-4E-C/a-4e_engine_ext_far_rip"
+
+-- PITCH
+pitch = 1.0
+
+-- VOLUME
+gain = 1.0
+attack = 0.7
+release = 0.7
+
+-- DISTANCE
+silent_radius = 250
+peak_radius = 700
+inner_radius = 600
+outer_radius = 2000
+
+-- DIRECTIONALITY
+position = {0, 0, 0}
+-- direction = {1, 0, 0}
+-- cone_inner_angle = 90
+-- cone_outer_angle = 55
+-- cone_inner_gain = 1.0
+-- cone_outer_gain = 0
+
+-- MISC FLAGS
+nodoppler = true
+auto_width = false
+distance_filter_offset = 1000
