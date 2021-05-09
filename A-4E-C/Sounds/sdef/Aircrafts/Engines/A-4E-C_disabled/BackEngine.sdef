@@ -1,0 +1,6 @@
+wave = "Effects/Aircrafts/Engines/A-4E-C/BackEngine"
+cone_inner_angle = 60
+cone_outer_angle = 120
+cone_outer_gain = 0.3
+direction = {-1, 0, 0}
+gain = 100.0

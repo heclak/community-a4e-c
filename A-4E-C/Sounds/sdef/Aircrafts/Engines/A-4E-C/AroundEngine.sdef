@@ -1,0 +1,4 @@
+wave = "Effects/Aircrafts/Engines/Su25AroundEngine"
+inner_radius = 100
+outer_radius = 1000
+gain = 0.9
