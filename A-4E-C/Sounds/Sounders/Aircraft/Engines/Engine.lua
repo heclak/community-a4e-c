@@ -10,10 +10,10 @@ offsets = {
 	around = 0
 }
 
-SOUND_CORE_RPM = 0 -- This is normalised 0.0 -> 1.0
+--SOUND_CORE_RPM = 0 -- This is normalised 0.0 -> 1.0
 SOUND_FAN_RPM = 1  -- This is normalised 0.0 -> 1.0
 SOUND_TURBINE_POWER = 2 --No idea
-SOUND_THRUST = 3 -- I assume this is in Newtons
+--SOUND_THRUST = 3 -- I assume this is in Newtons
 SOUND_TRUE_AIRSPEED = 4 --Airspeed I think is in m/s
 
 engine = {number = 0}
@@ -43,17 +43,64 @@ function engine:init(number_, host)
 
 
 	self.sounds = {
-		[1] = {
+		{
 			sound = nil,
-			type = SOUND_CORE_RPM,
-			sdef_name = "Aircrafts/Engines/A-4E-C/PlaneFrontEngine",
+			type = SOUND_FAN_RPM,
+			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_around_hi",
 			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.23, 1.40}, 0.01, 1.0),
 			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 0.01, 1.0),
 		},
-		[2] = {
+		{
 			sound = nil,
-			type = SOUND_CORE_RPM,
-			sdef_name = "Aircrafts/Engines/A-4E-C/PlaneAroundEngine",
+			type = SOUND_FAN_RPM,
+			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_front_hi",
+			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.23, 1.40}, 0.01, 1.0),
+			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 0.01, 1.0),
+		},
+		{
+			sound = nil,
+			type = SOUND_FAN_RPM,
+			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_back_hi",
+			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.23, 1.40}, 0.01, 1.0),
+			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 0.01, 1.0),
+		},
+
+		{
+			sound = nil,
+			type = SOUND_FAN_RPM,
+			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_around_lo",
+			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.23, 1.40}, 0.01, 1.0),
+			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 0.01, 1.0),
+		},
+
+		{
+			sound = nil,
+			type = SOUND_FAN_RPM,
+			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_front_lo",
+			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.23, 1.40}, 0.01, 1.0),
+			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 0.01, 1.0),
+		},
+
+		{
+			sound = nil,
+			type = SOUND_FAN_RPM,
+			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_back_lo",
+			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.23, 1.40}, 0.01, 1.0),
+			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 0.01, 1.0),
+		},
+
+		{
+			sound = nil,
+			type = SOUND_FAN_RPM,
+			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_far_whine",
+			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.23, 1.40}, 0.01, 1.0),
+			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 0.01, 1.0),
+		},
+
+		{
+			sound = nil,
+			type = SOUND_FAN_RPM,
+			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_far_rip",
 			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.23, 1.40}, 0.01, 1.0),
 			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 0.01, 1.0),
 		},
@@ -161,10 +208,10 @@ end
 function engine:update(coreRPM, fanRPM, turbPower, thrust, flame, vTrue)
 
 	sound_param = {
-		[SOUND_CORE_RPM] = coreRPM,
+		--[SOUND_CORE_RPM] = coreRPM,
 		[SOUND_FAN_RPM] = fanRPM,
 		[SOUND_TURBINE_POWER] = turbPower,
-		[SOUND_THRUST] = thrust,
+		--[SOUND_THRUST] = thrust,
 		[SOUND_TRUE_AIRSPEED] = vTrue,
 	}
 

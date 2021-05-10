@@ -17,7 +17,7 @@ local update_time_step = 0.02 --update will be called 50 times per second
 make_default_activity(update_time_step)
 local emergency_generator_countdown = 0
 
-local sensor_data = get_base_data()
+local sensor_data = get_efm_sensor_data_overrides()
 
 local master_arm = false
 
@@ -25,12 +25,50 @@ local prev_ac_volts
 local prev_emerg_gen=false
 local emergency_generator_deployed=false
 local emergency_generator_bypass=false
+
+local gen_init = 0
+
+--This replaces eletric_system:get_AC_Bus_1_voltage()
+function get_AC_Bus_1_voltage()
+    if sensor_data.getEngineLeftRPM() > 50.0 or gen_init > 0 then
+        return 115
+    else
+        return 0
+    end
+end
+
+function update_AC_BUS()
+
+    if sensor_data.getEngineLeftRPM() > 50.0 or get_elec_external_power() then
+        electric_system:DC_Battery_on(true)
+    else
+        electric_system:DC_Battery_on(false)
+        
+        if gen_init >= 0 then
+            gen_init = gen_init - 1
+        end
+    end
+end
+
+
+
 function update_elec_state()
+
+    --We are no longer using the built in AC bus for this.
+    --This is because we must set the RELATED_CORE_RPM and RELATED_THRUST to zero
+    --so as to not produce SU-25 sounds.
+    --Instead the rpm is checked to be more than 50.
+
+    --The actual electric_system:DC_Battery_on must be switched to enable and disable eletrical power
+    --to the radio.
+    update_AC_BUS()
+
     -- External power switch is located on outside of aircraft, not in cockpit
     --local external_power_connected=(get_aircraft_draw_argument_value(402)==1) -- pretend we have external power when huffer is shown (TODO: AC electric mobile power plant, see Fig 1-49 of NATOPS)
     local external_power_connected=get_elec_external_power()
     if true --[[(electric_system:get_AC_Bus_1_voltage() ~= prev_ac_volts) or (prev_emerg_gen ~= emergency_generator_deployed)--]] then
-        if electric_system:get_AC_Bus_1_voltage() > 0 and ((not emergency_generator_deployed) or (emergency_generator_deployed and emergency_generator_bypass)) then
+
+        if get_AC_Bus_1_voltage() > 0 and ((not emergency_generator_deployed) or (emergency_generator_deployed and emergency_generator_bypass)) then
             -- main generator on
             elec_primary_ac_ok:set(1)
             elec_primary_dc_ok:set(1)
@@ -94,7 +132,7 @@ function update_elec_state()
             end
         end
         elec_emergency_gen_active:set(emergency_generator_deployed and 1 or 0)
-        prev_ac_volts = electric_system:get_AC_Bus_1_voltage()
+        prev_ac_volts = get_AC_Bus_1_voltage()
         prev_emerg_gen = emergency_generator_deployed
     end
 
@@ -155,7 +193,7 @@ function post_initialize()
 
     electric_system:AC_Generator_1_on(true) -- A-4E generator is automatic and cannot be controlled by switches
     electric_system:AC_Generator_2_on(false) -- A-4E doesn't have a 2nd generator (since no second engine)
-    electric_system:DC_Battery_on(false) -- A-4E doesn't have a battery
+    electric_system:DC_Battery_on(true) -- A-4E doesn't have a battery
     set_aircraft_draw_argument_value(501,-1.0) -- hide RAT
 
     prev_ac_volts=-1
@@ -167,9 +205,11 @@ function post_initialize()
         -- set master_arm when starting hot
         dev:performClickableAction(device_commands.arm_master,0,true) -- arg 709
         master_arm = false
+        gen_init = 2
         -- elec_mon_arms_dc_ok:set(elec_mon_dc_ok:get())
         elec_mon_arms_dc_ok:set(0)
     elseif birth=="GROUND_COLD" then
+        gen_init = 0
         dev:performClickableAction(device_commands.arm_master,0,true) -- arg 709
         master_arm = false
         elec_mon_arms_dc_ok:set(0)

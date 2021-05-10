@@ -44,7 +44,7 @@ void Scooter::Radio::setup( void* baseRadio, void* electricalSystem, void* inter
 	m_intercom = intercom;
 
 	//Get the 1st DC system wire.
-	void* wire = m_api.pfn_get_dc_wire( electricalSystem, 1 );
+	void* wire = m_api.pfn_get_dc_wire( electricalSystem, 2 );
 	if ( wire )
 	{
 		//Connect the DC system wire to the radio.

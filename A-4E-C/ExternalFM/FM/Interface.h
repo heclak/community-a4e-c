@@ -129,6 +129,7 @@ public:
 		m_fuelBoostCaution = m_api.pfn_ed_cockpit_get_parameter_handle( "D_FUELBOOST_CAUTION" );
 
 		m_gForce = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_GFORCE" );
+		m_fuelFlow = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_FUEL_FLOW" );
 
 	}
 
@@ -206,6 +207,11 @@ public:
 	{
 		printf( "Weapon: " );
 		return getPointer( m_weapon );
+	}
+
+	inline void setFuelFlow( double number )
+	{
+		setParamNumber( m_fuelFlow, number );
 	}
 
 	inline void setLeftSlat( double number )
@@ -593,6 +599,8 @@ private:
 	void* m_masterTest = NULL;
 
 	void* m_gForce = NULL;
+
+	void* m_fuelFlow = NULL;
 };
 
 

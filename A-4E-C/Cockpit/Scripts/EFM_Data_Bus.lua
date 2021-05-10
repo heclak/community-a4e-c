@@ -71,6 +71,8 @@ local fm_using_FFB = get_param_handle("FM_USING_FFB")
 
 local fm_gForce = get_param_handle("FM_GFORCE")
 
+local fm_fuel_flow = get_param_handle("FM_FUEL_FLOW")
+
 local tanks = {
     [1] = fm_l_tank_capacity,
     [2] = fm_c_tank_capacity,
@@ -81,6 +83,7 @@ local tanks = {
 function fm_setTankState(idx, value)
     tanks[idx]:set(value)
 end
+
 
 function fm_setGForce(value)
     fm_gForce:set(value)
@@ -188,6 +191,11 @@ end
 
 function fm_setCP741Power(value)
     fm_cp741_power:set(value)
+end
+
+
+function fm_getFuelFlow()
+    return fm_fuel_flow:get()
 end
 
 function fm_getUsingFFB()
@@ -323,6 +331,7 @@ function get_efm_sensor_data_overrides()
 
     if EFM_enabled then
         data.getEngineLeftRPM = fm_getEngineRPM
+        data.getEngineLeftFuelConsumption = fm_getFuelFlow
         data.getThrottleLeftPosition = fm_getThrottle
         data.getTrueAirSpeed = fm_getAirspeed
         data.getAngleOfSlide = fm_getBeta

@@ -208,6 +208,8 @@ void ed_fm_simulate(double dt)
 
 	//Post update
 	s_interface->setRPM(s_engine->getRPMNorm()*100.0);
+	s_interface->setFuelFlow( s_engine->getFuelFlow() );
+
 	s_interface->setThrottlePosition(s_input->throttleNorm());
 	s_interface->setStickPitch(s_airframe->getElevator());
 	s_interface->setStickRoll(s_airframe->getAileron());
@@ -620,6 +622,9 @@ void ed_fm_set_draw_args (EdDrawArgument * drawargs,size_t size)
 
 	drawargs[STABILIZER_TRIM].f = s_airframe->getStabilizerAnim();
 
+	//Fan 325 RPM
+	//drawargs[325].f = 1.0;
+
 	//This is the launch bar argument.
 	drawargs[85].f = 1.0;
 
@@ -670,14 +675,17 @@ double ed_fm_get_param(unsigned index)
 		return s_engine->getFuelFlow();
 
 	case ED_FM_ENGINE_1_CORE_RELATED_THRUST:
+		return s_engine->getThrust() / c_maxStaticThrust;
 	case ED_FM_ENGINE_1_RELATED_THRUST:
+		return 0.0;
 	case ED_FM_ENGINE_1_RELATED_RPM:
-	case ED_FM_ENGINE_1_CORE_RELATED_RPM:
 		return s_engine->getRPMNorm();
+	case ED_FM_ENGINE_1_CORE_RELATED_RPM:
+		return 0.0;//s_engine->getRPMNorm();
 
 	case ED_FM_ENGINE_1_CORE_THRUST:
 	case ED_FM_ENGINE_1_THRUST:
-		return s_fm->thrust();
+		return s_engine->getThrust();
 	case ED_FM_ENGINE_1_COMBUSTION:
 		return s_engine->getFuelFlow() / c_fuelFlowMax;
 	case ED_FM_SUSPENSION_1_RELATIVE_BRAKE_MOMENT:
