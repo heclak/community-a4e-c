@@ -11,8 +11,8 @@ release = 0.2
 -- DISTANCE
 silent_radius = 500
 peak_radius = 750
-inner_radius = 1000
-outer_radius = 3000
+inner_radius = 1200
+outer_radius = 3200
 
 -- DIRECTIONALITY
 position = {0, 0, 0}

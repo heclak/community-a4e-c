@@ -12,7 +12,7 @@ release = 2.0
 silent_radius = 0
 -- peak_radius = 80
 inner_radius = 25
-outer_radius = 1500
+outer_radius = 1900
 
 -- DIRECTIONALITY
 position = {-3, 0, 0}

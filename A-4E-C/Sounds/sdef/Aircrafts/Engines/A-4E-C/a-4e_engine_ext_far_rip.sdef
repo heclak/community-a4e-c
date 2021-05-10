@@ -12,15 +12,15 @@ release = 0.7
 silent_radius = 250
 peak_radius = 700
 inner_radius = 600
-outer_radius = 2000
+outer_radius = 2800
 
 -- DIRECTIONALITY
 position = {0, 0, 0}
--- direction = {1, 0, 0}
--- cone_inner_angle = 90
--- cone_outer_angle = 55
--- cone_inner_gain = 1.0
--- cone_outer_gain = 0
+direction = {-1, 0, 0}
+cone_inner_angle = 150
+cone_outer_angle = 180
+cone_inner_gain = 1.0
+cone_outer_gain = 0
 
 -- MISC FLAGS
 nodoppler = true
