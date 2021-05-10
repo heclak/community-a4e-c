@@ -674,14 +674,14 @@ double ed_fm_get_param(unsigned index)
 	case ED_FM_ENGINE_1_FUEL_FLOW:
 		return s_engine->getFuelFlow();
 
+	case ED_FM_ENGINE_1_RELATED_THRUST:
 	case ED_FM_ENGINE_1_CORE_RELATED_THRUST:
 		return s_engine->getThrust() / c_maxStaticThrust;
-	case ED_FM_ENGINE_1_RELATED_THRUST:
-		return 0.0;
 	case ED_FM_ENGINE_1_RELATED_RPM:
 		return s_engine->getRPMNorm();
 	case ED_FM_ENGINE_1_CORE_RELATED_RPM:
-		return 0.0;//s_engine->getRPMNorm();
+		return 0.0;
+		//return s_engine->getRPMNorm();
 
 	case ED_FM_ENGINE_1_CORE_THRUST:
 	case ED_FM_ENGINE_1_THRUST:
