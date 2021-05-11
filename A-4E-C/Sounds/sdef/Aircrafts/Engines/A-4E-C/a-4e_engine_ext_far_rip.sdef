@@ -4,23 +4,23 @@ wave = "Effects/Aircrafts/Engines/A-4E-C/a-4e_engine_ext_far_rip"
 pitch = 1.0
 
 -- VOLUME
-gain = 1.0
+gain = 1.1
 attack = 0.7
 release = 0.7
 
 -- DISTANCE
 silent_radius = 250
-peak_radius = 700
-inner_radius = 600
-outer_radius = 2800
+peak_radius = 450
+inner_radius = 300
+outer_radius = 3300
 
 -- DIRECTIONALITY
 position = {0, 0, 0}
-direction = {-1, 0, 0}
-cone_inner_angle = 150
-cone_outer_angle = 180
-cone_inner_gain = 1.0
-cone_outer_gain = 0
+-- direction = {-1, 0, 0}
+-- cone_inner_angle = 150
+-- cone_outer_angle = 180
+-- cone_inner_gain = 1.0
+-- cone_outer_gain = 0
 
 -- MISC FLAGS
 nodoppler = true

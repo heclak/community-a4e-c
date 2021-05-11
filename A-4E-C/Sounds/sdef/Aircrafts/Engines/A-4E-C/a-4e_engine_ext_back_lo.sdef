@@ -4,7 +4,7 @@ wave = "Effects/Aircrafts/Engines/A-4E-C/a-4e_engine_ext_back_lo"
 pitch = 1.0
 
 -- VOLUME
-gain = 1.0
+gain = 0.8
 attack = 2.0
 release = 2.0
 
@@ -17,10 +17,10 @@ outer_radius = 650
 -- DIRECTIONALITY
 position = {-3, 0, 0}
 direction = {-1, 0, 0}
-cone_inner_angle = 60
+cone_inner_angle = 80
 cone_outer_angle = 140
-cone_inner_gain = 0.7
-cone_outer_gain = 0.15
+cone_inner_gain = 0.9
+cone_outer_gain = 0.01
 
 -- MISC FLAGS
 nodoppler = false

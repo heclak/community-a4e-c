@@ -1,9 +1,9 @@
 wave = "Effects/Aircrafts/A-4E-C/a-4e_EngineWindConstantBass.ogg"
 inner_radius = 100
-gain = 3.0
+gain = 2.5
 attack = 0.1
 release = 0.1
-position = {-0.37, 0.0, 0.0} 
+position = {-3.37, 0.0, 0.0} 
 pitch = 1.0
 lowpass = 24000.0
 

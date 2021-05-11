@@ -4,15 +4,15 @@ wave = "Effects/Aircrafts/Engines/A-4E-C/a-4e_engine_ext_far_whine"
 pitch = 1.0
 
 -- VOLUME
-gain = 1.0
+gain = 1.1
 attack = 0.2
 release = 0.2
 
 -- DISTANCE
 silent_radius = 500
-peak_radius = 750
-inner_radius = 1200
-outer_radius = 3200
+peak_radius = 1000
+inner_radius = 900
+outer_radius = 2800
 
 -- DIRECTIONALITY
 position = {0, 0, 0}
