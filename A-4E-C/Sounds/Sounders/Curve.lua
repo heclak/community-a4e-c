@@ -42,7 +42,7 @@ function Curve:value(x)
         return self.curve[1]
     end
 
-    if upper > #self.curve then
+    if upper >= #self.curve then
         return self.curve[#self.curve]
     end
 
@@ -50,5 +50,9 @@ function Curve:value(x)
     local lowerX = lower * self.dx + self.min
     local upperX = upper * self.dx + self.min
 
-    return (x - lowerX) * ((self.curve[upper+1] - self.curve[lower+1]) / (upperX - lowerX)) + self.curve[lower+1]
+
+    local y2 = self.curve[upper+1]
+    local y1 = self.curve[lower+1]
+
+    return (x - lowerX) * (( y2 - y1 ) / (upperX - lowerX)) + y1
 end

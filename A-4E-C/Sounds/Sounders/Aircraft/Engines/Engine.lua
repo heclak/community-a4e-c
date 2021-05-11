@@ -13,7 +13,7 @@ offsets = {
 --SOUND_CORE_RPM = 0 -- This is normalised 0.0 -> 1.0
 SOUND_FAN_RPM = 1  -- This is normalised 0.0 -> 1.0
 SOUND_TURBINE_POWER = 2 --No idea
---SOUND_THRUST = 3 -- I assume this is in Newtons
+SOUND_THRUST = 3 -- I assume this is in Newtons
 SOUND_TRUE_AIRSPEED = 4 --Airspeed I think is in m/s
 
 engine = {number = 0}
@@ -33,7 +33,8 @@ function engine:init(number_, host)
 
 	{
 		sound = nil,
-		type = <what is the x axis for the pitch and gain curves>,
+		type_pitch = <what is the x axis for the pitch curve>,
+		type_gain = <what is the x axis for the gain curve>,
 		sdef_name = <which sound sdef>,
 		pitch_curve = Curve(<curve data>, <min>, <max>)
 		gain_curve = Curve(<curve data>, <min>, <max>)
@@ -45,21 +46,24 @@ function engine:init(number_, host)
 	self.sounds = {
 		{
 			sound = nil,
-			type = SOUND_FAN_RPM,
+			type_pitch = SOUND_FAN_RPM,
+			type_gain = SOUND_FAN_RPM,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_around_hi",
 			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33}, 0.01, 1.0),
 			gain_curve = Curve({0.00, 0.10, 0.45, 0.67, 0.81, 0.93, 1}, 0.56, 1.0),
 		},
 		{
 			sound = nil,
-			type = SOUND_FAN_RPM,
+			type_pitch = SOUND_FAN_RPM,
+			type_gain = SOUND_FAN_RPM,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_front_hi",
 			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33}, 0.01, 1.0),
 			gain_curve = Curve({0.00, 0.10, 0.45, 0.67, 0.81, 0.93, 1}, 0.56, 1.0),
 		},
 		{
 			sound = nil,
-			type = SOUND_TURBINE_POWER,
+			type_pitch = SOUND_TURBINE_POWER,
+			type_gain = SOUND_TURBINE_POWER,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_back_hi",
 			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33}, 0.01, 1.0),
 			gain_curve = Curve({0.00, 0.10, 0.45, 0.67, 0.81, 0.93, 1}, 0.56, 1.0),
@@ -67,7 +71,8 @@ function engine:init(number_, host)
 
 		{
 			sound = nil,
-			type = SOUND_FAN_RPM,
+			type_pitch = SOUND_FAN_RPM,
+			type_gain = SOUND_FAN_RPM,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_around_lo",
 			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.13, 1.26, 1.40}, 0.01, 1.0),
 			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 0.01, 1.0),
@@ -75,7 +80,8 @@ function engine:init(number_, host)
 
 		{
 			sound = nil,
-			type = SOUND_FAN_RPM,
+			type_pitch = SOUND_FAN_RPM,
+			type_gain = SOUND_FAN_RPM,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_front_lo",
 			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.13, 1.26, 1.40}, 0.01, 1.0),
 			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 0.01, 1.0),
@@ -83,7 +89,8 @@ function engine:init(number_, host)
 
 		{
 			sound = nil,
-			type = SOUND_TURBINE_POWER,
+			type_pitch = SOUND_TURBINE_POWER,
+			type_gain = SOUND_TURBINE_POWER,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_back_lo",
 			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.13, 1.26, 1.40}, 0.01, 1.0),
 			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 0.01, 1.0),
@@ -91,12 +98,23 @@ function engine:init(number_, host)
 
 		{
 			sound = nil,
-			type = SOUND_FAN_RPM,
+			type_pitch = SOUND_FAN_RPM,
+			type_gain = SOUND_FAN_RPM,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_far_whine",
 			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.23, 1.40}, 0.01, 1.0),
 			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 0.01, 1.0),
 		},
 
+		{
+			sound = nil,
+			type_pitch = SOUND_FAN_RPM,
+			type_gain = SOUND_TRUE_AIRSPEED,
+			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_far_rip",
+			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.23, 1.40}, 0.01, 1.0),
+			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 0.01, 340.0),
+		},
+
+		--[[
 		{
 			sound = nil,
 			type = SOUND_TRUE_AIRSPEED,
@@ -109,6 +127,7 @@ function engine:init(number_, host)
 			type = SOUND_TURBINE_POWER,
 			pitch_curve = Curve({0.30, 0.55, 0.80, 1.00, 1.15}, 0.01, 1.0),
 		},
+		]]
 	}
 
 
@@ -221,8 +240,9 @@ function engine:update(coreRPM, fanRPM, turbPower, thrust, flame, vTrue)
 	}
 
 	for i, v in pairs(self.sounds) do
-		param_value = sound_param[v.type]
-		self:controlSound(v.sound, v.pitch_curve:value(param_value), v.gain_curve:value(param_value), nil)
+		local param_gain = sound_param[v.type_gain]
+		local param_pitch = sound_param[v.type_pitch]
+		self:controlSound(v.sound, v.pitch_curve:value(param_pitch), v.gain_curve:value(param_gain), nil)
 	end
 	
 end
