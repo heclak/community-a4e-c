@@ -89,16 +89,17 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- ALE-29A Chaff Control Panel --------------
     --------------------------------------------- 
-    {down = Keys.CmBankSelectRotate,                                                                                                            name = _('ALE-29A Dispenser Select Cycle'),                        category = {_('Chaff Control Panel')}},
-    {down = Keys.CmBankSelect, value_down = -1,                                                                                                 name = _('ALE-29A Dispenser Select - 1'),                          category = {_('Chaff Control Panel')}},
-    {down = Keys.CmBankSelect, value_down = 1,                                                                                                  name = _('ALE-29A Dispenser Select - 2'),                          category = {_('Chaff Control Panel')}},
-    {down = Keys.CmBankSelect, value_down = 0,                                                                                                  name = _('ALE-29A Dispenser Select - Both'),                       category = {_('Chaff Control Panel')}},
-    {down = device_commands.cm_auto, up = device_commands.cm_auto, cockpit_device_id = devices.COUNTERMEASURES, value_down = 1.0, value_up = 0, name = _('ALE-29A AUTO Pushbutton'),                               category = {_('Chaff Control Panel')}},
-    {down = Keys.CmBank1AdjUp,                                                                                                                  name = _('ALE-29A Dispenser 1 Counter - Increase'),                category = {_('Chaff Control Panel')}},
-    {down = Keys.CmBank1AdjDown,                                                                                                                name = _('ALE-29A Dispenser 1 Counter - Decrease'),                category = {_('Chaff Control Panel')}},
-    {down = Keys.CmBank2AdjUp,                                                                                                                  name = _('ALE-29A Dispenser 2 Counter - Increase'),                category = {_('Chaff Control Panel')}},
-    {down = Keys.CmBank2AdjDown,                                                                                                                name = _('ALE-29A Dispenser 2 Counter - Decrease'),                category = {_('Chaff Control Panel')}},
-    {down = Keys.CmPowerToggle,                                                                                                                 name = _('ALE-29A PWR Switch - PWR/OFF'),                          category = {_('Chaff Control Panel')}},
+    {down = Keys.CmBankSelectRotate,                                                                                                            name = _('ALE-29A Dispenser Select Cycle'),         category = {_('Chaff Control Panel')}},
+    {down = Keys.CmBankSelect, value_down = -1,                                                                                                 name = _('ALE-29A Dispenser Select - 1'),           category = {_('Chaff Control Panel')}},
+    {down = Keys.CmBankSelect, value_down = 1,                                                                                                  name = _('ALE-29A Dispenser Select - 2'),           category = {_('Chaff Control Panel')}},
+    {down = Keys.CmBankSelect, value_down = 0,                                                                                                  name = _('ALE-29A Dispenser Select - Both'),        category = {_('Chaff Control Panel')}},
+    {down = device_commands.cm_auto, up = device_commands.cm_auto, cockpit_device_id = devices.COUNTERMEASURES, value_down = 1.0, value_up = 0, name = _('ALE-29A AUTO Pushbutton'),                category = {_('Chaff Control Panel')}},
+    {down = Keys.CmBank1AdjUp,                                                                                                                  name = _('ALE-29A Dispenser 1 Counter - Increase'), category = {_('Chaff Control Panel')}},
+    {down = Keys.CmBank1AdjDown,                                                                                                                name = _('ALE-29A Dispenser 1 Counter - Decrease'), category = {_('Chaff Control Panel')}},
+    {down = Keys.CmBank2AdjUp,                                                                                                                  name = _('ALE-29A Dispenser 2 Counter - Increase'), category = {_('Chaff Control Panel')}},
+    {down = Keys.CmBank2AdjDown,                                                                                                                name = _('ALE-29A Dispenser 2 Counter - Decrease'), category = {_('Chaff Control Panel')}},
+    {down = Keys.CmPowerToggle,                                                                                                                 name = _('ALE-29A PWR Switch - PWR/OFF'),           category = {_('Chaff Control Panel')}},
+    {down = device_commands.cm_pwr, up = device_commands.cm_pwr, cockpit_device_id = devices.COUNTERMEASURES, value_down = 1.0, value_up = 0,   name = _('ALE-29A PWR Switch - PWR else OFF'),      category = {_('Chaff Control Panel')}},
 
     ---------------------------------------------
     -- ECM Control Panel ------------------------
@@ -113,6 +114,7 @@ join(res.keyCommands,{
     {down = device_commands.ecm_apr27_off, up = device_commands.ecm_apr27_off, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.RWR, name = _('APR-27 - ON else OFF'), category = {_('ECM Control Panel')}},
     {down = Keys.ecm_apr25_off, value_down = 1.0, value_up = 0.0, name = _('APR-25 - ON/OFF'), category = {_('ECM Control Panel')}},
     {down = device_commands.ecm_apr25_off, up = device_commands.ecm_apr25_off, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.RWR, name = _('APR-25 - ON else OFF'), category = {_('ECM Control Panel')}},
+    {down = device_commands.ecm_apr25_audio, up = device_commands.ecm_apr25_audio, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.RWR, name = _('Audio - APR/27 else APR/25'), category = {_('ECM Control Panel')}},
     {down = Keys.ecm_OuterKnobInc, name = _('MSL Volume (Outer Knob) - Increment'), category = {_('ECM Control Panel')}},
     {down = Keys.ecm_OuterKnobDec, name = _('MSL Volume (Outer Knob) - Decrement'), category = {_('ECM Control Panel')}},
     {down = Keys.ecm_OuterKnobStartUp, up = Keys.ecm_OuterKnobStop, name = _('MSL Volume (Outer Knob) - Continuous Increase'),   category = {_('ECM Control Panel')}},
