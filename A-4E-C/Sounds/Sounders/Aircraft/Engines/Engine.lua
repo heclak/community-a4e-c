@@ -116,6 +116,15 @@ function engine:init(number_, host)
 			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 80.0, 340.0),
 		},
 
+		{
+			sound = nil,
+			type_pitch = SOUND_FAN_RPM,
+			type_gain = SOUND_TRUE_AIRSPEED,
+			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_far_roar",
+			pitch_curve = Curve({0.66, 1.00, 1.33}, 0.01, 1.0),
+			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 80.0, 340.0),
+		},
+
 	}
 
 
