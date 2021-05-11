@@ -67,6 +67,9 @@ local apg53a_sweep_rho = 1
 -- AN/APG-53A CONFIGURATION
 local RADAR_RESOLUTION = 50     -- main radar resolution for collisions.  a2g mode uses 1/2 this.
 
+-- plusnine keybinding move/directon
+local radar_tilt_moving = 0 
+local radar_volume_moving = 0
 
 -- Listeners (clickable)
 dev:listen_command(device_commands.radar_planprofile)
@@ -96,8 +99,14 @@ dev:listen_command(Keys.RadarTCPlanProfile)
 dev:listen_command(Keys.RadarRangeLongShort)
 dev:listen_command(Keys.RadarAoAComp)
 dev:listen_command(Keys.RadarVolume)
-
-
+dev:listen_command(Keys.RadarVolumeStartUp)
+dev:listen_command(Keys.RadarVolumeStartDown)
+dev:listen_command(Keys.RadarVolumeStop)
+dev:listen_command(Keys.RadarTiltInc)
+dev:listen_command(Keys.RadarTiltDec)
+dev:listen_command(Keys.RadarTiltStartUp)
+dev:listen_command(Keys.RadarTiltStartDown)
+dev:listen_command(Keys.RadarTiltStop)
 
 -- "SEARCH" and "TC-PLAN" mode data structures
 search = {}
@@ -1058,15 +1067,27 @@ function SetCommand(command,value)
         end
     elseif command == Keys.RadarVolume then
         if value == 1 then
-            dev:performClickableAction(device_commands.radar_volume, apg53a_volume+0.1, false)
+            dev:performClickableAction(device_commands.radar_volume, clamp(apg53a_volume+0.1, 0, 1), false)
         elseif value == 0 then
-            dev:performClickableAction(device_commands.radar_volume, apg53a_volume-0.1, false)
+            dev:performClickableAction(device_commands.radar_volume, clamp(apg53a_volume-0.1, 0, 1), false)
         end
+    elseif command == Keys.RadarTiltInc then
+        dev:performClickableAction(device_commands.radar_angle, clamp(apg53a_angle_value+0.04, 0, 1), false)
+    elseif command == Keys.RadarTiltDec then
+        dev:performClickableAction(device_commands.radar_angle, clamp(apg53a_angle_value-0.04, 0, 1), false)
+    elseif command == Keys.RadarTiltStartUp then
+        radar_tilt_moving = 1
+    elseif command == Keys.RadarTiltStartDown then
+        radar_tilt_moving = -1
+    elseif command == Keys.RadarTiltStop then
+        radar_tilt_moving = 0
+    elseif command == Keys.RadarVolumeStartUp then
+        radar_volume_moving = 1
+    elseif command == Keys.RadarVolumeStartDown then
+        radar_volume_moving = -1
+    elseif command == Keys.RadarVolumeStop then
+        radar_volume_moving = 0
     end
-
-
-
-
 
     if mode_changed then -- XXX temporary hack to display (or clear) profile scribe on change of mode, range or plan/profile
         local scribe_range=0
@@ -1310,6 +1331,14 @@ function update()
         end
 
         glare_obst_light:set(obst_val)
+    end
+
+    -- continuous knob movements
+    if radar_tilt_moving ~= 0 then
+        dev:performClickableAction(device_commands.radar_angle, clamp(apg53a_angle_value + 0.02 * radar_tilt_moving, 0, 1), false)
+    end
+    if radar_volume_moving ~= 0 then
+        dev:performClickableAction(device_commands.radar_volume, clamp(apg53a_volume + 0.02 * radar_volume_moving, 0, 1), false)
     end
 end
 

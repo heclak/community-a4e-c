@@ -72,8 +72,8 @@ elements["PNT_120"] = multiposition_switch_limited( "Radar Mode", devices.RADAR,
 elements["PNT_120"].animated        = {true, true}
 elements["PNT_120"].animation_speed = {4, 4}  -- multiply these numbers by the base 1.0 second animation speed to get final speed.  4 means animates in 0.25 seconds.
 elements["PNT_121"] = default_2_position_tumb( "Radar AoA Compensation", devices.RADAR, device_commands.radar_aoacomp, 121, TOGGLECLICK_LEFT_MID)
-elements["PNT_122"] = default_axis_limited( "Radar Antenna Elevation", devices.RADAR, device_commands.radar_angle, 122, 0.4, 0.1, false, false, {0,1} )
-elements["PNT_123"] = default_axis_limited( "Radar Warning Volume", devices.RADAR, device_commands.radar_volume, 123, 0.0, 0.3, false, false, {-1,1} )
+elements["PNT_122"] = default_axis_limited( "Radar Antenna Tilt", devices.RADAR, device_commands.radar_angle, 122, 0.4, 0.1, false, false, {0,1} )
+elements["PNT_123"] = default_axis_limited( "Radar Obstacle Tone Volume", devices.RADAR, device_commands.radar_volume, 123, 0.0, 0.3, false, false, {-1,1} )
 
 -- APPROACH POWER COMPENSATOR PANEL #17A
 elements["PNT_135"] = multiposition_switch_limited("APC Enable/Stby/Off", devices.AFCS, device_commands.apc_engagestbyoff, 135, 3, 1.0, false, -1.0, TOGGLECLICK_LEFT_FWD)
