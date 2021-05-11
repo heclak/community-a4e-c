@@ -214,10 +214,15 @@ join(res.keyCommands,{
     -- Left Console -----------------------------
     ---------------------------------------------    
     -- Gunpods Control Panel
-    {down = Keys.GunpodCharge,                                                      name = _('GUNPOD CHARGE/OFF/CLEAR Toggle'),   category = {_('Left Console'), _('Gunpods Control Panel')}},
-    {down = Keys.GunpodLeft,                                                        name = _('LH STATION - READY/SAFE'),          category = {_('Left Console'), _('Gunpods Control Panel')}},
-    {down = Keys.GunpodCenter,                                                      name = _('CTR STATION - READY/SAFE'),         category = {_('Left Console'), _('Gunpods Control Panel')}},
-    {down = Keys.GunpodRight,                                                       name = _('RH STATION - READY/SAFE'),          category = {_('Left Console'), _('Gunpods Control Panel')}},
+    {down = Keys.GunpodCharge, name = _('Gunpod Switch - CHARGE/OFF/CLEAR'), category = {_('Left Console'), _('Gunpods Control Panel')}},
+    {down = device_commands.gunpod_chargeclear, value_down = 1, up = device_commands.gunpod_chargeclear, value_up = 0, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('Gunpod Switch - CHARGE else OFF'), category = {_('Left Console'), _('Gunpods Control Panel')}},
+    {down = device_commands.gunpod_chargeclear, value_down = -1, up = device_commands.gunpod_chargeclear, value_up = 0, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('Gunpod Switch - CLEAR else OFF'), category = {_('Left Console'), _('Gunpods Control Panel')}},
+    {down = Keys.GunpodLeft, name = _('Gunpod Station LH Switch - READY/SAFE'), category = {_('Left Console'), _('Gunpods Control Panel')}},
+    {down = device_commands.gunpod_l, value_down = 1, up = device_commands.gunpod_l, value_up = 0, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('Gunpod Station LH Switch - READY else SAFE'), category = {_('Left Console'), _('Gunpods Control Panel')}},
+    {down = Keys.GunpodCenter, name = _('Gunpod Station CTR Switch - READY/SAFE'), category = {_('Left Console'), _('Gunpods Control Panel')}},
+    {down = device_commands.gunpod_c, value_down = 1, up = device_commands.gunpod_c, value_up = 0, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('Gunpod Station CTR Switch - READY else SAFE'), category = {_('Left Console'), _('Gunpods Control Panel')}},
+    {down = Keys.GunpodRight, name = _('Gunpod Station RH Switch - READY/SAFE'), category = {_('Left Console'), _('Gunpods Control Panel')}},
+    {down = device_commands.gunpod_r, value_down = 1, up = device_commands.gunpod_r, value_up = 0, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('Gunpod Station RH Switch - READY else SAFE'), category = {_('Left Console'), _('Gunpods Control Panel')}},
 
     -- APC Control Panel
     {down = Keys.APCEngageStbyOff, value_down = -1,                                 name = _('APC POWER Switch - OFF'),           category = {_('Left Console'), _('APC Control Panel')}},
