@@ -45,8 +45,8 @@ join(res.keyCommands,{
     {pressed = Keys.TrimDown, up = Keys.TrimStop,                                    name = _('Trimmer Switch - NOSE DOWN'),       category = {_('Stick'), _('Flight Control')}},
     {pressed = Keys.TrimLeft, up = Keys.TrimStop,                                    name = _('Trimmer Switch - LEFT WING DOWN'),  category = {_('Stick'), _('Flight Control')}},
     {pressed = Keys.TrimRight, up = Keys.TrimStop,                                   name = _('Trimmer Switch - RIGHT WING DOWN'), category = {_('Stick'), _('Flight Control')}},
-    
-    {down = Keys.TrimCancel,                                                         name = _('Trim: Reset'),                      category = {_('Stick'), _('Flight Control')}},
+    {pressed = Keys.TrimCancel, up = Keys.TrimStop,                                  name = _('Trimmer Reset (Press and Hold)'),   category = {_('Stick'), _('Flight Control')}},
+
     {combos = {{key = 'JOY_BTN1'}}, down = Keys.PlaneFireOn, up = Keys.PlaneFireOff, name = _('Gun-Rocket Trigger'),               category = {_('Stick')}},
     {combos = {{key = 'JOY_BTN2'}}, down = Keys.PickleOn, up = Keys.PickleOff,       name = _('Bomb Release Button'),              category = {_('Stick')}},
     {down = Keys.AFCSOverride,                                                       name = _('AFCS Override Button'),             category = {_('Stick')}},
