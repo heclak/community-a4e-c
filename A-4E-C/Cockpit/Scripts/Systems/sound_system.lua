@@ -26,38 +26,50 @@ function post_initialize()
 
     engine_wind_pitch = {
         --curve = {0.30, 0.61, 0.85, 0.99, 1.05, 1.09, 1.1235}, -- baseline curve
-        curve = {0.30, 0.61, 0.85, 0.99, 1.07, 1.14, 1.21}, -- enhanced and tuned curve
+        curve = {0.30, 0.61, 0.85, 0.99, 1.07, 1.14, 1.21},
         min = 1.0,
         max = 100.0,
     }
 
     engine_wind_volume = {
-        curve = {0.00, 0.72, 0.85, 0.93, 0.97, 0.99},
+        curve = {0.00, 0.72, 0.85, 0.93, 0.97, 1.00},
         min = 1.0,
-        max = 100.0,
+        max = 90.0,
     }
 
     engine_low_pitch = {
-        curve = {0.30, 0.61, 0.85, 0.99, 1.10, 1.23, 1.40}, -- enhanced and tuned curve
-        min = 1.0,
+        curve = {0.30, 0.61, 0.85, 0.99, 1.11, 1.22, 1.33},
+        min = 5.0,
         max = 100.0,
     }
 
     engine_low_volume = {
-        curve = {0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1},
+        curve = {0.00, 0.61, 0.82, 0.97, 0.99, 1.00},
         min = 1.0,
-        max = 80.0,
+        max = 95.0,
     }
 
     engine_high_pitch = {
-        curve = {0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33}, -- enhanced and tuned curve
+        curve = {0.30, 0.61, 0.85, 0.99, 1.12, 1.24, 1.36},
         min = 1.0,
         max = 100.0,
     }
 
     engine_high_volume = {
-        curve = {0.00, 0.10, 0.45, 0.67, 0.81, 0.93, 1.00},
+        curve = {0.00, 0.12, 0.36, 0.50},
         min = 56.0,
+        max = 100.0,
+    }
+
+    engine_roar_pitch = {
+        curve = {0.40, 1.2, 1.3, 1.4},
+        min = 1.0,
+        max = 100.0,
+    }
+
+    engine_roar_volume = {
+        curve = {0.00, 0.04, 0.06, 0.12, 0.19},
+        min = 01.0,
         max = 100.0,
     }
 
@@ -93,6 +105,7 @@ function post_initialize()
         Sound_Player.new_always_controlled(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineWindConstant", "RPM", engine_wind_volume, engine_wind_pitch),
         Sound_Player.new_always_controlled(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineOperationLo", "RPM", engine_low_volume, engine_low_pitch),
         Sound_Player.new_always_controlled(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineOperationHi", "RPM", engine_high_volume, engine_high_pitch),
+        Sound_Player.new_always_controlled(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineRoar", "RPM", engine_roar_volume, engine_roar_pitch),
 
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineCompressorStall", "SND_INST_ENGINE_STALL", SOUND_ONCE),
         --gear pod doors

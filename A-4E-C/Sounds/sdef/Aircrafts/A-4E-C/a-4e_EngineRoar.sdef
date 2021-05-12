@@ -1,6 +1,6 @@
-wave = "Effects/Aircrafts/A-4E-C/a-4e_EngineOperationHi.ogg"
+wave = "Effects/Aircrafts/A-4E-C/a-4e_EngineRoar.ogg"
 inner_radius = 100
-gain = 2.1
+gain = 0.33
 attack = 0.1
 release = 0.1
 position = {-3.37, 0.0, 0.0} 

@@ -76,7 +76,7 @@ function engine:init(number_, host)
 			type_pitch = SOUND_FAN_RPM,
 			type_gain = SOUND_FAN_RPM,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_around_lo",
-			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.07, 1.15, 1.23}, 0.09, 1.0),
+			pitch_curve = Curve({0.30, 0.61, 0.85, 1.00, 1.05, 1.08, 1.13}, 0.09, 1.0),
 			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 0.01, 1.0),
 		},
 
@@ -85,7 +85,7 @@ function engine:init(number_, host)
 			type_pitch = SOUND_FAN_RPM,
 			type_gain = SOUND_FAN_RPM,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_front_lo",
-			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.05, 1.11, 1.17}, 0.17, 1.0),
+			pitch_curve = Curve({0.30, 0.61, 0.85, 1.00, 1.05, 1.08, 1.13}, 0.17, 1.0),
 			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 0.01, 1.0),
 		},
 
@@ -94,7 +94,7 @@ function engine:init(number_, host)
 			type_pitch = SOUND_TURBINE_POWER,
 			type_gain = SOUND_FAN_RPM,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_back_lo",
-			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.06, 1.13, 1.19}, 0.17, 1.0),
+			pitch_curve = Curve({0.30, 0.61, 0.85, 1.00, 1.05, 1.08, 1.13}, 0.17, 1.0),
 			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 0.11, 1.0),
 		},
 
