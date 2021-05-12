@@ -25,7 +25,6 @@ function post_initialize()
     sndhost_cockpit             = create_sound_host("COCKPIT","2D",0,0,0) -- TODO: look into defining this sound host for HEADPHONES/HELMET
 
     engine_wind_pitch = {
-        --curve = {0.30, 0.61, 0.85, 0.99, 1.05, 1.09, 1.1235}, -- baseline curve
         curve = {0.30, 0.61, 0.85, 0.99, 1.07, 1.14, 1.21},
         min = 1.0,
         max = 100.0,
@@ -38,37 +37,39 @@ function post_initialize()
     }
 
     engine_low_pitch = {
-        curve = {0.30, 0.61, 0.85, 0.99, 1.11, 1.22, 1.33},
+        curve = {0.30, 0.61, 0.85, 1.00, 1.05, 1.08, 1.13},
         min = 5.0,
         max = 100.0,
     }
 
     engine_low_volume = {
+        -- baseline curve
+        -- curve = {0.30, 0.61, 0.85, 0.99, 1.05, 1.09, 1.1235},
         curve = {0.00, 0.61, 0.82, 0.97, 0.99, 1.00},
         min = 1.0,
         max = 95.0,
     }
 
     engine_high_pitch = {
-        curve = {0.30, 0.61, 0.85, 0.99, 1.12, 1.24, 1.36},
+        curve = {0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33},
         min = 1.0,
         max = 100.0,
     }
 
     engine_high_volume = {
-        curve = {0.00, 0.12, 0.36, 0.50},
+        curve = {0.00, 0.11, 0.23, 0.36},
         min = 56.0,
         max = 100.0,
     }
 
     engine_roar_pitch = {
-        curve = {0.40, 1.2, 1.3, 1.4},
+        curve = {0.60, 0.90, 1.2, 1.5},
         min = 1.0,
         max = 100.0,
     }
 
     engine_roar_volume = {
-        curve = {0.00, 0.04, 0.06, 0.12, 0.19},
+        curve = {0.00, 0.06, 0.08, 0.13, 0.19},
         min = 01.0,
         max = 100.0,
     }
