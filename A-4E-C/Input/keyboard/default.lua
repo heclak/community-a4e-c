@@ -9,9 +9,8 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- General ----------------------------------
     ---------------------------------------------
-    {combos = {{key = 'U'}}, down = iCommandPlaneShipTakeOff,                                                            name = _('Catapult Hook-Up'),           category = {_('General')}},
-    -- {combos = {{key = 'P', reformers = {'RShift'}}}, down = iCommandCockpitShowPilotOnOff,                            name = _('Show Pilot Body'),                  category = _('General')},
-    {combos = {{key = 'T'}}, down = iCommandPlaneWingtipSmokeOnOff,                                                      name = _('Smoke - ON/OFF'),                   category = {_('General')}},
+    {combos = {{key = 'U'}}, down = iCommandPlaneShipTakeOff, name = _('Catapult Hook-Up'), category = {_('General')}},
+    -- {combos = {{key = 'P', reformers = {'RShift'}}}, down = iCommandCockpitShowPilotOnOff, name = _('Show Pilot Body'), category = _('General')},
     {combos = {{key = 'S', reformers = {'LShift', 'LAlt'}}}, down = Keys.ToggleSlatsLock, name = _('Lock/Unlock Slats'), category = {_('General')}},
 
     ---------------------------------------------

@@ -107,6 +107,7 @@ indicators                  = {}
 indicators[#indicators + 1] = {"ccIndicator" ,LockOn_Options.script_path.."HUD/Indicator/init.lua"      ,nil,{{"PNT_HUD_CENTER"  ,"PNT_HUD_DOWN"  ,"PNT_HUD_RIGHT"}}}
 indicators[#indicators + 1] = {"ccIndicator" ,LockOn_Options.script_path.."HUD/Indicator/init_debug.lua",nil,{{"PNT_RADAR_CENTER","PNT_RADAR_DOWN","PNT_RADAR_RIGHT"}}} -- debug
 indicators[#indicators + 1] = {"ccIndicator" ,LockOn_Options.script_path.."RADAR/Indicator/init.lua"    ,nil,{{"PNT_RADAR_CENTER","PNT_RADAR_DOWN","PNT_RADAR_RIGHT"}}}
+indicators[#indicators + 1] = {"ccControlsIndicatorBase", LockOn_Options.script_path.."ControlsIndicator/ControlsIndicator.lua", nil}
 
 --RADAROFF indicators[#indicators + 1] = {"ccIndicator",LockOn_Options.script_path.."RADAR/Indicator/init.lua",--init script
 --RADAROFF   nil,--id of parent device

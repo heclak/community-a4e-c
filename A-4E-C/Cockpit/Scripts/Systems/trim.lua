@@ -53,12 +53,19 @@ dev:listen_command(Keys.TrimLeft)
 dev:listen_command(Keys.TrimRightRudder)
 dev:listen_command(Keys.TrimLeftRudder)
 dev:listen_command(Keys.TrimCancel)
+dev:listen_command(Keys.ShowControls)
+
 dev:listen_command(device_commands.rudder_trim)
 
+dev:listen_command(iCommandPlane_ShowControls)
 
+local iCommandPlane_ShowControls = 851
 
 local optionsData_trimspeed =  get_plugin_option_value("A-4E-C","trimSpeed","local")
 local trimspeedfactor 
+
+local SHOW_CONTROLS  = get_param_handle("SHOW_CONTROLS")
+
 
 if optionsData_trimspeed == 0 then
 	trimspeedfactor = 1
@@ -77,7 +84,9 @@ function post_initialize()
     -- TODO: is there a better way to determine initial SFM pitch trim?
     pitch_trim_handle:set(-0.5)  -- for some reason, stick pitch is reported as stick roll in the API
     trim_override_handle:set(0)
-    trim_override = false
+    trim_override = 
+    
+    SHOW_CONTROLS:set(0)
 
     startup_print("trim: postinit end")
 end
@@ -129,6 +138,8 @@ function SetCommand(command,value)
         end
     elseif command == Keys.TrimCancel then
         trim_cancellation = 1
+    elseif command == Keys.ShowControls then
+        SHOW_CONTROLS:set(1-SHOW_CONTROLS:get())
     end
 end
 

@@ -50,6 +50,7 @@ Keys =
 	-- RightEngineStop = 314,			-- ?????????? ??????? ?????????
 
 	PowerOnOff                      = 315,
+    ShowControls                    = 851,
 
     --[[   -- Do not use the built-in altimeter adjustments, they have internal SSM affects on the altimeter that we cannot limit
     AltimeterPressureIncrease = 316,  
