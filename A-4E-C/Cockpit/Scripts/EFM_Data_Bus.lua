@@ -73,6 +73,14 @@ local fm_gForce = get_param_handle("FM_GFORCE")
 
 local fm_fuel_flow = get_param_handle("FM_FUEL_FLOW")
 
+local fm_tcn_x = get_param_handle("FM_TCN_X")
+local fm_tcn_y = get_param_handle("FM_TCN_Y")
+local fm_tcn_z = get_param_handle("FM_TCN_Z")
+local fm_tcn_valid = get_param_handle("FM_TCN_VALID")
+local fm_tcn_object_id = get_param_handle("FM_TCN_OBJECT_ID")
+local fm_tcn_object_name = get_param_handle("FM_TCN_OBJECT_NAME")
+local fm_icls_heading = get_param_handle("FM_ICLS_HEADING")
+
 local tanks = {
     [1] = fm_l_tank_capacity,
     [2] = fm_c_tank_capacity,
@@ -82,6 +90,14 @@ local tanks = {
 --Mask for tank states
 function fm_setTankState(idx, value)
     tanks[idx]:set(value)
+end
+
+function fm_setTacanName(value)
+    fm_tcn_object_name:set(value)
+end
+
+function fm_setTacanID(value)
+    fm_tcn_object_id:set(value)
 end
 
 
@@ -193,7 +209,6 @@ function fm_setCP741Power(value)
     fm_cp741_power:set(value)
 end
 
-
 function fm_getFuelFlow()
     return fm_fuel_flow:get()
 end
@@ -270,6 +285,26 @@ function fm_getInRange()
     return fm_in_range:get()
 end
 
+function fm_getTacanPosX()
+    return fm_tcn_x:get()
+end
+
+function fm_getTacanPosY()
+    return fm_tcn_y:get()
+end
+
+function fm_getTacanPosZ()
+    return fm_tcn_z:get()
+end
+
+function fm_tacanValid()
+    return fm_tcn_valid:get() > 0.5
+end
+
+function fm_getICLSHeading()
+    return fm_icls_heading:get()
+end
+
 fm_setCockpitShake(2.0 * optionsData_cockpitShake/100.0)
 
 function get_efm_data_bus()
@@ -303,6 +338,8 @@ function get_efm_data_bus()
     efm_data_bus.fm_setTankState = fm_setTankState
     efm_data_bus.fm_setCP741Power = fm_setCP741Power
     efm_data_bus.fm_setGForce = fm_setGForce
+    efm_data_bus.fm_setTacanID = fm_setTacanID
+    efm_data_bus.fm_setTacanName = fm_setTacanName
 
 
     efm_data_bus.fm_getGunsightAngle = fm_getGunsightAngle
@@ -318,6 +355,11 @@ function get_efm_data_bus()
     efm_data_bus.fm_getSlatRight = fm_getSlatRight
     efm_data_bus.fm_getUsingFFB = fm_getUsingFFB
     efm_data_bus.fm_getInRange = fm_getInRange
+    efm_data_bus.fm_getTacanPosX = fm_getTacanPosX
+    efm_data_bus.fm_getTacanPosY = fm_getTacanPosY
+    efm_data_bus.fm_getTacanPosZ = fm_getTacanPosZ
+    efm_data_bus.fm_tacanValid = fm_tacanValid
+    efm_data_bus.fm_getICLSHeading = fm_getICLSHeading
 
     return efm_data_bus
    

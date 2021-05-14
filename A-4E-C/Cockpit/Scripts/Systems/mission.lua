@@ -64,7 +64,6 @@ function load_tempmission_file()
 	log.info("Temp mission file loaded")
 end
 
-
 ----------------------------------------------------------
 --miz_carriers = {}	
 

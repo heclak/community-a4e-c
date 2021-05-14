@@ -131,6 +131,15 @@ public:
 		m_gForce = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_GFORCE" );
 		m_fuelFlow = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_FUEL_FLOW" );
 
+
+		m_tcnX = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_TCN_X" );
+		m_tcnY = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_TCN_Y" );
+		m_tcnZ = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_TCN_Z" );
+		m_tcnValid = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_TCN_VALID" );
+		m_tcnObjectID = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_TCN_OBJECT_ID" );
+		m_tcnUnitName = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_TCN_OBJECT_NAME" );
+		m_iclsHeading = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_ICLS_HEADING" );
+
 	}
 
 	cockpit_param_api& api()
@@ -179,7 +188,7 @@ public:
 		}
 		else
 		{
-			LOG("Pointer could not be found from string: %s\n", buffer)
+			LOG( "Pointer could not be found from string: %s\n", buffer )
 		}
 
 		return NULL;
@@ -207,6 +216,43 @@ public:
 	{
 		printf( "Weapon: " );
 		return getPointer( m_weapon );
+	}
+
+	inline uint32_t getTCNObjectID()
+	{
+		return (uint32_t)getParamNumber( m_tcnObjectID );
+	}
+
+	inline void getTCNObjectName(char* buffer, unsigned int size)
+	{
+		getParamString( m_tcnUnitName, buffer, size );
+
+		//printf( "%s\n", buffer );
+	}
+
+	inline void setICLSHeading( double value )
+	{
+		setParamNumber( m_iclsHeading, value );
+	}
+
+	inline void setTacanX( double value )
+	{
+		setParamNumber( m_tcnX, value );
+	}
+
+	inline void setTacanY( double value )
+	{
+		setParamNumber( m_tcnY, value );
+	}
+
+	inline void setTacanZ( double value )
+	{
+		setParamNumber( m_tcnZ, value );
+	}
+
+	inline void setTacanValid( bool valid )
+	{
+		setParamNumber( m_tcnValid, (double)valid );
 	}
 
 	inline void setFuelFlow( double number )
@@ -601,6 +647,14 @@ private:
 	void* m_gForce = NULL;
 
 	void* m_fuelFlow = NULL;
+
+	void* m_tcnX = NULL;
+	void* m_tcnY = NULL;
+	void* m_tcnZ = NULL;
+	void* m_tcnValid = NULL;
+	void* m_tcnObjectID = NULL;
+	void* m_tcnUnitName = NULL;
+	void* m_iclsHeading = NULL;
 };
 
 

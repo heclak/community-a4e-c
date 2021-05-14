@@ -144,6 +144,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ED_FM_TEMPLATE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -161,6 +162,7 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\..\..\source\repos\Scooter_Hacks\ObjectFinder.h" />
     <ClInclude Include="..\include\Cockpit\ccParametersAPI.h" />
     <ClInclude Include="..\include\FM\wHumanCustomPhysicsAPI.h" />
     <ClInclude Include="..\include\FM\wHumanCustomPhysicsAPI_ImplementationDeclare.h" />
@@ -172,6 +174,7 @@
     <ClInclude Include="Avionics.h" />
     <ClInclude Include="Axis.h" />
     <ClInclude Include="BaseComponent.h" />
+    <ClInclude Include="Beacon.h" />
     <ClInclude Include="cockpit_base_api.h" />
     <ClInclude Include="Commands.h" />
     <ClInclude Include="CP741.h" />
@@ -207,6 +210,7 @@
     <ClCompile Include="Airframe.cpp" />
     <ClCompile Include="Avionics.cpp" />
     <ClCompile Include="Axis.cpp" />
+    <ClCompile Include="Beacon.cpp" />
     <ClCompile Include="CP741.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
@@ -242,7 +246,7 @@
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <MASM Include="hack.asm">
+    <MASM Include="assembly.asm">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </MASM>
   </ItemGroup>

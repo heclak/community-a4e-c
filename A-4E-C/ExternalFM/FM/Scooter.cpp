@@ -30,6 +30,7 @@
 #include "LERX.h"
 #include "ILS.h"
 #include "Commands.h"
+#include "Beacon.h"
 
 //============================= Statics ===================================//
 static Scooter::AircraftState* s_state = NULL;
@@ -45,6 +46,8 @@ static LuaVM* s_luaVM = NULL;
 static Scooter::ILS* s_ils = NULL;
 
 static std::vector<LERX> s_splines;
+
+static Scooter::Beacon* s_beacon = NULL;
 
 //========================== Static Functions =============================//
 static void init( const char* config );
@@ -81,6 +84,7 @@ void init(const char* config)
 	s_radio = new Scooter::Radio(*s_interface);
 	s_ils = new Scooter::ILS(*s_interface);
 	s_fuelSystem = new Scooter::FuelSystem2( *s_engine, *s_state );
+	s_beacon = new Scooter::Beacon(*s_interface);
 	
 }
 
@@ -97,6 +101,7 @@ void cleanup()
 	delete s_radio;
 	delete s_ils;
 	delete s_fuelSystem;
+	delete s_beacon;
 
 	s_luaVM = NULL;
 	s_state = NULL;
@@ -109,6 +114,7 @@ void cleanup()
 	s_radio = NULL;
 	s_ils = NULL;
 	s_fuelSystem = NULL;
+	s_beacon = NULL;
 
 	s_splines.clear();
 }
@@ -195,6 +201,8 @@ void ed_fm_simulate(double dt)
 		s_state->setGForce( s_interface->getGForce() );
 
 		s_fuelSystem->setBoostPumpPower( s_interface->getElecMonitoredAC() );
+
+
 	}
 
 	//Update
@@ -205,6 +213,7 @@ void ed_fm_simulate(double dt)
 	s_fuelSystem->update( dt );
 	s_avionics->updateAvionics(dt);
 	s_fm->calculateAero(dt);
+	s_beacon->update();
 
 	//Post update
 	s_interface->setRPM(s_engine->getRPMNorm()*100.0);
@@ -635,6 +644,7 @@ void ed_fm_set_draw_args (EdDrawArgument * drawargs,size_t size)
 
 double ed_fm_get_param(unsigned index)
 {
+
 	switch (index)
 	{
 	case ED_FM_SUSPENSION_0_GEAR_POST_STATE:
