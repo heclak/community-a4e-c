@@ -20,8 +20,8 @@ local IndicationTexturesPath = LockOn_Options.script_path.."../Resources/Indicat
 
 -------TEXTURES-------
 textures = {}
-textures["BLOB_TEXTURE"] = {"radar_blob.dds",materials["BLOB_COLOR"]}
-textures["GUNSIGHT_TEXTURE"] = {"gunsight4.dds",materials["GUNSIGHT_COLOR"]}
+textures["BLOB_TEXTURE"] = {"a4e_radar_blob.dds",materials["BLOB_COLOR"]}
+textures["GUNSIGHT_TEXTURE"] = {"a4e_gunsight_reticle.dds",materials["GUNSIGHT_COLOR"]}
 
 -------------------------------------------------------
 -------FONTS-------
