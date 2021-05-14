@@ -11,14 +11,14 @@ release = 2.0
 -- DISTANCE
 silent_radius = 0
 -- peak_radius = 80
-inner_radius = 150
+inner_radius = 40
 outer_radius = 550
 
 -- DIRECTIONALITY
 position = {-3, 0, 0}
 direction = {-1, 0, 0}
-cone_inner_angle = 80
-cone_outer_angle = 120
+cone_inner_angle = 70
+cone_outer_angle = 100
 cone_inner_gain = 0.9
 cone_outer_gain = 0.01
 

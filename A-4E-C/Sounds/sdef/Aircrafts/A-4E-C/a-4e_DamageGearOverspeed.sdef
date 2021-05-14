@@ -4,7 +4,7 @@ wave = {
 }
 inner_radius = 20
 outer_radius = 150
-gain = 16.0
+gain = 8.0
 detached = true
 position = {0.75, -2, 0}
 pitch_random = 0.15

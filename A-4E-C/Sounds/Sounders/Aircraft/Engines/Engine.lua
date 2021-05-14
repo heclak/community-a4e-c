@@ -44,84 +44,156 @@ function engine:init(number_, host)
 
 
 	self.sounds = {
-		{
-			sound = nil,
-			type_pitch = SOUND_FAN_RPM,
-			type_gain = SOUND_FAN_RPM,
-			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_around_hi",
-			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33}, 0.02, 1.0),
-			gain_curve = Curve({0.00, 0.10, 0.45, 0.67, 0.81, 0.93, 1}, 0.43, 1.0),
-		},
+		--[[
+			= = = = = = = = = = = = = = = = = = = = = = = = =
+			SOUND DEFINITION FILES AND ASSETS
+			= = = = = = = = = = = = = = = = = = = = = = = = =
 
-		{
-			sound = nil,
-			type_pitch = SOUND_FAN_RPM,
-			type_gain = SOUND_FAN_RPM,
-			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_front_hi",
-			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33}, 0.09, 1.0),
-			gain_curve = Curve({0.00, 0.10, 0.45, 0.67, 0.81, 0.93, 1}, 0.47, 1.0),
-		},
+			Localiztion, audible distance, and other imporant variables are set in the sdefs, see:
+			/Sounds/sdef/Aircrafts/Engines/A-4E-C
 
-		{
-			sound = nil,
-			type_pitch = SOUND_TURBINE_POWER,
-			type_gain = SOUND_FAN_RPM,
-			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_back_hi",
-			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33}, 0.15, 1.0),
-			gain_curve = Curve({0.00, 0.10, 0.45, 0.67, 0.81, 0.93, 1}, 0.22, 1.0),
-		},
+			External sound assets are placed in 
+			/Sounds/Effects/Aircrafts/Engines/A-4E-C
+		
+			= = = = = = = = = = = = = = = = = = = = = = = = =
+			WARNING! WARNING! WARNING! WARNING! WARNING! 
+			= = = = = = = = = = = = = = = = = = = = = = = = =
+			DO NOT COPY OR USE THESE SOUNDS
+			= = = = = = = = = = = = = = = = = = = = = = = = =
 
-		{
-			sound = nil,
-			type_pitch = SOUND_FAN_RPM,
-			type_gain = SOUND_FAN_RPM,
-			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_around_lo",
-			pitch_curve = Curve({0.30, 0.61, 0.85, 1.00, 1.05, 1.08, 1.13}, 0.09, 1.0),
-			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 0.01, 1.0),
-		},
+			Some assets used in the creation of these sounds 
+			were made with purchased and licensed assets. 
+			While many parts of this project are open source, 
+			these sounds are not. 
 
+			While they are significantly transformed 
+			from their original sources, taking these sounds 
+			for use in your own project is theft: 
+			not from the Community A-4E-C project, 
+			but from the original licensors of the source material.
+
+			Distributing these sounds puts YOU in legal jeopardy 
+			should the licensors of the original assets find out,
+			and rest assured, there are entire teams of people 
+			whose entire livelihood is chasing theives down
+			and making them pay (in spades). 
+
+			The Community A-4E-C project is not reponsible 
+			for your copyright infringement.
+
+			= = = = = = = = = = = = = = = = = = = = = = = = =
+			ENGINE SOUNDS
+			= = = = = = = = = = = = = = = = = = = = = = = = =
+
+			Loud, large-frequency spectrum sounds can easily damage your hearing.
+			Be mindful of how loud you set sounds like this.
+			Be mindful of how loud you set your volume in DCS World.
+			Take regular breaks to give your ears and your brain a break.
+
+			The engine has two signature tones, with a baseline curve across RPM.
+			
+			a LOW tone: 
+			curve = {0.30, 0.61, 0.85, 1.00, 1.04, 1.09, 1.13},
+			
+			and a HIGH tone:
+			curve = {0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33},
+		
+			In order to maintain consistency when the pilot opens the canopy, 
+			changes to pitch curves should be replicated on the interior sound set, see: 
+			/Cockpit/Scripts/Systems/sound_system.lua
+
+			= = = = = = = = = = = = = = = = = = = = = = = = =
+		]]
+
+		-- These sounds are organized by aircraft orientation:
+		-- The main groups are FRONT, AROUND and REAR.
+		-- Each includes a low-operation tone, a high-operation tone, and a distant sound.
+
+		-- FRONT
+		-- It's the sound of air being sucked into the turbine.
+		-- It has a swirling phasing sound, and a grinding signature tone.
+		-- It lacks the lower frequencies present in other engine sounds.
+		-- At higher speeds, a dramatic screaming ROAR is heard from a distance.
 		{
 			sound = nil,
 			type_pitch = SOUND_FAN_RPM,
 			type_gain = SOUND_FAN_RPM,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_front_lo",
-			pitch_curve = Curve({0.30, 0.61, 0.85, 1.00, 1.05, 1.08, 1.13}, 0.17, 1.0),
+			pitch_curve = Curve({0.30, 0.61, 0.85, 1.00, 1.04, 1.09, 1.13}, 0.01, 1.0),
 			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 0.01, 1.0),
 		},
-
 		{
 			sound = nil,
-			type_pitch = SOUND_TURBINE_POWER,
+			type_pitch = SOUND_FAN_RPM,
 			type_gain = SOUND_FAN_RPM,
-			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_back_lo",
-			pitch_curve = Curve({0.30, 0.61, 0.85, 1.00, 1.05, 1.08, 1.13}, 0.17, 1.0),
-			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 0.11, 1.0),
+			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_front_hi",
+			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33}, 0.01, 1.0),
+			gain_curve = Curve({0.00, 0.10, 0.45, 0.67, 0.81, 0.93, 1}, 0.47, 1.0),
 		},
-
+		{
+			sound = nil,
+			type_pitch = SOUND_FAN_RPM,
+			type_gain = SOUND_TRUE_AIRSPEED,
+			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_far_roar",
+			pitch_curve = Curve({0.66, 1.00, 1.33}, 0.01, 1.0),
+			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 80.0, 340.0),
+		},
+		-- AROUND
+		-- It's a full spectrum jet engine sound.
+		-- It has elements of the front and rear sounds, with the full signatures of neither.
+		-- It projects in a sphere, not in a cone, filling in missing frequenies from any direction.
+		-- At high RPM, a WHINE is heard from a distance.
+		{
+			sound = nil,
+			type_pitch = SOUND_FAN_RPM,
+			type_gain = SOUND_FAN_RPM,
+			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_around_lo",
+			pitch_curve = Curve({0.30, 0.61, 0.85, 1.00, 1.05, 1.08, 1.13}, 0.01, 1.0),
+			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 0.01, 1.0),
+		},
+		{
+			sound = nil,
+			type_pitch = SOUND_FAN_RPM,
+			type_gain = SOUND_FAN_RPM,
+			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_around_hi",
+			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33}, 0.01, 1.0),
+			gain_curve = Curve({0.00, 0.10, 0.45, 0.67, 0.81, 0.93, 1}, 0.43, 1.0),
+		},
 		{
 			sound = nil,
 			type_pitch = SOUND_FAN_RPM,
 			type_gain = SOUND_FAN_RPM,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_far_whine",
 			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.11, 1.22, 1.33}, 0.01, 1.0),
-			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 0.15, 1.0),
+			gain_curve = Curve({0.00, 0.31, 0.62, 0.85, 0.94, 0.99, 1}, 0.11, 1.0),
 		},
-
+		-- BACK
+		-- It's the sound of air thrust out of the turbine.
+		-- It has a loud, low roar.
+		-- It lacks the higher frequencies present in other engine sounds.
+		-- At higher speeds, a dramatic screaming RIP is heard from a distance.
+		{
+			sound = nil,
+			type_pitch = SOUND_TURBINE_POWER,
+			type_gain = SOUND_FAN_RPM,
+			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_back_lo",
+			pitch_curve = Curve({0.30, 0.61, 0.85, 1.00, 1.04, 1.09, 1.13}, 0.01, 1.0),
+			gain_curve = Curve({0.00, 0.21, 0.62, 0.93, 0.97, 0.99, 1}, 0.11, 1.0),
+		},
+		{
+			sound = nil,
+			type_pitch = SOUND_TURBINE_POWER,
+			type_gain = SOUND_FAN_RPM,
+			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_back_hi",
+			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33}, 0.01, 1.0),
+			gain_curve = Curve({0.00, 0.10, 0.45, 0.67, 0.81, 0.93, 1}, 0.22, 1.0),
+		},
 		{
 			sound = nil,
 			type_pitch = SOUND_FAN_RPM,
 			type_gain = SOUND_TRUE_AIRSPEED,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_far_rip",
 			pitch_curve = Curve({0.66, 1.00, 1.33}, 0.5, 1.0),
-			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 80.0, 340.0),
-		},
-
-		{
-			sound = nil,
-			type_pitch = SOUND_FAN_RPM,
-			type_gain = SOUND_TRUE_AIRSPEED,
-			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_far_roar",
-			pitch_curve = Curve({0.66, 1.00, 1.33}, 0.05, 1.0),
 			gain_curve = Curve({0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1}, 80.0, 340.0),
 		},
 
