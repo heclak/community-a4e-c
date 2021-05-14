@@ -53,12 +53,19 @@ dev:listen_command(Keys.TrimLeft)
 dev:listen_command(Keys.TrimRightRudder)
 dev:listen_command(Keys.TrimLeftRudder)
 dev:listen_command(Keys.TrimCancel)
+dev:listen_command(Keys.ShowControls)
+
 dev:listen_command(device_commands.rudder_trim)
 
+dev:listen_command(iCommandPlane_ShowControls)
 
+local iCommandPlane_ShowControls = 851
 
 local optionsData_trimspeed =  get_plugin_option_value("A-4E-C","trimSpeed","local")
 local trimspeedfactor 
+
+local SHOW_CONTROLS  = get_param_handle("SHOW_CONTROLS")
+
 
 if optionsData_trimspeed == 0 then
 	trimspeedfactor = 1
@@ -77,7 +84,9 @@ function post_initialize()
     -- TODO: is there a better way to determine initial SFM pitch trim?
     pitch_trim_handle:set(-0.5)  -- for some reason, stick pitch is reported as stick roll in the API
     trim_override_handle:set(0)
-    trim_override = false
+    trim_override = 
+    
+    SHOW_CONTROLS:set(0)
 
     startup_print("trim: postinit end")
 end
@@ -85,6 +94,8 @@ end
 local trimming_updown = 0 -- 1=up,0=neutral,-1=down
 local trimming_leftright = 0 -- 1=right,0=neutral,-1=left
 local trimming_rudder_leftright = 0 -- 1=right,0=neutral,-1=left
+
+local trim_cancellation = 0
 
 local iCommandPlaneTrimPitchAbs=2022
 local iCommandPlaneTrimRollAbs=2023
@@ -100,6 +111,7 @@ function SetCommand(command,value)
         trimming_updown = 0
         trimming_leftright = 0
         trimming_rudder_leftright = 0
+        trim_cancellation = 0
     elseif command == Keys.TrimUp then
         trimming_updown = 1
     elseif command == Keys.TrimDown then
@@ -125,17 +137,9 @@ function SetCommand(command,value)
             dispatch_action(nil, iCommandPlaneTrimRudderAbs, rudder_trim*rudder_trim_scale)
         end
     elseif command == Keys.TrimCancel then
-        trimming_updown = 0
-        trimming_leftright = 0
-        trimming_rudder_leftright = 0
-        dispatch_action(nil, iCommandPlaneTrimCancel, 0)
-        dispatch_action(nil, iCommandPlaneTrimRudderAbs, 0)
-        dispatch_action(nil, iCommandPlaneTrimPitchAbs, 0)
-        dispatch_action(nil, iCommandPlaneTrimRollAbs, 0)
-        dev:performClickableAction(device_commands.rudder_trim, 0, false)
-        roll_trim_handle:set(0)
-        pitch_trim_handle:set(0)
-        rudder_trim_handle:set(0)
+        trim_cancellation = 1
+    elseif command == Keys.ShowControls then
+        SHOW_CONTROLS:set(1-SHOW_CONTROLS:get())
     end
 end
 
@@ -236,7 +240,55 @@ function update()
         --rudder_trim_handle:set(rudder_trim)
         --dispatch_action(nil, iCommandPlaneTrimRudderAbs, rudder_trim)
     end
+
+    update_trim_reset()
+
 end
+
+function update_trim_reset()
+    -- smoothly transitioning trim reset
+    if trim_cancellation ~= 0 then
+        -- rather than center, set pitch trim to ~2 on the gauge (0.5)
+        -- this is the default cold start, take-off and in-air position,
+        -- so it seems a better choice than 0.
+        local pitch_trim_default = 0.5
+
+        local pitch_trim=pitch_trim_handle:get()
+        local roll_trim=roll_trim_handle:get()
+        local rudder_trim=rudder_trim_handle:get()
+        local trim_pitch_delta = trim_pitch_update * trimspeedfactor
+        local trim_delta = trim_update * trimspeedfactor
+        -- print_message_to_user('trim reseting... ' ..pitch_trim)
+        -- center nose trim 
+        if math.abs(rudder_trim) + pitch_trim_default < trim_pitch_delta then
+           pitch_trim = pitch_trim_default
+        elseif pitch_trim < -pitch_trim_default then
+            pitch_trim = pitch_trim + trim_pitch_delta
+        elseif pitch_trim > -pitch_trim_default then
+            pitch_trim = pitch_trim - trim_pitch_delta
+        end
+        pitch_trim_handle:set(pitch_trim)
+        -- center aeileron trim
+        if math.abs(roll_trim) < trim_delta then
+            roll_trim = 0
+        elseif roll_trim < 0 then
+            roll_trim = roll_trim + trim_delta
+        elseif roll_trim > 0 then
+            roll_trim = roll_trim - trim_delta
+        end
+        roll_trim_handle:set(roll_trim)
+        -- center rudder trim
+        if math.abs(rudder_trim) < trim_delta then
+            rudder_trim = 0
+        elseif rudder_trim < 0 then
+            rudder_trim = rudder_trim + trim_delta
+        elseif rudder_trim > 0 then
+            rudder_trim = rudder_trim - trim_delta
+        end
+        rudder_trim_handle:set(rudder_trim)
+    end
+end
+
 
 startup_print("trim: load end")
 need_to_be_closed = false -- close lua state after initialization

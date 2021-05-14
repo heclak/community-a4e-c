@@ -9,9 +9,9 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- General ----------------------------------
     ---------------------------------------------
-    {down = iCommandPlaneShipTakeOff,                                                name = _('Catapult Hook-Up'),           category = {_('General')}},
-    -- {down = iCommandCockpitShowPilotOnOff,                                        name = _('Show Pilot Body'),                  category = _('General')},
-    {down = iCommandPlaneWingtipSmokeOnOff,                                          name = _('Smoke - ON/OFF'), category = {_('General')}},
+    {down = iCommandPlaneShipTakeOff, name = _('Catapult Hook-Up'), category = {_('General')}},
+    -- {down = iCommandCockpitShowPilotOnOff, name = _('Show Pilot Body'), category = _('General')},
+    {down = Keys.ToggleSlatsLock, name = _('Lock/Unlock Slats'), category = {_('General')}},
 
     ---------------------------------------------
     -- View Cockpit -----------------------------
@@ -45,8 +45,8 @@ join(res.keyCommands,{
     {pressed = Keys.TrimDown, up = Keys.TrimStop,                                    name = _('Trimmer Switch - NOSE DOWN'),       category = {_('Stick'), _('Flight Control')}},
     {pressed = Keys.TrimLeft, up = Keys.TrimStop,                                    name = _('Trimmer Switch - LEFT WING DOWN'),  category = {_('Stick'), _('Flight Control')}},
     {pressed = Keys.TrimRight, up = Keys.TrimStop,                                   name = _('Trimmer Switch - RIGHT WING DOWN'), category = {_('Stick'), _('Flight Control')}},
-    
-    {down = Keys.TrimCancel,                                                         name = _('Trim: Reset'),                      category = {_('Stick'), _('Flight Control')}},
+    {pressed = Keys.TrimCancel, up = Keys.TrimStop,                                  name = _('Trimmer Reset (Press and Hold)'),   category = {_('Stick'), _('Flight Control')}},
+
     {combos = {{key = 'JOY_BTN1'}}, down = Keys.PlaneFireOn, up = Keys.PlaneFireOff, name = _('Gun-Rocket Trigger'),               category = {_('Stick')}},
     {combos = {{key = 'JOY_BTN2'}}, down = Keys.PickleOn, up = Keys.PickleOff,       name = _('Bomb Release Button'),              category = {_('Stick')}},
     {down = Keys.AFCSOverride,                                                       name = _('AFCS Override Button'),             category = {_('Stick')}},
@@ -89,16 +89,17 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- ALE-29A Chaff Control Panel --------------
     --------------------------------------------- 
-    {down = Keys.CmBankSelectRotate,                                                                                                            name = _('ALE-29A Dispenser Select Cycle'),                        category = {_('Chaff Control Panel')}},
-    {down = Keys.CmBankSelect, value_down = -1,                                                                                                 name = _('ALE-29A Dispenser Select - 1'),                          category = {_('Chaff Control Panel')}},
-    {down = Keys.CmBankSelect, value_down = 1,                                                                                                  name = _('ALE-29A Dispenser Select - 2'),                          category = {_('Chaff Control Panel')}},
-    {down = Keys.CmBankSelect, value_down = 0,                                                                                                  name = _('ALE-29A Dispenser Select - Both'),                       category = {_('Chaff Control Panel')}},
-    {down = device_commands.cm_auto, up = device_commands.cm_auto, cockpit_device_id = devices.COUNTERMEASURES, value_down = 1.0, value_up = 0, name = _('ALE-29A AUTO Pushbutton'),                               category = {_('Chaff Control Panel')}},
-    {down = Keys.CmBank1AdjUp,                                                                                                                  name = _('ALE-29A Dispenser 1 Counter - Increase'),                category = {_('Chaff Control Panel')}},
-    {down = Keys.CmBank1AdjDown,                                                                                                                name = _('ALE-29A Dispenser 1 Counter - Decrease'),                category = {_('Chaff Control Panel')}},
-    {down = Keys.CmBank2AdjUp,                                                                                                                  name = _('ALE-29A Dispenser 2 Counter - Increase'),                category = {_('Chaff Control Panel')}},
-    {down = Keys.CmBank2AdjDown,                                                                                                                name = _('ALE-29A Dispenser 2 Counter - Decrease'),                category = {_('Chaff Control Panel')}},
-    {down = Keys.CmPowerToggle,                                                                                                                 name = _('ALE-29A PWR Switch - PWR/OFF'),                          category = {_('Chaff Control Panel')}},
+    {down = Keys.CmBankSelectRotate,                                                                                                            name = _('ALE-29A Dispenser Select Cycle'),         category = {_('Chaff Control Panel')}},
+    {down = Keys.CmBankSelect, value_down = -1,                                                                                                 name = _('ALE-29A Dispenser Select - 1'),           category = {_('Chaff Control Panel')}},
+    {down = Keys.CmBankSelect, value_down = 1,                                                                                                  name = _('ALE-29A Dispenser Select - 2'),           category = {_('Chaff Control Panel')}},
+    {down = Keys.CmBankSelect, value_down = 0,                                                                                                  name = _('ALE-29A Dispenser Select - Both'),        category = {_('Chaff Control Panel')}},
+    {down = device_commands.cm_auto, up = device_commands.cm_auto, cockpit_device_id = devices.COUNTERMEASURES, value_down = 1.0, value_up = 0, name = _('ALE-29A AUTO Pushbutton'),                category = {_('Chaff Control Panel')}},
+    {down = Keys.CmBank1AdjUp,                                                                                                                  name = _('ALE-29A Dispenser 1 Counter - Increase'), category = {_('Chaff Control Panel')}},
+    {down = Keys.CmBank1AdjDown,                                                                                                                name = _('ALE-29A Dispenser 1 Counter - Decrease'), category = {_('Chaff Control Panel')}},
+    {down = Keys.CmBank2AdjUp,                                                                                                                  name = _('ALE-29A Dispenser 2 Counter - Increase'), category = {_('Chaff Control Panel')}},
+    {down = Keys.CmBank2AdjDown,                                                                                                                name = _('ALE-29A Dispenser 2 Counter - Decrease'), category = {_('Chaff Control Panel')}},
+    {down = Keys.CmPowerToggle,                                                                                                                 name = _('ALE-29A PWR Switch - PWR/OFF'),           category = {_('Chaff Control Panel')}},
+    {down = device_commands.cm_pwr, up = device_commands.cm_pwr, cockpit_device_id = devices.COUNTERMEASURES, value_down = 1.0, value_up = 0,   name = _('ALE-29A PWR Switch - PWR else OFF'),      category = {_('Chaff Control Panel')}},
 
     ---------------------------------------------
     -- ECM Control Panel ------------------------
@@ -113,6 +114,7 @@ join(res.keyCommands,{
     {down = device_commands.ecm_apr27_off, up = device_commands.ecm_apr27_off, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.RWR, name = _('APR-27 - ON else OFF'), category = {_('ECM Control Panel')}},
     {down = Keys.ecm_apr25_off, value_down = 1.0, value_up = 0.0, name = _('APR-25 - ON/OFF'), category = {_('ECM Control Panel')}},
     {down = device_commands.ecm_apr25_off, up = device_commands.ecm_apr25_off, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.RWR, name = _('APR-25 - ON else OFF'), category = {_('ECM Control Panel')}},
+    {down = device_commands.ecm_apr25_audio, up = device_commands.ecm_apr25_audio, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.RWR, name = _('Audio - APR/27 else APR/25'), category = {_('ECM Control Panel')}},
     {down = Keys.ecm_OuterKnobInc, name = _('MSL Volume (Outer Knob) - Increment'), category = {_('ECM Control Panel')}},
     {down = Keys.ecm_OuterKnobDec, name = _('MSL Volume (Outer Knob) - Decrement'), category = {_('ECM Control Panel')}},
     {down = Keys.ecm_OuterKnobStartUp, up = Keys.ecm_OuterKnobStop, name = _('MSL Volume (Outer Knob) - Continuous Increase'),   category = {_('ECM Control Panel')}},
@@ -234,10 +236,15 @@ join(res.keyCommands,{
     -- Left Console -----------------------------
     ---------------------------------------------    
     -- Gunpods Control Panel
-    {down = Keys.GunpodCharge,                                                                name = _('GUNPOD CHARGE/OFF/CLEAR Switch Toggle'), category = {_('Left Console'), _('Gunpods Control Panel')}},
-    {down = Keys.GunpodLeft,                                                                  name = _('LH STATION Switch - READY/SAFE'),        category = {_('Left Console'), _('Gunpods Control Panel')}},
-    {down = Keys.GunpodCenter,                                                                name = _('CTR STATION Switch - READY/SAFE'),       category = {_('Left Console'), _('Gunpods Control Panel')}},
-    {down = Keys.GunpodRight,                                                                 name = _('RH STATION Switch - READY/SAFE'),        category = {_('Left Console'), _('Gunpods Control Panel')}},
+    {down = Keys.GunpodCharge, name = _('Gunpod Switch - CHARGE/OFF/CLEAR'), category = {_('Left Console'), _('Gunpods Control Panel')}},
+    {down = device_commands.gunpod_chargeclear, value_down = 1, up = device_commands.gunpod_chargeclear, value_up = 0, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('Gunpod Switch - CHARGE else OFF'), category = {_('Left Console'), _('Gunpods Control Panel')}},
+    {down = device_commands.gunpod_chargeclear, value_down = -1, up = device_commands.gunpod_chargeclear, value_up = 0, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('Gunpod Switch - CLEAR else OFF'), category = {_('Left Console'), _('Gunpods Control Panel')}},
+    {down = Keys.GunpodLeft, name = _('Gunpod Station LH Switch - READY/SAFE'), category = {_('Left Console'), _('Gunpods Control Panel')}},
+    {down = device_commands.gunpod_l, value_down = 1, up = device_commands.gunpod_l, value_up = 0, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('Gunpod Station LH Switch - READY else SAFE'), category = {_('Left Console'), _('Gunpods Control Panel')}},
+    {down = Keys.GunpodCenter, name = _('Gunpod Station CTR Switch - READY/SAFE'), category = {_('Left Console'), _('Gunpods Control Panel')}},
+    {down = device_commands.gunpod_c, value_down = 1, up = device_commands.gunpod_c, value_up = 0, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('Gunpod Station CTR Switch - READY else SAFE'), category = {_('Left Console'), _('Gunpods Control Panel')}},
+    {down = Keys.GunpodRight, name = _('Gunpod Station RH Switch - READY/SAFE'), category = {_('Left Console'), _('Gunpods Control Panel')}},
+    {down = device_commands.gunpod_r, value_down = 1, up = device_commands.gunpod_r, value_up = 0, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('Gunpod Station RH Switch - READY else SAFE'), category = {_('Left Console'), _('Gunpods Control Panel')}},
 
     -- APC Control Panel
     {down = Keys.APCEngageStbyOff, value_down = -1,                                           name = _('APC POWER Switch - OFF'),                category = {_('Left Console'), _('APC Control Panel')}},
@@ -266,38 +273,59 @@ join(res.keyCommands,{
     {down = device_commands.ENGINE_drop_tanks_sw, up = device_commands.ENGINE_drop_tanks_sw, value_down = -1, value_up = 0, cockpit_device_id = devices.ENGINE, name = _('Pressurization - DOWN/FLIGHT REFUEL else PRESS'), category = {_('Left Console'), _('Engine Control Panel')}},
 
     -- Radar Control Panel
-    {down = Keys.RadarModeOFF,                                                          name = _('Radar Mode Selector Switch Knob - OFF'),                       category = {_('Left Console'), _('Radar Control Panel')}},
-    {down = Keys.RadarModeSTBY,                                                         name = _('Radar Mode Selector Switch Knob - STANDBY'),                   category = {_('Left Console'), _('Radar Control Panel')}},
-    {down = Keys.RadarModeSearch,                                                       name = _('Radar Mode Selector Switch Knob - SEARCH'),                    category = {_('Left Console'), _('Radar Control Panel')}},
-    {down = Keys.RadarModeTC,                                                           name = _('Radar Mode Selector Switch Knob - TERRAIN CLEARANCE'),         category = {_('Left Console'), _('Radar Control Panel')}},
-    {down = Keys.RadarModeA2G,                                                          name = _('Radar Mode Selector Switch Knob - A2G'),                       category = {_('Left Console'), _('Radar Control Panel')}},
-    {down = Keys.RadarMode,                                                             name = _('Radar Mode Selector Switch Knob Cycle'),                       category = {_('Left Console'), _('Radar Control Panel')}},
-    {down = Keys.RadarModeCW,                                                           name = _('Radar Mode Selector Switch Knob - CW'),                        category = {_('Left Console'), _('Radar Control Panel')}},
-    {down = Keys.RadarModeCCW,                                                          name = _('Radar Mode Selector Switch Knob - CCW'),                       category = {_('Left Console'), _('Radar Control Panel')}},
-    {down = Keys.RadarAoAComp, value_down = 1,                                          name = _('Radar AoA Compensation Switch - ON'),                          category = {_('Left Console'), _('Radar Control Panel')}},
-    {down = Keys.RadarAoAComp, value_down = 0,                                          name = _('Radar AoA Compensation Switch - OFF'),                         category = {_('Left Console'), _('Radar Control Panel')}},
-    {down = Keys.RadarAoAComp, value_down = -1,                                         name = _('Radar AoA Compensation Switch - ON/OFF'),                      category = {_('Left Console'), _('Radar Control Panel')}},
-    {down = Keys.RadarVolume, value_down = 1,                                           name = _('Radar Obstacle Tone Volume Knob - Increase'),                  category = {_('Left Console'), _('Radar Control Panel')}},
-    {down = Keys.RadarVolume, value_down = 0,                                           name = _('Radar Obstacle Tone Volume Knob - Decrease'),                  category = {_('Left Console'), _('Radar Control Panel')}},
-    
-    {down = Keys.RadarModeSearch, up = Keys.RadarModeTC,                                name = _('Radar Mode Selector Switch Knob - SEARCH else TC'),            category = {_('Left Console'), _('Radar Control Panel'), _('Special For Joystick')}},
-    {down = Keys.RadarModeA2G, up = Keys.RadarModeTC,                                   name = _('Radar Mode Selector Switch Knob - A2G else TC'),               category = {_('Left Console'), _('Radar Control Panel'), _('Special For Joystick')}},
-    {down = Keys.RadarAoAComp, value_down = 1, up = Keys.RadarAoAComp, value_up = 0,    name = _('Radar AoA Compensation Switch - ON else OFF'),                 category = {_('Left Console'), _('Radar Control Panel'), _('Special For Joystick')}},
+    {down = Keys.RadarModeOFF,                                                          name = _('Radar Mode Selector Switch Knob - OFF'),                      category = {_('Left Console'), _('Radar Control Panel')}},
+    {down = Keys.RadarModeSTBY,                                                         name = _('Radar Mode Selector Switch Knob - STANDBY'),                  category = {_('Left Console'), _('Radar Control Panel')}},
+    {down = Keys.RadarModeSearch,                                                       name = _('Radar Mode Selector Switch Knob - SEARCH'),                   category = {_('Left Console'), _('Radar Control Panel')}},
+    {down = Keys.RadarModeTC,                                                           name = _('Radar Mode Selector Switch Knob - TERRAIN CLEARANCE'),        category = {_('Left Console'), _('Radar Control Panel')}},
+    {down = Keys.RadarModeA2G,                                                          name = _('Radar Mode Selector Switch Knob - A2G'),                      category = {_('Left Console'), _('Radar Control Panel')}},
+    {down = Keys.RadarMode,                                                             name = _('Radar Mode Selector Switch Knob Cycle'),                      category = {_('Left Console'), _('Radar Control Panel')}},
+    {down = Keys.RadarModeCW,                                                           name = _('Radar Mode Selector Switch Knob - CW'),                       category = {_('Left Console'), _('Radar Control Panel')}},
+    {down = Keys.RadarModeCCW,                                                          name = _('Radar Mode Selector Switch Knob - CCW'),                      category = {_('Left Console'), _('Radar Control Panel')}},
+    {down = Keys.RadarAoAComp, value_down = 1,                                          name = _('Radar AoA Compensation Switch - ON'),                         category = {_('Left Console'), _('Radar Control Panel')}},
+    {down = Keys.RadarAoAComp, value_down = 0,                                          name = _('Radar AoA Compensation Switch - OFF'),                        category = {_('Left Console'), _('Radar Control Panel')}},
+    {down = Keys.RadarAoAComp, value_down = -1,                                         name = _('Radar AoA Compensation Switch - ON/OFF'),                     category = {_('Left Console'), _('Radar Control Panel')}},
+    {down = Keys.RadarVolume, value_down = 1,                                           name = _('Radar Obstacle Tone Volume Knob - Increase'),                 category = {_('Left Console'), _('Radar Control Panel')}},
+    {down = Keys.RadarVolume, value_down = 0,                                           name = _('Radar Obstacle Tone Volume Knob - Decrease'),                 category = {_('Left Console'), _('Radar Control Panel')}},
+    {down = Keys.RadarVolume, value_down = 1,                                           name = _('Radar Obstacle Tone Volume Knob - Increment'),                category = {_('Left Console'), _('Radar Control Panel')}},
+    {down = Keys.RadarVolume, value_down = 0,                                           name = _('Radar Obstacle Tone Volume Knob - Decrement'),                category = {_('Left Console'), _('Radar Control Panel')}},
+    {down = Keys.RadarVolumeStartUp, up = Keys.RadarVolumeStop,                         name = _('Radar Obstacle Tone Volume Knob - Continuous Increase'),      category = {_('Left Console'), _('Radar Control Panel')}},
+    {down = Keys.RadarVolumeStartDown, up = Keys.RadarVolumeStop,                       name = _('Radar Obstacle Tone Volume Knob - Continuous Decrease'),      category = {_('Left Console'), _('Radar Control Panel')}},
+    {down = Keys.RadarTiltInc,                                                          name = _('Radar Antenna Tilt Knob - CW'),                               category = {_('Left Console'), _('Radar Control Panel')}},
+    {down = Keys.RadarTiltDec,                                                          name = _('Radar Antenna Tilt Knob - CCW'),                              category = {_('Left Console'), _('Radar Control Panel')}},
+    {down = Keys.RadarTiltStartUp, up = Keys.RadarTiltStop,                             name = _('Radar Antenna Tilt Knob - Continuous CW'),                    category = {_('Left Console'), _('Radar Control Panel')}},
+    {down = Keys.RadarTiltStartDown, up = Keys.RadarTiltStop,                           name = _('Radar Antenna Tilt Knob - Continuous CCW'),                   category = {_('Left Console'), _('Radar Control Panel')}},
+
+    {down = Keys.RadarModeSearch, up = Keys.RadarModeTC,                                name = _('Radar Mode Selector Switch Knob - SEARCH else TC'),           category = {_('Left Console'), _('Radar Control Panel'), _('Special For Joystick')}},
+    {down = Keys.RadarModeA2G, up = Keys.RadarModeTC,                                   name = _('Radar Mode Selector Switch Knob - A2G else TC'),              category = {_('Left Console'), _('Radar Control Panel'), _('Special For Joystick')}},
+    {down = Keys.RadarAoAComp, value_down = 1, up = Keys.RadarAoAComp, value_up = 0,    name = _('Radar AoA Compensation Switch - ON else OFF'),                category = {_('Left Console'), _('Radar Control Panel'), _('Special For Joystick')}},
     
     -- AFCS Panel
-    {down = Keys.AFCSStandbyToggle,                                                     name = _('AFCS Standby Switch - OFF/STANDBY'),                           category = {_('Left Console'), _('AFCS Panel')}},
-    {down = device_commands.afcs_stab_aug, value_down = 1, cockpit_device_id = devices.AFCS, name = _('AFCS Yaw Damper - STAB AUG'), category = {_('Left Console'), _('AFCS Panel')}},
-    {down = device_commands.afcs_stab_aug, value_down = 0, cockpit_device_id = devices.AFCS, name = _('AFCS Yaw Damper - OFF'), category = {_('Left Console'), _('AFCS Panel')}},
-    {down = Keys.AFCSStabAugToggle,                                                     name = _('AFCS Yaw Damper - OFF/STAB AUG'),                              category = {_('Left Console'), _('AFCS Panel')}},
-    {down = Keys.AFCSEngageToggle,                                                      name = _('AFCS Engage Switch - OFF/ENGAGE'),                             category = {_('Left Console'), _('AFCS Panel')}},
-    {down = Keys.AFCSAltitudeToggle,                                                    name = _('AFCS Altitude Switch - OFF/ALT'),                              category = {_('Left Console'), _('AFCS Panel')}},
-    {down = Keys.AFCSHeadingToggle,                                                     name = _('AFCS Heading Select Switch - OFF/HDG SEL'),                    category = {_('Left Console'), _('AFCS Panel')}},
-    {down = device_commands.afcs_hdg_set, value_down = 1, cockpit_device_id = devices.AFCS,                name = _('AFCS SET Knob - CW/Increase'),              category = {_('Left Console'), _('AFCS Panel')}},
-    {down = device_commands.afcs_hdg_set, value_down = -1, cockpit_device_id = devices.AFCS,                name = _('AFCS SET Knob - CCW/Decrease'),            category = {_('Left Console'), _('AFCS Panel')}},
+    {down = Keys.AFCSStandbyToggle,                                                             name = _('AFCS Standby Switch - OFF/STANDBY'),          category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_standby, value_down = 1, up = device_commands.afcs_standby, value_up = 0, cockpit_device_id = devices.AFCS, name = _('AFCS Standby Switch - STANDBY else OFF'), category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_standby, value_down = 1, cockpit_device_id = devices.AFCS,     name = _('AFCS Standby Switch - STANDBY'),              category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_standby, value_down = 0, cockpit_device_id = devices.AFCS,     name = _('AFCS Standby Switch - OFF'),                  category = {_('Left Console'), _('AFCS Panel')}},
+    {down = Keys.AFCSStabAugToggle,                                                             name = _('AFCS Yaw Damper - OFF/STAB AUG'),             category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_stab_aug, value_down = 1, up = device_commands.afcs_stab_aug, value_up = 0, cockpit_device_id = devices.AFCS, name = _('AFCS Yaw Damper - STAB AUG else OFF'), category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_stab_aug, value_down = 0, cockpit_device_id = devices.AFCS,    name = _('AFCS Yaw Damper - OFF'),                      category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_stab_aug, value_down = 1, cockpit_device_id = devices.AFCS,    name = _('AFCS Yaw Damper - STAB AUG'),                 category = {_('Left Console'), _('AFCS Panel')}},
+    {down = Keys.AFCSEngageToggle,                                                              name = _('AFCS Engage Switch - OFF/ENGAGE'),            category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_engage, value_down = 1, up = device_commands.afcs_engage, value_up = 0, cockpit_device_id = devices.AFCS, name = _('AFCS Engage Switch - ENGAGE else OFF'), category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_engage, value_down = 0, cockpit_device_id = devices.AFCS,      name = _('AFCS Engage Switch - OFF'),                   category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_engage, value_down = 1, cockpit_device_id = devices.AFCS,      name = _('AFCS Engage Switch - ENGAGE'),                category = {_('Left Console'), _('AFCS Panel')}},
+    {down = Keys.AFCSAltitudeToggle,                                                            name = _('AFCS Altitude Switch - OFF/ALT'),             category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_alt, value_down = 1, up = device_commands.afcs_alt, value_up = 0, cockpit_device_id = devices.AFCS, name = _('AFCS Altitude Switch - ALT else OFF'), category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_alt, value_down = 0, cockpit_device_id = devices.AFCS,         name = _('AFCS Altitude Switch - OFF'),                 category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_alt, value_down = 1, cockpit_device_id = devices.AFCS,         name = _('AFCS Altitude Switch - ALT'),                 category = {_('Left Console'), _('AFCS Panel')}},
+    {down = Keys.AFCSHeadingToggle,                                                             name = _('AFCS Heading Select Switch - OFF/HDG SEL'),   category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_hdg_sel, value_down = 1, up = device_commands.afcs_hdg_sel, value_up = 0, cockpit_device_id = devices.AFCS, name = _('AFCS Heading Select Switch - HDG SEL else OFF'), category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_hdg_sel, value_down = 0, cockpit_device_id = devices.AFCS,     name = _('AFCS Heading Select Switch - OFF'),           category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_hdg_sel, value_down = 1, cockpit_device_id = devices.AFCS,     name = _('AFCS Heading Select Switch - HDG SEL'),       category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_hdg_set, value_down = 1, cockpit_device_id = devices.AFCS,     name = _('AFCS SET Knob - CW/Increase'),                category = {_('Left Console'), _('AFCS Panel')}},
+    {down = device_commands.afcs_hdg_set, value_down = -1, cockpit_device_id = devices.AFCS,    name = _('AFCS SET Knob - CCW/Decrease'),               category = {_('Left Console'), _('AFCS Panel')}},
 
-    {down = Keys.AFCSHotasPath,                                                         name = _('AFCS Path Mode'),                                              category = {_('Left Console'), _('AFCS Panel')}},
-    {down = Keys.AFCSHotasAltHdg,                                                       name = _('AFCS Altitude + Heading Modes'),                               category = {_('Left Console'), _('AFCS Panel')}},
-    {down = Keys.AFCSHotasAlt,                                                          name = _('AFCS Altitude Mode'),                                          category = {_('Left Console'), _('AFCS Panel')}},
+    {down = Keys.AFCSHotasPath,                                                                 name = _('AFCS Path Mode'),                             category = {_('Left Console'), _('AFCS Panel')}},
+    {down = Keys.AFCSHotasAltHdg,                                                               name = _('AFCS Altitude + Heading Modes'),              category = {_('Left Console'), _('AFCS Panel')}},
+    {down = Keys.AFCSHotasAlt,                                                                  name = _('AFCS Altitude Mode'),                         category = {_('Left Console'), _('AFCS Panel')}},
 
     -- Special commands for Warthog Throttle
     {down = Keys.AFCSHotasPath, up = Keys.AFCSHotasAltHdg,  name = _('AFCS Path Mode else Altitude+Heading (Warthog Throttle)'),     category = {_('Left Console'), _('AFCS Panel'), _('Special For Joystick')}},
@@ -539,8 +567,8 @@ join(res.axisCommands,{
     {action = device_commands.shrike_sidewinder_volume,     cockpit_device_id = devices.WEAPON_SYSTEM , name = _('Missile Volume Knob'),            category = {_('Instrument Panel'), _('Misc Switches Panel')}},
 
     -- Radar Control Panel
-    {action = device_commands.radar_angle_axis,             cockpit_device_id = devices.RADAR,          name = _('Radar Angle Slew'),               category = {_('Left Console'), _('Radar Control Panel')}},
-    {action = device_commands.radar_angle_axis_abs,         cockpit_device_id = devices.RADAR,          name = _('Radar Angle Absolute'),           category = {_('Left Console'), _('Radar Control Panel')}},
+    {action = device_commands.radar_angle_axis,             cockpit_device_id = devices.RADAR,          name = _('Radar Antenna Tilt - Slew'),               category = {_('Left Console'), _('Radar Control Panel')}},
+    {action = device_commands.radar_angle_axis_abs,         cockpit_device_id = devices.RADAR,          name = _('Radar Antenna Tilt - Absolute'),           category = {_('Left Console'), _('Radar Control Panel')}},
 
     -- Interior Lights Panel
     {action = device_commands.intlight_instruments_AXIS,    cockpit_device_id = devices.AVIONICS,       name = _('Lighting: Instrument'),           category = {_('Right Console'), _('Interior Lights Control Panel')}},

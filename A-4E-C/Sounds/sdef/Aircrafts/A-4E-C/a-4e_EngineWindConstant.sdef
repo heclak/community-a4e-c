@@ -1,14 +1,8 @@
 wave = "Effects/Aircrafts/A-4E-C/a-4e_EngineWindConstantBass.ogg"
 inner_radius = 100
-gain = 3.0
+gain = 2.3
 attack = 0.1
 release = 0.1
-position = {-0.37, 0.0, 0.0} 
+position = {-3.37, 0.0, 0.0} 
 pitch = 1.0
 lowpass = 24000.0
-
--- play: engine moving, full volume at >10% RPM
--- continuous
--- inaudible under ~5% RPM
--- pitch 1.0 at 55% RPM (idle)
--- up ~3.5 semitones at 100% RPM

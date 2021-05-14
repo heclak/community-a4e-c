@@ -17,47 +17,151 @@ end
 -- params
 local param_catapult_takeoff = get_param_handle("SOUND_CAT_TAKEOFF")
 
-
 local sounds
 
 function post_initialize()
     -- initialise soundhosts
     sndhost_cockpit             = create_sound_host("COCKPIT","2D",0,0,0) -- TODO: look into defining this sound host for HEADPHONES/HELMET
 
+	--[[
+  		= = = = = = = = = = = = = = = = = = = = = = = = =
+        SOUND DEFINITION FILES AND ASSETS
+  		= = = = = = = = = = = = = = = = = = = = = = = = =
+
+        Localiztion, volume, and other imporant variables are set in the sdefs, see:
+        /Sounds/sdef/Aircrafts/A-4E-C
+
+        To avoid distracting binaural processing issues,
+        for example, the sound occasionally only being heard in only one ear,
+        be sure to set any engine sounds as originating well behind the pilot's head.
+
+        In-cockpit sound assets are placed in: 
+        /Sounds/Effects/Aircrafts/A-4E-C
+
+   		= = = = = = = = = = = = = = = = = = = = = = = = =
+		WARNING! WARNING! WARNING! WARNING! WARNING! 
+		= = = = = = = = = = = = = = = = = = = = = = = = =
+		DO NOT COPY OR USE THESE SOUNDS
+		= = = = = = = = = = = = = = = = = = = = = = = = =
+		Some assets used in the creation of these sounds 
+		were made with purchased and licensed assets. 
+		While many parts of this project are open source, 
+		these sounds are not. 
+
+		While they are significantly transformed 
+		from their original sources, taking these sounds 
+		for use in your own project is theft: 
+		not from the Community A-4E-C project, 
+		but from the original licensors of the source material.
+
+		Distributing these sounds puts YOU in legal jeopardy 
+		should the licensors of the original assets find out,
+		and rest assured, there are entire teams of people 
+		whose entire livelihood is chasing theives down
+		and making them pay (in spades). 
+
+		The Community A-4E-C project is not reponsible 
+		for your copyright infringement.
+
+  		= = = = = = = = = = = = = = = = = = = = = = = = =
+        ENGINE SOUNDS
+  		= = = = = = = = = = = = = = = = = = = = = = = = =
+
+        Loud, large-frequency spectrum sounds can easily damage your hearing.
+        Be mindful of how loud you set sounds like this.
+        Be mindful of how loud you set your volume in DCS World.
+        Take regular breaks to give your ears and your brain a break.
+
+        The engine has two signature tones, with a baseline curve across RPM.
+        
+        a LOW tone: 
+        curve = {0.30, 0.61, 0.85, 1.00, 1.04, 1.09, 1.13},
+        
+        and a HIGH tone:
+        curve = {0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33},
+    
+        In order to maintain consistency when the pilot opens the canopy, 
+        changes to pitch curves should be replicated on the exterior sound set, see: 
+        /Sounds/Sounders/Aircraft/Engines/Engine.lua
+
+  		= = = = = = = = = = = = = = = = = = = = = = = = =
+
+    ]]
+
+    -- These sounds are listed in the order they become audible 
+    -- as the engine starts up and moves toward taxi and takeoff.
+
+    -- ENGINE WIND 
+    -- The turbine is winding.
+    -- This is one of the first sounds to be heard after the valve opens. 
+    -- It's fairly neutral in tone.
     engine_wind_pitch = {
-        --curve = {0.30, 0.61, 0.85, 0.99, 1.05, 1.09, 1.1235}, -- baseline curve
-        curve = {0.30, 0.61, 0.85, 0.99, 1.07, 1.14, 1.21}, -- enhanced and tuned curve
+        curve = {0.30, 0.61, 0.85, 0.99, 1.07, 1.14, 1.21},
         min = 1.0,
         max = 100.0,
     }
-
     engine_wind_volume = {
-        curve = {0.00, 0.72, 0.85, 0.93, 0.97, 0.99},
+        curve = {0.00, 0.61, 0.71, 0.85, 0.97, 0.99, 1.00},
         min = 1.0,
         max = 100.0,
     }
-
+    -- ENGINE TONE (LOW) 
+    -- This is one of the first sounds to be heard after the valve opens. 
+    -- It's the primary signature tone of the aircraft heard in the cockpit.
+    -- The baseline is used to align the pitch engine samples before hand-tuning each one.
     engine_low_pitch = {
-        curve = {0.30, 0.61, 0.85, 0.99, 1.10, 1.23, 1.40}, -- enhanced and tuned curve
+        curve = {0.30, 0.61, 0.85, 1.00, 1.04, 1.09, 1.13},
         min = 1.0,
         max = 100.0,
     }
-
     engine_low_volume = {
-        curve = {0.00, 0.61, 0.82, 0.93, 0.97, 0.99, 1},
-        min = 1.0,
-        max = 80.0,
-    }
-
-    engine_high_pitch = {
-        curve = {0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33}, -- enhanced and tuned curve
+        curve = {0.00, 0.61, 0.71, 0.85, 0.97, 0.99, 1.00},
         min = 1.0,
         max = 100.0,
     }
-
+    -- ENGINE ROAR 
+    -- Combustion is occurring and thrust is being generated.
+    -- It can be heard once the fuel ignites, around 11-15% RPM.
+    -- It's a dull low roar.
+    engine_roar_pitch = {
+        curve = {0.46, 0.61, 0.83, 1.08},
+        min = 1.0,
+        max = 100.0,
+    }
+    engine_roar_volume = {
+        curve = {0.00, 0.14, 0.15, 0.16, 0.22},
+        min = 9.0,
+        max = 100.0,
+    }
+    -- ENGINE TONE (HIGH) 
+    -- Fuel is ignited, the engine approaches power stability.
+    -- This tone is a high-pitched whine, and is a signature in high-power operation.
+    -- It's tuning has been exaggerated slightly from the baseline.
+    -- This is to provide aggression and more meaningful feedback for throttle operation.
+    engine_high_pitch = {
+        curve = {0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33},
+        min = 1.0,
+        max = 100.0,
+    }
     engine_high_volume = {
-        curve = {0.00, 0.10, 0.45, 0.67, 0.81, 0.93, 1.00},
-        min = 56.0,
+        curve = {0.00, 0.5, 0.10, 0.26},
+        min = 22.0,
+        max = 100.0,
+    }
+    -- ENGINE GROWL
+    -- The engine is power-stable and can be throttled.
+    -- This tone is an quiet but emergent, fuzzy groan.
+    -- It provides sonic complexity to the engine.
+    -- It is heard primarily during takeoff to help signify a throttle down or other loss of RPM.
+    -- In the air, it tends to get buried by the wind.
+    engine_growl_pitch = {
+        curve = {0.20, 0.20, 0.20, 0.60, 0.72, 0.85},
+        min = 1.0,
+        max = 100.0,
+    }
+    engine_growl_volume = {
+        curve = {0.00, 0.005, 0.01, 0.02, 0.04},
+        min = 22.0,
         max = 100.0,
     }
 
@@ -89,10 +193,11 @@ function post_initialize()
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineWindUp", "SND_INST_ENGINE_WIND_UP", SOUND_ONCE),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineWindDown", "SND_INST_ENGINE_WIND_DOWN", SOUND_ONCE),
 
-
         Sound_Player.new_always_controlled(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineWindConstant", "RPM", engine_wind_volume, engine_wind_pitch),
         Sound_Player.new_always_controlled(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineOperationLo", "RPM", engine_low_volume, engine_low_pitch),
         Sound_Player.new_always_controlled(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineOperationHi", "RPM", engine_high_volume, engine_high_pitch),
+        Sound_Player.new_always_controlled(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineGrowl", "RPM", engine_growl_volume, engine_growl_pitch),
+        Sound_Player.new_always_controlled(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineRoar", "RPM", engine_roar_volume, engine_roar_pitch),
 
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineCompressorStall", "SND_INST_ENGINE_STALL", SOUND_ONCE),
         --gear pod doors
@@ -146,9 +251,6 @@ function post_initialize()
 
     }
 
-
-
-
     -- initialise sounds
     snd_catapultTakeoff = sndhost_cockpit:create_sound("Aircrafts/A-4E-C/A4E-CarrierCatapultTakeoff_In")
     snd_catapultLaunchbarDisconnect = sndhost_cockpit:create_sound("Aircrafts/A-4E-C/A4E-CarrierLaunchBarDisconnect")
@@ -161,7 +263,6 @@ function update()
     for index, sound in pairs(sounds) do
         sound:update()
     end
-
 
     playSoundOnceByParam(snd_catapultTakeoff, snd_catapultLaunchbarDisconnect, param_catapult_takeoff)
 end

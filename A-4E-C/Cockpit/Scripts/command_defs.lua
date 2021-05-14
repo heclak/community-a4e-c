@@ -50,6 +50,7 @@ Keys =
 	-- RightEngineStop = 314,			-- ?????????? ??????? ?????????
 
 	PowerOnOff                      = 315,
+    ShowControls                    = 851,
 
     --[[   -- Do not use the built-in altimeter adjustments, they have internal SSM affects on the altimeter that we cannot limit
     AltimeterPressureIncrease = 316,  
@@ -347,6 +348,15 @@ Keys =
     UHFFreqModeDec                 = __custom_counter(),
     UHFPresetChannelInc            = __custom_counter(),
     UHFPresetChannelDec            = __custom_counter(),
+    RadarTiltInc                   = __custom_counter(),
+    RadarTiltDec                   = __custom_counter(),
+    RadarTiltStartUp               = __custom_counter(),
+    RadarTiltStartDown             = __custom_counter(),
+    RadarTiltStop                  = __custom_counter(),
+    RadarVolumeStartUp             = __custom_counter(),
+    RadarVolumeStartDown           = __custom_counter(),
+    RadarVolumeStop                = __custom_counter(),
+
 }
 
 start_command   = 3000
