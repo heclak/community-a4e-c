@@ -1957,7 +1957,7 @@ function update_tacan()
 
     if tacan_mode == "REC" or tacan_mode == "T/R" then
 
-        update_object_beacon(atcn)
+        
         --if tacan_mode == "ILS" then
             --tacan_channel_param:set(tacan_channel)
         --else
@@ -1967,13 +1967,22 @@ function update_tacan()
         if atcn == nil then
             atcn = find_matched_tacan(tacan_channel)
         end
+
+        if atcn == nil then
+            return 
+        end
+
+        update_object_beacon(atcn)
+        
         
     
 	   local curx,cury,curz = sensor_data.getSelfCoordinates()
 
         if Terrain.isVisible(curx,cury,curz,atcn.position.x,atcn.position.y+15,atcn.position.z) then
+            
             local range = math.sqrt( (atcn.position.x - curx)^2 + (atcn.position.y - cury)^2 + (atcn.position.z - curz)^2 )/nm2meter
             if range < max_tacan_range then
+
                 if tacan_mode == "T/R" then
                     arn52_range = (range < max_tacan_range) and range or nil
                     --print_message_to_user("range: "..arn52_range)
@@ -1981,6 +1990,7 @@ function update_tacan()
 
                 --local bearing = true_bearing_deg_from_xz(curx, curz, atcn.position.x, atcn.position.z)
                 local bearing = true_bearing_viall_from_xz(curx, curz, atcn.position.x, atcn.position.z)
+                
                 local declination = get_declination()
 
                 -- grid X/Y isn't aligned with true north, so find average adjustment between current position and beacon source
@@ -1988,6 +1998,8 @@ function update_tacan()
                 --print_message_to_user("declination= "..declination.."  adj= "..adj)
 
                 arn52_bearing = (bearing - declination - adj) % 360
+
+                
                 --print_message_to_user("brg: "..bearing.."  dec: "..declination.."  mb: "..arn52_bearing)
 
                 configure_morse_playback(atcn.callsign)
@@ -2235,7 +2247,7 @@ function fetch_object_beacon_data(channel)
 
         local object = objects[1]
 
-        print_message_to_user(object.name)
+        --print_message_to_user(object.name)
 
         local cur_beacon = {
             position = { x = 0.0, y = 0.0, z = 0.0 },
