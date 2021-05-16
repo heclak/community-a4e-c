@@ -283,6 +283,36 @@ declare_loadout(	--D-704 BUDDY POD
 	}
 )
 
+declare_loadout({	-- 5KS-4500 JATO Bottle
+				category=	CAT_ROCKETS,
+				CLSID	=	"{A4E_5KS-4500}",
+				Picture	=	"LAU61.png",
+				wsTypeOfWeapon	=	{wsType_Weapon, wsType_NURS, wsType_Rocket,	145},
+				displayName	=	_("5KS-4500 JATO Bottle"),
+				--attribute	=	{4,	7,	32,	9},
+				attribute	=	{wsType_Weapon,	wsType_NURS, wsType_Container,	9},
+				Cx_pil	=	0.002,
+				Count	=	1,
+				Weight	=	98,
+				Elements	=
+				{
+					[1]	=
+					{
+						Position	=	{0,	0,	0},
+						ShapeName	=	"A4E_5KS_4500",
+						IsAdapter 	= 	true,
+					},
+                    [2] = 
+                    {
+                        -- DrawArgs       = {{1,1},{2,1}},
+                        payload_CLSID  = "{SPRD-99}",
+                        ShapeName      = "sprd_dummy"
+                    }
+				}, -- end of Elements
+})
+
+
+
 
 ---------AIR AIR--------------
 --[[

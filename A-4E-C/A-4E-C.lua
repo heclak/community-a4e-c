@@ -879,6 +879,22 @@ A_4E_C =  {
             },
             get_outboard_weapons("R")
         ),
+        pylon(6, 0, 0, 0, 0,
+            {
+                use_full_connector_position = true, connector = "JATO_L",
+            },
+            {
+                { CLSID = "{A4E_5KS-4500}"}
+            }
+        ),
+        pylon(7, 0, 0, 0, 0,
+            {
+                use_full_connector_position = true, connector = "JATO_R",
+            },
+            {
+                { CLSID = "{A4E_5KS-4500}"}
+            }
+        )
     },
 ---------------------------------------------------------------------------------------------------------------------------------------------
     Tasks = {       -- defined in db_units_planes.lua, nothing is #15

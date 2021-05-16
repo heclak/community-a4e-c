@@ -378,6 +378,14 @@ function enable_smoke()
 
 end
 
+function fire_jato()
+    print_message_to_user("firing JATO")
+    WeaponSystem:launch_station(5)
+    WeaponSystem:launch_station(6)
+    WeaponSystem:emergency_jettison(5)
+    WeaponSystem:emergency_jettison(6)
+end
+
 local ir_missile_lock_param = get_param_handle("WS_IR_MISSILE_LOCK")
 local ir_missile_az_param = get_param_handle("WS_IR_MISSILE_TARGET_AZIMUTH")
 local ir_missile_el_param = get_param_handle("WS_IR_MISSILE_TARGET_ELEVATION")
@@ -1299,7 +1307,7 @@ function SetCommand(command,value)
     elseif command == device_commands.shrike_selector then
         -- print_message_to_user(value)
 	elseif command == Keys.JATOFiringButton then
-		
+		fire_jato()
 	elseif command == device_commands.JATO_arm then
 		check_jato_armed_and_full(value)
 	elseif command == device_commands.JATO_jettison then
