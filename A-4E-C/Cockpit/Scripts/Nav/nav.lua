@@ -412,7 +412,6 @@ function post_initialize()
     local lx, ly, lz = sensor_data.getSelfCoordinates()
     asn41_integrate_x = lx
     asn41_integrate_z = lz
-    print_message_to_user(recursively_traverse(sensor_data))
     local geopos = lo_to_geo_coords(asn41_integrate_x, asn41_integrate_z)
 
     asn41_ppos_lat = geopos.lat
