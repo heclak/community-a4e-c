@@ -357,6 +357,10 @@ Keys =
     RadarVolumeStartDown           = __custom_counter(),
     RadarVolumeStop                = __custom_counter(),
 
+
+    JATO_fire_left                  = __custom_counter(),
+    JATO_fire_right                 = __custom_counter(),
+
 }
 
 start_command   = 3000

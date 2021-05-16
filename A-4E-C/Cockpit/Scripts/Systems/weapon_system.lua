@@ -137,11 +137,16 @@ local GLARE_LABS_ANNUN = get_param_handle("D_GLARE_LABS")
 local glare_labs_annun_state = false
 
 local shrike_armed_param = get_param_handle("SHRIKE_ARMED")
-local jato_armed_and_full_param = get_param_handle("JATO_ARMED_AND_FULL")
+local jato_loaded = get_param_handle("WEP_JATO_LOADED")
 
 local main_rpm = get_param_handle("RPM")
 
 local bombing_computer_target_set = false
+
+
+local jato_jettison = false
+local jato_armed = false
+
 
 ------------------------------------------------
 -----------  AIRCRAFT DEFINITION  --------------
@@ -213,6 +218,8 @@ WeaponSystem:listen_command(Keys.ChangeCBU2BAQuantity)
 
 WeaponSystem:listen_command(device_commands.JATO_arm)
 WeaponSystem:listen_command(device_commands.JATO_jettison)
+WeaponSystem:listen_command(device_commands.JATO_fire_left)
+WeaponSystem:listen_command(device_commands.JATO_fire_right)
 WeaponSystem:listen_command(Keys.JATOFiringButton)
 
 local shrike_sidewinder_volume = get_param_handle("SHRIKE_SIDEWINDER_VOLUME")
@@ -378,12 +385,41 @@ function enable_smoke()
 
 end
 
+function update_jato()
+
+    if jato_jettison then
+        WeaponSystem:performClickableAction(device_commands.JATO_jettison,0.0,true)
+    end
+
+    local left_jato = WeaponSystem:get_station_info(5)
+    local right_jato = WeaponSystem:get_station_info(6)
+
+    if left_jato.count == 1 or right_jato.count == 1 then
+        jato_loaded:set(1.0)
+    else
+        jato_loaded:set(0.0)
+    end
+end
+
 function fire_jato()
-    print_message_to_user("firing JATO")
-    WeaponSystem:launch_station(5)
-    WeaponSystem:launch_station(6)
-    WeaponSystem:emergency_jettison(5)
-    WeaponSystem:emergency_jettison(6)
+    if not jato_armed then
+        return
+    end
+
+    local left_jato = WeaponSystem:get_station_info(5)
+    local right_jato = WeaponSystem:get_station_info(6)
+
+    if left_jato.count == 1 then
+        dispatch_action(nil, Keys.JATO_fire_left)
+        WeaponSystem:launch_station(5)
+        print_message_to_user("Firing Left Jato")
+    end
+
+    if right_jato.count == 1 then
+        dispatch_action(nil, Keys.JATO_fire_right)
+        WeaponSystem:launch_station(6)
+        print_message_to_user("Firing Right Jato")
+    end
 end
 
 local ir_missile_lock_param = get_param_handle("WS_IR_MISSILE_LOCK")
@@ -490,6 +526,7 @@ function update()
 	end	--]]
     
     update_fuel_tanks()
+    update_jato()
 
     time_ticker = time_ticker + update_rate
     local _master_arm = get_elec_mon_arms_dc_ok() -- check master arm status
@@ -1309,9 +1346,14 @@ function SetCommand(command,value)
 	elseif command == Keys.JATOFiringButton then
 		fire_jato()
 	elseif command == device_commands.JATO_arm then
-		check_jato_armed_and_full(value)
+		jato_armed = value == 1.0
 	elseif command == device_commands.JATO_jettison then
-
+        print_message_to_user("Jett "..tostring(value))
+        if value == 1.0 then
+            WeaponSystem:emergency_jettison(5)
+            WeaponSystem:emergency_jettison(6)
+            jato_jettison = true
+        end
     elseif command == Keys.MissileVolumeInc then
         WeaponSystem:performClickableAction(device_commands.shrike_sidewinder_volume, clamp(missile_volume_pos + 0.05, 0, 1), false)
     elseif command == Keys.MissileVolumeDec then

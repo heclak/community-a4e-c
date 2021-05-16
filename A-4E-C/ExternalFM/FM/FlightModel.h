@@ -297,7 +297,7 @@ void FlightModel::addForce(const Vec3& force, const Vec3& pos)
 	m_force += force;
 
 	//Calculate the relative position to the centre of mass
-	Vec3 relativePos = pos - m_com;
+	Vec3 relativePos = pos - m_state.getCOM();
 
 	//Calculate the "moment" (actually torque)
 	Vec3 moment = cross(relativePos, force);

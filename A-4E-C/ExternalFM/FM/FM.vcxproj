@@ -187,6 +187,7 @@
     <ClInclude Include="ILS.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Interface.h" />
+    <ClInclude Include="Jato.h" />
     <ClInclude Include="LERX.h" />
     <ClInclude Include="LuaVM.h" />
     <ClInclude Include="Maths.h" />
@@ -230,6 +231,7 @@
     <ClCompile Include="FuelSystem2.cpp" />
     <ClCompile Include="ILS.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Jato.cpp" />
     <ClCompile Include="LuaVM.cpp" />
     <ClCompile Include="Maths.cpp" />
     <ClCompile Include="Radio.cpp" />

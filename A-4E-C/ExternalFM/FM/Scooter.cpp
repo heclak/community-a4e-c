@@ -31,6 +31,8 @@
 #include "ILS.h"
 #include "Commands.h"
 #include "Beacon.h"
+#include "Devices.h"
+#include "Jato.h"
 
 //============================= Statics ===================================//
 static Scooter::AircraftState* s_state = NULL;
@@ -48,6 +50,7 @@ static Scooter::ILS* s_ils = NULL;
 static std::vector<LERX> s_splines;
 
 static Scooter::Beacon* s_beacon = NULL;
+static Scooter::Jato* s_jato = NULL;
 
 //========================== Static Functions =============================//
 static void init( const char* config );
@@ -85,6 +88,7 @@ void init(const char* config)
 	s_ils = new Scooter::ILS(*s_interface);
 	s_fuelSystem = new Scooter::FuelSystem2( *s_engine, *s_state );
 	s_beacon = new Scooter::Beacon(*s_interface);
+	s_jato = new Scooter::Jato(*s_fm);
 	
 }
 
@@ -102,6 +106,7 @@ void cleanup()
 	delete s_ils;
 	delete s_fuelSystem;
 	delete s_beacon;
+	delete s_jato;
 
 	s_luaVM = NULL;
 	s_state = NULL;
@@ -115,6 +120,7 @@ void cleanup()
 	s_ils = NULL;
 	s_fuelSystem = NULL;
 	s_beacon = NULL;
+	s_jato = NULL;
 
 	s_splines.clear();
 }
@@ -130,9 +136,9 @@ void ed_fm_add_local_force(double & x,double &y,double &z,double & pos_x,double 
 	y = s_fm->getForce().y;
 	z = s_fm->getForce().z;
 
-	pos_x = s_fm->getCOM().x;
-	pos_y = s_fm->getCOM().y;
-	pos_z = s_fm->getCOM().z;
+	pos_x = s_state->getCOM().x;
+	pos_y = s_state->getCOM().y;
+	pos_z = s_state->getCOM().z;
 }
 
 void ed_fm_add_global_force(double & x,double &y,double &z,double & pos_x,double & pos_y,double & pos_z)
@@ -214,6 +220,7 @@ void ed_fm_simulate(double dt)
 	s_avionics->updateAvionics(dt);
 	s_fm->calculateAero(dt);
 	s_beacon->update();
+	s_jato->update(dt);
 
 	//Post update
 	s_interface->setRPM(s_engine->getRPMNorm()*100.0);
@@ -482,8 +489,14 @@ void ed_fm_set_command
 		if ( s_airframe->getNoseCompression() > 0.01 && magnitude(s_state->getLocalSpeed()) < 25.0 )
 			s_airframe->toggleSlatsLocked();
 		break;
+	case KEYS_JATO_FIRE_LEFT:
+		s_jato->fireLeft();
+		break;
+	case KEYS_JATO_FIRE_RIGHT:
+		s_jato->fireRight();
+		break;
 	default:
-		;// printf( "number %d: %lf\n", command, value );
+		printf( "number %d: %lf\n", command, value );
 	}
 
 	if ( command >= 3000 && command < 4000 )
@@ -491,16 +504,15 @@ void ed_fm_set_command
 		int deviceId = decodeClick( value );
 
 		//Do this when we have more than one device to check.
-		/*switch ( deviceId )
+		switch ( deviceId )
 		{
-
-		}*/
-
-		if ( s_fuelSystem->handleInput( command, value ) )
+		case DEVICES_ENGINE:
+			s_fuelSystem->handleInput( command, value );
 			return;
-
-		if ( s_avionics->handleInput( command, value ) )
+		case DEVICES_AVIONICS:
+			s_avionics->handleInput( command, value );
 			return;
+		}
 	}
 }
 

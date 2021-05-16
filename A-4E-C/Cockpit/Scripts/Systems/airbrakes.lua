@@ -48,6 +48,8 @@ local brake_eff = get_param_handle("BRAKE_EFF")
 local wheelchocks_state_param = get_param_handle("WHEEL_CHOCKS_STATE")
 wheelchocks_state_param:set(WHEELCHOCKS_STATE)
 
+local jato_loaded = get_param_handle("WEP_JATO_LOADED")
+
 local birth_tics = 0
 
 dev:listen_command(Airbrake)
@@ -263,14 +265,19 @@ end
 function update()
     update_birth()
     --update_brakes()
+
+    local airbrake_command_actual = ABRAKE_COMMAND
+    if jato_loaded:get() == 1.0 then
+        airbrake_command_actual = 0
+    end
     		
-	if (ABRAKE_COMMAND == 0 and ABRAKE_STATE > 0) then
+	if (airbrake_command_actual == 0 and ABRAKE_STATE > 0) then
 		ABRAKE_STATE = ABRAKE_STATE - 0.01 -- lower airbrake in increments of 0.01 (50x per second)
         if ABRAKE_STATE < 0 then
             ABRAKE_STATE = 0
         end
 	else
-		if (ABRAKE_COMMAND == 1) then
+		if (airbrake_command_actual == 1) then
             local knots = sensor_data.getTrueAirSpeed()*1.9438444924574
             if knots > speedbrake_max_effective_knots then
                 if knots > speedbrake_blowback_knots then

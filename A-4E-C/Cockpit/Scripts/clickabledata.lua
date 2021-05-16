@@ -35,8 +35,8 @@ elements["PNT_83"] = multiposition_switch_limited("Master Lighting ON/OFF/Moment
 
 --Spoilers
 elements["PNT_84"] = default_2_position_tumb("Spoiler Arm Switch",devices.SPOILERS, device_commands.spoiler_arm,84,TOGGLECLICK_LEFT_MID)
-elements["PNT_133"] = default_2_position_tumb("JATO ARM-OFF Switch",devices.AVIONICS, device_commands.JATO_arm,133,TOGGLECLICK_LEFT_MID)
-elements["PNT_134"] = default_2_position_tumb("JATO JETTISON-SAFE Switch",devices.AVIONICS, device_commands.JATO_jettison,134,TOGGLECLICK_LEFT_MID)
+elements["PNT_133"] = default_2_position_tumb("JATO ARM-OFF Switch",devices.WEAPON_SYSTEM, device_commands.JATO_arm,133,TOGGLECLICK_LEFT_MID)
+elements["PNT_134"] = default_2_position_tumb("JATO JETTISON-SAFE Switch",devices.WEAPON_SYSTEM, device_commands.JATO_jettison,134,TOGGLECLICK_LEFT_MID)
 --Speedbrake
 elements["PNT_85"] = default_2_position_tumb("Speedbrake switch",devices.AIRBRAKES, device_commands.speedbrake,85,SPEEDBRAKE_SWITCH)
 elements["PNT_128"] = default_3_position_tumb("Speedbrake emergency",devices.AIRBRAKES, device_commands.speedbrake_emer,128)
