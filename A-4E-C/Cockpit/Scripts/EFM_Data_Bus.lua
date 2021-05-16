@@ -81,6 +81,10 @@ local fm_tcn_object_id = get_param_handle("FM_TCN_OBJECT_ID")
 local fm_tcn_object_name = get_param_handle("FM_TCN_OBJECT_NAME")
 local fm_icls_heading = get_param_handle("FM_ICLS_HEADING")
 
+local fm_acceleration_x = get_param_handle("FM_ACCELERATION_X")
+local fm_acceleration_y = get_param_handle("FM_ACCELERATION_Y")
+local fm_acceleration_z = get_param_handle("FM_ACCELERATION_Z")
+
 local tanks = {
     [1] = fm_l_tank_capacity,
     [2] = fm_c_tank_capacity,
@@ -305,6 +309,10 @@ function fm_getICLSHeading()
     return fm_icls_heading:get()
 end
 
+function fm_getWorldAcceleration()
+    return fm_acceleration_x:get(), fm_acceleration_y:get(), fm_acceleration_z:get()
+end
+
 fm_setCockpitShake(2.0 * optionsData_cockpitShake/100.0)
 
 function get_efm_data_bus()
@@ -360,6 +368,7 @@ function get_efm_data_bus()
     efm_data_bus.fm_getTacanPosZ = fm_getTacanPosZ
     efm_data_bus.fm_tacanValid = fm_tacanValid
     efm_data_bus.fm_getICLSHeading = fm_getICLSHeading
+    efm_data_bus.fm_getWorldAcceleration = fm_getWorldAcceleration
 
     return efm_data_bus
    

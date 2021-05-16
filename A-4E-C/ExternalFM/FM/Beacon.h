@@ -13,6 +13,7 @@
 //================================ Includes ===============================//
 
 // This is an optional include. If the ObjectFinder.h class is not found stubs will be used.
+// If anyone from Eagle Dynamics wishes to know how this works please contact me at joshnel123@gmail.com.
 #if __has_include("optional_headers/ObjectFinder.h")
 #define USE_OBJECT_FINDER
 #include "optional_headers/ObjectFinder.h"

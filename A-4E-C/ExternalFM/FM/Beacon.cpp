@@ -36,7 +36,7 @@ void Scooter::Beacon::update()
 #ifdef USE_OBJECT_FINDER
 	void* ptr = m_finder.find( id, name );
 	valid = m_finder.findPosition( id, name, pos, heading );
-	printf( "ID: %d, PTR: %p, x: %lf, y: %lf, z: %lf\n", id, ptr, pos.x, pos.y, pos.z );
+	//printf( "ID: %d, PTR: %p, x: %lf, y: %lf, z: %lf\n", id, ptr, pos.x, pos.y, pos.z );
 #endif
 
 	m_interface.setTacanValid( valid );

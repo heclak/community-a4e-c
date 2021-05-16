@@ -22,6 +22,7 @@ local meter2mile = 0.000621371
 local meter2feet = 3.28084
 local knot2meter = 1852
 local nm2meter = 1852
+local knots_2_metres_per_second = 0.514444
 
 local degrees_per_radian = 57.2957795
 --local feet_per_meter_per_minute = 196.8
@@ -57,6 +58,8 @@ local apn153_gs = get_param_handle("APN153-GS")
 local apn153_drift = get_param_handle("APN153-DRIFT")
 local apn153_wind_speed = get_param_handle("APN153-WIND-SPEED")
 local apn153_wind_dir = get_param_handle("APN153-WIND-DIR")
+local apn153_wind_x = 0.0
+local apn153_wind_z = 0.0
 
 -- apn-153 indicators
 local apn153_speed_Xnn = get_param_handle("APN153-SPEED-Xnn")
@@ -87,6 +90,9 @@ local asn41_ppos_lon = 0
 local asn41_ppos_lat_offset = 0
 local asn41_ppos_lon_offset = 0
 
+local asn41_integrate_x = 0
+local asn41_integrate_z = 0
+
 local asn41_d1_lat = 0
 local asn41_d1_lon = 0
 local asn41_d1_lat_offset = 0
@@ -112,6 +118,9 @@ local asn41_winddir_push_state = 0
 local dest_lat_slew_state = 0
 local dest_lon_slew_state = 0
 local asn41_slew_rate = 1
+
+local asn41_wind_x = 0.0
+local asn41_wind_z = 0.0
 
 -- asn-41 shared output data
 local asn41_valid = get_param_handle("ASN41-VALID")
@@ -159,6 +168,12 @@ local asn41_magvar_xXxxx = get_param_handle("ASN41-MAGVAR-xXxxx")
 local asn41_magvar_xxXxx = get_param_handle("ASN41-MAGVAR-xxXxx")
 local asn41_magvar_xxxXx = get_param_handle("ASN41-MAGVAR-xxxXx")
 local asn41_magvar_xxxxX = get_param_handle("ASN41-MAGVAR-xxxxX")
+
+--DRIFT ERRORS
+local pitch_err = 0.0
+local roll_err = 0.0
+local heading_err = 0.0
+local vel_err = 0.0
 
 
 -----------------------------------------------------------------------
@@ -394,6 +409,21 @@ function post_initialize()
         end
     end
 
+    local lx, ly, lz = sensor_data.getSelfCoordinates()
+    asn41_integrate_x = lx
+    asn41_integrate_z = lz
+    print_message_to_user(recursively_traverse(sensor_data))
+    local geopos = lo_to_geo_coords(asn41_integrate_x, asn41_integrate_z)
+
+    asn41_ppos_lat = geopos.lat
+    asn41_ppos_lon = geopos.lon
+
+    math.randomseed(asn41_ppos_lat)
+    pitch_err = 0.02 * randDir()
+    roll_err = 0.02 * randDir()
+    heading_err = 0.02 * randDir()
+    vel_err = 0.5 * randDir()
+
     dev:performClickableAction(device_commands.tacan_ch_major, 0.0, true)
     dev:performClickableAction(device_commands.tacan_ch_minor, 0.1, true)
 
@@ -405,11 +435,11 @@ function post_initialize()
         apn153_tempcondition = 100
         apn153_warmup_timer = 0
         apn153_test_timer = 0
-        dev:performClickableAction(device_commands.doppler_select, 0.1, true)   -- STBY by default for warm starts
+        dev:performClickableAction(device_commands.doppler_select, 0.2, true)   -- ground by default for warm starts
 
         asn41_state = "asn41-off"
         asn41_input = "OFF"
-        dev:performClickableAction(device_commands.nav_select, 0.1, true)  -- set switch to "off" initially
+        dev:performClickableAction(device_commands.nav_select, 0.3, true)  -- set switch to D1 initially
 
     elseif birth=="GROUND_COLD" then
         -- setup doppler
@@ -824,14 +854,110 @@ function draw_dest(la, lo)
     nav_dest_lon_nnnnnX:set( E_W )
 end
 
+function getGroundSpeedFromDoppler(precision)
 
-function update_and_draw_ppos(asn41_ppos_lat_offset, asn41_ppos_lon_offset)
+    precision = precision or 0
+
+    local v_ground_x, v_ground_y, v_ground_z = sensor_data.getSelfVelocity()
+
+
+    v_ground_x = round(v_ground_x, precision)
+    v_ground_z = round(v_ground_z, precision)
+
+    return v_ground_x, v_ground_z
+end
+
+function calculate_drift()
+    local point = geo_to_lo_coords(asn41_ppos_lat + asn41_ppos_lat_offset, asn41_ppos_lon + asn41_ppos_lon_offset)
     local lx, ly, lz = sensor_data.getSelfCoordinates()
-    local geopos = lo_to_geo_coords(lx, lz)
 
+    return math.sqrt((lx - point.x)^2 + (lz - point.z)^2)
+end
+
+function randDir()
+    if math.random() > 0.5 then
+        return 1.0
+    else
+        return -1.0
+    end
+end
+
+function getAirDataComputerVariables(precision)
+
+    precision = math.max(precision or 4, 1)
+
+    local tas = round(sensor_data.getTrueAirSpeed(), precision - 1)
+    local roll = round(sensor_data.getRoll() + roll_err, precision)
+    local pitch = round(sensor_data.getPitch() + pitch_err, precision)
+    local heading = round(-sensor_data.getHeading() + heading_err, precision)
+    local aoa = round(sensor_data.getAngleOfAttack(), precision)
+
+    return tas, pitch, roll, heading, aoa
+end
+
+function getVelocityFromAirDataComputer()
+
+    local tas, pitch, roll, heading, aoa = getAirDataComputerVariables()
+
+    local sinRoll = math.sin(roll)
+    local cosRoll = math.cos(roll)
+
+    local horizontalAirspeed = tas * math.cos(pitch - aoa * cosRoll)
+    heading = heading - aoa * sinRoll
+
+    --local ax, ay, az = efm_data_bus.fm_getWorldAcceleration()
+
+    local vx = horizontalAirspeed * math.cos(heading)-- + update_time_step * ax
+    local vz = horizontalAirspeed * math.sin(heading)-- + update_time_step * az
+
+    --print_message_to_user( "Heading " .. tostring(heading).." errvx: " .. tostring(errvx) .. " errvz: "..tostring(errvz) )
+    --print_message_to_user(tostring(errvx) .. " vx_actual : "..tostring(vax).." vx_calc : "..tostring(vx))
+
+
+    return vx, vz
+end
+
+function update_ASN41_wind_vec(use_apn153)
+
+    if use_apn153 then
+        asn41_wind_x = apn153_wind_x
+        asn41_wind_z = apn153_wind_z
+
+    else
+        wind = bearing_to_2d_vector(asn41_winddir_offset)
+        asn41_wind_x = wind.x * asn41_windspeed_offset * knots_2_metres_per_second
+        asn41_wind_z = wind.z * asn41_windspeed_offset * knots_2_metres_per_second
+
+
+    end
+end
+
+function updateIntegratedLatLong()
+
+    --update_time_step
+    local vx, vz = getVelocityFromAirDataComputer()
+    --print_message_to_user(tostring(vx).." "..tostring(vy).." "..tostring(vz))
+
+
+
+    local halfdtSqr = 0.5 * (update_time_step ^ 2)
+
+    asn41_integrate_x = asn41_integrate_x + (vx - asn41_wind_x + vel_err) * update_time_step 
+    asn41_integrate_z = asn41_integrate_z + (vz - asn41_wind_z + vel_err) * update_time_step
+
+    --local drift = calculate_drift()
+
+    --print_message_to_user("Drift: "..tostring(drift/1000.0))
+
+    local geopos = lo_to_geo_coords(asn41_integrate_x, asn41_integrate_z)
     asn41_ppos_lat = geopos.lat
     asn41_ppos_lon = geopos.lon
-    draw_ppos(geopos.lat+asn41_ppos_lat_offset, geopos.lon+asn41_ppos_lon_offset)
+
+end
+
+
+function update_and_draw_ppos(asn41_ppos_lat_offset, asn41_ppos_lon_offset)
+    draw_ppos(asn41_ppos_lat+asn41_ppos_lat_offset, asn41_ppos_lon+asn41_ppos_lon_offset)
 end
 
 function set_d1_xy(x, y)
@@ -1109,14 +1235,22 @@ function update_asn41()
             elseif asn41_input == "D2" then asn41_state = "asn41-d2"
             end
         else
+            updateIntegratedLatLong()
             -- asn41-d1 output
             asn41_d1_lat_offset, asn41_d1_lon_offset = asn41_slew(asn41_d1_lat_offset, asn41_d1_lon_offset)
             asn41_update_range_and_bearing(1)
             -- asn41-d1 draw
             -- asn41_draw_windspeed( asn41_windspeed_offset )
             -- asn41_draw_winddir( asn41_winddir_offset )
-            asn41_draw_windspeed(apn153_wind_speed:get())
-            asn41_draw_winddir(apn153_wind_dir:get())
+
+            if apn153_state == "apn153-off" or apn153_state == "apn153-test" then
+                asn41_draw_windspeed( asn41_windspeed_offset )
+                asn41_draw_winddir( asn41_winddir_offset )
+            else
+                asn41_draw_windspeed(apn153_wind_speed:get())
+                asn41_draw_winddir(apn153_wind_dir:get())
+            end
+            
             asn41_draw_magvar( asn41_magvar_offset )
             update_and_draw_ppos(asn41_ppos_lat_offset, asn41_ppos_lon_offset)  -- fully tracks present position
             draw_dest(asn41_d1_lat+asn41_d1_lat_offset, asn41_d1_lon+asn41_d1_lon_offset)
@@ -1129,14 +1263,22 @@ function update_asn41()
             elseif asn41_input == "D1" then asn41_state = "asn41-d1"
             end
         else
+            updateIntegratedLatLong()
             -- asn41-d2 output
             asn41_d2_lat_offset, asn41_d2_lon_offset = asn41_slew(asn41_d2_lat_offset, asn41_d2_lon_offset)
             asn41_update_range_and_bearing(2)
             -- asn41-d2 draw
             -- asn41_draw_windspeed( asn41_windspeed_offset )
             -- asn41_draw_winddir( asn41_winddir_offset )
-            asn41_draw_windspeed(apn153_wind_speed:get())
-            asn41_draw_winddir(apn153_wind_dir:get())
+            
+            if apn153_state == "apn153-off" or apn153_state == "apn153-test" then
+                asn41_draw_windspeed( asn41_windspeed_offset )
+                asn41_draw_winddir( asn41_winddir_offset )
+            else
+                asn41_draw_windspeed(apn153_wind_speed:get())
+                asn41_draw_winddir(apn153_wind_dir:get())
+            end
+
             asn41_draw_magvar( asn41_magvar_offset )
             update_and_draw_ppos(asn41_ppos_lat_offset, asn41_ppos_lon_offset)
             draw_dest(asn41_d2_lat+asn41_d2_lat_offset, asn41_d2_lon+asn41_d2_lon_offset)
@@ -1306,47 +1448,10 @@ end
 
 -- Used to calculate the wind vector from the data provided by the AN/APN-153
 -- @return wind direction and wind speed
-function apn153_calculate_wind_vector(true_heading, true_airspeed, ground_track, ground_speed)
-    -- print_message_to_user("true heading: "..true_heading.." true airspeed: "..true_airspeed.." ground track: "..ground_track.." ground speed: "..ground_speed)
-
-    -- this function uses the air vector as the beginning of the vector path
-    -- flip the air vector in preparation for vector addition
-    local air_vector_heading_rad = math.rad((true_heading + 180) % 360)
-    -- convert to radians
-    local ground_track_rad = math.rad(ground_track)
-
-    -- calculate the wind vector
-    local air_vector = {
-        x = true_airspeed * math.cos(air_vector_heading_rad),
-        y = true_airspeed * math.sin(air_vector_heading_rad)
-    }
-    local ground_vector = {
-        x = ground_speed * math.cos(ground_track_rad),
-        y = ground_speed * math.sin(ground_track_rad)
-    }
-    local wind_vector = {
-        x = air_vector.x + ground_vector.x,
-        y = air_vector.y + ground_vector.y
-    }
-    wind_vector.magnitude = math.sqrt((wind_vector.x * wind_vector.x) + (wind_vector.y * wind_vector.y))
-
-    -- check which quadrant is the wind vector in and adjust the direction
-    -- this wind direction indicates the direction the wind is blowing towards
-    if wind_vector.x >= 0 and wind_vector.y >= 0 then -- quadrant 1
-        wind_vector.direction = math.deg(math.atan(wind_vector.y, wind_vector.x))
-    elseif wind_vector.x < 0 and wind_vector.y >= 0 then -- quadrant 2
-        wind_vector.direction = math.rad(math.atan(wind_vector.y, wind_vector.x)) + 180
-    elseif wind_vector.x < 0 and wind_vector.y < 0 then -- quadrant 3
-        wind_vector.direction = math.rad(math.atan(wind_vector.y, wind_vector.x)) + 180
-    elseif wind_vector.x >= 0 and wind_vector.y < 0 then -- quadrant 4
-        wind_vector.direction = math.rad(math.atan(wind_vector.y, wind_vector.x)) + 360
-    end
-
-    -- invert the wind direction to remain consistent with ATIS wind reporting
-    -- wind direction will indicate the direction the wind is coming FROM
-    wind_vector.direction = (wind_vector.direction + 180) % 360
-
-    return wind_vector.magnitude, wind_vector.direction
+function apn153_calculate_wind_vector(ground_track_x, ground_track_z)
+    local vx, vz = getVelocityFromAirDataComputer()
+    local vgx, vgz = getGroundSpeedFromDoppler()
+    return (vx - vgx), (vz - vgz)
 end
 
 -- This function is executed by the AN/APN-153 for purposes of preventing large impluses in
@@ -1378,8 +1483,12 @@ function apn153_speed_and_drift(land)
     local angle = math.deg( math.atan2(curz-lastz, curx-lastx) ) % 360
 
     -- calculate wind data and share
-    local wind_speed, wind_direction = apn153_calculate_wind_vector(heading, sensor_data.getTrueAirSpeed() * 1.94384, angle, speed)
-    apn153_wind_speed:set(wind_speed)
+    apn153_wind_x, apn153_wind_z = apn153_calculate_wind_vector(curx-lastx, curz-lastz)
+
+    wind_direction = vec_to_bearing({x = apn153_wind_x, z = apn153_wind_z})
+    wind_speed = math.sqrt(apn153_wind_x^2 + apn153_wind_z^2)
+
+    apn153_wind_speed:set(wind_speed / knots_2_metres_per_second)
     apn153_wind_dir:set(wind_direction)
 
     drift = (angle-heading)
@@ -1447,6 +1556,7 @@ local function update_apn153()
     local updated = false
 
     if apn153_state == "apn153-off" then
+        update_ASN41_wind_vec(false)
         apn153_gs:set(0)
         apn153_drift:set(0)
         set_apn153_memorylight( apn153_memorylight_test==1 and 1 or 0 )
@@ -1460,6 +1570,7 @@ local function update_apn153()
         end
 
     elseif apn153_state == "apn153-mem-stby" then
+        update_ASN41_wind_vec(true)
         -- speed and drift do not update in standby modes
         set_apn153_memorylight(1)
 
@@ -1472,6 +1583,7 @@ local function update_apn153()
         end
 
     elseif apn153_state == "apn153-mem-land" then
+        update_ASN41_wind_vec(true)
         -- speed and drift do not update in standby modes
         set_apn153_memorylight(1)
 
@@ -1488,6 +1600,7 @@ local function update_apn153()
         end
 
     elseif apn153_state == "apn153-mem-sea" then
+        update_ASN41_wind_vec(true)
         -- speed and drift do not update in standby modes
         set_apn153_memorylight(1)
 
@@ -1504,6 +1617,7 @@ local function update_apn153()
         end
 
     elseif apn153_state == "apn153-land" then
+        update_ASN41_wind_vec(true)
         set_apn153_memorylight( apn153_memorylight_test==1 and 1 or 0 )
 
         if apn153_input ~= "LAND" then
@@ -1527,6 +1641,7 @@ local function update_apn153()
 
 
     elseif apn153_state == "apn153-sea" then
+        update_ASN41_wind_vec(true)
         set_apn153_memorylight( apn153_memorylight_test==1 and 1 or 0 )
 
         if apn153_input ~= "SEA" then
@@ -1536,6 +1651,7 @@ local function update_apn153()
             elseif apn153_input == "TEST" then apn153_state = "apn153-test"
             end
         else
+            
             if signalok then
                 speed,drift = apn153_speed_and_drift(false)
                 updated = true
@@ -1549,7 +1665,7 @@ local function update_apn153()
         end
 
     elseif apn153_state == "apn153-test" then
-
+        update_ASN41_wind_vec(false)
         if apn153_input ~= "TEST" then
             if apn153_input == "OFF" then 
                 apn153_test_running = false
@@ -2246,8 +2362,6 @@ function fetch_object_beacon_data(channel)
         
 
         local object = objects[1]
-
-        --print_message_to_user(object.name)
 
         local cur_beacon = {
             position = { x = 0.0, y = 0.0, z = 0.0 },

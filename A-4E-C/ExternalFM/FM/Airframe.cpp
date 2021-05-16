@@ -161,7 +161,7 @@ void Scooter::Airframe::airframeUpdate(double dt)
 		{
 			m_catMoment = -c_catConstantMoment + std::max ( pow( ( m_catAngle - m_state.getAngle().z - 0.07 ) * 60.0, 3.0 ) * c_catConstrainingForce, -500000.0 );
 		}
-		printf( "Cat Moment: %lf\n", m_catMoment );
+		//printf( "Cat Moment: %lf\n", m_catMoment );
 	}
 	else
 	{

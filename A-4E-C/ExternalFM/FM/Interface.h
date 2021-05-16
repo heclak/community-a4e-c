@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include "../include/Cockpit/ccParametersAPI.h"
 #include "Globals.h"
+#include "Vec3.h"
 
 //=========================================================================//
 
@@ -140,6 +141,10 @@ public:
 		m_tcnUnitName = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_TCN_OBJECT_NAME" );
 		m_iclsHeading = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_ICLS_HEADING" );
 
+		m_accelerationX = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_ACCELERATION_X" );
+		m_accelerationY = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_ACCELERATION_Y" );
+		m_accelerationZ = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_ACCELERATION_Z" );
+
 	}
 
 	cockpit_param_api& api()
@@ -228,6 +233,13 @@ public:
 		getParamString( m_tcnUnitName, buffer, size );
 
 		//printf( "%s\n", buffer );
+	}
+
+	inline void setWorldAcceleration( const Vec3& a )
+	{
+		setParamNumber( m_accelerationX, a.x );
+		setParamNumber( m_accelerationY, a.y );
+		setParamNumber( m_accelerationZ, a.z );
 	}
 
 	inline void setICLSHeading( double value )
@@ -655,6 +667,10 @@ private:
 	void* m_tcnObjectID = NULL;
 	void* m_tcnUnitName = NULL;
 	void* m_iclsHeading = NULL;
+
+	void* m_accelerationX = NULL;
+	void* m_accelerationY = NULL;
+	void* m_accelerationZ = NULL;
 };
 
 

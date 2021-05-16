@@ -334,6 +334,8 @@ void ed_fm_set_current_state
 	direction.z = xz - wy;
 
 	s_state->setCurrentStateWorldAxis(Vec3(px, py, pz), Vec3(vx, vy, vz), direction);
+
+	s_interface->setWorldAcceleration( Vec3( ax, ay, az ) );
 }
 
 
@@ -690,8 +692,8 @@ double ed_fm_get_param(unsigned index)
 	case ED_FM_ENGINE_1_RELATED_RPM:
 		return s_engine->getRPMNorm();
 	case ED_FM_ENGINE_1_CORE_RELATED_RPM:
-		return 0.0;
-		//return s_engine->getRPMNorm();
+		//return 0.0;
+		return s_engine->getRPMNorm();
 
 	case ED_FM_ENGINE_1_CORE_THRUST:
 	case ED_FM_ENGINE_1_THRUST:
