@@ -2,20 +2,20 @@ name = "USMC VMAT-102"
 countries = {"USA"}
 
 livery = {
-  {"Top", DIFFUSE, "a4e-trn-usmc-vmat-102-top", true};
+  {"Top", DIFFUSE, "a4e_trn_usmc_vmat102_top", true};
   {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet", true};
-  {"Bottom", DIFFUSE, "fus_bot_usmc", true};
+  {"Bottom", DIFFUSE, "a4e_usmc_bot_dirty", true};
   {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet", true};
-  {"Gear and metal", DIFFUSE, "fus_bot_usmc", true};
-  {"Cockpit", DIFFUSE, "fus_bot_usmc", true};
+  {"Gear and metal", DIFFUSE, "a4e_usmc_bot_dirty", true};
+  {"Cockpit", DIFFUSE, "a4e_usmc_bot_dirty", true};
   --{"Front",	0, "a4e_ext_front", true};
   --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
 
   -- flaps, used on most liveries
-  {"flaps_001", DIFFUSE, "a4e_bort_white", true};
-  {"flaps_010", DIFFUSE, "a4e_bort_white", true};
-  {"flaps_100", DIFFUSE, "a4e_bort_white", true};
+  {"flaps_001", DIFFUSE, "empty", true};
+  {"flaps_010", DIFFUSE, "empty", true};
+  {"flaps_100", DIFFUSE, "empty", true};
 
   -- three digit, smaller nose numbers, used on most liveries
   {"nose_001", DIFFUSE, "a4e_bort_black", true};

@@ -53,12 +53,12 @@ countries = {
 
 livery =
 {
-  {"Top", DIFFUSE, "community-a4e3-top", true};
-  {"Top", ROUGHNESS_METALLIC, "community-a4e3-top_RoughMet", true};
-  {"Bottom", DIFFUSE, "community-a4e3-bot", true};
-  {"Bottom", ROUGHNESS_METALLIC, "community-a4e3-bot_RoughMet", true};
-  {"Gear and metal", DIFFUSE, "community-a4e3-bot", true};
-  {"Cockpit", DIFFUSE, "community-a4e-bot", true};
+  {"Top", DIFFUSE, "a4e_community3_top", true};
+  {"Top", ROUGHNESS_METALLIC, "a4e_community3_top_RoughMet", true};
+  {"Bottom", DIFFUSE, "a4e_community3_bot", true};
+  {"Bottom", ROUGHNESS_METALLIC, "a4e_community3_bot_RoughMet", true};
+  {"Gear and metal", DIFFUSE, "a4e_community3_bot", true};
+  {"Cockpit", DIFFUSE, "a4e_community3_bot", true};
   --{"Front",	0, "a4e_ext_front", true};
   --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
@@ -97,11 +97,11 @@ livery =
   {"tail_100", DIFFUSE, "empty", true};
 
   -- custom fuel tanks: 150 gallon
-  {"fuel_150_a4e", DIFFUSE, "uvMapsFuelTank_DFT150_DFT300_community_a4e", true};
+  {"fuel_150_a4e", DIFFUSE, "a4e_ft_community_ft", true};
 
   -- custom fuel tank: 300 gallon left/right
-  {"fuel_300lr_a4e", DIFFUSE, "uvMapsFuelTank_DFT150_DFT300_community_a4e", true};
+  {"fuel_300lr_a4e", DIFFUSE, "a4e_ft_community_ft", true};
 
   -- custom fuel tank: 300 gallon center
-  {"fuel_300c_a4e", DIFFUSE, "uvMapsFuelTank_DFT150_DFT300_community_a4e", true};
+  {"fuel_300c_a4e", DIFFUSE, "a4e_ft_community_ft", true};
 }

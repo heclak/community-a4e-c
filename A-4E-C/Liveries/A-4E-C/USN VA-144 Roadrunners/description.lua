@@ -2,12 +2,12 @@ name = "USN VA-144 Roadrunners"
 countries = {"USA"}
 
 livery = {
-  {"Top", DIFFUSE, "va144_roadrunners_top", true};
+  {"Top", DIFFUSE, "a4e_usn_va144_roadrunners_top", true};
   {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet", true};
-  {"Bottom", DIFFUSE, "fus_bot_usn", true};
+  {"Bottom", DIFFUSE, "a4e_usn_bot_dirty", true};
   {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet", true};
-  {"Gear and metal", DIFFUSE, "fus_bot_usn", true};
-  {"Cockpit", DIFFUSE, "fus_bot_usn", true};
+  {"Gear and metal", DIFFUSE, "a4e_usn_bot_dirty", true};
+  {"Cockpit", DIFFUSE, "a4e_usn_bot_dirty", true};
   --{"Front",	0, "a4e_ext_front", true};
   --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
@@ -46,8 +46,8 @@ livery = {
   {"tail_100", DIFFUSE, "empty", true};
 
   -- custom fuel tanks: 150 gallon
-  {"fuel_150_a4e", DIFFUSE, "uvmapsfueltank_dft150_dft300-rr", true};
+  {"fuel_150_a4e", DIFFUSE, "a4e_ft_150_300_lightning", true};
 
   -- custom fuel tank: 300 gallon left/right
-  {"fuel_300lr_a4e", DIFFUSE, "uvmapsfueltank_dft150_dft300-rr", true};
+  {"fuel_300lr_a4e", DIFFUSE, "a4e_ft_150_300_lightning", true};
 }

@@ -2,7 +2,7 @@ name = "BAE Systems"
 countries = {"USA", "UK", "GER"}
 
 livery = {
-  {"Top", DIFFUSE, "a4e-trn-bae-top", true};
+  {"Top", DIFFUSE, "a4e_trn_bae_top", true};
   {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet_hi", true};
   --{"Bottom", DIFFUSE, "a4e_ext_bottom", true};
   {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet_hi", true};

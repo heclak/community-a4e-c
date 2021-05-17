@@ -2,12 +2,12 @@ name = "USMC VMA-311 Tomcats"
 countries = {"USA"}
 
 livery = {
-  {"Top", DIFFUSE, "vma311_tomcats_top", true};
+  {"Top", DIFFUSE, "a4e_usmc_vma311_tomcats_top", true};
   {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet", true};
-  {"Bottom", DIFFUSE, "fus_bot_usmc", true};
+  {"Bottom", DIFFUSE, "a4e_usmc_bot_dirty", true};
   {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet", true};
-  {"Gear and metal", DIFFUSE, "fus_bot_usmc", true};
-  {"Cockpit", DIFFUSE, "fus_bot_usmc", true};
+  {"Gear and metal", DIFFUSE, "a4e_usmc_bot_dirty", true};
+  {"Cockpit", DIFFUSE, "a4e_usmc_bot_dirty", true};
   --{"Front",	0, "a4e_ext_front", true};
   --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};

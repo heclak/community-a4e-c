@@ -2,12 +2,12 @@ name = "USMC TOPGUN MiG-17"
 countries = {"USA", "AUSAF"}
 
 livery = {
-  {"Top", DIFFUSE, "a4e-aggr-usmc-topgun-mig-17-top", true};
+  {"Top", DIFFUSE, "a4e_aggr_usmc_topgun_mig17_top", true};
   {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet_lo", true};
-  {"Bottom", DIFFUSE, "a4e-aggr-usmc-topgun-mig-17-bot", true};
+  {"Bottom", DIFFUSE, "a4e_aggr_usmc_topgun_mig17_bot", true};
   {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet_lo", true};
-  {"Cockpit", DIFFUSE, "a4e-aggr-usmc-topgun-mig-17-bot", true};
-  {"Gear and metal", DIFFUSE, "a4e-aggr-usmc-topgun-mig-17-bot", true};
+  {"Cockpit", DIFFUSE, "a4e_aggr_usmc_topgun_mig17_bot", true};
+  {"Gear and metal", DIFFUSE, "a4e_aggr_usmc_topgun_mig17_bot", true};
   --{"Front",	0, "a4e_ext_front", true};
   --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
@@ -46,11 +46,11 @@ livery = {
   {"tail_100", DIFFUSE, "empty", true};
 
   -- custom fuel tanks: 150 gallon
-  {"fuel_150_a4e", DIFFUSE, "a4e-aggr-usmc-topgun-mig-17-ft", true};
+  {"fuel_150_a4e", DIFFUSE, "a4e_aggr_usmc_topgun_mig17_ft", true};
 
   -- custom fuel tank: 300 gallon left/right
-  {"fuel_300lr_a4e", DIFFUSE, "a4e-aggr-usmc-topgun-mig-17-ft", true};
+  {"fuel_300lr_a4e", DIFFUSE, "a4e_aggr_usmc_topgun_mig17_ft", true};
 
   -- custom fuel tank: 300 gallon center
-  {"fuel_300c_a4e", DIFFUSE, "a4e-aggr-usmc-topgun-mig-17-ft", true};
+  {"fuel_300c_a4e", DIFFUSE, "a4e_aggr_usmc_topgun_mig17_ft", true};
 }

@@ -2,12 +2,12 @@ name = "USN VT-7 Eagles"
 countries = {"USA"}
 
 livery = {
-  {"Top", DIFFUSE, "a4e-trn-usn-vt-7-eagles-top", true};
-  {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet", true};
-  {"Bottom", DIFFUSE, "fus_bot_usn", true};
-  {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet", true};
-  {"Gear and metal", DIFFUSE, "fus_bot_usn", true};
-  {"Cockpit", DIFFUSE, "fus_bot_usn", true};
+  {"Top", DIFFUSE, "a4e_trn_usn_vt7_eagles_top", true};
+  {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet_hi", true};
+  {"Bottom", DIFFUSE, "a4e_usn_bot_dirty", true};
+  {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet_hi", true};
+  {"Gear and metal", DIFFUSE, "a4e_usn_bot_dirty", true};
+  {"Cockpit", DIFFUSE, "a4e_usn_bot_dirty", true};
   --{"Front",	0, "a4e_ext_front", true};
   --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};

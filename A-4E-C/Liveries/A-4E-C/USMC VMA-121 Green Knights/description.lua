@@ -2,12 +2,12 @@ name = "USMC VMA-121 Green Knights"
 countries = {"USA"}
 
 livery = {
-  {"Top", DIFFUSE, "vma121_green_knights_top", true};
+  {"Top", DIFFUSE, "a4e_usmc_vma121_greenknights_top", true};
   {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet", true};
-  {"Bottom", DIFFUSE, "fus_bot_usmc", true};
+  {"Bottom", DIFFUSE, "a4e_usmc_bot", true};
   {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet", true};
-  {"Gear and metal", DIFFUSE, "fus_bot_usmc", true};
-  {"Cockpit", DIFFUSE, "fus_bot_usmc", true};
+  {"Gear and metal", DIFFUSE, "a4e_usmc_bot", true};
+  {"Cockpit", DIFFUSE, "a4e_usmc_bot", true};
   --{"Front",	0, "a4e_ext_front", true};
   --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
@@ -15,7 +15,7 @@ livery = {
   -- flaps, used on most liveries
   {"flaps_001", DIFFUSE, "a4e_bort_white", true};
   {"flaps_010", DIFFUSE, "a4e_bort_white", true};
-  {"flaps_100", DIFFUSE, "a4e_bort_white", true};
+  {"flaps_100", DIFFUSE, "empty", true};
 
   -- three digit, smaller nose numbers, used on most liveries
   {"nose_001", DIFFUSE, "a4e_bort_black", true};
@@ -46,10 +46,10 @@ livery = {
   {"tail_100", DIFFUSE, "empty", true};
 
   -- custom fuel tanks: 150 gallon
-  {"fuel_150_a4e", DIFFUSE, "uvmapsfueltank_dft150_dft300-green", true};
+  {"fuel_150_a4e", DIFFUSE, "a4e_ft_150_300_green", true};
 
   -- custom fuel tank: 300 gallon left/right
-  {"fuel_300lr_a4e", DIFFUSE, "uvmapsfueltank_dft150_dft300-green", true};
+  {"fuel_300lr_a4e", DIFFUSE, "a4e_ft_150_300_green", true};
 
   -- custom fuel tank: 300 gallon center
   --{"fuel_300c_a4e", DIFFUSE, "uvmapsfueltank_dft150_dft300", true};

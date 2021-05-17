@@ -2,12 +2,12 @@ name = "USN TOPGUN"
 countries = {"USA", "AUSAF"}
 
 livery = {
-  {"Top", DIFFUSE, "a4e-aggr-usn-topgun-top", true};
+  {"Top", DIFFUSE, "a4e_aggr_usn_topgun_top", true};
   {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet_lo", true};
-  {"Bottom", DIFFUSE, "a4e-aggr-usn-topgun-bot", true};
+  {"Bottom", DIFFUSE, "a4e_aggr_usn_topgun_bot", true};
   {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet_lo", true};
-  {"Cockpit", DIFFUSE, "a4e-aggr-usn-topgun-bot", true};
-  {"Gear and metal", DIFFUSE, "a4e-aggr-usn-topgun-bot", true};
+  {"Cockpit", DIFFUSE, "a4e_aggr_usn_topgun_bot", true};
+  {"Gear and metal", DIFFUSE, "a4e_aggr_usn_topgun_bot", true};
   --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
 
@@ -45,14 +45,11 @@ livery = {
   {"tail_100", DIFFUSE, "empty", true};
 
   -- custom fuel tanks: 150 gallon
-  {"fuel_150_a4e", DIFFUSE, "a4e-aggr-usn-topgun-ft", true};
+  {"fuel_150_a4e", DIFFUSE, "a4e_aggr_usn_topgun_ft", true};
 
   -- custom fuel tank: 300 gallon left/right
-  {"fuel_300lr_a4e", DIFFUSE, "a4e-aggr-usn-topgun-ft", true};
+  {"fuel_300lr_a4e", DIFFUSE, "a4e_aggr_usn_topgun_ft", true};
 
   -- custom fuel tank: 300 gallon center
-  {"fuel_300c_a4e", DIFFUSE, "a4e-aggr-usn-topgun-ft", true};
-
-  -- custom MER rack
-  {"a4e_mer", DIFFUSE, "a4e_mer_topgun", true};
+  {"fuel_300c_a4e", DIFFUSE, "a4e_aggr_usn_topgun_ft", true};
 }
