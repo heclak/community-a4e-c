@@ -283,11 +283,86 @@ declare_loadout(	--D-704 BUDDY POD
 	}
 )
 
+
+declare_weapon({
+    category = CAT_ROCKETS,
+    name = "5KS_dummy",
+    user_name = _("5KS-4500 JATO Bottle"),
+    wsTypeOfWeapon = {wsType_Weapon, wsType_NURS, wsType_Rocket, WSTYPE_PLACEHOLDER},
+    scheme = "nurs-standard",
+    model = "A4E_5KS_4500",
+    attribute	=	{wsType_Weapon,	wsType_NURS, wsType_Rocket,	WSTYPE_PLACEHOLDER},
+
+    fm = {
+        mass = 221,
+        caliber = 0.3,
+        cx_coeff = {0.2, 0.4, 0.7, 0.9, 1.3},
+        L = 1.56,
+        I = 0.18,
+        Ix = 0.00165,
+        Ma = 0.124698,
+        Mw = 1.4351299,
+        shapeName = "",
+        wind_time = 0,
+        wind_sigma = 0,
+        wing_unfold_time = 0.1,
+        rail_open = false,
+    },
+
+    engine = {
+        fuel_mass = 180,
+        impulse = 10,
+        boost_time = 7.9,
+        work_time = 0.1, 
+        boost_factor = 0.01,
+        nozzle_position = {{0.27, -0.25, 0}},
+        nozzle_orientationXYZ = {{0,0,0}},
+        tail_width = 0.15,
+        boost_tail = 4,
+        work_tail = 3,
+        smoke_color = {0.75, 0.75, 0.75},
+        smoke_transparency = 0.7,
+
+    },
+
+    warhead = {
+        mass = 0,
+        expl_mass = 0,
+        other_factors = {0,0,0},
+        concrete_factors = {0,0,0},
+        obj_factors = {0,0},
+        cumulative_factor = 0,
+        cumulative_thickness = 0,
+        piercing_mass = 0,
+    },
+
+
+
+    shape_table_data = {
+        {
+            file = "A4E_5KS_4500",
+            life = 1,
+            fire = {0, 1},
+            username = "5KS-4500 JATO Bottle",
+            name = "5KS_dummy",
+            index = WSTYPE_PLACEHOLDER,
+        },
+    },
+    
+    properties = {
+        dist_min = 1,
+        dist_max = 10000,
+    },
+})
+
+
+
+
 declare_loadout({	-- 5KS-4500 JATO Bottle
-				category=	CAT_ROCKETS,
+				category=	CAT_PODS,
 				CLSID	=	"{A4E_5KS-4500}",
 				Picture	=	"LAU61.png",
-				wsTypeOfWeapon	=	{wsType_Weapon, wsType_NURS, wsType_Rocket,	145},
+				wsTypeOfWeapon	=	{wsType_Weapon, wsType_NURS, wsType_Rocket, 145},
 				displayName	=	_("5KS-4500 JATO Bottle"),
 				--attribute	=	{4,	7,	32,	9},
 				attribute	=	{wsType_Weapon,	wsType_NURS, wsType_Container,	9},
@@ -298,19 +373,17 @@ declare_loadout({	-- 5KS-4500 JATO Bottle
 				{
 					[1]	=
 					{
-						Position	=	{0,	0,	0},
 						ShapeName	=	"A4E_5KS_4500",
 						IsAdapter 	= 	true,
 					},
                     [2] = 
                     {
                         -- DrawArgs       = {{1,1},{2,1}},
-                        payload_CLSID  = "{SPRD-99}",
-                        ShapeName      = "sprd_dummy"
+                        name = "5KS_dummy",
+                        ShapeName      = "sprd_dummy",
                     }
 				}, -- end of Elements
 })
-
 
 
 

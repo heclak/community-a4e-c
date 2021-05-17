@@ -143,9 +143,12 @@ local main_rpm = get_param_handle("RPM")
 
 local bombing_computer_target_set = false
 
-
-local jato_jettison = false
-local jato_armed = false
+local jato_state = {
+    jato_jettison = false,
+    jato_armed = false,
+    jato_l_fired = false,
+    jato_r_fired = false,
+}
 
 
 ------------------------------------------------
@@ -387,7 +390,7 @@ end
 
 function update_jato()
 
-    if jato_jettison then
+    if jato_state.jato_jettison then
         WeaponSystem:performClickableAction(device_commands.JATO_jettison,0.0,true)
     end
 
@@ -402,23 +405,25 @@ function update_jato()
 end
 
 function fire_jato()
-    if not jato_armed then
+    if not jato_state.jato_armed then
         return
     end
 
     local left_jato = WeaponSystem:get_station_info(5)
     local right_jato = WeaponSystem:get_station_info(6)
 
-    if left_jato.count == 1 then
+    if left_jato.count == 1 and not jato_state.jato_l_fired then
         dispatch_action(nil, Keys.JATO_fire_left)
         WeaponSystem:launch_station(5)
         print_message_to_user("Firing Left Jato")
+        jato_state.jato_l_fired = true
     end
 
-    if right_jato.count == 1 then
+    if right_jato.count == 1 and not jato_state.jato_r_fired then
         dispatch_action(nil, Keys.JATO_fire_right)
         WeaponSystem:launch_station(6)
         print_message_to_user("Firing Right Jato")
+        jato_state.jato_r_fired = true
     end
 end
 
@@ -1346,13 +1351,15 @@ function SetCommand(command,value)
 	elseif command == Keys.JATOFiringButton then
 		fire_jato()
 	elseif command == device_commands.JATO_arm then
-		jato_armed = value == 1.0
+		jato_state.jato_armed = value == 1.0
 	elseif command == device_commands.JATO_jettison then
         print_message_to_user("Jett "..tostring(value))
         if value == 1.0 then
             WeaponSystem:emergency_jettison(5)
             WeaponSystem:emergency_jettison(6)
-            jato_jettison = true
+            jato_state.jato_jettison = true
+            jato_state.jato_l_fired = false
+            jato_state.jato_r_fired = false
         end
     elseif command == Keys.MissileVolumeInc then
         WeaponSystem:performClickableAction(device_commands.shrike_sidewinder_volume, clamp(missile_volume_pos + 0.05, 0, 1), false)
