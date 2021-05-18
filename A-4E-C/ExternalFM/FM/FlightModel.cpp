@@ -349,8 +349,8 @@ void Scooter::FlightModel::calculateElements()
 	Vec3 dragElem = windAxisToBody(m_CDwindAxesComp, m_state.getAOA(), m_state.getBeta() );
 	
 
-	m_elementLSlat.setLDFactor(m_airframe.getSlatLPosition(), m_airframe.getSlatLPosition());
-	m_elementRSlat.setLDFactor(m_airframe.getSlatRPosition(), m_airframe.getSlatRPosition());
+	m_elementLSlat.setLDFactor(1.1 * m_airframe.getSlatLPosition(), m_airframe.getSlatLPosition());
+	m_elementRSlat.setLDFactor(1.1 * m_airframe.getSlatRPosition(), m_airframe.getSlatRPosition());
 	m_elementLFlap.setLDFactor(m_airframe.getFlapsPosition() * m_airframe.getFlapDamage(), m_airframe.getFlapsPosition());
 	m_elementRFlap.setLDFactor(m_airframe.getFlapsPosition() * m_airframe.getFlapDamage(), m_airframe.getFlapsPosition());
 	m_elementLSpoiler.setLDFactor(m_airframe.getSpoilerPosition() * m_airframe.getSpoilerDamage(), m_airframe.getSpoilerPosition());

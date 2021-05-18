@@ -1957,7 +1957,7 @@ end
 
 function update_ils()
     local desired_gs = 1.0
-    local desired_loc = -10.0
+    local desired_loc = -1.0
 
     
 
