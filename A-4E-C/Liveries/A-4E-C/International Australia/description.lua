@@ -2,16 +2,16 @@ name = "Australian Navy"
 countries = {"USA", "AUS"}
 
 livery = {
-  {"Top", DIFFUSE, "a4e-aus-top", true};
+  {"Top", DIFFUSE, "a4e_intl_aus_top", true};
   {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet", true};
-  {"Bottom", DIFFUSE, "a4e-aus-bot", true};
+  {"Bottom", DIFFUSE, "a4e_intl_aus_bot", true};
   {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet", true};
-  {"Gear and metal", DIFFUSE, "a4e-aus-bot", true};
-  {"Gear and metal", DIFFUSE, "a4e-aus-bot", true};
-  {"Cockpit", DIFFUSE, "a4e-aus-bot", true};
+  {"Gear and metal", DIFFUSE, "a4e_intl_aus_bot", true};
+  {"Cockpit", DIFFUSE, "a4e_intl_aus_bot", true};
   --{"Front",	0, "a4e_ext_front", true};
   --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
+  {"Pilot",	DIFFUSE, "a4e_intl_aus_pilot", true};
 
   -- flaps, used on most liveries
   {"flaps_001", DIFFUSE, "a4e_bort_white_smooth", true};
@@ -47,11 +47,11 @@ livery = {
   {"tail_100", DIFFUSE, "empty", true};
 
   -- custom fuel tanks: 150 gallon
-  {"fuel_150_a4e", DIFFUSE, "uvMapsFuelTank_DFT150_DFT300_lightgrey", true};
+  {"fuel_150_a4e", DIFFUSE, "a4e_ft_150_300_gray", true};
 
   -- custom fuel tank: 300 gallon left/right
-  {"fuel_300lr_a4e", DIFFUSE, "uvMapsFuelTank_DFT150_DFT300_lightgrey", true};
+  {"fuel_300lr_a4e", DIFFUSE, "a4e_ft_150_300_gray", true};
 
   -- custom fuel tank: 300 gallon center
-  {"fuel_300c_a4e", DIFFUSE, "uvMapsFuelTank_DFT150_DFT300_lightgrey", true};
+  {"fuel_300c_a4e", DIFFUSE, "a4e_ft_150_300_gray", true};
 }

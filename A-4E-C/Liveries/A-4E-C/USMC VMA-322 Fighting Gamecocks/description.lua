@@ -2,15 +2,16 @@ name = "USMC VMA-322 Fighting Gamecocks"
 countries = {"USA"}
 
 livery = {
-  {"Top", DIFFUSE, "vma322_fighting_gamecocks_top", true};
+  {"Top", DIFFUSE, "a4e_usmc_vma322_fightinggamecocks_top", true};
   {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet", true};
-  {"Bottom", DIFFUSE, "fus_bot_usmc", true};
+  {"Bottom", DIFFUSE, "a4e_usmc_bot_dirty", true};
   {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet", true};
-  {"Gear and metal", DIFFUSE, "fus_bot_usmc", true};
-  {"Cockpit", DIFFUSE, "fus_bot_usmc", true};
+  {"Gear and metal", DIFFUSE, "a4e_usmc_bot_dirty", true};
+  {"Cockpit", DIFFUSE, "a4e_usmc_bot_dirty", true};
   --{"Front",	0, "a4e_ext_front", true};
   --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
+	{"Pilot",	DIFFUSE, "a4e_usmc_vma322_fightinggamecocks_pilot", true};
 
   -- flaps, used on most liveries
   {"flaps_001", DIFFUSE, "a4e_bort_white", true};
@@ -46,8 +47,8 @@ livery = {
   {"tail_100", DIFFUSE, "empty", true};
 
   -- custom fuel tanks: 150 gallon
-  {"fuel_150_a4e", DIFFUSE, "uvmapsfueltank_dft150_dft300-green", true};
+  {"fuel_150_a4e", DIFFUSE, "a4e_ft_150_300_green", true};
 
   -- custom fuel tank: 300 gallon left/right
-  {"fuel_300lr_a4e", DIFFUSE, "uvmapsfueltank_dft150_dft300-green", true};
+  {"fuel_300lr_a4e", DIFFUSE, "a4e_ft_150_300_green", true};
 }

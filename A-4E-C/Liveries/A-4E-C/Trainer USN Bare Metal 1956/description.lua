@@ -2,15 +2,16 @@ name = "USN Bare Metal"
 countries = {"USA"}
 
 livery = {
-  {"Top", DIFFUSE, "a4e-trn-baremetal-top", true};
-  {"Top", ROUGHNESS_METALLIC, "a4e-trn-baremetal-top_RoughMet", true};
-  {"Bottom", DIFFUSE, "a4e-trn-baremetal-bot", true};
-  {"Bottom", ROUGHNESS_METALLIC, "a4e-trn-baremetal-bot_RoughMet", true};
-  {"Gear and metal", DIFFUSE, "a4e-trn-baremetal-bot", true};
-  {"Cockpit", DIFFUSE, "a4e-trn-baremetal-bot", true};
+  {"Top", DIFFUSE, "a4e_trn_baremetal_top", true};
+  {"Top", ROUGHNESS_METALLIC, "a4e_trn_baremetal_top_RoughMet", true};
+  {"Bottom", DIFFUSE, "a4e_trn_baremetal_bot", true};
+  {"Bottom", ROUGHNESS_METALLIC, "a4e_trn_baremetal_bot_RoughMet", true};
+  {"Gear and metal", DIFFUSE, "a4e_trn_baremetal_bot", true};
+  {"Cockpit", DIFFUSE, "a4e_trn_baremetal_bot", true};
   --{"Front",	0, "a4e_ext_front", true};
   --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
+  {"Pilot",	DIFFUSE, "a4e_pilot_usn", true};
 
   -- flaps, used on most liveries
   {"flaps_001", DIFFUSE, "a4e_bort_white", true};

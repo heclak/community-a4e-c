@@ -2,15 +2,16 @@ name = "USN VC-1 FLECOMPRON One"
 countries = {"USA"}
 
 livery = {
-  {"Top", DIFFUSE, "a4e-trn-usn-vc-1-flecompron-one-top", true};
-  {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet", true};
-  {"Bottom", DIFFUSE, "fus_bot_usn", true};
-  {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet", true};
-  {"Gear and metal", DIFFUSE, "fus_bot_usn", true};
-  {"Cockpit", DIFFUSE, "fus_bot_usn", true};
+  {"Top", DIFFUSE, "a4e_trn_usn_vc1_flecompron_one_top", true};
+  {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet_hi", true};
+  {"Bottom", DIFFUSE, "a4e_usn_bot", true};
+  {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet_hi", true};
+  {"Gear and metal", DIFFUSE, "a4e_usn_bot", true};
+  {"Cockpit", DIFFUSE, "a4e_usn_bot", true};
   --{"Front",	0, "a4e_ext_front", true};
   --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
+  {"Pilot",	DIFFUSE, "a4e_trn_usn_vc1_flecompron_one_pilot", true};
 
   -- flaps, used on most liveries
   {"flaps_001", DIFFUSE, "a4e_bort_white", true};
@@ -46,8 +47,8 @@ livery = {
   {"tail_100", DIFFUSE, "empty", true};
 
   -- custom fuel tanks: 150 gallon
-  {"fuel_150_a4e", DIFFUSE, "uvmapsfueltank_dft150_dft300-blue", true};
+  {"fuel_150_a4e", DIFFUSE, "a4e_ft_150_300_blue", true};
 
   -- custom fuel tank: 300 gallon left/right
-  {"fuel_300lr_a4e", DIFFUSE, "uvmapsfueltank_dft150_dft300-blue", true};
+  {"fuel_300lr_a4e", DIFFUSE, "a4e_ft_150_300_blue", true};
 }

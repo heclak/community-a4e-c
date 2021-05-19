@@ -2,15 +2,16 @@ name = "USN Naval Fighter Weapons School - Gray"
 countries = {"USA"}
 
 livery = {
-  {"Top", DIFFUSE, "nfws_gray_top", true};
-  {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet", true};
-  {"Bottom", DIFFUSE, "nfws_gray_bot", true};
-  {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet", true};
-  {"Gear and metal", DIFFUSE, "nfws_gray_bot", true};
-  {"Cockpit", DIFFUSE, "nfws_gray_bot", true};
+  {"Top", DIFFUSE, "a4e_trn_usn_nfws_gray_top", true};
+  {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet_lo", true};
+  {"Bottom", DIFFUSE, "a4e_trn_usn_nfws_gray_bot", true};
+  {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet_lo", true};
+  {"Gear and metal", DIFFUSE, "a4e_trn_usn_nfws_gray_bot", true};
+  {"Cockpit", DIFFUSE, "a4e_trn_usn_nfws_gray_bot", true};
   {"Front",	0, "a4e_ext_front", true};
   {"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
   {"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
+  {"Pilot",	DIFFUSE, "a4e_pilot_usn", true};
 
   -- flaps, used on most liveries
   {"flaps_001", DIFFUSE, "a4e_bort_white", true};
@@ -46,11 +47,11 @@ livery = {
   {"tail_100", DIFFUSE, "empty", true};
 
   -- custom fuel tanks: 150 gallon
-  {"fuel_150_a4e", DIFFUSE, "uvMapsFuelTank_DFT150_DFT300_nfws_gray", true};
+  {"fuel_150_a4e", DIFFUSE, "a4e_trn_usn_nfws_gray_ft", true};
 
   -- custom fuel tank: 300 gallon left/right
-  {"fuel_300lr_a4e", DIFFUSE, "uvMapsFuelTank_DFT150_DFT300_nfws_gray", true};
+  {"fuel_300lr_a4e", DIFFUSE, "a4e_trn_usn_nfws_gray_ft", true};
 
   -- custom fuel tank: 300 gallon center
-  {"fuel_300c_a4e", DIFFUSE, "uvMapsFuelTank_DFT150_DFT300_nfws_gray", true};
+  {"fuel_300c_a4e", DIFFUSE, "a4e_trn_usn_nfws_gray_ft", true};
 }
