@@ -101,7 +101,8 @@ function post_initialize()
         max = 100.0,
     }
     engine_wind_volume = {
-        curve = {0.00, 0.61, 0.71, 0.85, 0.97, 0.99, 1.00},
+        --curve = {0.00, 0.61, 0.71, 0.85, 0.97, 0.99, 1.00},
+        curve = {0.00, 3.6, 4.25, 4.75, 5.0, 5.5, 6.00},
         min = 1.0,
         max = 100.0,
     }
@@ -115,7 +116,8 @@ function post_initialize()
         max = 100.0,
     }
     engine_low_volume = {
-        curve = {0.00, 0.61, 0.71, 0.85, 0.97, 0.99, 1.00},
+        --curve = {0.00, 0.61, 0.71, 0.85, 0.97, 0.99, 1.00},
+        curve = {0.00, 3.6, 4.25, 5.1, 6.0, 7.0, 8.00},
         min = 1.0,
         max = 100.0,
     }
@@ -129,8 +131,9 @@ function post_initialize()
         max = 100.0,
     }
     engine_roar_volume = {
-        curve = {0.00, 0.14, 0.15, 0.16, 0.22},
-        min = 9.0,
+        --curve = {0.00, 0.14, 0.15, 0.16, 0.22},
+        curve = {0.00, 0.22, 0.01, 0.04, 0.30},
+        min = 5.0,
         max = 100.0,
     }
     -- ENGINE TONE (HIGH) 
@@ -144,7 +147,8 @@ function post_initialize()
         max = 100.0,
     }
     engine_high_volume = {
-        curve = {0.00, 0.5, 0.10, 0.26},
+        --curve = {0.00, 0.05, 0.10, 0.25},
+        curve = {0.00, 0.3, 0.6, 1.5},
         min = 22.0,
         max = 100.0,
     }
@@ -160,7 +164,8 @@ function post_initialize()
         max = 100.0,
     }
     engine_growl_volume = {
-        curve = {0.00, 0.005, 0.01, 0.02, 0.04},
+        --curve = {0.00, 0.005, 0.01, 0.02, 0.04},
+        curve = {0.00, 0.03, 0.06, 0.2, 0.4},
         min = 22.0,
         max = 100.0,
     }
