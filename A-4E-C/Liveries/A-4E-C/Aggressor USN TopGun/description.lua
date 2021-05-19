@@ -10,6 +10,7 @@ livery = {
   {"Gear and metal", DIFFUSE, "a4e_aggr_usn_topgun_bot", true};
   --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
+  {"Pilot",	DIFFUSE, "a4e_pilot_usn", true};
 
   -- flaps, used on most liveries
   {"flaps_001", DIFFUSE, "a4e_bort_black", true};

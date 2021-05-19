@@ -11,6 +11,7 @@ livery = {
   --{"Front",	0, "a4e_ext_front", true};
   --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
+  {"Pilot",	DIFFUSE, "a4e_trn_usmc_vmat102_pilot", true};
 
   -- flaps, used on most liveries
   {"flaps_001", DIFFUSE, "empty", true};

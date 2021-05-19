@@ -2,7 +2,7 @@ name = "USMC VMA-322 Fighting Gamecocks"
 countries = {"USA"}
 
 livery = {
-  {"Top", DIFFUSE, "a4e_usmc_vma322_fightinggamecocks", true};
+  {"Top", DIFFUSE, "a4e_usmc_vma322_fightinggamecocks_top", true};
   {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet", true};
   {"Bottom", DIFFUSE, "a4e_usmc_bot_dirty", true};
   {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet", true};
@@ -11,6 +11,7 @@ livery = {
   --{"Front",	0, "a4e_ext_front", true};
   --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
+	{"Pilot",	DIFFUSE, "a4e_usmc_vma322_fightinggamecocks_pilot", true};
 
   -- flaps, used on most liveries
   {"flaps_001", DIFFUSE, "a4e_bort_white", true};
