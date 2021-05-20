@@ -20,6 +20,11 @@ function find_mobile_tacan_and_icls()
             append_beacons_to_id(groups, tacan_to_id, icls_to_id)
         end
 
+        if v.vehicle then
+            local groups = v.vehicle.group
+            append_beacons_to_id(groups, tacan_to_id, icls_to_id)
+        end
+
     end
 
     for i,v in ipairs(mission.coalition.red.country) do
@@ -31,6 +36,11 @@ function find_mobile_tacan_and_icls()
 
         if v.plane then
             local groups = v.plane.group
+            append_beacons_to_id(groups, tacan_to_id, icls_to_id)
+        end
+
+        if v.vehicle then
+            local groups = v.vehicle.group
             append_beacons_to_id(groups, tacan_to_id, icls_to_id)
         end
 
