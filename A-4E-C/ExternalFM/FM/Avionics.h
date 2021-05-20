@@ -18,6 +18,8 @@
 #include "Input.h"
 #include "AircraftState.h"
 #include "CP741.h"
+#include "Interface.h"
+#include "AirDataComputer.h"
 //=========================================================================//
 
 namespace Scooter
@@ -26,7 +28,7 @@ namespace Scooter
 class Avionics : public BaseComponent
 {
 public:
-	Avionics(Input& input, AircraftState& state);
+	Avionics(Input& input, AircraftState& state, Interface& inter);
 	~Avionics();
 	virtual void zeroInit();
 	virtual void coldInit();
@@ -52,7 +54,10 @@ private:
 
 	Input& m_input;
 	AircraftState& m_state;
+	Interface& m_interface;
+
 	CP741 m_bombingComputer;
+	AirDataComputer m_adc;
 
 	bool m_damperEnabled = false;
 

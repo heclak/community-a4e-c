@@ -145,6 +145,8 @@ public:
 		m_accelerationY = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_ACCELERATION_Y" );
 		m_accelerationZ = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_ACCELERATION_Z" );
 
+		m_ADC_TAS = m_api.pfn_ed_cockpit_get_parameter_handle( "ADC_TAS" );
+
 	}
 
 	cockpit_param_api& api()
@@ -233,6 +235,11 @@ public:
 		getParamString( m_tcnUnitName, buffer, size );
 
 		//printf( "%s\n", buffer );
+	}
+
+	inline void ADC_setTAS(double value)
+	{
+		setParamNumber( m_ADC_TAS, value );
 	}
 
 	inline void setWorldAcceleration( const Vec3& a )
@@ -671,6 +678,12 @@ private:
 	void* m_accelerationX = NULL;
 	void* m_accelerationY = NULL;
 	void* m_accelerationZ = NULL;
+
+	//ADC Variables
+	void* m_ADC_TAS = NULL;
+	void* m_ADC_TASX = NULL;
+	void* m_ADC_TASZ = NULL;
+
 };
 
 

@@ -23,11 +23,14 @@
 Scooter::Avionics::Avionics
 (
 	Input& input,
-	AircraftState& state
+	AircraftState& state,
+	Interface& inter
 ) :
 	m_input(input),
 	m_state(state),
-	m_bombingComputer(state)
+	m_interface(inter),
+	m_bombingComputer(state),
+	m_adc(inter, state)
 {
 	zeroInit();
 }
@@ -96,6 +99,7 @@ void Scooter::Avionics::updateAvionics(double dt)
 		m_input.yawDamper() = 0.0;
 	}
 	m_bombingComputer.updateSolution();
+	m_adc.update(dt);
 
 	//printf("Filter: %lf, Rudder: %lf\n", f, m_flightModel.yawRate());
 }

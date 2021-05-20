@@ -169,6 +169,7 @@
     <ClInclude Include="Actuator.h" />
     <ClInclude Include="AeroElement.h" />
     <ClInclude Include="AircraftState.h" />
+    <ClInclude Include="AirDataComputer.h" />
     <ClInclude Include="Airframe.h" />
     <ClInclude Include="AtmosphereState.h" />
     <ClInclude Include="Avionics.h" />
@@ -207,6 +208,7 @@
     <ClCompile Include="Actuator.cpp" />
     <ClCompile Include="AeroElement.cpp" />
     <ClCompile Include="AircraftState.cpp" />
+    <ClCompile Include="AirDataComputer.cpp" />
     <ClCompile Include="Airframe.cpp" />
     <ClCompile Include="Avionics.cpp" />
     <ClCompile Include="Axis.cpp" />

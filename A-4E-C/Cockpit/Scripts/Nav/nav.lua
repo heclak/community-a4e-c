@@ -6,6 +6,7 @@ dofile(LockOn_Options.script_path.."Systems/mission_utils.lua")
 dofile(LockOn_Options.script_path.."Nav/NAV_util.lua")
 dofile(LockOn_Options.script_path.."Nav/ils_utils.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
+dofile(LockOn_Options.script_path.."Systems/air_data_computer_api.lua")
 
 startup_print("nav: load")
 
@@ -173,7 +174,6 @@ local asn41_magvar_xxxxX = get_param_handle("ASN41-MAGVAR-xxxxX")
 local pitch_err = 0.0
 local roll_err = 0.0
 local heading_err = 0.0
-local vel_err = 0.0
 
 
 -----------------------------------------------------------------------
@@ -421,7 +421,6 @@ function post_initialize()
     pitch_err = 0.02 * randDir()
     roll_err = 0.02 * randDir()
     heading_err = 0.02 * randDir()
-    vel_err = 0.5 * randDir()
 
     dev:performClickableAction(device_commands.tacan_ch_major, 0.0, true)
     dev:performClickableAction(device_commands.tacan_ch_minor, 0.1, true)
@@ -885,7 +884,7 @@ function getAirDataComputerVariables(precision)
 
     precision = math.max(precision or 4, 1)
 
-    local tas = round(sensor_data.getTrueAirSpeed(), precision - 1)
+    local tas = round(Air_Data_Computer:getTAS(), precision - 1)
     local roll = round(sensor_data.getRoll() + roll_err, precision)
     local pitch = round(sensor_data.getPitch() + pitch_err, precision)
     local heading = round(-sensor_data.getHeading() + heading_err, precision)
@@ -941,10 +940,10 @@ function updateIntegratedLatLong()
 
     local halfdtSqr = 0.5 * (update_time_step ^ 2)
 
-    asn41_integrate_x = asn41_integrate_x + (vx - asn41_wind_x + vel_err) * update_time_step 
-    asn41_integrate_z = asn41_integrate_z + (vz - asn41_wind_z + vel_err) * update_time_step
+    asn41_integrate_x = asn41_integrate_x + (vx - asn41_wind_x) * update_time_step 
+    asn41_integrate_z = asn41_integrate_z + (vz - asn41_wind_z) * update_time_step
 
-    --local drift = calculate_drift()
+    local drift = calculate_drift()
 
     --print_message_to_user("Drift: "..tostring(drift/1000.0))
 
@@ -1504,21 +1503,30 @@ function apn153_speed_and_drift(land)
     -- these values are made up
 
     if apn153_mode_error_change == 0 or apn153_mode_error == 0 then
-        apn153_mode_error = math.random(3,6)
+        apn153_mode_error = (1.0 + math.random(3,6) / 100.0)
         apn153_mode_error_change = math.random(100,200) -- error swings every 5-10 seconds assuming update_time_step = 0.05
     end
     
     if not land then
         -- sea mode
         if landtype == "land" or landtype == "river" then
-            drift = drift * (1 + apn153_mode_error/100)
-            speed = speed * (1 + apn153_mode_error/100)
+            drift = drift * apn153_mode_error
+            speed = speed * apn153_mode_error
+
+            apn153_wind_x = apn153_wind_x * apn153_mode_error
+            apn153_wind_z = apn153_wind_z * apn153_mode_error
+
             apn153_mode_error_change = apn153_mode_error_change - 1
+            
         end
     else
         if landtype == "sea" or landtype == "lake" then
-            drift = drift * (1 - apn153_mode_error/100)
-            speed = speed * (1 - apn153_mode_error/100)
+            drift = drift * apn153_mode_error
+            speed = speed * apn153_mode_error
+
+            apn153_wind_x = apn153_wind_x * apn153_mode_error
+            apn153_wind_z = apn153_wind_z * apn153_mode_error
+
             apn153_mode_error_change = apn153_mode_error_change - 1
         end
     end
@@ -2084,6 +2092,9 @@ function update_tacan()
         end
 
         if atcn == nil then
+            morse_silent = true
+            arn52_range = nil
+            arn52_bearing = nil
             return 
         end
 
@@ -2101,6 +2112,8 @@ function update_tacan()
                 if tacan_mode == "T/R" then
                     arn52_range = (range < max_tacan_range) and range or nil
                     --print_message_to_user("range: "..arn52_range)
+                else
+                    arn52_range = nil
                 end
 
                 --local bearing = true_bearing_deg_from_xz(curx, curz, atcn.position.x, atcn.position.z)
@@ -2130,6 +2143,9 @@ function update_tacan()
     elseif tacan_mode == "ILS" then
         --nothing
     else
+        morse_silent = true
+        arn52_range = nil
+        arn52_bearing = nil
         stop_morse_playback()
     end
 
@@ -2186,7 +2202,11 @@ function update_bdhi()
                 --print_message_to_user("mh= "..maghead.." brg= "..arn52_bearing)
                 bdhi_draw_needle2( (arn52_bearing - maghead) % 360 )
                 bdhi_draw_needle1( 330 )
+            else
+                bdhi_draw_needle1( 0 )
+                bdhi_draw_needle2( 0 )
             end
+
             bdhi_draw_range( arn52_range )
         else
             bdhi_draw_needle2( mh )

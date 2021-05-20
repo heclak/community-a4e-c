@@ -79,7 +79,7 @@ void init(const char* config)
 	s_input = new Scooter::Input;
 	s_engine = new Scooter::Engine2( *s_state );
 	s_airframe = new Scooter::Airframe( *s_state, *s_input, *s_engine );
-	s_avionics = new Scooter::Avionics( *s_input, *s_state );
+	s_avionics = new Scooter::Avionics( *s_input, *s_state, *s_interface );
 	s_fm = new Scooter::FlightModel( *s_state, *s_input, *s_airframe, *s_engine, *s_interface, s_splines );
 	s_radio = new Scooter::Radio(*s_interface);
 	s_ils = new Scooter::ILS(*s_interface);
