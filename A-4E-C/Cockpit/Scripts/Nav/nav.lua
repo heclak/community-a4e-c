@@ -204,7 +204,7 @@ local bdhi_dme_xxX = get_param_handle("BDHI_DME_xxX")
 -----------------------------------------------------------------------
 
 -- arn-52 state and input processing
-tacan_modelist = {"OFF", "REC", "T/R", "ILS"}
+tacan_modelist = {"OFF", "REC", "T/R", "A/A"}
 local tacan_mode = "OFF"
 local tacan_volume = 0
 local tacan_volume_moving = 0
@@ -453,6 +453,8 @@ function post_initialize()
 
     tacan_to_object_id, icls_to_object_id = find_mobile_tacan_and_icls()
 
+    --local s = recursively_traverse(tacan_to_object_id)
+    --print_message_to_user(s)
 
 	miz_carriers = decode_mission()
 	tacan_channel_param:set(0)
@@ -614,6 +616,7 @@ function SetCommand(command,value)
     ---------------------------------------------
     elseif command == device_commands.tacan_mode then
         tacan_mode = tacan_modelist[ round((value*10)+1,0) ]
+        check_air_to_air_tacan()
     elseif command == device_commands.tacan_ch_major then
         tacan_ch_major = value * 20     -- 0.05 per increment, 0 to 12
         tacan_channel = round(10*tacan_ch_major + tacan_ch_minor)
@@ -639,10 +642,10 @@ function SetCommand(command,value)
         elseif tacan_mode == "REC" then
             dev:performClickableAction(device_commands.tacan_mode, 0.2, false) -- set T/R
         elseif tacan_mode == "T/R" then
-            dev:performClickableAction(device_commands.tacan_mode, 0.3, false) -- set ILS
+            dev:performClickableAction(device_commands.tacan_mode, 0.3, false) -- set A/A
         end
     elseif command == Keys.TacanModeDec then
-        if tacan_mode == "ILS" then
+        if tacan_mode == "A/A" then
             dev:performClickableAction(device_commands.tacan_mode, 0.2, false) -- set T/R
         elseif tacan_mode == "T/R" then
             dev:performClickableAction(device_commands.tacan_mode, 0.1, false) -- set REC
@@ -1733,6 +1736,15 @@ function true_bearing_viall_from_xz(x1,z1,x2,z2)
     return forward_azimuth_bearing(geopos1.lat, geopos1.lon, geopos2.lat, geopos2.lon)
 end
 
+function check_air_to_air_tacan()
+    if atcn == nil then
+        return
+    end
+
+    if atcn.air_to_air ~= (tacan_mode == "A/A") then
+        atcn = nil
+    end
+end
 
 -- find_active_tacan()
 --
@@ -1741,10 +1753,15 @@ end
 -- appropriate frequency
 function find_matched_tacan(chan)
 
-    local bcn = fetch_object_beacon_data(chan)
+    local air_to_air = tacan_mode == "A/A"
+    local bcn = fetch_object_beacon_data(chan, air_to_air)
     
     if bcn then
         return bcn
+    end
+
+    if air_to_air then
+        return nil
     end
 
     for i = 1,#beacon_data do
@@ -1757,7 +1774,9 @@ function find_matched_tacan(chan)
                 end
 
 			--	tacan_channel_param:set(chan)
-                return beacon_data[i]
+                bcn = beacon_data[i]
+                bcn.air_to_air = false
+                return bcn
 				
 				
             end
@@ -1772,7 +1791,7 @@ function update_tacan()
 
     -- for position of the active_tacan beacon, update visibility, distance, and range
 
-    if tacan_mode == "REC" or tacan_mode == "T/R" then
+    if tacan_mode == "REC" or tacan_mode == "T/R" or tacan_mode == "A/A" then
 
         
         --if tacan_mode == "ILS" then
@@ -1789,6 +1808,7 @@ function update_tacan()
             morse_silent = true
             arn52_range = nil
             arn52_bearing = nil
+            stop_morse_playback()
             return 
         end
 
@@ -1803,7 +1823,7 @@ function update_tacan()
             local range = math.sqrt( (atcn.position.x - curx)^2 + (atcn.position.y - cury)^2 + (atcn.position.z - curz)^2 )/nm2meter
             if range < max_tacan_range then
 
-                if tacan_mode == "T/R" then
+                if tacan_mode == "T/R" or tacan_mode == "A/A" then
                     arn52_range = (range < max_tacan_range) and range or nil
                     --print_message_to_user("range: "..arn52_range)
                 else
@@ -2065,15 +2085,18 @@ function update()
     end
 end
 
-function fetch_object_beacon_data(channel)
+function fetch_object_beacon_data(channel, air_to_air)
 
     local objects = tacan_to_object_id[channel]
     --print_message_to_user(tostring(objects))
     if objects then
-
-        
-
         local object = objects[1]
+
+        --print_message_to_user("Object ID: "..tostring(object.id))
+
+        if object.air_to_air ~= air_to_air then
+            return nil
+        end
 
         local cur_beacon = {
             position = { x = 0.0, y = 0.0, z = 0.0 },
@@ -2082,6 +2105,8 @@ function fetch_object_beacon_data(channel)
             ntype = NAV_TYPE_TCN,
             frequency = 0.0,
             channel = channel,
+            air_to_air = object.air_to_air,
+            mobile = true,
         }
 
         if object.id then
@@ -2104,7 +2129,7 @@ end
 
 function update_object_beacon(cur_beacon)
 
-    if cur_beacon == nil then
+    if cur_beacon == nil or not cur_beacon.mobile then
         return false
     end
     cur_beacon.position.x, cur_beacon.position.y, cur_beacon.position.z = tacan_efm_api:getPosition()

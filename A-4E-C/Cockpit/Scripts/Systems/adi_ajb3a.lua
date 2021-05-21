@@ -40,3 +40,5 @@ function update()
     adi_needles_api.glideslope_needle_param:set(gs_needle:get_current_val())
     adi_needles_api.localiser_needle_param:set(loc_needle:get_current_val())
 end
+
+need_to_be_closed = false -- close lua state after initialization

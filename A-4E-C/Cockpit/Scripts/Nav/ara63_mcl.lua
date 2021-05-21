@@ -102,8 +102,6 @@ function post_initialize()
     load_tempmission_file() 
     tacan_to_object_id, icls_to_object_id = find_mobile_tacan_and_icls()
 
-    print_message_to_user(recursively_traverse(icls_to_object_id))
-
     local birth = LockOn_Options.init_conditions.birth_place
 
     if birth == "GROUND_HOT" or birth == "AIR_HOT" then

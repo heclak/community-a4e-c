@@ -106,11 +106,15 @@ end
 
 function append_beacons_to_id(groups, tacan_to_id, icls_to_id)
     for key,value in ipairs(groups) do
+        local tasks = value["tasks"]
         local points = value["route"]["points"]
 
         --local tacan_value, callsign, override_id 
         
         local group_beacon_data = search_waypoints_for_beacons(points)
+        if tasks then
+            search_for_task_beacons(tasks, group_beacon_data)
+        end
         local unit_id = value["units"][1]["unitId"]
 
         for i,unit in ipairs(group_beacon_data) do
@@ -124,21 +128,21 @@ function append_beacons_to_id(groups, tacan_to_id, icls_to_id)
             local table_to_use = tacan_to_id
 
             if unit.type == "icls" then
-                append_group_beacon_data(icls_to_id, unit.channel, unit_id_to_use, name, unit.callsign)
+                append_group_beacon_data(icls_to_id, unit.channel, unit_id_to_use, name, unit.callsign, false)
             else
-                append_group_beacon_data(tacan_to_id, unit.channel, unit_id_to_use, name, unit.callsign)
+                append_group_beacon_data(tacan_to_id, unit.channel, unit_id_to_use, name, unit.callsign, unit.air_to_air)
             end
         end
     end
 end
 
-function append_group_beacon_data(t, channel, unit_id, name, callsign)
+function append_group_beacon_data(t, channel, unit_id, name, callsign, air_to_air)
     if t[channel] == nil then
         t[channel] = {}
-        t[channel][1] = { id = unit_id, name = name, callsign = callsign }
+        t[channel][1] = { id = unit_id, name = name, callsign = callsign, air_to_air = air_to_air }
     else
         local len = #t[channel]
-        t[channel][len+1] = { id = unit_id, name = name, callsign = callsign }
+        t[channel][len+1] = { id = unit_id, name = name, callsign = callsign, air_to_air = air_to_air }
     end
 end
 
@@ -170,34 +174,48 @@ function search_waypoints_for_beacons(points)
 
                 local tasks = params["tasks"]
                 
-
-                for task_num, task in ipairs(tasks) do
-
-                    if task["params"] and task["params"]["action"] then
-                        local action = task["params"]["action"]
-
-                        if action["id"] == "ActivateBeacon" then
-                            group_beacon_data[#group_beacon_data + 1 ] = {
-                                channel = action["params"]["channel"],
-                                callsign = action["params"]["callsign"],
-                                unitid = action["params"]["unitId"],
-                                type = "tacan"
-                            }
-                        elseif action["id"] == "ActivateICLS" then
-                            group_beacon_data[#group_beacon_data + 1] = {
-                                channel = action["params"]["channel"],
-                                callsign = "",
-                                uintid = action["params"]["unitId"],
-                                type = "icls"
-                            }
-                        end
-                    end
-                end
+                search_for_task_beacons(tasks, group_beacon_data)
+                
             end
         end
     end
     
     return group_beacon_data
+end
+
+function search_for_task_beacons(tasks, group_beacon_data)
+
+    for task_num, task in ipairs(tasks) do
+
+        if task["params"] and task["params"]["action"] then
+            local action = task["params"]["action"]
+
+            if action["id"] == "ActivateBeacon" then
+                local air_to_air = action["params"]["AA"]
+                print_message_to_user(air_to_air)
+                if air_to_air == nil then
+                    air_to_air = true
+                end
+
+                group_beacon_data[#group_beacon_data + 1 ] = {
+                    air_to_air = air_to_air,
+                    channel = action["params"]["channel"],
+                    callsign = action["params"]["callsign"],
+                    unitid = action["params"]["unitId"],
+                    type = "tacan"
+                }
+
+
+            elseif action["id"] == "ActivateICLS" then
+                group_beacon_data[#group_beacon_data + 1] = {
+                    channel = action["params"]["channel"],
+                    callsign = "",
+                    uintid = action["params"]["unitId"],
+                    type = "icls"
+                }
+            end
+        end
+    end
 end
 
 function recursively_search_value(table, search_value)
