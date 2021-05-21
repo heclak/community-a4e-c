@@ -462,7 +462,7 @@ setmetatable(Constant_Speed_Controller,
 
 function Constant_Speed_Controller.new(speed, min, max, pos)
   local self = setmetatable({}, Constant_Speed_Controller)
-  self.target_speed = speed
+  self.speed = speed
   self.min = min
   self.max = max
   self.pos = pos
