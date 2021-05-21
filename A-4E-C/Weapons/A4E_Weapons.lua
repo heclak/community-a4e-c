@@ -283,9 +283,9 @@ declare_loadout(	--D-704 BUDDY POD
 	}
 )
 
-
-declare_weapon({
+jato_rocket = {
     category = CAT_ROCKETS,
+    CLSID = "{5KS_dummy}",
     name = "5KS_dummy",
     user_name = _("5KS-4500 JATO Bottle"),
     wsTypeOfWeapon = {wsType_Weapon, wsType_NURS, wsType_Rocket, WSTYPE_PLACEHOLDER},
@@ -309,6 +309,7 @@ declare_weapon({
         rail_open = false,
     },
 
+    --[[
     engine = {
         fuel_mass = 180,
         impulse = 10,
@@ -316,7 +317,6 @@ declare_weapon({
         work_time = 0.1, 
         boost_factor = 0.01,
         nozzle_position = {{0.27, -0.25, 0}},
-        nozzle_orientationXYZ = {{0,0,0}},
         tail_width = 0.15,
         boost_tail = 4,
         work_tail = 3,
@@ -324,9 +324,24 @@ declare_weapon({
         smoke_transparency = 0.7,
 
     },
+    ]]
+    engine = {
+        fuel_mass   			= 3,
+        boost_time  			= 0,
+        work_time   			= 1.3,
+        boost_factor			= 1,
+        nozzle_position 	    =  {{-0.65, 0, 0}},
+        nozzle_orientationXYZ   =  {{0, 0, 0}},
+        tail_width  			= 0.052,
+        boost_tail  			= 1,
+        work_tail   			= 1,
+        smoke_color 			= {0.6, 0.6, 0.6},
+        smoke_transparency 		= 0.3,
+        motor_length 			= 39.3 * 2.54
+    },
 
     warhead = {
-        mass = 0,
+        mass = 1,
         expl_mass = 0,
         other_factors = {0,0,0},
         concrete_factors = {0,0,0},
@@ -353,19 +368,29 @@ declare_weapon({
         dist_min = 1,
         dist_max = 10000,
     },
-})
+}
 
 
+declare_weapon(jato_rocket)
+
+function copy_type(t)
+    new_table = {}
+
+    for i,v in ipairs(t) do
+        new_table[i] = v
+    end
+    return new_table
+end
 
 
 declare_loadout({	-- 5KS-4500 JATO Bottle
 				category=	CAT_PODS,
 				CLSID	=	"{A4E_5KS-4500}",
 				Picture	=	"LAU61.png",
-				wsTypeOfWeapon	=	{wsType_Weapon, wsType_NURS, wsType_Rocket, 145},
+				wsTypeOfWeapon	= copy_type(jato_rocket.wsTypeOfWeapon),
 				displayName	=	_("5KS-4500 JATO Bottle"),
 				--attribute	=	{4,	7,	32,	9},
-				attribute	=	{wsType_Weapon,	wsType_NURS, wsType_Container,	9},
+				attribute	=	{wsType_Weapon,	wsType_NURS, wsType_Container,	WSTYPE_PLACEHOLDER},
 				Cx_pil	=	0.002,
 				Count	=	1,
 				Weight	=	98,
@@ -379,8 +404,9 @@ declare_loadout({	-- 5KS-4500 JATO Bottle
                     [2] = 
                     {
                         -- DrawArgs       = {{1,1},{2,1}},
-                        name = "5KS_dummy",
-                        ShapeName      = "sprd_dummy",
+                        --payload_CLSID  = ,
+                        --name = "5KS_dummy",
+                        ShapeName      = "ffar_mk4_mk5",
                     }
 				}, -- end of Elements
 })
