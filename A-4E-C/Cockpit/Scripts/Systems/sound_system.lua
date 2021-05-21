@@ -169,6 +169,22 @@ function post_initialize()
         min = 22.0,
         max = 100.0,
     }
+    -- WIND RUSHING
+    -- The aircraft is moving at speed and air is deforming around against the cockpit glass.
+    -- This is a mostly high-frequency white-noise with an occasional 'whipping' shift.
+    -- It provides audio feedback in response to the aircraft's speed, as opposed to RPM.
+    -- This sound is heard during takeoff/landing, and other significant changes in airspeed.
+    -- Airspeed min/max declarations below are made in m/s.
+    wind_rushing_pitch = {
+        curve = {0.50, 0.75, 1.25, 1.50},
+        min = 16.0,
+        max = 225.0,
+    }
+    wind_rushing_volume = {
+        curve = {0.00, 1.0, 3.00, 4.50, 6.00},
+        min = 16.0,
+        max = 175.0,
+    }
 
     sounds = {
         --DEBUG TEST SOUNDS
@@ -203,6 +219,7 @@ function post_initialize()
         Sound_Player.new_always_controlled(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineOperationHi", "RPM", engine_high_volume, engine_high_pitch),
         Sound_Player.new_always_controlled(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineGrowl", "RPM", engine_growl_volume, engine_growl_pitch),
         Sound_Player.new_always_controlled(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineRoar", "RPM", engine_roar_volume, engine_roar_pitch),
+        Sound_Player.new_always_controlled(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitWindRushing", "SOUND_TRUE_AIRSPEED", wind_rushing_volume, wind_rushing_pitch),
 
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineCompressorStall", "SND_INST_ENGINE_STALL", SOUND_ONCE),
         --gear pod doors
@@ -222,7 +239,7 @@ function post_initialize()
         --rattle and rumble
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitRumble", "SND_ALWS_COCKPIT_RUMBLE", SOUND_ALWAYS, nil, nil, 1.0, 2.0 / device_timer_dt ),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitRattle", "SND_ALWS_COCKPIT_RATTLE", SOUND_ALWAYS, nil, nil, 1.0, 2.0 / device_timer_dt ),
-        --refueling
+        --refuelingb
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitRefuel", "SND_CONT_FUEL_INTAKE", SOUND_CONTINUOUS),
         --slats
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitSlatsLeftIn", "SND_INST_L_SLAT_IN", SOUND_ONCE),
