@@ -568,4 +568,7 @@ device_commands =
 
     mcl_channel_selector            = __counter(),
     mcl_power_switch                = __counter(),
+
+    afcs_test_guard                 = __counter(),
+    afcs_test               = __counter(),
 }

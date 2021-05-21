@@ -291,8 +291,8 @@ elements["PNT_110"] = default_axis_limited( "White Floodlight Control", devices.
 elements["PNT_405"].sound = {{COCKPIT_ILLUM_POT, COCKPIT_ILLUM_POT}}
 
 -- AFCS TEST PANEL #59
--- elements["PNT_258"] = default_2_position_tumb("AFCS 1-N-2 Guard", devices.ELECTRIC_SYSTEM, device_commands.emer_gen_bypass, 258, nil, 4.0)
--- elements["PNT_259"] = springloaded_3_pos_tumb("AFCS 1-N-2",       devices.ELECTRIC_SYSTEM, device_commands.emer_gen_bypass, 259, true, KNOBCLICK_RIGHT_AFT)
+elements["PNT_258"] = default_2_position_tumb("AFCS 1-N-2 Guard", devices.AFCS, device_commands.afcs_test_guard, 258, nil, 4.0)
+elements["PNT_259"] = springloaded_3_pos_tumb("AFCS 1-N-2",       devices.AFCS, device_commands.afcs_test, 259, true, KNOBCLICK_RIGHT_AFT)
 
 -- AN/ARC-51 UHF RADIO #67
 elements["PNT_361"] = multiposition_switch_limited("ARC-51 UHF Preset Channel", devices.RADIO, device_commands.arc51_freq_preset, 361, 20, 0.05, false, 0.00, KNOBCLICK_RIGHT_MID)

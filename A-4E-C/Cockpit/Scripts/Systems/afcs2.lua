@@ -66,6 +66,11 @@ local AFCS_HDG_100s_param = get_param_handle("AFCS_HDG_100s")
 local AFCS_HDG_10s_param = get_param_handle("AFCS_HDG_10s")
 local AFCS_HDG_1s_param = get_param_handle("AFCS_HDG_1s")
 
+--AFCS Test windows
+local AFCS_test_roll_param = get_param_handle("AFCS_TEST_ROLL")
+local AFCS_test_yaw_param = get_param_handle("AFCS_TEST_YAW")
+local AFCS_test_pitch_param = get_param_handle("AFCS_TEST_PITCH")
+
 --Commands AFCS
 dev:listen_command(device_commands.afcs_standby)
 dev:listen_command(device_commands.afcs_engage)
@@ -74,6 +79,12 @@ dev:listen_command(device_commands.afcs_alt)
 dev:listen_command(device_commands.afcs_hdg_set)
 dev:listen_command(device_commands.afcs_stab_aug)
 dev:listen_command(device_commands.afcs_ail_trim)
+
+dev:listen_command(Keys.TrimUp)
+dev:listen_command(Keys.TrimDown)
+dev:listen_command(Keys.TrimRight)
+dev:listen_command(Keys.TrimLeft)
+dev:listen_command(Keys.TrimStop)
 
 --Keys to manipulate the panel
 dev:listen_command(Keys.AFCSOverride)
@@ -106,11 +117,18 @@ AFCS_STATE_ATTITUDE_HDG = 4
 AFCS_STATE_ALTITUDE_ONLY = 5
 AFCS_STATE_ALTITUDE_HDG = 6
 AFCS_STATE_CSS = 7
+AFCS_STATE_TEST_1 = 8
+AFCS_STATE_TEST_2 = 9
 
 --Special Control State
 AFCS_CONTROL_PATH = 0
 AFCS_CONTROL_ALT_HDG = 1
 AFCS_CONTROL_ALT = 2
+
+--Test Switch States
+AFCS_TEST_1 = 0
+AFCS_TEST_OFF = 1
+AFCS_TEST_2 = 2
 
 --Constant
 local afcs_warmup_time = 90 --seconds
@@ -125,6 +143,13 @@ local afcs_ail_trim_enabled = true
 local afcs_stab_aug_enabled = false
 local afcs_css_enabled = false
 local afcs_control_state = AFCS_CONTROL_ALT_HDG
+local afcs_test_switch = AFCS_TEST_OFF
+
+local afcs_roll_servo_current = 0.0
+local afcs_yaw_servo_current = 0.0
+local afcs_pitch_servo_current = 0.0
+
+local afcs_trim_actuated = false
 
 
 --State information
@@ -218,6 +243,20 @@ function afcs_ail_trim(value)
     afcs_ail_trim_enabled = (value == 1)
 end
 
+function afcs_test(value)
+    afcs_test_switch = round(value + 1)
+    print_message_to_user(afcs_test_switch)
+end
+
+--AFCS Trim Callbacks
+function afcs_trim()
+    afcs_trim_actuated = true
+end
+
+function afcs_trim_stop()
+    afcs_trim_actuated = false
+end
+
 --AFCS Callbacks that manipulate the panel only.
 function afcs_standby_toggle()
     dev:performClickableAction(device_commands.afcs_standby,afcs_standby_enabled and 0 or 1,false)
@@ -238,6 +277,7 @@ end
 function afcs_heading_toggle()
     dev:performClickableAction(device_commands.afcs_hdg_sel,afcs_hdg_sel_enabled and 0 or 1,false)
 end
+
 
 --AFCS Callbacks that input special combinations
 function afcs_hotas_path()
@@ -306,8 +346,15 @@ local command_table = {
     [device_commands.afcs_hdg_sel] = afcs_heading,
     [device_commands.afcs_stab_aug] = afcs_stab_aug,
     [device_commands.afcs_ail_trim] = afcs_ail_trim,
+    [device_commands.afcs_test] = afcs_test,
 
     --Keys
+    [Keys.TrimUp] = afcs_trim,
+    [Keys.TrimDown] = afcs_trim,
+    [Keys.TrimLeft] = afcs_trim,
+    [Keys.TrimRight] = afcs_trim,
+    [Keys.TrimStop] = afcs_trim_stop,
+
     [Keys.AFCSOverride] = afcs_override,
     [Keys.AFCSStandbyToggle] = afcs_standby_toggle,
     [Keys.AFCSStabAugToggle] = afcs_stab_aug_toggle,
@@ -328,7 +375,7 @@ local command_table = {
 
 
 function post_initialize()
-
+    AFCS_test_roll_param:set(-1)
     afcs_engage_enabled = false
     afcs_engage_enabled_switch = false
     afcs_hdg_sel_enabled = false
@@ -381,7 +428,6 @@ end
 
 --AFCS Functions
 function afcs_check_engage_params()
-
     local state = afcs_get_current_state()
 
     local bank_angle = math.deg(sensor_data.getRoll())
@@ -531,6 +577,10 @@ end
 function afcs_hold_pitch(angle)
     local pitch_angle = math.deg(sensor_data.getPitch())
     local pitch_trim = clamp(pitch_pid:run(angle, pitch_angle), -1, 1)
+
+    local delta = pitch_trim - pitch_trim_handle:get()
+    afcs_pitch_servo_current = delta
+
     pitch_trim_handle:set(pitch_trim)
 end
 
@@ -678,15 +728,37 @@ function afcs_check_limits()
     The AFCS is also disengaged when the ailerons are deflected more than 50%, in this case the stick deflection is used.
     TODO: change to aileron deflection.
     ]]--
+    local disengage = false
+
     if g_force > 4 or g_force < -1.5 then
-        dev:performClickableAction(device_commands.afcs_engage,0,false)
-    elseif math.abs(efm_data_bus.fm_getRollInput()) > 0.5 then
-        dev:performClickableAction(device_commands.afcs_engage,0,false)
+        disengage = true
+    end
+
+    if math.abs(efm_data_bus.fm_getRollInput()) > 0.5 then
+        disengage = true
         roll_trim_handle:set(0.0)
     end
 
+    --Test mode 2 directs the trim commands
+    --into the structural protection circuit
+    --this causes a disconnect when the trim switch is used.
+    if afcs_test_switch == AFCS_TEST_2 then
+        if afcs_trim_actuated then
+            disengage = true
+        end
+    end
+
+    if disengage then
+        dev:performClickableAction(device_commands.afcs_engage,0,false)
+    end
 
 
+end
+
+function afcs_check_sync()
+    if math.abs(efm_data_bus.fm_getRudderInput()) > 0.1 and afcs_test_switch ~= AFCS_TEST_2 then
+        dev:performClickableAction(device_commands.afcs_engage,0,false)
+    end
 end
 
 --Are we allowed to engage from this state
@@ -786,6 +858,8 @@ function update()
 
     --State change
     if temp_state ~= afcs_state then
+        afcs_check_sync()
+
         --Check if this state change is allowed with the current condition
         afcs_engage_enabled = afcs_engage_enabled and afcs_allowed_to_engage_from_state(afcs_state) and afcs_check_engage_params()
 

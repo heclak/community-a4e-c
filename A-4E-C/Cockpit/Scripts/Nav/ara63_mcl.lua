@@ -48,8 +48,8 @@ local mcl_power_switch = MCL_PWR_OFF
 adi_loc_needle = -1
 adi_gs_needle = -1
 
--- 4 seconds per cycle, 2 units per length and 2 lengths per cycle so 4 / (2 * 2)
-loc_bit = Constant_Speed_Controller(update_time_step, -0.33, 0.33, -0.33)
+-- 4 seconds per cycle, 2 units per length and 0.66 lengths per cycle so (1/3) * 4 / (2 * 2)
+loc_bit = Constant_Speed_Controller(update_time_step / 3, -0.33, 0.33, -0.33)
 loc_bit_target = 0.33
 
 -------------------------------------------
@@ -82,7 +82,7 @@ command_callbacks = {
 
 function SetCommand(command, value)
 
-    print_message_to_user("Command: "..tostring(command).." Value: "..tostring(value))
+    --print_message_to_user("Command: "..tostring(command).." Value: "..tostring(value))
 
     if command_callbacks[command] == nil then
         return
@@ -148,6 +148,7 @@ function update()
     if mcl_state == MCL_STATE_OFF then
         adi_needles_api:releaseNeedles(devices.MCL)
     elseif mcl_state == MCL_STATE_BIT then
+        print_message_to_user()
         local gs, loc = mcl_calculate_bit_angle()
         adi_needles_api:setTarget(devices.MCL, gs, loc)
     elseif mcl_state == MCL_STATE_ON then
