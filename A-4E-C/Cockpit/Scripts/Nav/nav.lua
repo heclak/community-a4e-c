@@ -7,6 +7,7 @@ dofile(LockOn_Options.script_path.."Nav/NAV_util.lua")
 dofile(LockOn_Options.script_path.."Nav/ils_utils.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 dofile(LockOn_Options.script_path.."Systems/air_data_computer_api.lua")
+dofile(LockOn_Options.script_path.."Systems/tacan_efm_api.lua")
 
 startup_print("nav: load")
 
@@ -188,8 +189,6 @@ bdhi_mode = "TACAN"
 local bdhi_hdg = get_param_handle("BDHI_HDG")
 local bdhi_needle1 = get_param_handle("BDHI_NEEDLE1")
 local bdhi_needle2 = get_param_handle("BDHI_NEEDLE2")
-local bdhi_ils_gs = get_param_handle("BDHI_ILS_GS")
-local bdhi_ils_loc = get_param_handle("BDHI_ILS_LOC")
 
 local bdhi_dme_flag = get_param_handle("BDHI_DME_FLAG")
 local bdhi_dme_Xxx = get_param_handle("BDHI_DME_Xxx")
@@ -218,11 +217,6 @@ local tacan_channel_last = 1
 local arn52_range = nil
 local arn52_bearing = nil
 local atcn -- "active tacan"
-local aicls
-
---ils needles
-loc_needle = -1
-gs_needle = -1
 
 --marker
 current_marker = nil
@@ -253,7 +247,7 @@ local rangelimit =  390 * 1.1508 -- nmile2mile
 local mr = {}
 local mridx = 2     -- 1 is home base ("0" in ME), 2 is first waypoint "1" in ME, etc.
 
-local ils_data, marker_data = get_ils_data_in_format()
+
 
 dev:listen_command(Keys.NavReset)
 --dev:listen_command(Keys.NavTCNNext)
@@ -922,7 +916,7 @@ function update_ASN41_wind_vec(use_apn153)
         asn41_wind_z = apn153_wind_z
 
     else
-        wind = bearing_to_2d_vector(asn41_winddir_offset)
+        wind = bearing_to_vec2d(asn41_winddir_offset)
         asn41_wind_x = wind.x * asn41_windspeed_offset * knots_2_metres_per_second
         asn41_wind_z = wind.z * asn41_windspeed_offset * knots_2_metres_per_second
 
@@ -1483,7 +1477,7 @@ function apn153_speed_and_drift(land)
     -- calculate wind data and share
     apn153_wind_x, apn153_wind_z = apn153_calculate_wind_vector(curx-lastx, curz-lastz)
 
-    wind_direction = vec_to_bearing({x = apn153_wind_x, z = apn153_wind_z})
+    wind_direction = vec2d_to_bearing({x = apn153_wind_x, z = apn153_wind_z})
     wind_speed = math.sqrt(apn153_wind_x^2 + apn153_wind_z^2)
 
     apn153_wind_speed:set(wind_speed / knots_2_metres_per_second)
@@ -1772,306 +1766,6 @@ function find_matched_tacan(chan)
     return nil
 end
 
-function bearing_to_2d_vector(brg)
-	brg = math.rad(brg)
-	vec = {
-		x = math.cos(brg),
-		z = math.sin(brg)
-	}
-	
-	return vec
-end
-
-function vec_to_bearing(vec)
-	angle = math.deg(math.atan2(vec.z,vec.x))
-	
-	if angle < 0 then
-		angle = 360 + angle
-	end
-	
-	return angle
-end
-
-function normalize_2d(vec)
-	mag = math.sqrt(vec.x^2 + vec.z^2)
-	new_vec = {
-		x = vec.x / mag,
-		z = vec.z / mag
-	}
-	return new_vec
-end
-
-function find_ils_loc(pos, brg, invert_brg)
-
-    --print_message_to_user(tostring(pos.x).." "..tostring(pos.y).." "..tostring(pos.z))
-
-    if invert_brg then
-        if brg > 180 then
-            brg = brg - 180
-        else
-            brg = brg + 180
-        end
-    end
-
-	local curx, cury, curz = sensor_data.getSelfCoordinates()
-	
-    local posy = pos.y + 19
-
-	if not Terrain.isVisible(curx,cury,curz,pos.x,posy,pos.z) then
-		return 3.0, false
-    end
-    
-    local range = math.sqrt((pos.x - curx)^2 + (posy - cury)^2 + (pos.z - curz)^2)
-
-    
-
-    if range > 33000 then
-        return 3.0, false
-    end
-	
-	
-	runway_vec = bearing_to_2d_vector(brg)
-	aircraft_vec = {
-		x = (pos.x - curx),
-		z = (pos.z - curz)
-	}
-
-    --print_message_to_user("x: "..aircraft_vec.x.." z: "..aircraft_vec.z)
-	
-	aircraft_vec = normalize_2d(aircraft_vec)
-	--runway_vec = normalize_2d(runway_vec)
-	
-	--tan(angle) = y/x
-	--y = a x b
-	--x = a . b
-	-- where a and b are vectors.
-	localiser_angle =  math.deg(math.atan2( - aircraft_vec.z*runway_vec.x + aircraft_vec.x*runway_vec.z, aircraft_vec.z*runway_vec.z + aircraft_vec.x * runway_vec.x))
-
-    if math.abs(localiser_angle) > 35 then
-        return 3.0, false
-    end
-
-	return localiser_angle, true
-end
-
-function find_ils_gs(pos, carrier)
-	local curx, cury, curz = sensor_data.getSelfCoordinates()
-
-    local posy = pos.y + 19
-	if not Terrain.isVisible(curx,cury,curz,pos.x,pos.y+19,pos.z) then
-		return -3.0, false
-	end
-	
-    local horizontal_range = math.sqrt((pos.x - curx)^2 + (pos.z - curz)^2)
-    
-    if horizontal_range > 22000 then
-        return -3.0, false
-    end
-
-	local height = cury - posy
-	
-	glide_slope_angle = math.deg(math.atan(height/horizontal_range))
-    --print_message_to_user("Height: "..height.." Range: "..horizontal_range.." Angle: "..glide_slope_angle)
-	
-	return glide_slope_angle, true
-end
-
-function fetch_current_ils()
-
-    local current_ils = nil
-    local carrier = false
-
-
-    --print_message_to_user(recursively_traverse(icls_to_object_id))
-
-    local objects = icls_to_object_id[tacan_channel]
-
-    if objects then
-
-        local object_data = objects[1]
-
-        efm_data_bus.fm_setTacanID(object_data.id)
-        efm_data_bus.fm_setTacanName(object_data.name)
-
-        if efm_data_bus.fm_tacanValid() then
-
-            local x = efm_data_bus.fm_getTacanPosX()
-            local y = efm_data_bus.fm_getTacanPosY()
-            local z = efm_data_bus.fm_getTacanPosZ()
-
-            local heading = efm_data_bus.fm_getICLSHeading()
-            local z_dir = bearing_to_2d_vector(heading - 90)
-            local x_dir = bearing_to_2d_vector(heading)
-
-            --Stennis Offset:
-            -- x = 18.0 metres
-            -- z = 13.0
-            --This is really lazy, I just couldn't
-            --be bothered to create another 2d rotation
-            --function.
-            x_dir.x = -x_dir.x * 18.0
-            x_dir.z = -x_dir.z * 18.0
-
-            z_dir.x = z_dir.x * 13.0
-            z_dir.z = z_dir.z * 13.0
-
-            x = x + x_dir.x + z_dir.x
-            z = z + x_dir.z + z_dir.z
-
-            local curx, cury, curz = sensor_data.getSelfCoordinates()
-
-            --print_message_to_user(tostring(x - curx).." "..(z - curz))
-
-
-            --print_message_to_user("x_dir: "..tostring(x_dir.x).." "..tostring(x_dir.z).." z_dir: "..tostring(z_dir.x).." "..tostring(z_dir.z))
-
-            current_ils = {
-                callsign = "",
-                name = "",
-                [BEACON_TYPE_ILS_GLIDESLOPE] = {
-                    position = {
-                        x = x,
-                        y = y,
-                        z = z, 
-                    },
-                    direction = heading - 9,
-                    frequency = 0,
-                },
-
-                [BEACON_TYPE_ILS_LOCALIZER] = {
-                    position = {
-                        x = x,
-                        y = y,
-                        z = z,
-                        
-                    },
-                    direction = heading - 9,
-                    frequency = 0,
-                },
-            }
-            carrier = true
-        end
-    end
-
-
-    if current_ils == nil then
-        current_ils = ils_data[tacan_channel]
-        carrier = false
-    end
-
-    return current_ils, carrier
-
-end
-
-function update_ils()
-    local desired_gs = 1.0
-    local desired_loc = -1.0
-
-    
-
-	if tacan_mode == "ILS" then
-    
-        local current_ils, carrier = fetch_current_ils()
-
-        if current_ils ~= nil then
-            local localiser_angle = 3.0
-            local glide_slope_angle = -3.0
-            local loc_avail = false
-            local gs_avail = false
-            
-            
-
-        -- print_message_to_user("Channel "..tacan_channel..tostring(current_ils)..tostring(current_ils[BEACON_TYPE_ILS_LOCALIZER]["direction"]))
-
-
-            if current_ils[BEACON_TYPE_ILS_GLIDESLOPE] ~= nil then
-                glide_slope_angle, gs_avail = find_ils_gs(current_ils[BEACON_TYPE_ILS_GLIDESLOPE].position, carrier)
-            end
-
-            if current_ils[BEACON_TYPE_ILS_LOCALIZER] ~= nil then
-
-                localiser_angle, loc_avail  = find_ils_loc(current_ils[BEACON_TYPE_ILS_LOCALIZER].position, current_ils[BEACON_TYPE_ILS_LOCALIZER].direction, not carrier)
-
-                if loc_avail then
-                    configure_morse_playback(current_ils.callsign)
-                else
-                    stop_morse_playback()
-                end
-
-                if math.abs(localiser_angle) > 7 then
-                    gs_avail = false
-                end
-
-            end
-            
-            --See 1-56B in the NATOPS for these numbers
-            local DEGREES_TO_DEFLECTION_LOC = 1.0/6.0
-            local DEGREES_TO_DEFLECTION_GS = 1.0/1.4 
-
-
-            if gs_avail then
-
-                local gs_appr_angle = 3
-                if carrier then
-                    gs_appr_angle = 3.5
-                end
-
-                desired_gs = (gs_appr_angle - glide_slope_angle) * DEGREES_TO_DEFLECTION_GS
-                update_marker()
-            end
-
-            if loc_avail then
-                desired_loc = -localiser_angle * DEGREES_TO_DEFLECTION_LOC
-            end
-        end
-    end
-
-    gs_needle = gs_needle + clamp(desired_gs - gs_needle, -1, 1) / 10
-    loc_needle = loc_needle + clamp(desired_loc - loc_needle, -1, 1) / 10
-
-	bdhi_ils_gs:set(gs_needle)
-	bdhi_ils_loc:set(loc_needle)
-
-end
-
-function update_marker()
-    
-    marker_outer_snd:update(nil, 1.0, nil)
-    marker_middle_snd:update(nil, 1.0, nil)
-
-    local curx, cury, curz = sensor_data.getSelfCoordinates()
-
-    if current_marker then
-        if (cury - current_marker.position.y) >= 330 then
-            current_marker = nil
-            return
-        end
-
-        --250 m -> squared
-        if (math.abs(curx - current_marker.position.x)^2 + math.abs(curz - current_marker.position.z)^2) >= 562500 then
-            current_marker = nil
-            return
-        end
-
-        return
-    end
-
-    for i,v in ipairs(marker_data) do
-        if (cury - v.position.y) < 330 then
-            --250 m -> squared
-            if (math.abs(curx - v.position.x)^2 + math.abs(curz - v.position.z)^2) < 562500 then
-                    current_marker = v
-                    if v.far then
-                        marker_outer_snd:play_once()
-                    else
-                        marker_middle_snd:play_once()
-                    end
-                    return
-            end
-        end
-    end
-end
-
 function update_tacan()
 
     local max_tacan_range = 225
@@ -2356,7 +2050,6 @@ function update()
 
     if get_elec_mon_primary_ac_ok() then
         update_tacan()  -- AN/ARN-52(V) TACAN BEARING-DISTANCE EQUIPMENT
-        update_ils()
     end
 
     if get_elec_26V_ac_ok() then
@@ -2391,8 +2084,16 @@ function fetch_object_beacon_data(channel)
             channel = channel,
         }
 
+        if object.id then
+            tacan_efm_api:setObjectID(object.id)
+        else
+            tacan_efm_api:setObjectID(0)
+        end
+
         if object.name then
-            efm_data_bus.fm_setTacanName(object.name)
+            tacan_efm_api:setObjectName(object.name)
+        else
+            tacan_efm_api:setObjectName("")
         end
 
         return cur_beacon
@@ -2403,15 +2104,10 @@ end
 
 function update_object_beacon(cur_beacon)
 
-    if cur_beacon == nil or cur_beacon.objectID == nil then
-        efm_data_bus.fm_setTacanID(0)
+    if cur_beacon == nil then
         return false
     end
-
-    efm_data_bus.fm_setTacanID(cur_beacon.objectID)
-    cur_beacon.position.x = efm_data_bus.fm_getTacanPosX()
-    cur_beacon.position.y = efm_data_bus.fm_getTacanPosY()
-    cur_beacon.position.z = efm_data_bus.fm_getTacanPosZ()
+    cur_beacon.position.x, cur_beacon.position.y, cur_beacon.position.z = tacan_efm_api:getPosition()
 
     --print_message_to_user(tostring(cur_beacon.position.x).." "..tostring(cur_beacon.position.y).." "..tostring(cur_beacon.position.z))
 

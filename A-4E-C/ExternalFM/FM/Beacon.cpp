@@ -20,28 +20,45 @@ Scooter::Beacon::Beacon( Interface& inter ) :
 
 void Scooter::Beacon::update()
 {
-	//Fetch the ID
-	uint32_t id = m_interface.getTCNObjectID();
+	updateTacan();
+	updateMCL();
+}
 
-	//Fetch the name
+void Scooter::Beacon::updateTacan()
+{
 	char name[50] = "";
 	const unsigned int size = 50;
-	m_interface.getTCNObjectName( name, size );
+	uint32_t id = m_interface.getTacanObjectID();
+	m_interface.getTacanObjectName( name, size );
 
 	Vec3 pos;
-	double heading = 0.0;
-
-
+	double heading = 0.0; //dummy
 	bool valid = false;
 #ifdef USE_OBJECT_FINDER
-	void* ptr = m_finder.find( id, name );
 	valid = m_finder.findPosition( id, name, pos, heading );
-	//printf( "ID: %d, PTR: %p, x: %lf, y: %lf, z: %lf\n", id, ptr, pos.x, pos.y, pos.z );
 #endif
 
+	m_interface.setTacanPosition( pos );
 	m_interface.setTacanValid( valid );
-	m_interface.setTacanX( pos.x );
-	m_interface.setTacanY( pos.y );
-	m_interface.setTacanZ( pos.z );
-	m_interface.setICLSHeading( heading );
+}
+
+void Scooter::Beacon::updateMCL()
+{
+	char name[50] = "";
+	const unsigned int size = 50;
+	uint32_t id = m_interface.getMCLObjectID();
+	m_interface.getMCLObjectName( name, size );
+
+
+	Vec3 pos;
+	double heading = 0.0; //dummy
+	bool valid = false;
+#ifdef USE_OBJECT_FINDER
+	valid = m_finder.findPosition( id, name, pos, heading );
+	printf( "Heading: %lf, Valid %d\n", heading, valid );
+#endif
+
+	m_interface.setMCLPosition( pos );
+	m_interface.setMCLHeading( heading );
+	m_interface.setMCLValid( valid );
 }

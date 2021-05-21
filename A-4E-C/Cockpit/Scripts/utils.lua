@@ -462,10 +462,11 @@ setmetatable(Constant_Speed_Controller,
 
 function Constant_Speed_Controller.new(speed, min, max, pos)
   local self = setmetatable({}, Constant_Speed_Controller)
-  self.speed = speed
+  self.target_speed = speed
   self.min = min
   self.max = max
   self.pos = pos
+
   return self
 end
 
@@ -632,4 +633,33 @@ is used in the 'hacks' to make the radio (and potentially the ILS) work.
 function find_lua_device_ptr(device)
   str_ptr = string.sub(tostring(device.link),10)
   return str_ptr
+end
+
+function bearing_to_vec2d(brg)
+	brg = math.rad(brg)
+	vec = {
+		x = math.cos(brg),
+		z = math.sin(brg)
+	}
+	
+	return vec
+end
+
+function vec2d_to_bearing(vec)
+	angle = math.deg(math.atan2(vec.z,vec.x))
+	
+	if angle < 0 then
+		angle = 360 + angle
+	end
+	
+	return angle
+end
+
+function normalize_vec2d(vec)
+	mag = math.sqrt(vec.x^2 + vec.z^2)
+	new_vec = {
+		x = vec.x / mag,
+		z = vec.z / mag
+	}
+	return new_vec
 end

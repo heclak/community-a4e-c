@@ -273,14 +273,14 @@ elements["PNT_222"] = multiposition_switch_limited("Navigation Lights", devices.
 elements["PNT_223"] = multiposition_switch_limited("Tail Light", devices.EXT_LIGHTS, device_commands.extlight_tail, 223, 3, 1, true, -1.0, TOGGLECLICK_RIGHT_MID)
 
 -- MISC SWITCHES PANEL #53
--- elements["PNT_250"] = multiposition_switch_limited("MCL Channel Selector",         devices.ELECTRIC_SYSTEM, device_commands.emer_gen_bypass, 250, 20, 0.05, false, nil, KNOBCLICK_RIGHT_AFT, 2)
--- elements["PNT_251"] = springloaded_3_pos_tumb("Seat Adjustment",                   devices.ELECTRIC_SYSTEM, device_commands.emer_gen_bypass, 251, false, KNOBCLICK_RIGHT_MID)
--- elements["PNT_252"] = default_2_position_tumb("Emergency Generator Bypass/Normal", devices.ELECTRIC_SYSTEM, device_commands.emer_gen_bypass, 252, TOGGLECLICK_RIGHT_AFT)
--- elements["PNT_253"] = default_3_position_tumb("MCL Power",                         devices.ELECTRIC_SYSTEM, device_commands.emer_gen_bypass, 253, nil, false, TOGGLECLICK_RIGHT_AFT)
--- elements["PNT_254"] = default_3_position_tumb("TACAN Antenna Control",             devices.ELECTRIC_SYSTEM, device_commands.emer_gen_bypass, 254, nil, false, TOGGLECLICK_RIGHT_AFT)
--- elements["PNT_255"] = default_2_position_tumb("Navigation Dead Reckoning/Doppler", devices.ELECTRIC_SYSTEM, device_commands.emer_gen_bypass, 255, TOGGLECLICK_RIGHT_AFT)
--- elements["PNT_256"] = default_2_position_tumb("Fuel Transfer Bypass/Normal",       devices.ELECTRIC_SYSTEM, device_commands.emer_gen_bypass, 256, TOGGLECLICK_RIGHT_AFT)
--- elements["PNT_257"] = default_2_position_tumb("Rain Removal",                      devices.ELECTRIC_SYSTEM, device_commands.emer_gen_bypass, 257, TOGGLECLICK_RIGHT_AFT)
+elements["PNT_250"] = multiposition_switch_limited("MCL Channel Selector",         devices.MCL, device_commands.mcl_channel_selector, 250, 20, 0.05, false, nil, KNOBCLICK_RIGHT_AFT, 2)
+elements["PNT_251"] = springloaded_3_pos_tumb("Seat Adjustment",                   devices.ELECTRIC_SYSTEM, device_commands.emer_gen_bypass, 251, false, KNOBCLICK_RIGHT_MID)
+elements["PNT_252"] = default_2_position_tumb("Emergency Generator Bypass/Normal", devices.ELECTRIC_SYSTEM, device_commands.emer_gen_bypass, 252, TOGGLECLICK_RIGHT_AFT)
+elements["PNT_253"] = springloaded_forward_only_3_pos_tumb("MCL Power",                         devices.MCL, device_commands.mcl_power_switch, 253, false, TOGGLECLICK_RIGHT_AFT)
+elements["PNT_254"] = default_3_position_tumb("TACAN Antenna Control",             devices.ELECTRIC_SYSTEM, device_commands.emer_gen_bypass, 254, nil, false, TOGGLECLICK_RIGHT_AFT)
+elements["PNT_255"] = default_2_position_tumb("Navigation Dead Reckoning/Doppler", devices.ELECTRIC_SYSTEM, device_commands.emer_gen_bypass, 255, TOGGLECLICK_RIGHT_AFT)
+elements["PNT_256"] = default_2_position_tumb("Fuel Transfer Bypass/Normal",       devices.ELECTRIC_SYSTEM, device_commands.emer_gen_bypass, 256, TOGGLECLICK_RIGHT_AFT)
+elements["PNT_257"] = default_2_position_tumb("Rain Removal",                      devices.ELECTRIC_SYSTEM, device_commands.emer_gen_bypass, 257, TOGGLECLICK_RIGHT_AFT)
 
 -- INTERIOR LIGHTING PANEL #54
 elements["PNT_106"] = default_axis_limited( "Instrument Lighting", devices.AVIONICS, device_commands.intlight_instruments, 106, 0.0, 0.3, false, false, {0,1} )

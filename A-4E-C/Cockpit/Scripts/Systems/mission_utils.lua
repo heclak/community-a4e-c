@@ -49,6 +49,49 @@ function find_mobile_tacan_and_icls()
     return tacan_to_id, icls_to_id
 end
 
+function find_min_id()
+
+
+    local min = 1000000
+
+    stack = {{key = nil, value = mission, depth = 0}}
+    explored = {}
+
+    while stack do
+        local stack_item = table.remove(stack)
+        
+        if stack_item == nil then
+            break
+        end
+
+        local key = stack_item.key
+        local item = stack_item.value
+        local depth = stack_item.depth
+        
+        
+
+        if type(item) == "table" then
+            if not explored[tostring(item)] then
+                for i,v in pairs(item) do
+                    table.insert(stack, {key = i, value = v, depth = depth+1 })
+                end
+                explored[tostring(item)] = true
+            end
+
+            
+        else
+            if key == "unitId" then
+                if item < min then
+                    min = item
+                end
+            end
+        end
+
+    end
+
+    return min
+end
+
 function addDashes(name)
     local number = name:sub(-2)
     print_message_to_user(tostring(number))

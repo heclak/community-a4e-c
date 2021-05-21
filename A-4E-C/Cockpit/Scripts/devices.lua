@@ -45,6 +45,8 @@ devices["SHRIKE"]           = counter()
 devices["SOUNDSYSTEM"]      = counter()
 devices["NVG"]              = counter()
 devices["EFM_DATA_BUS"]	  = counter()
+devices["MCL"]			  = counter()
+devices["ADI_AJB3A"]	  = counter()
 
 -- temporary dummy devices
 devices["TEMP1"]            = counter()

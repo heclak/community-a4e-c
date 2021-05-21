@@ -133,13 +133,20 @@ public:
 		m_fuelFlow = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_FUEL_FLOW" );
 
 
-		m_tcnX = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_TCN_X" );
-		m_tcnY = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_TCN_Y" );
-		m_tcnZ = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_TCN_Z" );
-		m_tcnValid = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_TCN_VALID" );
-		m_tcnObjectID = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_TCN_OBJECT_ID" );
-		m_tcnUnitName = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_TCN_OBJECT_NAME" );
-		m_iclsHeading = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_ICLS_HEADING" );
+		m_tcnX = m_api.pfn_ed_cockpit_get_parameter_handle( "API_TCN_X" );
+		m_tcnY = m_api.pfn_ed_cockpit_get_parameter_handle( "API_TCN_Y" );
+		m_tcnZ = m_api.pfn_ed_cockpit_get_parameter_handle( "API_TCN_Z" );
+		m_tcnValid = m_api.pfn_ed_cockpit_get_parameter_handle( "API_TCN_VALID" );
+		m_tcnObjectID = m_api.pfn_ed_cockpit_get_parameter_handle( "API_TCN_OBJECT_ID" );
+		m_tcnUnitName = m_api.pfn_ed_cockpit_get_parameter_handle( "API_TCN_OBJECT_NAME" );
+
+		m_mclX = m_api.pfn_ed_cockpit_get_parameter_handle( "API_MCL_X" );
+		m_mclY = m_api.pfn_ed_cockpit_get_parameter_handle( "API_MCL_Y" );
+		m_mclZ = m_api.pfn_ed_cockpit_get_parameter_handle( "API_MCL_Z" );
+		m_mclHeading = m_api.pfn_ed_cockpit_get_parameter_handle( "API_MCL_HEADING" );
+		m_mclValid = m_api.pfn_ed_cockpit_get_parameter_handle( "API_MCL_VALID" );
+		m_mclObjectID = m_api.pfn_ed_cockpit_get_parameter_handle( "API_MCL_OBJECT_ID" );
+		m_mclUnitName = m_api.pfn_ed_cockpit_get_parameter_handle( "API_MCL_OBJECT_NAME" );
 
 		m_accelerationX = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_ACCELERATION_X" );
 		m_accelerationY = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_ACCELERATION_Y" );
@@ -225,14 +232,26 @@ public:
 		return getPointer( m_weapon );
 	}
 
-	inline uint32_t getTCNObjectID()
+	inline uint32_t getTacanObjectID()
 	{
 		return (uint32_t)getParamNumber( m_tcnObjectID );
 	}
 
-	inline void getTCNObjectName(char* buffer, unsigned int size)
+	inline void getTacanObjectName(char* buffer, unsigned int size)
 	{
 		getParamString( m_tcnUnitName, buffer, size );
+
+		//printf( "%s\n", buffer );
+	}
+
+	inline uint32_t getMCLObjectID()
+	{
+		return (uint32_t)getParamNumber( m_mclObjectID );
+	}
+
+	inline void getMCLObjectName( char* buffer, unsigned int size )
+	{
+		getParamString( m_mclUnitName, buffer, size );
 
 		//printf( "%s\n", buffer );
 	}
@@ -249,29 +268,33 @@ public:
 		setParamNumber( m_accelerationZ, a.z );
 	}
 
-	inline void setICLSHeading( double value )
+	inline void setTacanPosition( const Vec3& v )
 	{
-		setParamNumber( m_iclsHeading, value );
-	}
-
-	inline void setTacanX( double value )
-	{
-		setParamNumber( m_tcnX, value );
-	}
-
-	inline void setTacanY( double value )
-	{
-		setParamNumber( m_tcnY, value );
-	}
-
-	inline void setTacanZ( double value )
-	{
-		setParamNumber( m_tcnZ, value );
+		setParamNumber( m_tcnX, v.x );
+		setParamNumber( m_tcnY, v.y );
+		setParamNumber( m_tcnZ, v.z );
 	}
 
 	inline void setTacanValid( bool valid )
 	{
 		setParamNumber( m_tcnValid, (double)valid );
+	}
+
+	inline void setMCLPosition( const Vec3& v )
+	{
+		setParamNumber( m_mclX, v.x );
+		setParamNumber( m_mclY, v.y );
+		setParamNumber( m_mclZ, v.z );
+	}
+
+	inline void setMCLHeading( double heading )
+	{
+		setParamNumber( m_mclHeading, heading );
+	}
+
+	inline void setMCLValid( bool valid )
+	{
+		setParamNumber( m_mclValid, (double)valid );
 	}
 
 	inline void setFuelFlow( double number )
@@ -673,7 +696,14 @@ private:
 	void* m_tcnValid = NULL;
 	void* m_tcnObjectID = NULL;
 	void* m_tcnUnitName = NULL;
-	void* m_iclsHeading = NULL;
+
+	void* m_mclX = NULL;
+	void* m_mclY = NULL;
+	void* m_mclZ = NULL;
+	void* m_mclHeading = NULL;
+	void* m_mclValid = NULL;
+	void* m_mclObjectID = NULL;
+	void* m_mclUnitName = NULL;
 
 	void* m_accelerationX = NULL;
 	void* m_accelerationY = NULL;

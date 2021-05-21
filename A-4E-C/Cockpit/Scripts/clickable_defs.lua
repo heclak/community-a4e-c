@@ -92,6 +92,56 @@ function default_3_position_tumb(hint_, device_, command_, arg_, cycled_, invers
     }
 end
 
+function springloaded_forward_only_3_pos_tumb(hint_, device_, command_, arg_, inversed_, sound_, animation_speed_)
+    local animation_speed_ = animation_speed_ or anim_speed_default
+    local val = 1
+    if inversed_ then
+        val = -1
+    end
+
+    return {
+        class               = {class_type.BTN, class_type.TUMB},
+        hint                = hint_,
+        device              = device_,
+        action              = {command_, command_},
+        stop_action         = {command_, nil},
+        arg                 = {arg_, arg_},
+        arg_value           = {val, -val},
+        arg_lim             = {{-1, 1}, {-1, 1}},
+        updatable           = true,
+        use_OBB             = true,
+        use_release_message = true,
+        animated            = {true, true},
+        animation_speed     = {animation_speed_, animation_speed_},
+        sound               = sound_ and {{sound_, sound_}} or nil
+    }
+end
+
+function springloaded_aft_only_3_pos_tumb(hint_, device_, command_, arg_, inversed_, sound_, animation_speed_)
+    local animation_speed_ = animation_speed_ or anim_speed_default
+    local val = 1
+    if inversed_ then
+        val = -1
+    end
+
+    return {
+        class               = {class_type.TUMB, class_type.BTN},
+        hint                = hint_,
+        device              = device_,
+        action              = {command_, command_},
+        stop_action         = {nil, command_},
+        arg                 = {arg_, arg_},
+        arg_value           = {val, -val},
+        arg_lim             = {{-1, 1}, {-1, 1}},
+        updatable           = true,
+        use_OBB             = true,
+        use_release_message = true,
+        animated            = {true, true},
+        animation_speed     = {animation_speed_, animation_speed_},
+        sound               = sound_ and {{sound_, sound_}} or nil
+    }
+end
+
 function springloaded_3_pos_tumb(hint_, device_, command_, arg_, inversed_, sound_, animation_speed_)
     local animation_speed_ = animation_speed_ or anim_speed_default
     local val = 1

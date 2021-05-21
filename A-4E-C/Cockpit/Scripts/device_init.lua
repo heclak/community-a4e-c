@@ -86,6 +86,8 @@ creators[devices.SOUNDSYSTEM]     = {"avLuaDevice"           ,LockOn_Options.scr
 --creators[devices.ILS]             = {"avLuaDevice"           ,LockOn_Options.script_path.."Nav/ils.lua"}
 creators[devices.NVG]             = {"avNightVisionGoggles"  ,LockOn_Options.script_path.."HELMET/NVG.lua"                            ,{}}
 creators[devices.EFM_DATA_BUS]		= {"avLuaDevice", LockOn_Options.script_path.."EFM_Data_Bus.lua"}
+creators[devices.MCL]             = {"avLuaDevice", LockOn_Options.script_path.."Nav/ara63_mcl.lua"}
+creators[devices.ADI_AJB3A]       = {"avLuaDevice", LockOn_Options.script_path.."Systems/adi_ajb3a.lua"}
 
 -- creators[devices.TEST]        = {"avLuaDevice"                        ,LockOn_Options.script_path.."test_device.lua"}
 -- creators[devices.ADI]         = {"avBaseIKP"                          ,LockOn_Options.script_path.."adi.lua"}

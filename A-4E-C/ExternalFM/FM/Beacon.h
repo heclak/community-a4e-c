@@ -35,6 +35,8 @@ public:
 	Beacon( Interface& inter );
 
 	void update();
+	void updateTacan();
+	void updateMCL();
 
 	inline const Vec3& getPosition() const;
 	inline const float getHeading() const; //degrees

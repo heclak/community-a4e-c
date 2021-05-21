@@ -565,4 +565,7 @@ device_commands =
 
     dest_lat_slew                   = __counter(),
     dest_lon_slew                   = __counter(),
+
+    mcl_channel_selector            = __counter(),
+    mcl_power_switch                = __counter(),
 }
