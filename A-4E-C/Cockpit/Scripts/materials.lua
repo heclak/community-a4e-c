@@ -13,7 +13,7 @@ materials["RADAR_FOV"] 	= {17, 80, 7, 0}
 materials["RADAR_GRID"] = {0, 100, 0, 192}
 materials["RADAR_SCRIBE"] = {0, 200,0, 192}
 materials["GUNSIGHT_GLASS"] = {0, 120, 0, 128}
-materials["GUNSIGHT_COLOR"] = {255, 85, 0, 255}
+materials["GUNSIGHT_COLOR"] = {255, 65, 0, 255}
 
 
 local IndicationTexturesPath = LockOn_Options.script_path.."../Resources/IndicationTextures/"
@@ -26,9 +26,9 @@ textures["GUNSIGHT_TEXTURE"] = {"a4e_gunsight_reticle.dds",materials["GUNSIGHT_C
 -------------------------------------------------------
 -------FONTS-------
 fonts = {}
-fonts["font_kneeboard"]			= {fontdescription_cmn["font_general_loc"], 10, {0,0,0,255}}
-fonts["font_kneeboard_white"]   = {fontdescription_cmn["font_general_loc"], 10, {255,255,255,255}}
-fonts["font_kneeboard_hint"]	= {fontdescription_cmn["font_general_loc"], 10, {255,0,0,255}}
+fonts["font_kneeboard"]			= {fontdescription_cmn["font_general_loc"], 10, {25, 33, 33, 255}}
+fonts["font_kneeboard_white"]   = {fontdescription_cmn["font_general_loc"], 10, {255, 255, 255, 255}}
+fonts["font_kneeboard_hint"]	= {fontdescription_cmn["font_general_loc"], 10, {143, 23, 0, 255}}
 
 -- force preload resources to avoid freeze on start (list of texture files)
 --[[
