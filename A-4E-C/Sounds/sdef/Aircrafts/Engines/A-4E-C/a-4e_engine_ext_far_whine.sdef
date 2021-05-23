@@ -16,7 +16,7 @@ release = 0.2
 silent_radius = 500
 peak_radius = 1000
 inner_radius = 700
-outer_radius = 4000
+outer_radius = 3800
 
 -- DIRECTIONALITY
 -- position: in meters from model origin (often center of gravity)

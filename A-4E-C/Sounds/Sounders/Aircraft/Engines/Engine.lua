@@ -190,7 +190,7 @@ function engine:init(number_, host)
 			type_gain = SOUND_FAN_RPM,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_far_whine",
 			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33}, 0.01, 1.0),
-			gain_curve = Curve({0.00, 3.60, 4.20, 5.80, 5.90, 6.00, 7.00}, 0.26, 1.0),
+			gain_curve = Curve({0.00, 3.50, 4.00, 4.25, 4.50, 5.00, 5.50}, 0.18, 1.0),
 		},
 		-- BACK
 		-- It's the sound of air thrust out of the turbine.

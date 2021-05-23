@@ -149,8 +149,8 @@ function post_initialize()
         max = 100.0,
     }
     engine_roar_volume = {
-        curve = {0.00, 0.22, 0.01, 0.04, 0.30},
-        min = 5.0,
+        curve = {0.00, 0.01, 0.04, 0.30},
+        min = 11.0,
         max = 100.0,
     }
     -- ENGINE TONE (HIGH) 
@@ -197,7 +197,7 @@ function post_initialize()
     }
     wind_rushing_volume = {
         curve = {0.00, 1.00, 3.50, 5.50, 7.00},
-        min = 15.0,
+        min = 18.0,
         max = 200.0,
     }
 
