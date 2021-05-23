@@ -54,7 +54,7 @@ public:
 	//in the local reference frame of the aircraft.
 	inline void addForce(const Vec3& force, const Vec3& pos);
 	inline void addForceDir(const Vec3& force, const Vec3& dir);
-	inline void addForceElement(AeroElement elem);
+	inline void addForceElement(AeroElement elem, bool leftWing);
 	inline void addForce( const Vec3& force );
 
 	//Setup parameters before calculation.
@@ -81,6 +81,7 @@ public:
 	void calculateAero(double dt);
 	void calculateElements();
 	void calculateShake(double& dt);
+	void checkForOverstress(double dt);
 
 	//Get forces for ED physics engine.
 	inline const Vec3& getForce() const;
@@ -125,6 +126,9 @@ private:
 				 
 	const double m_thrust = 38000;
 
+	//390 KN is the structural limit. 1.5 times safety margin.
+	static constexpr double c_wingStructuralLimit = 195000.0 * 1.8;
+
 //
 	double m_q; //0.5*p*V^2 * s * b
 	double m_p; //0.25*p*V * s * b^2
@@ -145,6 +149,10 @@ private:
 	//double m_beta; //angle of slip
 	double m_betaPrevious;
 	double m_betaDot;
+
+	//For tracking damage
+	double m_lwForce = 0.0;
+	double m_rwForce = 0.0;
 
 	Vec3 m_CDwindAxesComp; //Drag from various elements, calculated in wind axes
 
@@ -318,13 +326,18 @@ void FlightModel::addForceDir(const Vec3& force, const Vec3& dir)
 	m_moment += moment;
 }
 
-void FlightModel::addForceElement(AeroElement elem)
+void FlightModel::addForceElement(AeroElement elem, bool leftWing)
 {
 	//Add the force to the overall force
 	m_force += elem.getForce();
 
 	//Calculate the "moment" (actually torque)
 	m_moment += elem.getMoment();
+
+	if ( leftWing )
+		m_lwForce += elem.getForce().y;
+	else
+		m_rwForce += elem.getForce().y;
 }
 
 void FlightModel::addForce( const Vec3& force )

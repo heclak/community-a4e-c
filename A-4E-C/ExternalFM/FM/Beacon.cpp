@@ -55,7 +55,7 @@ void Scooter::Beacon::updateMCL()
 	bool valid = false;
 #ifdef USE_OBJECT_FINDER
 	valid = m_finder.findPosition( id, name, pos, heading );
-	printf( "Heading: %lf, Valid %d\n", heading, valid );
+	//printf( "Heading: %lf, Valid %d\n", heading, valid );
 #endif
 
 	m_interface.setMCLPosition( pos );

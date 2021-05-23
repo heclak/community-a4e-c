@@ -23,6 +23,8 @@ Scooter::Airframe::Airframe(AircraftState& state, Input& controls, Engine2& engi
 {
 	m_integrityElement = new float[(int)Damage::COUNT];
 	zeroInit();
+
+	m_damageStack.reserve( 10 );
 }
 
 Scooter::Airframe::~Airframe()
@@ -174,5 +176,5 @@ void Scooter::Airframe::airframeUpdate(double dt)
 
 	m_catStateSent = false;
 
-	//printDamageState();
+	printDamageState();
 }

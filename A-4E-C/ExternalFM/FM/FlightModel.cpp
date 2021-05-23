@@ -246,6 +246,8 @@ void Scooter::FlightModel::calculateAero(double dt)
 	M_stab();
 	N_stab();
 
+	checkForOverstress( dt );
+
 	//printf("roll rate: %lf\n", m_state.getOmega().x);
 	
 	calculateShake(dt);
@@ -346,6 +348,9 @@ void Scooter::FlightModel::drag()
 
 void Scooter::FlightModel::calculateElements()
 {
+	m_lwForce = 0.0;
+	m_rwForce = 0.0;
+
 	Vec3 dragElem = windAxisToBody(m_CDwindAxesComp, m_state.getAOA(), m_state.getBeta() );
 	
 
@@ -376,12 +381,12 @@ void Scooter::FlightModel::calculateElements()
 	//printf("aoa hstab: %lf\n", toDegrees(m_elementHorizontalStab.m_aoa));
 	//printf("forceL: %lf, %lf, %lf  forceR: %lf, %lf, %lf\n", m_elementLAil.getForce().x, m_elementLAil.getForce().y, m_elementLAil.getForce().z, m_elementRAil.getForce().x, m_elementRAil.getForce().y, m_elementRAil.getForce().z);
 
-	addForceElement(m_elementLSlat);
-	addForceElement(m_elementRSlat);
-	addForceElement(m_elementLFlap);
-	addForceElement(m_elementRFlap);
-	addForceElement(m_elementLSpoiler);
-	addForceElement(m_elementRSpoiler);
+	addForceElement(m_elementLSlat, true);
+	addForceElement(m_elementRSlat, false);
+	addForceElement(m_elementLFlap, true);
+	addForceElement(m_elementRFlap, false);
+	addForceElement(m_elementLSpoiler, true);
+	addForceElement(m_elementRSpoiler, false);
 
 	//m_moment += m_elementLAil.getMoment();
 	//m_moment += m_elementRAil.getMoment();
@@ -396,7 +401,8 @@ void Scooter::FlightModel::calculateElements()
 
 	for (int i = 0; i < m_elements.size(); i++)
 	{
-		if (i < m_elements.size() / 2)
+		bool leftWing = i < m_elements.size() / 2;
+		if ( leftWing )
 		{
 			damage = m_airframe.getLWingDamage();
 		}
@@ -410,13 +416,15 @@ void Scooter::FlightModel::calculateElements()
 		if ( m_splines.size() )
 			m_splines[vapourMap[i]].setOpacity(m_elements[i].getOpacity());
 
-		addForceElement(m_elements[i]);
+		addForceElement(m_elements[i], leftWing );
+
 		//printf("id: %d, aoa: %lf, beta: %lf\n", i, toDegrees(m_elements[i].getAOA()), toDegrees(m_elements[i].getBeta()));
 	}
 
 	for (int i = 0; i < m_elementsC.size(); i++)
 	{
-		if (i < m_elementsC.size() / 2)
+		bool leftWing = i < m_elementsC.size() / 2;
+		if ( leftWing )
 		{
 			damage = m_airframe.getLWingDamage();
 		}
@@ -440,7 +448,7 @@ void Scooter::FlightModel::calculateElements()
 		}
 
 
-		addForceElement(m_elementsC[i]);
+		addForceElement(m_elementsC[i], leftWing);
 		//printf("id: %d, aoa: %lf, beta: %lf\n", i, toDegrees(m_elements[i].getAOA()), toDegrees(m_elements[i].getBeta()));
 	}
 
@@ -506,6 +514,32 @@ void Scooter::FlightModel::slats(double& dt)
 
 	m_airframe.setSlatLPosition( x_L );
 	m_airframe.setSlatRPosition( x_R );
+}
+
+void Scooter::FlightModel::checkForOverstress( double dt )
+{
+	if ( m_lwForce > c_wingStructuralLimit )
+	{
+		m_airframe.setDamageDelta( Airframe::Damage::WING_L_IN, 1.0 );
+		m_airframe.setDamageDelta( Airframe::Damage::WING_L_CENTER, 1.0 );
+		m_airframe.setDamageDelta( Airframe::Damage::WING_L_PART_CENTER, 1.0 );
+		m_airframe.setDamageDelta( Airframe::Damage::FLAP_L, 1.0 );
+		m_airframe.setDamageDelta( Airframe::Damage::WING_L_OUT, 1.0 );
+		m_airframe.setDamageDelta( Airframe::Damage::AILERON_L, 1.0 );
+		printf( "CRACK: Left Wing\n" );
+	}
+		
+
+	if ( m_rwForce > c_wingStructuralLimit )
+	{
+		m_airframe.setDamageDelta( Airframe::Damage::WING_R_IN, 1.0 );
+		m_airframe.setDamageDelta( Airframe::Damage::WING_R_CENTER, 1.0 );
+		m_airframe.setDamageDelta( Airframe::Damage::WING_R_PART_CENTER, 1.0 );
+		m_airframe.setDamageDelta( Airframe::Damage::FLAP_R, 1.0 );
+		m_airframe.setDamageDelta( Airframe::Damage::WING_R_OUT, 1.0 );
+		m_airframe.setDamageDelta( Airframe::Damage::AILERON_R, 1.0 );
+		printf( "CRACK: Right Wing\n" );
+	}
 }
 
 void Scooter::FlightModel::calculateShake(double& dt)

@@ -735,6 +735,7 @@ bool Airframe::processDamageStack( Damage& element, float& damage )
 
 
 	m_integrityElement[(int)delta.m_element] -= delta.m_delta;
+	m_integrityElement[(int)delta.m_element] = clamp( m_integrityElement[(int)delta.m_element], 0.0, 1.0 );
 	
 	element = delta.m_element;
 	damage = m_integrityElement[(int)delta.m_element];
