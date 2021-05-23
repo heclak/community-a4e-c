@@ -5,6 +5,7 @@ dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 local draw_background           = MakeMaterial("arcade.tga", {32, 96, 128, 128})
 local draw_axis                 = MakeMaterial("arcade.tga", {0, 16, 48, 168})
 local draw_input                = MakeMaterial("arcade.tga", {255, 192, 0, 255})
+local draw_indicator            = MakeMaterial("arcade.tga", {255, 255, 255, 255})
 
 SetCustomScale(1.0)
 
@@ -199,3 +200,58 @@ wbraker_index.init_rot         = {-90, 0, 0}
 wbraker_index.material         = draw_input
 wbraker_index.parent_element   = wbraker_scale.name
 AddElement(wbraker_index)
+
+
+-- scale FLAPS position
+flaps_scale                = Copy(pitch_scale)
+flaps_scale.vertices       = {
+                                {0, -line_width},
+                                {0, line_width},
+                                {-sizeX + 14.0 * ds, line_width},
+                                {-sizeX + 14.0 * ds, -line_width}
+                              }
+flaps_scale.init_pos       = {-sizeX + 2.0 * ds, 0}
+AddElement(flaps_scale)
+
+-- draw FLAPS position
+flaps_index                 = Copy(roll_scale)
+flaps_index.vertices        = {
+                                {-2.0 * line_width, -line_width},
+                                {-2.0 * line_width, line_width},
+                                { 2.0 * line_width, line_width},
+                                { 2.0 * line_width, -line_width}
+                              }
+flaps_index.element_params  = {"FM_FLAPS"}  
+flaps_index.controllers     = {{"move_up_down_using_parameter", 0, -sizeX + 14.0 * ds}}
+flaps_index.tex_params	    = {256 / 512, 176.5 / 512, 0.5 * tex_scale / 3, 2 * tex_scale / 3}
+flaps_index.init_rot        = {-90, 0, 0}
+flaps_index.material        = draw_indicator
+flaps_index.parent_element  = flaps_scale.name
+AddElement(flaps_index)
+
+-- scale SPOILER position
+spoiler_scale                = Copy(pitch_scale)
+spoiler_scale.vertices       = {
+                                {0, -line_width},
+                                {0, line_width},
+                                {sizeX - 14.0 * ds, line_width},
+                                {sizeX - 14.0 * ds, -line_width}
+                              }
+spoiler_scale.init_pos       = {-sizeX + 2.0 * ds, 0}
+AddElement(spoiler_scale)
+
+-- draw SPOILER position
+spoiler_index                 = Copy(roll_scale)
+spoiler_index.vertices        = {
+                                {-2.0 * line_width, -line_width},
+                                {-2.0 * line_width, line_width},
+                                { 2.0 * line_width, line_width},
+                                { 2.0 * line_width, -line_width}
+                              }
+spoiler_index.element_params  = {"FM_SPOILERS"}  
+spoiler_index.controllers     = {{"move_up_down_using_parameter", 0, sizeX - 14.0 * ds}}
+spoiler_index.tex_params	    = {256 / 512, 176.5 / 512, 0.5 * tex_scale / 3, 2 * tex_scale / 3}
+spoiler_index.init_rot        = {-90, 0, 0}
+spoiler_index.material        = draw_indicator
+spoiler_index.parent_element  = spoiler_scale.name
+AddElement(spoiler_index)
