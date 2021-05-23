@@ -145,9 +145,13 @@ local afcs_css_enabled = false
 local afcs_control_state = AFCS_CONTROL_ALT_HDG
 local afcs_test_switch = AFCS_TEST_OFF
 
-local afcs_roll_servo_current = 0.0
-local afcs_yaw_servo_current = 0.0
-local afcs_pitch_servo_current = 0.0
+local afcs_roll_servo_current = 0.5
+local afcs_yaw_servo_current = 0.5
+local afcs_pitch_servo_current = 0.5
+
+local afcs_roll_servo_current_wma = WMA_wrap(0.1, 0.0, -1.0, 1.0)
+local afcs_yaw_servo_current_wma = WMA_wrap(0.1, 0.0, -1.0, 1.0)
+local afcs_pitch_servo_current_wma = WMA_wrap(0.1, 0.0, -1.0, 1.0)
 
 local afcs_trim_actuated = false
 
@@ -375,7 +379,7 @@ local command_table = {
 
 
 function post_initialize()
-    AFCS_test_roll_param:set(-1)
+    
     afcs_engage_enabled = false
     afcs_engage_enabled_switch = false
     afcs_hdg_sel_enabled = false
@@ -579,7 +583,6 @@ function afcs_hold_pitch(angle)
     local pitch_trim = clamp(pitch_pid:run(angle, pitch_angle), -1, 1)
 
     local delta = pitch_trim - pitch_trim_handle:get()
-    afcs_pitch_servo_current = delta
 
     pitch_trim_handle:set(pitch_trim)
 end
@@ -779,8 +782,15 @@ function update_afcs()
     --Do however need to check AFCS_STATE_WARMUP because it's possible to have this switch on in that state.
     if afcs_stab_aug_enabled and afcs_state ~= AFCS_STATE_WARMUP and get_hyd_utility_ok() and get_elec_primary_dc_ok() and get_elec_primary_ac_ok() then
         efm_data_bus.fm_setYawDamper(1.0)
+        afcs_yaw_servo_current = 0.0
     else
         efm_data_bus.fm_setYawDamper(0.0)
+        afcs_yaw_servo_current = efm_data_bus.fm_getRudderInput() + 0.5
+    end
+
+
+    if afcs_yaw_servo_current > 1.0 then
+        afcs_yaw_servo_current = afcs_yaw_servo_current - 2.0
     end
 
     --switch based on the state and apply the various types of hold
@@ -890,6 +900,22 @@ function update()
     update_afcs()
     update_apc()
     update_throttle_buttons()
+
+    --Update the test indicators
+    if afcs_state ~= AFCS_STATE_OFF and afcs_test_switch ~= AFCS_TEST_OFF then
+        afcs_roll_servo_current_wma:get_WMA_wrap(afcs_roll_servo_current)
+        afcs_pitch_servo_current_wma:get_WMA_wrap(afcs_pitch_servo_current)
+        afcs_yaw_servo_current_wma:get_WMA_wrap(afcs_yaw_servo_current)
+    else
+        afcs_roll_servo_current_wma:get_WMA_wrap(0.0)
+        afcs_pitch_servo_current_wma:get_WMA_wrap(0.0)
+        afcs_yaw_servo_current_wma:get_WMA_wrap(0.0)
+    end
+
+    AFCS_test_roll_param:set(afcs_roll_servo_current_wma:get_current_val())
+    AFCS_test_pitch_param:set(afcs_pitch_servo_current_wma:get_current_val())
+    AFCS_test_yaw_param:set(afcs_yaw_servo_current_wma:get_current_val())
+    
 
 end
 

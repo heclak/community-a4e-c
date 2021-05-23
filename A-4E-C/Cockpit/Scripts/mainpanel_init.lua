@@ -1083,7 +1083,7 @@ ECM_Visibilty.parameter_name		= "ECM_VIS"
 
 AFCS_TEST_ROLL						= CreateGauge("parameter")
 AFCS_TEST_ROLL.arg_number			= 260
-AFCS_TEST_ROLL.input					= {-1.0, 1.0}
+AFCS_TEST_ROLL.input				= {-1.0, 1.0}
 AFCS_TEST_ROLL.output				= {-1.0, 1.0}
 AFCS_TEST_ROLL.parameter_name		= "AFCS_TEST_ROLL"
 
@@ -1095,7 +1095,7 @@ AFCS_TEST_YAW.parameter_name		= "AFCS_TEST_YAW"
 
 AFCS_TEST_PITCH						= CreateGauge("parameter")
 AFCS_TEST_PITCH.arg_number			= 262
-AFCS_TEST_PITCH.input					= {-1.0, 1.0}
+AFCS_TEST_PITCH.input				= {-1.0, 1.0}
 AFCS_TEST_PITCH.output				= {-1.0, 1.0}
 AFCS_TEST_PITCH.parameter_name		= "AFCS_TEST_PITCH"
 
