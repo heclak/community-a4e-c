@@ -41,10 +41,11 @@ function post_initialize()
    		= = = = = = = = = = = = = = = = = = = = = = = = =
 		WARNING! WARNING! WARNING! WARNING! WARNING! 
 		= = = = = = = = = = = = = = = = = = = = = = = = =
-		DO NOT COPY OR USE THESE SOUNDS
+		DO NOT COPY OR USE THESE SOUNDS IN YOUR PROJECTS
 		= = = = = = = = = = = = = = = = = = = = = = = = =
-		Some assets used in the creation of these sounds 
-		were made with purchased and licensed assets. 
+		
+        The A-4E-C team purchased and licensed some assets 
+        to use in the creation of our engine sounds.
 		While many parts of this project are open source, 
 		these sounds are not. 
 
@@ -79,17 +80,35 @@ function post_initialize()
         
         and a HIGH tone:
         curve = {0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33},
-    
+
+        These sounds are listed in the order they become audible 
+        as the engine starts up and moves toward taxi and takeoff.
+        Gain volumes are set quite high, as this assists in drowning out
+        the default SU-25T engine sound scheme. DCS' sound engine 
+        prevents any digital clipping by automatically lowering the mix 
+        of lower-gain sounds, so in addition to volume, this variable 
+        should also be thought of as a kind of priority.
+
+        Interior mixing is less smooth and creates more pilot-significance.
+        Special attention should be paid so important engine-start-up events or
+        other performance changes in the air can be detected by sound.
+
         In order to maintain consistency when the pilot opens the canopy, 
-        changes to pitch curves should be replicated on the exterior sound set, see: 
+		asset signature frequencies and pitch curves should be replicated 
+		on the exterior sound set, see: 
         /Sounds/Sounders/Aircraft/Engines/Engine.lua
+
+        = = = = = = = = = = = = = = = = = = = = = = = = =
+        INTERPRETING ASSETS AND SDEFS
+  		= = = = = = = = = = = = = = = = = = = = = = = = =
+
+        Ensure engine sounds originate at least 1.5 meteers  
+        from behind the pilot head position. This prevents sounds
+        jumping from one ear to the other.
 
   		= = = = = = = = = = = = = = = = = = = = = = = = =
 
     ]]
-
-    -- These sounds are listed in the order they become audible 
-    -- as the engine starts up and moves toward taxi and takeoff.
 
     -- ENGINE WIND 
     -- The turbine is winding.
@@ -102,7 +121,7 @@ function post_initialize()
     }
     engine_wind_volume = {
         --curve = {0.00, 0.61, 0.71, 0.85, 0.97, 0.99, 1.00},
-        curve = {0.00, 3.6, 4.25, 4.75, 5.0, 5.5, 6.00},
+        curve = {0.00, 3.60, 4.25, 4.75, 5.00, 5.50, 6.00},
         min = 1.0,
         max = 100.0,
     }
@@ -116,8 +135,7 @@ function post_initialize()
         max = 100.0,
     }
     engine_low_volume = {
-        --curve = {0.00, 0.61, 0.71, 0.85, 0.97, 0.99, 1.00},
-        curve = {0.00, 3.6, 4.25, 5.1, 6.0, 7.0, 8.00},
+        curve = {0.00, 3.60, 4.25, 5.10, 6.00, 7.00, 8.00},
         min = 1.0,
         max = 100.0,
     }
@@ -131,7 +149,6 @@ function post_initialize()
         max = 100.0,
     }
     engine_roar_volume = {
-        --curve = {0.00, 0.14, 0.15, 0.16, 0.22},
         curve = {0.00, 0.22, 0.01, 0.04, 0.30},
         min = 5.0,
         max = 100.0,
@@ -147,14 +164,13 @@ function post_initialize()
         max = 100.0,
     }
     engine_high_volume = {
-        --curve = {0.00, 0.05, 0.10, 0.25},
-        curve = {0.00, 0.3, 0.6, 1.5},
+        curve = {0.00, 0.30, 0.60, 1.50},
         min = 22.0,
         max = 100.0,
     }
     -- ENGINE GROWL
     -- The engine is power-stable and can be throttled.
-    -- This tone is an quiet but emergent, fuzzy groan.
+    -- This tone is an quiet, yet emergent, fuzzy groan.
     -- It provides sonic complexity to the engine.
     -- It is heard primarily during takeoff to help signify a throttle down or other loss of RPM.
     -- In the air, it tends to get buried by the wind.
@@ -164,8 +180,7 @@ function post_initialize()
         max = 100.0,
     }
     engine_growl_volume = {
-        --curve = {0.00, 0.005, 0.01, 0.02, 0.04},
-        curve = {0.00, 0.03, 0.06, 0.2, 0.4},
+        curve = {0.00, 0.03, 0.06, 0.20, 0.40},
         min = 22.0,
         max = 100.0,
     }
@@ -181,9 +196,9 @@ function post_initialize()
         max = 225.0,
     }
     wind_rushing_volume = {
-        curve = {0.00, 1.0, 3.00, 4.50, 6.00},
-        min = 16.0,
-        max = 175.0,
+        curve = {0.00, 1.00, 3.50, 5.50, 7.00},
+        min = 15.0,
+        max = 200.0,
     }
 
     sounds = {

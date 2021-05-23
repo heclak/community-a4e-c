@@ -58,11 +58,11 @@ function engine:init(number_, host)
 			= = = = = = = = = = = = = = = = = = = = = = = = =
 			WARNING! WARNING! WARNING! WARNING! WARNING! 
 			= = = = = = = = = = = = = = = = = = = = = = = = =
-			DO NOT COPY OR USE THESE SOUNDS
+			DO NOT COPY OR USE THESE SOUNDS IN YOUR PROJECTS
 			= = = = = = = = = = = = = = = = = = = = = = = = =
 
-			Some assets used in the creation of these sounds 
-			were made with purchased and licensed assets. 
+			The A-4E-C team purchased and licensed some assets 
+        	to use in the creation of our engine sounds.
 			While many parts of this project are open source, 
 			these sounds are not. 
 
@@ -98,16 +98,41 @@ function engine:init(number_, host)
 			and a HIGH tone:
 			curve = {0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33},
 		
+			These sounds are organized by aircraft orientation:
+			The main groups are FRONT, AROUND and REAR.
+			Each includes a low-operation tone, a high-operation tone, and a distant sound.
+
+        	Gain volumes are set quite high, as this assists in drowning out
+        	the default SU-25T engine sound scheme and providing a more theatrical
+			fly-by sound. 
+			
+			DCS' sound engine prevents any digital clipping by automatically 
+			lowering the mix of lower-gain sounds, so in addition to volume, 
+			this variable should also be thought of as a kind of priority.
+
 			In order to maintain consistency when the pilot opens the canopy, 
-			changes to pitch curves should be replicated on the interior sound set, see: 
+			asset signature frequencies and pitch curves should be replicated 
+			on the interior sound set, see: 
 			/Cockpit/Scripts/Systems/sound_system.lua
+
+			= = = = = = = = = = = = = = = = = = = = = = = = =
+			INTERPRETING ASSETS AND SDEFS
+			= = = = = = = = = = = = = = = = = = = = = = = = =
+
+			In addition to setting appropriate audible radiuses,
+			driven by the inner_radius, outer_radius, silent_radius 
+			and peak_radius variables, external engine sounds should 
+			consider placement (away from the aircraft's origin/COG), and
+			cone-broadcasting for sounds that head primarily to the front, 
+			rear, or sides of the aircraft.
+
+			For example, the engine RIP and ROAR are in a silent_radius
+			in close proximity -- this prevents distracting and 
+			inappropriate noise during formation flying.
 
 			= = = = = = = = = = = = = = = = = = = = = = = = =
 		]]
 
-		-- These sounds are organized by aircraft orientation:
-		-- The main groups are FRONT, AROUND and REAR.
-		-- Each includes a low-operation tone, a high-operation tone, and a distant sound.
 
 		-- FRONT
 		-- It's the sound of air being sucked into the turbine.
@@ -120,7 +145,7 @@ function engine:init(number_, host)
 			type_gain = SOUND_FAN_RPM,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_front_lo",
 			pitch_curve = Curve({0.30, 0.61, 0.85, 1.00, 1.04, 1.09, 1.13}, 0.01, 1.0),
-			gain_curve = Curve({0.00, 3.6, 4.2, 5.8, 5.9, 6.0, 7}, 0.01, 1.0),
+			gain_curve = Curve({0.00, 3.60, 4.20, 5.80, 5.90, 6.00, 7.00}, 0.01, 1.0),
 		},
 		{
 			sound = nil,
@@ -128,7 +153,7 @@ function engine:init(number_, host)
 			type_gain = SOUND_FAN_RPM,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_front_hi",
 			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33}, 0.01, 1.0),
-			gain_curve = Curve({0.00, 0.60, 2.7, 3.9, 4.2, 5.9, 6}, 0.47, 1.0),
+			gain_curve = Curve({0.00, 0.60, 2.70, 3.90, 4.20, 5.90, 6.00}, 0.47, 1.0),
 		},
 		{
 			sound = nil,
@@ -136,7 +161,7 @@ function engine:init(number_, host)
 			type_gain = SOUND_TRUE_AIRSPEED,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_far_roar",
 			pitch_curve = Curve({0.66, 1.00, 1.33}, 0.01, 1.0),
-			gain_curve = Curve({0.00, 0.31, 2.4, 5.9, 6.0, 6.5, 1}, 80.0, 340.0),
+			gain_curve = Curve({0.00, 0.31, 2.40, 5.90, 6.00, 6.50, 7.00}, 80.0, 340.0),
 		},
 		-- AROUND
 		-- It's a full spectrum jet engine sound.
@@ -149,7 +174,7 @@ function engine:init(number_, host)
 			type_gain = SOUND_FAN_RPM,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_around_lo",
 			pitch_curve = Curve({0.30, 0.61, 0.85, 1.00, 1.05, 1.08, 1.13}, 0.01, 1.0),
-			gain_curve = Curve({0.00, 3.6, 4.2, 5.8, 5.9, 6.0, 7}, 0.01, 1.0),
+			gain_curve = Curve({0.00, 3.60, 4.20, 5.80, 5.90, 6.00, 7.00}, 0.01, 1.0),
 		},
 		{
 			sound = nil,
@@ -157,15 +182,15 @@ function engine:init(number_, host)
 			type_gain = SOUND_FAN_RPM,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_around_hi",
 			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33}, 0.01, 1.0),
-			gain_curve = Curve({0.00, 0.60, 2.7, 3.9, 4.2, 5.9, 6}, 0.43, 1.0),
+			gain_curve = Curve({0.00, 0.60, 2.7, 3.9, 4.2, 5.9, 6.0}, 0.43, 1.0),
 		},
 		{
 			sound = nil,
 			type_pitch = SOUND_FAN_RPM,
 			type_gain = SOUND_FAN_RPM,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_far_whine",
-			gain_curve = Curve({0.00, 3.6, 4.2, 5.2, 5.8, 5.9, 6.0}, 0.01, 1.0),
-			gain_curve = Curve({0.00, 0.11, 2.82, 6.0, 6.3, 6.6, 7}, 80.0, 340.0),
+			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33}, 0.01, 1.0),
+			gain_curve = Curve({0.00, 0.11, 2.82, 6.0, 6.3, 6.6, 7.0}, 80.0, 340.0),
 		},
 		-- BACK
 		-- It's the sound of air thrust out of the turbine.
@@ -178,7 +203,7 @@ function engine:init(number_, host)
 			type_gain = SOUND_FAN_RPM,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_back_lo",
 			pitch_curve = Curve({0.30, 0.61, 0.85, 1.00, 1.04, 1.09, 1.13}, 0.01, 1.0),
-			gain_curve = Curve({0.00, 3.6, 4.2, 5.8, 5.9, 6.0, 7}, 0.01, 1.0),
+			gain_curve = Curve({0.00, 3.60, 4.20, 5.80, 5.90, 6.00, 7.00}, 0.01, 1.0),
 		},
 		{
 			sound = nil,
@@ -186,7 +211,7 @@ function engine:init(number_, host)
 			type_gain = SOUND_FAN_RPM,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_back_hi",
 			pitch_curve = Curve({0.30, 0.61, 0.85, 0.99, 1.10, 1.21, 1.33}, 0.01, 1.0),
-			gain_curve = Curve({0.00, 0.60, 2.7, 3.9, 4.2, 5.9, 6}, 0.43, 1.0),
+			gain_curve = Curve({0.00, 0.61, 2.70, 3.90, 4.20, 5.90, 6.00}, 0.43, 1.0),
 		},
 		{
 			sound = nil,
@@ -194,7 +219,7 @@ function engine:init(number_, host)
 			type_gain = SOUND_TRUE_AIRSPEED,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_far_rip",
 			pitch_curve = Curve({0.66, 1.00, 1.33}, 0.5, 1.0),
-			gain_curve = Curve({0.00, 0.11, 2.82, 6.0, 6.3, 6.6, 7}, 80.0, 340.0),
+			gain_curve = Curve({0.00, 0.11, 2.82, 5.66, 6.33, 6.66, 7.00}, 80.0, 340.0),
 		},
 
 	}
