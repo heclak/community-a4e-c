@@ -34,7 +34,6 @@ local line_width                = (4.5 / 512) / tex_scale
 local throttle_offset           = 4.0 * ds
 local rudder_offset             = 3.0 * ds
 
-
 -- =============================
 -- BACKGROUND
 -- =============================
@@ -208,10 +207,10 @@ AddElement(roll_scale_p025)
 -- draw GEAR NOSE position
 gearc_index                 = Copy(roll_scale)
 gearc_index.vertices        = {
-                                {-3.0 * line_width, -3.0 * line_width},
-                                {-3.0 * line_width, 3.0 * line_width},
-                                { 3.0 * line_width, 3.0 * line_width},
-                                { 3.0 * line_width, -3.0 * line_width}
+                                {-4.0 * line_width, -5.0 * line_width},
+                                {-4.0 * line_width, 5.0 * line_width},
+                                { 4.0 * line_width, 5.0 * line_width},
+                                { 4.0 * line_width, -5.0 * line_width}
                               }
 gearc_index.element_params  = {"FM_GEAR_NOSE"}
 gearc_index.controllers     = {{"move_up_down_using_parameter", sizeX, sizeX}}
@@ -337,15 +336,8 @@ wbrakel_scale.material       = draw_hidden
 AddElement(wbrakel_scale)
 
 -- scale WHEELBRAKE RIGHT position
-wbraker_scale                = Copy(pitch_scale)
-wbraker_scale.vertices       = {
-                                    {0.0, -line_width},
-                                    {0.0, line_width},
-                                    {2.0 * sizeX, line_width},
-                                    {2.0 * sizeX, -line_width}
-                                  }
+wbraker_scale                = Copy(wbrakel_scale)
 wbraker_scale.init_pos       = {0.5 * sizeX, -sizeX}
-wbraker_scale.material       = draw_hidden
 AddElement(wbraker_scale)
 
 -- draw THROTTLE position
@@ -381,18 +373,8 @@ wbrakel_index.parent_element   = wbrakel_scale.name
 AddElement(wbrakel_index)
 
 -- draw WHEELBRAKE RIGHT position
-wbraker_index                = Copy(roll_scale)
-wbraker_index.vertices       = {
-                                    {-2.0 * line_width, -line_width},
-                                    {-2.0 * line_width, line_width},
-                                    { 2.0 * line_width, line_width},
-                                    { 2.0 * line_width, -line_width}
-                                  }
+wbraker_index                = Copy(wbrakel_index)
 wbraker_index.element_params = {"RIGHT_BRAKE_PEDAL"}  
-wbraker_index.controllers    = {{"move_up_down_using_parameter", 0, 2.0 * sizeX}}
-wbraker_index.tex_params	    = {256 / 512, 176.5 / 512, 0.5 * tex_scale / 3, 2 * tex_scale / 3}
-wbraker_index.init_rot         = {-90, 0, 0}
-wbraker_index.material         = draw_input
 wbraker_index.parent_element   = wbraker_scale.name
 AddElement(wbraker_index)
 
