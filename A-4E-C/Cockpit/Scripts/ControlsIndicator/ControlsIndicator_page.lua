@@ -265,10 +265,10 @@ AddElement(gearr_index)
 -- draw SLAT LEFT position
 slatl_index                     = Copy(roll_scale)
 slatl_index.vertices            = {
-                                    {-1.0 * line_width, -2.0 * line_width},
-                                    {-1.0 * line_width, 2.0 * line_width},
-                                    {1.0 * line_width, 2.0 * line_width},
-                                    {1.0 * line_width, -2.0 * line_width}
+                                    {-1.5 * line_width, -2.0 * line_width},
+                                    {-1.5 * line_width, 2.0 * line_width},
+                                    {1.5 * line_width, 2.0 * line_width},
+                                    {1.5 * line_width, -2.0 * line_width}
                                   }
 slatl_index.element_params      = {"FM_SLAT_LEFT"}
 slatl_index.init_pos            = {-sizeX, sizeX}
