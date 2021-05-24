@@ -154,6 +154,7 @@ public:
 
 		m_ADC_TAS = m_api.pfn_ed_cockpit_get_parameter_handle( "ADC_TAS" );
 
+		m_chocks = m_api.pfn_ed_cockpit_get_parameter_handle( "WHEEL_CHOCKS_STATE" );
 	}
 
 	cockpit_param_api& api()
@@ -230,6 +231,11 @@ public:
 	{
 		printf( "Weapon: " );
 		return getPointer( m_weapon );
+	}
+
+	inline bool getChocks() const
+	{
+		return getParamNumber( m_chocks ) > 0.5;
 	}
 
 	inline uint32_t getTacanObjectID()
@@ -577,14 +583,14 @@ public:
 		 
 	void* m_test = NULL;
 private:
-	inline double getParamNumber(void* ptr)
+	inline double getParamNumber(void* ptr) const
 	{
 		double result;
 		m_api.pfn_ed_cockpit_parameter_value_to_number(ptr, result, false);
 		return result;
 	}
 
-	inline void getParamString(void* ptr, char* buffer, unsigned int bufferSize)
+	inline void getParamString(void* ptr, char* buffer, unsigned int bufferSize) const
 	{
 		m_api.pfn_ed_cockpit_parameter_value_to_string(ptr, buffer, bufferSize);
 	}
@@ -713,6 +719,8 @@ private:
 	void* m_ADC_TAS = NULL;
 	void* m_ADC_TASX = NULL;
 	void* m_ADC_TASZ = NULL;
+
+	void* m_chocks = NULL;
 
 };
 

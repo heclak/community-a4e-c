@@ -184,7 +184,7 @@ void FuelSystem2::update( double dt )
 	if ( ! enginePower )
 		wingTransferRate = 0.0;
 
-	if ( wingTransferRate < 1.8 || m_fuel[TANK_WING] < 15.0 )
+	if ( wingTransferRate < 1.8 || m_fuel[TANK_WING] <= 15.0 )
 		m_fuelTransferCaution = true;
 	else
 		m_fuelTransferCaution = false;
