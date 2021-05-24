@@ -2,9 +2,9 @@ dofile(LockOn_Options.common_script_path.."elements_defs.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 
 -- set color values are r, g, b, a, with a min-max of 0, 255
-local draw_background           = MakeMaterial("arcade.tga", {255, 0, 0, 64})
-local draw_percentile           = MakeMaterial("arcade.tga", {255, 0, 0, 80})
-local draw_percentile_strong    = MakeMaterial("arcade.tga", {255, 0, 0, 255})
+local draw_background           = MakeMaterial("arcade.tga", {255, 0, 0, 80})
+local draw_percentile           = MakeMaterial("arcade.tga", {255, 0, 0, 32})
+local draw_percentile_strong    = MakeMaterial("arcade.tga", {255, 0, 0, 128})
 local draw_axis                 = MakeMaterial("arcade.tga", {255, 0, 0, 255})
 local draw_hidden               = MakeMaterial("arcade.tga", {255, 0, 0, 0})
 local draw_input                = MakeMaterial("arcade.tga", {255, 255, 0, 255})
@@ -28,7 +28,7 @@ local ds                        = 0.05 * sizeX
 local line_width                = (4.5 / 512) / tex_scale
 
 local throttle_offset           = 4.0 * ds
-local rudder_offset             = 4.0 * ds
+local rudder_offset             = 3.0 * ds
 
 
 -- =============================
@@ -204,10 +204,10 @@ AddElement(roll_scale_p025)
 -- draw FLAPS position
 flaps_index                 = Copy(roll_scale)
 flaps_index.vertices        = {
-                                {-sizeX, -line_width},
-                                {-sizeX, line_width},
-                                {sizeX, line_width},
-                                {sizeX, -line_width}
+                                {-sizeX, -0.5 * line_width},
+                                {-sizeX, 0.5 * line_width},
+                                {sizeX, 0.5 * line_width},
+                                {sizeX, -0.5 * line_width}
                               }
 flaps_index.element_params  = {"FM_FLAPS"}  
 flaps_index.controllers     = {{"move_up_down_using_parameter", 0, -sizeX}}
@@ -220,10 +220,10 @@ AddElement(flaps_index)
 -- draw SPOILER position
 spoiler_index                 = Copy(pitch_scale)
 spoiler_index.vertices        = {
-                                  {-sizeX, -line_width},
-                                  {-sizeX, line_width},
-                                  {sizeX, line_width},
-                                  {sizeX, -line_width}
+                                  {-sizeX, -0.5 * line_width},
+                                  {-sizeX, 0.5 * line_width},
+                                  {sizeX, 0.5 * line_width},
+                                  {sizeX, -0.5 * line_width}
                                 }
 spoiler_index.element_params  = {"FM_SPOILERS"}  
 spoiler_index.controllers     = {{"move_up_down_using_parameter", 0, sizeX}}
@@ -236,10 +236,10 @@ AddElement(spoiler_index)
 -- draw AIRBRAKE1 position
 abrake1_index                 = Copy(roll_scale)
 abrake1_index.vertices        = {
-                                  {-sizeX, -line_width},
-                                  {-sizeX, line_width},
-                                  {sizeX, line_width},
-                                  {sizeX, -line_width}
+                                  {-sizeX, -0.5 * line_width},
+                                  {-sizeX, 0.5 * line_width},
+                                  {sizeX, 0.5 * line_width},
+                                  {sizeX, -0.5 * line_width}
                                 }
 abrake1_index.element_params  = {"FM_BRAKES"}  
 abrake1_index.controllers     = {{"move_up_down_using_parameter", 0, sizeX}}
@@ -250,19 +250,8 @@ abrake1_index.parent_element  = roll_scale.name
 AddElement(abrake1_index)
 
 -- draw AIRBRAKE2 position
-abrake2_index                 = Copy(roll_scale)
-abrake2_index.vertices        = {
-                                  {-sizeX, -line_width},
-                                  {-sizeX, line_width},
-                                  {sizeX, line_width},
-                                  {sizeX, -line_width}
-                                }
-abrake2_index.element_params  = {"FM_BRAKES"}  
+abrake2_index                 = Copy(abrake1_index)
 abrake2_index.controllers     = {{"move_up_down_using_parameter", 0, -sizeX}}
-abrake2_index.tex_params	    = {256 / 512, 176.5 / 512, 0.5 * tex_scale / 3, 2 * tex_scale / 3}
-abrake2_index.init_rot        = {-90, 0, 0}
-abrake2_index.material        = draw_indicator
-abrake2_index.parent_element  = roll_scale.name
 AddElement(abrake2_index)
 
 -- =============================
@@ -309,7 +298,7 @@ wbrakel_scale.vertices       = {
                                     {2.0 * sizeX, line_width},
                                     {2.0 * sizeX, -line_width}
                                   }
-wbrakel_scale.init_pos       = {-0.75 * sizeX, -sizeX}
+wbrakel_scale.init_pos       = {-0.5 * sizeX, -sizeX}
 wbrakel_scale.material       = draw_hidden
 AddElement(wbrakel_scale)
 
@@ -321,7 +310,7 @@ wbraker_scale.vertices       = {
                                     {2.0 * sizeX, line_width},
                                     {2.0 * sizeX, -line_width}
                                   }
-wbraker_scale.init_pos       = {0.75 * sizeX, -sizeX}
+wbraker_scale.init_pos       = {0.5 * sizeX, -sizeX}
 wbraker_scale.material       = draw_hidden
 AddElement(wbraker_scale)
 
