@@ -9,6 +9,10 @@ local draw_axis                 = MakeMaterial("arcade.tga", {255, 0, 0, 255})
 local draw_hidden               = MakeMaterial("arcade.tga", {255, 0, 0, 0})
 local draw_input                = MakeMaterial("arcade.tga", {255, 255, 0, 255})
 local draw_indicator            = MakeMaterial("arcade.tga", {255, 0, 0, 255})
+local draw_gear                 = MakeMaterial("arcade.tga", {255, 0, 0, 255})
+
+local draw_on                   = MakeMaterial("arcade.tga", {128, 0, 0, 255})
+local draw_off                  = MakeMaterial("arcade.tga", {255, 0, 0, 255})
 
 SetCustomScale(1.0)
 
@@ -55,7 +59,7 @@ base.level		                  = 8
 AddElement(base)
 
 -- =================================
--- SCALES ands GRIDS - LOW priority
+-- AXES ands GRIDS
 -- =================================
 
 -- scale PITCH
@@ -198,8 +202,38 @@ roll_scale_p025.material	      = draw_percentile
 AddElement(roll_scale_p025)
 
 -- =============================
--- INDICATORS - HIGH priority
+-- DRAG SURFACES positions
 -- =============================
+
+-- draw GEAR NOSE position
+gearc_index                 = Copy(roll_scale)
+gearc_index.vertices        = {
+                                {-3.0 * line_width, -3.0 * line_width},
+                                {-3.0 * line_width, 3.0 * line_width},
+                                { 3.0 * line_width, 3.0 * line_width},
+                                { 3.0 * line_width, -3.0 * line_width}
+                              }
+gearc_index.element_params  = {"FM_GEAR_NOSE"}
+gearc_index.controllers     = {{"move_up_down_using_parameter", sizeX, sizeX}}
+gearc_index.tex_params	    = {256 / 512, 176.5 / 512, 0.5 * tex_scale / 3, 2 * tex_scale / 3}
+gearc_index.init_rot        = {-90, 0, 0}
+gearc_index.material        = draw_gear
+gearc_index.parent_element  = pitch_scale.name
+AddElement(gearc_index)
+
+-- draw GEAR LEFT position
+gearl_index                 = Copy(gearc_index)
+gearl_index.element_params  = {"FM_GEAR_LEFT"}
+gearl_index.init_pos        = {0, (0.50 * sizeX)}
+gearl_index.controllers     = {{"move_up_down_using_parameter", -sizeX, -sizeX}}
+AddElement(gearl_index)
+
+-- draw GEAR RIGHT position
+gearr_index                 = Copy(gearc_index)
+gearr_index.element_params  = {"FM_GEAR_RIGHT"}
+gearr_index.init_pos        = {0, -(0.50 * sizeX)}
+gearr_index.controllers     = {{"move_up_down_using_parameter", -sizeX, -sizeX}}
+AddElement(gearr_index)
 
 -- draw FLAPS position
 flaps_index                 = Copy(roll_scale)
@@ -209,7 +243,7 @@ flaps_index.vertices        = {
                                 {sizeX, 0.5 * line_width},
                                 {sizeX, -0.5 * line_width}
                               }
-flaps_index.element_params  = {"FM_FLAPS"}  
+flaps_index.element_params  = {"FM_FLAPS"}
 flaps_index.controllers     = {{"move_up_down_using_parameter", 0, -sizeX}}
 flaps_index.tex_params	    = {256 / 512, 176.5 / 512, 0.5 * tex_scale / 3, 2 * tex_scale / 3}
 flaps_index.init_rot        = {-90, 0, 0}
@@ -255,7 +289,7 @@ abrake2_index.controllers     = {{"move_up_down_using_parameter", 0, -sizeX}}
 AddElement(abrake2_index)
 
 -- =============================
--- additional INPUT INDICATORS
+-- INPUT INDICATORS
 -- =============================
 
 -- scale RUDDER
@@ -314,13 +348,6 @@ wbraker_scale.init_pos       = {0.5 * sizeX, -sizeX}
 wbraker_scale.material       = draw_hidden
 AddElement(wbraker_scale)
 
-
-
--- =============================
--- put INDICATOR items LAST
--- =============================
-
-
 -- draw THROTTLE position
 throttle_index                  = Copy(roll_scale)
 throttle_index.vertices         = {
@@ -369,9 +396,7 @@ wbraker_index.material         = draw_input
 wbraker_index.parent_element   = wbraker_scale.name
 AddElement(wbraker_index)
 
-
-
--- draw PITCH AND ROLL position
+-- draw PITCH AND ROLL (STICK) position
 stick_position					= CreateElement "ceTexPoly"
 stick_position.name             = "stick_position"
 stick_position.vertices         = {
