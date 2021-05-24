@@ -200,8 +200,36 @@ roll_scale_p025.init_pos        = {0, (0.25 * sizeX)}
 roll_scale_p025.material	      = draw_percentile
 AddElement(roll_scale_p025)
 
+-- scale THROTTLE position
+throttle_scale                  = Copy(pitch_scale)
+throttle_scale.vertices         = {
+                                    {0, -line_width},
+                                    {0, line_width},
+                                    {2.0 * sizeX, line_width},
+                                    {2.0 * sizeX, -line_width}
+                                  }
+throttle_scale.init_pos         = {-(sizeX + throttle_offset), -sizeX}
+AddElement(throttle_scale)
+
+-- scale WHEELBRAKE LEFT position
+wbrakel_scale                = Copy(pitch_scale)
+wbrakel_scale.vertices       = {
+                                    {0.0, -line_width},
+                                    {0.0, line_width},
+                                    {2.0 * sizeX, line_width},
+                                    {2.0 * sizeX, -line_width}
+                                  }
+wbrakel_scale.init_pos       = {-0.5 * sizeX, -sizeX}
+wbrakel_scale.material       = draw_hidden
+AddElement(wbrakel_scale)
+
+-- scale WHEELBRAKE RIGHT position
+wbraker_scale                = Copy(wbrakel_scale)
+wbraker_scale.init_pos       = {0.5 * sizeX, -sizeX}
+AddElement(wbraker_scale)
+
 -- =============================
--- DRAG SURFACES positions
+-- INDICATORS
 -- =============================
 
 -- draw GEAR NOSE position
@@ -233,6 +261,8 @@ gearr_index.element_params  = {"FM_GEAR_RIGHT"}
 gearr_index.init_pos        = {0, -(0.50 * sizeX)}
 gearr_index.controllers     = {{"move_up_down_using_parameter", -sizeX, -sizeX}}
 AddElement(gearr_index)
+
+
 
 -- draw SLAT LEFT position
 slatl_index                 = Copy(roll_scale)
@@ -272,7 +302,6 @@ gearc_index.init_rot        = {-90, 0, 0}
 gearc_index.material        = draw_gear
 gearc_index.parent_element  = pitch_scale.name
 AddElement(gearc_index)
-
 
 -- draw FLAPS position
 flaps_index                 = Copy(roll_scale)
@@ -314,7 +343,7 @@ abrake1_index.vertices        = {
                                   {sizeX, 0.5 * line_width},
                                   {sizeX, -0.5 * line_width}
                                 }
-abrake1_index.element_params  = {"FM_BRAKES"}  
+abrake1_index.element_params  = {"FM_BRAKES"}
 abrake1_index.controllers     = {{"move_up_down_using_parameter", 0, sizeX}}
 abrake1_index.tex_params	    = {256 / 512, 176.5 / 512, 0.5 * tex_scale / 3, 2 * tex_scale / 3}
 abrake1_index.init_rot        = {-90, 0, 0}
@@ -326,6 +355,22 @@ AddElement(abrake1_index)
 abrake2_index                 = Copy(abrake1_index)
 abrake2_index.controllers     = {{"move_up_down_using_parameter", 0, -sizeX}}
 AddElement(abrake2_index)
+
+-- draw RPM position
+rpm_index                 = Copy(roll_scale)
+rpm_index.vertices        = {
+                                {-4.0 * line_width, -5.0 * line_width},
+                                {-4.0 * line_width, 5.0 * line_width},
+                                { 4.0 * line_width, 5.0 * line_width},
+                                { 4.0 * line_width, -5.0 * line_width}
+                              }
+rpm_index.element_params  = {"RPM"}
+rpm_index.controllers     = {{"move_up_down_using_parameter", 0, sizeX / 50}}
+rpm_index.tex_params	    = {256 / 512, 176.5 / 512, 0.5 * tex_scale / 3, 2 * tex_scale / 3}
+rpm_index.init_rot        = {-90, 0, 0}
+rpm_index.material        = draw_indicator
+rpm_index.parent_element  = throttle_scale.name
+AddElement(rpm_index)
 
 -- =============================
 -- INPUT INDICATORS
@@ -351,34 +396,6 @@ rudder_index.parent_element     = rudder_scale.name
 rudder_index.tex_params	        = {256 / 512, 176.5 / 512, 0.5 * tex_scale / 3, 2 * tex_scale / 3}
 rudder_index.material	        = draw_input
 AddElement(rudder_index)
-
--- scale THROTTLE position
-throttle_scale                  = Copy(pitch_scale)
-throttle_scale.vertices         = {
-                                    {0, -line_width},
-                                    {0, line_width},
-                                    {2.0 * sizeX, line_width},
-                                    {2.0 * sizeX, -line_width}
-                                  }
-throttle_scale.init_pos         = {-(sizeX + throttle_offset), -sizeX}
-AddElement(throttle_scale)
-
--- scale WHEELBRAKE LEFT position
-wbrakel_scale                = Copy(pitch_scale)
-wbrakel_scale.vertices       = {
-                                    {0.0, -line_width},
-                                    {0.0, line_width},
-                                    {2.0 * sizeX, line_width},
-                                    {2.0 * sizeX, -line_width}
-                                  }
-wbrakel_scale.init_pos       = {-0.5 * sizeX, -sizeX}
-wbrakel_scale.material       = draw_hidden
-AddElement(wbrakel_scale)
-
--- scale WHEELBRAKE RIGHT position
-wbraker_scale                = Copy(wbrakel_scale)
-wbraker_scale.init_pos       = {0.5 * sizeX, -sizeX}
-AddElement(wbraker_scale)
 
 -- draw THROTTLE position
 throttle_index                  = Copy(roll_scale)
