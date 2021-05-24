@@ -1,20 +1,28 @@
 wave = "Effects/Aircrafts/Engines/A-4E-C/a-4e_engine_ext_front_lo"
 
 -- PITCH
+
 pitch = 1.0
 
 -- VOLUME
+
 gain = 1.1
 attack = 0.4
 release = 0.4
 
 -- DISTANCE
+-- in meters
+
 silent_radius = 0
 peak_radius = 300
 inner_radius = 250	
 outer_radius = 1000
 
 -- DIRECTIONALITY
+-- position: in meters from model origin (often center of gravity)
+-- direction: if conical projection by defining orientation from -1 to 1.
+-- both these variables list coordinates in {FRONT-BACK, UP-DOWN, RIGHT-LEFT}
+
 position = {3, 0, 0}
 direction = {1, 0, 0}
 cone_inner_angle = 55
@@ -23,6 +31,7 @@ cone_inner_gain = 0.90
 cone_outer_gain = 0.01
 
 -- MISC FLAGS
+
 nodoppler = false
 auto_width = true
 -- distance_filter_offset = 1000

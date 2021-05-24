@@ -6,6 +6,10 @@ planes = {
         file = "Caucasus A-4E-C Cold Start.miz"
     },
     {
+        name = _("Taxi"),
+        file = "Caucasus A-4E-C Taxi.miz"
+    },
+    {
         name = _("Takeoff"),
         file = "Caucasus A-4E-C Takeoff.miz"
     },
@@ -56,6 +60,10 @@ planes = {
         file = "Persian Gulf A-4E-C Cold Start.miz"
     },
     {
+        name = _("Taxi"),
+        file = "Persian Gulf A-4E-C Taxi.miz"
+    },
+    {
         name = _("Takeoff"),
         file = "Persian Gulf A-4E-C Takeoff.miz"
     },
@@ -98,6 +106,10 @@ planes = {
         file = "Nevada A-4E-C Cold Start.miz"
     },
     {
+        name = _("Taxi"),
+        file = "Nevada A-4E-C Taxi.miz"
+    },
+    {
         name = _("Takeoff"),
         file = "Nevada A-4E-C Takeoff.miz"
     },
@@ -110,6 +122,10 @@ planes = {
     {
         name = _("Cold Start"),
         file = "Syria A-4E-C Cold Start.miz"
+    },
+    {
+        name = _("Taxi"),
+        file = "Syria A-4E-C Taxi.miz"
     },
     {
         name = _("Takeoff"),
