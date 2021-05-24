@@ -262,7 +262,6 @@ end
 
 function update()
     update_birth()
-    update_chocks()
     --update_brakes()
     		
 	if (ABRAKE_COMMAND == 0 and ABRAKE_STATE > 0) then
@@ -346,14 +345,6 @@ function update()
             sound_params.snd_cont_hydraulic_mov:set(0.0)
             sound_params.snd_inst_hydraulic_stop:set(1.0)
         end
-    end
-end
-
-function update_chocks()
-    -- hold brake and keep holding it until chocks fail or removed
-    if WHEELCHOCKS_STATE == 1 then
-        --print_message_to_user('HOLD.')
-        dispatch_action(nil,Keys.BrakesOn)
     end
 end
 
