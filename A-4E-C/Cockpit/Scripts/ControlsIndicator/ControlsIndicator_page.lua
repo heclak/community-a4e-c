@@ -234,6 +234,46 @@ gearr_index.init_pos        = {0, -(0.50 * sizeX)}
 gearr_index.controllers     = {{"move_up_down_using_parameter", -sizeX, -sizeX}}
 AddElement(gearr_index)
 
+-- draw SLAT LEFT position
+slatl_index                 = Copy(roll_scale)
+slatl_index.vertices        = {
+                                {-2.0 * line_width, -2.0 * line_width},
+                                {-2.0 * line_width, 2.0 * line_width},
+                                {2.0 * line_width, 2.0 * line_width},
+                                {2.0 * line_width, -2.0 * line_width}
+                              }
+slatl_index.element_params  = {"FM_SLAT_LEFT"}
+slatl_index.init_pos        = {-sizeX, sizeX}
+slatl_index.controllers     = {{"move_up_down_using_parameter", 0, 2.0 * sizeX}}
+slatl_index.tex_params	    = {256 / 512, 176.5 / 512, 0.5 * tex_scale / 3, 2 * tex_scale / 3}
+slatl_index.init_rot        = {-90, 0, 0}
+slatl_index.material        = draw_gear
+slatl_index.parent_element  = pitch_scale.name
+AddElement(slatl_index)
+
+-- draw SLAT RIGHT position
+slatr_index                 = Copy(slatl_index)
+slatr_index.element_params  = {"FM_SLAT_RIGHT"}
+slatr_index.init_pos        = {-sizeX, -sizeX}
+AddElement(slatr_index)
+
+-- draw GEAR NOSE position
+gearc_index                 = Copy(roll_scale)
+gearc_index.vertices        = {
+                                {-4.0 * line_width, -5.0 * line_width},
+                                {-4.0 * line_width, 5.0 * line_width},
+                                { 4.0 * line_width, 5.0 * line_width},
+                                { 4.0 * line_width, -5.0 * line_width}
+                              }
+gearc_index.element_params  = {"FM_GEAR_NOSE"}
+gearc_index.controllers     = {{"move_up_down_using_parameter", sizeX, sizeX}}
+gearc_index.tex_params	    = {256 / 512, 176.5 / 512, 0.5 * tex_scale / 3, 2 * tex_scale / 3}
+gearc_index.init_rot        = {-90, 0, 0}
+gearc_index.material        = draw_gear
+gearc_index.parent_element  = pitch_scale.name
+AddElement(gearc_index)
+
+
 -- draw FLAPS position
 flaps_index                 = Copy(roll_scale)
 flaps_index.vertices        = {
