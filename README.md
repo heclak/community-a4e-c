@@ -14,7 +14,7 @@ Gospadin, Heclak, Joshua Nelson, plusnine, Farlander, gyrovague, kryb / Archimae
 
 ## Special Thanks
 
-SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Sidekick65, Talo, Gvad, HellesBelles, SPINEG, Sport, rudel-chw, Luciano, Malamem, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
+SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, Gvad, Sidekick65, HellesBelles, SPINEG, Sport, rudel-chw, Luciano, Malamem, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
 
 ## Features
 
@@ -70,14 +70,14 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Sidekick65, Talo, Gvad, Hel
 
 - Fuel system cuts off if auto pause is left on for too long
 - Pilot blacks out when hooking into SuperCarrier (throttle up hard to cat-in!)
-- Wheel chocks do not stop the aircraft 
+- Wheel chocks do not stop the aircraft
 - APC underresponsive
 - AN/ASN-41 navigation BDHI needle animations swapped in test mode
 - IN RANGE lamp flickers when TEST is pressed
 - TEST press can cause ECM panel lights to stick on
 - Throttle position occasionally stuck in OFF position after rearm
 
-[see full issue list](https://github.com/heclak/community-a4e-c/issues/) 
+[see full issue list](https://github.com/heclak/community-a4e-c/issues/)
 
 #### Dispensing high volumes of bomblets (40+) from SUU-7/CBU-1/CBU-2 causes serious performance dip and/or crashes to desktop
 
@@ -89,7 +89,7 @@ Failure to perform these steps will result in DCS World not recognizing the modu
 
 ### STEP 1: Upgrading from an older release
 
-If you are upgrading from an older version of the A-4E-C, perform these following actions. You must completely delete the currently installed A-4E-C files before installing the new version, as some important files have been removed for this. 
+If you are upgrading from an older version of the A-4E-C, perform these following actions. You must completely delete the currently installed A-4E-C files before installing the new version, as some important files have been removed for this.
 
 Additionally your input bindings must be reset and rebound in order to accommodate this release’s enhanced control scheme. If this is a new installation, you can skip this step and move on to Step 2.
 
@@ -159,13 +159,13 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 **Q: Why can't I use the TACAN and BDHI or ILS my favorite carrier?**
 
-- In order to TACAN to a carrier, the mission file must be set up correctly, allowing the A-4E-C to interpret the carrier's position from the mission file's settings. 
+- In order to TACAN to a carrier, the mission file must be set up correctly, allowing the A-4E-C to interpret the carrier's position from the mission file's settings.
 - In the mission file, the following conditions should be met:
   - The carrier must be the Stennis
   - The Stennis must have one (and only one) waypoint
   - The start and end speeds for eacg waypoint must be equal
   - The TACAN channel is set to the X frequency
-  - Drift, damage, or other server strain can still throw the calculation off course, but in a properly set up mission, the TACAN signal should remain in visual range of the carrier. 
+  - Drift, damage, or other server strain can still throw the calculation off course, but in a properly set up mission, the TACAN signal should remain in visual range of the carrier.
   - ILS does not function for carrier units.
 
 **Q: Can I fly the A-4E-C as a tanker?**
