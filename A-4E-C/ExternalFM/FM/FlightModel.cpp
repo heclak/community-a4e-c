@@ -19,8 +19,13 @@
 #include "Maths.h"
 //=========================================================================//
 
+typedef Scooter::Airframe::Damage D;
+
 static int vapourMap[8] = {};
 static int vapourMapC[10] = {};
+
+static D wingElementToDamage[] = {D::WING_L_CENTER, D::WING_L_CENTER, D::WING_L_IN, D::WING_L_IN, D::WING_R_IN, D::WING_R_IN, D::WING_R_CENTER, D::WING_R_CENTER};
+static D wingElementToDamageC[] = {D::AILERON_L, D::WING_L_OUT, D::WING_L_OUT, D::WING_L_OUT, D::WING_L_CENTER, D::WING_R_CENTER, D::WING_R_OUT, D::WING_R_OUT, D::WING_R_OUT, D::AILERON_L };
 
 
 #undef min
@@ -402,14 +407,16 @@ void Scooter::FlightModel::calculateElements()
 	for (int i = 0; i < m_elements.size(); i++)
 	{
 		bool leftWing = i < m_elements.size() / 2;
-		if ( leftWing )
+		/*if ( leftWing )
 		{
 			damage = m_airframe.getLWingDamage();
 		}
 		else
 		{
 			damage = m_airframe.getRWingDamage();
-		}
+		}*/
+		damage = m_airframe.getDamageElement( wingElementToDamageC[i] );
+
 		m_elements[i].setLDFactor(1.0 * damage, 0.7 * damage);
 		m_elements[i].calculateElementPhysics();
 
@@ -424,16 +431,15 @@ void Scooter::FlightModel::calculateElements()
 	for (int i = 0; i < m_elementsC.size(); i++)
 	{
 		bool leftWing = i < m_elementsC.size() / 2;
-		if ( leftWing )
+		/*if ( leftWing )
 		{
 			damage = m_airframe.getLWingDamage();
 		}
 		else
 		{
 			damage = m_airframe.getRWingDamage();
-		}
-
-		
+		}*/
+		damage = m_airframe.getDamageElement( wingElementToDamageC[i] );
 
 		m_elementsC[i].setLDFactor(1.0 * damage, 0.7 * damage);
 		m_elementsC[i].calculateElementPhysics();
@@ -520,7 +526,7 @@ void Scooter::FlightModel::checkForOverstress( double dt )
 {
 	if ( m_lwForce > c_wingStructuralLimit )
 	{
-		m_airframe.setDamageDelta( Airframe::Damage::WING_L_IN, 1.0 );
+		m_airframe.setDamageDelta( Airframe::Damage::WING_L_IN, random() );
 		m_airframe.setDamageDelta( Airframe::Damage::WING_L_CENTER, 1.0 );
 		m_airframe.setDamageDelta( Airframe::Damage::WING_L_PART_CENTER, 1.0 );
 		m_airframe.setDamageDelta( Airframe::Damage::FLAP_L, 1.0 );
@@ -532,7 +538,7 @@ void Scooter::FlightModel::checkForOverstress( double dt )
 
 	if ( m_rwForce > c_wingStructuralLimit )
 	{
-		m_airframe.setDamageDelta( Airframe::Damage::WING_R_IN, 1.0 );
+		m_airframe.setDamageDelta( Airframe::Damage::WING_R_IN, random() );
 		m_airframe.setDamageDelta( Airframe::Damage::WING_R_CENTER, 1.0 );
 		m_airframe.setDamageDelta( Airframe::Damage::WING_R_PART_CENTER, 1.0 );
 		m_airframe.setDamageDelta( Airframe::Damage::FLAP_R, 1.0 );
@@ -558,6 +564,7 @@ void Scooter::FlightModel::calculateShake(double& dt)
 	if ( m_scalarV > 30.0 )
 		shakeAmplitude = clamp( (aoa - 10.0) / 15.0, 0.0, 1.0 );
 	m_interface.setCockpitRattle( shakeAmplitude );
+	m_interface.setLoadFactor( getLoadFactor() );
 	shakeAmplitude *= buffetAmplitude;
 
 	// GEAR CONTRIBUTION

@@ -155,6 +155,7 @@ public:
 		m_ADC_TAS = m_api.pfn_ed_cockpit_get_parameter_handle( "ADC_TAS" );
 
 		m_chocks = m_api.pfn_ed_cockpit_get_parameter_handle( "WHEEL_CHOCKS_STATE" );
+		m_averageLoadFactor = m_api.pfn_ed_cockpit_get_parameter_handle( "SND_ALWS_DAMAGE_AIRFRAME_STRESS" );
 	}
 
 	cockpit_param_api& api()
@@ -426,6 +427,11 @@ public:
 	inline void setFuelBoostCaution( bool caution )
 	{
 		setParamNumber( m_fuelBoostCaution, (double)caution );
+	}
+
+	inline void setLoadFactor( double factor )
+	{
+		setParamNumber( m_averageLoadFactor, factor );
 	}
 
 	inline double getGForce()
@@ -722,6 +728,7 @@ private:
 
 	void* m_chocks = NULL;
 
+	void* m_averageLoadFactor = NULL;
 };
 
 

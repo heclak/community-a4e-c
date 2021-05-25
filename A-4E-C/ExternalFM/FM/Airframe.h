@@ -369,6 +369,8 @@ public:
 	inline float getFlapDamage() const;
 	inline double getNoseCompression() const;
 
+	inline double getDamageElement(Damage element) const;
+
 	inline double getElevatorZeroForceDeflection() const;
 	inline bool getSlatsLocked() const;
 
@@ -695,6 +697,11 @@ void Airframe::setCatStateFromKey()
 		m_catapultState = ON_CAT_NOT_READY;
 		break;
 	}
+}
+
+double Airframe::getDamageElement(Damage element) const
+{
+	return DMG_ELEM ( element );
 }
 
 double Airframe::getCatMoment() const

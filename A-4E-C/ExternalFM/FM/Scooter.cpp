@@ -67,6 +67,7 @@ static inline int decodeClick( float& value )
 
 void init(const char* config)
 {
+	srand( 741 );
 	s_luaVM = new LuaVM;
 
 	char configFile[200];

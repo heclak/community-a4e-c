@@ -52,3 +52,8 @@ static inline double lerpWeight( double v0, double v1, double w )
 {
 	return v0 + w * (v1 - v0);
 }
+
+static inline double random()
+{
+	return (double)(rand() % 100) / 100.0;
+}

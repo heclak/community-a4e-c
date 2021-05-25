@@ -99,6 +99,7 @@ public:
 	inline double toRad(double angle);
 	inline int getRandomNumber(int min, int max);
 	inline double getCockpitShake();
+	inline double getLoadFactor() const;
 	inline void setCockpitShakeModifier( double mod );
 
 private:
@@ -436,6 +437,13 @@ int FlightModel::getRandomNumber(int min, int max)
 double FlightModel::getCockpitShake()
 {
 	return m_cockpitShake;
+}
+
+double FlightModel::getLoadFactor() const
+{
+	double lf = (m_lwForce + m_rwForce) / (c_wingStructuralLimit * 2.0);
+	printf( "Load Factor: %lf\n", lf );
+	return lf;
 }
 
 void FlightModel::setCockpitShakeModifier( double mod )
