@@ -2,6 +2,8 @@ dofile(LockOn_Options.common_script_path.."KNEEBOARD/indicator/definitions.lua")
 dofile(LockOn_Options.script_path.."Nav/NAV_util.lua")
 SetScale(FOV)
 
+-- NAVIGATION LOG
+
 -- add background image for kneeboard
 add_picture(LockOn_Options.script_path.."../Textures/a4e_cockpit_kneeboard_weapons.png")
 

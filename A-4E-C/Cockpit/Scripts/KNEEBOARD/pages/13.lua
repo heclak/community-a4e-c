@@ -3,6 +3,8 @@ dofile(LockOn_Options.script_path.."Nav/ils_utils.lua")
 dofile(LockOn_Options.common_script_path.."KNEEBOARD/indicator/definitions.lua")
 SetScale(FOV)
 
+-- ILS DATA
+
 -- add background image for kneeboard
 add_picture(LockOn_Options.script_path.."../Textures/a4e_cockpit_kneeboard_weapons.png")
 
