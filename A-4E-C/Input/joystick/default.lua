@@ -394,8 +394,8 @@ join(res.keyCommands,{
 
     -- ARN-52 TACAN Control Panel
     {down = Keys.NavReset,          name = _('Reset Both TCN & NDB Channels'),                              category = {_('Systems')}},
-    {down = Keys.NavILSPrev,        name = _('ILS Channel: Previous'),                                      category = {_('Systems')}},
-    {down = Keys.NavILSNext,        name = _('ILS Channel: Next'),                                          category = {_('Systems')}},
+    --{down = Keys.NavILSPrev,        name = _('ILS Channel: Previous'),                                      category = {_('Systems')}},
+    --{down = Keys.NavILSNext,        name = _('ILS Channel: Next'),                                          category = {_('Systems')}},
     {down = Keys.TacanModeInc,      name = _('TACAN Mode - CW'),                                            category = {_('Systems')}},
     {down = Keys.TacanModeDec,      name = _('TACAN Mode - CCW'),                                           category = {_('Systems')}},
     {down = Keys.TacanChMajorInc,   name = _('TACAN Channel 10s - Increase'),                               category = {_('Systems')}},
@@ -404,6 +404,14 @@ join(res.keyCommands,{
     {down = Keys.TacanVolumeDec,    name = _('TACAN Volume - Decrease'),                                    category = {_('Systems')}},
     {down = Keys.TacanVolumeStartUp, up = Keys.TacanVolumeStop, name = _('TACAN Volume - Continuous Increase'), category = {_('Systems')}},
     {down = Keys.TacanVolumeStartDown, up = Keys.TacanVolumeStop, name = _('TACAN Volume - Continuous Decrease'), category = {_('Systems')}},
+
+    -- MCL
+    {down = device_commands.mcl_power_switch, cockpit_device_id = devices.MCL, value_down = -1,  name = _('MCL (ILCS) Power - OFF'),  category = {_('Systems')}},
+    {down = device_commands.mcl_power_switch, cockpit_device_id = devices.MCL, value_down = 0,  name = _('MCL (ILCS) Power - ON'),  category = {_('Systems')}},
+    {down = device_commands.mcl_power_switch, up = device_commands.mcl_power_switch, cockpit_device_id = devices.MCL, value_down = 1, value_up = 0, name = _('MCL (ILCS) Power - BIT else ON'),  category = {_('Systems')}},
+    {down = Keys.MCL_Power_Toggle, name = _('MCL (ILCS) Power - ON/OFF'), category = {_('Systems')}},
+    {down = Keys.MCL_Chan_Inc, name = _('MCL (ILCS) Channel Selector - Increase'), category = {_('Systems')}},
+    {down = Keys.MCL_Chan_Dec, name = _('MCL (ILCS) Channel Selector - Decrease'), category = {_('Systems')}},
 
     -- Interior Lights Panel
     {down = device_commands.intlight_whiteflood_CHANGE,     cockpit_device_id = devices.AVIONICS,  value_down = 0.1,  name = _('White Floodlight Control Knob - CW/Increase'),  category = {_('Right Console'), _('Interior Lights Control Panel')}},

@@ -22,6 +22,9 @@ sensor_data = get_efm_sensor_data_overrides()
 -------------------------------------------
 dev:listen_command(device_commands.mcl_channel_selector)
 dev:listen_command(device_commands.mcl_power_switch)
+dev:listen_command(Keys.MCL_Power_Toggle)
+dev:listen_command(Keys.MCL_Chan_Inc)
+dev:listen_command(Keys.MCL_Chan_Dec)
 
 -------------------------------------------
 --           FILE CONSTANTS
@@ -58,6 +61,7 @@ loc_bit_target = 0.33
 
 -------------------------------------------
 
+--device commands
 function channelFromArg(arg)
     return round(arg * 20 + 1.0)
 end
@@ -74,10 +78,36 @@ function mcl_power_switch_callback(value)
     mcl_power_switch = round(value + 1.0)
 end
 
+--keys
+function MCL_Power_Toggle_callback(value)
+    if mcl_power_switch == MCL_PWR_OFF then
+        dev:performClickableAction(device_commands.mcl_power_switch, 0, false)
+    else 
+        dev:performClickableAction(device_commands.mcl_power_switch, -1, false)
+    end
+end
+
+function MCL_Chan_Inc_callback(value)
+    local mcl_channel_target = mcl_channel + 1
+    if mcl_channel_target <= 20 then
+        dev:performClickableAction(device_commands.mcl_channel_selector, argFromChannel(mcl_channel_target), false)
+    end
+end
+
+function MCL_Chan_Dec_callback(value)
+    local mcl_channel_target = mcl_channel - 1
+    if mcl_channel_target >= 1 then
+        dev:performClickableAction(device_commands.mcl_channel_selector, argFromChannel(mcl_channel_target), false)
+    end
+end
+
 
 command_callbacks = {
     [device_commands.mcl_channel_selector] = mcl_channel_selector_callback,
     [device_commands.mcl_power_switch] = mcl_power_switch_callback,
+    [Keys.MCL_Power_Toggle] = MCL_Power_Toggle_callback,
+    [Keys.MCL_Chan_Inc] = MCL_Chan_Inc_callback,
+    [Keys.MCL_Chan_Dec] = MCL_Chan_Dec_callback,
 }
 
 function SetCommand(command, value)

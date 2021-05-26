@@ -356,6 +356,9 @@ Keys =
     RadarVolumeStartUp             = __custom_counter(),
     RadarVolumeStartDown           = __custom_counter(),
     RadarVolumeStop                = __custom_counter(),
+    MCL_Power_Toggle               = __custom_counter(),
+    MCL_Chan_Inc                   = __custom_counter(),
+    MCL_Chan_Dec                   = __custom_counter(),
 
 }
 
