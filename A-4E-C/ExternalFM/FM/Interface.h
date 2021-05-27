@@ -153,9 +153,11 @@ public:
 		m_accelerationZ = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_ACCELERATION_Z" );
 
 		m_ADC_TAS = m_api.pfn_ed_cockpit_get_parameter_handle( "ADC_TAS" );
+		m_ADC_CAS = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_CAS" );
 
 		m_chocks = m_api.pfn_ed_cockpit_get_parameter_handle( "WHEEL_CHOCKS_STATE" );
 		m_averageLoadFactor = m_api.pfn_ed_cockpit_get_parameter_handle( "SND_ALWS_DAMAGE_AIRFRAME_STRESS" );
+
 	}
 
 	cockpit_param_api& api()
@@ -266,6 +268,11 @@ public:
 	inline void ADC_setTAS(double value)
 	{
 		setParamNumber( m_ADC_TAS, value );
+	}
+
+	inline void ADC_setCAS( double value )
+	{
+		setParamNumber( m_ADC_CAS, value );
 	}
 
 	inline void setWorldAcceleration( const Vec3& a )
@@ -729,6 +736,8 @@ private:
 	void* m_chocks = NULL;
 
 	void* m_averageLoadFactor = NULL;
+
+	void* m_ADC_CAS = NULL;
 };
 
 

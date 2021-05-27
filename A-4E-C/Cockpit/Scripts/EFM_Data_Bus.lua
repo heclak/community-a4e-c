@@ -85,6 +85,8 @@ local fm_acceleration_x = get_param_handle("FM_ACCELERATION_X")
 local fm_acceleration_y = get_param_handle("FM_ACCELERATION_Y")
 local fm_acceleration_z = get_param_handle("FM_ACCELERATION_Z")
 
+local fm_cas = get_param_handle("FM_CAS")
+
 local tanks = {
     [1] = fm_l_tank_capacity,
     [2] = fm_c_tank_capacity,
@@ -317,6 +319,10 @@ function fm_getWorldAcceleration()
     return fm_acceleration_x:get(), fm_acceleration_y:get(), fm_acceleration_z:get()
 end
 
+function fm_getCalibratedAirSpeed()
+    return fm_cas:get()
+end
+
 fm_setCockpitShake(2.0 * optionsData_cockpitShake/100.0)
 
 function get_efm_data_bus()
@@ -392,6 +398,7 @@ function get_efm_sensor_data_overrides()
         data.getTrueAirSpeed = fm_getAirspeed
         data.getAngleOfSlide = fm_getBeta
         data.getAngleOfAttack = fm_getAOA
+        data.getIndicatedAirSpeed = fm_getCalibratedAirSpeed
     end
 
     return data
