@@ -162,18 +162,21 @@ When you are confident your files are correctly installed, launch DCS World. If 
 - Implementing guided weapons would also require access to the SDK. Additionally, the specific airframe/cockpit that we have modelled is not equipped to accommodate the AGM-62 Walleye. A-4Es that were able to carry the AGM-62 Walleye had the ground radar display replaced with a TV monitor for use with the AGM-62 Walleye.
 
 **Q: Why is my standalone server rejecting missions with the A-4E-C?**
-A standalone server requires an installation of the A-4E-C module in order to host missions that feature it.
+
+- A standalone server requires an installation of the A-4E-C module in order to host missions that feature it.
 
 **Q: Is there a way I can host missions with the A-4E-C on my multiplayer server that won't lock out players who do not have the module installed?**
-Yes, but it's a little involved. It's not DCS that is locking players out, but the Mission Editor deciding that any mission with an A4-E-C placed down is going to require the module. 
-As there's no in-engine way of de-flagging this, you'll need to get hands-on with your mission files. 
+
+- Yes, but it's a little involved. It's not DCS that is locking players out, but the Mission Editor deciding that any mission with an A4-E-C placed down is going to require the module. 
+
+- As there's no in-engine way of de-flagging this, you'll need to get hands-on with your mission files. 
 You may or may not already know that the *.miz* mission files are, in fact, *.zip* files. So, take the mission file you desire to edit, and make a copy with a *.zip* extension. Find somewhere handy to unzip it.
-Inside, you will find a *mission* file (no extention). Open this file in your text-editor of choice, and search required to find the mission's list of required modules, and then remove the A-4E-C entry from the list, as shown in Line 32 in this screenshot:
+- Inside, you will find a *mission* file (no extension). Open this file in your text-editor of choice, and search required to find the mission's list of required modules, and then remove the A-4E-C entry from the list, as shown in Line 32 in this screenshot:
 
 ![Image of a mission file with the A4-E-C required module on Line 32](https://cdn.discordapp.com/attachments/757126581729886328/847194735167799346/unknown.png)
 
-Save the mission file, and re-create a new *.zip* (carefully maintaining proper folder structure, *bien sur*) and renaming it with a *.miz* file extension.
-Test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS should display any A4-E-C units as default-livery Su-27s, and players without the module should not be able to take control of the module, as if they did not own a for-pay aircraft.
+- Save the mission file, and re-create a new *.zip* (carefully maintaining proper folder structure, *bien sur*) and renaming it with a *.miz* file extension.
+- Test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS should display any A4-E-C units as default-livery Su-27s, and players without the module should not be able to take control of the module, as if they did not own a for-pay aircraft.
 
 **Q: Are there any plans to make the module official, obtain the Eagle Dynamics SDK, or make the module a part of the default DCS install package?**
 
@@ -181,7 +184,7 @@ Test your altered mission by yourself or with a friend to ensure it loads proper
 
 **Q: Why doesn't the A-4E-C work with my favorite mission or multiplayer scripting system?**
 
-- Some scripts or other utilities need to be informed of the A-4E-C's existence in order to accomodate it. If you have a favorite popular mod, script that should accomodate it, be sure to let the author know!
+- Some scripts or other utilities need to be informed of the A-4E-C's existence in order to accommodate it. If you have a favorite popular mod, script that should accommodate it, be sure to let the author know!
 
 **Q: What's the song in the menu?**
 - Crow, by [Eric Haugen](https://erichaugen.bandcamp.com/releases)
