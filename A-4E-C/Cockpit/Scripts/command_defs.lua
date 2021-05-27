@@ -359,7 +359,7 @@ Keys =
     MCL_Power_Toggle               = __custom_counter(),
     MCL_Chan_Inc                   = __custom_counter(),
     MCL_Chan_Dec                   = __custom_counter(),
-
+    Fuel_Transfer_Bypass_Toggle    = __custom_counter(),
 }
 
 start_command   = 3000
