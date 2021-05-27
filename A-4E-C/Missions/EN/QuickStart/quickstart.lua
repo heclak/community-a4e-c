@@ -22,6 +22,10 @@ planes = {
         file = "Caucasus A-4E-C Free Flight.miz"
     },
     {
+        name = _("Ground Attack: Bomb Truckin'"),
+        file = "Caucasus A-4E-C Bomb Trucking.miz"
+    },
+    {
         name = _("Ground Attack: Harbour"),
         file = "Caucasus A-4E-C Harbour Bombing.miz"
     },
@@ -32,6 +36,10 @@ planes = {
     {
         name = _("SEAD: Shrike Strike"),
         file = "Caucasus A-4E-C Shrike.miz"
+    },
+    {
+        name = _("Aerial Refueling"),
+        file = "Caucasus A-4E-C Aerial Refueling.miz"
     },
     {
         name = _("Dogfight: A-4E-C (Trained)"),
