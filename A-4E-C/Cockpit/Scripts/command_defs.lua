@@ -571,4 +571,12 @@ device_commands =
 
     afcs_test_guard                 = __counter(),
     afcs_test               = __counter(),
+
+    --Most of these are dummy/placeholder.
+    tacan_antenna           = __counter(),
+    rain_removal            = __counter(),
+    nav_dead_recon          = __counter(),
+    seat_adjustment         = __counter(),
+
+    fuel_transfer_bypass    = __counter(),
 }
