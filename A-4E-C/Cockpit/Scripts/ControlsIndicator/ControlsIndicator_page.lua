@@ -465,7 +465,7 @@ stick_position.tex_params	      = {330 / 512, 365.5 / 512, 2 * tex_scale, 2 * te
 stick_position.element_params   = {"STICK_PITCH", "STICK_ROLL"} 
 stick_position.controllers      = {
                                     {"move_left_right_using_parameter", 1, sizeX},
-								                    {"move_up_down_using_parameter", 0, sizeX}
+								                    {"move_up_down_using_parameter", 0, -sizeX}
                                   }
 stick_position.parent_element   = base.name
 AddElement(stick_position)
