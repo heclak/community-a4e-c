@@ -30,6 +30,10 @@ planes = {
         file = "Caucasus A-4E-C Slalom.miz"
     },
     {
+        name = _("SEAD: Shrike Strike"),
+        file = "Caucasus A-4E-C Shrike.miz"
+    },
+    {
         name = _("Dogfight: A-4E-C (Trained)"),
         file = "Caucasus A-4E-C Dogfight vs A-4E-C Trained.miz"
     },
