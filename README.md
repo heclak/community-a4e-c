@@ -14,7 +14,7 @@ Gospadin, Heclak, Joshua Nelson, plusnine, Farlander, gyrovague, kryb/Archimaede
 
 ## Special Thanks
 
-SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, Gvad, Sidekick65, HellesBelles, SPINEG, Sport, rudel-chw, Luciano, Malamem, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
+SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, Gvad, Sidekick65, HellesBelles, SPINEG, Shadowfrost, Sport, rudel-chw, Luciano, Malamem, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
 
 ## Features
 
@@ -27,7 +27,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, Gvad, Sidekick65, Hel
 - AN/ASN-41 Nav Computer  
 - AFCS
 - ARC-51A UHF Radio
-- ARN-52 TACAN 
+- ARN-52 TACAN
 - ARA-63 MCL (ICLS)
 - CP-741/a Bombing computer (CCRP)
 - Shrike anti-radiation missile
@@ -56,7 +56,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, Gvad, Sidekick65, Hel
 - Systems: Added fuel flow system
 - Systems: Added oxygen system (pilots must now beware of hypoxia!)
 - Systems: Added drift to AN/ASN-41 Nav Computer
-- Misions: Added instant action missions (thanks Sidekick65, Cubeboy and SPINEG)
+- Misions: Added instant action missions (thanks Sidekick65, Cubeboy, Shadowfrost and SPINEG)
 - Misions: Added runway strike and anti-ship strike roles
 - Textures: Exterior texture improvements, added normal maps (thanks HellesBelles for their contribution)
 - Textures: Cockpit improvements, added normal maps (thanks Sport for their contribution)
@@ -161,7 +161,7 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 **Q: Is there a user manual or tutorials available?**
 
-- There is some helpful pilot guidance included in the kneeboard. The NATOPS manual for the A-4E is the gold standard, but [Heclak's Community A-4E Guide](https://docs.google.com/presentation/d/1cUH7jpAoGHm-IzUDnv_NDhiZlvX55Q9WvpgR1d9ksYY/edit?usp=sharing) is a great resource for operating the sim (althought it may take us some time to get it up to date with 2.0's features), and [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt_8Jw9ByL10ar6b8rQg) features many good tutorials on systems and weaponry. 
+- There is some helpful pilot guidance included in the kneeboard. The NATOPS manual for the A-4E is the gold standard, but [Heclak's Community A-4E Guide](https://docs.google.com/presentation/d/1cUH7jpAoGHm-IzUDnv_NDhiZlvX55Q9WvpgR1d9ksYY/edit?usp=sharing) is a great resource for operating the sim (althought it may take us some time to get it up to date with 2.0's features), and [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt_8Jw9ByL10ar6b8rQg) features many good tutorials on systems and weaponry.
 
 **Q: Is there a paint kit I can use to create my own A-4E-C liveries?**
 
@@ -181,9 +181,9 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 **Q: Is there a way I can host missions with the A-4E-C on my multiplayer server that won't lock out players who do not have the module installed?**
 
-- Yes, but it's a little involved. It's not DCS that is locking players out, but the Mission Editor deciding that any mission with an A4-E-C placed down is going to require the module. 
+- Yes, but it's a little involved. It's not DCS that is locking players out, but the Mission Editor deciding that any mission with an A4-E-C placed down is going to require the module.
 
-- As there's no in-engine way of de-flagging this, you'll need to get hands-on with your mission files. 
+- As there's no in-engine way of de-flagging this, you'll need to get hands-on with your mission files.
 You may or may not already know that the *.miz* mission files are, in fact, *.zip* files. So, take the mission file you desire to edit, and make a copy with a *.zip* extension. Find somewhere handy to unzip it.
 - Inside, you will find a *mission* file (no extension). Open this file in your text-editor of choice, and search required to find the mission's list of required modules, and then remove the A-4E-C entry from the list, as shown in Line 32 in this screenshot:
 
