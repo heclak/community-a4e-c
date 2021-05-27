@@ -1,8 +1,8 @@
 wave = "Effects/Aircrafts/A-4E-C/a-4e_CockpitStructuralDamage.ogg"
-position = {1.5, 0, 0}
-gain = 1.0
+position = {-1.5, -1.5, 0}
+gain = 10.0
 inner_radius = 15
-attack = 0.2
+attack = 0.5
 release = 0.5
 
 -- play: exceeding structural limitations
