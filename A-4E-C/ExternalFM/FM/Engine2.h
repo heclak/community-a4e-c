@@ -214,7 +214,8 @@ double Engine2::hpOmegaToLPOmega( double x )
 
 void Engine2::updateShaftsDynamic( double dt )
 {
-	double torque = (double)m_bleedAir * c_startTorque + m_turbineDamage * m_compressorDamage * m_fuelFlow * c_combustionTorque + std::max(m_airspeed, 30.0) * c_airspeedTorque - (m_hpOmega + m_lpOmega) * c_engineDrag;
+	double effectiveAirspeed = m_airspeed > 30.0 ? m_airspeed : 0.0;
+	double torque = (double)m_bleedAir * c_startTorque + m_turbineDamage * m_compressorDamage * m_fuelFlow * c_combustionTorque + effectiveAirspeed * c_airspeedTorque - (m_hpOmega + m_lpOmega) * c_engineDrag;
 
 	m_hpOmega += dt * torque / c_hpInertia;
 	m_hpOmega = std::max( m_hpOmega, 0.0 );
