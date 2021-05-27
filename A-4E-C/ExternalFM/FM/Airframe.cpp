@@ -176,5 +176,5 @@ void Scooter::Airframe::airframeUpdate(double dt)
 
 	m_catStateSent = false;
 
-	printDamageState();
+	//printDamageState();
 }

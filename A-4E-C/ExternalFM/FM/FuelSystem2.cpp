@@ -55,12 +55,21 @@ bool FuelSystem2::handleInput( int command, float value )
 		return true;
 	case DEVICE_COMMANDS_ENGINE_DROP_TANKS_SW:
 		m_externalTankPressure = true;
-		m_wingTankBypass = false;
 
 		if ( value == 1.0 )
 			m_externalTankPressure = false;
 		else if ( value == -1.0 )
+		{
+			m_externalTankFlightRefuel = true;
+			m_externalTankPressure = false;
+		}
+
+		return true;
+	case DEVICE_COMMANDS_FUEL_TRANSFER_BYPASS:
+		if ( value == 1.0 )
 			m_wingTankBypass = true;
+		else
+			m_wingTankBypass = false;
 
 		return true;
 	}
@@ -70,13 +79,15 @@ bool FuelSystem2::handleInput( int command, float value )
 
 void FuelSystem2::addFuel( double dm, bool wingFirst )
 {
+	//printf( "Add Fuel: %lf, Wing First? %d\n", dm, wingFirst );
+
 	//If adding fuel add it before wing tanks.
 	if ( dm > 0.0 && ! wingFirst )
 		dm = addFuelToTank( TANK_FUSELAGE, dm );
 
 	//If the wing tank bypass switch is enabled we
 	//refuel the external tanks instead.
-	if ( m_wingTankBypass )
+	if ( m_externalTankFlightRefuel )
 	{
 		int externalTanks = 0;
 		for ( int i = TANK_EXTERNAL_LEFT; i < NUMBER_OF_TANKS; i++ )
@@ -94,7 +105,8 @@ void FuelSystem2::addFuel( double dm, bool wingFirst )
 				dm += addFuelToTank( (Tank)i, fracDM );
 		}
 	}
-	else //Bypass is not enabled so refuel the wing tank, ignoring the externals.
+	
+	if ( ! m_wingTankBypass ) //Bypass is not enabled so refuel the wing tank.
 	{
 		dm = addFuelToTank( TANK_WING, dm );
 	}
@@ -196,6 +208,9 @@ void FuelSystem2::update( double dt )
 	if ( m_dumpingFuel )
 		addFuelToTank( TANK_WING, -c_fuelDumpRate * dt, 15.0 );
 
+
+	int tankToTransfer = m_wingTankBypass ? TANK_FUSELAGE : TANK_WING;
+
 	//External tanks being pressurised.
 	if ( m_externalTankPressure && enginePower )
 	{
@@ -207,11 +222,11 @@ void FuelSystem2::update( double dt )
 		transferAmount += m_fuelCapacity[TANK_EXTERNAL_LEFT] > 15.0 ? externWingRate : 0.0;
 		transferAmount += m_fuelCapacity[TANK_EXTERNAL_RIGHT] > 15.0 ? externWingRate : 0.0;
 
-		if ( transferAmount <= m_fuelCapacity[TANK_WING] - m_fuel[TANK_WING] )
+		if ( transferAmount <= m_fuelCapacity[tankToTransfer] - m_fuel[tankToTransfer] )
 		{
-			transferFuel( TANK_EXTERNAL_CENTRE, TANK_WING, externCentreRate );
-			transferFuel( TANK_EXTERNAL_LEFT, TANK_WING, externWingRate );
-			transferFuel( TANK_EXTERNAL_RIGHT, TANK_WING, externWingRate );
+			transferFuel( TANK_EXTERNAL_CENTRE, (FuelSystem2::Tank)tankToTransfer, externCentreRate );
+			transferFuel( TANK_EXTERNAL_LEFT, (FuelSystem2::Tank)tankToTransfer, externWingRate );
+			transferFuel( TANK_EXTERNAL_RIGHT, (FuelSystem2::Tank)tankToTransfer, externWingRate );
 		}
 		else
 		{

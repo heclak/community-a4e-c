@@ -93,6 +93,7 @@ private:
 	bool m_mechPumpPressure = true; //is the mechanical pump working
 	bool m_wingTankPressure = false; //emergency pressure
 	bool m_wingTankBypass = false; //bypass the wing tanks, fueling only the fuselage and external tanks
+	bool m_externalTankFlightRefuel = false;
 
 	bool m_hasFuel = true; //this is false is the fuel cannot be delivered or we are out of fuel.
 	bool m_dumpingFuel = false;
