@@ -18,6 +18,10 @@ planes = {
         file = "Caucasus A-4E-C Carrier Start.miz"
     },
     {
+        name = _("Carrier Approach and Landing"),
+        file = "Caucasus A-4E-C Carrier Approach.miz"
+    },
+    {
         name = _("Free Flight"),
         file = "Caucasus A-4E-C Free Flight.miz"
     },
