@@ -243,7 +243,8 @@ void ed_fm_simulate(double dt)
 	s_interface->setRightSlat( s_airframe->getSlatRPosition() );
 
 	s_interface->setUsingFFB( s_input->getFFBEnabled() );
-	s_interface->setEngineStall( s_engine->stalled() );
+
+	//s_interface->setEngineStall( s_engine->stalled() ); Disabled for beta-5 re-enable when ready.
 
 	//Starting to try to move some of these tests into the cpp. Make it less spaghetti.
 	//Ultimately we should move this into the avionics class.
