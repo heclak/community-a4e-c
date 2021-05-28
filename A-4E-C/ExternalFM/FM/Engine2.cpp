@@ -25,7 +25,9 @@ Scooter::Engine2::Engine2(AircraftState& aircraftState) :
 	thrustToFFOverSqrtTemp ( c_thrustToFFOverSqrtTemp, c_thrustToFFOverSqrtTempMin, c_thrustToFFOverSqrtTempMax ),
 	lpInertia( c_lpInertiaTable, 0.0, c_maxHPOmega ),
 	hpInertia( c_hpInertiaTable, 0.0, c_maxLPOmega ),
-	windmillInertiaFactor( c_windmillInertiaFactor, 0.0, c_maxHPOmega )
+	windmillInertiaFactor( c_windmillInertiaFactor, 0.0, c_maxHPOmega ),
+	m_compressorDamageVary(0.0, 10.0),
+	m_fuelControllerDamageVary(0.0, 3.0 )
 {
 	zeroInit();
 }
@@ -116,7 +118,11 @@ void Scooter::Engine2::updateEngine( double dt )
 			//inertiaFactor = desiredFractionalOmega > m_hpOmega / c_maxHPOmega ? 1.0 : 2.0;
 		}
 
-		double desiredFuelFlow = getPID( desiredFractionalOmega, dt );
+		m_fuelControllerDamageVary.setScale( 1.0 );
+		double fuelDamage = 1.0;//(1.0 - m_fuelControllerDamageVary.update( dt ));
+
+		//printf( "Damage: %lf\n", fuelDamage );
+		double desiredFuelFlow = getPID( desiredFractionalOmega , dt ) * fuelDamage;
 		//m_fuelFlow = desiredFuelFlow;
 		//Update towards desired fuel flow with response time.
 		//m_fuelFlow = m_throttle;
@@ -157,7 +163,11 @@ void Scooter::Engine2::updateEngine( double dt )
 	if ( getRPMNorm() > 0.52 && m_ignitors && m_hasFuel )
 	{
 		//Fuel Flow -> Shaft Speed
-		updateShafts( m_compressorDamage * fuelToHPOmega( m_fuelFlow ), 1.0, dt );
+		double damage = (1.0 - m_integrity);
+		m_compressorDamageVary.setScale( damage );
+		double drag = m_compressorDamageVary.update( dt );
+		//printf( "Integrity: %lf, Damage: %lf\n", m_integrity, drag );
+		updateShafts( pow(m_integrity, 0.25) * (1.0 - drag) * fuelToHPOmega( m_fuelFlow ), 1.0, dt );
 	}
 	else
 	{

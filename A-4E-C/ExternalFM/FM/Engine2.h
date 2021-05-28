@@ -22,6 +22,7 @@
 #include "Maths.h"
 #include "AircraftState.h"
 #include <algorithm>
+#include "SmoothVary.h"
 //=========================================================================//
 
 #undef max
@@ -65,6 +66,7 @@ public:
 	inline void setTemperature( double temperature );
 	inline void setCompressorDamage( double damage );
 	inline void setTurbineDamage( double damage );
+	inline void setIntegrity( double integrity );
 	inline void setMaxDeliverableFuelFlowFraction( double fraction );
 
 	inline double getThrust();
@@ -110,8 +112,11 @@ private:
 	bool m_ignitors = true;
 	bool m_bleedAir = false;
 
+	SmoothVary m_compressorDamageVary;
+	SmoothVary m_fuelControllerDamageVary;
 	double m_compressorDamage = 0.0;
 	double m_turbineDamage = 0.0;
+	double m_integrity = 0.0;
 
 	bool m_started = false;
 
@@ -248,8 +253,8 @@ void Engine2::updateShafts( double hpTarget, double inertiaFactor, double dt )
 	m_hpOmegaDot += dt * hpAccel;
 	m_lpOmegaDot += dt * lpAccel;
 
-	m_hpOmega += dt * (m_hpOmegaDot - m_turbineDamage);
-	m_lpOmega += dt * (m_lpOmegaDot - m_turbineDamage);
+	m_hpOmega += dt * m_hpOmegaDot;
+	m_lpOmega += dt * m_lpOmegaDot;
 
 
 	//m_hpOmega += dt * ((hpErrorDot) + (hpError / hpInertia(m_hpOmega))) / inertiaFactor;
@@ -269,6 +274,11 @@ void Engine2::setCompressorDamage( double damage )
 void Engine2::setTurbineDamage( double damage )
 {
 	m_turbineDamage = damage;
+}
+
+void Engine2::setIntegrity( double integrity )
+{
+	m_integrity = integrity;
 }
 
 }
