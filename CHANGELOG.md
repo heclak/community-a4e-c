@@ -21,24 +21,23 @@ you run into trouble it is worth checking the following conditions:
   - Equivalent unit with a name which contains the original name of the unit placed in the editor
   - Unit does not share a channel regardless of X or Y band
 
-
-- APC Version 2 for EFM
 - Quick Start Missions: 
     - Adverse weather carrier landing 
     - Carrier landing
     - Bomb trucking
     - Aerial Refueling
 
-- Controls Indicator
 - 3d Model:
   - Added MCL Panel
   - Added Misc Switches Panel
   - Implemented AFCS Test panel switches
 
-- AFCS test (WIP: indicators do not function correctly at the moment)
-- New kneeboard pages
-- Basic wing overstress
-- Misc Keybinds
+- Textures:
+  - Individualised Pilot appearances
+  - Damage textures
+  - Cockpit normal maps
+  - Retouched cockpit interior
+  - Countermeasures dispensers
 
 - Sounds:
   - Wing stress
@@ -55,20 +54,34 @@ you run into trouble it is worth checking the following conditions:
   - Normal drift is about 2 - 3 nautical miles per hour
   - Drift will increase with lots of maneouvers
 
+- Kneeboard:
+  - Startup checklist
+  - Taxi checklist
+  - Takeoff checklist
+  - Emergency procedures
+  - Bomb table and CP-741/A procedure
+  - Case III landing and APC procedure
+
+- AFCS test (WIP: indicators do not function correctly at the moment)
+- Basic wing overstress
+- Misc Keybinds
+- Controls Indicator
+- APC Version 2 for EFM
 
 ### Changed
+- Fuel System:
+  - New bypass switch will bypass the wing tank in case of wing leak.
+  - Flight refuel switch will no longer bypass wing tank, this enables/disables external tank flight refueling.
+
 - Engine damage has now more dynamic effect
 - Beta calculated per surface rather than using the overall airframe beta. This fixes some edge of the envelope nastiness
 - Rudder pedal animation no longer tied to rudder
 - AFCS will not engage with rudder uncentred
-- Fuel System:
-  - New bypass switch will bypass the wing tank in case of wing leak.
-  - Flight refuel switch will no longer bypass wing tank, this enables/disables external tank flight refueling.
 - Gunsight colour
 - ILS mode on TACAN has been changed to A/A and functions as such
 - Slats lift increased slightly
 - Increased wing drag onset at > 40 degrees angle of attack
-- External Livery names renamed to be standardised
+- Textures renamed to be standardised, to prevent all known mod conflicts
 - Keybinds recategorised correctly
 
 ### Deprecated
@@ -81,6 +94,7 @@ you run into trouble it is worth checking the following conditions:
 - Airspeed indicator uses calibrated airspeed instead of equivalent airspeed.
 - Fuel trans light not displaying when integral wing tank empty
 - Wheel animations
+- Mid Air refueling not completing with external tanks
 
 ### Known Issues
 - Chocks only partially stop the aircraft (brakes are used as a placeholder)
