@@ -156,7 +156,9 @@ public:
 		m_ADC_CAS = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_CAS" );
 
 		m_chocks = m_api.pfn_ed_cockpit_get_parameter_handle( "WHEEL_CHOCKS_STATE" );
+
 		m_averageLoadFactor = m_api.pfn_ed_cockpit_get_parameter_handle( "SND_ALWS_DAMAGE_AIRFRAME_STRESS" );
+		m_engineStall = m_api.pfn_ed_cockpit_get_parameter_handle( "SND_INST_ENGINE_STALL" );
 
 	}
 
@@ -263,6 +265,11 @@ public:
 		getParamString( m_mclUnitName, buffer, size );
 
 		//printf( "%s\n", buffer );
+	}
+
+	inline void setEngineStall( bool stall )
+	{
+		setParamNumber( m_engineStall, (double)stall );
 	}
 
 	inline void ADC_setTAS(double value)
@@ -738,6 +745,8 @@ private:
 	void* m_averageLoadFactor = NULL;
 
 	void* m_ADC_CAS = NULL;
+
+	void* m_engineStall = NULL;
 };
 
 

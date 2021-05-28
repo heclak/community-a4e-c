@@ -149,8 +149,8 @@ void Scooter::AeroElement::calculateElementPhysics()
 		m_aoa += controlInput();
 	}
 	
-	//m_beta = atan2(cross(forwardVec, flightPathProjectedBeta)*m_surfaceNormal, forwardVec* flightPathProjectedBeta);
-	m_beta = m_state.getBeta();
+	m_beta = atan2(cross(forwardVec, flightPathProjectedBeta)*m_surfaceNormal, forwardVec* flightPathProjectedBeta);
+	//m_beta = m_state.getBeta();
 	elementLift();
 	elementDrag();
 

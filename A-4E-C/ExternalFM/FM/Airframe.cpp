@@ -135,8 +135,11 @@ void Scooter::Airframe::airframeUpdate(double dt)
 	//printf( "Compressor Damage %lf, Turbine Damage: %lf\n", getCompressorDamage(), getTurbineDamage() );
 
 
-	m_engine.setCompressorDamage( getCompressorDamage() );
-	m_engine.setTurbineDamage( getTurbineDamage() );
+	//m_engine.setCompressorDamage( getCompressorDamage() );
+	//m_engine.setCompressorDamage( 1.0 );
+	m_engine.setIntegrity( DMG_ELEM( Damage::ENGINE ) );
+	//m_engine.setTurbineDamage( getTurbineDamage() );
+	//m_engine.setTurbineDamage( 1.0 );
 	
 	m_stabilizer = setStabilizer(dt);
 	m_elevator = setElevator(dt);

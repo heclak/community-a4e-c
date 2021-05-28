@@ -223,7 +223,7 @@ void ed_fm_simulate(double dt)
 	s_interface->setThrottlePosition(s_input->throttleNorm());
 	s_interface->setStickPitch(s_airframe->getElevator());
 	s_interface->setStickRoll(s_airframe->getAileron());
-	s_interface->setRudderPedals(s_airframe->getRudder());
+	s_interface->setRudderPedals(s_input->yawAxis().getValue());
 	s_interface->setLeftBrakePedal( s_input->brakeLeft() );
 	s_interface->setRightBrakePedal( s_input->brakeRight() );
 
@@ -243,6 +243,8 @@ void ed_fm_simulate(double dt)
 	s_interface->setRightSlat( s_airframe->getSlatRPosition() );
 
 	s_interface->setUsingFFB( s_input->getFFBEnabled() );
+
+	//s_interface->setEngineStall( s_engine->stalled() ); Disabled for beta-5 re-enable when ready.
 
 	//Starting to try to move some of these tests into the cpp. Make it less spaghetti.
 	//Ultimately we should move this into the avionics class.
@@ -503,6 +505,9 @@ void ed_fm_set_command
 			return;
 
 		if ( s_avionics->handleInput( command, value ) )
+			return;
+
+		if ( s_engine->handleInput( command, value ) )
 			return;
 	}
 }

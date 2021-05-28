@@ -54,8 +54,9 @@ local pitch_pid = PID(6, 0.05, 0.2, -100, 100, 0.01)   -- create the PID for pit
 local altitude_pid = PID(1.5, 0.01, 0.11, -100, 100, 0.01)   -- create the PID for altitude control (elevator trim), values found experimentally
 
 --APC PID
-local apc_pid = PID(5, 0.02, 0.1, -100, 40, 0.01)   -- create the PID for the APC, values found experimentally
-
+local apc_pid = PID_alt(0.05, 0.9, 0.03, nil, -0.01, 0.01)   -- create the PID for the APC, values found experimentally
+                    --5, 0.02, 0.1
+                    --0.05, 0.8, 0.01, nil, -0.01, 0.01
 --APC control numbers
 local ThrottleUp = 1032
 local ThrottleDown = 1033
@@ -156,7 +157,7 @@ local afcs_pitch_servo_current_wma = WMA_wrap(0.1, 0.0, -1.0, 1.0)
 local afcs_trim_actuated = false
 
 
---State information
+--AFCS State information
 local afcs_state = AFCS_STATE_OFF
 local afcs_warmup_count = 0
 local afcs_warmed_up = false
@@ -168,6 +169,7 @@ local afcs_altitude_hold = 0
 local afcs_heading_hold = 0
 
 -- APC initialization
+--[[
 local apc_enabled = false
 local apc_inputlist = {"OFF", "STBY", "ENGAGE"}     -- -1,0,1
 local apc_input = "OFF"
@@ -176,17 +178,60 @@ local apc_warmup_timer = 99999
 local apc_warm = false
 local apc_state = "apc-off"
 local speedHold = -100
-local apc_light = get_param_handle("APC_LIGHT")
+
+]]
 
 --APC States
-APC_OFF = 0
-APC_STBY = 1
-APC_ACTIVE = 2
+APC_STATE_OFF = 0
+APC_STATE_WARMUP = 1
+APC_STATE_STBY = 2
+APC_STATE_ENGAGE = 3
+APC_STATE_DISENGAGE = 4
 
 --APC modes
 APC_MODE_COLD = 0
 APC_MODE_STD = 1
 APC_MODE_HOT = 2
+
+--APC Power
+APC_POWER_OFF = 0
+APC_POWER_STBY = 1
+APC_POWER_ENGAGE = 2
+
+-- APC Constants
+local apc_warmup_time = 15.0
+local apc_min_power = 0.3
+local apc_target = 17.5
+local apc_reset_point = apc_min_power + (1.0 - apc_min_power) / 2.0
+
+
+
+-- APC State Information
+--local apcs_state
+local apc_warmup_count = 0
+local apc_warmed_up = false
+local apc_mode = APC_STD
+local apc_power = APC_POWER_OFF
+local apc_light = get_param_handle("APC_LIGHT")
+local apc_throttle_error = 0.0
+local apc_transient = false
+local apc_throttle = apc_min_power
+
+function apcArgToPower(value)
+    return value + 1.0
+end
+
+function apcPowerToArg(value)
+    return value - 1.0
+end
+
+function apcArgToMode(value)
+    return value + 1.0
+end
+
+function apcModeToArg(value)
+    return value - 1.0
+end
 
 --[[
 The commands are handled somewhat differently in this file.
@@ -249,7 +294,7 @@ end
 
 function afcs_test(value)
     afcs_test_switch = round(value + 1)
-    print_message_to_user(afcs_test_switch)
+    --print_message_to_user(afcs_test_switch)
 end
 
 --AFCS Trim Callbacks
@@ -324,11 +369,15 @@ end
 
 --APC COMMAND CALLBACKS
 function apc_engagestbyoff(value)
-    apc_input = apc_inputlist[ round(value+2) ] -- convert -1,0,1 to 1,2,3
+    apc_power = apcArgToPower(value)
+    --print_message_to_user("APC POWER: "..tostring(apc_power))
+    --apc_input = apc_inputlist[ round(value+2) ] -- convert -1,0,1 to 1,2,3
 end
 
 function apc_hotstdcold(value)
-    apc_mode = apc_modelist[ round(value+2) ]   -- convert -1,0,1 to 1,2,3
+    apc_mode = apcArgToMode(value)
+    --print_message_to_user("APC MODE: "..tostring(apc_mode))
+    --apc_mode = apc_modelist[ round(value+2) ]   -- convert -1,0,1 to 1,2,3
 end
 
 function APCEngageStbyOff(value)
@@ -388,6 +437,9 @@ function post_initialize()
     afcs_css_enabled = false
     
     afcs_heading_hold = 0
+    apc_power = APC_POWER_OFF
+    apc_warmup_count = 0
+    apc_warmed_up = false
     
     local birth = LockOn_Options.init_conditions.birth_place
     if birth == "GROUND_HOT" or birth == "AIR_HOT" then
@@ -404,9 +456,9 @@ function post_initialize()
         afcs_standby_enabled = false
         afcs_stab_aug_enabled = false
         afcs_state = AFCS_STATE_OFF
-    end
 
-    dev:performClickableAction(device_commands.apc_engagestbyoff,-1,true) --disable APC by default
+        
+    end
 
     --Switches are synced to the states stored in this file on load.
     sync_switches()
@@ -428,6 +480,7 @@ function sync_switches()
     dev:performClickableAction(device_commands.afcs_hdg_sel,   afcs_hdg_sel_enabled and 1 or 0,  false)
     dev:performClickableAction(device_commands.afcs_alt,       afcs_alt_hold_enabled and 1 or 0, false)
     dev:performClickableAction(device_commands.afcs_ail_trim,  afcs_ail_trim_enabled and 1 or 0, false)
+    dev:performClickableAction(device_commands.apc_engagestbyoff, (apc_power == APC_POWER_STBY) and 0 or -1, false)
 end
 
 --AFCS Functions
@@ -493,7 +546,7 @@ function afcs_get_current_state()
     end
 end
 
-function print_state(state)
+function afcs_print_state(state)
     state_names = {}
 
     state_names[AFCS_STATE_OFF] = "AFCS_STATE_OFF"
@@ -777,6 +830,42 @@ end
 
 function update_afcs()
 
+    afcs_check_switches()
+    local temp_state = afcs_get_current_state()
+
+    --State change
+    if temp_state ~= afcs_state then
+        afcs_check_sync()
+
+        --Check if this state change is allowed with the current condition
+        afcs_engage_enabled = afcs_engage_enabled and afcs_allowed_to_engage_from_state(afcs_state) and afcs_check_engage_params()
+
+        --Update the possible new state
+        temp_state = afcs_get_current_state()
+        --Actually transition if this state is not the same as our current state.
+        if temp_state ~= afcs_state and afcs_update_transition(afcs_state, temp_state) then
+            afcs_transition_state(afcs_state, temp_state)
+            --Update state after transition
+            afcs_state = temp_state
+        end
+    end
+
+    --Update the test indicators
+    if afcs_state ~= AFCS_STATE_OFF and afcs_test_switch ~= AFCS_TEST_OFF then
+        afcs_roll_servo_current_wma:get_WMA_wrap(afcs_roll_servo_current)
+        afcs_pitch_servo_current_wma:get_WMA_wrap(afcs_pitch_servo_current)
+        afcs_yaw_servo_current_wma:get_WMA_wrap(afcs_yaw_servo_current)
+    else
+        afcs_roll_servo_current_wma:get_WMA_wrap(0.0)
+        afcs_pitch_servo_current_wma:get_WMA_wrap(0.0)
+        afcs_yaw_servo_current_wma:get_WMA_wrap(0.0)
+    end
+
+    AFCS_test_roll_param:set(afcs_roll_servo_current_wma:get_current_val())
+    AFCS_test_pitch_param:set(afcs_pitch_servo_current_wma:get_current_val())
+    AFCS_test_yaw_param:set(afcs_yaw_servo_current_wma:get_current_val())
+
+
     --enable/disable the afcs stability augmentation
     --Don't need to check AFCS_STATE_OFF because this switch cannot be on with that set to off.
     --Do however need to check AFCS_STATE_WARMUP because it's possible to have this switch on in that state.
@@ -797,13 +886,13 @@ function update_afcs()
     --early return for stdby/off positions
     if afcs_state == AFCS_STATE_OFF then
         
-        --Degrade the warmup at 3 times the rate of warmup
+        --Degrade the warmup at half the rate of warmup
         --This is a made up value, it just makes sense that the warmup
         --wouldn't take 90 seconds after switching it off and then back off
         --again very quickly.
         if afcs_warmup_count >= 0 then
             --print_message_to_user("AFCS Warmup count: "..afcs_warmup_count)
-            afcs_warmup_count = afcs_warmup_count - update_time_step * 3
+            afcs_warmup_count = afcs_warmup_count - update_time_step * 0.5
         end
 
         if afcs_warmup_count < afcs_warmup_time then
@@ -863,28 +952,6 @@ end
 
 function update()
 
-    afcs_check_switches()
-    local temp_state = afcs_get_current_state()
-
-    --State change
-    if temp_state ~= afcs_state then
-        afcs_check_sync()
-
-        --Check if this state change is allowed with the current condition
-        afcs_engage_enabled = afcs_engage_enabled and afcs_allowed_to_engage_from_state(afcs_state) and afcs_check_engage_params()
-
-        --Update the possible new state
-        temp_state = afcs_get_current_state()
-        --Actually transition if this state is not the same as our current state.
-        if temp_state ~= afcs_state and afcs_update_transition(afcs_state, temp_state) then
-            afcs_transition_state(afcs_state, temp_state)
-            --Update state after transition
-            afcs_state = temp_state
-        end
-    end
-    
-    
-
     --Calculate heading rotarys
     local hdg=afcs_heading_hold
     local _100s=math.floor(hdg/100)/10
@@ -900,22 +967,6 @@ function update()
     update_afcs()
     update_apc()
     update_throttle_buttons()
-
-    --Update the test indicators
-    if afcs_state ~= AFCS_STATE_OFF and afcs_test_switch ~= AFCS_TEST_OFF then
-        afcs_roll_servo_current_wma:get_WMA_wrap(afcs_roll_servo_current)
-        afcs_pitch_servo_current_wma:get_WMA_wrap(afcs_pitch_servo_current)
-        afcs_yaw_servo_current_wma:get_WMA_wrap(afcs_yaw_servo_current)
-    else
-        afcs_roll_servo_current_wma:get_WMA_wrap(0.0)
-        afcs_pitch_servo_current_wma:get_WMA_wrap(0.0)
-        afcs_yaw_servo_current_wma:get_WMA_wrap(0.0)
-    end
-
-    AFCS_test_roll_param:set(afcs_roll_servo_current_wma:get_current_val())
-    AFCS_test_pitch_param:set(afcs_pitch_servo_current_wma:get_current_val())
-    AFCS_test_yaw_param:set(afcs_yaw_servo_current_wma:get_current_val())
-    
 
 end
 
@@ -936,7 +987,143 @@ function debug_print_apc(s)
     --stub
 end
 
+function apc_print_state()
+    state_name = {
+        [APC_STATE_OFF] = "APC_STATE_OFF",
+        [APC_STATE_WARMUP] = "APC_STATE_WARMUP",
+        [APC_STATE_STBY] = "APC_STATE_STBY",
+        [APC_STATE_ENGAGE] = "APC_STATE_ENGAGE",
+    }
+
+    print_message_to_user(state_name[apc_state])
+
+end
+
+function apc_get_current_state()
+    if apc_power == APC_POWER_OFF or not get_elec_fwd_mon_ac_ok() then
+        return APC_STATE_OFF
+    elseif apc_warmed_up then
+        if apc_power == APC_POWER_STBY then
+            return APC_STATE_STBY
+        elseif apc_power == APC_POWER_ENGAGE then
+            return APC_STATE_ENGAGE
+        end
+    else
+        return APC_STATE_WARMUP
+    end
+end
+
+function apc_check_limits()
+
+    local disengage = false
+
+    if apc_power == APC_POWER_ENGAGE then
+        --Flick the spring loaded switch to standby if there is no power.
+        if apc_state == APC_STATE_OFF then
+            disengage = true
+        elseif sensor_data.getThrottleLeftPosition() < (apc_min_power - 0.01) and not apc_transient then
+            --print_message_to_user("THROTTLE: "..tostring(sensor_data.getThrottleLeftPosition()))
+            disengage = true
+        elseif sensor_data.getWOW_LeftMainLandingGear() > 0 then
+            disengage = true
+        end
+    end
+
+    if disengage then
+        dev:performClickableAction(device_commands.apc_engagestbyoff, 0.0, false)
+    end
+
+end
+
+function apc_hold_aoa()
+
+    local aoa = efm_data_bus.fm_getAOAUnits()
+
+    local result = apc_pid:run(apc_target, aoa)
+    local new_throttle = clamp(-result, apc_min_power, 1.0)
+
+    -- Get error between desired and actual.
+    -- This could be caused by the throttle axis moving or by the user.
+    local throttle_diff = math.abs(sensor_data.getThrottleLeftPosition() - new_throttle)
+
+    --print_message_to_user(tostring(sensor_data.getThrottleLeftPosition()).." "..tostring(new_throttle))
+
+    if throttle_diff > 0.1 then
+        -- Build up error as long as the difference is large enough.
+        apc_throttle_error = apc_throttle_error + throttle_diff
+    else
+        -- We have reached the target so reset the error.
+        apc_throttle_error = 0.0
+
+        -- If we just engaged this will now allow the user to force
+        -- the APC into standby by moving the throttle.
+        apc_transient = false
+    end
+
+    if math.abs(new_throttle - apc_throttle) > 0.1 then
+        apc_transient = true
+    end
+
+
+    -- If the throttle error is large enough then disengage
+    -- Unless we have just engaged and not reached the desired yet.
+    if apc_throttle_error > 2.0 and not apc_transient then
+        dev:performClickableAction(device_commands.apc_engagestbyoff, 0.0, false)
+    end
+
+    apc_throttle = new_throttle
+    dispatch_action(nil, ThrottleAxis, -2.0*apc_throttle + 1.0)
+    
+end
+
 function update_apc()
+
+    local temp_state = apc_get_current_state()
+
+    if temp_state ~= apc_state then
+        apc_state = temp_state
+
+        if temp_state == APC_STATE_ENGAGE then
+            apc_transient = true
+            apc_throttle = apc_min_power
+            apc_pid:reset(-apc_reset_point)
+        else
+            apc_transient = false
+        end
+
+        --apc_print_state()
+    end
+
+    if apc_state == APC_STATE_OFF then
+        apc_light:set(0.0)
+
+        if apc_warmup_count >= 0.0 then
+            apc_warmup_count = apc_warmup_count - update_time_step * 0.5
+        end
+
+        apc_warmed_up = apc_warmup_count >= apc_warmup_time
+        return
+
+    elseif apc_state == APC_STATE_WARMUP then
+        apc_light:set(0.0)
+        if apc_warmup_count < apc_warmup_time then
+            apc_warmup_count = apc_warmup_count + update_time_step
+            --print_message_to_user(tostring(apc_warmup_count))
+        end
+
+        apc_warmed_up = apc_warmup_count >= apc_warmup_time
+        return
+    elseif apc_state == APC_STATE_STBY then
+        apc_light:set(1.0)
+    elseif apc_state == APC_STATE_ENGAGE then
+        apc_light:set(1.0)
+        apc_hold_aoa()
+    end
+
+    apc_check_limits()
+end
+
+function update_apc_old()
     local timenow = get_model_time()
 
     --apc_throttle = apc_pid(sensor_data.getAngleOfAttack())

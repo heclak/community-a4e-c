@@ -899,7 +899,7 @@ MK_81SE = {
     mass            = 250 * POUNDS_TO_KG,
     hMin            = 300.0,
     hMax            = 12000.0,
-    Cx              = 0.00025,
+    Cx              = 0.00018,
     VyHold          = -100.0,
     Ag              = -1.23,
     fm              = {
@@ -1042,7 +1042,8 @@ AN_M81 = {
     mass            = 260.0 * POUNDS_TO_KG,
     hMin            = 300.0,
     hMax            = 12000.0,
-    Cx              = 0.00124,
+    Cx              = 0.000124,
+    Cx_pil          = 0.0,
     VyHold          = -100.0,
     Ag              = -1.23,
     fm              = {
@@ -1117,7 +1118,7 @@ AN_M88 = {
     mass            = 216.2 * POUNDS_TO_KG,
     hMin            = 300.0,
     hMax            = 12000.0,
-    Cx              = 0.00124,
+    Cx              = 0.000124,
     VyHold          = -100.0,
     Ag              = -1.23,
     fm              = {
@@ -1397,16 +1398,16 @@ declare_loadout(make_cbu_a4e("CBU-2B/A", "BLU-3B", math.floor(409/cbu_mult))) --
 local bomb_data =
 {
     --use shapename,        mass,       wstype,                 image,                  drag,               offset (m)
-    ["Mk-81"]         = { mass = 118,   wstype = {4,5,9,30},              pic = 'mk81.png',      cx = 0.00018, ofs = -0.0508, PictureBlendColor = false },  -- 2" offset back
-    ["Mk-81SE"]       = { mass = 118,   wstype = MK_81SE.wsTypeOfWeapon,  pic = 'mk81SE.png',    cx = 0.00018, ofs = 0.0,     PictureBlendColor = false },  -- 0" offset back
-    ["Mk-82"]         = { mass = 241,   wstype = {4,5,9,31},              pic = 'mk82.png',      cx = 0.00025, ofs = -0.0762, PictureBlendColor = false },  -- 3" offset back
-    ["Mk-82 Snakeye"] = { mass = 241,   wstype = {4,5,9,79},              pic = 'mk82air.png',   cx = 0.00025, ofs = -0.2540, PictureBlendColor = false },  -- 10" offset back
-    ["Mk-83"]         = { mass = 447,   wstype = {4,5,9,32},              pic = 'mk83.png',      cx = 0.00035, ofs = 0.0,     PictureBlendColor = false },  -- 0" offset, hangars are in wrong place
-    ["Mk-77 mod 1"]   = { mass = 230,   wstype = mk77mod1.wsTypeOfWeapon, pic = 'mk77mod1.png',  cx = 0.001,   ofs = 0.0,     PictureBlendColor = false },  -- drag number is garbage
-    ["Mk-20"]         = { mass = 222,   wstype = {4,5,38,45},             pic = 'mk20.png',      cx = 0.00070, ofs = 0.0,     PictureBlendColor = false },
-    ["AN-M57"]        = { mass = 113.0, wstype = {4,5,9,271},             pic = 'us_AN-M57.png', cx = 0.00035, ofs = 0.0,     PictureBlendColor = true  },
-    ["AN-M81"]        = { mass = 117.9, wstype = AN_M81.wsTypeOfWeapon,   pic = 'an-m81.png',    cx = 0.00025, ofs = 0.0,     PictureBlendColor = false },
-    ["AN-M88"]        = { mass = 98,    wstype = AN_M88.wsTypeOfWeapon,   pic = 'an-m88.png',    cx = 0.00025, ofs = 0.0,     PictureBlendColor = false },
+    ["Mk-81"]         = { mass = 118          ,   wstype = {4,5,9,30},              pic = 'mk81.png',      cx = 0.00018, ofs = -0.0508, PictureBlendColor = false },  -- 2" offset back
+    ["Mk-81SE"]       = { mass = MK_81SE.mass ,   wstype = MK_81SE.wsTypeOfWeapon,  pic = 'mk81SE.png',    cx = MK_81SE.Cx, ofs = 0.0,     PictureBlendColor = false },  -- 0" offset back
+    ["Mk-82"]         = { mass = 241          ,   wstype = {4,5,9,31},              pic = 'mk82.png',      cx = 0.00025, ofs = -0.0762, PictureBlendColor = false },  -- 3" offset back
+    ["Mk-82 Snakeye"] = { mass = 241          ,   wstype = {4,5,9,79},              pic = 'mk82air.png',   cx = 0.00025, ofs = -0.2540, PictureBlendColor = false },  -- 10" offset back
+    ["Mk-83"]         = { mass = 447          ,   wstype = {4,5,9,32},              pic = 'mk83.png',      cx = 0.00035, ofs = 0.0,     PictureBlendColor = false },  -- 0" offset, hangars are in wrong place
+    ["Mk-77 mod 1"]   = { mass = mk77mod1.mass,   wstype = mk77mod1.wsTypeOfWeapon, pic = 'mk77mod1.png',  cx = mk77mod1.Cx,   ofs = 0.0,     PictureBlendColor = false },  -- drag number is garbage
+    ["Mk-20"]         = { mass = 222          ,   wstype = {4,5,38,45},             pic = 'mk20.png',      cx = 0.00070, ofs = 0.0,     PictureBlendColor = false },
+    ["AN-M57"]        = { mass = 113.0        ,   wstype = {4,5,9,271},             pic = 'us_AN-M57.png', cx = 0.00035, ofs = 0.0,     PictureBlendColor = true  },
+    ["AN-M81"]        = { mass = AN_M81.mass  ,   wstype = AN_M81.wsTypeOfWeapon,   pic = 'an-m81.png',    cx = AN_M81.Cx, ofs = 0.0,     PictureBlendColor = false },
+    ["AN-M88"]        = { mass = AN_M88.mass  ,   wstype = AN_M88.wsTypeOfWeapon,   pic = 'an-m88.png',    cx = AN_M88.Cx, ofs = 0.0,     PictureBlendColor = false },
 }
 
 local rack_data =
@@ -1510,9 +1511,9 @@ function bru_41(element,count,side) -- build up to a 6x MER loadout of the speci
     data.displayName        = element.." *"..tostring(count).." (MER)"
     data.wsTypeOfWeapon     = bomb_variant.wstype
     data.Weight             = rack_variant.mass + count * bomb_variant.mass
-    data.Cx_pil             = 0.001887 + bomb_variant.cx*(count*.85)     -- 6x MER has 15% less drag per bomb due to in-line mounting
-    data.Elements           =
-    {
+    data.Cx_pil             = 0.001887 + bomb_variant.cx*(count*.85)            -- 6x MER has 15% less drag per bomb due to in-line mounting. NB: This isn't quite how it works. Since
+    data.Elements           =                                                   -- DCS will subtract the cx from the pylon on release. This means if the total is less than cx * count
+    {                                                                           -- you will actually have negative drag for this pylon.
         {
             Position	=	{0,	0,	0},
             ShapeName	=	rack_variant.shapename,
@@ -1583,9 +1584,9 @@ function bru_42(element,count,side) -- build a TER setup for the specified bombs
     data.displayName        = element.." *"..tostring(count).." (TER)"
     data.wsTypeOfWeapon     = bomb_variant.wstype
     data.Weight             = rack_variant.mass + count * bomb_variant.mass
-    data.Cx_pil             = 0.001887 + bomb_variant.cx*(count*.9)     -- TER only counts 0.9 of the drag per mounted store
-    data.Elements           =
-    {
+    data.Cx_pil             = 0.001887 + bomb_variant.cx*(count*.9)     -- TER only counts 0.9 of the drag per mounted store, NB: This isn't quite how it works. Since
+    data.Elements           =                                           -- DCS will subtract the cx from the pylon on release. This means if the total is less than cx * count
+    {                                                                   -- you will actually have negative drag for this pylon.
         {
             Position	=	{0,	0,	0},
             ShapeName	=	rack_variant.shapename,

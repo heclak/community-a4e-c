@@ -197,6 +197,7 @@
     <ClInclude Include="ED_FM_Utility.h" />
     <ClInclude Include="FlightModel.h" />
     <ClInclude Include="Sidewinder.h" />
+    <ClInclude Include="SmoothVary.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Table.h" />
     <ClInclude Include="Tacan.h" />
