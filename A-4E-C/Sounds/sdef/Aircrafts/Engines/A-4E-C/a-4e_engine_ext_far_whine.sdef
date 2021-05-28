@@ -6,7 +6,7 @@ pitch = 1.0
 
 -- VOLUME
 
-gain = 4.0
+gain = 5.0
 attack = 0.2
 release = 0.2
 
