@@ -413,6 +413,12 @@ join(res.keyCommands,{
     {down = Keys.MCL_Chan_Inc, name = _('MCL (ILCS) Channel Selector - Increase'), category = {_('Systems')}},
     {down = Keys.MCL_Chan_Dec, name = _('MCL (ILCS) Channel Selector - Decrease'), category = {_('Systems')}},
 
+    -- Fuel Transfer Bypass Switch
+    {down = device_commands.fuel_transfer_bypass, cockpit_device_id = devices.ENGINE, value_down = 0,  name = _('Fuel Transfer - NORMAL'),  category = {_('Systems')}},
+    {down = device_commands.fuel_transfer_bypass, cockpit_device_id = devices.ENGINE, value_down = 1,  name = _('Fuel Transfer - BYPASS'),  category = {_('Systems')}},
+    {down = device_commands.fuel_transfer_bypass, up = device_commands.fuel_transfer_bypass, cockpit_device_id = devices.ENGINE, value_down = 1, value_up = 0, name = _('Fuel Transfer - BYPASS else NORMAL'),  category = {_('Systems')}},
+    {down = Keys.Fuel_Transfer_Bypass_Toggle, name = _('Fuel Transfer - NORMAL/BYPASS'), category = {_('Systems')}},
+
     -- Interior Lights Panel
     {down = device_commands.intlight_whiteflood_CHANGE,     cockpit_device_id = devices.AVIONICS,  value_down = 0.1,  name = _('White Floodlight Control Knob - CW/Increase'),  category = {_('Right Console'), _('Interior Lights Control Panel')}},
     {down = device_commands.intlight_whiteflood_CHANGE,     cockpit_device_id = devices.AVIONICS,  value_down = -0.1, name = _('White Floodlight Control Knob - CCW/Decrease'), category = {_('Right Console'), _('Interior Lights Control Panel')}},
@@ -559,6 +565,15 @@ join(res.axisCommands,{
     {action = device_commands.wheelbrake_AXIS,      name = _('Wheel Brake'),       category = {_('Systems')}},
     {action = device_commands.left_wheelbrake_AXIS,  name = _('Wheel Brake Left'),  category = {_('Systems')}},
     {action = device_commands.right_wheelbrake_AXIS,  name = _('Wheel Brake Right'), category = {_('Systems')}},
+    
+
+    {combos = {{key = 'TRACKIR_PITCH'}},	action = iHeadTrackerPitchNormed	, name = _('Head Tracker : Pitch')},
+    {combos = {{key = 'TRACKIR_YAW'}},  	action = iHeadTrackerYawNormed		, name = _('Head Tracker : Yaw')},
+    {combos = {{key = 'TRACKIR_ROLL'}}, 	action = iHeadTrackerRollNormed		, name = _('Head Tracker : Roll')},
+    
+    {combos = {{key = 'TRACKIR_X'}}, 		action = iHeadTrackerPosZNormed		, name = _('Head Tracker : Right/Left')},
+    {combos = {{key = 'TRACKIR_Y'}}, 		action = iHeadTrackerPosYNormed		, name = _('Head Tracker : Up/Down')},
+    {combos = {{key = 'TRACKIR_Z'}}, 		action = iHeadTrackerPosXNormed		, name = _('Head Tracker : Forward/Backward')},
     
 	--Old throttle
     --{combos = defaultDeviceAssignmentFor("rudder"),  action = iCommandPlaneRudder	   , name = _('Rudder')},

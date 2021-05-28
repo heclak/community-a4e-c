@@ -6,7 +6,7 @@ pitch = 1.0
 
 -- VOLUME
 
-gain = 1.1
+gain = 4.0
 attack = 0.2
 release = 0.2
 
@@ -14,7 +14,7 @@ release = 0.2
 -- in meters
 
 silent_radius = 500
-peak_radius = 1000
+--peak_radius = 1000
 inner_radius = 700
 outer_radius = 3800
 

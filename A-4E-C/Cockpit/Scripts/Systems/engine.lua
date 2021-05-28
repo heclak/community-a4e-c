@@ -58,6 +58,9 @@ local manual_fuel_control_mode_sw = 0
 local igniter_timer = 0
 local igniter_max = 400 -- set timer maximum in seconds * 20
 
+local fuel_transfer_bypass_state = 0
+local fuel_transfer_bypass_valve = 0
+
 ------------------------------------------------
 ----------------  CONSTANTS  -------------------
 ------------------------------------------------
@@ -71,6 +74,8 @@ Engine:listen_command(Keys.Engine_Start)
 Engine:listen_command(Keys.Engine_Stop)
 Engine:listen_command(device_commands.ENGINE_manual_fuel_shutoff)
 --Engine:listen_command(device_commands.throttle_axis)
+Engine:listen_command(Keys.Fuel_Transfer_Bypass_Toggle)
+
 
 function post_initialize()
 
@@ -270,9 +275,15 @@ function SetCommand(command,value)
             -- position: flight refuel
             -- TODO implement logic
         end
+    elseif command == Keys.Fuel_Transfer_Bypass_Toggle then
+        fuel_transfer_bypass_valve = fuel_transfer_bypass_state
+        dev:performClickableAction((device_commands.fuel_transfer_bypass), ((fuel_transfer_bypass_state * -1) +1), false)
+        fuel_transfer_bypass_state = (fuel_transfer_bypass_valve * -1) +1
     else
         -- print_message_to_user("engine unknown cmd: "..command.."="..tostring(value))
     end
+
+
 end
 
 local egt_c_val=WMA(0.02)

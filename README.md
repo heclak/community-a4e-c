@@ -10,55 +10,68 @@ We thank the DCS World community for their support over the years, and dedicate 
 
 ## Contributing Developers
 
-Gospadin, Heclak, Joshua Nelson, plusnine, Farlander, gyrovague, kryb / Archimaede, Merker, Jones, Nero
+Gospadin, Heclak, Joshua Nelson, plusnine, Farlander, gyrovague, kryb/Archimaede, Merker, Jones, Nero
 
 ## Special Thanks
 
-SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, Gvad, Sidekick65, HellesBelles, SPINEG, Sport, rudel-chw, Luciano, Malamem, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
+SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, Gvad, Sidekick65, HellesBelles, SPINEG, Shadowfrost, Sport, rudel-chw, Luciano, Malamem, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
 
 ## Features
 
 - Realistic external flight model and engine simulation
 - Clickable cockpit
-- Air-to-ground radar
-- Shrike anti-radiation missile
-- CP-741/a Bombing computer (CCRP)
 - Carrier landing and takeoff
 - Air-to-air refueling
+- AN/APG-53A Radar (air-to-ground)
+- AN/APN-153 Doppler Nav
+- AN/ASN-41 Nav Computer  
+- AFCS
+- ARC-51A UHF Radio
+- ARN-52 TACAN
+- ARA-63 MCL (ICLS)
+- CP-741/a Bombing computer (CCRP)
+- Shrike anti-radiation missile
 - New weapons:
   - AN- series WWII munitions: M66, M81, M88
   - MK4 HIPEG 20 mm gunpod
   - Mk-77 napalm canister
   - SUU-7 bomblet dispenser
-- Custom sounds
+- Unique sounds inside and outside the aircraft
 
 ### Version 2.0 Changelog: Featured Items
 
 - Features: External Flight Model (EFM) with flight dynamics, suspension, slat simulation, cockpit shake, wing vapour and more.
-- Features: Realistic engine simulation (jnels, please add detail here!)
-- Features: Added radio functions (jnels, please add detail here! - thanks, Harald?)
-- Features: Added ILS for ground stations
+- Features: Realistic engine simulation
 - Features: Added SuperCarrier compatibility
+- Features: Added ARC-51A UHF Radio functions (thanks Harald)
+- Features: Added ARN-52 TACAN and ARA-63 MCL (ICLS) functions
 - Features: Added CP-741/a bombing computer (set CMPTR on weapon selector and use slick bombs)
 - Features: Added air-to-air refueling capabilities
-- Features: Added nosewheel steering and differential braking (be sure to reset your user inputs)
+- Features: Added nosewheel steering and differential braking
 - Features: Added SUU-25 Parachute illumination pod for night ops
 - Systems: AFCS Added stability augmentation (be sure to enable this yaw-dampening system on the AFCS panel before takeoff!)
 - Systems: Added sidewinders to loadout options on outer pylons
 - Systems: Added SUU-25 parachute illumination pod to loadout options
 - Systems: Added empty fuel tanks to loadout options
 - Systems: Added fuel flow system
-- Systems: Added oxygen system (pilots must now beware of hypooxia!)
-- Misions: Added instant action missions (thanks Sidekick65, Cubeboy)
-- Textures: Exterior texture improvements, added normal map (thanks HellesBelles)
-- Textures: Cockpit improvements (thanks Sport, for the new gunsight mapping)
+- Systems: Added oxygen system (pilots must now beware of hypoxia!)
+- Systems: Added drift to AN/ASN-41 Nav Computer
+- Misions: Added instant action missions (thanks Sidekick65, Cubeboy, Shadowfrost and SPINEG)
+- Misions: Added runway strike and anti-ship strike roles
+- Textures: Exterior texture improvements, added normal maps (thanks HellesBelles for their contribution)
+- Textures: Cockpit improvements, added normal maps (thanks Sport for their contribution)
+- Textures: Added a diverse array of new helmets and pilot uniforms and patches across liveries
 - Liveries: Added Argentina and Chile as available countries for the A-4E-C
 - Liveries: Added Argentine Brigada (thanks GVad, for these paints and much more)
+- Liveries: Added Community III: Forever Free livery
 - Liveries: Reformatted livery description.lua templates (livery creators, see our updated paintkit)
 - Liveries: Inaccuracies corrected (within the available modex systems, with great apologies to the non-USN/USMC operators)
-- Quality of Life: Added new keybinds (thanks to the userbase for documenting many of these)
+- Quality of Life: Added loads of new keybinds (thanks to the userbase for documenting many of these.)
+- Quality of Life: Added cockpit controls indicator
+- Quality of Life: Added several new helpful kneeboard pages (thanks to Rob for drafting several pages)
+- Quality of Life: Trim reset now provides a smooth transition
 - Quality of Life: Added in-cockpit sounds and improved user feedback
-- Quality of Life: Revised special menu options (like screen shake)
+- Quality of Life: Revised special menu options
 - Quality of Life: Fixed FFB stick support
 - Quality of Life: Slats locking option for aerobatic performance teams
 - Quality of Life: Smokewinder pod easier to operate (weapon select independent)
@@ -68,14 +81,15 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, Gvad, Sidekick65, Hel
 
 ### Known Bugs
 
-- Fuel system cuts off if auto pause is left on for too long
 - Pilot blacks out when hooking into SuperCarrier (throttle up hard to cat-in!)
-- Wheel chocks do not stop the aircraft
-- APC underresponsive
-- AN/ASN-41 navigation BDHI needle animations swapped in test mode
-- IN RANGE lamp flickers when TEST is pressed
-- TEST press can cause ECM panel lights to stick on
+- Fuel system cuts off if auto pause is left on for too long
 - Throttle position occasionally stuck in OFF position after rearm
+- APC system is underresponsive
+- Some missions created in DCS 2.7 or later render navigation system inoperable
+- TEST press can cause ECM panel lights to stick on
+- IN RANGE lamp flickers when TEST is pressed
+- AN/ASN-41 navigation BDHI needle animations swapped in test mode
+- Switch position slightly off for Fuel Trans Bypass and Dead Recon
 
 [see full issue list](https://github.com/heclak/community-a4e-c/issues/)
 
@@ -143,11 +157,11 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 **Q: Can I get involved with the A-4E-C project?**
 
-- Yes! Join our Discord server and introduce yourself! We can always use a hand from game artists, programmers or reliable testers as we continue to move the project forward. If you think you have something to contribute, don’t hesitate!
+- Yes! [Join the Community A-4E-C Discord server](https://discord.gg/tQZbkTQ) and introduce yourself! We can always use a hand from game artists, programmers or reliable testers as we continue to move the project forward. If you think you have something to contribute, don’t hesitate!
 
 **Q: Is there a user manual or tutorials available?**
 
-- There is some precursor guidance included in the kneeboard. The NATOPS manual for the A-4E is the gold standard, but [Heclak's Community A-4E Guide](https://docs.google.com/presentation/d/1cUH7jpAoGHm-IzUDnv_NDhiZlvX55Q9WvpgR1d9ksYY/edit?usp=sharing) is a great resource for operating the sim (althought it may take us some time to get it up to date with 2.0's features), and [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt_8Jw9ByL10ar6b8rQg) features many good tutorials on systems and weaponry. 
+- There is some helpful pilot guidance included in the kneeboard. The NATOPS manual for the A-4E is the gold standard, but [Heclak's Community A-4E Guide](https://docs.google.com/presentation/d/1cUH7jpAoGHm-IzUDnv_NDhiZlvX55Q9WvpgR1d9ksYY/edit?usp=sharing) is a great resource for operating the sim (althought it may take us some time to get it up to date with 2.0's features), and [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt_8Jw9ByL10ar6b8rQg) features many good tutorials on systems and weaponry.
 
 **Q: Is there a paint kit I can use to create my own A-4E-C liveries?**
 
@@ -167,9 +181,9 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 **Q: Is there a way I can host missions with the A-4E-C on my multiplayer server that won't lock out players who do not have the module installed?**
 
-- Yes, but it's a little involved. It's not DCS that is locking players out, but the Mission Editor deciding that any mission with an A4-E-C placed down is going to require the module. 
+- Yes, but it's a little involved. It's not DCS that is locking players out, but the Mission Editor deciding that any mission with an A4-E-C placed down is going to require the module.
 
-- As there's no in-engine way of de-flagging this, you'll need to get hands-on with your mission files. 
+- As there's no in-engine way of de-flagging this, you'll need to get hands-on with your mission files.
 You may or may not already know that the *.miz* mission files are, in fact, *.zip* files. So, take the mission file you desire to edit, and make a copy with a *.zip* extension. Find somewhere handy to unzip it.
 - Inside, you will find a *mission* file (no extension). Open this file in your text-editor of choice, and search required to find the mission's list of required modules, and then remove the A-4E-C entry from the list, as shown in Line 32 in this screenshot:
 
