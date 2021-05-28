@@ -13,6 +13,7 @@
 //
 //================================ Includes ===============================//
 #include "Engine2.h"
+#include "Commands.h"
 //=========================================================================//
 
 Scooter::Engine2::Engine2(AircraftState& aircraftState) :
@@ -76,6 +77,19 @@ void Scooter::Engine2::airborneInit()
 	m_ignitors = true;
 }
 
+bool Scooter::Engine2::handleInput( int command, float value )
+{
+	switch ( command )
+	{
+	case DEVICE_COMMANDS_ENGINE_FUEL_CONTROL_SW:
+		printf( "FUEL SWITCH: %lf\n", value );
+		m_manualFuelControl = value == 1.0;
+		return true;
+	}
+
+	return false;
+}
+
 void Scooter::Engine2::updateEngine( double dt )
 {
 	double correctedThrottle = 0.0;
@@ -122,7 +136,14 @@ void Scooter::Engine2::updateEngine( double dt )
 		double fuelDamage = 1.0;//(1.0 - m_fuelControllerDamageVary.update( dt ));
 
 		//printf( "Damage: %lf\n", fuelDamage );
-		double desiredFuelFlow = getPID( desiredFractionalOmega , dt ) * fuelDamage;
+
+		double desiredFuelFlow;
+
+		if ( ! m_manualFuelControl )
+			desiredFuelFlow = getPID( desiredFractionalOmega, dt ) * fuelDamage;
+		else
+			desiredFuelFlow = m_throttle * (c_fuelFlowMax * 1.1) + 0.01;
+
 		//m_fuelFlow = desiredFuelFlow;
 		//Update towards desired fuel flow with response time.
 		//m_fuelFlow = m_throttle;
@@ -167,10 +188,18 @@ void Scooter::Engine2::updateEngine( double dt )
 		m_compressorDamageVary.setScale( damage );
 		double drag = m_compressorDamageVary.update( dt );
 		//printf( "Integrity: %lf, Damage: %lf\n", m_integrity, drag );
-		updateShafts( pow(m_integrity, 0.25) * (1.0 - drag) * fuelToHPOmega( m_fuelFlow ), 1.0, dt );
+
+		double expectedOmega = fuelToHPOmega( m_fuelFlow );
+		m_compressorAOA = expectedOmega - m_hpOmega;
+		//printf( "Compressor AOA: %lf\n", m_compressorAOA );
+
+		m_compressorStalled = m_compressorAOA > c_compressorStallAOA;
+
+		updateShafts( pow(m_integrity, 0.25) * (1.0 - drag) * expectedOmega, 1.0, dt );
 	}
 	else
 	{
+		m_compressorStalled = false;
 		updateShaftsDynamic( dt );
 	}
 

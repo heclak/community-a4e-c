@@ -44,6 +44,8 @@
 #define c_airspeedTorque 0.3
 #define c_engineDrag 0.1
 
+#define c_compressorStallAOA 300.0
+
 namespace Scooter
 {
 
@@ -57,6 +59,8 @@ public:
 	virtual void coldInit();
 	virtual void hotInit();
 	virtual void airborneInit();
+
+	bool handleInput( int command, float value );
 
 	inline void setThrottle(double throttle);
 	inline void setHasFuel( bool hasFuel );
@@ -74,6 +78,7 @@ public:
 	inline double getPID( double desiredFractionalRPM, double dt );
 	inline double getRPMNorm();
 	inline double getRPM();
+	inline bool stalled();
 
 	void updateEngine( double dt );
 private:
@@ -118,7 +123,12 @@ private:
 	double m_turbineDamage = 0.0;
 	double m_integrity = 0.0;
 
+	double m_compressorAOA = 0.0;
+	bool m_compressorStalled = false;
+
 	bool m_started = false;
+
+	bool m_manualFuelControl = false;
 
 	//Environment
 	double m_airspeed = 0.0;
@@ -211,6 +221,11 @@ double Engine2::getPID( double desiredFractionalRPM, double dt )
 	return error * m_pGain + m_errAcc * m_iGain + errDeriv * m_dGain;
 }
 
+bool Engine2::stalled()
+{
+	return m_compressorStalled;
+}
+
 double Engine2::hpOmegaToLPOmega( double x )
 {
 	//This function was found using python this is just a 4th order polynomial fit. These magic numbers are the coefficients that came out.
@@ -220,7 +235,7 @@ double Engine2::hpOmegaToLPOmega( double x )
 void Engine2::updateShaftsDynamic( double dt )
 {
 	double effectiveAirspeed = m_airspeed > 30.0 ? m_airspeed : 0.0;
-	double torque = (double)m_bleedAir * c_startTorque + m_turbineDamage * m_compressorDamage * m_fuelFlow * c_combustionTorque + effectiveAirspeed * c_airspeedTorque - (m_hpOmega + m_lpOmega) * c_engineDrag;
+	double torque = (double)m_bleedAir * c_startTorque + m_integrity * m_fuelFlow * c_combustionTorque + effectiveAirspeed * c_airspeedTorque - (m_hpOmega + m_lpOmega) * c_engineDrag;
 
 	m_hpOmega += dt * torque / c_hpInertia;
 	m_hpOmega = std::max( m_hpOmega, 0.0 );

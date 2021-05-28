@@ -236,7 +236,7 @@ function post_initialize()
         Sound_Player.new_always_controlled(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineRoar", "RPM", engine_roar_volume, engine_roar_pitch),
         Sound_Player.new_always_controlled(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitWindRushing", "SOUND_TRUE_AIRSPEED", wind_rushing_volume, wind_rushing_pitch),
 
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineCompressorStall", "SND_INST_ENGINE_STALL", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_EngineCompressorStall", "SND_INST_ENGINE_STALL", SOUND_CONTINUOUS),
         --gear pod doors
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearPodClose_L", "SND_INST_L_GEAR_POD_CLOSE", SOUND_ONCE),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearPodOpen_L", "SND_INST_L_GEAR_POD_OPEN", SOUND_ONCE),
