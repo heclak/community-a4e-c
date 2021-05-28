@@ -19,7 +19,7 @@ local param_catapult_takeoff = get_param_handle("SOUND_CAT_TAKEOFF")
 
 local sounds
 
-function post_initialize()
+function post_initialize()    
     -- initialise soundhosts
     sndhost_cockpit             = create_sound_host("COCKPIT","2D",0,0,0) -- TODO: look into defining this sound host for HEADPHONES/HELMET
 

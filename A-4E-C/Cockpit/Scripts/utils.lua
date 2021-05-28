@@ -254,6 +254,50 @@ function PID:reset(u)
 end
 
 
+PID_alt = {}
+PID_alt.__index = PID_alt
+setmetatable(PID_alt, {
+  __call = function( cls, ... )
+    return cls.new(...) -- automatically call constructor when class is called like a function, e.g. a=PID() is equivalent to a=PID.new()
+  end,
+})
+
+function PID_alt.new(kp, ki, kd, centre, errIMin, errIMax)
+  local self = setmetatable({}, PID_alt)
+  self.kp = kp
+  self.ki = ki
+  self.kd = kd
+
+  self.errIMin = errIMin or -100000000.0
+  self.errIMax = errIMax or  100000000.0
+
+  self.errorD = 0.0
+  self.errorI = 0.0
+  self.centre = centre or 0.0
+
+  return self
+end
+
+function PID_alt:run(setpoint, process_variable)
+  local error = setpoint - process_variable
+
+  self.errorI = clamp(self.errorI + error, self.errIMin, self.errIMax)
+
+  local p = self.kp * error
+  local i = self.ki * self.errorI
+  local d = self.kd * (error - self.errorD)
+
+  self.errorD = error
+
+  return self.centre + p + i + d
+end
+
+function PID_alt:reset(centre)
+  self.errorD = 0.0
+  self.errorI = 0.0
+  self.centre = centre
+end
+
 ---------------------------------------------
 ---------------------------------------------
 --[[
