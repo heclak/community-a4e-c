@@ -2,6 +2,95 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
+## Version 2.0.0-beta-5 - 28 May 2021
+
+### You must delete and rebind all your keys if NOT updating from beta-4
+See readme for instructions.
+
+### Added
+- Manual Carrier Landing (MCL/ICLS) system and its bit test
+- TACAN for moving objects (tankers and ships) and portable tacan stations
+
+Note for TACAN and MCL(ICLS). The method used relies on the mission file. This means
+for a TACAN or MCL to be detected the unit (or unit with the same unit name) must exist
+in the mission file. Replacement objects can be spawned in to replace dead units however
+they must have a name which contains the original name to be correctly found by the TACAN
+and MCL system. This method should work 99% of the time with regular missions however if
+you run into trouble it is worth checking the following conditions:
+  - Unit with TACAN/MCL exists in the mission file (placed in editor)
+  - Equivalent unit with a name which contains the original name of the unit placed in the editor
+  - Unit does not share a channel regardless of X or Y band
+
+
+- APC Version 2 for EFM
+- Quick Start Missions: 
+    - Adverse weather carrier landing 
+    - Carrier landing
+    - Bomb trucking
+    - Aerial Refueling
+
+- Controls Indicator
+- 3d Model:
+  - Added MCL Panel
+  - Added Misc Switches Panel
+  - Implemented AFCS Test panel switches
+
+- AFCS test (WIP: indicators do not function correctly at the moment)
+- New kneeboard pages
+- Basic wing overstress
+- Misc Keybinds
+
+- Sounds:
+  - Wing stress
+  - External engine sounds
+  - Wind rushing sound
+
+- Air data computer AXC-666 for AN/ASN-41 and CP-741/A, no external functionality but lays some ground work for more realistic simualtion
+
+- AN/ASN-41 Integrator:
+  - Now integrates from starting position functioning correctly
+  - Integration happens in D1 and D2 only, set to D1 or D2 to have the correct position. Switching to STBY will pause the integration
+  - APN-153 radar is vital to preventing drift
+  - Minor errors are introduced for sensors producing drift over time
+  - Normal drift is about 2 - 3 nautical miles per hour
+  - Drift will increase with lots of maneouvers
+
+
+### Changed
+- Engine damage has now more dynamic effect
+- Beta calculated per surface rather than using the overall airframe beta. This fixes some edge of the envelope nastiness
+- Rudder pedal animation no longer tied to rudder
+- AFCS will not engage with rudder uncentred
+- Fuel System:
+  - New bypass switch will bypass the wing tank in case of wing leak.
+  - Flight refuel switch will no longer bypass wing tank, this enables/disables external tank flight refueling.
+- Gunsight colour
+- ILS mode on TACAN has been changed to A/A and functions as such
+- Slats lift increased slightly
+- Increased wing drag onset at > 40 degrees angle of attack
+- External Livery names renamed to be standardised
+- Keybinds recategorised correctly
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- M-81 and M-88 bomb negative pylon drag after release from MER/TER rack
+- Engine windmilling at low speed
+- Airspeed indicator uses calibrated airspeed instead of equivalent airspeed.
+- Fuel trans light not displaying when integral wing tank empty
+- Wheel animations
+
+### Known Issues
+- Chocks only partially stop the aircraft (brakes are used as a placeholder)
+- Pilot can blackout from cat shot
+- Pilot can blackout from rolling too fast
+- ASN-41 Navigation Computer - PPOS and Desintation knob keybindings do not work (the in-cockpit knobs still work perfectly fine)
+
+### You must delete and rebind all your keys if NOT updating from beta-4
+See readme for instructions.
+
 ## Version 2.0.0-beta-4 - 08 May 2021
 
 ### You must delete and rebind all your keys after updating to beta-4
