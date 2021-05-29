@@ -6,7 +6,7 @@ pitch = 1.0
 
 -- VOLUME
 
-gain = 7.0
+gain = 7.8
 attack = 0.7
 release = 0.7
 
@@ -24,7 +24,7 @@ outer_radius = 4000
 -- both these variables list coordinates in {FRONT-BACK, UP-DOWN, RIGHT-LEFT}
 
 position = {0, 0, 0}
-direction = {-1, 0, 0}
+direction = {1, 0, 0}
 cone_inner_angle = 135
 cone_outer_angle = 165
 cone_inner_gain = 1.0

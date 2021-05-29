@@ -6,17 +6,17 @@ pitch = 1.0
 
 -- VOLUME
 
-gain = 5.0
+gain = 4.0
 attack = 0.2
 release = 0.2
 
 -- DISTANCE
 -- in meters
 
-silent_radius = 500
+silent_radius = 800
 --peak_radius = 1000
-inner_radius = 700
-outer_radius = 3800
+inner_radius = 1400
+outer_radius = 3300
 
 -- DIRECTIONALITY
 -- position: in meters from model origin (often center of gravity)

@@ -210,7 +210,7 @@ function engine:init(number_, host)
 			type_pitch = SOUND_TURBINE_POWER,
 			type_gain = SOUND_FAN_RPM,
 			sdef_name = "Aircrafts/Engines/A-4E-C/a-4e_engine_ext_back_hi",
-			pitch_curve = Curve(0.93, 1.00, 1.07}, 0.43, 1.0),
+			pitch_curve = Curve({0.93, 1.00, 1.07}, 0.43, 1.0),
 			gain_curve = Curve({0.00, 0.10, 0.45, 0.65, 0.70, 0.98, 1.00}, 0.43, 1.0),
 		},
 		{
