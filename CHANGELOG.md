@@ -7,9 +7,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 ### This is a hotfix for the engine sounds for some DCS modules being overwritten by A-4E sounds. Please check the chanelog below for the full 2.0.0-beta-5 changelog.
 
 ### Added
-- Training Missions:
-  - TACAN
-  - MCL
+- TACAN and MCL training mission
 
 ### Fixed
 - Engine sounds for some DCS modules being overwritten by A-4E sounds
