@@ -1,3 +1,3 @@
-dofile("Aircraft/Aircraft.lua")
+dofile("Aircraft/a4_Aircraft.lua")
 
 plane = aircraft:new()
