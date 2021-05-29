@@ -529,12 +529,12 @@ join(res.keyCommands,{
     
     -- FC3 Commands [Implemented] (TODO: What should be implmented here?)
     {down = Keys.JettisonFC3,up = Keys.JettisonWeaponsUp, name = _('Weapons Jettison: FC3-style'), category = {_('Systems')}},
-    {down = Keys.RadarHoldToggle,                         name = _('Radar Hold: Toggle'),          category = _('Modes')},
-    {down = Keys.RadarHoldDec,                            name = _('Radar Hold: Dec'),             category = _('Modes')},
-    {down = Keys.RadarHoldInc,                            name = _('Radar Hold: Inc'),             category = _('Modes')},
-    {down = Keys.SpeedHoldToggle,                         name = _('Speed Hold: Toggle'),          category = _('Modes')},
-    {down = Keys.SpeedHoldDec,                            name = _('Speed Hold: Dec'),             category = _('Modes')},
-    {down = Keys.SpeedHoldInc,                            name = _('Speed Hold: Inc'),             category = _('Modes')},
+    -- {down = Keys.RadarHoldToggle,                         name = _('Radar Hold: Toggle'),          category = _('Modes')},
+    -- {down = Keys.RadarHoldDec,                            name = _('Radar Hold: Dec'),             category = _('Modes')},
+    -- {down = Keys.RadarHoldInc,                            name = _('Radar Hold: Inc'),             category = _('Modes')},
+    -- {down = Keys.SpeedHoldToggle,                         name = _('Speed Hold: Toggle'),          category = _('Modes')},
+    -- {down = Keys.SpeedHoldDec,                            name = _('Speed Hold: Dec'),             category = _('Modes')},
+    -- {down = Keys.SpeedHoldInc,                            name = _('Speed Hold: Inc'),             category = _('Modes')},
 
     -- FC3 Commands [Not Implemented]
     -- {down = iCommandPowerOnOff,                                                                                  name = _('Electric Power Switch'),                  category = {_('Systems')}},
