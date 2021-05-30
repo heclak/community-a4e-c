@@ -22,8 +22,11 @@ SetScale(FOV)
 -- ================================
 -- 2x - WEAPONS
 -- ================================
--- 21 - Bombing Table / CP-741/A Instructions
--- 22 - Weapon Info (CBUs)
+-- 21 - Simple Bombing Tables and Snakeeye
+-- 22 - AWRS and CP-741/A
+-- 23 - CBUs Configuration
+-- 24 - Guns and Gunpods
+-- 25 - Rockets, Shrike, Sidewinder
 
 -- ================================
 -- 3x - FLIGHT INSTRUCTION
