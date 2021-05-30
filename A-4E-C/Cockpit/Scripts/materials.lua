@@ -13,7 +13,7 @@ materials["RADAR_FOV"] 	= {17, 80, 7, 0}
 materials["RADAR_GRID"] = {0, 100, 0, 192}
 materials["RADAR_SCRIBE"] = {0, 200,0, 192}
 materials["GUNSIGHT_GLASS"] = {0, 120, 0, 128}
-materials["GUNSIGHT_COLOR"] = {255, 65, 0, 255}
+materials["GUNSIGHT_COLOR"] = {255, 48, 0, 255}
 
 
 local IndicationTexturesPath = LockOn_Options.script_path.."../Resources/IndicationTextures/"
