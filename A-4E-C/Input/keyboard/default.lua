@@ -372,8 +372,6 @@ join(res.keyCommands,{
     {down = Keys.TacanChMajorDec,                                             name = _('TACAN Channel 10s - Decrease'),         category = {_('Systems')}},
     {down = Keys.TacanChMinorInc,                                             name = _('TACAN Channel 1s - Increase'),          category = {_('Systems')}},
     {down = Keys.TacanChMinorDec,                                             name = _('TACAN Channel 1s - Decrease'),          category = {_('Systems')}},
-    {down = Keys.TacanChMinorInc,                                             name = _('TACAN Channel 1s - Increase'),          category = {_('Systems')}},
-    {down = Keys.TacanChMinorDec,                                             name = _('TACAN Channel 1s - Decrease'),          category = {_('Systems')}},
     {down = Keys.TacanVolumeInc,                                              name = _('TACAN Volume - Increase'),              category = {_('Systems')}},
     {down = Keys.TacanVolumeDec,                                              name = _('TACAN Volume - Decrease'),              category = {_('Systems')}},
     {down = Keys.TacanVolumeStartUp, up = Keys.TacanVolumeStop,               name = _('TACAN Volume - Continuous Increase'),   category = {_('Systems')}},
