@@ -1,15 +1,13 @@
 local diff = {
-	["axisDiffs"] = {
-		["a3123cd35"] = {
-			["name"] = "Rudder",
-			["removed"] = {
+	["keyDiffs"] = {
+		["d10000pnilu10001cdnilvdnilvpnilvunil"] = {
+			["added"] = {
 				[1] = {
-					["key"] = "JOY_RZ",
+					["key"] = "JOY_BTN4",
 				},
 			},
+			["name"] = "Nose Wheel Steering",
 		},
-	},
-	["keyDiffs"] = {
 		["dnilp10113u10119cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {

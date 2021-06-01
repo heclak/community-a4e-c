@@ -16,7 +16,7 @@ local diff = {
 				},
 			},
 		},
-		["a3123cd35"] = {
+		["a2003cdnil"] = {
 			["name"] = "Rudder",
 			["removed"] = {
 				[1] = {
@@ -26,7 +26,7 @@ local diff = {
 		},
 	},
 	["keyDiffs"] = {
-		["d10001pnilu10000cdnilvdnilvpnilvunil"] = {
+		["d10011pnilu10010cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
 					["key"] = "JOY_BTN22",
@@ -34,7 +34,7 @@ local diff = {
 			},
 			["name"] = "FLAP Switch - UP else STOP",
 		},
-		["d10002pnilu10000cdnilvdnilvpnilvunil"] = {
+		["d10012pnilu10010cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
 					["key"] = "JOY_BTN23",
@@ -42,7 +42,7 @@ local diff = {
 			},
 			["name"] = "FLAP Switch - DOWN else STOP",
 		},
-		["d10006pnilu10007cdnilvdnilvpnilvunil"] = {
+		["d10016pnilu10017cdnilvdnilvpnilvunil"] = {
 			["name"] = "Gun-Rocket Trigger",
 			["removed"] = {
 				[1] = {
@@ -50,7 +50,7 @@ local diff = {
 				},
 			},
 		},
-		["d10008pnilu10009cdnilvdnilvpnilvunil"] = {
+		["d10018pnilu10019cdnilvdnilvpnilvunil"] = {
 			["name"] = "Bomb Release Button",
 			["removed"] = {
 				[1] = {
@@ -74,13 +74,13 @@ local diff = {
 			},
 			["name"] = "Master Exterior Lights Switch - ON else OFF",
 		},
-		["d10123pnilunilcdnilvdnilvpnilvunil"] = {
+		["d10139pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN26",
+					["key"] = "JOY_BTN15",
 				},
 			},
-			["name"] = "AFCS Override Button",
+			["name"] = "JATO Firing Button",
 		},
 		["d147pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
