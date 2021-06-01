@@ -14,9 +14,9 @@ livery = {
   {"Pilot",	DIFFUSE, "a4e_intl_rnzaf_kiwired_pilot", true};
 
     -- flaps, used on most liveries
-    {"flaps_001", DIFFUSE, "a4e_bort_white_smooth", true};
-    {"flaps_010", DIFFUSE, "a4e_bort_white_smooth", true};
-    {"flaps_100", DIFFUSE, "a4e_bort_white_smooth", true};
+    {"flaps_001", DIFFUSE, "empty", true};
+    {"flaps_010", DIFFUSE, "empty", true};
+    {"flaps_100", DIFFUSE, "empty", true};
 
     -- three digit, smaller nose numbers, used on most liveries
     {"nose_001", DIFFUSE, "a4e_bort_white_smooth", true};
