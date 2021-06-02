@@ -23,13 +23,13 @@ livery = {
   {"nose_100", DIFFUSE, "empty", true};
 
   -- two digit top-of-tail, used on most USMC liveries
-  {"tail_aggressor_001", DIFFUSE, "empty", true};
-  {"tail_aggressor_010", DIFFUSE, "empty", true};
+  {"tail_aggressor_001", DIFFUSE, "a4e_bort_grey", true};
+  {"tail_aggressor_010", DIFFUSE, "a4e_bort_grey", true};
 
   -- three digit top-of-rudder, used on most USN liveries
-  {"rudder_001", DIFFUSE, "a4e_bort_white", true};
-  {"rudder_010", DIFFUSE, "a4e_bort_white", true};
-  {"rudder_100", DIFFUSE, "a4e_bort_white", true};
+  {"rudder_001", DIFFUSE, "empty", true};
+  {"rudder_010", DIFFUSE, "empty", true};
+  {"rudder_100", DIFFUSE, "empty", true};
 
   -- wing bort used on most USN liveries
   {"wing_001", DIFFUSE, "empty", true};
