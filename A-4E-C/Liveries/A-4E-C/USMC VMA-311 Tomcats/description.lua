@@ -28,8 +28,8 @@ livery = {
   {"tail_aggressor_010", DIFFUSE, "a4e_bort_black", true};
 
   -- three digit top-of-rudder, used on most USN liveries
-  {"rudder_001", DIFFUSE, "a4e_bort_black", true};
-  {"rudder_010", DIFFUSE, "a4e_bort_black", true};
+  {"rudder_001", DIFFUSE, "empty", true};
+  {"rudder_010", DIFFUSE, "empty", true};
   {"rudder_100", DIFFUSE, "empty", true};
 
   -- wing bort used on most USN liveries
