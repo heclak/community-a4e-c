@@ -81,7 +81,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, Gvad, Sidekick65, Hel
 
 ### Known Bugs and Incompatibilities
 
-- Incompatible with the CH-53 Super Stallion mod (due to a DCS bug).
+- Incompatible with the CH-53E "Super Stallion" mod (due to a DCS bug).
 - Pilot blacks out when hooking into SuperCarrier (throttle up hard to cat-in!)
 - Fuel system cuts off if auto pause is left on for too long
 - Throttle position occasionally stuck in OFF position after rearm
