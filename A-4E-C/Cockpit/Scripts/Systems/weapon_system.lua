@@ -118,6 +118,7 @@ local AWRS_mode = AWRS_mode_step_salvo
 local AWRS_power = get_param_handle("AWRS_POWER")
 local AWRS_quantity = 0
 local AWRS_interval = 0.1
+local AWRS_interval_position = 0
 local AWRS_multiplier = 1
 local weapon_interval = AWRS_multiplier*AWRS_interval
  -- fairly arbitrary value (seconds between rockets) (see also http://www.gettyimages.com/detail/video/news-footage/861-51 )
@@ -207,6 +208,8 @@ WeaponSystem:listen_command(Keys.AWRSQtySelDecrease)
 WeaponSystem:listen_command(Keys.AWRSModeSelCCW)
 WeaponSystem:listen_command(Keys.AWRSModeSelCW)
 WeaponSystem:listen_command(device_commands.AWRS_drop_interval_AXIS)
+WeaponSystem:listen_command(Keys.AWRS_Drop_Interval_Inc)
+WeaponSystem:listen_command(Keys.AWRS_Drop_Interval_Dec)
 
 WeaponSystem:listen_command(Keys.ChangeCBU2AQuantity)
 WeaponSystem:listen_command(Keys.ChangeCBU2BAQuantity)
@@ -269,6 +272,8 @@ function post_initialize()
     dev:performClickableAction(device_commands.AWRS_multiplier,0.0,true) -- arg 743, 0=>1x
     dev:performClickableAction(device_commands.arm_bomb,bomb_arm_switch-1,true)
     dev:performClickableAction(device_commands.shrike_sidewinder_volume, 0.5, true)
+
+    AWRS_interval_position = 0.4 -- replicate AWRS quantity for position
     
     -- update cbu dispenser release behaviour from mission planner settings
     cbu1a_quantity:set(2)
@@ -1236,7 +1241,14 @@ function SetCommand(command,value)
     elseif command == device_commands.AWRS_drop_interval_AXIS then
         local normalisedValue = ( ( value + 1 ) / 2 ) * 0.9 -- normalised {-1 to 1} to {0 - 0.9}
         WeaponSystem:performClickableAction(device_commands.AWRS_drop_interval, normalisedValue, false)
-
+    elseif command == Keys.AWRS_Drop_Interval_Inc then
+        local newposition = clamp(AWRS_interval_position + 0.05, 0.0, 0.9)
+        WeaponSystem:performClickableAction(device_commands.AWRS_drop_interval, clamp(newposition, 0.0, 0.9), false)
+        AWRS_interval_position = newposition
+    elseif command == Keys.AWRS_Drop_Interval_Dec then
+        local newposition = clamp(AWRS_interval_position - 0.05, 0.0, 0.9)
+        WeaponSystem:performClickableAction(device_commands.AWRS_drop_interval, newposition, false)
+        AWRS_interval_position = newposition
     elseif command == device_commands.AWRS_multiplier then
         if value==1 then
             AWRS_multiplier = 10

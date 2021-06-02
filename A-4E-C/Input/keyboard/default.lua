@@ -220,18 +220,20 @@ join(res.keyCommands,{
     {down = device_commands.arm_master, value_down = 1, up = device_commands.arm_master, value_up = 0, cockpit_device_id = devices.ELECTRIC_SYSTEM, name = _('Master Arm - ON else OFF'),                  category = {_('Instrument Panel'), _('Armament Panel')}},
 
     -- Aircraft Weapons Release System Panel
-    {down = Keys.AWRSMultiplierToggle,  name = _('AWE-1 MULTIPLIER Switch - ON/OFF'),       category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
+    {down = Keys.AWRSMultiplierToggle,      name = _('AWE-1 MULTIPLIER Switch - ON/OFF'),       category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
     {down = device_commands.AWRS_multiplier, up = device_commands.AWRS_multiplier, cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 1.0, value_up = 0.0, name = _('MULTIPLIER Switch - ON else OFF'), category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
-    {down = Keys.AWRSQtySelIncrease,    name = _('AWE-1 QTY SEL Switch - CW/Increase'),     category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
-    {down = Keys.AWRSQtySelDecrease,    name = _('AWE-1 QTY SEL Switch - CCW/Decrease'),    category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
-    {down = Keys.AWRSModeSelCCW,        name = _('AWE-1 MODE Switch - CCW'),                category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
-    {down = Keys.AWRSModeSelCW,         name = _('AWE-1 MODE Switch - CW'),                 category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
+    {down = Keys.AWRSQtySelIncrease,        name = _('AWE-1 QTY SEL Switch - CW/Increase'),     category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
+    {down = Keys.AWRSQtySelDecrease,        name = _('AWE-1 QTY SEL Switch - CCW/Decrease'),    category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
+    {down = Keys.AWRSModeSelCCW,            name = _('AWE-1 MODE Switch - CCW'),                category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
+    {down = Keys.AWRSModeSelCW,             name = _('AWE-1 MODE Switch - CW'),                 category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
+    {down = Keys.AWRS_Drop_Interval_Inc,    name = _('AWE-1 DROP INTVL - Increment'),           category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
+    {down = Keys.AWRS_Drop_Interval_Dec,    name = _('AWE-1 DROP INTVL - Decrement'),           category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
 
     -- T-Handles
-    {down = device_commands.emer_bomb_release, up = device_commands.emer_bomb_release, cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 1.0, value_up = 0.0,                     name = _('EMER BOMB Release Handle'),       category = {_('Instrument Panel')}},
-    {down = device_commands.emer_gear_release, up = device_commands.emer_gear_release, cockpit_device_id = devices.GEAR, value_down = 1.0, value_up = 0.0,                              name = _('EMER GEAR Release Handle'),       category = {_('Instrument Panel')}},
-    {down = device_commands.man_flt_control_override, up = device_commands.man_flt_control_override, cockpit_device_id = devices.HYDRAULIC_SYSTEM, value_down = 1.0, value_up = 0.0,    name = _('MAN FLT CONT Release Handle'),    category = {_('Instrument Panel')}},
-    {down = device_commands.emer_gen_deploy, cockpit_device_id = devices.ELECTRIC_SYSTEM, value_down = 1.0,                                                                             name = _('EMER GEN Release Handle'),        category = {_('Instrument Panel')}},
+    {down = device_commands.emer_bomb_release, up = device_commands.emer_bomb_release, cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 1.0, value_up = 0.0,                     name = _('Handles - EMER BOMB Release'),       category = {_('Instrument Panel')}},
+    {down = device_commands.emer_gear_release, up = device_commands.emer_gear_release, cockpit_device_id = devices.GEAR, value_down = 1.0, value_up = 0.0,                              name = _('Handles - EMER GEAR Release'),       category = {_('Instrument Panel')}},
+    {down = device_commands.man_flt_control_override, up = device_commands.man_flt_control_override, cockpit_device_id = devices.HYDRAULIC_SYSTEM, value_down = 1.0, value_up = 0.0,    name = _('Handles - MAN FLT CONT Release'),    category = {_('Instrument Panel')}},
+    {down = device_commands.emer_gen_deploy, cockpit_device_id = devices.ELECTRIC_SYSTEM, value_down = 1.0,                                                                             name = _('Handles - EMER GEN Release'),        category = {_('Instrument Panel')}},
 
     ---------------------------------------------
     -- Left Console -----------------------------
@@ -473,7 +475,7 @@ join(res.keyCommands,{
     --------------------------------------------- 
     {down = iCommandPilotGestureSalute,                                                     name = _('Pilot Salute'),       category = {_('Communications')}},
     {combos = {{key = 'U'}}, down = iCommandPlaneShipTakeOff,                               name = _('Catapult Hook-Up'),   category = {_('Communications')}},
-    {combos = {{key = 'S', reformers = {'LShift', 'LAlt'}}}, down = Keys.ToggleSlatsLock,   name = _('Lock/Unlock Slats'),  category = {_('Communications')}},
+    {combos = {{key = 'S', reformers = {'LShift', 'LAlt'}}}, down = Keys.ToggleSlatsLock,   name = _('Lock/Unlock Slats (Ground Only)'),  category = {_('Communications')}},
   
     -- Weapon/CMDS Adjustment
     {combos = {{key = '2', reformers = {'RShift','RAlt'}}},		down = Keys.ChangeCBU2AQuantity,    value_down = 1, name = _('ALE-29A set CBU-2/A Release Quantity - 1/2/3'),            category = {_('Kneeboard'), _('ALE-29A Programmer')}},
