@@ -22,9 +22,9 @@ join(res.keyCommands,{
     -- Systems ----------------------------------
     ---------------------------------------------
     {combos = {{key = 'E', reformers = {'LCtrl'}}}, down = iCommandPlaneEject,                                              name = _('Eject (3 times)'),            category = {_('Systems')}},
-    {combos = {{key = 'W'}}, down = Keys.BrakesOn, up = Keys.BrakesOff,                                                     name = _('Wheel Brake - Hold'),       category = {_('Systems')}},
-	{combos = {{key = 'W', reformers = {'LShift'}}}, down = Keys.BrakesOnLeft, up = Keys.BrakesOffLeft,						name = _('Wheel Brake Left - Hold'), 	category = {_('Systems')}},
-	{combos = {{key = 'W', reformers = {'LAlt'}}}, down = Keys.BrakesOnRight, up = Keys.BrakesOffRight,						name = _('Wheel Brake Right - Hold'), category = {_('Systems')}},
+    {combos = {{key = 'W'}}, down = Keys.BrakesOn, up = Keys.BrakesOff,                                                     name = _('Wheel Brake - ON else OFF'),       category = {_('Systems')}},
+	{combos = {{key = 'W', reformers = {'LShift'}}}, down = Keys.BrakesOnLeft, up = Keys.BrakesOffLeft,						name = _('Wheel Brake Left - ON else OFF'), 	category = {_('Systems')}},
+	{combos = {{key = 'W', reformers = {'LAlt'}}}, down = Keys.BrakesOnRight, up = Keys.BrakesOffRight,						name = _('Wheel Brake Right - ON else OFF'), category = {_('Systems')}},
 
     ---------------------------------------------
     -- Flight Control ---------------------------
@@ -48,13 +48,13 @@ join(res.keyCommands,{
     {combos = {{key = 'Space', reformers = {'LAlt'}}}, down = Keys.PickleOn,	up = Keys.PickleOff, name = _('Bomb Release Button'),               category = {_('Stick')}},
     {combos = {{key = 'A', reformers = {'LCtrl'}}}, down = Keys.AFCSOverride,                        name = _('AFCS Override Button'),              category = {_('Stick')}},
     {combos = {{key = 'Back'}}, down = Keys.ToggleStick,                                             name = _('Control Stick - HIDE/SHOW'),         category = {_('Stick')}},
-	{down = Keys.nws_engage, up = Keys.nws_disengage,                                                name = _('Nose Wheel Steering'),               category = {_('Stick')}},
+	{down = Keys.nws_engage, up = Keys.nws_disengage,                                                name = _('Nose Wheel Steering - ON else OFF'), category = {_('Stick')}},
 
     ---------------------------------------------
     -- Throttle Quadrant ------------------------
     ---------------------------------------------
-    {combos = {{key = 'PageUp'}}, down = iCommandPlaneAUTIncreaseRegime,                                name = _('Throttle Rotary - Increment'),             category = {_('Throttle Quadrant'), _('Flight Control')}},
-    {combos = {{key = 'PageDown'}}, down = iCommandPlaneAUTDecreaseRegime,                              name = _('Throttle Rotary - Decrement'),             category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {combos = {{key = 'PageUp'}}, down = iCommandPlaneAUTIncreaseRegime,                                name = _('Throttle Rotary - Increment'),            category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {combos = {{key = 'PageDown'}}, down = iCommandPlaneAUTDecreaseRegime,                              name = _('Throttle Rotary - Decrement'),            category = {_('Throttle Quadrant'), _('Flight Control')}},
     {combos = {{key = 'Num+'}}, pressed = iCommandThrottleIncrease, up = iCommandThrottleStop,          name = _('Throttle Continuous - Increase'),         category = {_('Throttle Quadrant'), _('Flight Control')}},
     {combos = {{key = 'Num-'}}, pressed = iCommandThrottleDecrease, up = iCommandThrottleStop,          name = _('Throttle Continuous - Decrease'),         category = {_('Throttle Quadrant'), _('Flight Control')}},
 
@@ -66,6 +66,7 @@ join(res.keyCommands,{
     {down = Keys.ExtLightMasterToggle,                                                                  name = _('Master Exterior Lights Switch - ON/OFF'), category = {_('Throttle Grip')}},
     {down = Keys.ExtLightMaster, value_down = 1, up = Keys.ExtLightMaster, value_up = 0,                name = _('Master Exterior Lights Switch - ON else OFF'), category = {_('Throttle Grip')}},
     {combos = {{key = 'B'}}, down = iCommandPlaneAirBrake,                                              name = _('Speedbrake Switch - OPEN/CLOSE'),         category = {_('Throttle Grip')}},
+    {down = iCommandPlaneAirBrakeOn, up = iCommandPlaneAirBrakeOff,                                     name = _('Speedbrake Switch - OPEN else CLOSE'),    category = {_('Throttle Grip')}},
     {combos = {{key = 'B', reformers = {'LShift'}}}, down = iCommandPlaneAirBrakeOn,                    name = _('Speedbrake Switch - OPEN'),               category = {_('Throttle Grip')}},
     {combos = {{key = 'B', reformers = {'LCtrl'}}}, down = iCommandPlaneAirBrakeOff,                    name = _('Speedbrake Switch - CLOSE'),              category = {_('Throttle Grip')}},
 
@@ -154,9 +155,9 @@ join(res.keyCommands,{
 
     -- Arresting Hook Handle
     {combos = {{key = 'G', reformers = {'LAlt'}}}, down = Keys.PlaneHook,                                                   name = _('Tail Hook Handle - UP/DOWN'),                     category = {_('Instrument Panel')}},
-    {down = Keys.PlaneHookUp,                                                                                               name = _('Tail Hook Up'),                                   category = {_('Instrument Panel')}},
-    {down = Keys.PlaneHookDown,                                                                                             name = _('Tail Hook Down'),                                 category = {_('Instrument Panel')}},
-    {down = Keys.PlaneHookUp, up = Keys.PlaneHookDown,                                                                      name = _('Tail Hook UP else DOWN'),                         category = {_('Instrument Panel')}},
+    {down = Keys.PlaneHookUp,                                                                                               name = _('Tail Hook Handle - UP'),                          category = {_('Instrument Panel')}},
+    {down = Keys.PlaneHookDown,                                                                                             name = _('Tail Hook Handle - DOWN'),                        category = {_('Instrument Panel')}},
+    {down = Keys.PlaneHookUp, up = Keys.PlaneHookDown,                                                                      name = _('Tail Hook Handle - UP else DOWN'),                category = {_('Instrument Panel')}},
 
     -- Misc Switches Panel
     {down = Keys.RadarTCPlanProfile, value_down = 1,                                                                        name = _('Radar Terrain Clearance - PLAN'),                 category = {_('Instrument Panel'), _('Misc Switches Panel')}},
