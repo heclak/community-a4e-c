@@ -17,7 +17,7 @@ SetScale(FOV)
 -- ================================
 -- 11 - Navigation Log
 -- 12 - Radio Presets
--- 12 - ILS Data
+-- 13 - ILS Data
 
 -- ================================
 -- 2x - WEAPONS
