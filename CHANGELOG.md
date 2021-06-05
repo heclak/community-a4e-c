@@ -4,7 +4,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 
 ## Version 2.0.0-beta-5.1 - 30 May 2021
 
-### This is a hotfix for the engine sounds for some DCS modules being overwritten by A-4E sounds. Please check the chanelog below for the full 2.0.0-beta-5 changelog.
+### This is a hotfix for the engine sounds for some DCS modules being overwritten by A-4E sounds. Please check the changelog for 2.0.0-beta-5.
 
 ### Added
 - TACAN and MCL training mission
@@ -12,7 +12,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 ### Fixed
 - Engine sounds for some DCS modules being overwritten by A-4E sounds
 
-### This is a hotfix for the engine sounds for some DCS modules being overwritten by A-4E sounds. Please check the chanelog below for the full 2.0.0-beta-5 changelog.
+### This is a hotfix for the engine sounds for some DCS modules being overwritten by A-4E sounds. Please check the changelog for 2.0.0-beta-5.
 
 ## Version 2.0.0-beta-5 - 29 May 2021
 
