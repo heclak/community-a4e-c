@@ -877,7 +877,7 @@ A_4E_C =  {
         aircraft_task(CAP),                 -- Task #11 in ME
         aircraft_task(CAS),                 -- Task #31
         aircraft_task(SEAD),                -- Task #29
-        --aircraft_task(Reconnaissance),
+        aircraft_task(Reconnaissance),
         aircraft_task(GroundAttack),        -- Task #32
         aircraft_task(AFAC),                -- Task #16
         aircraft_task(RunwayAttack),
