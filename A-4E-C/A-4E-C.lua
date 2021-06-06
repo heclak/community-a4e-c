@@ -91,7 +91,6 @@ local function get_outboard_weapons( side )
 
         --MISSILES--
         { CLSID = "{AGM_45A}", connector = shrikeConnector, arg_value = 0.1 }, -- AGM-45 SHRIKE
-        { CLSID = "{AGM12_B}" },                                               -- AGM-12B
 
         --BOMBS--
         { CLSID = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}" },   -- Mk-20 Rockeye cluster bomb
@@ -170,11 +169,8 @@ local function get_inboard_weapons( side )
 
         --MISSILES--
         { CLSID = "{AGM_45A}", connector = shrikeConnector, arg_value = 0.1 }, -- AGM-45 SHRIKE
-        { CLSID = "{AGM12_C}" }, -- AGM-12C
-        { CLSID = "{AGM12_B}" }, -- AGM-12B
 
         --BOMBS--
-        { CLSID = "{C40A1E3A-DD05-40D9-85A4-217729E37FAE}" }, -- AGM-62 WALLEYE
         { CLSID = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}" }, -- Mk-20 Rockeye cluster bomb
         { CLSID = "{90321C8E-7ED1-47D4-A160-E074D5ABD902}" }, -- MK-81
         { CLSID = "{MK-81SE}" },                              -- Mk-81 Snakeye
@@ -273,11 +269,7 @@ local function get_centerline_weapons( side )
         { CLSID = "{LAU-68 FFAR Mk5 HEAT_TER_3_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 FFAR Mk5 HEAT
 
 
-        --MISSILES--
-        { CLSID = "{AGM12_B}" },                                -- AGM-12B
-
         --BOMBS--
-        { CLSID = "{C40A1E3A-DD05-40D9-85A4-217729E37FAE}" },   -- AGM-62 WALLEYE
         { CLSID = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}" },   -- Mk-20 Rockeye cluster bomb
         { CLSID = "{90321C8E-7ED1-47D4-A160-E074D5ABD902}" },   -- MK-81
         { CLSID = "{MK-81SE}" },                                -- Mk-81 Snakeye
