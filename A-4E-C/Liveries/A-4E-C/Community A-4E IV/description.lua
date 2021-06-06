@@ -54,7 +54,7 @@ countries = {
 livery =
 {
   {"Top", DIFFUSE, "a4e_community4_top", true};
-  {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet_ul", true};
+  {"Top", ROUGHNESS_METALLIC, "a4e_community4_top_RoughMet", true};
   {"Bottom", DIFFUSE, "a4e_community_bot", true};
   {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet_ul", true};
   {"Gear and metal", DIFFUSE, "a4e_community_bot", true};
