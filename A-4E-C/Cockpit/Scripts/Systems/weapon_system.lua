@@ -561,7 +561,7 @@ function update()
             end
         end
 
-        if readied_stations_empty == true then
+        if readied_stations_empty == true and AWRS_mode >= AWRS_mode_ripple_single then
             debug_print('Stations Empty')
             ripple_sequence_end()
             -- break
