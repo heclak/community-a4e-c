@@ -31,6 +31,7 @@
 #include "ILS.h"
 #include "Commands.h"
 #include "Beacon.h"
+#include "Radar.h"
 
 //============================= Statics ===================================//
 static Scooter::AircraftState* s_state = NULL;
@@ -48,11 +49,15 @@ static Scooter::ILS* s_ils = NULL;
 static std::vector<LERX> s_splines;
 
 static Scooter::Beacon* s_beacon = NULL;
+static Scooter::Radar* s_radar = NULL;
+static unsigned char* s_testBuffer = NULL;
 
 //========================== Static Functions =============================//
 static void init( const char* config );
 static void cleanup();
 static inline double rawAOAToUnits( double rawAOA );
+static void checkCorruption(const char* str);
+static void dumpMem( unsigned char* ptr, size_t size );
 
 //=========================================================================//
 
@@ -63,6 +68,41 @@ static inline int decodeClick( float& value )
 	float normalised = modf( value, &deviceID );
 	value = normalised * 8.0f - 2.0f;
 	return (int)deviceID;
+}
+
+static void dumpMem( unsigned char* ptr, size_t size )
+{
+	printf( "PTR: %p\n", ptr );
+	printf( "Offset | Mem | ASCII\n" );
+	size_t rows = size / 8;
+
+	for ( size_t i = 0; i < rows; i++ )
+	{
+		int offset = (int)i * 8;
+		printf( "%04x | ", offset );
+
+		for ( size_t j = 0; j < 8; j++ )
+		{
+			unsigned char c = ptr[i * 8 + j];
+			printf( "%02x ",  c );
+		}
+
+		printf( "|" );
+
+		for ( size_t j = 0; j < 8; j++ )
+		{
+			unsigned char c = ptr[i * 8 + j];
+
+			if ( isprint( c ) )
+				printf( "%c", c );
+			else
+				printf( "." );
+		}
+
+		printf( "|\n" );
+	}
+
+
 }
 
 void init(const char* config)
@@ -86,7 +126,11 @@ void init(const char* config)
 	s_ils = new Scooter::ILS(*s_interface);
 	s_fuelSystem = new Scooter::FuelSystem2( *s_engine, *s_state );
 	s_beacon = new Scooter::Beacon(*s_interface);
-	
+	s_radar = new Scooter::Radar( *s_interface, *s_state );
+
+	//checkCorruption(__FUNCTION__);
+	//printf( "Offset: %llx\n", (intptr_t)(&s_fuelSystem->m_enginePump) - (intptr_t)s_fuelSystem );
+	//dumpMem( (unsigned char*)s_fuelSystem, sizeof( Scooter::FuelSystem2 ) );
 }
 
 void cleanup()
@@ -103,6 +147,7 @@ void cleanup()
 	delete s_ils;
 	delete s_fuelSystem;
 	delete s_beacon;
+	delete s_radar;
 
 	s_luaVM = NULL;
 	s_state = NULL;
@@ -116,8 +161,19 @@ void cleanup()
 	s_ils = NULL;
 	s_fuelSystem = NULL;
 	s_beacon = NULL;
+	s_radar = NULL;
 
 	s_splines.clear();
+}
+
+void checkCorruption(const char* str)
+{
+	//printf( "Validating Test buffer...\n" );
+
+	if ( ! s_fuelSystem->m_enginePump )
+		printf( "Memory corrupted! %s\n", str );
+	else
+		printf( "Memory Fine %str\n", str );
 }
 
 double rawAOAToUnits( double rawAOA )
@@ -165,6 +221,7 @@ void ed_fm_simulate(double dt)
 	//Pre update
 	if ( s_interface->getAvionicsAlive() )
 	{
+
 		//s_sidewinder->init();
 		//s_sidewinder->update();
 		//s_ils->test();
@@ -206,6 +263,10 @@ void ed_fm_simulate(double dt)
 
 	}
 
+
+	//checkCorruption( __FUNCTION__ );
+	//dumpMem( (unsigned char*)s_fuelSystem, sizeof( Scooter::FuelSystem2 ) );
+
 	//Update
 	s_input->update();
 	s_radio->update();
@@ -215,7 +276,11 @@ void ed_fm_simulate(double dt)
 	s_avionics->updateAvionics(dt);
 	s_fm->calculateAero(dt);
 	s_beacon->update();
+	s_radar->update( dt );
 
+
+	//s_scope->setBlob( 1, 0.5, 0.5, 1.0 );
+	
 	//Post update
 	s_interface->setRPM(s_engine->getRPMNorm()*100.0);
 	s_interface->setFuelFlow( s_engine->getFuelFlow() );

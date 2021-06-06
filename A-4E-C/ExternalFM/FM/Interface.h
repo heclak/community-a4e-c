@@ -602,6 +602,12 @@ public:
 	}
 		 
 	void* m_test = NULL;
+
+	inline void setParamNumber( void* ptr, double number )
+	{
+		m_api.pfn_ed_cockpit_update_parameter_with_number( ptr, number );
+	}
+
 private:
 	inline double getParamNumber(void* ptr) const
 	{
@@ -615,10 +621,7 @@ private:
 		m_api.pfn_ed_cockpit_parameter_value_to_string(ptr, buffer, bufferSize);
 	}
 
-	inline void setParamNumber(void* ptr, double number)
-	{
-		m_api.pfn_ed_cockpit_update_parameter_with_number(ptr, number);
-	}
+	
 
 	inline void setParamString(void* ptr, const char* string)
 	{
