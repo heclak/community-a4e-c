@@ -29,6 +29,8 @@ fonts = {}
 fonts["font_kneeboard"]			= {fontdescription_cmn["font_general_loc"], 10, {25, 33, 33, 255}}
 fonts["font_kneeboard_white"]   = {fontdescription_cmn["font_general_loc"], 10, {255, 255, 255, 255}}
 fonts["font_kneeboard_hint"]	= {fontdescription_cmn["font_general_loc"], 10, {143, 23, 0, 255}}
+-- fonts["font_radio_labels"]      = {fontdescription["font_arc51_labels"], 10, {0, 0, 0, 255}}
+fonts["font_radio_labels"]      = {fontdescription["font_handwritten"], 10, {0, 0, 0, 255}}
 
 -- force preload resources to avoid freeze on start (list of texture files)
 --[[

@@ -1,3 +1,7 @@
+if symbols_locale_included == nil then
+	dofile(LockOn_Options.common_script_path.."Fonts/symbols_locale.lua")
+end
+
 CP1251_toUTF8 =
 {
 	[128]=	1026,
@@ -70,6 +74,7 @@ CP1251_toUTF8 =
 }
 
 local IndicationTexturesPath = LockOn_Options.script_path.."../Resources/IndicationTextures/"
+local IndicationResourcesPath = LockOn_Options.script_path.."../IndicationResources/"
 
 fontdescription = {}
 
@@ -609,5 +614,90 @@ fontdescription["font_HUD_STANDBY"] = {
 	   [9]   = {55, STB_xsize, STB_ysize}, -- 7
 	   [10]  = {56, STB_xsize, STB_ysize}, -- 8
 	   [11]  = {57, STB_xsize, STB_ysize}, -- 9
+	}
+}
+
+-- font_radio_label_xsize = 70
+-- font_radio_label_ysize = 146
+
+-- fontdescription["font_arc51_labels"] = {
+-- 	texture = "Fonts/font_general_EN.dds",
+-- 	size = {7, 7},
+-- 	resolution = {1024, 1024},
+-- 	default = {font_radio_label_xsize, font_radio_label_ysize},
+-- 	chars = {
+-- 		[1]   = {symbol[' '],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[2]   = {symbol['*'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[3]   = {symbol['+'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[4]   = {symbol['-'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[5]   = {symbol['.'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[6]   = {symbol['/'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[7]   = {symbol['0'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[8]   = {symbol['1'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[9]   = {symbol['2'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[10]  = {symbol['3'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[11]  = {symbol['4'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[12]  = {symbol['5'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[13]  = {symbol['6'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[14]  = {symbol['7'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[15]  = {symbol['8'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[16]  = {symbol['9'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[17]  = {symbol[':'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[18]  = {latin['A'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[19]  = {latin['B'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[20]  = {latin['C'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[21]  = {latin['D'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[22]  = {latin['E'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[23]  = {latin['F'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[24]  = {latin['G'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[25]  = {latin['H'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[26]  = {latin['I'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[27]  = {latin['J'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[28]  = {latin['K'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[29]  = {latin['L'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[30]  = {latin['M'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[31]  = {latin['N'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[32]  = {latin['O'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[33]  = {latin['P'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[34]  = {latin['Q'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[35]  = {latin['R'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[36]  = {latin['S'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[37]  = {latin['T'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[38]  = {latin['U'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[39]  = {latin['V'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[40]  = {latin['W'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[41]  = {latin['X'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[42]  = {latin['Y'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[43]  = {latin['Z'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[44]  = {symbol['['],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[45]  = {symbol[']'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[46]  = {symbol['>'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[47]  = {latin['o'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[48]  = {symbol['^'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 		[49]  = {symbol['%'],	font_radio_label_xsize, font_radio_label_ysize},
+-- 	}
+-- }
+
+
+font_handwritten_label_xsize = (2048/6) - 70
+font_handwritten_label_ysize = 2048/6
+
+fontdescription["font_handwritten"] = {
+	texture = IndicationResourcesPath.."font_heclak_handwritten.dds",
+	size = {6, 6},
+	resolution = {2048, 2048},
+	default = {font_handwritten_label_xsize, font_handwritten_label_ysize},
+	chars = {
+		[1]   = {symbol['1'],	font_handwritten_label_xsize, font_handwritten_label_ysize},
+		[2]   = {symbol['2'],	font_handwritten_label_xsize, font_handwritten_label_ysize},
+		[3]   = {symbol['3'],	font_handwritten_label_xsize, font_handwritten_label_ysize},
+		[4]   = {symbol['4'],	font_handwritten_label_xsize, font_handwritten_label_ysize},
+		[5]   = {symbol['5'],	font_handwritten_label_xsize, font_handwritten_label_ysize},
+		[6]   = {symbol['6'],	font_handwritten_label_xsize, font_handwritten_label_ysize},
+		[7]   = {symbol['7'],	font_handwritten_label_xsize, font_handwritten_label_ysize},
+		[8]   = {symbol['8'],	font_handwritten_label_xsize, font_handwritten_label_ysize},
+		[9]   = {symbol['9'],	font_handwritten_label_xsize, font_handwritten_label_ysize},
+		[10]  = {symbol['0'],	font_handwritten_label_xsize, font_handwritten_label_ysize},
+		[11]  = {symbol['.'],	font_handwritten_label_xsize - 150, font_handwritten_label_ysize},
 	}
 }
