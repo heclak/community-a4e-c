@@ -891,6 +891,7 @@ A_4E_C =  {
         aircraft_task(RunwayAttack),
         aircraft_task(AntishipStrike),
         aircraft_task(Refueling),           -- Task #13
+        aircraft_task(Escort),
     },
     DefaultTask = aircraft_task(CAS),
 ---------------------------------------------------------------------------------------------------------------------------------------------
