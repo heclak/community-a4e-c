@@ -87,11 +87,17 @@ local fm_acceleration_z = get_param_handle("FM_ACCELERATION_Z")
 
 local fm_cas = get_param_handle("FM_CAS")
 
+local fm_radar_disabled = get_param_handle("FM_RADAR_DISABLED")
+
 local tanks = {
     [1] = fm_l_tank_capacity,
     [2] = fm_c_tank_capacity,
     [3] = fm_r_tank_capacity,
 }
+
+function fm_setRadarDisabled(value)
+    fm_radar_disabled:set(value)
+end
 
 --Mask for tank states
 function fm_setTankState(idx, value)
@@ -358,6 +364,7 @@ function get_efm_data_bus()
     efm_data_bus.fm_setGForce = fm_setGForce
     efm_data_bus.fm_setTacanID = fm_setTacanID
     efm_data_bus.fm_setTacanName = fm_setTacanName
+    efm_data_bus.fm_setRadarDisabled = fm_setRadarDisabled
 
 
     efm_data_bus.fm_getGunsightAngle = fm_getGunsightAngle

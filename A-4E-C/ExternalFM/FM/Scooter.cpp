@@ -259,7 +259,7 @@ void ed_fm_simulate(double dt)
 		s_state->setGForce( s_interface->getGForce() );
 
 		s_fuelSystem->setBoostPumpPower( s_interface->getElecMonitoredAC() );
-
+		s_radar->setDisable( s_interface->getRadarDisabled() );
 
 	}
 
@@ -565,6 +565,8 @@ void ed_fm_set_command
 		{
 
 		}*/
+		if ( s_radar->handleInput( command, value ) )
+			return;
 
 		if ( s_fuelSystem->handleInput( command, value ) )
 			return;
@@ -872,6 +874,7 @@ void ed_fm_cold_start()
 	s_avionics->coldInit();
 	s_state->coldInit();
 	s_fuelSystem->coldInit();
+	s_radar->coldInit();
 }
 
 void ed_fm_hot_start()
@@ -883,6 +886,7 @@ void ed_fm_hot_start()
 	s_avionics->hotInit();
 	s_state->hotInit();
 	s_fuelSystem->hotInit();
+	s_radar->hotInit();
 }
 
 void ed_fm_hot_start_in_air()
@@ -894,6 +898,7 @@ void ed_fm_hot_start_in_air()
 	s_avionics->airborneInit();
 	s_state->airborneInit();
 	s_fuelSystem->airborneInit();
+	s_radar->airborneInit();
 }
 
 void ed_fm_repair()

@@ -160,6 +160,8 @@ public:
 		m_averageLoadFactor = m_api.pfn_ed_cockpit_get_parameter_handle( "SND_ALWS_DAMAGE_AIRFRAME_STRESS" );
 		m_engineStall = m_api.pfn_ed_cockpit_get_parameter_handle( "SND_INST_ENGINE_STALL" );
 
+		m_disableRadar = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_RADAR_DISABLED" );
+
 	}
 
 	cockpit_param_api& api()
@@ -265,6 +267,11 @@ public:
 		getParamString( m_mclUnitName, buffer, size );
 
 		//printf( "%s\n", buffer );
+	}
+
+	inline bool getRadarDisabled()
+	{
+		return getParamNumber( m_disableRadar ) > 0.5;
 	}
 
 	inline void setEngineStall( bool stall )
@@ -750,6 +757,8 @@ private:
 	void* m_ADC_CAS = NULL;
 
 	void* m_engineStall = NULL;
+
+	void* m_disableRadar = NULL;
 };
 
 

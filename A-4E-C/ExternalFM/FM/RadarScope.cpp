@@ -11,22 +11,23 @@ Scooter::RadarScope::RadarScope( Interface& inter ) :
 	m_yParams = new void*[MAX_BLOBS];
 	m_opacityParams = new void*[MAX_BLOBS];
 
-	char paramName[50];
+	char paramName[SIDE_LENGTH];
 
 	for ( size_t i = 0; i < MAX_BLOBS; i++ )
 	{
-		sprintf_s( paramName, 50, "RADAR_BLOB_%llu_LR", i );
+		sprintf_s( paramName, SIDE_LENGTH, "RADAR_BLOB_%llu_LR", i );
 		m_xParams[i] = m_interface.api().pfn_ed_cockpit_get_parameter_handle( paramName );
 
 
-		sprintf_s( paramName, 50, "RADAR_BLOB_%llu_UD", i );
+		sprintf_s( paramName, SIDE_LENGTH, "RADAR_BLOB_%llu_UD", i );
 		m_yParams[i] = m_interface.api().pfn_ed_cockpit_get_parameter_handle( paramName );
 
-		sprintf_s( paramName, 50, "RADAR_BLOB_%llu_OP", i );
+		sprintf_s( paramName, SIDE_LENGTH, "RADAR_BLOB_%llu_OP", i );
 		m_opacityParams[i] = m_interface.api().pfn_ed_cockpit_get_parameter_handle( paramName );
 	}
 
-	
+	m_radarGlow = m_interface.api().pfn_ed_cockpit_get_parameter_handle( "APG53A_GLOW" );
+	m_filter = m_interface.api().pfn_ed_cockpit_get_parameter_handle( "RADAR_FILTER" );
 
 }
 
