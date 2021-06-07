@@ -160,14 +160,24 @@ SnapViews = {
 
 	},
 
-	[13] = {--default view
-		viewAngle = 75.000000,-- FOV when spawning in pit (auto dezoom) (FOV arrivée Cockpit (une fois dézoom fait par DCS) ) 95
-		hAngle	 = 0.000000,
-		vAngle	 = -13.000000, -- horizontal cockpit view (Vue horizontale cockpit) -10
-		x_trans	 = 0,
-		y_trans	 = 0,  -- base height of the cockpit view (Hauteur de base de la vue cockpit)
-		z_trans	 = 0.000000,
-		rollAngle = 0.000000,
+	[13] = { -- default view
+		viewAngle  = 75.000000,
+		hAngle     = 0.000000,
+		vAngle     = -13.000000,
+		x_trans    = 0,
+		y_trans    = -0.0106,
+		z_trans    = 0.000000,
+		rollAngle  = 0.000000,
+	},
+
+	[14] = { -- VR HMD View
+		viewAngle  = 75.000000,
+		hAngle     = 0.000000,
+		vAngle     = -13.000000,
+		x_trans    = 0.05,
+		y_trans    = -0.0106,
+		z_trans    = 0.000000,
+		rollAngle  = 0.000000,
 	},
 
 },
