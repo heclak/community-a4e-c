@@ -2,6 +2,26 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
+## Unreleased
+
+### Added
+- added custom view positioning for VR HMDs. Position is lowered and moved slightly forwarded from the previous position
+- added aircraft tasks (Reconnaissance, Escort)
+- added radio frequency printouts on the AN/ARC-51 label. Labels are dynamically generated from the mission file
+- added new miscellaneous switch panel on right console
+
+### Changed
+- updated mirror code for better rear visibility in mirrors
+- lowered default cockpit view to allow visibility of the zero mil position
+
+### Deprecated
+
+### Removed
+- removed loadouts that were non-functional
+
+### Fixed
+- fixed incorrect LABS tone function where the tone stops when the readied stations are empty
+
 ## Version 2.0.0-beta-5.1 - 30 May 2021
 
 ### This is a hotfix for the engine sounds for some DCS modules being overwritten by A-4E sounds. Please check the chanelog below for the full 2.0.0-beta-5 changelog.
