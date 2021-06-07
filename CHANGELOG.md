@@ -9,6 +9,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 - added aircraft tasks (Reconnaissance, Escort)
 - added radio frequency printouts on the AN/ARC-51 label. Labels are dynamically generated from the mission file
 - added new miscellaneous switch panel on right console
+- added VR config to allow the use of VR controllers (throttle function is incomplete)
 
 ### Changed
 - updated mirror code for better rear visibility in mirrors
