@@ -4,4 +4,4 @@ SetScale(FOV)
 -- CASE III LANDING
 
 -- add background image for kneeboard
-add_picture(LockOn_Options.script_path.."../Textures/a4e_cockpit_kneeboard_case3.png")
+add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_case3.png")

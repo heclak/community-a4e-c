@@ -1,6 +1,9 @@
 dofile(LockOn_Options.common_script_path.."KNEEBOARD/indicator/definitions.lua")
 SetScale(FOV)
 
+-- add background image for kneeboard
+add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_welcome.png")
+
 --[[
 
 -- Insert new pages as needed.
@@ -36,6 +39,8 @@ SetScale(FOV)
 3  - *AVOID*
 30 -
 31 - Case III Recovery
+32 - Weight and Accelleration Limits
+33 - Airspeed Limits
 
 ================================
 4x - QUICK-START
@@ -48,6 +53,3 @@ SetScale(FOV)
 44 - Quick-Start 4. Emergency Procedures
 
 ]]
-
--- add background image for kneeboard
-add_picture(LockOn_Options.script_path.."../Textures/a4e_cockpit_kneeboard_welcome.png")
