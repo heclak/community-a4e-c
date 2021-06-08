@@ -1,0 +1,16 @@
+wave = "Effects/Aircrafts/A-4E-C/a-4e_CockpitStructuralDamageStrain.ogg"
+position = {-2.0, -2.0, 0}
+gain = 3.0
+inner_radius = 15
+attack = 0.5
+release = 0.5
+
+-- play: exceeding structural limitations
+-- once
+-- lowpass = 24000.0
+-- to ensure this sound is unique each time it is heard,
+-- it should play in-flight continuously, silently,
+-- manipulating gain value when the event triggers
+-- setting gain value based on the amount of shake input
+-- maybe short-pulse this on landing gear overspeed damage?
+-- (let the attack and release do the work)

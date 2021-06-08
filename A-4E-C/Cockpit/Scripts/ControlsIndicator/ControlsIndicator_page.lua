@@ -50,7 +50,7 @@ base.vertices                   = {
                                     {sizeX + ds, -sizeY}
                                   }        
 base.indices                    = default_box_indices
-base.init_pos                   = {(-1 * aspect + 1.5 * sizeX),(1 - 1.3 * sizeX)}
+base.init_pos                   = {(-1 * aspect + 1.5 * sizeX), -(1 - 1.3 * sizeX)}
 base.element_params             = {"SHOW_CONTROLS"} 
 base.controllers                = {{"parameter_in_range", 0, 1}}
 base.h_clip_relation            = h_clip_relations.REWRITE_LEVEL
@@ -434,6 +434,8 @@ wbraker_index.parent_element    = wbraker_scale.name
 AddElement(wbraker_index)
 
 -- draw NOSEWHEEL STEERING status
+--[[
+-- commenting this out for now until we have a better system for showing and hiding indicators
 nws_index                     = Copy(roll_scale)
 nws_index.vertices            = {
                                   {-2.25 * ds, -2.25 * ds},
@@ -449,6 +451,7 @@ nws_index.init_rot            = {-90, 0, 0}
 nws_index.material            = draw_input
 nws_index.parent_element      = base.name
 AddElement(nws_index)
+]]
 
 -- draw PITCH AND ROLL (STICK) position
 stick_position					        = CreateElement "ceTexPoly"
