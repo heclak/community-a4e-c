@@ -75,6 +75,10 @@ private:
 	inline State getState();
 	inline void warmup( double rate );
 
+	static inline bool findIndex( size_t horizontalScanIndex, size_t verticalScanIndex, size_t& index );
+	static inline void indexToScreenCoords( size_t index, double& x, double& y );
+	static inline bool screenCoordToIndex( double x, double y, size_t& index );
+
 	void scan();
 	void drawScan();
 	void clearScan();
@@ -93,8 +97,8 @@ private:
 	int m_scanned = 0;
 	bool m_disabled = true;
 
-	Vec3f m_scanLine[SIDE_LENGTH];
-
+	//Vec3f m_scanLine[SIDE_LENGTH];
+	double m_scanLine[SIDE_LENGTH];
 
 	//Constants
 	const double m_warmupTime = 180.0;
@@ -112,6 +116,7 @@ private:
 	double m_detail = 1.0;
 	double m_gain = 1.0;
 	double m_brilliance = 1.0;
+	double m_storage = 1.0;
 	bool m_cleared = false;
 
 };
@@ -164,6 +169,33 @@ void Radar::warmup( double rate )
 {
 	m_warmup += rate;
 	m_warmup = clamp( m_warmup, 0.0, m_warmupTime );
+}
+
+void Radar::indexToScreenCoords( size_t index, double& x, double& y )
+{
+	size_t xI = index % SIDE_LENGTH;
+	size_t yI = index / SIDE_LENGTH;
+
+	x = ((double)xI / (double)SIDE_LENGTH) * 2.0 - 1.0;
+	y = ((double)yI / (double)SIDE_LENGTH) * 2.0 - 1.0;
+}
+
+bool Radar::screenCoordToIndex( double x, double y, size_t& index )
+{
+	size_t xI = round(((x + 1.0) / 2.0) * SIDE_LENGTH);
+	size_t yI = round(((y + 1.0) / 2.0) * SIDE_LENGTH);
+
+	return findIndex( xI, yI, index);
+}
+
+bool Radar::findIndex( size_t horizontalScanIndex, size_t verticalScanIndex, size_t& index )
+{
+	index = horizontalScanIndex + verticalScanIndex * SIDE_LENGTH;
+
+	if ( index >= 0 && index < MAX_BLOBS )
+		return true;
+	else
+		return false;
 }
 
 } // end namespace scooter

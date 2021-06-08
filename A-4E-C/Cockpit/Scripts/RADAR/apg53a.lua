@@ -927,7 +927,20 @@ end
 
 function SetCommand(command,value)
 
-    print_message_to_user(value)
+    --[[
+    if command == device_commands.radar_storage then
+        if value > 0.5 then
+            cpp_radar_disabled = true
+            check_disabled()
+        else
+            cpp_radar_disabled = false
+            check_disabled()
+        end
+    end
+    ]]
+
+
+    --print_message_to_user(value)
     if check_disabled() then
         return
     end

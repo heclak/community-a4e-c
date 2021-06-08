@@ -614,14 +614,14 @@ public:
 	{
 		m_api.pfn_ed_cockpit_update_parameter_with_number( ptr, number );
 	}
-
-private:
-	inline double getParamNumber(void* ptr) const
+	inline double getParamNumber( void* ptr ) const
 	{
 		double result;
-		m_api.pfn_ed_cockpit_parameter_value_to_number(ptr, result, false);
+		m_api.pfn_ed_cockpit_parameter_value_to_number( ptr, result, false );
 		return result;
 	}
+
+private:
 
 	inline void getParamString(void* ptr, char* buffer, unsigned int bufferSize) const
 	{

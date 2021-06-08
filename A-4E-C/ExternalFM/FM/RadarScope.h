@@ -1,5 +1,6 @@
 #pragma once
 #include "Interface.h"
+#include "Maths.h"
 
 #define SIDE_LENGTH 50
 #define MAX_BLOBS (SIDE_LENGTH * SIDE_LENGTH)
@@ -14,6 +15,7 @@ public:
 	RadarScope( Interface& inter );
 	~RadarScope();
 
+	inline void addBlobOpacity( size_t index, double value );
 	inline void setBlobOpacity( size_t index, double value );
 	inline void setBlob( size_t index, double x, double y, double opacity );
 	inline void setBlobPos( size_t index, double x, double y );
@@ -29,6 +31,13 @@ private:
 	void* m_radarGlow = NULL;
 	void* m_filter = NULL;
 };
+
+void RadarScope::addBlobOpacity( size_t index, double value )
+{
+	double currentValue = m_interface.getParamNumber( m_opacityParams[index] );
+
+	setBlobOpacity( index, clamp(currentValue + value, 0.0, 1.0) );
+}
 
 void RadarScope::setBlobOpacity( size_t index, double value )
 {

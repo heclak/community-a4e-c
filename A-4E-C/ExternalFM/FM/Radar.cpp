@@ -5,6 +5,14 @@
 #include "cockpit_base_api.h"
 #include "Devices.h"
 
+constexpr double y1Gain = 0.06;
+constexpr double x1Gain = 0.0;
+constexpr double y2Gain = 5.0;
+constexpr double x2Gain = 1.0;
+
+constexpr double c_bGain = (y1Gain * x1Gain - y2Gain * x2Gain) / (y1Gain - y2Gain);
+constexpr double c_aGain = y1Gain * x1Gain - c_bGain * y1Gain;
+
 
 
 extern "C"
@@ -21,8 +29,17 @@ Scooter::Radar::Radar( Interface& inter, AircraftState& state ):
 	m_state(state),
 	m_interface(inter)
 {
-	for ( size_t i = 0; i < SIDE_LENGTH; i++ )
-		m_scanLine[i] = Vec3f();
+	//for ( size_t i = 0; i < SIDE_LENGTH; i++ )
+		//m_scanLine[i] = Vec3f();
+
+	for ( size_t i = 0; i < MAX_BLOBS; i++ )
+	{
+		double x;
+		double y;
+
+		indexToScreenCoords( i, x, y );
+		m_scope.setBlobPos( i, x, y );
+	}
 
 	HMODULE dll = GetModuleHandleA( "worldgeneral.dll" );
 
@@ -83,17 +100,22 @@ bool Scooter::Radar::handleInput( int command, float value )
 		m_scope.setFilter( ! (bool)value );
 		return true;
 	case DEVICE_COMMANDS_RADAR_DETAIL:
-		m_detail = value * (5.0_deg - 0.1_deg) + 0.1_deg;
+		m_detail = value * (5.0_deg - 0.5_deg) + 0.5_deg;
 		printf( "Detail: %lf\n", m_detail );
 		return true;
 	case DEVICE_COMMANDS_RADAR_GAIN:
-		m_gain = (1.0 - value) * 9.9 + 0.1;
-			
+
+		m_gain = c_aGain / (value - c_bGain);
+		//m_gain = -1.0 / (10.0 * (value - 1.001)) - 0.05;//(1.0 - value) * (100.0 - 0.1) + 0.1;
+		//m_gain = (100.0 - 0.05) * value + 0.05;
 			//1.9 * (1.0 - value) + 0.1;
 		printf( "Gain: %lf\n", m_gain );
 		return true;
 	case DEVICE_COMMANDS_RADAR_BRILLIANCE:
 		m_brilliance = value;
+		return true;
+	case DEVICE_COMMANDS_RADAR_STORAGE:
+		m_storage = (1.0 - 0.01) * pow(1.0 - value, 3.0) + 0.01;
 		return true;
 	}
 
@@ -103,7 +125,10 @@ bool Scooter::Radar::handleInput( int command, float value )
 void Scooter::Radar::update( double dt )
 {
 	if ( m_disabled )
+	{
+		clearScan();
 		return;
+	}
 
 	if ( ! m_interface.getElecMonitoredAC() )
 		return;
@@ -172,16 +197,18 @@ void Scooter::Radar::scan()
 
 	Vec3f out;
 
-
-
-	float x = -1.0 + 2.0 * (float)m_xIndex / (float)SIDE_LENGTH;
-
 	for ( size_t i = 0; i < SIDE_LENGTH; i++ )
+		m_scanLine[i] = 0.0;
+
+	float x = 1.0 - 2.0 * (float)m_xIndex / (float)SIDE_LENGTH;
+
+
+	const size_t rays = SIDE_LENGTH * 2;
+
+	for ( size_t i = 0; i < rays; i++ )
 	{
 
-		float y = -1.0 + 2.0 * (float)i / (float)SIDE_LENGTH;
-
-		size_t index = i + m_xIndex * SIDE_LENGTH;
+		float y = -1.0 + 2.0 * (float)i / (float)rays;
 
 		bool found = false;
 
@@ -216,22 +243,19 @@ void Scooter::Radar::scan()
 				Vec3 normal( normalf.x, normalf.y, normalf.z );
 
 				double reflectivity = typeReflectivity( (TerrainType)type ) * normalize( -dir ) * normalize( normal );
-				if ( reflectivity < m_gain )
-					reflectivity /= m_gain;
+				//if ( reflectivity < m_gain )
+				reflectivity *= m_gain;
 
-				m_scanLine[i].x = -x;
-				m_scanLine[i].y = displayRange;
-				m_scanLine[i].z = clamp( reflectivity, 0.0, 1.0 );
+				//m_scanLine[i].x = x;
+				//m_scanLine[i].y = displayRange;
+
+				size_t yIndex = round( ((displayRange + 1.0) / 2.0) * SIDE_LENGTH );
+				
+				size_t index;
+				if ( yIndex >= 0 && yIndex < SIDE_LENGTH )
+					m_scanLine[yIndex] += clamp( reflectivity, 0.0, 1.0 );
 
 			}
-			else
-			{
-				m_scanLine[i].z = 0.0;
-			}
-		}
-		else
-		{
-			m_scanLine[i].z = 0.0;
 		}
 	}
 }
@@ -242,16 +266,48 @@ void Scooter::Radar::drawScan()
 
 	for ( size_t i = 0; i < SIDE_LENGTH; i++ )
 	{
-		size_t index = i + m_xIndex * SIDE_LENGTH;
+		size_t index;
+		findIndex( m_xIndex, i, index );
 
-		if ( m_scanLine[i].z == 0.0 )
+		double decay = -m_storage;
+
+		if ( m_xIndex == 0 || m_xIndex == (SIDE_LENGTH - 1) )
+			decay *= 2.0;
+
+		m_scope.addBlobOpacity( index, decay );
+		//m_scope.setBlobOpacity( index, 0.0 );
+	}
+		
+
+	for ( size_t i = 0; i < SIDE_LENGTH; i++ )
+	{
+		if ( m_scanLine[i] == 0.0 )
 		{
-			m_scope.setBlobOpacity( index, 0.0 );
+			bool inLimits = i > 0 && i < (SIDE_LENGTH - 1);
+
+			if ( inLimits && m_scanLine[i + 1] != 0.0 && m_scanLine[i - 1] != 0.0 )
+			{
+				m_scanLine[i] = (m_scanLine[i + 1] + m_scanLine[i - 1]) / 2.0;
+			}
+			else
+				continue;
 		}
-		else
-		{
-			m_scope.setBlob( index, m_scanLine[i].x, m_scanLine[i].y, m_brilliance * m_scanLine[i].z );
-		}
+
+		//size_t index = i + m_xIndex * SIDE_LENGTH;
+
+		//size_t index;
+		//size_t yIndex = round( ((m_scanLine[i].y + 1.0) / 2.0) * SIDE_LENGTH );
+
+		//if ( yIndex < 0 || yIndex > ( SIDE_LENGTH - 1 ) )
+			//continue;
+		//size_t index;
+		//if (  )
+		size_t index;
+		findIndex( m_xIndex, i, index );
+		m_scope.setBlobOpacity( index, m_brilliance * clamp(m_scanLine[i], 0.0, 1.0) );
+
+			//m_scope.setBlob( index, m_scanLine[i].x, m_scanLine[i].y, m_brilliance * m_scanLine[i].z );
+		//}
 	}
 }
 
