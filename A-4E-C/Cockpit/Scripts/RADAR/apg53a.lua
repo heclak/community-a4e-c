@@ -218,21 +218,14 @@ function post_initialize()
         dev:performClickableAction(device_commands.radar_reticle, 0.0, false)  -- set radar reticle to 0.5, 50% background brightness on hashmarks
         dev:performClickableAction(device_commands.radar_aoacomp, 0, false) -- disable AoA comp by default
     end
-
-    -- night time setup
-    local abstime = get_absolute_model_time()
-    local hours = abstime / 3600.0
-
-    if hours <= 6 or hours >= 17 then
-        dev:performClickableAction(device_commands.radar_filter, 0, false)
-        radar_filter_param:set(1)
-    else
+    if true then -- TODO: set filter down if starting in the dark
         dev:performClickableAction(device_commands.radar_filter, 1, false)
         radar_filter_param:set(0)
+    else
+        dev:performClickableAction(device_commands.radar_filter, 0, false)
+        radar_filter_param:set(1)
     end
-
     dev:performClickableAction(device_commands.radar_volume, 0.5, false)
-
 end
 
 local xyz ={{5.2,9.2}, {6.7,9.2}, {8.2,8.2}, {7.9,7.8}, {8.0,7.0},  -- AE
