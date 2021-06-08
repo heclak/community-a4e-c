@@ -60,19 +60,30 @@ function gunsightAngleToRads()
 end
 
 function post_initialize()
+
     local dev=GetSelf()
     gunsight_visible:set(0)
     gunsight_daynight_param:set(1)
     gunsight_reflector_param:set(reflector_pos)
     gunsight_reflector_rot_param:set(reflector_pos)
     dev:performClickableAction(device_commands.GunsightKnob, reflector_pos, false)
-    dev:performClickableAction(device_commands.GunsightBrightness, (135/360), false) -- set to brightest
+    dev:performClickableAction(device_commands.GunsightBrightness, 0.35, false)
     local birth = LockOn_Options.init_conditions.birth_place
     if birth=="GROUND_HOT" or birth=="AIR_HOT" then
         power_on = true
         power_on_time = -100
         gunsight_visible:set(1)
     end
+
+    -- night time setup
+    local abstime = get_absolute_model_time()
+    local hours = abstime / 3600.0
+
+    if hours <= 6 or hours >= 17 then
+        dev:performClickableAction(device_commands.GunsightDayNight, 1.0, false)
+        dev:performClickableAction(device_commands.GunsightBrightness, 0.20, false)
+    end
+
 end
 
 function SetCommand(command,value)
