@@ -21,6 +21,7 @@ add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeb
 11 - Navigation Log
 12 - Radio Presets
 13 - ILS Data
+14 - CBU and Countermeasures Configuration
 
 ================================
 2x - WEAPONS
@@ -29,9 +30,10 @@ add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeb
 20 -
 21 - Simple Bombing Tables and Snakeeye
 22 - AWRS and CP-741/A
-23 - CBU Configuration
+23 - 
 24 - Guns and Gunpods
-25 - Rockets, Shrike, Sidewinder
+25 - Rockets
+26 - AN/APR-23 Radar Homing and Warning System / Shrike, Sidewinder
 
 ================================
 3x - FLIGHT INSTRUCTION
