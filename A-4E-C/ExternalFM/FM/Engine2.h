@@ -3,7 +3,7 @@
 #define ENGINE_2_H
 //=========================================================================//
 //
-//		FILE NAME	: Engine2.cpp
+//		FILE NAME	: Engine2.h
 //		AUTHOR		: Joshua Nelson
 //		DATE		: October 2020
 //

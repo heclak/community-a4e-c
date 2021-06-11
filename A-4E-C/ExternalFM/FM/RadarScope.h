@@ -12,6 +12,14 @@ namespace Scooter
 class RadarScope
 {
 public:
+
+	enum Scribe
+	{
+		OFF,
+		ON_10,
+		ON_20,
+	};
+
 	RadarScope( Interface& inter );
 	~RadarScope();
 
@@ -21,6 +29,13 @@ public:
 	inline void setBlobPos( size_t index, double x, double y );
 	inline void setGlow( bool glow );
 	inline void setFilter( bool filter );
+	inline void setProfileScribe( Scribe scribe );
+
+	inline void setSideRange( double range );
+	inline void setBottomRange( double range );
+	inline void setObstacle( bool light, double volume );
+
+	void update( double dt );
 
 private:
 	Interface& m_interface;
@@ -30,6 +45,15 @@ private:
 	void** m_opacityParams;
 	void* m_radarGlow = NULL;
 	void* m_filter = NULL;
+	void* m_glow = NULL;
+	void* m_profile10 = NULL;
+	void* m_profile20 = NULL;
+	void* m_sideRange = NULL;
+	void* m_bottomRange = NULL;
+	void* m_obstacleLight = NULL;
+	void* m_obstacleVolume = NULL;
+
+	bool m_obstacle = false;
 };
 
 void RadarScope::addBlobOpacity( size_t index, double value )
@@ -65,6 +89,41 @@ void RadarScope::setGlow( bool glow )
 void RadarScope::setFilter( bool filter )
 {
 	m_interface.setParamNumber( m_filter, (double)filter );
+}
+
+void RadarScope::setProfileScribe( Scribe scribe )
+{
+	switch ( scribe )
+	{
+	case Scribe::OFF:
+		m_interface.setParamNumber( m_profile10, 0.0 );
+		m_interface.setParamNumber( m_profile20, 0.0 );
+		break;
+	case Scribe::ON_10:
+		m_interface.setParamNumber( m_profile10, 1.0 );
+		m_interface.setParamNumber( m_profile20, 0.0 );
+		break;
+	case Scribe::ON_20:
+		m_interface.setParamNumber( m_profile10, 0.0 );
+		m_interface.setParamNumber( m_profile20, 1.0 );
+		break;
+	}
+}
+
+void RadarScope::setSideRange( double range )
+{
+	m_interface.setParamNumber( m_sideRange, range );
+}
+
+void RadarScope::setBottomRange( double range )
+{
+	m_interface.setParamNumber( m_bottomRange, range );
+}
+
+void RadarScope::setObstacle( bool light, double volume )
+{
+	m_obstacle = light;
+	m_interface.setParamNumber( m_obstacleVolume, volume );
 }
 
 }

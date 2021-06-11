@@ -20,3 +20,13 @@ inline long double operator"" _nauticalMile( long double x )
 {
 	return x * 1852.0;
 }
+
+inline long double operator"" _yard( long double x )
+{
+	return x * 0.9144;
+}
+
+inline long double operator"" _feet( long double x )
+{
+	return x * 0.3048;
+}
