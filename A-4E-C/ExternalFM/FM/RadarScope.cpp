@@ -28,7 +28,22 @@ Scooter::RadarScope::RadarScope( Interface& inter ) :
 
 	m_radarGlow = m_interface.api().pfn_ed_cockpit_get_parameter_handle( "APG53A_GLOW" );
 	m_filter = m_interface.api().pfn_ed_cockpit_get_parameter_handle( "RADAR_FILTER" );
+	m_profile10 = m_interface.api().pfn_ed_cockpit_get_parameter_handle( "RADAR_PROFILE_SCRIBE_10NM" );
+	m_profile20 = m_interface.api().pfn_ed_cockpit_get_parameter_handle( "RADAR_PROFILE_SCRIBE_20NM" );
 
+	m_sideRange = m_interface.api().pfn_ed_cockpit_get_parameter_handle( "APG53A-LEFTRANGE" );
+	m_bottomRange = m_interface.api().pfn_ed_cockpit_get_parameter_handle( "APG53A-BOTTOMRANGE" );
+
+	m_obstacleLight = m_interface.api().pfn_ed_cockpit_get_parameter_handle( "D_GLARE_OBST" );
+	m_obstacleVolume = m_interface.api().pfn_ed_cockpit_get_parameter_handle( "APG53_OBST_VOLUME" );
+}
+
+void Scooter::RadarScope::update( double dt )
+{
+	if ( m_interface.getElecPrimaryAC() )
+	{
+		m_interface.setParamNumber( m_obstacleLight, (double)(m_interface.getMasterTest() || m_obstacle) );
+	}
 }
 
 Scooter::RadarScope::~RadarScope()

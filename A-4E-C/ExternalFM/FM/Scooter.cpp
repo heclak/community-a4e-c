@@ -243,7 +243,7 @@ void ed_fm_simulate(double dt)
 		);
 
 		s_avionics->getComputer().setGunsightAngle( s_interface->getGunsightAngle() );
-		s_avionics->getComputer().setTarget( s_interface->getSetTarget(), s_interface->getSlantRange() );
+		s_avionics->getComputer().setTarget( s_interface->getSetTarget(), s_interface->getRadarDisabled() ? s_interface->getSlantRange() : s_radar->getRange() );
 		s_avionics->getComputer().setPower( s_interface->getCP741Power() );
 
 		s_input->pitchTrim() = s_interface->getPitchTrim();
