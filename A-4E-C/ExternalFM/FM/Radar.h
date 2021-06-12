@@ -102,6 +102,7 @@ private:
 	static inline bool screenCoordToIndex( double x, double y, size_t& index );
 	static inline double getReflection( const Vec3& dir, const Vec3& normal, TerrainType type );
 	static inline double typeReflectivity( TerrainType type );
+	static inline double angleAxisToCommand( double axis );
 
 	void scanPlan(double dt);
 	void updateGimbalPlan();
@@ -293,6 +294,19 @@ bool Radar::findIndex( size_t horizontalScanIndex, size_t verticalScanIndex, siz
 		return true;
 	else
 		return false;
+}
+
+double Radar::angleAxisToCommand( double axis )
+{
+	double fraction = abs( axis );
+
+	//0.4 is the centre point.
+	//Since it is 25.0_deg * value - 10.0_deg
+	//If axis is greater than zero it scales linearly over the remaining upper 0.6 range.
+	//If axis is less than zero it scales linearly over the remaining lower 0.4 range.
+	return axis > 0 ? 0.4 + 0.6 * axis : 0.4 + 0.4 * axis;
+
+
 }
 
 void Radar::resetObstacleData()

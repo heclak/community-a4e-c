@@ -117,6 +117,9 @@ bool Scooter::Radar::handleInput( int command, float value )
 	case DEVICE_COMMANDS_RADAR_VOLUME:
 		m_obstacleVolume = value;
 		return true;
+	case DEVICE_COMMANDS_RADAR_ANGLE_AXIS_ABS:
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_ANGLE, angleAxisToCommand(value));
+		return true;
 	}
 
 	return false;
@@ -155,7 +158,7 @@ void Scooter::Radar::update( double dt )
 	
 	if ( newState != m_state )
 	{
-		transitionState( newState, m_state );
+		transitionState( m_state, newState );
 		m_state = newState;
 	}
 
