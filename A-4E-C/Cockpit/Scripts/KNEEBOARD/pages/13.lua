@@ -6,7 +6,7 @@ SetScale(FOV)
 -- ILS DATA
 
 -- add background image for kneeboard
-add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_ils.png")
+add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_1_ils.png")
 
 local gettext = require("i_18n")
 _ = gettext.translate
@@ -139,7 +139,7 @@ txt_BoardTitle				= CreateElement "ceStringPoly"
 txt_BoardTitle.name			= "txt_BoardTitle"
 txt_BoardTitle.material		= "font_kneeboard_white"
 txt_BoardTitle.init_pos		= {0.0, getLineY(0), 0}
-txt_BoardTitle.value		= _("ILS DATA")
+txt_BoardTitle.value		= _("MCL/ILS/ICLS DATA")
 txt_BoardTitle.alignment	= "CenterBottom"
 txt_BoardTitle.stringdefs	= predefined_font_title
 AddElement(txt_BoardTitle)

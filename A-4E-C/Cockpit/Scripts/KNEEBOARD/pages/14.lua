@@ -4,7 +4,7 @@ SetScale(FOV)
 -- WEAPON / CBU INFO
 
 -- add background image for kneeboard
-add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_weapons.png")
+add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_1_ale29.png")
 
 local gettext = require("i_18n")
 _ = gettext.translate
@@ -48,7 +48,7 @@ txt_BoardTitle				= CreateElement "ceStringPoly"
 txt_BoardTitle.name			= "txt_BoardTitle"
 txt_BoardTitle.material		= "font_kneeboard_white"
 txt_BoardTitle.init_pos		= {0.0, getLineY(0), 0}
-txt_BoardTitle.value		= "WEAPONS"
+txt_BoardTitle.value		= "ALE-29 PROGRAMMING"
 txt_BoardTitle.alignment	= "CenterBottom"
 txt_BoardTitle.stringdefs	= predefined_font_title
 AddElement(txt_BoardTitle)

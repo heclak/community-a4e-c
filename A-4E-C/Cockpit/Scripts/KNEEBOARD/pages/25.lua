@@ -4,4 +4,4 @@ SetScale(FOV)
 -- AN/APR-23 RADAR HOMING AND WARNING SYSTEM TABLE
 
 -- add background image for kneeboard
-add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_rhws.png")
+add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_2_rhws.png")
