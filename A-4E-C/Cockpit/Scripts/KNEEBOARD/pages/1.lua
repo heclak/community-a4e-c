@@ -18,6 +18,7 @@ add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeb
 ================================
 1x - MISSION INFORMATION
 ================================
+10 - 
 11 - Navigation Log
 12 - Radio Presets
 13 - ILS Data
@@ -28,19 +29,19 @@ add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeb
 ================================
 2  - *AVOID*
 20 -
-21 - Simple Bombing Tables and Snakeeye
+21 - Simple Weapon and Bombing Tables
 22 - AWRS and CP-741/A
-23 - 
+23 - Snakeyes and Rockets
 24 - Guns and Gunpods
-25 - Rockets
-26 - AN/APR-23 Radar Homing and Warning System / Shrike, Sidewinder
+25 - 
+26 - Missiles: AGM-45A Shrike and AIM-9 Sidewinder, AN/APR-23 Radar Homing and Warning System
 
 ================================
 3x - FLIGHT INSTRUCTION
 ================================
 3  - *AVOID*
-30 -
-31 - Case III Recovery
+30 - Case III Recovery
+31 - Automatic Flight Control System (AFCS)
 32 - Weight and Accelleration Limits
 33 - Airspeed Limits
 
