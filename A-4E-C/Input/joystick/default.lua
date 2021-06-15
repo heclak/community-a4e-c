@@ -134,6 +134,9 @@ join(res.keyCommands,{
     {down = Keys.GunsightDayNightToggle,                                        name = _('Gunsight Brightness Switch - DAY/NIGHT'),             category = {_('Gunsight Panel')}},
     {down = device_commands.GunsightDayNight, up = device_commands.GunsightDayNight, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.GUNSIGHT, name = _('Gunsight Brightness Switch - DAY else NIGHT'), category = {_('Gunsight Panel')}},
 
+    -- Stopwatch
+    {down = device_commands.clock_stopwatch, up = device_commands.clock_stopwatch, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.CLOCK, name = _('Stopwatch - START/STOP/RESET'), category = {_('Instrument Panel')}},
+
     -- Altimeter
     {down = Keys.AltPressureInc,                                            name = _('Altimeter Pressure - Rotary Increment'),                  category = {_('Instrument Panel')}},
     {down = Keys.AltPressureDec,                                            name = _('Altimeter Pressure - Rotary Decrement'),                  category = {_('Instrument Panel')}},
