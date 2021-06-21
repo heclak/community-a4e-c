@@ -2,7 +2,7 @@ dofile(LockOn_Options.common_script_path.."elements_defs.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 
 -- set color values are r, g, b, a, with a min-max of 0, 255
-local draw_background           = MakeMaterial("arcade.tga", {255, 0, 0, 80})
+local draw_background           = MakeMaterial("arcade.tga", {128, 0, 0, 80})
 local draw_percentile           = MakeMaterial("arcade.tga", {255, 0, 0, 32})
 local draw_percentile_strong    = MakeMaterial("arcade.tga", {255, 0, 0, 128})
 local draw_axis                 = MakeMaterial("arcade.tga", {255, 0, 0, 255})
@@ -374,6 +374,76 @@ AddElement(rpm_index)
 -- INPUT INDICATORS
 -- =============================
 
+-- draw WHEELBRAKE LEFT position
+wbrakel_index                   = Copy(roll_scale)
+wbrakel_index.vertices          = {
+                                    {-2.0 * line_width, -line_width},
+                                    {-2.0 * line_width, line_width},
+                                    {2.0 * line_width, line_width},
+                                    {2.0 * line_width, -line_width}
+                                  }
+wbrakel_index.element_params    = {"LEFT_BRAKE_PEDAL"}  
+wbrakel_index.controllers       = {{"move_up_down_using_parameter", 0, 2.0 * sizeX}}
+wbrakel_index.tex_params	      = {256 / 512, 176.5 / 512, 0.5 * tex_scale / 3, 2 * tex_scale / 3}
+wbrakel_index.init_rot          = {-90, 0, 0}
+wbrakel_index.material          = draw_input
+wbrakel_index.parent_element    = wbrakel_scale.name
+AddElement(wbrakel_index)
+
+-- draw WHEELBRAKE RIGHT position
+wbraker_index                   = Copy(wbrakel_index)
+wbraker_index.element_params    = {"RIGHT_BRAKE_PEDAL"}  
+wbraker_index.parent_element    = wbraker_scale.name
+AddElement(wbraker_index)
+
+-- draw NOSEWHEEL STEERING status
+
+nws_center                      = Copy(roll_scale)
+nws_center.vertices             = {
+                                    {-2.25 * ds, -2.25 * ds},
+                                    {-2.25 * ds, 2.25 * ds},
+                                    {2.25 * ds, 2.25 * ds},
+                                    {2.25 * ds, -2.25 * ds}
+                                  }
+nws_center.init_pos             = {0, 1.0  * sizeX}
+nws_center.tex_params	          = {179.5 / 512, 256.5 / 512, 3 * tex_scale, 3 * tex_scale}
+nws_center.init_rot             = {0, 0, 0}
+nws_center.material             = draw_axis
+nws_center.parent_element       = base.name
+AddElement(nws_center)
+
+nws_index                       = Copy(nws_center)
+nws_index.init_pos              = {0, -sizeX -rudder_offset}
+nws_index.tex_params	          = {394.5 / 512, 256.5 / 512, 2 * tex_scale, 2 * tex_scale}
+nws_index.material              = draw_input
+nws_index.element_params        = {"FM_NWS"}
+nws_index.controllers           = {{"move_up_down_using_parameter", 0, 2.0 * sizeX + rudder_offset}}
+AddElement(nws_index)
+
+nws_mask                        = Copy(nws_center)
+nws_mask.init_pos               = {0, -sizeX -rudder_offset}
+AddElement(nws_mask)
+
+-- draw PITCH AND ROLL (STICK) position
+stick_position					        = CreateElement "ceTexPoly"
+stick_position.name             = "stick_position"
+stick_position.vertices         = {
+                                    {-stick_index_sz, -stick_index_sz},
+                                    {-stick_index_sz, stick_index_sz},
+                                    {stick_index_sz, stick_index_sz},
+                                    {stick_index_sz, -stick_index_sz}
+                                  }
+stick_position.indices          = default_box_indices
+stick_position.material	        = draw_input
+stick_position.tex_params	      = {330 / 512, 365.5 / 512, 2 * tex_scale, 2 * tex_scale / 0.8}
+stick_position.element_params   = {"STICK_PITCH", "STICK_ROLL"} 
+stick_position.controllers      = {
+                                    {"move_left_right_using_parameter", 1, sizeX},
+								                    {"move_up_down_using_parameter", 0, -sizeX}
+                                  }
+stick_position.parent_element   = base.name
+AddElement(stick_position)
+
 -- scale RUDDER
 rudder_scale                    = Copy(roll_scale)
 rudder_scale.init_pos           = {0,-(sizeX + rudder_offset)}
@@ -410,65 +480,3 @@ throttle_index.init_rot         = {-90, 0, 0}
 throttle_index.material         = draw_input
 throttle_index.parent_element   = throttle_scale.name
 AddElement(throttle_index)
-
--- draw WHEELBRAKE LEFT position
-wbrakel_index                   = Copy(roll_scale)
-wbrakel_index.vertices          = {
-                                    {-2.0 * line_width, -line_width},
-                                    {-2.0 * line_width, line_width},
-                                    {2.0 * line_width, line_width},
-                                    {2.0 * line_width, -line_width}
-                                  }
-wbrakel_index.element_params    = {"LEFT_BRAKE_PEDAL"}  
-wbrakel_index.controllers       = {{"move_up_down_using_parameter", 0, 2.0 * sizeX}}
-wbrakel_index.tex_params	      = {256 / 512, 176.5 / 512, 0.5 * tex_scale / 3, 2 * tex_scale / 3}
-wbrakel_index.init_rot          = {-90, 0, 0}
-wbrakel_index.material          = draw_input
-wbrakel_index.parent_element    = wbrakel_scale.name
-AddElement(wbrakel_index)
-
--- draw WHEELBRAKE RIGHT position
-wbraker_index                   = Copy(wbrakel_index)
-wbraker_index.element_params    = {"RIGHT_BRAKE_PEDAL"}  
-wbraker_index.parent_element    = wbraker_scale.name
-AddElement(wbraker_index)
-
--- draw NOSEWHEEL STEERING status
---[[
--- commenting this out for now until we have a better system for showing and hiding indicators
-nws_index                     = Copy(roll_scale)
-nws_index.vertices            = {
-                                  {-2.25 * ds, -2.25 * ds},
-                                  {-2.25 * ds, 2.25 * ds},
-                                  {2.25 * ds, 2.25 * ds},
-                                  {2.25 * ds, -2.25 * ds}
-                                }
-nws_index.element_params      = {"FM_NWS"}
-nws_index.init_pos            = {-3.0 * sizeX, sizeX}
-nws_index.controllers         = {{"move_up_down_using_parameter", 0, 3.0 * sizeX}}
-nws_index.tex_params	        = {179.5 / 512, 256.5 / 512, 3 * tex_scale, 3 * tex_scale}
-nws_index.init_rot            = {-90, 0, 0}
-nws_index.material            = draw_input
-nws_index.parent_element      = base.name
-AddElement(nws_index)
-]]
-
--- draw PITCH AND ROLL (STICK) position
-stick_position					        = CreateElement "ceTexPoly"
-stick_position.name             = "stick_position"
-stick_position.vertices         = {
-                                    {-stick_index_sz, -stick_index_sz},
-                                    {-stick_index_sz, stick_index_sz},
-                                    {stick_index_sz, stick_index_sz},
-                                    {stick_index_sz, -stick_index_sz}
-                                  }
-stick_position.indices          = default_box_indices
-stick_position.material	        = draw_input
-stick_position.tex_params	      = {330 / 512, 365.5 / 512, 2 * tex_scale, 2 * tex_scale / 0.8}
-stick_position.element_params   = {"STICK_PITCH", "STICK_ROLL"} 
-stick_position.controllers      = {
-                                    {"move_left_right_using_parameter", 1, sizeX},
-								                    {"move_up_down_using_parameter", 0, -sizeX}
-                                  }
-stick_position.parent_element   = base.name
-AddElement(stick_position)
