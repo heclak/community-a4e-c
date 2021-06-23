@@ -234,7 +234,7 @@ join(res.keyCommands,{
     {down = Keys.AWRS_Drop_Interval_Dec,    name = _('AWE-1 DROP INTVL - Decrement'),           category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
 
     -- T-Handles
-    {down = device_commands.emer_bomb_release, up = device_commands.emer_bomb_release, cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 1.0, value_up = 0.0,                     name = _('Handles - EMER BOMB Release'),       category = {_('Instrument Panel')}},
+    {combos = {{key = 'W', reformers = {'LCtrl'}}}, down = device_commands.emer_bomb_release, up = device_commands.emer_bomb_release, cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 1.0, value_up = 0.0, name = _('Handles - EMER BOMB Release'), category = {_('Instrument Panel')}},
     {down = device_commands.emer_gear_release, up = device_commands.emer_gear_release, cockpit_device_id = devices.GEAR, value_down = 1.0, value_up = 0.0,                              name = _('Handles - EMER GEAR Release'),       category = {_('Instrument Panel')}},
     {down = device_commands.man_flt_control_override, up = device_commands.man_flt_control_override, cockpit_device_id = devices.HYDRAULIC_SYSTEM, value_down = 1.0, value_up = 0.0,    name = _('Handles - MAN FLT CONT Release'),    category = {_('Instrument Panel')}},
     {down = device_commands.emer_gen_deploy, cockpit_device_id = devices.ELECTRIC_SYSTEM, value_down = 1.0,                                                                             name = _('Handles - EMER GEN Release'),        category = {_('Instrument Panel')}},
@@ -531,7 +531,7 @@ join(res.keyCommands,{
     {down = Keys.Tune3, value_down = -0.1,                                                               name = _('Tune3: -0.1'),                  category = {_('Debug')}},
 
     -- FC3 Commands [Implemented] (TODO: What should be implmented here?)
-    {combos = {{key = 'W', reformers = {'LCtrl'}}}, down = Keys.JettisonFC3,up = Keys.JettisonWeaponsUp, name = _('Jettison Stores (3 times)'), category = {_('Systems')}},
+    -- {combos = {{key = 'W', reformers = {'LCtrl'}}}, down = Keys.JettisonFC3,up = Keys.JettisonWeaponsUp, name = _('Jettison Stores (3 times)'), category = {_('Systems')}},
     -- {combos = {{key = '5', reformers = {'LShift'}}}, down = Keys.RadarHoldToggle,                        name = _('Radar Hold: Toggle'),          category = _('Modes')},
     -- {combos = {{key = '6', reformers = {'LShift'}}}, down = Keys.RadarHoldDec,                           name = _('Radar Hold: Dec'),             category = _('Modes')},
     -- {combos = {{key = '7', reformers = {'LShift'}}}, down = Keys.RadarHoldInc,                           name = _('Radar Hold: Inc'),             category = _('Modes')},

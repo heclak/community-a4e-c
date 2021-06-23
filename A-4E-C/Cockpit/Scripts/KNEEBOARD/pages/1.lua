@@ -53,4 +53,10 @@ add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeb
 43 - Quick-Start 3. Takeoff
 44 - Quick-Start 4. Emergency Procedures
 
+================================
+9x - Additional Guidance
+================================
+90 -
+91 - Controls Indicator Diagram
+
 ]]

@@ -1,8 +1,10 @@
 dofile(LockOn_Options.common_script_path.."elements_defs.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
+dofile(LockOn_Options.script_path.."/ControlsIndicator/ControlsIndicator_api.lua")
 
 -- set color values are r, g, b, a, with a min-max of 0, 255
-local draw_background           = MakeMaterial("arcade.tga", {128, 0, 0, 80})
+local draw_background           = MakeMaterial("arcade.tga", {128, 0, 0, 128})
+local draw_transparent          = MakeMaterial("arcade.tga", {0, 0, 0, 0})
 local draw_percentile           = MakeMaterial("arcade.tga", {255, 0, 0, 32})
 local draw_percentile_strong    = MakeMaterial("arcade.tga", {255, 0, 0, 128})
 local draw_axis                 = MakeMaterial("arcade.tga", {255, 0, 0, 255})
@@ -10,6 +12,7 @@ local draw_hidden               = MakeMaterial("arcade.tga", {255, 0, 0, 0})
 local draw_input                = MakeMaterial("arcade.tga", {255, 255, 0, 255})
 local draw_indicator            = MakeMaterial("arcade.tga", {255, 0, 0, 255})
 local draw_gear                 = MakeMaterial("arcade.tga", {255, 0, 0, 255})
+local draw_debug                = MakeMaterial("arcade.tga", {0, 255, 255, 255})
 
 local draw_on                   = MakeMaterial("arcade.tga", {128, 0, 0, 255})
 local draw_off                  = MakeMaterial("arcade.tga", {255, 0, 0, 255})
@@ -31,8 +34,10 @@ local tex_scale                 = 0.25 / sizeX
 local ds                        = 0.05 * sizeX
 local line_width                = (4.5 / 512) / tex_scale
 
-local throttle_offset           = 4.0 * ds
+local throttle_offset           = 5.0 * ds
 local rudder_offset             = 3.0 * ds
+
+local stick_index_sz            = 0.1 * sizeX
 
 -- =============================
 -- BACKGROUND
@@ -64,6 +69,7 @@ AddElement(base)
 -- scale PITCH
 pitch_scale                     = CreateElement "ceTexPoly"
 pitch_scale.name		            = "pitch_scale"
+pitch_scale.init_pos            = {-1.0 * ds, 3.0 * ds}
 pitch_scale.vertices            = {
                                     {-sizeX,-line_width},
                                     {-sizeX, line_width},
@@ -87,6 +93,7 @@ pitch_scale_p100.vertices       = {
                                   }
 pitch_scale_p100.init_pos       = {1.00 * sizeX, -sizeX}
 pitch_scale_p100.material	      = draw_percentile_strong
+pitch_scale_p100.parent_element = pitch_scale.name
 AddElement(pitch_scale_p100)
 
 pitch_scale_p075                = Copy(pitch_scale_p100)
@@ -104,103 +111,84 @@ pitch_scale_p025.init_pos       = {0.25 * sizeX, -sizeX}
 pitch_scale_p025.material	      = draw_percentile
 AddElement(pitch_scale_p025)
 
-pitch_scale_n100                = Copy(pitch_scale)
-pitch_scale_n100.vertices       = {
-                                    {0, -0.5 * line_width},
-                                    {0, 0.5 * line_width},
-                                    {2.0 * sizeX, 0.5 * line_width},
-                                    {2.0 * sizeX, -0.5 * line_width}
-                                  }
+pitch_scale_n100                = Copy(pitch_scale_p100)
 pitch_scale_n100.init_pos       = {-1.00 * sizeX, -sizeX}
 pitch_scale_n100.material	      = draw_percentile_strong
 AddElement(pitch_scale_n100)
 
-pitch_scale_n075                = Copy(pitch_scale_n100)
+pitch_scale_n075                = Copy(pitch_scale_p100)
 pitch_scale_n075.init_pos       = {-0.75 * sizeX, -sizeX}
 pitch_scale_n075.material	      = draw_percentile
 AddElement(pitch_scale_n075)
 
-pitch_scale_n050                = Copy(pitch_scale_n100)
+pitch_scale_n050                = Copy(pitch_scale_p100)
 pitch_scale_n050.init_pos       = {-0.50 * sizeX, -sizeX}
 pitch_scale_p100.material	      = draw_percentile_strong
 AddElement(pitch_scale_n050)
 
-pitch_scale_n025                = Copy(pitch_scale_n100)
+pitch_scale_n025                = Copy(pitch_scale_p100)
 pitch_scale_n025.init_pos       = {-0.25 * sizeX, -sizeX}
 pitch_scale_n025.material	      = draw_percentile
 AddElement(pitch_scale_n025)
 
 -- scale ROLL
-roll_scale                      = CreateElement "ceTexPoly"
+roll_scale                      = Copy(pitch_scale)
 roll_scale.name		              = "roll_scale"
-roll_scale.vertices             = {
-                                    {-sizeX, -line_width},
-                                    {-sizeX, line_width},
-                                    {sizeX, line_width},
-                                    {sizeX, -line_width}
-                                  }
-roll_scale.indices		          = default_box_indices
-roll_scale.material	            = draw_axis
-roll_scale.tex_params	          = {256 / 512, 176.5 / 512, tex_scale, 2 * tex_scale}
-roll_scale.parent_element       = base.name
+roll_scale.init_pos             = {0, 0}
+roll_scale.init_rot             = {90, 0, 0}
+roll_scale.parent_element       = pitch_scale.name
 AddElement(roll_scale)
 
-local stick_index_sz            = 0.1 * sizeX
-
 -- scale ROLL PERCENTILE grid
-roll_scale_n100                 = Copy(roll_scale)
-roll_scale_n100.vertices        = {
-                                    {-sizeX, -0.5 * line_width},
-                                    {-sizeX, 0.5 * line_width},
-                                    {sizeX, 0.5 * line_width},
-                                    {sizeX, -0.5 * line_width}
-                                  }
-roll_scale_n100.init_pos        = {0, -(1.00 * sizeX)}
-roll_scale_n100.material	      = draw_percentile_strong
-AddElement(roll_scale_n100)
-
-roll_scale_n075                 = Copy(roll_scale_n100)
-roll_scale_n075.init_pos        = {0, -(0.75 * sizeX)}
-roll_scale_n075.material	      = draw_percentile
-AddElement(roll_scale_n075)
-
-roll_scale_n050                 = Copy(roll_scale_n100)
-roll_scale_n050.init_pos        = {0, -(0.50 * sizeX)}
-roll_scale_n050.material	      = draw_percentile_strong
-AddElement(roll_scale_n050)
-
-roll_scale_n025                 = Copy(roll_scale_n100)
-roll_scale_n025.init_pos        = {0, -(0.25 * sizeX)}
-roll_scale_n025.material	      = draw_percentile
-AddElement(roll_scale_n025)
-
 roll_scale_p100                 = Copy(roll_scale)
-roll_scale_p100.vertices        = {
-                                    {-sizeX, -0.5 * line_width},
-                                    {-sizeX, 0.5 * line_width},
-                                    {sizeX, 0.5 * line_width},
-                                    {sizeX, -0.5 * line_width}
+pitch_scale_p100.vertices       = {
+                                    {0, -0.5 * line_width},
+                                    {0, 0.5 * line_width},
+                                    {2.0 * sizeX, 0.5 * line_width},
+                                    {2.0 * sizeX, -0.5 * line_width}
                                   }
-roll_scale_p100.init_pos        = {0, (1.00 * sizeX)}
+roll_scale_p100.init_pos        = {-(1.00 * sizeX), 0}
+roll_scale_p100.init_rot        = {90, 0, 0}
 roll_scale_p100.material	      = draw_percentile_strong
+roll_scale_p100.parent_element  = roll_scale.name 
 AddElement(roll_scale_p100)
 
 roll_scale_p075                 = Copy(roll_scale_p100)
-roll_scale_p075.init_pos        = {0, (0.75 * sizeX)}
+roll_scale_p075.init_pos        = {-(0.75 * sizeX), 0}
 roll_scale_p075.material	      = draw_percentile
 AddElement(roll_scale_p075)
 
 roll_scale_p050                 = Copy(roll_scale_p100)
-roll_scale_p050.init_pos        = {0, (0.50 * sizeX)}
+roll_scale_p050.init_pos        = {-(0.50 * sizeX), 0}
 roll_scale_p050.material	      = draw_percentile_strong
 AddElement(roll_scale_p050)
 
 roll_scale_p025                 = Copy(roll_scale_p100)
-roll_scale_p025.init_pos        = {0, (0.25 * sizeX)}
+roll_scale_p025.init_pos        = {-(0.25 * sizeX), 0}
 roll_scale_p025.material	      = draw_percentile
 AddElement(roll_scale_p025)
 
--- scale THROTTLE position
+roll_scale_n025                 = Copy(roll_scale_p100)
+roll_scale_n025.init_pos        = {(0.25 * sizeX), 0}
+roll_scale_n025.material	      = draw_percentile
+AddElement(roll_scale_n025)
+
+roll_scale_n050                 = Copy(roll_scale_p100)
+roll_scale_n050.init_pos        = {(0.50 * sizeX), 0}
+roll_scale_n050.material	      = draw_percentile_strong
+AddElement(roll_scale_n050)
+
+roll_scale_n075                 = Copy(roll_scale_p100)
+roll_scale_n075.init_pos        = {(0.75 * sizeX), 0}
+roll_scale_n075.material	      = draw_percentile
+AddElement(roll_scale_n075)
+
+roll_scale_n100                 = Copy(roll_scale_p100)
+roll_scale_n100.init_pos        = {(1.00 * sizeX), 0}
+roll_scale_n100.material	      = draw_percentile_strong
+AddElement(roll_scale_n100)
+
+-- scale THROTTLE
 throttle_scale                  = Copy(pitch_scale)
 throttle_scale.vertices         = {
                                     {0, -line_width},
@@ -208,25 +196,11 @@ throttle_scale.vertices         = {
                                     {2.0 * sizeX, line_width},
                                     {2.0 * sizeX, -line_width}
                                   }
-throttle_scale.init_pos         = {-(sizeX + throttle_offset), -sizeX}
+throttle_scale.init_pos         = {-sizeX, (sizeX + throttle_offset)}
+throttle_scale.init_rot         = {0, 0, 0}
+throttle_scale.parent_element   = pitch_scale.name 
 AddElement(throttle_scale)
 
--- scale WHEELBRAKE LEFT position
-wbrakel_scale                   = Copy(pitch_scale)
-wbrakel_scale.vertices          = {
-                                    {0.0, -line_width},
-                                    {0.0, line_width},
-                                    {2.0 * sizeX, line_width},
-                                    {2.0 * sizeX, -line_width}
-                                  }
-wbrakel_scale.init_pos          = {-0.5 * sizeX, -sizeX}
-wbrakel_scale.material          = draw_hidden
-AddElement(wbrakel_scale)
-
--- scale WHEELBRAKE RIGHT position
-wbraker_scale                   = Copy(wbrakel_scale)
-wbraker_scale.init_pos          = {0.5 * sizeX, -sizeX}
-AddElement(wbraker_scale)
 
 -- =============================
 -- INDICATORS
@@ -265,15 +239,15 @@ AddElement(gearr_index)
 -- draw SLAT LEFT position
 slatl_index                     = Copy(roll_scale)
 slatl_index.vertices            = {
-                                    {-1.5 * line_width, -2.0 * line_width},
-                                    {-1.5 * line_width, 2.0 * line_width},
-                                    {1.5 * line_width, 2.0 * line_width},
-                                    {1.5 * line_width, -2.0 * line_width}
+                                    {-2.5 * line_width, -2.5 * line_width},
+                                    {-2.5 * line_width, 2.5 * line_width},
+                                    {2.5 * line_width, 2.5 * line_width},
+                                    {2.5 * line_width, -2.5 * line_width}
                                   }
 slatl_index.element_params      = {"FM_SLAT_LEFT"}
 slatl_index.init_pos            = {-sizeX, sizeX}
 slatl_index.controllers         = {{"move_up_down_using_parameter", 0, 2.0 * sizeX}}
-slatl_index.tex_params	        = {256 / 512, 176.5 / 512, 0.5 * tex_scale / 3, 2 * tex_scale / 3}
+slatl_index.tex_params	         = {179.5 / 512, 256.5 / 512, 3 * tex_scale, 3 * tex_scale}
 slatl_index.init_rot            = {-90, 0, 0}
 slatl_index.material            = draw_gear
 slatl_index.parent_element      = pitch_scale.name
@@ -302,56 +276,33 @@ gearc_index.parent_element      = pitch_scale.name
 AddElement(gearc_index)
 
 -- draw FLAPS position
-flaps_index                     = Copy(roll_scale)
-flaps_index.vertices            = {
-                                    {-sizeX, -0.5 * line_width},
-                                    {-sizeX, 0.5 * line_width},
-                                    {sizeX, 0.5 * line_width},
-                                    {sizeX, -0.5 * line_width}
-                                  }
+flaps_index                     = Copy(pitch_scale)
+flaps_index.init_pos            = {0, 0}
 flaps_index.element_params      = {"FM_FLAPS"}
 flaps_index.controllers         = {{"move_up_down_using_parameter", 0, -sizeX}}
-flaps_index.tex_params	        = {256 / 512, 176.5 / 512, 0.5 * tex_scale / 3, 2 * tex_scale / 3}
 flaps_index.init_rot            = {-90, 0, 0}
 flaps_index.material            = draw_indicator
 flaps_index.parent_element      = pitch_scale.name
 AddElement(flaps_index)
 
 -- draw SPOILER position
-spoiler_index                   = Copy(pitch_scale)
-spoiler_index.vertices          = {
-                                    {-sizeX, -0.5 * line_width},
-                                    {-sizeX, 0.5 * line_width},
-                                    {sizeX, 0.5 * line_width},
-                                    {sizeX, -0.5 * line_width}
-                                  }
+spoiler_index                   = Copy(flaps_index)
 spoiler_index.element_params    = {"FM_SPOILERS"}  
-spoiler_index.controllers       = {{"move_up_down_using_parameter", 0, sizeX}}
-spoiler_index.tex_params	      = {256 / 512, 176.5 / 512, 0.5 * tex_scale / 3, 2 * tex_scale / 3}
-spoiler_index.init_rot          = {-90, 0, 0}
-spoiler_index.material          = draw_indicator
-spoiler_index.parent_element    = pitch_scale.name
+spoiler_index.init_rot          = {90, 0, 0}
 AddElement(spoiler_index)
 
 -- draw AIRBRAKE1 position
 abrake1_index                   = Copy(roll_scale)
-abrake1_index.vertices          = {
-                                    {-sizeX, -0.5 * line_width},
-                                    {-sizeX, 0.5 * line_width},
-                                    {sizeX, 0.5 * line_width},
-                                    {sizeX, -0.5 * line_width}
-                                  }
+abrake1_index.init_pos          = {0, 0}
 abrake1_index.element_params    = {"FM_BRAKES"}
 abrake1_index.controllers       = {{"move_up_down_using_parameter", 0, sizeX}}
-abrake1_index.tex_params	      = {256 / 512, 176.5 / 512, 0.5 * tex_scale / 3, 2 * tex_scale / 3}
 abrake1_index.init_rot          = {-90, 0, 0}
 abrake1_index.material          = draw_indicator
 abrake1_index.parent_element    = roll_scale.name
 AddElement(abrake1_index)
 
--- draw AIRBRAKE2 position
 abrake2_index                   = Copy(abrake1_index)
-abrake2_index.controllers       = {{"move_up_down_using_parameter", 0, -sizeX}}
+abrake2_index.init_rot          = {90, 0, 0}
 AddElement(abrake2_index)
 
 -- draw RPM position
@@ -370,9 +321,29 @@ rpm_index.material              = draw_indicator
 rpm_index.parent_element        = throttle_scale.name
 AddElement(rpm_index)
 
+
 -- =============================
 -- INPUT INDICATORS
 -- =============================
+
+-- scale WHEELBRAKE LEFT position
+wbrakel_scale                   = Copy(pitch_scale)
+wbrakel_scale.vertices          = {
+                                    {0.0, -line_width},
+                                    {0.0, line_width},
+                                    {2.0 * sizeX, line_width},
+                                    {2.0 * sizeX, -line_width}
+                                  }
+wbrakel_scale.init_pos          = {-sizeX, 0.5 * sizeX}
+wbrakel_scale.init_rot          = {0, 0, 0}
+wbrakel_scale.material          = draw_transparent
+wbrakel_scale.parent_element    = pitch_scale.name 
+AddElement(wbrakel_scale)
+
+-- scale WHEELBRAKE RIGHT position
+wbraker_scale                   = Copy(wbrakel_scale)
+wbrakel_scale.init_pos          = {-sizeX, -0.5 * sizeX}
+AddElement(wbraker_scale)
 
 -- draw WHEELBRAKE LEFT position
 wbrakel_index                   = Copy(roll_scale)
@@ -396,32 +367,67 @@ wbraker_index.element_params    = {"RIGHT_BRAKE_PEDAL"}
 wbraker_index.parent_element    = wbraker_scale.name
 AddElement(wbraker_index)
 
--- draw NOSEWHEEL STEERING status
+-- draw THROTTLE STEP positions
+throttle_pos1                   = Copy(roll_scale)
+throttle_pos1.vertices             = {
+                                    {-2.25 * ds, -2.25 * ds},
+                                    {-2.25 * ds, 2.25 * ds},
+                                    {2.25 * ds, 2.25 * ds},
+                                    {2.25 * ds, -2.25 * ds}
+                                  }
+throttle_pos1.init_pos          = {-rudder_offset, 1.5 * ds}
+throttle_pos1.tex_params	      = {179.5 / 512, 256.5 / 512, 3 * tex_scale, 3 * tex_scale}
+throttle_pos1.init_rot          = {0, 0, 0}
+throttle_pos1.material          = draw_axis
+throttle_pos1.parent_element    = throttle_scale.name
+AddElement(throttle_pos1)
 
-nws_center                      = Copy(roll_scale)
+throttle_pos2                   = Copy(throttle_pos1)
+throttle_pos2.init_pos          = {0, -1.0 * ds}
+throttle_pos2.parent_element    = throttle_pos1.name
+AddElement(throttle_pos2)
+
+throttle_pos3                   = Copy(throttle_pos1)
+throttle_pos3.init_pos          = {0, -3.0 * ds}
+throttle_pos3.parent_element    = throttle_pos1.name
+AddElement(throttle_pos3)
+
+-- draw THROTTLE STEP status
+throttle_p_index                = Copy(throttle_pos1)
+throttle_p_index.init_pos       = {0, -3.0 * ds}
+throttle_p_index.init_rot       = {0, 0, 0}
+throttle_p_index.material       = draw_input
+throttle_p_index.element_params = {ControlsIndicator_api.throttle_fm_step_param_string}
+throttle_p_index.controllers    = {{"move_up_down_using_parameter", 0, -3.0 * ds}}
+throttle_p_index.parent_element = throttle_pos1.name
+AddElement(throttle_p_index)
+
+-- draw NOSEWHEEL STEERING status
+nws_center                      = Copy(pitch_scale)
 nws_center.vertices             = {
                                     {-2.25 * ds, -2.25 * ds},
                                     {-2.25 * ds, 2.25 * ds},
                                     {2.25 * ds, 2.25 * ds},
                                     {2.25 * ds, -2.25 * ds}
                                   }
-nws_center.init_pos             = {0, 1.0  * sizeX}
+nws_center.init_pos             = {sizeX, 0}
 nws_center.tex_params	          = {179.5 / 512, 256.5 / 512, 3 * tex_scale, 3 * tex_scale}
 nws_center.init_rot             = {0, 0, 0}
 nws_center.material             = draw_axis
-nws_center.parent_element       = base.name
+nws_center.parent_element       = pitch_scale.name
 AddElement(nws_center)
 
 nws_index                       = Copy(nws_center)
-nws_index.init_pos              = {0, -sizeX -rudder_offset}
+nws_index.init_pos              = {-(sizeX + rudder_offset), 0}
 nws_index.tex_params	          = {394.5 / 512, 256.5 / 512, 2 * tex_scale, 2 * tex_scale}
+nws_index.init_rot              = {-90, 0, 0}
 nws_index.material              = draw_input
 nws_index.element_params        = {"FM_NWS"}
 nws_index.controllers           = {{"move_up_down_using_parameter", 0, 2.0 * sizeX + rudder_offset}}
 AddElement(nws_index)
 
 nws_mask                        = Copy(nws_center)
-nws_mask.init_pos               = {0, -sizeX -rudder_offset}
+nws_mask.init_pos               = {-(sizeX + rudder_offset), 0}
 AddElement(nws_mask)
 
 -- draw PITCH AND ROLL (STICK) position
@@ -441,12 +447,14 @@ stick_position.controllers      = {
                                     {"move_left_right_using_parameter", 1, sizeX},
 								                    {"move_up_down_using_parameter", 0, -sizeX}
                                   }
-stick_position.parent_element   = base.name
+stick_position.init_pos = {0, 0}
+stick_position.init_rot = {-90, 0}
+stick_position.parent_element   = pitch_scale.name
 AddElement(stick_position)
 
 -- scale RUDDER
 rudder_scale                    = Copy(roll_scale)
-rudder_scale.init_pos           = {0,-(sizeX + rudder_offset)}
+rudder_scale.init_pos           = {-(sizeX + rudder_offset), 0}
 AddElement(rudder_scale)
 
 -- draw RUDDER position
@@ -458,14 +466,13 @@ rudder_index.vertices           = {
                                     {2.0 * line_width, -line_width}
                                   }
 rudder_index.element_params     = {"RUDDER_PEDALS"}  
-rudder_index.controllers 	      = {{"move_up_down_using_parameter", 0, -sizeX}}
-rudder_index.init_rot           = {90, 0}
+rudder_index.controllers 	      = {{"move_up_down_using_parameter", 0, sizeX}}
 rudder_index.parent_element     = rudder_scale.name
 rudder_index.tex_params	        = {256 / 512, 176.5 / 512, 0.5 * tex_scale / 3, 2 * tex_scale / 3}
 rudder_index.material	          = draw_input
 AddElement(rudder_index)
 
--- draw THROTTLE position
+-- draw THROTTLE position (input)
 throttle_index                  = Copy(roll_scale)
 throttle_index.vertices         = {
                                     {-2.0 * line_width, -line_width},
@@ -474,9 +481,17 @@ throttle_index.vertices         = {
                                     {2.0 * line_width, -line_width}
                                   }
 throttle_index.element_params   = {"FM_THROTTLE_POSITION"}  
-throttle_index.controllers      = {{"move_up_down_using_parameter", 0, 2.0 * sizeX}}
+throttle_index.controllers      = {{"move_up_down_using_parameter", 0, -2.0 * sizeX}}
 throttle_index.tex_params	      = {256 / 512, 176.5 / 512, 0.5 * tex_scale / 3, 2 * tex_scale / 3}
-throttle_index.init_rot         = {-90, 0, 0}
-throttle_index.material         = draw_input
+throttle_index.init_rot         = {90, 0, 0}
+throttle_index.material         = draw_percentile_strong
 throttle_index.parent_element   = throttle_scale.name
 AddElement(throttle_index)
+
+-- draw THROTTLE position (actual)
+throttlefm_index                  = Copy(throttle_index)
+throttlefm_index.element_params   = {ControlsIndicator_api.throttle_fm_move_param_string}
+throttlefm_index.material         = draw_input
+throttlefm_index.parent_element   = throttle_scale.name
+AddElement(throttlefm_index)
+

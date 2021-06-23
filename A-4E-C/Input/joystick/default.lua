@@ -534,7 +534,7 @@ join(res.keyCommands,{
     {down = Keys.Tune3, value_down = -0.1,         name = _('Tune3: -0.1'),                  category = {_('Debug')}},
     
     -- FC3 Commands [Implemented] (TODO: What should be implmented here?)
-    {down = Keys.JettisonFC3,up = Keys.JettisonWeaponsUp, name = _('Jettison Stores (3 times)'), category = {_('Systems')}},
+    -- {down = Keys.JettisonFC3,up = Keys.JettisonWeaponsUp, name = _('Jettison Stores (3 times)'), category = {_('Systems')}},
     -- {down = Keys.RadarHoldToggle,                         name = _('Radar Hold: Toggle'),          category = _('Modes')},
     -- {down = Keys.RadarHoldDec,                            name = _('Radar Hold: Dec'),             category = _('Modes')},
     -- {down = Keys.RadarHoldInc,                            name = _('Radar Hold: Inc'),             category = _('Modes')},
