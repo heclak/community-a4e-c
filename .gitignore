@@ -357,7 +357,9 @@ A-4E-C/Sounds/Effects/
 A-4E-C/Sounds/EditorMusic/
 A-4E-C/Sounds/NewSounds/
 A-4E-C/Cockpit/Shapes/
+binaries/
 
 #Ignore Optional Headers
 A-4E-C/ExternalFM/FM/optional_headers/
 
+*.dds

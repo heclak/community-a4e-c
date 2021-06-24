@@ -81,7 +81,7 @@ function add_1000ft_profile_scribe(max_range_nm)
     scribe.element_params = {"RADAR_PROFILE_SCRIBE_"..tostring(max_range_nm).."NM","RADAR_FILTER"}
     scribe.controllers = {
         {"opacity_using_parameter", 0},
-        {"change_color_when_parameter_equal_to_number", 1, 1, 0.66, 0.22, 0.0},
+        {"change_color_when_parameter_equal_to_number", 1, 1, 0.02, 0.001, 0.0}, -- temporary, to be overridden in 2.1
     }
     scribe.additive_alpha   = true
 
@@ -135,7 +135,7 @@ for i=1,max_blobs do
         {"move_up_down_using_parameter", 0, 0.0383},
         {"move_left_right_using_parameter", 1, 0.0383},
         {"opacity_using_parameter",2},
-        {"change_color_when_parameter_equal_to_number", 3, 1, 0.66, 0.22, 0.0},
+        {"change_color_when_parameter_equal_to_number", 3, 1, 0.02, 0.001, 0.0}, -- temporary, to be overridden in 2.1
     }
 
     radar_blob.use_mipfilter    = true

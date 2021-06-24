@@ -253,35 +253,35 @@ declare_loadout(	--150 gal tank
 )
 
 
-declare_loadout(	--D-704 BUDDY POD
-	{
-		category		= CAT_FUEL_TANKS,
-		CLSID			= "{D-704_BUDDY_POD}",
-		attribute		=  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
-		Picture			= "d-704.png",
-		displayName		= _("D-704 Refueling Pod"),
-		Weight_Empty	= 719*POUNDS_TO_KG,
-		Weight			= 719*POUNDS_TO_KG + 300*GALLON_TO_KG,
-		Cx_pil			= 0.0030,
-		shape_table_data =
-		{
-			{
-				name 	= "D-704_POD_A4E",
-				file	= "D-704_pod_A4E";
-				life	= 1;
-				fire	= { 0, 1};
-				username	= "D-704_POD_A4E";
-				index	= WSTYPE_PLACEHOLDER;
-			},
-		},
-		Elements	=
-		{
-			{
-				ShapeName	= "D-704_POD_A4E",
-			},
-		},
-	}
-)
+-- declare_loadout(	--D-704 BUDDY POD
+-- 	{
+-- 		category		= CAT_FUEL_TANKS,
+-- 		CLSID			= "{D-704_BUDDY_POD}",
+-- 		attribute		=  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
+-- 		Picture			= "d-704.png",
+-- 		displayName		= _("D-704 Refueling Pod"),
+-- 		Weight_Empty	= 719*POUNDS_TO_KG,
+-- 		Weight			= 719*POUNDS_TO_KG + 300*GALLON_TO_KG,
+-- 		Cx_pil			= 0.0030,
+-- 		shape_table_data =
+-- 		{
+-- 			{
+-- 				name 	= "D-704_POD_A4E",
+-- 				file	= "D-704_pod_A4E";
+-- 				life	= 1;
+-- 				fire	= { 0, 1};
+-- 				username	= "D-704_POD_A4E";
+-- 				index	= WSTYPE_PLACEHOLDER;
+-- 			},
+-- 		},
+-- 		Elements	=
+-- 		{
+-- 			{
+-- 				ShapeName	= "D-704_POD_A4E",
+-- 			},
+-- 		},
+-- 	}
+-- )
 
 
 ---------AIR AIR--------------

@@ -6,6 +6,7 @@ dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 dofile(LockOn_Options.script_path.."sound_params.lua")
+dofile(LockOn_Options.script_path.."ControlsIndicator/ControlsIndicator_api.lua") 
 
 function debug_print(x)
     --print_message_to_user(x)
@@ -613,6 +614,8 @@ function update()
     end
 	efm_data_bus.fm_setEngineThrottle(throttle_pos)
     throttle_position:set(throttle_pos)
+
+    ControlsIndicator_api:setThrottle(throttle_pos)
 end
 
 

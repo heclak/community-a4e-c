@@ -1,4 +1,4 @@
-name = "Community A-4E II: Winter Splinter"
+name = "Community A-4E IV: Sea Otter"
 countries = {
     "ABH",  --Abkhazia
     "ARG",  --Argentina
@@ -53,10 +53,10 @@ countries = {
 
 livery =
 {
-  {"Top", DIFFUSE, "a4e_community2_top", true};
-  {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet_hi", true};
+  {"Top", DIFFUSE, "a4e_community4_top", true};
+  {"Top", ROUGHNESS_METALLIC, "a4e_community4_top_RoughMet", true};
   {"Bottom", DIFFUSE, "a4e_community_bot", true};
-  {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet_hi", true};
+  {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet_ul", true};
   {"Gear and metal", DIFFUSE, "a4e_community_bot", true};
   {"Cockpit", DIFFUSE, "a4e_community_bot", true};
   --{"Front",	0, "a4e_ext_front", true};
@@ -88,8 +88,8 @@ livery =
   {"wing_100", DIFFUSE, "empty", true};
 
   -- 2-digit large nose numbers, used on USN/USMC aggressors
-  {"nose_aggressor_001", DIFFUSE, "a4e_bort_red-white_smooth", true};
-  {"nose_aggressor_010", DIFFUSE, "a4e_bort_red-white_smooth", true};
+  {"nose_aggressor_001", DIFFUSE, "a4e_bort_white_smooth_small_1s", true};
+  {"nose_aggressor_010", DIFFUSE, "a4e_bort_white_smooth_small_10s", true};
 
   -- 3-digit large tail numbers, used on some USN/USMC aggressors
   {"tail_001", DIFFUSE, "empty", true};

@@ -79,17 +79,16 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, Gvad, Sidekick65, Hel
 
 [See full changelog](https://github.com/heclak/community-a4e-c/blob/master/CHANGELOG.md)
 
-### Known Bugs
+### Known Bugs and Incompatibilities
 
+- Incompatible with the CH-53E "Super Stallion" mod (due to a DCS bug). At this time, there is no solution for this incompatibility short of the user choosing to keep only one of these two modules installed.
 - Pilot blacks out when hooking into SuperCarrier (throttle up hard to cat-in!)
 - Fuel system cuts off if auto pause is left on for too long
 - Throttle position occasionally stuck in OFF position after rearm
-- APC system is underresponsive
 - Some missions created in DCS 2.7 or later render navigation system inoperable
 - TEST press can cause ECM panel lights to stick on
 - IN RANGE lamp flickers when TEST is pressed
 - AN/ASN-41 navigation BDHI needle animations swapped in test mode
-- Switch position slightly off for Fuel Trans Bypass and Dead Recon
 
 [see full issue list](https://github.com/heclak/community-a4e-c/issues/)
 
@@ -165,7 +164,7 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 **Q: Is there a paint kit I can use to create my own A-4E-C liveries?**
 
-- Yes! This [A-4E-C Paintkit](https://drive.google.com/open?id=19w_bD8xHJiZpAi1JbA2xyPDJpl9dje-4) includes the aircraft’s top, bottom and fuel tanks. See the included liveries for lua examples. If you created liveries for older versions of the A-4E-C, you might want to update them to accommodate new changes in the external model in the newer version.
+- Yes! This [A-4E-C Paintkit](https://drive.google.com/open?id=19w_bD8xHJiZpAi1JbA2xyPDJpl9dje-4) includes the aircraft’s top, bottom and fuel tanks. See the included liveries for lua examples. If you created liveries for older versions of the A-4E-C, you might need to update them to accommodate new changes in the external model in the newer version.
 
 **Q: Can I fly the A-4E-C as a tanker?**
 
@@ -185,12 +184,17 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 - As there's no in-engine way of de-flagging this, you'll need to get hands-on with your mission files.
 You may or may not already know that the *.miz* mission files are, in fact, *.zip* files. So, take the mission file you desire to edit, and make a copy with a *.zip* extension. Find somewhere handy to unzip it.
-- Inside, you will find a *mission* file (no extension). Open this file in your text-editor of choice, and search required to find the mission's list of required modules, and then remove the A-4E-C entry from the list, as shown in Line 32 in this screenshot:
+- Inside, you will find a *mission* file (no extension). Open this file in your text-editor of choice, and search required to find the mission's list of required modules under the **["requiredModules"]**  listings, and then remove the A-4E-C entry from the list, as shown in Line 32 in this screenshot:
 
-![Image of a mission file with the A4-E-C required module on Line 32](https://cdn.discordapp.com/attachments/757126581729886328/847194735167799346/unknown.png)
+![Image of a mission file with the A4-E-C required module on Line 32](https://cdn.discordapp.com/attachments/518815335013679104/851940052627095633/unknown.png)
 
 - Save the mission file, and re-create a new *.zip* (carefully maintaining proper folder structure, *bien sur*) and renaming it with a *.miz* file extension.
 - Test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS should display any A4-E-C units as default-livery Su-27s, and players without the module should not be able to take control of the module, as if they did not own a for-pay aircraft.
+
+**Q: Are there any plans to do other variants or later models of the A-4?**
+
+- There are no plans no keen interest to pursue this. There is a lot left to add for our beloved A-4E-C, and the advanced avionics in later models would not be able to be completed in a satisfying manner.
+
 
 **Q: Are there any plans to make the module official, obtain the Eagle Dynamics SDK, or make the module a part of the default DCS install package?**
 

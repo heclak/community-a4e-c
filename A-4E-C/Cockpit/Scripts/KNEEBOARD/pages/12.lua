@@ -6,7 +6,7 @@ SetScale(FOV)
 -- RADIO PRESETS
 
 -- add background image for kneeboard
-add_picture(LockOn_Options.script_path.."../Textures/a4e_cockpit_kneeboard_weapons.png")
+add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_1_radio.png")
 
 local gettext = require("i_18n")
 _ = gettext.translate
@@ -142,7 +142,7 @@ txt_BoardTitle				= CreateElement "ceStringPoly"
 txt_BoardTitle.name			= "txt_BoardTitle"
 txt_BoardTitle.material		= "font_kneeboard_white"
 txt_BoardTitle.init_pos		= {0.0, getLineY(0), 0}
-txt_BoardTitle.value		= _("RADIO PRESETS - UHF AM")
+txt_BoardTitle.value		= _("ARC-51A RADIO PRESETS")
 txt_BoardTitle.alignment	= "CenterBottom"
 txt_BoardTitle.stringdefs	= predefined_font_title
 AddElement(txt_BoardTitle)

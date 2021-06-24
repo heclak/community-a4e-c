@@ -1,3 +1,5 @@
+dofile(LockOn_Options.script_path.."VR_config.lua")
+
 shape_name   	   = "Cockpit_A-4E"
 is_EDM			   = true
 new_model_format   = true
@@ -21,10 +23,10 @@ local controllers = LoRegisterPanelControls()
 
 mirrors_data =
 {
-    center_point 	= {0.2,0.1,0.00},
-    width 		 	= 0.8, --1.2,
+    center_point 	= {0.47,0.06,0.00},
+    width 		 	= 1.4, --1.2,
     aspect 		 	= 1.5,
-	rotation 	 	= math.rad(1);
+	rotation 	 	= math.rad(-10);
 	animation_speed = 2.0;
 	near_clip 		= 0.1;
 	middle_clip		= 10;
