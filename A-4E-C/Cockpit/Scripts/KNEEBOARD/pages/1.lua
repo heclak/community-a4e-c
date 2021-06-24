@@ -29,10 +29,10 @@ add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeb
 2x - WEAPONS
 ================================
 20 -
-21 - Simple Weapon and Bombing Tables
+21 - Weapons, Bombs
 22 - AWRS and CP-741/A
-23 - Snakeyes and Rockets
-24 - Guns and Gunpods
+23 - Guns and Gunpods
+24 - Snakeyes and Rockets
 25 - Missiles: AGM-45A Shrike and AIM-9 Sidewinder, AN/APR-23 Radar Homing and Warning System
 
 ================================
