@@ -53,6 +53,10 @@ static Scooter::Beacon* s_beacon = NULL;
 static void init( const char* config );
 static void cleanup();
 static inline double rawAOAToUnits( double rawAOA );
+static void checkCorruption(const char* str);
+static void dumpMem( unsigned char* ptr, size_t size );
+static void checkCompatibility( const char* path );
+static bool searchFolder( const char* root, const char* folder, const char* file );
 
 //=========================================================================//
 
@@ -63,6 +67,107 @@ static inline int decodeClick( float& value )
 	float normalised = modf( value, &deviceID );
 	value = normalised * 8.0f - 2.0f;
 	return (int)deviceID;
+}
+
+static void dumpMem( unsigned char* ptr, size_t size )
+{
+	printf( "PTR: %p\n", ptr );
+	printf( "Offset | Mem | ASCII\n" );
+	size_t rows = size / 8;
+
+	for ( size_t i = 0; i < rows; i++ )
+	{
+		int offset = (int)i * 8;
+		printf( "%04x | ", offset );
+
+		for ( size_t j = 0; j < 8; j++ )
+		{
+			unsigned char c = ptr[i * 8 + j];
+			printf( "%02x ",  c );
+		}
+
+		printf( "|" );
+
+		for ( size_t j = 0; j < 8; j++ )
+		{
+			unsigned char c = ptr[i * 8 + j];
+
+			if ( isprint( c ) )
+				printf( "%c", c );
+			else
+				printf( "." );
+		}
+
+		printf( "|\n" );
+	}
+
+
+}
+
+bool searchFolder( const char* root, const char* folder, const char* file )
+{
+	char path[200];
+	sprintf_s( path, 200, "%s%s\\%s", root, folder, file );
+	WIN32_FIND_DATAA data;
+	HANDLE fileHandle = FindFirstFileA( path, &data );
+
+	return fileHandle != INVALID_HANDLE_VALUE;
+}
+
+void checkCompatibility(const char* path)
+{
+	char aircraftFolder[200];
+	strcpy_s( aircraftFolder, 200, path );
+
+	char* ptr = aircraftFolder;
+	while ( *ptr )
+	{
+		if ( *ptr == '/' )
+			*ptr = '\\';
+		ptr++;
+	}
+
+	char* lastSlash = strrchr( aircraftFolder, '\\' );
+
+	//WHAT?
+	if ( ! lastSlash )
+		return;
+
+	*(lastSlash + 1) = 0;
+
+	char searchPath[200];
+	sprintf_s( searchPath, 200, "%s*", aircraftFolder );
+
+	WIN32_FIND_DATAA data;
+	HANDLE handle = FindFirstFileA( searchPath, &data );
+	if ( handle == INVALID_HANDLE_VALUE )
+		return;
+
+	bool found = false;
+
+	do
+	{
+		if ( strcmp( data.cFileName, ".." ) == 0 || strcmp( data.cFileName, "." ) == 0 )
+			continue;
+
+		if ( data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY && searchFolder( aircraftFolder, data.cFileName, "CH_53.lua" ) )
+		{
+			found = true;
+			break;
+		}
+	} while ( FindNextFileA( handle, &data ) );
+
+	if ( ! found )
+		return;
+	
+	int selection = MessageBoxA( 
+		NULL, 
+		"The CH-53E mod is completely incompatible with the A-4E-C due to a DCS bug triggered\
+ by the CH-53E configuration. This bug causes memory corruption and undefined behaviour.\
+ To use the A-4E-C uninstall the CH-53E mod.", 
+		"FATAL ERROR - Sikorsky CH-53E Mod Detected", MB_OK | MB_ICONERROR );
+
+	std::terminate();
 }
 
 void init(const char* config)
@@ -635,7 +740,7 @@ void ed_fm_set_draw_args (EdDrawArgument * drawargs,size_t size)
 
 	drawargs[AIRBRAKE].f = s_airframe->getSpeedBrakePosition();
 
-	//drawargs[HOOK].f = s_airframe->getHookPosition();
+	//drawargs[HOOK].f = 1.0;//s_airframe->getHookPosition();
 
 	drawargs[STABILIZER_TRIM].f = s_airframe->getStabilizerAnim();
 
@@ -872,6 +977,11 @@ void ed_fm_suspension_feedback(int idx, const ed_fm_suspension_info* info)
 	{
 		s_airframe->setNoseCompression( info->struct_compression );
 	}
+
+	if ( idx > 2 )
+	{
+		printf( "Something Else\n" );
+	}
 		
 	//
 	//("Force(%lf, %lf, %lf)\n", info->acting_force[0], info->acting_force[1], info->acting_force[2]);
@@ -896,6 +1006,8 @@ void ed_fm_set_plugin_data_install_path ( const char* path )
 	init(path);
 
 	g_safeToRun = isSafeContext();
+
+	checkCompatibility( path );
 }
 
 void ed_fm_configure ( const char* cfg_path )
