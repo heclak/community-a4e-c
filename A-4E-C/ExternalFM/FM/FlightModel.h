@@ -443,7 +443,7 @@ double FlightModel::getLoadFactor() const
 {
 	double lf = (m_lwForce + m_rwForce) / (c_wingStructuralLimit * 2.0);
 	//printf( "Load Factor: %lf\n", lf );
-	return lf;
+	return abs(lf);
 }
 
 void FlightModel::setCockpitShakeModifier( double mod )
