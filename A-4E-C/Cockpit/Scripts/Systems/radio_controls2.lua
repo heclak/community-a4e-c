@@ -123,7 +123,6 @@ function fnc_arc51_volume(value)
         dev:performClickableAction(device_commands.arc51_volume, 0.2, false)
     elseif value > 0.8 then
         dev:performClickableAction(device_commands.arc51_volume, 0.8, false)
-
     else
         arc51_volume = value
     end
@@ -166,6 +165,7 @@ local command_table = {
 }
 
 function SetCommand(command,value)
+
     if command_table[command] ~= nil then
         command_table[command](value)
     -- mode switch
@@ -225,7 +225,7 @@ function arc51_get_current_state()
         elseif arc51_xmit_mode == ARC51_MAN then
             return ARC51_STATE_ON_MANUAL
         else --no other options
-            return ARC_STATE_ON_GUARD
+            return ARC51_STATE_ON_GUARD
         end
     end
 end
@@ -265,7 +265,7 @@ function arc51_transition_state()
     elseif arc51_state == ARC51_STATE_ON_MANUAL then
         uhf_radio_device:set_frequency(arc51_frequency)
     elseif arc51_state == ARC51_STATE_ON_GUARD then
-        uhf_radio_device:set_frequency(253E6) --standard guard frequency
+        uhf_radio_device:set_frequency(243E6) --standard guard frequency
     end
 end
 
