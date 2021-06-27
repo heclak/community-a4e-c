@@ -218,7 +218,7 @@ function arc51_get_current_state()
     if arc51_mode == ARC51_OFF or not get_elec_primary_dc_ok() then
         return ARC51_STATE_OFF
     elseif arc51_mode == ARC51_ADF then
-        return ARC51_ADF --do something about adf later.
+        return ARC51_STATE_OFF --do something about adf later.
     else --must be in TR or TR+G
         if arc51_xmit_mode == ARC51_PRESET then
             return ARC51_STATE_ON_PRESET
