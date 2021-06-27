@@ -189,6 +189,7 @@ join(res.keyCommands,{
     {down = Keys.FuelGaugeInt,                                          name = _('Internal-External Fuel Switch - INT'),            category = {_('Instrument Panel'), _('Misc Switches Panel')}},
     {down = Keys.FuelGaugeExt, up = Keys.FuelGaugeInt,                  name = _('Internal-External Fuel Switch - EXT else INT'),   category = {_('Instrument Panel'), _('Misc Switches Panel')}},
 
+
     -- Armament Panel 
     {down = device_commands.arm_bomb, value_down = 1, cockpit_device_id = devices.WEAPON_SYSTEM,                                                    name = _('BOMB ARM - NOSE & TAIL'),                    category = {_('Instrument Panel'), _('Armament Panel')}},
     {down = device_commands.arm_bomb, value_down = 0, cockpit_device_id = devices.WEAPON_SYSTEM,                                                    name = _('BOMB ARM - OFF'),                            category = {_('Instrument Panel'), _('Armament Panel')}},
@@ -222,6 +223,16 @@ join(res.keyCommands,{
     {down = device_commands.arm_gun, value_down = 1, up = device_commands.arm_gun, value_up = 0, cockpit_device_id = devices.WEAPON_SYSTEM,         name = _('Guns - READY else SAFE'),                    category = {_('Instrument Panel'), _('Armament Panel')}},
     {combos = {{key = '0'}}, down = Keys.MasterArmToggle,                                                                                           name = _('Master Arm Switch Toggle'),                  category = {_('Instrument Panel'), _('Armament Panel')}},
     {down = device_commands.arm_master, value_down = 1, up = device_commands.arm_master, value_up = 0, cockpit_device_id = devices.ELECTRIC_SYSTEM, name = _('Master Arm - ON else OFF'),                  category = {_('Instrument Panel'), _('Armament Panel')}},
+
+    {down = Keys.ArmsEmerSelCW, name = _('Emergency Release Selector Switch - CW'), category = {_('Instrument Panel'), _('Armament Panel')}},
+    {down = Keys.ArmsEmerSelCCW, name = _('Emergency Release Selector Switch - CCW'), category = {_('Instrument Panel'), _('Armament Panel')}},
+    {down = device_commands.arm_emer_sel, value_down = 0.0, cockpit_device_id = devices.WEAPON_SYSTEM,  name = _('Emergency Release Selector - WNG'), category = {_('Instrument Panel'), _('Armament Panel')}},
+    {down = device_commands.arm_emer_sel, value_down = 0.1, cockpit_device_id = devices.WEAPON_SYSTEM,  name = _('Emergency Release Selector - 1'), category = {_('Instrument Panel'), _('Armament Panel')}},
+    {down = device_commands.arm_emer_sel, value_down = 0.2, cockpit_device_id = devices.WEAPON_SYSTEM,  name = _('Emergency Release Selector - 2'), category = {_('Instrument Panel'), _('Armament Panel')}},
+    {down = device_commands.arm_emer_sel, value_down = 0.3, cockpit_device_id = devices.WEAPON_SYSTEM,  name = _('Emergency Release Selector - 3'), category = {_('Instrument Panel'), _('Armament Panel')}},
+    {down = device_commands.arm_emer_sel, value_down = 0.4, cockpit_device_id = devices.WEAPON_SYSTEM,  name = _('Emergency Release Selector - 4'), category = {_('Instrument Panel'), _('Armament Panel')}},
+    {down = device_commands.arm_emer_sel, value_down = 0.5, cockpit_device_id = devices.WEAPON_SYSTEM,  name = _('Emergency Release Selector - 5'), category = {_('Instrument Panel'), _('Armament Panel')}},
+    {down = device_commands.arm_emer_sel, value_down = 0.6, cockpit_device_id = devices.WEAPON_SYSTEM,  name = _('Emergency Release Selector - AL'), category = {_('Instrument Panel'), _('Armament Panel')}},
 
     -- Aircraft Weapons Release System Panel
     {down = Keys.AWRSMultiplierToggle,      name = _('AWE-1 MULTIPLIER Switch - ON/OFF'),       category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},

@@ -223,6 +223,16 @@ join(res.keyCommands,{
     {down = Keys.MasterArmToggle,                                                                                                                   name = _('Master Arm Switch Toggle'),                category = {_('Instrument Panel'), _('Armament Panel')}},
     {down = device_commands.arm_master, value_down = 1, up = device_commands.arm_master, value_up = 0, cockpit_device_id = devices.ELECTRIC_SYSTEM, name = _('Master Arm - ON else OFF'),                category = {_('Instrument Panel'), _('Armament Panel')}},
 
+    {down = Keys.ArmsEmerSelCW, name = _('Emergency Release Selector Switch - CW'), category = {_('Instrument Panel'), _('Armament Panel')}},
+    {down = Keys.ArmsEmerSelCCW, name = _('Emergency Release Selector Switch - CCW'), category = {_('Instrument Panel'), _('Armament Panel')}},
+    {down = device_commands.arm_emer_sel, cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.0, name = _('Emergency Release Selector - WNG'), category = {_('Instrument Panel'), _('Armament Panel')}},
+    {down = device_commands.arm_emer_sel, cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.1, name = _('Emergency Release Selector - 1'), category = {_('Instrument Panel'), _('Armament Panel')}},
+    {down = device_commands.arm_emer_sel, cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.2, name = _('Emergency Release Selector - 2'), category = {_('Instrument Panel'), _('Armament Panel')}},
+    {down = device_commands.arm_emer_sel, cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.3, name = _('Emergency Release Selector - 3'), category = {_('Instrument Panel'), _('Armament Panel')}},
+    {down = device_commands.arm_emer_sel, cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.4, name = _('Emergency Release Selector - 4'), category = {_('Instrument Panel'), _('Armament Panel')}},
+    {down = device_commands.arm_emer_sel, cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.5, name = _('Emergency Release Selector - 5'), category = {_('Instrument Panel'), _('Armament Panel')}},
+    {down = device_commands.arm_emer_sel, cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.6, name = _('Emergency Release Selector - AL'), category = {_('Instrument Panel'), _('Armament Panel')}},
+
     -- Aircraft Weapons Release System Panel
     {down = Keys.AWRSMultiplierToggle,      name = _('AWE-1 MULTIPLIER - ON/OFF'),          category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
     {down = device_commands.AWRS_multiplier, up = device_commands.AWRS_multiplier, cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 1.0, value_up = 0.0, name = _('MULTIPLIER Switch ON else OFF'), category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
@@ -599,7 +609,7 @@ join(res.axisCommands,{
     {action = device_commands.ecm_msl_alert_axis_outer,     cockpit_device_id = devices.RWR,            name = _('ECM - MSL volume (outer knob)'),        category = {_('ECM Control Panel')}},
     
     -- Misc Switches Panel
-    {action = device_commands.shrike_sidewinder_volume,     cockpit_device_id = devices.WEAPON_SYSTEM,  name = _('Missile Volume Knob'),            category = {_('Instrument Panel'), _('Misc Switches Panel')}},
+    {action = device_commands.shrike_sidewinder_volume,   cockpit_device_id = devices.WEAPON_SYSTEM,  name = _('Missile Volume Knob'),            category = {_('Instrument Panel'), _('Misc Switches Panel')}},
 
     -- Radar Control Panel
     {action = device_commands.radar_angle_axis,             cockpit_device_id = devices.RADAR,          name = _('Radar Antenna Tilt - Slew'),      category = {_('Left Console'), _('Radar Control Panel')}},
