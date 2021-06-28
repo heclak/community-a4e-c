@@ -234,14 +234,14 @@ join(res.keyCommands,{
     {down = device_commands.arm_emer_sel, cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 0.6, name = _('Emergency Release Selector - AL'), category = {_('Instrument Panel'), _('Armament Panel')}},
 
     -- Aircraft Weapons Release System Panel
-    {down = Keys.AWRSMultiplierToggle,      name = _('AWE-1 MULTIPLIER - ON/OFF'),          category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
-    {down = device_commands.AWRS_multiplier, up = device_commands.AWRS_multiplier, cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 1.0, value_up = 0.0, name = _('MULTIPLIER Switch ON else OFF'), category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
-    {down = Keys.AWRSQtySelIncrease,        name = _('AWE-1 QTY SEL - CW/Increase'),        category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
-    {down = Keys.AWRSQtySelDecrease,        name = _('AWE-1 QTY SEL - CCW/Decrease'),       category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
-    {down = Keys.AWRSModeSelCCW,            name = _('AWE-1 MODE - CCW'),                   category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
-    {down = Keys.AWRSModeSelCW,             name = _('AWE-1 MODE - CW'),                    category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
-    {down = Keys.AWRS_Drop_Interval_Inc,    name = _('AWE-1 DROP INTVL - Increment'),       category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
-    {down = Keys.AWRS_Drop_Interval_Dec,    name = _('AWE-1 DROP INTVL - Decrement'),       category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
+    {down = Keys.AWRSMultiplierToggle,      name = _('AWE-1 Multiplier Switch - ON/OFF'),       category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
+    {down = device_commands.AWRS_multiplier, up = device_commands.AWRS_multiplier, cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 1.0, value_up = 0.0, name = _('AWE-1 Multiplier Switch Switch - ON else OFF'), category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
+    {down = Keys.AWRSQtySelIncrease,        name = _('AWE-1 Quantity Selector - CW/Increase'),     category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
+    {down = Keys.AWRSQtySelDecrease,        name = _('AWE-1 Quantity Selector - CCW/Decrease'),    category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
+    {down = Keys.AWRSModeSelCW,             name = _('AWE-1 Mode Switch - CW'),                 category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
+    {down = Keys.AWRSModeSelCCW,            name = _('AWE-1 Mode Switch - CCW'),                category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
+    {down = Keys.AWRS_Drop_Interval_Inc,    name = _('AWE-1 Drop Interval - CW/Increase'),           category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
+    {down = Keys.AWRS_Drop_Interval_Dec,    name = _('AWE-1 Drop Interval - CCW/Decrease'),           category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System Panel')}},
 
     -- T-Handles
     {down = device_commands.emer_bomb_release, up = device_commands.emer_bomb_release, cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 1.0, value_up = 0.0,                     name = _('Handles - EMER BOMB Release'),       category = {_('Instrument Panel')}},
