@@ -31,8 +31,8 @@ join(res.keyCommands,{
     ---------------------------------------------
     {combos = {{key = 'Up'}}, down = iCommandPlaneUpStart, up = iCommandPlaneUpStop,                                     name = _('Aircraft Pitch - DOWN'),           category = {_('Aircraft Control')}},
     {combos = {{key = 'Down'}}, down = iCommandPlaneDownStart, up = iCommandPlaneDownStop,                               name = _('Aircraft Pitch - UP'),             category = {_('Aircraft Control')}},
-    {combos = {{key = 'Left'}}, down = iCommandPlaneLeftStart, up = iCommandPlaneLeftStop,                               name = _('Aircraft Bank - LEFT'),            category = {_('Aircraft Control')}},
-    {combos = {{key = 'Right'}}, down = iCommandPlaneRightStart, up = iCommandPlaneRightStop,                            name = _('Aircraft Bank - RIGHT'),           category = {_('Aircraft Control')}},
+    {combos = {{key = 'Left'}}, down = iCommandPlaneLeftStart, up = iCommandPlaneLeftStop,                               name = _('Aircraft Roll - LEFT'),            category = {_('Aircraft Control')}},
+    {combos = {{key = 'Right'}}, down = iCommandPlaneRightStart, up = iCommandPlaneRightStop,                            name = _('Aircraft Roll - RIGHT'),           category = {_('Aircraft Control')}},
     {combos = {{key = 'Z'}}, down = iCommandPlaneLeftRudderStart, up = iCommandPlaneLeftRudderStop,                      name = _('Aircraft Rudder - LEFT'),          category = {_('Aircraft Control')}},
     {combos = {{key = 'X'}}, down = iCommandPlaneRightRudderStart, up = iCommandPlaneRightRudderStop,                    name = _('Aircraft Rudder - RIGHT'),         category = {_('Aircraft Control')}},
 
