@@ -48,7 +48,7 @@ txt_BoardTitle				= CreateElement "ceStringPoly"
 txt_BoardTitle.name			= "txt_BoardTitle"
 txt_BoardTitle.material		= "font_kneeboard_white"
 txt_BoardTitle.init_pos		= {0.0, getLineY(0), 0}
-txt_BoardTitle.value		= "ALE-29 PROGRAMMING"
+txt_BoardTitle.value		= "AN/ALE-29 PROGRAMMER"
 txt_BoardTitle.alignment	= "CenterBottom"
 txt_BoardTitle.stringdefs	= predefined_font_title
 AddElement(txt_BoardTitle)
