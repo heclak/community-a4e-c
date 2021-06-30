@@ -591,18 +591,11 @@ join(res.axisCommands,{
     {combos = defaultDeviceAssignmentFor("roll"),   action = iCommandPlaneRoll,         name = _('Roll'),              category = {_('Aircraft Control')}},
     {combos = defaultDeviceAssignmentFor("pitch"),  action = iCommandPlanePitch,        name = _('Pitch'),             category = {_('Aircraft Control')}},
 	{combos = defaultDeviceAssignmentFor("rudder"), action = iCommandPlaneRudder,		name = _('Rudder'),            category = {_('Aircraft Control')}},
-	{combos = defaultDeviceAssignmentFor("thrust"), action = iCommandPlaneThrustCommon, name = _('Thrust'),            category = {_('Aircraft Control')}},
+	{combos = defaultDeviceAssignmentFor("thrust"), action = iCommandPlaneThrustCommon, name = _('Throttle'),          category = {_('Aircraft Control')}},
     {action = device_commands.wheelbrake_AXIS,                                          name = _('Wheel Brake'),       category = {_('Aircraft Control')}},
     {action = device_commands.left_wheelbrake_AXIS,                                     name = _('Wheel Brake Left'),  category = {_('Aircraft Control')}},
     {action = device_commands.right_wheelbrake_AXIS,                                    name = _('Wheel Brake Right'), category = {_('Aircraft Control')}},
     
-    {action = iCommandViewHorizontalAbs,                                                name = _('Absolute Camera Horizontal View')},
-    {action = iCommandViewVerticalAbs,                                                  name = _('Absolute Camera Vertical View')},
-    {action = iCommandViewZoomAbs,                                                      name = _('Zoom View')},
-    {action = iCommandViewRollAbs,                                                      name = _('Absolute Roll Shift Camera View')},
-    {action = iCommandViewHorTransAbs,                                                  name = _('Absolute Horizontal Shift Camera View')},
-    {action = iCommandViewVertTransAbs,                                                 name = _('Absolute Vertical Shift Camera View')},
-    {action = iCommandViewLongitudeTransAbs,                                            name = _('Absolute Longitude Shift Camera View')},
 
     {combos = {{key = 'TRACKIR_PITCH'}},	action = iHeadTrackerPitchNormed,           name = _('Head Tracker : Pitch')},
     {combos = {{key = 'TRACKIR_YAW'}},  	action = iHeadTrackerYawNormed,             name = _('Head Tracker : Yaw')},
@@ -633,6 +626,8 @@ join(res.axisCommands,{
     -- Aircraft Weapons Release System Panel
     {action = device_commands.AWRS_drop_interval_AXIS,      cockpit_device_id = devices.WEAPON_SYSTEM,  name = _('AWRS Drop Interval Knob'),                category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
     
+    --{action = iCommandWheelBrake,		name = _('Wheel Brake')},
+
     {action = device_commands.GunsightBrightness,              cockpit_device_id = devices.GUNSIGHT,    name = _('Gunsight Light Control'),                 category = {_('Instrument Panel'), _('Gunsight Panel')}},
     {action = device_commands.GunsightElevationControl_AXIS,   cockpit_device_id = devices.GUNSIGHT,    name = _('Gunsight Elevation Control'),             category = {_('Instrument Panel'), _('Gunsight Panel')}},
 
