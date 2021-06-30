@@ -68,7 +68,7 @@ elements["PNT_131"] = default_2_position_tumb("Manual Fuel Shutoff Catch",device
 elements["PNT_125"] = default_2_position_tumb("Oxygen Switch", devices.AVIONICS, device_commands.oxygen_switch, 125, TOGGLECLICK_LEFT_MID)
 
 -- RADAR CONTROL PANEL #6
-elements["PNT_120"] = multiposition_switch_limited( "APG-53A Radar Mode", devices.RADAR, device_commands.radar_mode, 120, 5, 0.10, nil, nil, KNOBCLICK_LEFT_MID )
+elements["PNT_120"] = multiposition_switch_limited( "AN/APG-53A Radar Mode", devices.RADAR, device_commands.radar_mode, 120, 5, 0.10, nil, nil, KNOBCLICK_LEFT_MID )
 elements["PNT_120"].animated        = {true, true}
 elements["PNT_120"].animation_speed = {4, 4}  -- multiply these numbers by the base 1.0 second animation speed to get final speed.  4 means animates in 0.25 seconds.
 elements["PNT_121"] = default_2_position_tumb( "Radar AoA Compensation", devices.RADAR, device_commands.radar_aoacomp, 121, TOGGLECLICK_LEFT_MID)
@@ -84,14 +84,14 @@ elements["PNT_139"] = default_button("Accelerometer Reset", devices.AVIONICS, de
 elements["PNT_146"] = default_button("Stopwatch", devices.CLOCK, device_commands.clock_stopwatch, 146)
 
 -- ANGLE OF ANGLE INDEXER
-elements["PNT_853"] = default_axis_limited( "AoA Indexer Dimming Wheel", devices.AVIONICS, device_commands.AOA_dimming_wheel_AXIS, 853, 1.0, 0.2, false, false, {-1,1} )
+elements["PNT_853"] = default_axis_limited("AoA Indexer Dimming Wheel", devices.AVIONICS, device_commands.AOA_dimming_wheel_AXIS, 853, 1.0, 0.2, false, false, {-1,1} )
 
 -- AFCS PANEL #8  (Aircraft Flight Control System)
 elements["PNT_160"] = default_2_position_tumb("AFCS Standby Switch",devices.AFCS, device_commands.afcs_standby,160, TOGGLECLICK_LEFT_AFT)
 elements["PNT_161"] = default_2_position_tumb("AFCS Engage Switch",devices.AFCS, device_commands.afcs_engage,161, TOGGLECLICK_LEFT_AFT)
 elements["PNT_162"] = default_2_position_tumb("AFCS Heading Select Switch",devices.AFCS, device_commands.afcs_hdg_sel,162, TOGGLECLICK_LEFT_AFT)
 elements["PNT_163"] = default_2_position_tumb("AFCS Altitude Switch",devices.AFCS, device_commands.afcs_alt,163, TOGGLECLICK_LEFT_AFT)
-elements["PNT_164"] = default_axis_limited( "AFCS Heading Select Pull-to-Set Knob ", devices.AFCS, device_commands.afcs_hdg_set, 164, 0.0, 0.3, false, true, {0,1} )
+elements["PNT_164"] = default_axis_limited("AFCS Heading Select Pull-to-Set Knob", devices.AFCS, device_commands.afcs_hdg_set, 164, 0.0, 0.3, false, true, {0,1} )
 elements["PNT_165"] = default_2_position_tumb("AFCS Stability Augmentation Switch (Yaw Damper)",devices.AFCS, device_commands.afcs_stab_aug,165, TOGGLECLICK_LEFT_AFT)
 elements["PNT_166"] = default_2_position_tumb("AFCS Aileron Trim (unimplemented)",devices.AFCS, device_commands.afcs_ail_trim,166, TOGGLECLICK_LEFT_AFT)
 
@@ -193,7 +193,7 @@ elements["PNT_891"] = default_2_position_tumb("Gunsight Day-Night Switch",device
 elements["PNT_892"] = default_movable_axis("Gunsight Elevation Control", devices.GUNSIGHT, device_commands.GunsightKnob, 892, 1.0, 0.05, false, false)
 
 -- ARN-52V TACAN
-elements["PNT_900"] = multiposition_switch_limited("TACAN Mode", devices.NAV, device_commands.tacan_mode, 900, 4, 0.1, false, nil, KNOBCLICK_RIGHT_MID)
+elements["PNT_900"] = multiposition_switch_limited("AN/ARN-52 TACAN Mode", devices.NAV, device_commands.tacan_mode, 900, 4, 0.1, false, nil, KNOBCLICK_RIGHT_MID)
 elements["PNT_900"].animated        = {true, true}
 elements["PNT_900"].animation_speed = {4, 4}  -- multiply these numbers by the base 1.0 second animation speed to get final speed.  4 means animates in 0.25 seconds.
 elements["PNT_901"] = multiposition_switch_limited("TACAN Channel 10s", devices.NAV, device_commands.tacan_ch_major, 901, 13, 0.05, false, nil, KNOBCLICK_RIGHT_MID)
@@ -202,12 +202,12 @@ elements["PNT_902"] = multiposition_switch_limited("TACAN Channel 1s", devices.N
 elements["PNT_903"] = default_axis_limited("TACAN Volume", devices.NAV, device_commands.tacan_volume, 903, 0.0, 0.3, false, false, {-1,1} )
 
 -- DOPPLER NAVIGATION COMPUTER #50 (ASN-41 / APN-153)
-elements["PNT_170"] = multiposition_switch_limited("AN/APN-153 Doppler Radar Mode",devices.NAV, device_commands.doppler_select,170,5,0.1,false,nil, KNOBCLICK_RIGHT_FWD)
+elements["PNT_170"] = multiposition_switch_limited("AN/APN-153 Doppler Navigation Radar Mode",devices.NAV, device_commands.doppler_select,170,5,0.1,false,nil, KNOBCLICK_RIGHT_FWD)
 elements["PNT_170"].animated        = {true, true}
 elements["PNT_170"].animation_speed = {4, 4}  -- multiply these numbers by the base 1.0 second animation speed to get final speed.  4 means animates in 0.25 seconds.
 elements["PNT_247"] = default_button("AN/APN-153 Memory Light Test", devices.NAV, device_commands.doppler_memory_test, 247)
 
-elements["PNT_176"] = multiposition_switch_limited("AN/ASN-41 Function Selector Switch",devices.NAV, device_commands.nav_select,176,5,0.1,false,nil, KNOBCLICK_RIGHT_FWD)
+elements["PNT_176"] = multiposition_switch_limited("AN/ASN-41 Function Selector",devices.NAV, device_commands.nav_select,176,5,0.1,false,nil, KNOBCLICK_RIGHT_FWD)
 elements["PNT_176"].animated        = {true, true}
 elements["PNT_176"].animation_speed = {4, 4}  -- multiply these numbers by the base 1.0 second animation speed to get final speed.  4 means animates in 0.25 seconds.
 
@@ -273,7 +273,7 @@ elements["PNT_222"] = multiposition_switch_limited("Navigation Lights Switch", d
 elements["PNT_223"] = multiposition_switch_limited("Tail Light Switch", devices.EXT_LIGHTS, device_commands.extlight_tail, 223, 3, 1, true, -1.0, TOGGLECLICK_RIGHT_MID)
 
 -- MISC SWITCHES PANEL #53
-elements["PNT_250"] = multiposition_switch_limited("MCL (ILCS) Channel Selector", devices.MCL, device_commands.mcl_channel_selector, 250, 20, 0.05, false, nil, KNOBCLICK_RIGHT_AFT, 2)
+elements["PNT_250"] = multiposition_switch_limited("MCL Channel Selector", devices.MCL, device_commands.mcl_channel_selector, 250, 20, 0.05, false, nil, KNOBCLICK_RIGHT_AFT, 2)
 elements["PNT_251"] = springloaded_3_pos_tumb("Seat Adjustment (unimplemented)", devices.AVIONICS, device_commands.seat_adjustment, 251, false, KNOBCLICK_RIGHT_MID)
 elements["PNT_252"] = default_2_position_tumb("Emergency Generator Switch", devices.ELECTRIC_SYSTEM, device_commands.emer_gen_bypass, 252, TOGGLECLICK_RIGHT_AFT)
 elements["PNT_253"] = springloaded_forward_only_3_pos_tumb("AN/ARA-63 MCL Power Switch", devices.MCL, device_commands.mcl_power_switch, 253, false, TOGGLECLICK_RIGHT_AFT)
@@ -302,7 +302,7 @@ elements["PNT_367"] = multiposition_switch_limited("Radio Frequency 10 MHz", dev
 elements["PNT_368"] = multiposition_switch_limited("Radio Frequency 1 MHz", devices.RADIO, device_commands.arc51_freq_ooXoo, 368, 10, 0.1, false, 0, KNOBCLICK_RIGHT_MID)
 elements["PNT_369"] = multiposition_switch_limited("Radio Frequency 50 kHz", devices.RADIO, device_commands.arc51_freq_oooXX, 369, 20, 0.05, false, 0, KNOBCLICK_RIGHT_MID)
 elements["PNT_370"] = default_2_position_tumb("Radio Squelch Disable", devices.RADIO, device_commands.arc51_squelch, 370, TOGGLECLICK_RIGHT_MID)
-elements["PNT_372"] = multiposition_switch_limited("AN/ARC-51 UHF Radio Mode", devices.RADIO, device_commands.arc51_mode, 372, 4, 0.1, false, 0, KNOBCLICK_RIGHT_MID)
+elements["PNT_372"] = multiposition_switch_limited("AN/ARC-51 UHF Radio Mode Switch", devices.RADIO, device_commands.arc51_mode, 372, 4, 0.1, false, 0, KNOBCLICK_RIGHT_MID)
 
 -- COMPASS CONTROLLER
 elements["PNT_509"] = default_axis_limited("Compass Latitude Knob", devices.COMPASS, device_commands.COMPASS_latitude, 509, 0, 0.3, false, false, {-1,1})
@@ -329,17 +329,17 @@ elements["PNT_1243"].animation_speed = {15, 15}
 elements["PNT_1243"].sound = {{EMER_BOMB_PULL, EMER_BOMB_RELEASE}}
 
 -- ECM panel
-elements["PNT_503"] = default_2_position_tumb("ECM Audio Switch",devices.RWR,device_commands.ecm_apr25_audio,	503,TOGGLECLICK_LEFT_MID)
+elements["PNT_503"] = default_2_position_tumb("Audio ALQ Switch",devices.RWR,device_commands.ecm_apr25_audio,	503,TOGGLECLICK_LEFT_MID)
 elements["PNT_504"] = default_2_position_tumb("APR-25 Switch",	devices.RWR, device_commands.ecm_apr25_off,		504,TOGGLECLICK_LEFT_MID)
 elements["PNT_501"] = default_2_position_tumb("APR-27 Switch",	devices.RWR, device_commands.ecm_apr27_off,		501,TOGGLECLICK_LEFT_MID)
 
 elements["PNT_507"] = default_button("APR-27 Test", devices.RWR, device_commands.ecm_systest_upper, 507)--,TOGGLECLICK_LEFT_MID)
 elements["PNT_510"] = default_button("APR-27 Light", devices.RWR, device_commands.ecm_systest_lower, 510)--,TOGGLECLICK_LEFT_MID)
 
-elements["PNT_506"] = default_axis_limited( "ECM PRF Volume (Inner Knob)", devices.RWR, device_commands.ecm_msl_alert_axis_inner, 506, 0.0, 0.3, false, false, {-0.8,0.8} )
-elements["PNT_505"] = default_axis_limited( "ECM Missile Volume (Outer Knob)", devices.RWR, device_commands.ecm_msl_alert_axis_outer, 505, 0.0, 0.3, false, false, {-0.8,0.8} )
+elements["PNT_506"] = default_axis_limited( "PRF Volume", devices.RWR, device_commands.ecm_msl_alert_axis_inner, 506, 0.0, 0.3, false, false, {-0.8,0.8} )
+elements["PNT_505"] = default_axis_limited( "Missile Alert Volume", devices.RWR, device_commands.ecm_msl_alert_axis_outer, 505, 0.0, 0.3, false, false, {-0.8,0.8} )
 
-elements["PNT_502"] = multiposition_switch_limited("ECM Function Selector",devices.RWR, device_commands.ecm_selector_knob,502,4,0.33,false,0.0,KNOBCLICK_MID_FWD, 5)
+elements["PNT_502"] = multiposition_switch_limited("AN/APR-23 Function Selector",devices.RWR, device_commands.ecm_selector_knob,502,4,0.33,false,0.0,KNOBCLICK_MID_FWD, 5)
 
 -- AIR CONDITIONING PANEL
 elements["PNT_1251"] = default_2_position_tumb("Cabin Pressure Switch", devices.ELECTRIC_SYSTEM, device_commands.cabin_pressure , 224, TOGGLECLICK_LEFT_MID)

@@ -364,6 +364,7 @@ Keys =
     AWRS_Drop_Interval_Dec         = __custom_counter(),
     ArmsEmerSelCW                  = __custom_counter(),
     ArmsEmerSelCCW                 = __custom_counter(),
+    FuelControl                    = __custom_counter(),
 }
 
 start_command   = 3000

@@ -76,7 +76,7 @@ Engine:listen_command(Keys.Engine_Stop)
 Engine:listen_command(device_commands.ENGINE_manual_fuel_shutoff)
 --Engine:listen_command(device_commands.throttle_axis)
 Engine:listen_command(Keys.Fuel_Transfer_Bypass_Toggle)
-
+Engine:listen_command(Keys.FuelControl)
 
 function post_initialize()
 
@@ -280,6 +280,8 @@ function SetCommand(command,value)
         fuel_transfer_bypass_valve = fuel_transfer_bypass_state
         dev:performClickableAction((device_commands.fuel_transfer_bypass), ((fuel_transfer_bypass_state * -1) +1), false)
         fuel_transfer_bypass_state = (fuel_transfer_bypass_valve * -1) +1
+    elseif command == Keys.FuelControl then
+        dev:performClickableAction((device_commands.ENGINE_fuel_control_sw), ((manual_fuel_control_mode_sw * -1) +1), false)
     else
         -- print_message_to_user("engine unknown cmd: "..command.."="..tostring(value))
     end

@@ -21,18 +21,18 @@ add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeb
 ================================
 10 - 
 11 - Navigation Log
-12 - ARC-51A UHF Radio Presets
+12 - AN/ARC-51A UHF Radio
 13 - MCL (ILS/ICLS) Data
-14 - CBU and Countermeasures Configuration
+14 - AN/ALE-29A Pogrammer
 
 ================================
 2x - WEAPONS
 ================================
 20 -
 21 - Weapons, Bombs
-22 - AWRS and CP-741/A
-23 - Guns and Gunpods
-24 - Snakeyes and Rockets
+22 - AWRS, CP-741/A
+23 - Guns, Gunpods
+24 - Rockets
 25 - Missiles: AGM-45A Shrike and AIM-9 Sidewinder, AN/APR-23 Radar Homing and Warning System
 
 ================================
