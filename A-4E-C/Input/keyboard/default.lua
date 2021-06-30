@@ -21,65 +21,65 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- Systems ----------------------------------
     ---------------------------------------------
-    {combos = {{key = 'E', reformers = {'LCtrl'}}}, down = iCommandPlaneEject,                                              name = _('Alternate Ejection Handle (3 times)'),    category = {_('Aircraft Control'), _('Emergency')}},
-    {combos = {{key = 'W'}}, down = Keys.BrakesOn, up = Keys.BrakesOff,                                                     name = _('Wheel Brake - ON else OFF'),              category = {_('Aircraft Control')}},
-	{combos = {{key = 'W', reformers = {'LShift'}}}, down = Keys.BrakesOnLeft, up = Keys.BrakesOffLeft,						name = _('Wheel Brake Left - ON else OFF'), 	    category = {_('Aircraft Control')}},
-	{combos = {{key = 'W', reformers = {'LAlt'}}}, down = Keys.BrakesOnRight, up = Keys.BrakesOffRight,						name = _('Wheel Brake Right - ON else OFF'),        category = {_('Aircraft Control')}},
+    {combos = {{key = 'E', reformers = {'LCtrl'}}}, down = iCommandPlaneEject,                                              name = _('Alternate Ejection Handle (3 times)'),    category = {_('Systems'), _('Emergency')}},
+    {combos = {{key = 'W'}}, down = Keys.BrakesOn, up = Keys.BrakesOff,                                                     name = _('Wheel Brake - ON else OFF'),              category = {_('Systems')}},
+	{combos = {{key = 'W', reformers = {'LShift'}}}, down = Keys.BrakesOnLeft, up = Keys.BrakesOffLeft,						name = _('Wheel Brake Left - ON else OFF'), 	    category = {_('Systems')}},
+	{combos = {{key = 'W', reformers = {'LAlt'}}}, down = Keys.BrakesOnRight, up = Keys.BrakesOffRight,						name = _('Wheel Brake Right - ON else OFF'),        category = {_('Systems')}},
 
     ---------------------------------------------
-    -- Aircraft Control -------------------------
+    -- Flight Control -------------------------
     ---------------------------------------------
-    {combos = {{key = 'Up'}}, down = iCommandPlaneUpStart, up = iCommandPlaneUpStop,                                     name = _('Aircraft Pitch - DOWN'),           category = {_('Stick'), _('Aircraft Control')}},
-    {combos = {{key = 'Down'}}, down = iCommandPlaneDownStart, up = iCommandPlaneDownStop,                               name = _('Aircraft Pitch - UP'),             category = {_('Stick'), _('Aircraft Control')}},
-    {combos = {{key = 'Left'}}, down = iCommandPlaneLeftStart, up = iCommandPlaneLeftStop,                               name = _('Aircraft Roll - LEFT'),            category = {_('Stick'), _('Aircraft Control')}},
-    {combos = {{key = 'Right'}}, down = iCommandPlaneRightStart, up = iCommandPlaneRightStop,                            name = _('Aircraft Roll - RIGHT'),           category = {_('Stick'), _('Aircraft Control')}},
-    {combos = {{key = 'Z'}}, down = iCommandPlaneLeftRudderStart, up = iCommandPlaneLeftRudderStop,                      name = _('Aircraft Rudder - LEFT'),          category = {_('Stick'), _('Aircraft Control')}},
-    {combos = {{key = 'X'}}, down = iCommandPlaneRightRudderStart, up = iCommandPlaneRightRudderStop,                    name = _('Aircraft Rudder - RIGHT'),         category = {_('Stick'), _('Aircraft Control')}},
+    {combos = {{key = 'Up'}}, down = iCommandPlaneUpStart, up = iCommandPlaneUpStop,                                     name = _('Aircraft Pitch - DOWN'),           category = {_('Stick'), _('Flight Control')}},
+    {combos = {{key = 'Down'}}, down = iCommandPlaneDownStart, up = iCommandPlaneDownStop,                               name = _('Aircraft Pitch - UP'),             category = {_('Stick'), _('Flight Control')}},
+    {combos = {{key = 'Left'}}, down = iCommandPlaneLeftStart, up = iCommandPlaneLeftStop,                               name = _('Aircraft Roll - LEFT'),            category = {_('Stick'), _('Flight Control')}},
+    {combos = {{key = 'Right'}}, down = iCommandPlaneRightStart, up = iCommandPlaneRightStop,                            name = _('Aircraft Roll - RIGHT'),           category = {_('Stick'), _('Flight Control')}},
+    {combos = {{key = 'Z'}}, down = iCommandPlaneLeftRudderStart, up = iCommandPlaneLeftRudderStop,                      name = _('Aircraft Rudder - LEFT'),          category = {_('Stick'), _('Flight Control')}},
+    {combos = {{key = 'X'}}, down = iCommandPlaneRightRudderStart, up = iCommandPlaneRightRudderStop,                    name = _('Aircraft Rudder - RIGHT'),         category = {_('Stick'), _('Flight Control')}},
 
     ---------------------------------------------
     -- Stick ------------------------------------
     ---------------------------------------------
-    {combos = {{key = '.', reformers = {'RCtrl'}}}, pressed = Keys.TrimUp, up = Keys.TrimStop,       name = _('Trimmer Switch - NOSE UP'),          category = {_('Stick'), _('Aircraft Control')}},
-    {combos = {{key = ';', reformers = {'RCtrl'}}}, pressed = Keys.TrimDown, up = Keys.TrimStop,     name = _('Trimmer Switch - NOSE DOWN'),        category = {_('Stick'), _('Aircraft Control')}},
-    {combos = {{key = ',', reformers = {'RCtrl'}}}, pressed = Keys.TrimLeft, up = Keys.TrimStop,     name = _('Trimmer Switch - LEFT WING DOWN'),   category = {_('Stick'), _('Aircraft Control')}},
-    {combos = {{key = '/', reformers = {'RCtrl'}}}, pressed = Keys.TrimRight, up = Keys.TrimStop,    name = _('Trimmer Switch - RIGHT WING DOWN'),  category = {_('Stick'), _('Aircraft Control')}},
-    {combos = {{key = 'T', reformers = {'LCtrl'}}}, pressed = Keys.TrimCancel, up = Keys.TrimStop,   name = _('Trimmer Reset (Hold)'),              category = {_('Stick'), _('Aircraft Control')}},
+    {combos = {{key = '.', reformers = {'RCtrl'}}}, pressed = Keys.TrimUp, up = Keys.TrimStop,       name = _('Trimmer Switch - NOSE UP'),          category = {_('Stick'), _('Flight Control')}},
+    {combos = {{key = ';', reformers = {'RCtrl'}}}, pressed = Keys.TrimDown, up = Keys.TrimStop,     name = _('Trimmer Switch - NOSE DOWN'),        category = {_('Stick'), _('Flight Control')}},
+    {combos = {{key = ',', reformers = {'RCtrl'}}}, pressed = Keys.TrimLeft, up = Keys.TrimStop,     name = _('Trimmer Switch - LEFT WING DOWN'),   category = {_('Stick'), _('Flight Control')}},
+    {combos = {{key = '/', reformers = {'RCtrl'}}}, pressed = Keys.TrimRight, up = Keys.TrimStop,    name = _('Trimmer Switch - RIGHT WING DOWN'),  category = {_('Stick'), _('Flight Control')}},
+    {combos = {{key = 'T', reformers = {'LCtrl'}}}, pressed = Keys.TrimCancel, up = Keys.TrimStop,   name = _('Trimmer Reset (Hold)'),              category = {_('Stick'), _('Flight Control')}},
     {combos = {{key = 'Space'}}, down = Keys.PlaneFireOn, up = Keys.PlaneFireOff,                    name = _('Gun-Rocket Trigger'),                category = {_('Stick'), _('Weapons')}},
     {combos = {{key = 'Space', reformers = {'LAlt'}}}, down = Keys.PickleOn,	up = Keys.PickleOff, name = _('Bomb Release Button'),               category = {_('Stick'), _('Weapons')}},
-    {combos = {{key = 'A', reformers = {'LCtrl'}}}, down = Keys.AFCSOverride,                        name = _('AFCS Override Button'),              category = {_('Stick'), _('Aircraft Control')}},
+    {combos = {{key = 'A', reformers = {'LCtrl'}}}, down = Keys.AFCSOverride,                        name = _('AFCS Override Button'),              category = {_('Stick'), _('AFCS Control Panel')}},
     {combos = {{key = 'Back'}}, down = Keys.ToggleStick,                                             name = _('Control Stick - HIDE/SHOW'),         category = {_('Stick'), _('View'), _('View Cockpit')}},
-    {down = Keys.nws_engage, up = Keys.nws_disengage,                                                name = _('Nose Wheel Steering - ON else OFF'), category = {_('Stick'), _('Aircraft Control')}},
+    {down = Keys.nws_engage, up = Keys.nws_disengage,                                                name = _('Nose Wheel Steering - ON else OFF'), category = {_('Stick'), _('Systems')}},
 
     ---------------------------------------------
     -- Throttle Quadrant ------------------------
     ---------------------------------------------
-    {combos = {{key = 'PageUp'}}, down = iCommandPlaneAUTIncreaseRegime,                                name = _('Throttle Position - Increment'),                  category = {_('Throttle Quadrant'), _('Aircraft Control')}},
-    {combos = {{key = 'PageDown'}}, down = iCommandPlaneAUTDecreaseRegime,                              name = _('Throttle Position - Decrement'),                  category = {_('Throttle Quadrant'), _('Aircraft Control')}},
-    {combos = {{key = 'Num+'}}, pressed = iCommandThrottleIncrease, up = iCommandThrottleStop,          name = _('Throttle Position Continuous - Increase'),        category = {_('Throttle Quadrant'), _('Aircraft Control')}},
-    {combos = {{key = 'Num-'}}, pressed = iCommandThrottleDecrease, up = iCommandThrottleStop,          name = _('Throttle Position Continuous - Decrease'),        category = {_('Throttle Quadrant'), _('Aircraft Control')}},
+    {combos = {{key = 'PageUp'}}, down = iCommandPlaneAUTIncreaseRegime,                                name = _('Throttle Position - Increment'),                  category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {combos = {{key = 'PageDown'}}, down = iCommandPlaneAUTDecreaseRegime,                              name = _('Throttle Position - Decrement'),                  category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {combos = {{key = 'Num+'}}, pressed = iCommandThrottleIncrease, up = iCommandThrottleStop,          name = _('Throttle Position Continuous - Increase'),        category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {combos = {{key = 'Num-'}}, pressed = iCommandThrottleDecrease, up = iCommandThrottleStop,          name = _('Throttle Position Continuous - Decrease'),        category = {_('Throttle Quadrant'), _('Flight Control')}},
 
-    {down = device_commands.throttle_click_ITER, value_down = 1, cockpit_device_id = devices.ENGINE,    name = _('Throttle Step Up - OFF/IGN/IDLE'),                category = {_('Throttle Quadrant'), _('Aircraft Control')}},
-    {down = device_commands.throttle_click_ITER, value_down = -1, cockpit_device_id = devices.ENGINE,   name = _('Throttle Step Down - OFF/IGN/IDLE'),              category = {_('Throttle Quadrant'), _('Aircraft Control')}},
+    {down = device_commands.throttle_click_ITER, value_down = 1, cockpit_device_id = devices.ENGINE,    name = _('Throttle Step Up - OFF/IGN/IDLE'),                category = {_('Throttle Quadrant'), _('Engine Control Panel')}},
+    {down = device_commands.throttle_click_ITER, value_down = -1, cockpit_device_id = devices.ENGINE,   name = _('Throttle Step Down - OFF/IGN/IDLE'),              category = {_('Throttle Quadrant'), _('Engine Control Panel')}},
 
-    {down = Keys.ExtLightMaster, value_down = 1,                                                        name = _('Master Exterior Lights Switch - ON'),             category = {_('Throttle Grip')}},
-    {down = Keys.ExtLightMaster, value_down = 0,                                                        name = _('Master Exterior Lights Switch - OFF'),            category = {_('Throttle Grip')}},
-    {down = Keys.ExtLightMasterToggle,                                                                  name = _('Master Exterior Lights Switch - ON/OFF'),         category = {_('Throttle Grip')}},
-    {down = Keys.ExtLightMaster, value_down = 1, up = Keys.ExtLightMaster, value_up = 0,                name = _('Master Exterior Lights Switch - ON else OFF'),    category = {_('Throttle Grip')}},
-    {combos = {{key = 'B'}}, down = iCommandPlaneAirBrake,                                              name = _('Speedbrake Switch - OPEN/CLOSE'),                 category = {_('Throttle Grip'), _('Aircraft Control')}},
-    {down = iCommandPlaneAirBrakeOn, up = iCommandPlaneAirBrakeOff,                                     name = _('Speedbrake Switch - OPEN else CLOSE'),            category = {_('Throttle Grip'), _('Aircraft Control')}},
-    {combos = {{key = 'B', reformers = {'LShift'}}}, down = iCommandPlaneAirBrakeOn,                    name = _('Speedbrake Switch - OPEN'),                       category = {_('Throttle Grip'), _('Aircraft Control')}},
-    {combos = {{key = 'B', reformers = {'LCtrl'}}}, down = iCommandPlaneAirBrakeOff,                    name = _('Speedbrake Switch - CLOSE'),                      category = {_('Throttle Grip'), _('Aircraft Control')}},
+    {down = Keys.ExtLightMaster, value_down = 1,                                                        name = _('Master Exterior Lights Switch - ON'),             category = {_('Throttle Grip'), _('Exterior Lights Control Panel')}},
+    {down = Keys.ExtLightMaster, value_down = 0,                                                        name = _('Master Exterior Lights Switch - OFF'),            category = {_('Throttle Grip'), _('Exterior Lights Control Panel')}},
+    {down = Keys.ExtLightMasterToggle,                                                                  name = _('Master Exterior Lights Switch - ON/OFF'),         category = {_('Throttle Grip'), _('Exterior Lights Control Panel')}},
+    {down = Keys.ExtLightMaster, value_down = 1, up = Keys.ExtLightMaster, value_up = 0,                name = _('Master Exterior Lights Switch - ON else OFF'),    category = {_('Throttle Grip'), _('Exterior Lights Control Panel')}},
+    {combos = {{key = 'B'}}, down = iCommandPlaneAirBrake,                                              name = _('Speedbrake Switch - OPEN/CLOSE'),                 category = {_('Throttle Grip'), _('Flight Control')}},
+    {down = iCommandPlaneAirBrakeOn, up = iCommandPlaneAirBrakeOff,                                     name = _('Speedbrake Switch - OPEN else CLOSE'),            category = {_('Throttle Grip'), _('Flight Control')}},
+    {combos = {{key = 'B', reformers = {'LShift'}}}, down = iCommandPlaneAirBrakeOn,                    name = _('Speedbrake Switch - OPEN'),                       category = {_('Throttle Grip'), _('Flight Control')}},
+    {combos = {{key = 'B', reformers = {'LCtrl'}}}, down = iCommandPlaneAirBrakeOff,                    name = _('Speedbrake Switch - CLOSE'),                      category = {_('Throttle Grip'), _('Flight Control')}},
 
-    {combos = {{key = 'Z', reformers = {'RCtrl'}}}, pressed = Keys.TrimLeftRudder, up = Keys.TrimStop,  name = _('Rudder Trim Switch - Rudder Left'),               category = {_('Throttle Quadrant'), _('Aircraft Control')}},
-    {combos = {{key = 'X', reformers = {'RCtrl'}}}, pressed = Keys.TrimRightRudder, up = Keys.TrimStop, name = _('Rudder Trim Switch - Rudder Right'),              category = {_('Throttle Quadrant'), _('Aircraft Control')}},
+    {combos = {{key = 'Z', reformers = {'RCtrl'}}}, pressed = Keys.TrimLeftRudder, up = Keys.TrimStop,  name = _('Rudder Trim Switch - Rudder Left'),               category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {combos = {{key = 'X', reformers = {'RCtrl'}}}, pressed = Keys.TrimRightRudder, up = Keys.TrimStop, name = _('Rudder Trim Switch - Rudder Right'),              category = {_('Throttle Quadrant'), _('Flight Control')}},
 
     -- Flap Switch
-    {combos = {{key = 'F'}}, down = iCommandPlaneFlaps,                                                 name = _('Flaps Switch - UP/DOWN'),                         category = {_('Throttle Quadrant'), _('Aircraft Control')}},
-    {combos = {{key = 'F', reformers = {'LCtrl'}}}, down = iCommandPlaneFlapsOn,                        name = _('Flaps Switch - DOWN'),                            category = {_('Throttle Quadrant'), _('Aircraft Control')}},
-    {combos = {{key = 'F', reformers = {'LShift'}}}, down = iCommandPlaneFlapsOff,                      name = _('Flaps Switch - UP'),                              category = {_('Throttle Quadrant'), _('Aircraft Control')}},
-    {combos = {{key = 'F', reformers = {'LAlt'}}}, down = Keys.PlaneFlapsStop,                          name = _('Flaps Switch - STOP'),                            category = {_('Throttle Quadrant'), _('Aircraft Control')}},
-    {down = Keys.PlaneFlapsDownHotas, up = Keys.PlaneFlapsStop,                                         name = _('Flaps Switch - DOWN else STOP'),                  category = {_('Throttle Quadrant'), _('Aircraft Control')}},
-    {down = Keys.PlaneFlapsUpHotas, up = Keys.PlaneFlapsStop,                                           name = _('Flaps Switch - UP else STOP'),                    category = {_('Throttle Quadrant'), _('Aircraft Control')}},
+    {combos = {{key = 'F'}}, down = iCommandPlaneFlaps,                                                 name = _('Flaps Switch - UP/DOWN'),                         category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {combos = {{key = 'F', reformers = {'LCtrl'}}}, down = iCommandPlaneFlapsOn,                        name = _('Flaps Switch - DOWN'),                            category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {combos = {{key = 'F', reformers = {'LShift'}}}, down = iCommandPlaneFlapsOff,                      name = _('Flaps Switch - UP'),                              category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {combos = {{key = 'F', reformers = {'LAlt'}}}, down = Keys.PlaneFlapsStop,                          name = _('Flaps Switch - STOP'),                            category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {down = Keys.PlaneFlapsDownHotas, up = Keys.PlaneFlapsStop,                                         name = _('Flaps Switch - DOWN else STOP'),                  category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {down = Keys.PlaneFlapsUpHotas, up = Keys.PlaneFlapsStop,                                           name = _('Flaps Switch - UP else STOP'),                    category = {_('Throttle Quadrant'), _('Flight Control')}},
     
     ---------------------------------------------
     -- AN/ALE-29A Chaff Control Panel -----------
@@ -135,32 +135,32 @@ join(res.keyCommands,{
     {down = device_commands.GunsightDayNight, up = device_commands.GunsightDayNight, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.GUNSIGHT,    name = _('Gunsight Day-Night Switch - DAY else NIGHT'),         category = {_('Instrument Panel'), _('Gunsight Panel')}},
 
     -- Stopwatch
-    {down = device_commands.clock_stopwatch, up = device_commands.clock_stopwatch, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.CLOCK, name = _('Stopwatch - START/STOP/RESET'), category = {_('Instrument Panel')}},
+    {down = device_commands.clock_stopwatch, up = device_commands.clock_stopwatch, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.CLOCK, name = _('Stopwatch - START/STOP/RESET'), category = {_('Instrument Panel'), _('Systems')}},
 
     -- Altimeter
-    {combos = {{key = '=', reformers = {'RShift'}}}, down = Keys.AltPressureInc,                                            name = _('Altimeter Pressure - Rotary Increment'),         category = {_('Instrument Panel')}},
-    {combos = {{key = '-', reformers = {'RShift'}}}, down = Keys.AltPressureDec,                                            name = _('Altimeter Pressure - Rotary Decrement'),         category = {_('Instrument Panel')}},
-    {down = Keys.AltPressureStartUp, up = Keys.AltPressureStop,                                                             name = _('Altimeter Pressure - Continuous Increase'),      category = {_('Instrument Panel')}},
-    {down = Keys.AltPressureStartDown, up = Keys.AltPressureStop,                                                           name = _('Altimeter Pressure - Continuous Decrease'),      category = {_('Instrument Panel')}},
+    {combos = {{key = '=', reformers = {'RShift'}}}, down = Keys.AltPressureInc,                                            name = _('Altimeter Pressure - Rotary Increment'),         category = {_('Instrument Panel'), _('Systems')}},
+    {combos = {{key = '-', reformers = {'RShift'}}}, down = Keys.AltPressureDec,                                            name = _('Altimeter Pressure - Rotary Decrement'),         category = {_('Instrument Panel'), _('Systems')}},
+    {down = Keys.AltPressureStartUp, up = Keys.AltPressureStop,                                                             name = _('Altimeter Pressure - Continuous Increase'),      category = {_('Instrument Panel'), _('Systems')}},
+    {down = Keys.AltPressureStartDown, up = Keys.AltPressureStop,                                                           name = _('Altimeter Pressure - Continuous Decrease'),      category = {_('Instrument Panel'), _('Systems')}},
 
     -- APN-141 Radar Altimeter
-    {combos = {{key = '-', reformers = {'RCtrl','RShift'}}}, down = Keys.RadarAltToggle,                                    name = _('Radar Altitude Warning - ON/OFF'),                category = {_('Instrument Panel')}},
-    {down = Keys.RadarAltWarningUp,                                                                                         name = _('Radar Altitude Warning - Rotary Increment'),      category = {_('Instrument Panel')}},
-    {down = Keys.RadarAltWarningDown,                                                                                       name = _('Radar Altitude Warning - Rotary Decrement'),      category = {_('Instrument Panel')}},
-    {combos = {{key = '=', reformers = {'RCtrl'}}}, down = Keys.RadarAltWarningStartUp, up = Keys.RadarAltWarningStop,      name = _('Radar Altitude Warning - Continuous Increase'),   category = {_('Instrument Panel')}},
-    {combos = {{key = '-', reformers = {'RCtrl'}}}, down = Keys.RadarAltWarningStartDown, up = Keys.RadarAltWarningStop,    name = _('Radar Altitude Warning - Continuous Decrease'),   category = {_('Instrument Panel')}},
+    {combos = {{key = '-', reformers = {'RCtrl','RShift'}}}, down = Keys.RadarAltToggle,                                    name = _('Radar Altitude Warning - ON/OFF'),                category = {_('Instrument Panel'), _('Systems')}},
+    {down = Keys.RadarAltWarningUp,                                                                                         name = _('Radar Altitude Warning - Rotary Increment'),      category = {_('Instrument Panel'), _('Systems')}},
+    {down = Keys.RadarAltWarningDown,                                                                                       name = _('Radar Altitude Warning - Rotary Decrement'),      category = {_('Instrument Panel'), _('Systems')}},
+    {combos = {{key = '=', reformers = {'RCtrl'}}}, down = Keys.RadarAltWarningStartUp, up = Keys.RadarAltWarningStop,      name = _('Radar Altitude Warning - Continuous Increase'),   category = {_('Instrument Panel'), _('Systems')}},
+    {combos = {{key = '-', reformers = {'RCtrl'}}}, down = Keys.RadarAltWarningStartDown, up = Keys.RadarAltWarningStop,    name = _('Radar Altitude Warning - Continuous Decrease'),   category = {_('Instrument Panel'), _('Systems')}},
 
     -- Landing Gear Handle
-    {combos = {{key = 'G'}}, down = Keys.PlaneGear,                                                                         name = _('Landing Gear Handle - UP/DOWN'),                  category = {_('Instrument Panel'), _('Aircraft Control')}},
-    {combos = {{key = 'G', reformers = {'LCtrl'}}}, down = Keys.PlaneGearUp,                                                name = _('Landing Gear Handle - UP'),                       category = {_('Instrument Panel'), _('Aircraft Control')}},
-    {combos = {{key = 'G', reformers = {'LShift'}}}, down = Keys.PlaneGearDown,                                             name = _('Landing Gear Handle - DOWN'),                     category = {_('Instrument Panel'), _('Aircraft Control')}},
-    {down = iCommandPlaneGearUp, up = iCommandPlaneGearDown,                                                                name = _('Landing Gear Handle - UP else DOWN'),             category = {_('Instrument Panel'), _('Aircraft Control')}},
+    {combos = {{key = 'G'}}, down = Keys.PlaneGear,                                                                         name = _('Landing Gear Handle - UP/DOWN'),                  category = {_('Instrument Panel'), _('Systems')}},
+    {combos = {{key = 'G', reformers = {'LCtrl'}}}, down = Keys.PlaneGearUp,                                                name = _('Landing Gear Handle - UP'),                       category = {_('Instrument Panel'), _('Systems')}},
+    {combos = {{key = 'G', reformers = {'LShift'}}}, down = Keys.PlaneGearDown,                                             name = _('Landing Gear Handle - DOWN'),                     category = {_('Instrument Panel'), _('Systems')}},
+    {down = iCommandPlaneGearUp, up = iCommandPlaneGearDown,                                                                name = _('Landing Gear Handle - UP else DOWN'),             category = {_('Instrument Panel'), _('Systems')}},
 
     -- Arresting Hook Handle
-    {combos = {{key = 'G', reformers = {'LAlt'}}}, down = Keys.PlaneHook,                                                   name = _('Tail Hook Handle - UP/DOWN'),                     category = {_('Instrument Panel'), _('Aircraft Control')}},
-    {down = Keys.PlaneHookUp,                                                                                               name = _('Tail Hook Handle - UP'),                          category = {_('Instrument Panel'), _('Aircraft Control')}},
-    {down = Keys.PlaneHookDown,                                                                                             name = _('Tail Hook Handle - DOWN'),                        category = {_('Instrument Panel'), _('Aircraft Control')}},
-    {down = Keys.PlaneHookUp, up = Keys.PlaneHookDown,                                                                      name = _('Tail Hook Handle - UP else DOWN'),                category = {_('Instrument Panel'), _('Aircraft Control')}},
+    {combos = {{key = 'G', reformers = {'LAlt'}}}, down = Keys.PlaneHook,                                                   name = _('Tail Hook Handle - UP/DOWN'),                     category = {_('Instrument Panel'), _('Systems')}},
+    {down = Keys.PlaneHookUp,                                                                                               name = _('Tail Hook Handle - UP'),                          category = {_('Instrument Panel'), _('Systems')}},
+    {down = Keys.PlaneHookDown,                                                                                             name = _('Tail Hook Handle - DOWN'),                        category = {_('Instrument Panel'), _('Systems')}},
+    {down = Keys.PlaneHookUp, up = Keys.PlaneHookDown,                                                                      name = _('Tail Hook Handle - UP else DOWN'),                category = {_('Instrument Panel'), _('Systems')}},
 
     -- Misc Switches Panel
     {down = Keys.RadarTCPlanProfile, value_down = 1,                                                                                           name = _('Radar Terrain Clearance - PROFILE'),            category = {_('Instrument Panel'), _('Misc Switches Control Panel'), _('AN/APG-53A Radar')}},
@@ -180,14 +180,14 @@ join(res.keyCommands,{
 
     {down = device_commands.master_test, up = device_commands.master_test, value_down = 1, value_up = 0, cockpit_device_id = devices.AVIONICS, name = _('Master Test Switch - ON else OFF'),             category = {_('Instrument Panel'), _('Misc Switches Control Panel')}},
 
-    {down = Keys.MissileVolumeInc,                                      name = _('Shrike/Sidewinder/Missile Volume Knob - Increment'),                category = {_('Instrument Panel'), _('Misc Switches Control Panel'), _('Weapons')}},
-    {down = Keys.MissileVolumeDec,                                      name = _('Shrike/Sidewinder/Missile Volume Knob - Decrement'),                category = {_('Instrument Panel'), _('Misc Switches Control Panel'), _('Weapons')}},
-    {down = Keys.MissileVolumeStartUp, up = Keys.MissileVolumeStop,     name = _('Shrike/Sidewinder/Missile Volume Knob - Continuous Increase'),      category = {_('Instrument Panel'), _('Misc Switches Control Panel'), _('Weapons')}},
-    {down = Keys.MissileVolumeStartDown, up = Keys.MissileVolumeStop,   name = _('Shrike/Sidewinder/Missile Volume Knob - Continuous Decrease'),      category = {_('Instrument Panel'), _('Misc Switches Control Panel'), _('Weapons')}},
+    {down = Keys.MissileVolumeInc,                                      name = _('Shrike/Sidewinder Volume Knob - Increment'),                  category = {_('Instrument Panel'), _('Misc Switches Control Panel'), _('Weapons')}},
+    {down = Keys.MissileVolumeDec,                                      name = _('Shrike/Sidewinder Volume Knob - Decrement'),                  category = {_('Instrument Panel'), _('Misc Switches Control Panel'), _('Weapons')}},
+    {down = Keys.MissileVolumeStartUp, up = Keys.MissileVolumeStop,     name = _('Shrike/Sidewinder Volume Knob - Continuous Increase'),        category = {_('Instrument Panel'), _('Misc Switches Control Panel'), _('Weapons')}},
+    {down = Keys.MissileVolumeStartDown, up = Keys.MissileVolumeStop,   name = _('Shrike/Sidewinder Volume Knob - Continuous Decrease'),        category = {_('Instrument Panel'), _('Misc Switches Control Panel'), _('Weapons')}},
 
-    {down = Keys.FuelGaugeExt,                                          name = _('Internal-External Fuel Switch - EXT'),            category = {_('Instrument Panel'), _('Misc Switches Control Panel')}},
-    {down = Keys.FuelGaugeInt,                                          name = _('Internal-External Fuel Switch - INT'),            category = {_('Instrument Panel'), _('Misc Switches Control Panel')}},
-    {down = Keys.FuelGaugeExt, up = Keys.FuelGaugeInt,                  name = _('Internal-External Fuel Switch - EXT else INT'),   category = {_('Instrument Panel'), _('Misc Switches Control Panel')}},
+    {down = Keys.FuelGaugeExt,                                          name = _('Internal-External Fuel Switch - EXT'),                        category = {_('Instrument Panel'), _('Misc Switches Control Panel'), _('Refueling')}},
+    {down = Keys.FuelGaugeInt,                                          name = _('Internal-External Fuel Switch - INT'),                        category = {_('Instrument Panel'), _('Misc Switches Control Panel'), _('Refueling')}},
+    {down = Keys.FuelGaugeExt, up = Keys.FuelGaugeInt,                  name = _('Internal-External Fuel Switch - EXT else INT'),               category = {_('Instrument Panel'), _('Misc Switches Control Panel'), _('Refueling')}},
 
     -- Armament Panel 
     {down = device_commands.arm_bomb, value_down = 1, cockpit_device_id = devices.WEAPON_SYSTEM,                                                    name = _('Bomb Arm Switch - NOSE & TAIL'),              category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
@@ -277,15 +277,15 @@ join(res.keyCommands,{
     {down = Keys.APCHotStdCold, value_down = 1, up = Keys.APCHotStdCold, value_up = 0,        name = _('APC Temperature Switch - HOT else STD'),    category = {_('Console Left'), _('APC Control Panel')}},
     
     -- JATO Control Panel
-    {combos = {{key = 'S'}}, down = Keys.SpoilersArmToggle,                                   name = _('Spoiler Arm Switch - ARM/OFF'),             category = {_('Console Left'), _('JATO Control Panel'), _('Aircraft Control')}},
-    {down = Keys.SpoilersArmOn,                                                               name = _('Spoiler Arm Switch - ARM'),                 category = {_('Console Left'), _('JATO Control Panel'), _('Aircraft Control')}},
-    {down = Keys.SpoilersArmOff,                                                              name = _('Spoiler Arm Switch - OFF'),                 category = {_('Console Left'), _('JATO Control Panel'), _('Aircraft Control')}},
-    {down = Keys.SpoilersArmOn, up = Keys.SpoilersArmOff,                                     name = _('Spoiler Arm Switch - ARM else OFF'),        category = {_('Console Left'), _('JATO Control Panel'), _('Aircraft Control')}},
-    {down = Keys.JATOFiringButton,                                                            name = _('JATO Firing Button (ALE-29A Burst)'),       category = {_('Console Left'), _('JATO Control Panel'), _('AN/ALE-29A Chaff Dispensing System')}},
+    {combos = {{key = 'S'}}, down = Keys.SpoilersArmToggle,                                   name = _('Spoiler Arm Switch - ARM/OFF'),             category = {_('Console Left'), _('JATO Control Panel'), _('Systems')}},
+    {down = Keys.SpoilersArmOn,                                                               name = _('Spoiler Arm Switch - ARM'),                 category = {_('Console Left'), _('JATO Control Panel'), _('Systems')}},
+    {down = Keys.SpoilersArmOff,                                                              name = _('Spoiler Arm Switch - OFF'),                 category = {_('Console Left'), _('JATO Control Panel'), _('Systems')}},
+    {down = Keys.SpoilersArmOn, up = Keys.SpoilersArmOff,                                     name = _('Spoiler Arm Switch - ARM else OFF'),        category = {_('Console Left'), _('JATO Control Panel'), _('Systems')}},
+    {down = Keys.JATOFiringButton,                                                            name = _('JATO Firing Button (ALE-29A Burst)'),       category = {_('Console Left'), _('JATO Control Panel'), _('Systems'), _('AN/ALE-29A Chaff Dispensing System')}},
 
     -- Engine Control Panel
-    {combos = {{key = 'Home', reformers = {'RShift'}}}, down = Keys.Engine_Start,                                                                                   name = _('Engine Starter Switch - START'),                                      category = {_('Console Left'), _('Engine Control Panel'), _('Aircraft Control')}}, _('Emergency')}},
-    {combos = {{key = 'End', reformers = {'RShift'}}}, down = Keys.Engine_Stop,                                                                                     name = _('Engine Starter Switch - ABORT'),                                      category = {_('Console Left'), _('Engine Control Panel'), _('Aircraft Control')}}, _('Emergency')}},
+    {combos = {{key = 'Home', reformers = {'RShift'}}}, down = Keys.Engine_Start,                                                                                   name = _('Engine Starter Switch - START'),                                      category = {_('Console Left'), _('Engine Control Panel'), _('Emergency')}},
+    {combos = {{key = 'End', reformers = {'RShift'}}}, down = Keys.Engine_Stop,                                                                                     name = _('Engine Starter Switch - ABORT'),                                      category = {_('Console Left'), _('Engine Control Panel'), _('Emergency')}},
     {down = device_commands.ENGINE_drop_tanks_sw, up = device_commands.ENGINE_drop_tanks_sw, value_down = 1, value_up = 0, cockpit_device_id = devices.ENGINE,      name = _('Drop Tank Pressurization Switch - UP/DROP TANKS else PRESS'),         category = {_('Console Left'), _('Engine Control Panel'), _('Refueling')}},
     {down = device_commands.ENGINE_drop_tanks_sw, up = device_commands.ENGINE_drop_tanks_sw, value_down = -1, value_up = 0, cockpit_device_id = devices.ENGINE,     name = _('Drop Tank Pressurization Switch - DOWN/FLIGHT REFUEL else PRESS'),    category = {_('Console Left'), _('Engine Control Panel'), _('Refueling')}},
     {down = Keys.FuelControl,                                                                                                                                       name = _('Fuel Control Switch - MANUAL/PRIMARY'),                               category = {_('Console Left'), _('Engine Control Panel'), _('Emergency')}},
@@ -351,10 +351,10 @@ join(res.keyCommands,{
     {down = Keys.AFCSHotasEngage,                                                                                                               name = _('AFCS Engage'),                                                            category = {_('Console Left'), _('AFCS Control Panel')}},
 
     -- Oxygen and Anti-G Panel
-    {down = device_commands.oxygen_switch, value_down = 1, cockpit_device_id = devices.AVIONICS,                                                    name = _('Oxygen Switch - ON'),             category = {_('Console Left'), _('Oxygen System')}},
-    {down = device_commands.oxygen_switch, value_down = 0, cockpit_device_id = devices.AVIONICS,                                                    name = _('Oxygen Switch - OFF'),            category = {_('Console Left'), _('Oxygen System')}},
-    {down = device_commands.oxygen_switch, value_down = 1, up = device_commands.oxygen_switch, value_up = 0, cockpit_device_id = devices.AVIONICS,  name = _('Oxygen Switch - ON else OFF'),    category = {_('Console Left'), _('Oxygen System')}},
-    {combos = {{key = 'O'}}, down = Keys.OxygenToggle,                                                                                              name = _('Oxygen Switch - ON/OFF'),         category = {_('Console Left'), _('Oxygen System')}},
+    {down = device_commands.oxygen_switch, value_down = 1, cockpit_device_id = devices.AVIONICS,                                                    name = _('Oxygen Switch - ON'),             category = {_('Console Left'), _('Systems')}},
+    {down = device_commands.oxygen_switch, value_down = 0, cockpit_device_id = devices.AVIONICS,                                                    name = _('Oxygen Switch - OFF'),            category = {_('Console Left'), _('Systems')}},
+    {down = device_commands.oxygen_switch, value_down = 1, up = device_commands.oxygen_switch, value_up = 0, cockpit_device_id = devices.AVIONICS,  name = _('Oxygen Switch - ON else OFF'),    category = {_('Console Left'), _('Systems')}},
+    {combos = {{key = 'O'}}, down = Keys.OxygenToggle,                                                                                              name = _('Oxygen Switch - ON/OFF'),         category = {_('Console Left'), _('Systems')}},
 
     -- Canopy Control
     {combos = {{key = 'C', reformers = {'LCtrl'}}}, down = iCommandPlaneFonar, name = _('Canopy Handle - CLOSE/OPEN'), category = {_('Console Left')}},
@@ -414,13 +414,13 @@ join(res.keyCommands,{
     -- AN/ARN-52 TACAN Control Panel
     --{down = Keys.NavILSPrev,                                                name = _('ILS Channel: Previous'),                category = {_('AN/ARN-52 TACAN')}},
     --{down = Keys.NavILSNext,                                                name = _('ILS Channel: Next'),                    category = {_('AN/ARN-52 TACAN')}},
-    {combos = {{key = '0', reformers = {'LCtrl'}}}, down = Keys.NavReset,     name = _('TACAN and NDB Channel Reset'),          category = {_('AN/ARN-52 TACAN')}},
-    {combos = {{key = 'T', reformers = {'RCtrl'}}}, down = Keys.TacanModeInc, name = _('AN/ARN-52 TACAN Mode - CW'),            category = {_('AN/ARN-52 TACAN')}},
-    {combos = {{key = 'T', reformers = {'RAlt'}}}, down = Keys.TacanModeDec,  name = _('AN/ARN-52 TACAN Mode - CCW'),           category = {_('AN/ARN-52 TACAN')}},
+    {combos = {{key = 'T', reformers = {'RCtrl'}}}, down = Keys.TacanModeInc, name = _('AN/ARN-52 TACAN Mode Switch - CW'),     category = {_('AN/ARN-52 TACAN')}},
+    {combos = {{key = 'T', reformers = {'RAlt'}}}, down = Keys.TacanModeDec,  name = _('AN/ARN-52 TACAN Mode Switch - CCW'),    category = {_('AN/ARN-52 TACAN')}},
     {down = Keys.TacanChMajorInc,                                             name = _('TACAN Channel 10s - Increase'),         category = {_('AN/ARN-52 TACAN')}},
     {down = Keys.TacanChMajorDec,                                             name = _('TACAN Channel 10s - Decrease'),         category = {_('AN/ARN-52 TACAN')}},
     {down = Keys.TacanChMinorInc,                                             name = _('TACAN Channel 1s - Increase'),          category = {_('AN/ARN-52 TACAN')}},
     {down = Keys.TacanChMinorDec,                                             name = _('TACAN Channel 1s - Decrease'),          category = {_('AN/ARN-52 TACAN')}},
+    {combos = {{key = '0', reformers = {'LCtrl'}}}, down = Keys.NavReset,     name = _('TACAN and NDB Channel Reset'),          category = {_('AN/ARN-52 TACAN')}},
     {down = Keys.TacanVolumeInc,                                              name = _('TACAN Volume - Rotary Increase'),       category = {_('AN/ARN-52 TACAN')}},
     {down = Keys.TacanVolumeDec,                                              name = _('TACAN Volume - Rotary Decrease'),       category = {_('AN/ARN-52 TACAN')}},
     {down = Keys.TacanVolumeStartUp, up = Keys.TacanVolumeStop,               name = _('TACAN Volume - Continuous Increase'),   category = {_('AN/ARN-52 TACAN')}},
