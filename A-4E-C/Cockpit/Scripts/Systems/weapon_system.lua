@@ -198,6 +198,9 @@ WeaponSystem:listen_command(Keys.MissileVolumeStop)
 WeaponSystem:listen_command(device_commands.shrike_sidewinder_volume)
 WeaponSystem:listen_command(device_commands.shrike_selector)
 
+WeaponSystem:listen_command(device_commands.shrike_sidewinder_volume)
+WeaponSystem:listen_command(device_commands.shrike_selector)
+
 WeaponSystem:listen_command(device_commands.AWRS_quantity)
 WeaponSystem:listen_command(device_commands.AWRS_drop_interval)
 WeaponSystem:listen_command(device_commands.AWRS_multiplier)
@@ -217,6 +220,9 @@ WeaponSystem:listen_command(Keys.ChangeCBU2BAQuantity)
 WeaponSystem:listen_command(device_commands.JATO_arm)
 WeaponSystem:listen_command(device_commands.JATO_jettison)
 WeaponSystem:listen_command(Keys.JATOFiringButton)
+
+WeaponSystem:listen_command(Keys.ArmsEmerSelCW)
+WeaponSystem:listen_command(Keys.ArmsEmerSelCCW)
 
 local shrike_sidewinder_volume = get_param_handle("SHRIKE_SIDEWINDER_VOLUME")
 local missile_volume_pos = 0
@@ -1326,6 +1332,11 @@ function SetCommand(command,value)
         missile_volume_moving = -1
     elseif command == Keys.MissileVolumeStop then
         missile_volume_moving = 0
+
+    elseif command == Keys.ArmsEmerSelCW then
+        WeaponSystem:performClickableAction(device_commands.arm_emer_sel, clamp(emer_sel_switch / 10 + 0.1, 0, 0.6), false)
+    elseif command == Keys.ArmsEmerSelCCW then
+        WeaponSystem:performClickableAction(device_commands.arm_emer_sel, clamp(emer_sel_switch / 10 - 0.1, 0, 0.6), false)
     end
 end
 

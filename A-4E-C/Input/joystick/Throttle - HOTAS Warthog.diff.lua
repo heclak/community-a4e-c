@@ -32,7 +32,7 @@ local diff = {
 					["key"] = "JOY_BTN22",
 				},
 			},
-			["name"] = "FLAP Switch - UP else STOP",
+			["name"] = "Flaps Switch - UP else STOP",
 		},
 		["d10012pnilu10010cdnilvdnilvpnilvunil"] = {
 			["added"] = {
@@ -40,7 +40,7 @@ local diff = {
 					["key"] = "JOY_BTN23",
 				},
 			},
-			["name"] = "FLAP Switch - DOWN else STOP",
+			["name"] = "Flaps Switch - DOWN else STOP",
 		},
 		["d10016pnilu10017cdnilvdnilvpnilvunil"] = {
 			["name"] = "Gun-Rocket Trigger",

@@ -142,7 +142,7 @@ txt_BoardTitle				= CreateElement "ceStringPoly"
 txt_BoardTitle.name			= "txt_BoardTitle"
 txt_BoardTitle.material		= "font_kneeboard_white"
 txt_BoardTitle.init_pos		= {0.0, getLineY(0), 0}
-txt_BoardTitle.value		= _("ARC-51A RADIO PRESETS")
+txt_BoardTitle.value		= _("AN/ARC-51A UHF RADIO")
 txt_BoardTitle.alignment	= "CenterBottom"
 txt_BoardTitle.stringdefs	= predefined_font_title
 AddElement(txt_BoardTitle)
