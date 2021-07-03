@@ -160,4 +160,18 @@ planes = {
         file = "Syria A-4E-C Free Flight.miz"
     },
 
+    -- Marianas
+    {
+        name = _("Cold Start"),
+        file = "Marianas A-4E-C Cold Start.miz"
+    },
+    {
+        name = _("Carrier Launch - Target Practice"),
+        file = "Marianas A-4E-C Carrier Target Practice.miz"
+    },
+    {
+        name = _("Free Flight"),
+        file = "Marianas A-4E-C Free Flight.miz"
+    },
+
 }
