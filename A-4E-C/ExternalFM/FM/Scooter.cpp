@@ -58,6 +58,9 @@ static void dumpMem( unsigned char* ptr, size_t size );
 static void checkCompatibility( const char* path );
 static bool searchFolder( const char* root, const char* folder, const char* file );
 
+//========================== Static Constants =============================//
+static constexpr bool s_NWSEnabled = false;
+
 //=========================================================================//
 
 //Courtesy of SilentEagle
@@ -816,9 +819,15 @@ double ed_fm_get_param(unsigned index)
 	case ED_FM_SUSPENSION_2_RELATIVE_BRAKE_MOMENT:
 		return s_interface->getChocks() ? 1.0 : s_input->brakeRight();
 	case ED_FM_SUSPENSION_0_WHEEL_SELF_ATTITUDE:
-		return s_interface->getNWS() > 0.5 ? 0.0 : 1.0;
+		if constexpr ( s_NWSEnabled )
+			return s_interface->getNWS() ? 0.0 : 1.0;
+		else
+			return 0.0;
 	case ED_FM_SUSPENSION_0_WHEEL_YAW:
-		return s_interface->getNWS() > 0.5 ? -s_input->yaw() * 0.5 : 0.0; //rotation to 45 degrees, half 90 (range of the wheel)
+		if ( s_NWSEnabled )
+			return s_interface->getNWS() ? -s_input->yaw() * 0.5 : 0.0; //rotation to 45 degrees, half 90 (range of the wheel)
+		else
+			return 0.0;
 	case ED_FM_STICK_FORCE_CENTRAL_PITCH:  // i.e. trimmered position where force feeled by pilot is zero
 		s_input->setFFBEnabled(true);
 		return s_airframe->getElevatorZeroForceDeflection();

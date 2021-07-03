@@ -551,9 +551,9 @@ public:
 		return getParamNumber(m_engineIgnition);
 	}
 
-	inline double getNWS()
+	inline bool getNWS()
 	{
-		return getParamNumber(m_nws);
+		return getParamNumber(m_nws) > 0.5;
 	}
 
 	inline double getCockpitShake()
