@@ -1,4 +1,15 @@
 #pragma once
+//=========================================================================//
+//
+//		FILE NAME	: LuaVM.h
+//		AUTHOR		: Joshua Nelson
+//		DATE		: Feb 2021
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Lua helper, for config files.
+//
+//================================ Includes ===============================//
 #include "../include/Cockpit/ccParametersAPI.h"
 #include "../include/FM/wHumanCustomPhysicsAPI.h"
 #include <vector>
