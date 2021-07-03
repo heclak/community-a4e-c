@@ -17,9 +17,9 @@ nose_amortizer_back_damper_force_factor 	=  nose_damper_force
 
 nose_wheel_moment_of_inertia 				= 0.6
 
---Absolutely no idea what these do but they might be helpful, turns out it breaks everything.
---nose_wheel_kz_factor					= 0.52,
---nose_noise_k							= 0.4,
+--Absolutely no idea what these do but they might be helpful.
+nose_wheel_kz_factor					= 0.3
+nose_noise_k							= 1.0
 
 --MAINGEAR2
 main_amortizer_min_length 					= 0.00
@@ -45,10 +45,16 @@ main_damper_coeff 							= 100.0
 
 main_wheel_moment_of_inertia 				= 2.65
 
-wheel_static_friction_factor_COMMON 		= 0.75
-wheel_side_friction_factor_COMMON 			= 0.6
+wheel_static_friction_factor_COMMON 		= 0.80
+wheel_side_friction_factor_COMMON 			= 0.43
 wheel_roll_friction_factor_COMMON 			= 0.04
 wheel_glide_friction_factor_COMMON 			= 0.15 --this needs to be low to go from standstill to moving smoothly
+
+wheel_static_friction_factor_NOSE 		    = 0.65
+wheel_side_friction_factor_NOSE 			= 0.45
+wheel_roll_friction_factor_NOSE 			= 0.05
+wheel_glide_friction_factor_NOSE 			= 0.15 --this needs to be low to go from standstill to moving smoothly
+
 
 brake_moment_main 							= 5500.0
 
@@ -67,7 +73,7 @@ suspension =
 		mass 									= 50,
 		damage_element 							= 83,
 		moment_of_inertia 						= {10.0,0.5,10.0},--leg
-		wheel_axle_offset 						= 0.1,
+		wheel_axle_offset 						= 0.19,
 		self_attitude 							= true,
 		yaw_limit 								= math.rad(90.0), --so apparently this must be set to half the animation angle for some reason
 		
@@ -84,10 +90,10 @@ suspension =
 		amortizer_back_damper_force_factor 		= nose_amortizer_back_damper_force_factor,
 	
 		wheel_radius = 0.441,
-		wheel_static_friction_factor 			= wheel_static_friction_factor_COMMON,
-		wheel_side_friction_factor 				= wheel_side_friction_factor_COMMON,--affects the abillity to slide in turns - decrease for better turning
-		wheel_roll_friction_factor 				= wheel_roll_friction_factor_COMMON,
-		wheel_glide_friction_factor 			= wheel_glide_friction_factor_COMMON,
+		wheel_static_friction_factor 			= wheel_static_friction_factor_NOSE,
+		wheel_side_friction_factor 				= wheel_side_friction_factor_NOSE,--affects the abillity to slide in turns - decrease for better turning
+		wheel_roll_friction_factor 				= wheel_roll_friction_factor_NOSE,
+		wheel_glide_friction_factor 			= wheel_glide_friction_factor_NOSE,
 		wheel_damage_force_factor 				= 250.0,--/N/ 250 Su-25, damage to tires
 		wheel_damage_speed 						= 200.0,
 		wheel_brake_moment_max 					= 0.0,
