@@ -822,7 +822,7 @@ double ed_fm_get_param(unsigned index)
 		if constexpr ( s_NWSEnabled )
 			return s_interface->getNWS() ? 0.0 : 1.0;
 		else
-			return 0.0;
+			return 1.0; //want castoring when NWS feature is disabled
 	case ED_FM_SUSPENSION_0_WHEEL_YAW:
 		if ( s_NWSEnabled )
 			return s_interface->getNWS() ? -s_input->yaw() * 0.5 : 0.0; //rotation to 45 degrees, half 90 (range of the wheel)
