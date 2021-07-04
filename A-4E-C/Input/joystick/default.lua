@@ -68,7 +68,7 @@ join(res.keyCommands,{
     {combos = {{key = 'JOY_BTN2'}}, down = Keys.PickleOn, up = Keys.PickleOff,          name = _('Bomb Release Button'),               category = {_('Stick'), _('Weapons')}},
     {down = Keys.AFCSOverride,                                                          name = _('AFCS Override Button'),              category = {_('Stick'), _('AFCS Control Panel')}},
     {down = Keys.ToggleStick,                                                           name = _('Control Stick - HIDE/SHOW'),         category = {_('Stick'), _('View'), _('View Cockpit')}},
-    {down = Keys.nws_engage, up = Keys.nws_disengage,                                   name = _('Nose Wheel Steering - ON else OFF'), category = {_('Stick'), _('Systems')}},
+    -- {down = Keys.nws_engage, up = Keys.nws_disengage,                                   name = _('Nose Wheel Steering - ON else OFF'), category = {_('Stick'), _('Systems')}},
 
     ---------------------------------------------
     -- Throttle Quadrant ------------------------

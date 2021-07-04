@@ -334,7 +334,7 @@ wbrakel_scale.vertices          = {
                                     {2.0 * sizeX, line_width},
                                     {2.0 * sizeX, -line_width}
                                   }
-wbrakel_scale.init_pos          = {-sizeX, 0.5 * sizeX}
+wbrakel_scale.init_pos          = {-sizeX, -0.5 * sizeX}
 wbrakel_scale.init_rot          = {0, 0, 0}
 wbrakel_scale.material          = draw_transparent
 wbrakel_scale.parent_element    = pitch_scale.name 
@@ -342,7 +342,7 @@ AddElement(wbrakel_scale)
 
 -- scale WHEELBRAKE RIGHT position
 wbraker_scale                   = Copy(wbrakel_scale)
-wbrakel_scale.init_pos          = {-sizeX, -0.5 * sizeX}
+wbrakel_scale.init_pos          = {-sizeX, 0.5 * sizeX}
 AddElement(wbraker_scale)
 
 -- draw WHEELBRAKE LEFT position
@@ -403,6 +403,7 @@ throttle_p_index.parent_element = throttle_pos1.name
 AddElement(throttle_p_index)
 
 -- draw NOSEWHEEL STEERING status
+--[[
 nws_center                      = Copy(pitch_scale)
 nws_center.vertices             = {
                                     {-2.25 * ds, -2.25 * ds},
@@ -429,6 +430,7 @@ AddElement(nws_index)
 nws_mask                        = Copy(nws_center)
 nws_mask.init_pos               = {-(sizeX + rudder_offset), 0}
 AddElement(nws_mask)
+]]
 
 -- draw PITCH AND ROLL (STICK) position
 stick_position					        = CreateElement "ceTexPoly"
