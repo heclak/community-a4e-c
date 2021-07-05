@@ -422,7 +422,7 @@ nosewheel_pos                       = Copy(nws_center)
 nosewheel_pos.tex_params	          = {394.5 / 512, 256.5 / 512, 2 * tex_scale, 2 * tex_scale}
 nosewheel_pos.material              = draw_input
 nosewheel_pos.element_params        = {ControlsIndicator_api.nosewheel_pos_param_string}
-nosewheel_pos.controllers           = {{"move_up_down_using_parameter", 0, 0.9 * sizeX}}
+nosewheel_pos.controllers           = {{"move_up_down_using_parameter", 0, 1.5 * sizeX}}
 AddElement(nosewheel_pos)
 
 --[[
