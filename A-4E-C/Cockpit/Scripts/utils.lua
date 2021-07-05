@@ -533,6 +533,10 @@ function Constant_Speed_Controller:get_position()
   return self.pos
 end
 
+function Constant_Speed_Controller:set_position(x)
+  self.pos = x
+end
+
 
 
 
