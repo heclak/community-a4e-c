@@ -480,7 +480,13 @@ end
 local tail_hook_param = get_param_handle("D_TAIL_HOOK")
 function update_hook()
     -- NOTE: we do not need to draw this ourselves, SFM always draws it based on built-in capabilities
-    hook_controller:update(HOOK_TARGET)
+    local cur_val = get_aircraft_draw_argument_value(25)
+
+    if math.abs(cur_val - hook_controller:get_position()) < 0.01 then 
+        hook_controller:update(HOOK_TARGET)
+    else
+        hook_controller:set_position(cur_val)
+    end
 
     set_aircraft_draw_argument_value(25,hook_controller:get_position())
 

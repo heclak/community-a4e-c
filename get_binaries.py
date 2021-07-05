@@ -161,7 +161,7 @@ class FileDownloader:
                     gdown.download(file["url"], file["path"], quiet=True)
                 except Exception as e:
                     #print(e)
-                    print("Error: requeuing file...")
+                    print("\nError: requeuing file {}...".format(file["path"]))
                     self.file_queue.append(file)
                     return
 
