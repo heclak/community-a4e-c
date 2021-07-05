@@ -50,7 +50,7 @@ local wheel_roll_friction_factor_COMMON         = 0.04
 local wheel_glide_friction_factor_COMMON        = 0.15 --this needs to be low to go from standstill to moving smoothly
 
 local wheel_static_friction_factor_NOSE         = 0.65
-local wheel_side_friction_factor_NOSE           = 0.45
+local wheel_side_friction_factor_NOSE           = 0.55 --0.45
 local wheel_roll_friction_factor_NOSE           = 0.05
 local wheel_glide_friction_factor_NOSE          = 0.15 --this needs to be low to go from standstill to moving smoothly
 
