@@ -160,6 +160,8 @@ public:
 		m_averageLoadFactor = m_api.pfn_ed_cockpit_get_parameter_handle( "SND_ALWS_DAMAGE_AIRFRAME_STRESS" );
 		m_engineStall = m_api.pfn_ed_cockpit_get_parameter_handle( "SND_INST_ENGINE_STALL" );
 
+		m_wheelBrakeAssist = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_WHEEL_BRAKE_ASSIST" );
+
 	}
 
 	cockpit_param_api& api()
@@ -600,6 +602,11 @@ public:
 	{
 		return getParamNumber( m_rTankCapacity );
 	}
+
+	inline bool getWheelBrakeAssist()
+	{
+		return getParamNumber( m_wheelBrakeAssist ) > 0.5;
+	}
 		 
 	void* m_test = NULL;
 private:
@@ -747,6 +754,8 @@ private:
 	void* m_ADC_CAS = NULL;
 
 	void* m_engineStall = NULL;
+
+	void* m_wheelBrakeAssist = NULL;
 };
 
 

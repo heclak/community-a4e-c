@@ -13,4 +13,7 @@ cdata =
 	A4E_COCKPIT_SHAKE_SLIDER_HELP	  = _('Cockpit Shake due to load on the aircraft.'),
 	A4E_COCKPIT_CSS_TEXT			  = _('CSS Mode FFB Deflection'),
 	A4E_COCKPIT_CSS_HELP			  = _('At what deflection of the stick in % should the AFCS switch to CSS mode. Note only for FFB sticks.'),
+	A4E_WHEEL_BRAKE_ASSIST_CHECK_LABEL = _('Use rudder for differential braking'),
+	A4E_WHEEL_BRAKE_ASSIST_CHECK_TOOLTIP = _('Rudder will be used to control the amount each wheel brake is depressed. '),
+	A4E_WHEEL_BRAKE_ASSIST_CHECK_HELP  = _('With full rudder in either direction and the brake (both) key pressed, the brake in the direction of the rudder will be depressed.'),
 }

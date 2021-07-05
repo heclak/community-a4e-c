@@ -315,7 +315,7 @@ void ed_fm_simulate(double dt)
 	}
 
 	//Update
-	s_input->update();
+	s_input->update(s_interface->getWheelBrakeAssist());
 	s_radio->update();
 	s_engine->updateEngine(dt);
 	s_airframe->airframeUpdate(dt);

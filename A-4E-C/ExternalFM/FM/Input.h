@@ -14,6 +14,7 @@
 //================================ Includes ===============================//
 #include "BaseComponent.h"
 #include "Axis.h"
+#include "Maths.h"
 
 //=========================================================================//
 
@@ -87,7 +88,7 @@ public:
 
 	Input();
 
-	void update();
+	void update(bool brakeAssist);
 
 	virtual void zeroInit()
 	{
@@ -213,7 +214,11 @@ public:
 	}
 	inline const double& brakeLeft() const
 	{
-		return m_leftBrakeAxis.getValue();
+		if ( ! m_brakeAssist )
+			return m_leftBrakeAxis.getValue();
+
+		//Fade the brake linearly based on rudder position.
+		return ( 1.0 - clamp( m_yawAxis.getValue(), 0.0, 1.0 ) ) * m_leftBrakeAxis.getValue();
 	}
 	inline void brakeLeft(double value)
 	{
@@ -221,7 +226,11 @@ public:
 	}
 	inline const double& brakeRight() const
 	{
-		return m_rightBrakeAxis.getValue();
+		if ( ! m_brakeAssist )
+			return m_rightBrakeAxis.getValue();
+
+		//Fade the brake linearly based on rudder position.
+		return (1.0 + clamp( m_yawAxis.getValue(), -1.0, 0.0 )) * m_rightBrakeAxis.getValue();
 	}
 	inline void brakeRight(double value)
 	{
@@ -351,6 +360,7 @@ private:
 	bool m_hook = false;
 	bool m_nosewheelSteering = false;
 	bool m_starter = false;
+	bool m_brakeAssist = false;
 };
 
 }//end namespace

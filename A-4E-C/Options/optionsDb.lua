@@ -38,4 +38,6 @@ return {
 	cockpitShake 			= DbOption.new():setValue(100):slider(Range(0,200)),
 
 	cssActivate				= DbOption.new():setValue(15):slider(Range(1,100)),
+
+	wheelBrakeAssist        = DbOption.new():setValue(false):checkbox(),
 }
