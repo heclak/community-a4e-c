@@ -1,94 +1,92 @@
 --EDITING THIS FILE WILL CAUSE THE EFM TO FAIL.
 --NOSEGEAR
-nose_amortizer_min_length 					= 0.00
-nose_amortizer_max_length 					= 0.25 --0.32
-nose_amortizer_basic_length 				= 0.25
-nose_amortizer_reduce_length 				= 0.01
+local nose_amortizer_min_length                 = 0.00
+local nose_amortizer_max_length                 = 0.25 --0.32
+local nose_amortizer_basic_length               = 0.25
+local nose_amortizer_reduce_length              = 0.01
 
+local nose_amortizer_spring_force_factor        = 3.0e+06
+local nose_amortizer_spring_force_factor_rate   = 2.0
 
-nose_amortizer_spring_force_factor 			= 3.0e+06
-nose_amortizer_spring_force_factor_rate 	= 2.0
+--nose_amortizer_static_force                   = 5e+4
+local nose_amortizer_static_force               = 5256.0 * 9.81 * 0.2
+local nose_damper_force                         = 2.0e+4
+local nose_amortizer_direct_damper_force_factor = nose_damper_force * 0.75
+local nose_amortizer_back_damper_force_factor   = nose_damper_force
 
---nose_amortizer_static_force = 5e+4
-nose_amortizer_static_force 				= 5256.0 * 9.81 * 0.2
-nose_damper_force 							= 2.0e+4
-nose_amortizer_direct_damper_force_factor 	=  nose_damper_force * 0.75
-nose_amortizer_back_damper_force_factor 	=  nose_damper_force
-
-nose_wheel_moment_of_inertia 				= 0.6
+local nose_wheel_moment_of_inertia              = 0.6
 
 --Absolutely no idea what these do but they might be helpful.
-nose_wheel_kz_factor					= 0.3
-nose_noise_k							= 1.0
+local nose_wheel_kz_factor                      = 0.3
+local nose_noise_k                              = 1.0
 
 --MAINGEAR2
-main_amortizer_min_length 					= 0.00
-main_amortizer_max_length 					= 0.67 --0.7
-main_amortizer_basic_length 				= 0.67 --0.7
+local main_amortizer_min_length                 = 0.00
+local main_amortizer_max_length                 = 0.67 --0.7
+local main_amortizer_basic_length               = 0.67 --0.7
 --This is the length over which the amortizer will reduce. Smaller values mean higher ride height, larger values lower ride height.
-main_amortizer_reduce_length 				= 28.0  --yes you read that right, 28 metres.
+local main_amortizer_reduce_length              = 28.0  --yes you read that right, 28 metres.
 
 -- F = kx^y, where x is the displacement from the default position (determined by the reduce length)
 --This is k in the above equation
-main_amortizer_spring_force_factor 			= 7.0e+7
+local main_amortizer_spring_force_factor        = 7.0e+7
 --This is y in the above equation
-main_amortizer_spring_force_factor_rate 	= 3.5
+local main_amortizer_spring_force_factor_rate   = 3.5
 
 --A static force that is there for countering gravity.
-main_amortizer_static_force 				= 5256.0 * 9.81 * 1.08
+local main_amortizer_static_force               = 5256.0 * 9.81 * 1.08
 
-main_damper_force 							= 7.0e+4 --3e+4
-main_amortizer_direct_damper_force_factor 	= main_damper_force * 0.75 --Damping force in the compress direction.
-main_amortizer_back_damper_force_factor 	= main_damper_force --Damping force in the extend direction
+local main_damper_force                         = 7.0e+4 --3e+4
+local main_amortizer_direct_damper_force_factor = main_damper_force * 0.75 --Damping force in the compress direction.
+local main_amortizer_back_damper_force_factor   = main_damper_force --Damping force in the extend direction
 
-main_damper_coeff 							= 100.0
+local main_damper_coeff                         = 100.0
 
-main_wheel_moment_of_inertia 				= 2.65
+local main_wheel_moment_of_inertia              = 2.65
 
-wheel_static_friction_factor_COMMON 		= 0.80
-wheel_side_friction_factor_COMMON 			= 0.43
-wheel_roll_friction_factor_COMMON 			= 0.04
-wheel_glide_friction_factor_COMMON 			= 0.15 --this needs to be low to go from standstill to moving smoothly
+local wheel_static_friction_factor_COMMON       = 0.80
+local wheel_side_friction_factor_COMMON         = 0.43
+local wheel_roll_friction_factor_COMMON         = 0.04
+local wheel_glide_friction_factor_COMMON        = 0.15 --this needs to be low to go from standstill to moving smoothly
 
-wheel_static_friction_factor_NOSE 		    = 0.65
-wheel_side_friction_factor_NOSE 			= 0.45
-wheel_roll_friction_factor_NOSE 			= 0.05
-wheel_glide_friction_factor_NOSE 			= 0.15 --this needs to be low to go from standstill to moving smoothly
+local wheel_static_friction_factor_NOSE         = 0.65
+local wheel_side_friction_factor_NOSE           = 0.45
+local wheel_roll_friction_factor_NOSE           = 0.05
+local wheel_glide_friction_factor_NOSE          = 0.15 --this needs to be low to go from standstill to moving smoothly
 
+local brake_moment_main                         = 5500.0
 
-brake_moment_main 							= 5500.0
-
-wheel_radius_factor 						= 1.0
+local wheel_radius_factor                       = 1.0
 
 --Absolutely no idea what these do but they might be helpful.
-main_wheel_kz_factor					= 0.52
-main_noise_k							= 0.4
+local main_wheel_kz_factor                      = 0.52
+local main_noise_k                              = 0.4
 
-suspension = 
+suspension =
 {
     --NOSEGEAR
     {
-        anti_skid_installed = false,	
-		
+        anti_skid_installed = false,
+
 		mass 									= 50,
 		damage_element 							= 83,
 		moment_of_inertia 						= {10.0,0.5,10.0},--leg
 		wheel_axle_offset 						= 0.19,
 		self_attitude 							= true,
 		yaw_limit 								= math.rad(180.0), --so apparently this must be set to half the animation angle for some reason
-		
+
 		amortizer_min_length 					= nose_amortizer_min_length,
 		amortizer_max_length 					= nose_amortizer_max_length,
 		amortizer_basic_length 					= nose_amortizer_basic_length,
 		amortizer_reduce_length 				= nose_amortizer_reduce_length,
-		
+
 		amortizer_spring_force_factor 			= nose_amortizer_spring_force_factor,
 		amortizer_spring_force_factor_rate 		= nose_amortizer_spring_force_factor_rate,
 
 		amortizer_static_force 					= nose_amortizer_static_force,
 		amortizer_direct_damper_force_factor 	= nose_amortizer_direct_damper_force_factor,
 		amortizer_back_damper_force_factor 		= nose_amortizer_back_damper_force_factor,
-	
+
 		wheel_radius = 0.441,
 		wheel_static_friction_factor 			= wheel_static_friction_factor_NOSE,
 		wheel_side_friction_factor 				= wheel_side_friction_factor_NOSE,--affects the abillity to slide in turns - decrease for better turning
@@ -114,7 +112,7 @@ suspension =
     --MAINGEAR LEFT
     {
         anti_skid_installed = false,
-	
+
 		mass 									= 200.0,
 		damage_element 							= 84,
 		moment_of_inertia 						= {100.0,10.0,100.0},--leg
@@ -126,14 +124,14 @@ suspension =
 		amortizer_max_length 					= main_amortizer_max_length,
 		amortizer_basic_length 					= main_amortizer_basic_length,
 		amortizer_reduce_length 				= main_amortizer_reduce_length,
-		
+
 		amortizer_spring_force_factor 			= main_amortizer_spring_force_factor,
 		amortizer_spring_force_factor_rate 		= main_amortizer_spring_force_factor_rate,
-		
+
 		amortizer_static_force 					= main_amortizer_static_force,
 		amortizer_direct_damper_force_factor 	= main_amortizer_direct_damper_force_factor,
 		amortizer_back_damper_force_factor 		= main_amortizer_back_damper_force_factor,
-	
+
 		wheel_radius 							= 0.609,
 		wheel_static_friction_factor 			= wheel_static_friction_factor_COMMON,
 		wheel_side_friction_factor 				= wheel_side_friction_factor_COMMON,
@@ -159,7 +157,7 @@ suspension =
     --MAINGEAR RIGHT
     {
         anti_skid_installed 					= false,
-		
+
 		mass 									= 200.0,
 		damage_element 							= 85,--?
 		moment_of_inertia 						= {100.0,10.0,100.0},--leg
@@ -171,14 +169,14 @@ suspension =
 		amortizer_max_length 					= main_amortizer_max_length,
 		amortizer_basic_length 					= main_amortizer_basic_length,
 		amortizer_reduce_length 				= main_amortizer_reduce_length,
-		
+
 		amortizer_spring_force_factor 			= main_amortizer_spring_force_factor,
 		amortizer_spring_force_factor_rate 		= main_amortizer_spring_force_factor_rate,
-		
+
 		amortizer_static_force 					= main_amortizer_static_force,
 		amortizer_direct_damper_force_factor 	= main_amortizer_direct_damper_force_factor/2.0,
 		amortizer_back_damper_force_factor 		= main_amortizer_back_damper_force_factor,
-		
+
 		wheel_radius 							= 0.609,
 		wheel_static_friction_factor 			= wheel_static_friction_factor_COMMON,
 		wheel_side_friction_factor 				= wheel_side_friction_factor_COMMON,
