@@ -4,6 +4,7 @@ dofile(LockOn_Options.script_path.."Systems/hydraulic_system_api.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.script_path.."sound_params.lua")
+dofile(LockOn_Options.script_path.."ControlsIndicator/ControlsIndicator_api.lua")
 
 -- This file includes both gear and tailhook behavior/systems
 --
@@ -472,6 +473,8 @@ function update_gear()
         GEAR_ERR = 0
         print_message_to_user("Ground crew reset landing gear")
     end
+
+    ControlsIndicator_api.nosewheel_pos_param:set(get_aircraft_draw_argument_value(2))
 end
 
 local tail_hook_param = get_param_handle("D_TAIL_HOOK")
@@ -493,6 +496,7 @@ function update_hook()
     --local tail_hook = get_aircraft_draw_argument_value(25)
     --tail_hook_param:set(hook_controller:get_position())
 end
+
 
 function update()
     update_gear()
