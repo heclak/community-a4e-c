@@ -230,7 +230,14 @@ function update_gear()
             sound_params.snd_inst_damage_gear_overspeed:set(0.0)
         end
     end
-    
+
+    -- update the nosewheel position to facilitate free castering nosewheel
+    -- output from DCS requires some parsing to properly map the nosewheel animation beyond the 90 degree point
+    local nose_wheel_pos = get_aircraft_draw_argument_value(1000)
+    local post_nose_wheel_post = nose_wheel_pos * math.sqrt(2) / math.pi
+    set_aircraft_draw_argument_value(2, post_nose_wheel_post)
+    -- print_message_to_user("pre: "..nose_wheel_pos.."   post: "..post_nose_wheel_post)
+
     sound_params.snd_cont_gear_mov:set(0.0)
     sound_params.snd_inst_gear_stop:set(1.0)
 
