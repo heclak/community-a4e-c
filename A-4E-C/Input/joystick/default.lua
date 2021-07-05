@@ -508,7 +508,7 @@ join(res.keyCommands,{
     {down = Keys.ExtLightFlashSteady, value_down = 1, up = Keys.ExtLightFlashSteady, value_up = 0,     name = _('Lighting Flash/Steady Switch - FLSH else STDY'), category = {_('Console Right'), _('Exterior Lights Control Panel')}},
 	
 	-- AN/ARC-51 UHF Radio
-	{down = Keys.radio_ptt,                                                                     name = _('Radio Microphone Push to Talk (PTT)'),    category = {_('Stick'), _('Communications'), _('AN/ARC-51 UHF Radio')}},
+	{down = Keys.radio_ptt,                                                                     name = _('Radio Microphone Push to Talk (PTT)'),    category = {_('Throttle Grip'), _('Communications'), _('AN/ARC-51 UHF Radio')}},
     {down = Keys.UHF10MHzInc,                                                                   name = _('Radio Frequency 10 MHz - Increase'),      category = {_('AN/ARC-51 UHF Radio')}},
     {down = Keys.UHF10MHzDec,                                                                   name = _('Radio Frequency 10 MHz - Decrease'),      category = {_('AN/ARC-51 UHF Radio')}},
     {down = Keys.UHF1MHzInc,                                                                    name = _('Radio Frequency 1 MHz - Increase'),       category = {_('AN/ARC-51 UHF Radio')}},
