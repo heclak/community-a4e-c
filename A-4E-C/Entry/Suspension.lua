@@ -75,7 +75,7 @@ suspension =
 		moment_of_inertia 						= {10.0,0.5,10.0},--leg
 		wheel_axle_offset 						= 0.19,
 		self_attitude 							= true,
-		yaw_limit 								= math.rad(90.0), --so apparently this must be set to half the animation angle for some reason
+		yaw_limit 								= math.rad(180.0), --so apparently this must be set to half the animation angle for some reason
 		
 		amortizer_min_length 					= nose_amortizer_min_length,
 		amortizer_max_length 					= nose_amortizer_max_length,
@@ -107,7 +107,7 @@ suspension =
 		--arg_post = 0,
 		arg_amortizer 							= 1,
 		arg_wheel_rotation 						= 101,
-		arg_wheel_yaw 							= 2,
+		arg_wheel_yaw 							= 1000,
 		collision_shell_name					= "WHEEL_F",
     },
 
