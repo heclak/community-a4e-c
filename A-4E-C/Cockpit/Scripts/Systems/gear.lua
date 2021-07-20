@@ -481,7 +481,7 @@ function update_gear()
         print_message_to_user("Ground crew reset landing gear")
     end
 
-    ControlsIndicator_api.nosewheel_pos_param:set(get_aircraft_draw_argument_value(2))
+    ControlsIndicator_api.nosewheel_pos_param:set(clamp(get_aircraft_draw_argument_value(2), -0.5, 0.5))
 end
 
 local tail_hook_param = get_param_handle("D_TAIL_HOOK")
