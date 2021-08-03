@@ -159,8 +159,7 @@ When you are confident your files are correctly installed, launch DCS World. If 
 - Yes! [Join the Community A-4E-C Discord server](https://discord.gg/tQZbkTQ) and introduce yourself! We can always use a hand from game artists, programmers or reliable testers as we continue to move the project forward. If you think you have something to contribute, don’t hesitate!
 
 **Q: The roll seems really sensetive!**
-- The roll seems really sensetive!
-The A-4E-C can perform a staggering 720 degrees of roll each second. If you're used to FC3 or more FBW aircraft, it can take a while to get used to how active piloting can be, especially if you have a short joystick. 
+- The A-4E-C can perform a staggering 720 degrees of roll each second. If you're used to FC3 or more FBW aircraft, it can take a while to get used to how active piloting can be, especially if you have a short joystick. 
 If you're having difficulty, ensure your joystick's input is calibrated.
 - Setting the roll Axis Tune in the DCS controls menu curves of 20 and a Y saturation of 60-80 seems to work well for most users without fancy joysticks while retaining most operational flight manoeuvrability.
 - If you're having difficulty trimming the aircraft evening, you can adjust the trim speed to 50% in DCS World's main menu under the Special Options for the A-4E-C.
