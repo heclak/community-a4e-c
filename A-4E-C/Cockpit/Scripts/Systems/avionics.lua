@@ -464,6 +464,15 @@ function SetCommand(command,value)
         lights_floodwhite_val = value
         -- print_message_to_user("flood value: "..value)
 
+    elseif command == Keys.IntLightBrightness then
+        if lights_floodred_val == FLOODRED_BRIGHT then
+            dev:performClickableAction(device_commands.intlight_brightness, -1, false)
+        elseif lights_floodred_val == FLOODRED_MED then
+            dev:performClickableAction(device_commands.intlight_brightness, 0, false)
+        else
+            dev:performClickableAction(device_commands.intlight_brightness, 1, false)
+        end
+        
     elseif command == device_commands.intlight_whiteflood_CHANGE then
         local newValue = lights_floodwhite_val + value
         if newValue > 1.0 then
