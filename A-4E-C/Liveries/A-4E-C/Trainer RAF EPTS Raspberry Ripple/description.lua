@@ -1,16 +1,17 @@
-name = "Brazilian AF-1 Marinha do Brasil VF-1 15 Anos"
-countries = {"USA", "BRA"}
+name = "RAF Empire Pilots Test School Raspberry Ripple"
+countries = {"USA", "UK"}
 
 livery = {
-  {"Top", DIFFUSE, "a4e_intl_bra_15anos_top", true};
-  {"Top", ROUGHNESS_METALLIC, "a4e_intl_bra_15anos_top_RoughMet", true};
-  {"Bottom", DIFFUSE, "a4e_intl_bra_15anos_bot", true};
-  {"Bottom", ROUGHNESS_METALLIC, "a4e_intl_bra_15anos_bot_RoughMet", true};
-  {"Gear and metal", DIFFUSE, "a4e_intl_bra_15anos_bot", true};
-  {"Cockpit", DIFFUSE, "a4e_intl_bra_15anos_bot", true};
+  {"Top", DIFFUSE, "a4e_trn_raf_rr_top", true};
+  {"Top", ROUGHNESS_METALLIC, "a4e_trn_raf_rr_top_RoughMet", true};
+  {"Bottom", DIFFUSE, "a4e_trn_raf_rr_bot", true};
+  {"Bottom", ROUGHNESS_METALLIC, "a4e_trn_raf_rr_bot_RoughMet", true};
+  {"Gear and metal", DIFFUSE, "a4e_trn_raf_rr_bot", true};
+  {"Cockpit", DIFFUSE, "a4e_trn_raf_rr_bot", true};
   --{"Front",	0, "a4e_ext_front", true};
-  {"cockpitWheelHardpoints", DIFFUSE, "a4e_intl_bra_15anos_bot", true};
-  {"Gear Bay", DIFFUSE, "a4e_intl_bra_15anos_bot", true};
+  --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
+  --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
+  {"Pilot",	DIFFUSE, "a4e_trn_raf_rr_pilot", true};
 
   -- flaps, used on most liveries
   {"flaps_001", DIFFUSE, "empty", true};
@@ -46,11 +47,12 @@ livery = {
   {"tail_100", DIFFUSE, "empty", true};
 
   -- custom fuel tanks: 150 gallon
-  {"fuel_150_a4e", DIFFUSE, "a4e_intl_bra_15anos_ft", true};
+  {"fuel_150_a4e", DIFFUSE, "a4e_trn_raf_rr_ft", true};
 
   -- custom fuel tank: 300 gallon left/right
-  {"fuel_300lr_a4e", DIFFUSE, "a4e_intl_bra_15anos_ft", true};
+  {"fuel_300lr_a4e", DIFFUSE, "a4e_trn_raf_rr_ft", true};
 
   -- custom fuel tank: 300 gallon center
-  {"fuel_300c_a4e", DIFFUSE, "a4e_intl_bra_15anos_ft", true};
+  {"fuel_300c_a4e", DIFFUSE, "a4e_trn_raf_rr_ft", true};
+
 }

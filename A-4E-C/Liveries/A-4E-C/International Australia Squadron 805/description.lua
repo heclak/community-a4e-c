@@ -1,16 +1,17 @@
-name = "Brazilian AF-1 Marinha do Brasil VF-1 15 Anos"
-countries = {"USA", "BRA"}
+name = "Australian Navy Squadron 805"
+countries = {"USA", "AUS"}
 
 livery = {
-  {"Top", DIFFUSE, "a4e_intl_bra_15anos_top", true};
-  {"Top", ROUGHNESS_METALLIC, "a4e_intl_bra_15anos_top_RoughMet", true};
-  {"Bottom", DIFFUSE, "a4e_intl_bra_15anos_bot", true};
-  {"Bottom", ROUGHNESS_METALLIC, "a4e_intl_bra_15anos_bot_RoughMet", true};
-  {"Gear and metal", DIFFUSE, "a4e_intl_bra_15anos_bot", true};
-  {"Cockpit", DIFFUSE, "a4e_intl_bra_15anos_bot", true};
+  {"Top", DIFFUSE, "a4e_intl_aus_sqn805_top", true};
+  {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet", true};
+  {"Bottom", DIFFUSE, "a4e_intl_aus_sqn805_bot", true};
+  {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet", true};
+  {"Gear and metal", DIFFUSE, "a4e_intl_aus_sqn805_bot", true};
+  {"Cockpit", DIFFUSE, "a4e_intl_aus_sqn805_bot", true};
   --{"Front",	0, "a4e_ext_front", true};
-  {"cockpitWheelHardpoints", DIFFUSE, "a4e_intl_bra_15anos_bot", true};
-  {"Gear Bay", DIFFUSE, "a4e_intl_bra_15anos_bot", true};
+  --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
+  --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
+  {"Pilot",	DIFFUSE, "a4e_intl_aus_pilot", true};
 
   -- flaps, used on most liveries
   {"flaps_001", DIFFUSE, "empty", true};
@@ -18,9 +19,9 @@ livery = {
   {"flaps_100", DIFFUSE, "empty", true};
 
   -- three digit, smaller nose numbers, used on most liveries
-  {"nose_001", DIFFUSE, "empty", true};
-  {"nose_010", DIFFUSE, "empty", true};
-  {"nose_100", DIFFUSE, "empty", true};
+  {"nose_001", DIFFUSE, "a4e_bort_black_smooth", true};
+  {"nose_010", DIFFUSE, "a4e_bort_black_smooth", true};
+  {"nose_100", DIFFUSE, "a4e_bort_black_smooth", true};
 
   -- two digit top-of-tail, used on most USMC liveries
   {"tail_aggressor_001", DIFFUSE, "empty", true};
@@ -46,11 +47,11 @@ livery = {
   {"tail_100", DIFFUSE, "empty", true};
 
   -- custom fuel tanks: 150 gallon
-  {"fuel_150_a4e", DIFFUSE, "a4e_intl_bra_15anos_ft", true};
+  {"fuel_150_a4e", DIFFUSE, "a4e_ft_150_300_gray", true};
 
   -- custom fuel tank: 300 gallon left/right
-  {"fuel_300lr_a4e", DIFFUSE, "a4e_intl_bra_15anos_ft", true};
+  {"fuel_300lr_a4e", DIFFUSE, "a4e_ft_150_300_gray", true};
 
   -- custom fuel tank: 300 gallon center
-  {"fuel_300c_a4e", DIFFUSE, "a4e_intl_bra_15anos_ft", true};
+  {"fuel_300c_a4e", DIFFUSE, "a4e_ft_150_300_gray", true};
 }
