@@ -69,7 +69,7 @@ function update()
     local throttle = sensor_data.getThrottleLeftPosition()
 
 
-    if get_elec_retraction_release_ground() and throttle < 0.7 and SPOILER_ARMED and get_elec_mon_dc_ok() then
+    if get_elec_retraction_release_ground() and throttle < 0.34 and SPOILER_ARMED and get_elec_mon_dc_ok() then
         SPOILER_TARGET = 1
     else
         SPOILER_TARGET = 0
