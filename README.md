@@ -2,9 +2,9 @@
 
 The Community A-4E-C represents more than three years of work on behalf of the development team. We’re proud to present the most comprehensive DCS World module to date, boasting such capabilities as air-to-ground radar and carrier operations. The A-4 was a cold war workhorse, providing a capable, reliable light attack aircraft to dozens of nations around the world. From the Sinai Desert to the Jungles of Vietnam, the A-4 was a common sight above cold war battlefields.
 
-After severel years of development, we are pleased to announce version 2.0 of the module, with a realistic flight model, the addition of a CP-741/a CCRP bombing computer, increased DCS functionality, increased carrier compatibility, and myriad new sounds and keybinds to increase your ease of use and immersion when flying this now-venerable module.
+After severel years of development, we are pleased to announce version 2.0 of the module, with a realistic flight model, improved systems, increased functionality across all DCS World's available content including full carrier compatibility and air-to-air refueling, and new sounds, keybinds and features to increase ease of use and immersion when flying this now-venerable module.
 
-We thank the DCS World community for their support over the years, and dedicate the module to our friend, mentor and lead coder, Eric “Gospadin” Mudama. His passion and brilliance left a mark on us all, and this labor of love which would not have been possible without him.
+We thank the DCS World community for their support and contributions over the years, and dedicate the module to our friend, mentor and lead coder, Eric “Gospadin” Mudama. His passion and brilliance left a mark on us all, and this labor of love which would not have been possible without him.
 
 **Please DO NOT redistribute this mod without permission!**
 
@@ -12,9 +12,9 @@ We thank the DCS World community for their support over the years, and dedicate 
 
 Gospadin, Heclak, Joshua Nelson, plusnine, Farlander, gyrovague, kryb/Archimaede, Merker, Jones, Nero
 
-## Special Thanks
+## Community Contributors
 
-SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, Gvad, Sidekick65, HellesBelles, SPINEG, Shadowfrost, Sport, rudel-chw, Luciano, Malamem, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
+SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPINEG, Shadowfrost, Sport, rudel-chw, Luciano, Malamem, HellesBelles, Bungo, Corsair016, FlyingHueman, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
 
 ## Features
 
@@ -22,73 +22,90 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, Gvad, Sidekick65, Hel
 - Clickable cockpit
 - Carrier landing and takeoff
 - Air-to-air refueling
-- AN/APG-53A Radar (air-to-ground)
-- AN/APN-153 Doppler Nav
-- AN/ASN-41 Nav Computer  
-- AFCS
-- ARC-51A UHF Radio
-- ARN-52 TACAN
-- ARA-63 MCL (ICLS)
+- Automatic Flight Control System (AFCS)
+- AN/ALE-29A Chaff Dispensing System
+- AN/APG-53A Radar
+- AN/APN-141 Radar Altimeter
+- AN/APN-153 Doppler Navigation Radar
+- AN/APR-23 Radar Homing and Warning System (ECM)
+- AN/ARA-63 MCL (ICLS)
+- AN/ARC-51 UHF Radio
+- AN/ARN-52 TACAN
+- AN/ASN-41 Navigation Computer
+- Approach Power Compensator (APC)
+- AWE-1 Aircraft Weapons Release System
 - CP-741/a Bombing computer (CCRP)
 - Shrike anti-radiation missile
 - New weapons:
   - AN- series WWII munitions: M66, M81, M88
-  - MK4 HIPEG 20 mm gunpod
+  - MK4 HIPEG 20mm gunpod
   - Mk-77 napalm canister
   - SUU-7 bomblet dispenser
 - Unique sounds inside and outside the aircraft
+- In-cockpit kneeboard user manual
 
 ### Version 2.0 Changelog: Featured Items
 
-- Features: External Flight Model (EFM) with flight dynamics, suspension, slat simulation, cockpit shake, wing vapour and more.
-- Features: Realistic engine simulation
-- Features: Added SuperCarrier compatibility
-- Features: Added ARC-51A UHF Radio functions (thanks Harald)
-- Features: Added ARN-52 TACAN and ARA-63 MCL (ICLS) functions
-- Features: Added CP-741/a bombing computer (set CMPTR on weapon selector and use slick bombs)
-- Features: Added air-to-air refueling capabilities
-- Features: Added nosewheel steering and differential braking
-- Features: Added SUU-25 Parachute illumination pod for night ops
-- Systems: AFCS Added stability augmentation (be sure to enable this yaw-dampening system on the AFCS panel before takeoff!)
-- Systems: Added sidewinders to loadout options on outer pylons
-- Systems: Added SUU-25 parachute illumination pod to loadout options
-- Systems: Added empty fuel tanks to loadout options
-- Systems: Added fuel flow system
-- Systems: Added oxygen system (pilots must now beware of hypoxia!)
-- Systems: Added drift to AN/ASN-41 Nav Computer
-- Misions: Added instant action missions (thanks Sidekick65, Cubeboy, Shadowfrost and SPINEG)
-- Misions: Added runway strike and anti-ship strike roles
-- Textures: Exterior texture improvements, added normal maps (thanks HellesBelles for their contribution)
-- Textures: Cockpit improvements, added normal maps (thanks Sport for their contribution)
-- Textures: Added a diverse array of new helmets and pilot uniforms and patches across liveries
-- Liveries: Added Argentina and Chile as available countries for the A-4E-C
-- Liveries: Added Argentine Brigada (thanks GVad, for these paints and much more)
-- Liveries: Added Community III: Forever Free livery
-- Liveries: Reformatted livery description.lua templates (livery creators, see our updated paintkit)
-- Liveries: Inaccuracies corrected (within the available modex systems, with great apologies to the non-USN/USMC operators)
-- Quality of Life: Added loads of new keybinds (thanks to the userbase for documenting many of these.)
-- Quality of Life: Added cockpit controls indicator
-- Quality of Life: Added several new helpful kneeboard pages (thanks to Rob for drafting several pages)
-- Quality of Life: Trim reset now provides a smooth transition
-- Quality of Life: Added in-cockpit sounds and improved user feedback
-- Quality of Life: Revised special menu options
-- Quality of Life: Fixed FFB stick support
-- Quality of Life: Slats locking option for aerobatic performance teams
-- Quality of Life: Smokewinder pod easier to operate (weapon select independent)
-- Quality of Life: Lots, and lots, and we mean LOTS of bug fixes
+- Features: 
+  - Added External Flight Model (EFM) with flight dynamics, suspension, slat simulation, differential braking, cockpit shake, wing vapour and more
+  - Added Pratt & Whitney J52-P-8A engine simulation
+  - Added ARC-51A UHF Radio (Harald)
+  - Added ARN-52 TACAN and ARA-63 MCL (ICLS) functions
+  - Added CP-741/a bombing computer
+  - Added SuperCarrier compatibility
+  - Added air-to-air refueling capabilities
+- Systems: 
+  - Added AFCS stability augmentation
+  - Added AN/ASN-41 Nav Computer drift on long flights and heavy maneuvers
+  - Added fuel flow system
+  - Added oxygen system
+  - Added AIM-9 missiles availability to outer pylons
+  - Added SUU-25 parachute illumination pod
+  - Added empty fuel tanks
+  - Improved Approach Power Compensator (APC) behavior
+  - Removed non-functional weapons (AGM-12 Bullpup, AGM-62 Walleye)
+- Misions: 
+  - Added new instant action missions across all maps (Sidekick65, Cubeboy, Shadowfrost, SPINEG)
+  - Added runway strike and anti-ship strike roles
+- Textures:
+  - Added unique helmets, pilot uniforms and patches
+  - Added preliminary damage textures
+  - Improved exterior and interior textures (HellesBelle, Sport)
+  - Fixed exterior and cockpit model material names to avoid conflicts
+- Liveries: 
+  - Added Community III and IV liveries
+  - Added Argentine Air Force Falklands Brigada IV and V (GVad)
+  - Added Australian Navy Squadron 805 (HellesBelle)
+  - Added Brazilian AF-1 Marinha do Brasil VF-1 15 Anos (Bungo)
+  - Added Finnish Air Force (FinCenturion)
+  - Added RAF Empire Pilots Test School Raspberry Ripple (FlyingHueman)
+  - Added RNZAF Golden T-Bird No.2, Squadron Ohakea, 1986 (Corsair016)
+- Quality of Life:
+  - Added kneeboard manual with systems procedures, quirks and user tips (Rob, Sidekick)
+  - Added in-cockpit sounds and improved user feedback
+  - Added AN/ARC-51 UHF Radio frequency presets printed to panel
+  - Added slats lock for aerobatic performance teams
+  - Added loads of new keybinds for various input options
+  - Added new system-specific categories for easier keybind searching
+  - Added cockpit controls indicator (pitch, roll, yaw, throttle, engine RPM, nosewheel, airbrakes, flaps, and spoilers)
+  - Added Argentina and Chile as available countries
+  - Improved labels between tooltips, inputs and NATOPS manual
+  - Improved special menu options
+  - Improved smokewinder pod operation (weapon select independent)
+  - Improved trim reset
+  - Improved axis input centering for easier keyboard users
+  - Improved main menu logos and iconography
+  - Fixed FFB stick support
+  - Fixed lots, and lots, and we mean LOTS of bugs
 
 [See full changelog](https://github.com/heclak/community-a4e-c/blob/master/CHANGELOG.md)
 
 ### Known Bugs and Incompatibilities
 
-- Incompatible with the CH-53E "Super Stallion" mod (due to a DCS bug). At this time, there is no solution for this incompatibility short of the user choosing to keep only one of these two modules installed.
-- Pilot blacks out when hooking into SuperCarrier (throttle up hard to cat-in!)
-- Fuel system cuts off if auto pause is left on for too long
-- Throttle position occasionally stuck in OFF position after rearm
-- Some missions created in DCS 2.7 or later render navigation system inoperable
-- TEST press can cause ECM panel lights to stick on
-- IN RANGE lamp flickers when TEST is pressed
-- AN/ASN-41 navigation BDHI needle animations swapped in test mode
+- incompatibility with CH-53E "Super Stallion" mod (DCS bug)
+- jettisoning Mk-77 mod 0 and mod 1 bombs causes CTD
+- missions created in DCS 2.7+ occasionally render AN/ASN-41 navigation computer inoperable
+- pilot blacks out when throttling up to hook up to catapult on SuperCarrier
 
 [see full issue list](https://github.com/heclak/community-a4e-c/issues/)
 
@@ -107,8 +124,8 @@ If you are upgrading from an older version of the A-4E-C, perform these followin
 Additionally your input bindings must be reset and rebound in order to accommodate this release’s enhanced control scheme. If this is a new installation, you can skip this step and move on to Step 2.
 
 - Delete the contents of your old A-4E-C installation folder: `C:\Users\username\Saved Games\DCS\Mods\aircraft\A-4E-C`
-- Delete your A-4E-C input settings by opening the following folder: `C:\Users\username\Saved Games\DCS\Config\Input\A-4E-C`
-- Delete the joystick, keyboard, mouse and trackir folders.
+- Delete your A-4E-C input settings by opening the following folder: `C:\Users\username\Saved Games\DCS\Config\Input\`
+- Delete the A-4E-C folder.
 
 ### STEP 2: Installing the module files.
 
@@ -118,13 +135,13 @@ Additionally your input bindings must be reset and rebound in order to accommoda
 
 Your correctly installed files should look something like the following image, substituting your Windows account name where the image displays Partario. If you're using the release branch of DCS World, the folder is `DCS` instead of `DCS.openbeta`.
 
-![Image of A-4E-C installation](https://user-images.githubusercontent.com/46121009/84217257-3b358600-aafe-11ea-9203-20d787b09662.png)
+![Image of A-4E-C installation](https://cdn.discordapp.com/attachments/692479717055397968/879491611799748688/unknown.png)
 
 ### STEP 3: Launch DCS World and verify installation
 
 When you are confident your files are correctly installed, launch DCS World. If your installation was successful, the A-4E-C theme icon appears as a option in the main menu:
 
-![Image of DCS World Menu with A-4E installed](https://cdn.discordapp.com/attachments/518815071858589697/720094260699070464/unknown.png)
+![Image of DCS World Menu with A-4E installed](https://cdn.discordapp.com/attachments/692479717055397968/879493860345147462/unknown.png)
 
 ## Installation Troubleshooting
 

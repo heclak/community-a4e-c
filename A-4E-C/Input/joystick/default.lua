@@ -164,11 +164,11 @@ join(res.keyCommands,{
     {down = Keys.AltPressureStartDown, up = Keys.AltPressureStop,                                                           name = _('Altimeter Pressure - Continuous Decrease'),      category = {_('Instrument Panel'), _('Systems')}},
 
     -- APN-141 Radar Altimeter
-    {down = Keys.RadarAltToggle,                                                                                            name = _('Radar Altitude Warning - ON/OFF'),                category = {_('Instrument Panel'), _('Systems'), _(AN/APN-141 Radar Altimeter)}},
-    {down = Keys.RadarAltWarningUp,                                                                                         name = _('Radar Altitude Warning - Rotary Increment'),      category = {_('Instrument Panel'), _('Systems'), _(AN/APN-141 Radar Altimeter)}},
-    {down = Keys.RadarAltWarningDown,                                                                                       name = _('Radar Altitude Warning - Rotary Decrement'),      category = {_('Instrument Panel'), _('Systems'), _(AN/APN-141 Radar Altimeter)}},
-    {down = Keys.RadarAltWarningStartUp, up = Keys.RadarAltWarningStop,                                                     name = _('Radar Altitude Warning - Continuous Increase'),   category = {_('Instrument Panel'), _('Systems'), _(AN/APN-141 Radar Altimeter)}},
-    {down = Keys.RadarAltWarningStartDown, up = Keys.RadarAltWarningStop,                                                   name = _('Radar Altitude Warning - Continuous Decrease'),   category = {_('Instrument Panel'), _('Systems'), _(AN/APN-141 Radar Altimeter)}},
+    {down = Keys.RadarAltToggle,                                                                                            name = _('Radar Altitude Warning - ON/OFF'),                category = {_('Instrument Panel'), _('Systems'), _('AN/APN-141 Radar Altimeter')}},
+    {down = Keys.RadarAltWarningUp,                                                                                         name = _('Radar Altitude Warning - Rotary Increment'),      category = {_('Instrument Panel'), _('Systems'), _('AN/APN-141 Radar Altimeter')}},
+    {down = Keys.RadarAltWarningDown,                                                                                       name = _('Radar Altitude Warning - Rotary Decrement'),      category = {_('Instrument Panel'), _('Systems'), _('AN/APN-141 Radar Altimeter')}},
+    {down = Keys.RadarAltWarningStartUp, up = Keys.RadarAltWarningStop,                                                     name = _('Radar Altitude Warning - Continuous Increase'),   category = {_('Instrument Panel'), _('Systems'), _('AN/APN-141 Radar Altimeter')}},
+    {down = Keys.RadarAltWarningStartDown, up = Keys.RadarAltWarningStop,                                                   name = _('Radar Altitude Warning - Continuous Decrease'),   category = {_('Instrument Panel'), _('Systems'), _('AN/APN-141 Radar Altimeter')}},
 
     -- Landing Gear Handle
     {down = Keys.PlaneGear,                                                                                                 name = _('Landing Gear Handle - UP/DOWN'),                  category = {_('Instrument Panel'), _('Systems')}},
