@@ -127,7 +127,7 @@ elements["PNT_530"] = default_2_position_tumb("Chaff Power Switch", devices.COUN
 -- you get a 3position switch, which is also undesirable
 -- The master press-to-test switch on the misc switches panel also tests the radar altimeter, so perhaps good
 -- enough for this switch/knob here to only represent on/off and not test mode
-elements["PNT_602"] = default_button_axis("Radar Altitude Warning", devices.RADARWARN, device_commands.radar_alt_switch, device_commands.radar_alt_indexer,603,602)
+elements["PNT_602"] = default_button_axis("AN/APN-141 Radar Altimeter", devices.RADARWARN, device_commands.radar_alt_switch, device_commands.radar_alt_indexer,603,602)
 elements["PNT_602"].class = {class_type.TUMB, class_type.LEV}
 elements["PNT_602"].relative = {false,true}
 elements["PNT_602"].arg_lim = {{-1, 0}, {0, 1}}
