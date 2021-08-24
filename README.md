@@ -14,7 +14,7 @@ Gospadin, Heclak, Joshua Nelson, plusnine, Farlander, gyrovague, kryb/Archimaede
 
 ## Community Contributors
 
-SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPINEG, Shadowfrost, Sport, rudel-chw, Luciano, Malamem, HellesBelles, Bungo, Corsair016, FlyingHueman, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
+SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPINEG, Shadowfrost, Sport, rudel-chw, Luciano, Malamem, HellesBelles, Bungo, Corsair016, FlyingHueman, JacobBadShot, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
 
 ## Features
 
@@ -78,6 +78,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPI
   - Added Australian Navy Squadron 805 (HellesBelle)
   - Added Brazilian AF-1 Marinha do Brasil VF-1 15 Anos (Bungo)
   - Added Finnish Air Force (FinCenturion)
+  - Added Malaysian TUDM M32-29 No.9 Squadron (JacobBadshot)
   - Added RAF Empire Pilots Test School Raspberry Ripple (FlyingHueman)
   - Added RNZAF Golden T-Bird No.2, Squadron Ohakea, 1986 (Corsair016)
 - Quality of Life:
