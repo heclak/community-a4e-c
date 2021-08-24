@@ -1,3 +1,4 @@
+-- this community livery by Corsair016
 name = "RNZAF Golden T-Bird No.2, Squadron Ohakea, 1986"
 countries = {"USA", "AUS"}
 

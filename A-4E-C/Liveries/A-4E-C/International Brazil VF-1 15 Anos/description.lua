@@ -1,3 +1,4 @@
+-- this community livery by Bungo
 name = "Brazilian AF-1 Marinha do Brasil VF-1 15 Anos"
 countries = {"USA", "BRA"}
 

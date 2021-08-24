@@ -1,18 +1,16 @@
--- this community livery by HellesBelle
-name = "Australian Navy Squadron 805"
-countries = {"USA", "AUS"}
+name = "Brazilian Navy LoViz"
+countries = {"USA", "BRA"}
 
 livery = {
-  {"Top", DIFFUSE, "a4e_intl_aus_sqn805_top", true};
-  {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet", true};
-  {"Bottom", DIFFUSE, "a4e_intl_aus_sqn805_bot", true};
-  {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet", true};
-  {"Gear and metal", DIFFUSE, "a4e_intl_aus_sqn805_bot", true};
-  {"Cockpit", DIFFUSE, "a4e_intl_aus_sqn805_bot", true};
+  {"Top", DIFFUSE, "a4e_intl_bra_loviz_top", true};
+  {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet_lo", true};
+  {"Bottom", DIFFUSE, "a4e_intl_bra_loviz_bot", true};
+  {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet_lo", true};
+  {"Gear and metal", DIFFUSE, "a4e_intl_bra_loviz_bot", true};
+  {"Cockpit", DIFFUSE, "a4e_intl_bra_loviz_bot", true};
   --{"Front",	0, "a4e_ext_front", true};
   --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
-  {"Pilot",	DIFFUSE, "a4e_intl_aus_pilot", true};
 
   -- flaps, used on most liveries
   {"flaps_001", DIFFUSE, "empty", true};
@@ -20,9 +18,9 @@ livery = {
   {"flaps_100", DIFFUSE, "empty", true};
 
   -- three digit, smaller nose numbers, used on most liveries
-  {"nose_001", DIFFUSE, "a4e_bort_black_smooth", true};
-  {"nose_010", DIFFUSE, "a4e_bort_black_smooth", true};
-  {"nose_100", DIFFUSE, "a4e_bort_black_smooth", true};
+  {"nose_001", DIFFUSE, "a4e_bort_grey_small_1s", true};
+  {"nose_010", DIFFUSE, "a4e_bort_grey_small_10s", true};
+  {"nose_100", DIFFUSE, "empty", true};
 
   -- two digit top-of-tail, used on most USMC liveries
   {"tail_aggressor_001", DIFFUSE, "empty", true};
@@ -48,11 +46,14 @@ livery = {
   {"tail_100", DIFFUSE, "empty", true};
 
   -- custom fuel tanks: 150 gallon
-  {"fuel_150_a4e", DIFFUSE, "a4e_ft_150_300_gray", true};
+  --{"fuel_150_a4e", DIFFUSE, "uvmapsfueltank_dft150_dft300", true};
 
   -- custom fuel tank: 300 gallon left/right
-  {"fuel_300lr_a4e", DIFFUSE, "a4e_ft_150_300_gray", true};
+  --{"fuel_300lr_a4e", DIFFUSE, "uvmapsfueltank_dft150_dft300", true};
 
   -- custom fuel tank: 300 gallon center
-  {"fuel_300c_a4e", DIFFUSE, "a4e_ft_150_300_gray", true};
+  --{"fuel_300c_a4e", DIFFUSE, "uvmapsfueltank_dft150_dft300", true};
+
+  -- custom fuel tank: 400 gallon
+  --{"fuel_400_a4e", DIFFUSE, "uvmapsfueltank_dft400", true};
 }

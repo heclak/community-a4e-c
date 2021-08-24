@@ -1,3 +1,4 @@
+-- this community livery by FinCenturion
 name = "Finnish Air Force (Fictional)"
 countries = {"USA", "FIN"}
 

@@ -1,3 +1,4 @@
+-- this community livery by FlyingHueman
 name = "RAF Empire Pilots Test School Raspberry Ripple (Fictional)"
 countries = {"USA", "UK"}
 
