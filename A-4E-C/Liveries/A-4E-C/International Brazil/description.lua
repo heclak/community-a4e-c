@@ -13,9 +13,9 @@ livery = {
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
 
   -- flaps, used on most liveries
-  {"flaps_001", DIFFUSE, "a4e_bort_white", true};
-  {"flaps_010", DIFFUSE, "a4e_bort_white", true};
-  {"flaps_100", DIFFUSE, "a4e_bort_white", true};
+  {"flaps_001", DIFFUSE, "empty", true};
+  {"flaps_010", DIFFUSE, "empty", true};
+  {"flaps_100", DIFFUSE, "empty", true};
 
   -- three digit, smaller nose numbers, used on most liveries
   {"nose_001", DIFFUSE, "a4e_bort_black_small_1s", true};
