@@ -14,7 +14,7 @@ Gospadin, Heclak, Joshua Nelson, plusnine, Farlander, gyrovague, kryb/Archimaede
 
 ## Community Contributors
 
-SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPINEG, Shadowfrost, Sport, rudel-chw, Luciano, Malamem, HellesBelles, Bungo, Corsair016, FlyingHueman, JacobBadShot, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
+SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPINEG, Shadowfrost, Sport, rudel-chw, Luciano, Malamem, pohlinkzei, HellesBelles, Bungo, Corsair016, FlyingHueman, JacobBadShot, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
 
 ## Features
 
@@ -63,6 +63,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPI
   - Added SUU-25 parachute illumination pod
   - Added empty fuel tanks
   - Improved Approach Power Compensator (APC) behavior
+  - Fixed spoiler behavior to deploy/stow properly WRT throttle and engine RPM (pohlinkzei)
   - Removed non-functional weapons (AGM-12 Bullpup, AGM-62 Walleye)
 - Misions: 
   - Added new instant action missions across all maps (Sidekick65, Cubeboy, Shadowfrost, SPINEG)
