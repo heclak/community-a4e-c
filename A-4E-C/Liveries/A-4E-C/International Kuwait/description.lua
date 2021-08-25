@@ -1,4 +1,4 @@
-name = "Free Kuwait"
+name = "Kuwait KAF Free Kuwait, 1991"
 countries = {"USA", "KWT"}
 
 livery = {

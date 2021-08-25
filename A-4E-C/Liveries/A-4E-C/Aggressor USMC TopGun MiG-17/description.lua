@@ -1,4 +1,4 @@
-name = "USMC TOPGUN MiG-17"
+name = "USMC Aggressor TOPGUN 56 (MiG-17), 1982"
 countries = {"USA", "AUSAF"}
 
 livery = {

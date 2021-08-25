@@ -1,5 +1,5 @@
 -- this community livery by Bungo
-name = "Brazilian AF-1 Marinha do Brasil VF-1 15 Anos"
+name = "Brazil Marinha do Brasil VF-1 15 AÑOS, 2013"
 countries = {"USA", "BRA"}
 
 livery = {

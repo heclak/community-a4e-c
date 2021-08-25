@@ -1,4 +1,4 @@
-name = "Brazilian Navy LoViz"
+name = "Brazil Marinha do Brasil VF-1 LoViz, 2018"
 countries = {"USA", "BRA"}
 
 livery = {

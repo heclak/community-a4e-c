@@ -1,5 +1,5 @@
 -- this community livery by JacobBadShot
-name = "Malaysian TUDM M32-29 No.9 Squadron"
+name = "Malaysia TUDM M32-29 No.9 Squadron, 2004"
 countries = {"USA", "AUS"}
 
 livery = {

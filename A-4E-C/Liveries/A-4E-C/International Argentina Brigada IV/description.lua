@@ -1,5 +1,5 @@
 -- this community livery by GVad
-name = "Argentine Air Force Falklands Brigada IV"
+name = "Argentina FAA Falklands Brigada IV, 1982"
 countries = {"USA", "ARG"}
 
 livery = {

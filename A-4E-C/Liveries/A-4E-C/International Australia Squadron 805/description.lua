@@ -1,5 +1,5 @@
 -- this community livery by HellesBelle
-name = "Australian Navy Squadron 805"
+name = "Australian Navy Squadron 805, 1972"
 countries = {"USA", "AUS"}
 
 livery = {
