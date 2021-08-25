@@ -1,5 +1,5 @@
 -- this community livery by FinCenturion
-name = "Finnish Air Force, 1980s (Fictional)"
+name = "Finland FiAF, 1984 (Fictional)"
 countries = {"USA", "FIN"}
 
 livery = {

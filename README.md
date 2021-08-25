@@ -1,12 +1,12 @@
 ![Community A-4E-C for DCS World](https://user-images.githubusercontent.com/46121009/57830942-41b3da00-77e6-11e9-8e8c-1b7274927bb0.jpg)
 
-The Community A-4E-C represents more than three years of work on behalf of the development team. We’re proud to present the most comprehensive DCS World module to date, boasting such capabilities as air-to-ground radar and carrier operations. The A-4 was a cold war workhorse, providing a capable, reliable light attack aircraft to dozens of nations around the world. From the Sinai Desert to the Jungles of Vietnam, the A-4 was a common sight above cold war battlefields.
+The Community A-4E-C represents more than three years of work on behalf of the development team. We’re proud to present the most comprehensive DCS World module to date, boasting such capabilities as air-to-ground radar and carrier operations. The A-4 was a cold war workhorse, providing a capable, reliable light attack aircraft to dozens of nations around the world. From the Sinai Desert to the Jungles of Vietnam, the A-4 was a common sight above battlefields around the world.
 
 After severel years of development, we are pleased to announce version 2.0 of the module, with a realistic flight model, improved systems, increased functionality across all DCS World's available content including full carrier compatibility and air-to-air refueling, and new sounds, keybinds and features to increase ease of use and immersion when flying this now-venerable module.
 
-We thank the DCS World community for their support and contributions over the years, and dedicate the module to our friend, mentor and lead coder, Eric “Gospadin” Mudama. His passion and brilliance left a mark on us all, and this labor of love which would not have been possible without him.
+We thank the DCS World community for their support and contributions over the years, and dedicate the module to our friend, mentor and lead coder, Eric "Gospadin" Mudama. His passion and brilliance left a mark on us all. This labor of love which would not have been possible without him.
 
-**Please DO NOT redistribute this mod without permission!**
+**DO NOT redistribute this mod without permission!**
 
 ## Contributing Developers
 
@@ -51,9 +51,9 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPI
   - Added Pratt & Whitney J52-P-8A engine simulation
   - Added ARC-51A UHF Radio (Harald)
   - Added ARN-52 TACAN and ARA-63 MCL (ICLS) functions
-  - Added CP-741/a bombing computer
+  - Added CP-741/A bombing computer
   - Added SuperCarrier compatibility
-  - Added air-to-air refueling capabilities
+  - Added air-to-air refueling
 - Systems: 
   - Added AFCS stability augmentation
   - Added AN/ASN-41 Nav Computer drift on long flights and heavy maneuvers
@@ -74,13 +74,15 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPI
   - Improved exterior and interior textures (HellesBelle, Sport)
   - Fixed exterior and cockpit model material names to avoid conflicts
 - Liveries: 
-  - Added Community III and IV liveries
-  - Added Argentine Air Force Falklands Brigada IV and V (GVad)
-  - Added Australian Navy Squadron 805 (HellesBelle)
-  - Added Brazilian AF-1 Marinha do Brasil VF-1 15 Anos (Bungo)
-  - Added Finnish Air Force (FinCenturion)
-  - Added Malaysian TUDM M32-29 No.9 Squadron (JacobBadshot)
-  - Added RAF Empire Pilots Test School Raspberry Ripple (FlyingHueman)
+  - Added Community III: Forever Free
+  - Added Community IV: Sea Otter
+  - Added Argentina FAA Falklands Brigada IV and V, 1982 (GVad)
+  - Added Australian Navy Squadron 805, 1972 (HellesBelle)
+  - Added Brazil Marinha do Brasil VF-1 LoViz, 2018
+  - Added Brazil Marinha do Brasil VF-1 15 AÑOS, 2013 (Bungo)
+  - Added Finland FiAF, 1984 (Fictional) (FinCenturion)
+  - Added Malaysia TUDM M32-29 No.9 Squadron, 2004 (JacobBadshot)
+  - Added RAF Empire Pilots Test School Raspberry Ripple (Fictional) (FlyingHueman)
   - Added RNZAF Golden T-Bird No.2, Squadron Ohakea, 1986 (Corsair016)
 - Quality of Life:
   - Added kneeboard manual with systems procedures, quirks and user tips (Rob, Sidekick)
@@ -89,9 +91,9 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPI
   - Added slats lock for aerobatic performance teams
   - Added loads of new keybinds for various input options
   - Added new system-specific categories for easier keybind searching
-  - Added cockpit controls indicator (pitch, roll, yaw, throttle, engine RPM, nosewheel, airbrakes, flaps, and spoilers)
+  - Added cockpit controls indicator (pitch, roll, yaw, throttle, throttle position, engine RPM, nosewheel, airbrakes, flaps, spoilers, and slats)
   - Added Argentina and Chile as available countries
-  - Improved labels between tooltips, inputs and NATOPS manual
+  - Improved labeling consistency between tooltips, inputs and NATOPS manual
   - Improved special menu options
   - Improved smokewinder pod operation (weapon select independent)
   - Improved trim reset
@@ -167,7 +169,7 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 **Q: How large is the module?**
 
-- The download file is ~700 MB. Installation size is ~800 MB.
+- Installation size is around 1 GB.
 
 **Q: Can I donate to the A-4E-C project?**
 
@@ -212,8 +214,7 @@ You may or may not already know that the *.miz* mission files are, in fact, *.zi
 
 **Q: Are there any plans to do other variants or later models of the A-4?**
 
-- There are no plans no keen interest to pursue this. There is a lot left to add for our beloved A-4E-C, and the advanced avionics in later models would not be able to be completed in a satisfying manner.
-
+- There are no plans nor keen interest to pursue this. There is a lot left to add for our beloved A-4E-C, and the advanced avionics in later models would not be able to be completed in a satisfying manner.
 
 **Q: Are there any plans to make the module official, obtain the Eagle Dynamics SDK, or make the module a part of the default DCS install package?**
 

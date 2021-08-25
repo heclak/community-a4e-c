@@ -294,7 +294,7 @@ elements["PNT_405"].sound = {{COCKPIT_ILLUM_POT, COCKPIT_ILLUM_POT}}
 elements["PNT_258"] = default_2_position_tumb("AFCS 1-N-2 Guard Switch", devices.AFCS, device_commands.afcs_test_guard, 258, nil, 4.0)
 elements["PNT_259"] = springloaded_3_pos_tumb("AFCS 1-N-2 Switch", devices.AFCS, device_commands.afcs_test, 259, true, KNOBCLICK_RIGHT_AFT)
 
--- AN/ARC-51 UHF RADIO #67
+-- AN/ARC-51A UHF RADIO #67
 elements["PNT_361"] = multiposition_switch_limited("Radio Preset Channel", devices.RADIO, device_commands.arc51_freq_preset, 361, 20, 0.05, false, 0.00, KNOBCLICK_RIGHT_MID)
 elements["PNT_365"] = default_axis_limited("Radio Volume", devices.RADIO, device_commands.arc51_volume, 365, 0.5, 0.3, false, false, {0,1})
 elements["PNT_366"] = multiposition_switch_limited("Radio Frequency Mode", devices.RADIO, device_commands.arc51_xmitmode, 366, 3, 1, true, -1, KNOBCLICK_RIGHT_MID)
@@ -302,7 +302,7 @@ elements["PNT_367"] = multiposition_switch_limited("Radio Frequency 10 MHz", dev
 elements["PNT_368"] = multiposition_switch_limited("Radio Frequency 1 MHz", devices.RADIO, device_commands.arc51_freq_ooXoo, 368, 10, 0.1, false, 0, KNOBCLICK_RIGHT_MID)
 elements["PNT_369"] = multiposition_switch_limited("Radio Frequency 50 kHz", devices.RADIO, device_commands.arc51_freq_oooXX, 369, 20, 0.05, false, 0, KNOBCLICK_RIGHT_MID)
 elements["PNT_370"] = default_2_position_tumb("Radio Squelch Disable", devices.RADIO, device_commands.arc51_squelch, 370, TOGGLECLICK_RIGHT_MID)
-elements["PNT_372"] = multiposition_switch_limited("AN/ARC-51 UHF Radio Mode Switch", devices.RADIO, device_commands.arc51_mode, 372, 4, 0.1, false, 0, KNOBCLICK_RIGHT_MID)
+elements["PNT_372"] = multiposition_switch_limited("AN/ARC-51A UHF Radio Mode Switch", devices.RADIO, device_commands.arc51_mode, 372, 4, 0.1, false, 0, KNOBCLICK_RIGHT_MID)
 
 -- COMPASS CONTROLLER
 elements["PNT_509"] = default_axis_limited("Compass Latitude Knob", devices.COMPASS, device_commands.COMPASS_latitude, 509, 0, 0.3, false, false, {-1,1})
