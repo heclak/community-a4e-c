@@ -3,9 +3,9 @@ countries = {"USA", "BRA"}
 
 livery = {
   {"Top", DIFFUSE, "a4e_intl_bra_loviz_top", true};
-  {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet_lo", true};
+  {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet", true};
   {"Bottom", DIFFUSE, "a4e_intl_bra_loviz_bot", true};
-  {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet_lo", true};
+  {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet", true};
   {"Gear and metal", DIFFUSE, "a4e_intl_bra_loviz_bot", true};
   {"Cockpit", DIFFUSE, "a4e_intl_bra_loviz_bot", true};
   --{"Front",	0, "a4e_ext_front", true};
@@ -18,8 +18,8 @@ livery = {
   {"flaps_100", DIFFUSE, "empty", true};
 
   -- three digit, smaller nose numbers, used on most liveries
-  {"nose_001", DIFFUSE, "a4e_bort_grey_small_1s", true};
-  {"nose_010", DIFFUSE, "a4e_bort_grey_small_10s", true};
+  {"nose_001", DIFFUSE, "empty", true};
+  {"nose_010", DIFFUSE, "empty", true};
   {"nose_100", DIFFUSE, "empty", true};
 
   -- two digit top-of-tail, used on most USMC liveries
