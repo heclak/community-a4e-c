@@ -81,10 +81,10 @@ join(res.keyCommands,{
     {down = device_commands.throttle_click_ITER, value_down = 1, cockpit_device_id = devices.ENGINE,    name = _('Throttle Step Up - OFF/IGN/IDLE'),                category = {_('Throttle Quadrant'), _('Engine Control Panel')}},
     {down = device_commands.throttle_click_ITER, value_down = -1, cockpit_device_id = devices.ENGINE,   name = _('Throttle Step Down - OFF/IGN/IDLE'),              category = {_('Throttle Quadrant'), _('Engine Control Panel')}},
 
-    {down = Keys.ExtLightMaster, value_down = 1,                                                        name = _('Master Exterior Lights Switch - ON'),             category = {_('Throttle Grip'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightMaster, value_down = 0,                                                        name = _('Master Exterior Lights Switch - OFF'),            category = {_('Throttle Grip'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightMasterToggle,                                                                  name = _('Master Exterior Lights Switch - ON/OFF'),         category = {_('Throttle Grip'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightMaster, value_down = 1, up = Keys.ExtLightMaster, value_up = 0,                name = _('Master Exterior Lights Switch - ON else OFF'),    category = {_('Throttle Grip'), _('Exterior Lights Control Panel')}},
+    {down = Keys.ExtLightMaster, value_down = 1,                                                        name = _('Master Exterior Lights Switch - ON'),             category = {_('Throttle Grip'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightMaster, value_down = 0,                                                        name = _('Master Exterior Lights Switch - OFF'),            category = {_('Throttle Grip'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightMasterToggle,                                                                  name = _('Master Exterior Lights Switch - ON/OFF'),         category = {_('Throttle Grip'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightMaster, value_down = 1, up = Keys.ExtLightMaster, value_up = 0,                name = _('Master Exterior Lights Switch - ON else OFF'),    category = {_('Throttle Grip'), _('Exterior Lights Panel')}},
     {down = iCommandPlaneAirBrake,                                                                      name = _('Speedbrake Switch - OPEN/CLOSE'),                 category = {_('Throttle Grip'), _('Flight Control')}},
     {down = iCommandPlaneAirBrakeOn, up = iCommandPlaneAirBrakeOff,                                     name = _('Speedbrake Switch - OPEN else CLOSE'),            category = {_('Throttle Grip'), _('Flight Control')}},
     {down = iCommandPlaneAirBrakeOn,                                                                    name = _('Speedbrake Switch - OPEN'),                       category = {_('Throttle Grip'), _('Flight Control')}},
@@ -94,12 +94,12 @@ join(res.keyCommands,{
     {pressed = Keys.TrimRightRudder, up = Keys.TrimStop,                                                name = _('Rudder Trim Switch - Rudder Right'),              category = {_('Throttle Quadrant'), _('Flight Control')}},
 
     -- Flap Switch
-    {down = iCommandPlaneFlaps,                                                                         name = _('Flaps Switch - UP/DOWN'),                         category = {_('Throttle Quadrant'), _('Flight Control')}},
-    {down = iCommandPlaneFlapsOn,                                                                       name = _('Flaps Switch - DOWN'),                            category = {_('Throttle Quadrant'), _('Flight Control')}},
-    {down = iCommandPlaneFlapsOff,                                                                      name = _('Flaps Switch - UP'),                              category = {_('Throttle Quadrant'), _('Flight Control')}},
-    {down = Keys.PlaneFlapsStop,                                                                        name = _('Flaps Switch - STOP'),                            category = {_('Throttle Quadrant'), _('Flight Control')}},
-    {down = Keys.PlaneFlapsDownHotas, up = Keys.PlaneFlapsStop,                                         name = _('Flaps Switch - DOWN else STOP'),                  category = {_('Throttle Quadrant'), _('Flight Control')}},
-    {down = Keys.PlaneFlapsUpHotas, up = Keys.PlaneFlapsStop,                                           name = _('Flaps Switch - UP else STOP'),                    category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {down = iCommandPlaneFlaps,                                                                         name = _('Flap Handle - UP/DOWN'),                         category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {down = iCommandPlaneFlapsOn,                                                                       name = _('Flap Handle - DOWN'),                            category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {down = iCommandPlaneFlapsOff,                                                                      name = _('Flap Handle - UP'),                              category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {down = Keys.PlaneFlapsStop,                                                                        name = _('Flap Handle - STOP'),                            category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {down = Keys.PlaneFlapsDownHotas, up = Keys.PlaneFlapsStop,                                         name = _('Flap Handle - DOWN else STOP'),                  category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {down = Keys.PlaneFlapsUpHotas, up = Keys.PlaneFlapsStop,                                           name = _('Flap Handle - UP else STOP'),                    category = {_('Throttle Quadrant'), _('Flight Control')}},
 
     ---------------------------------------------
     -- AN/ALE-29A Chaff Control Panel -----------
@@ -264,10 +264,10 @@ join(res.keyCommands,{
     {down = Keys.AWRS_Drop_Interval_Dec,                                                                                                                            name = _('AWRS Drop Interval Knob - CCW/Decrease'),         category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
 
     -- T-Handles
-    {down = device_commands.emer_bomb_release, up = device_commands.emer_bomb_release, cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 1.0, value_up = 0.0,                                                 name = _('Handles - EMER BOMB Release'),    category = {_('Instrument Panel'), _('Emergency')}},
-    {down = device_commands.emer_gear_release, up = device_commands.emer_gear_release, cockpit_device_id = devices.GEAR, value_down = 1.0, value_up = 0.0,                                                          name = _('Handles - EMER GEAR Release'),    category = {_('Instrument Panel'), _('Emergency')}},
-    {down = device_commands.man_flt_control_override, up = device_commands.man_flt_control_override, cockpit_device_id = devices.HYDRAULIC_SYSTEM, value_down = 1.0, value_up = 0.0,                                name = _('Handles - MAN FLT CONT Release'), category = {_('Instrument Panel'), _('Emergency')}},
-    {down = device_commands.emer_gen_deploy, cockpit_device_id = devices.ELECTRIC_SYSTEM, value_down = 1.0,                                                                                                         name = _('Handles - EMER GEN Release'),     category = {_('Instrument Panel'), _('Emergency')}},
+    {down = device_commands.emer_bomb_release, up = device_commands.emer_bomb_release, cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 1.0, value_up = 0.0,                                                 name = _('Emergency Stores Release Handle'),    category = {_('Instrument Panel'), _('Emergency')}},
+    {down = device_commands.emer_gear_release, up = device_commands.emer_gear_release, cockpit_device_id = devices.GEAR, value_down = 1.0, value_up = 0.0,                                                          name = _('Emergency Landing Gear Release Handle'),    category = {_('Instrument Panel'), _('Emergency')}},
+    {down = device_commands.man_flt_control_override, up = device_commands.man_flt_control_override, cockpit_device_id = devices.HYDRAULIC_SYSTEM, value_down = 1.0, value_up = 0.0,                                name = _('Manual Flight Control Handle'), category = {_('Instrument Panel'), _('Emergency')}},
+    {down = device_commands.emer_gen_deploy, cockpit_device_id = devices.ELECTRIC_SYSTEM, value_down = 1.0,                                                                                                         name = _('Emergency Generator Release Handle'),     category = {_('Instrument Panel'), _('Emergency')}},
     {down = device_commands.speedbrake_emer, up = device_commands.speedbrake_emer, value_down = 1, value_up = 0, cockpit_device_id = devices.AIRBRAKES,                                                             name = _('Emergency Speedbrake Knob'),      category = {_('Console Left'), _('Emergency')}},
 
     ---------------------------------------------
@@ -372,7 +372,7 @@ join(res.keyCommands,{
     {down = Keys.OxygenToggle,                                                                                                                      name = _('Oxygen Switch - ON/OFF'),         category = {_('Console Left'), _('Systems')}},
 
     -- Canopy Control
-    {down = iCommandPlaneFonar,                             name = _('Canopy Handle - CLOSE/OPEN'),                                             category = {_('Console Left')}},
+    {down = iCommandPlaneFonar,                             name = _('Canopy Lever - CLOSE/OPEN'),                                             category = {_('Console Left')}},
 
     ---------------------------------------------
     -- Right Console ----------------------------
@@ -456,62 +456,62 @@ join(res.keyCommands,{
     {down = Keys.Fuel_Transfer_Bypass_Toggle,                                                                                                                   name = _('Fuel Transfer Switch - BYPASS/NORMAL'),       category = {_('Refueling')}},
 
     -- Interior Lights Panel
-    {down = device_commands.intlight_whiteflood_CHANGE,                                     cockpit_device_id = devices.AVIONICS,  value_down = 0.1,                    name = _('White Floodlights Control - CW/Increase'),                    category = {_('Console Right'), _('Interior Lights Control Panel')}},
-    {down = device_commands.intlight_whiteflood_CHANGE,                                     cockpit_device_id = devices.AVIONICS,  value_down = -0.1,                   name = _('White Floodlights Control - CCW/Decrease'),                   category = {_('Console Right'), _('Interior Lights Control Panel')}},
-    {down = device_commands.intlight_instruments_CHANGE,                                    cockpit_device_id = devices.AVIONICS,  value_down = 0.1,                    name = _('Instrument Lights Control - CW/Increase'),                    category = {_('Console Right'), _('Interior Lights Control Panel')}},
-    {down = device_commands.intlight_instruments_CHANGE,                                    cockpit_device_id = devices.AVIONICS,  value_down = -0.1,                   name = _('Instrument Lights Control - CCW/Decrease'),                   category = {_('Console Right'), _('Interior Lights Control Panel')}},
-    {down = device_commands.intlight_console_CHANGE,                                        cockpit_device_id = devices.AVIONICS,  value_down = 0.1,                    name = _('Console Lights Control - CW/Increase'),                       category = {_('Console Right'), _('Interior Lights Control Panel')}},
-    {down = device_commands.intlight_console_CHANGE,                                        cockpit_device_id = devices.AVIONICS,  value_down = -0.1,                   name = _('Console Lights Control - CCW/Decrease'),                      category = {_('Console Right'), _('Interior Lights Control Panel')}},
-    {down = device_commands.intlight_brightness,                                            cockpit_device_id = devices.AVIONICS,  value_down = 1.0,                    name = _('Instrument Lights Brightness Switch - BRIGHT'),               category = {_('Console Right'), _('Interior Lights Control Panel')}},
-    {down = device_commands.intlight_brightness,                                            cockpit_device_id = devices.AVIONICS,  value_down = 0.0,                    name = _('Instrument Lights Brightness Switch - DIM'),                  category = {_('Console Right'), _('Interior Lights Control Panel')}},
-    {down = device_commands.intlight_brightness,                                            cockpit_device_id = devices.AVIONICS,  value_down = -1.0,                   name = _('Instrument Lights Brightness Switch - MEDIUM'),               category = {_('Console Right'), _('Interior Lights Control Panel')}},
-    {down = device_commands.intlight_brightness, up = device_commands.intlight_brightness,  cockpit_device_id = devices.AVIONICS,  value_down = 1.0, value_up = 0.0,    name = _('Instrument Lights Brightness Switch - BRIGHT else DIM'),      category = {_('Console Right'), _('Interior Lights Control Panel')}},
-    {down = device_commands.intlight_brightness, up = device_commands.intlight_brightness,  cockpit_device_id = devices.AVIONICS,  value_down = -1.0, value_up = 0.0,   name = _('Instrument Lights Brightness Switch - MEDIUM else DIM'),      category = {_('Console Right'), _('Interior Lights Control Panel')}},
-    {down = Keys.IntLightBrightness,                                                                                                                                    name = _('Instrument Lights Brightness - Cycle'),                       category = {_('Console Right'), _('Interior Lights Control Panel')}},
+    {down = device_commands.intlight_whiteflood_CHANGE,                                     cockpit_device_id = devices.AVIONICS,  value_down = 0.1,                    name = _('White Floodlights Control - CW/Increase'),                    category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = device_commands.intlight_whiteflood_CHANGE,                                     cockpit_device_id = devices.AVIONICS,  value_down = -0.1,                   name = _('White Floodlights Control - CCW/Decrease'),                   category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = device_commands.intlight_instruments_CHANGE,                                    cockpit_device_id = devices.AVIONICS,  value_down = 0.1,                    name = _('Instrument Lights Control - CW/Increase'),                    category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = device_commands.intlight_instruments_CHANGE,                                    cockpit_device_id = devices.AVIONICS,  value_down = -0.1,                   name = _('Instrument Lights Control - CCW/Decrease'),                   category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = device_commands.intlight_console_CHANGE,                                        cockpit_device_id = devices.AVIONICS,  value_down = 0.1,                    name = _('Console Lights Control - CW/Increase'),                       category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = device_commands.intlight_console_CHANGE,                                        cockpit_device_id = devices.AVIONICS,  value_down = -0.1,                   name = _('Console Lights Control - CCW/Decrease'),                      category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = device_commands.intlight_brightness,                                            cockpit_device_id = devices.AVIONICS,  value_down = 1.0,                    name = _('Instrument Lights Brightness Switch - BRIGHT'),               category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = device_commands.intlight_brightness,                                            cockpit_device_id = devices.AVIONICS,  value_down = 0.0,                    name = _('Instrument Lights Brightness Switch - DIM'),                  category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = device_commands.intlight_brightness,                                            cockpit_device_id = devices.AVIONICS,  value_down = -1.0,                   name = _('Instrument Lights Brightness Switch - MEDIUM'),               category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = device_commands.intlight_brightness, up = device_commands.intlight_brightness,  cockpit_device_id = devices.AVIONICS,  value_down = 1.0, value_up = 0.0,    name = _('Instrument Lights Brightness Switch - BRIGHT else DIM'),      category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = device_commands.intlight_brightness, up = device_commands.intlight_brightness,  cockpit_device_id = devices.AVIONICS,  value_down = -1.0, value_up = 0.0,   name = _('Instrument Lights Brightness Switch - MEDIUM else DIM'),      category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = Keys.IntLightBrightness,                                                                                                                                    name = _('Instrument Lights Brightness - Cycle'),                       category = {_('Console Right'), _('Interior Lights Panel')}},
     
     -- Exterior Lights Panel
-    {down = Keys.ExtLightProbeCycle,                                                                   name = _('Probe Light - Cycle'),                  category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightProbe, value_down = 1,                                                        name = _('Probe Light Switch - BRIGHT'),          category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightProbe, value_down = -1,                                                       name = _('Probe Light Switch - DIM'),             category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightProbe, value_down = 0,                                                        name = _('Probe Light Switch - OFF'),             category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightProbe, value_down = 1, up = Keys.ExtLightProbe, value_up = 0,                 name = _('Probe Light Switch - BRIGHT else OFF'), category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightProbe, value_down = -1, up = Keys.ExtLightProbe, value_up = 0,                name = _('Probe Light Switch - DIM else OFF'),    category = {_('Console Right'), _('Exterior Lights Control Panel')}},
+    {down = Keys.ExtLightProbeCycle,                                                                   name = _('Probe Light - Cycle'),                  category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightProbe, value_down = 1,                                                        name = _('Probe Light Switch - BRIGHT'),          category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightProbe, value_down = -1,                                                       name = _('Probe Light Switch - DIM'),             category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightProbe, value_down = 0,                                                        name = _('Probe Light Switch - OFF'),             category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightProbe, value_down = 1, up = Keys.ExtLightProbe, value_up = 0,                 name = _('Probe Light Switch - BRIGHT else OFF'), category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightProbe, value_down = -1, up = Keys.ExtLightProbe, value_up = 0,                name = _('Probe Light Switch - DIM else OFF'),    category = {_('Console Right'), _('Exterior Lights Panel')}},
 
-    {down = Keys.ExtLightTaxi, value_down = 1,                                                         name = _('Taxi Light Switch - ON'),               category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightTaxi, value_down = 0,                                                         name = _('Taxi Light Switch - OFF'),              category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightTaxiToggle,                                                                   name = _('Taxi Light Switch - ON/OFF'),           category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightTaxi, value_down = 1, up = Keys.ExtLightTaxi, value_up = 0,                   name = _('Taxi Light Switch - ON else OFF'),      category = {_('Console Right'), _('Exterior Lights Control Panel')}},
+    {down = Keys.ExtLightTaxi, value_down = 1,                                                         name = _('Taxi Light Switch - ON'),               category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightTaxi, value_down = 0,                                                         name = _('Taxi Light Switch - OFF'),              category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightTaxiToggle,                                                                   name = _('Taxi Light Switch - ON/OFF'),           category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightTaxi, value_down = 1, up = Keys.ExtLightTaxi, value_up = 0,                   name = _('Taxi Light Switch - ON else OFF'),      category = {_('Console Right'), _('Exterior Lights Panel')}},
 
-    {down = Keys.ExtLightAnticollision, value_down = 1,                                                name = _('Anti-Collision Light Switch - ON'),          category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightAnticollision, value_down = 0,                                                name = _('Anti-Collision Light Switch - OFF'),         category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightAnticollisionToggle,                                                          name = _('Anti-Collision Light Switch - ON/OFF'),      category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightAnticollision, value_down = 1, up = Keys.ExtLightAnticollision, value_up = 0, name = _('Anti-Collision Light Switch - ON else OFF'), category = {_('Console Right'), _('Exterior Lights Control Panel')}},
+    {down = Keys.ExtLightAnticollision, value_down = 1,                                                name = _('Anti-Collision Light Switch - ON'),          category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightAnticollision, value_down = 0,                                                name = _('Anti-Collision Light Switch - OFF'),         category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightAnticollisionToggle,                                                          name = _('Anti-Collision Light Switch - ON/OFF'),      category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightAnticollision, value_down = 1, up = Keys.ExtLightAnticollision, value_up = 0, name = _('Anti-Collision Light Switch - ON else OFF'), category = {_('Console Right'), _('Exterior Lights Panel')}},
 
-    {down = Keys.ExtLightNavCycle,                                                                     name = _('Navigation Lights - Cycle'),                   category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightNav, value_down = 1,                                                          name = _('Navigation Lights Switch - BRIGHT'),           category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightNav, value_down = -1,                                                         name = _('Navigation Lights Switch - DIM'),              category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightNav, value_down = 0,                                                          name = _('Navigation Lights Switch - OFF'),              category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightNav, value_down = 1, up = Keys.ExtLightNav, value_up = 0,                     name = _('Navigation Lights Switch - BRIGHT else OFF'),  category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightNav, value_down = -1, up = Keys.ExtLightNav, value_up = 0,                    name = _('Navigation Lights Switch - DIM else OFF'),     category = {_('Console Right'), _('Exterior Lights Control Panel')}},
+    {down = Keys.ExtLightNavCycle,                                                                     name = _('Navigation Lights - Cycle'),                   category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightNav, value_down = 1,                                                          name = _('Navigation Lights Switch - BRIGHT'),           category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightNav, value_down = -1,                                                         name = _('Navigation Lights Switch - DIM'),              category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightNav, value_down = 0,                                                          name = _('Navigation Lights Switch - OFF'),              category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightNav, value_down = 1, up = Keys.ExtLightNav, value_up = 0,                     name = _('Navigation Lights Switch - BRIGHT else OFF'),  category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightNav, value_down = -1, up = Keys.ExtLightNav, value_up = 0,                    name = _('Navigation Lights Switch - DIM else OFF'),     category = {_('Console Right'), _('Exterior Lights Panel')}},
 
-    {down = Keys.ExtLightTailCycle,                                                                    name = _('Tail Light - Cycle'),                   category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightTail, value_down = 1,                                                         name = _('Tail Light Switch - BRIGHT'),           category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightTail, value_down = -1,                                                        name = _('Tail Light Switch - DIM'),              category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightTail, value_down = 0,                                                         name = _('Tail Light Switch - OFF'),              category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightTail, value_down = 1, up = Keys.ExtLightTail, value_up = 0,                   name = _('Tail Light Switch - BRIGHT else OFF'),  category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightTail, value_down = -1, up = Keys.ExtLightTail, value_up = 0,                  name = _('Tail Light Switch - DIM else OFF'),     category = {_('Console Right'), _('Exterior Lights Control Panel')}},
+    {down = Keys.ExtLightTailCycle,                                                                    name = _('Tail Light - Cycle'),                   category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightTail, value_down = 1,                                                         name = _('Tail Light Switch - BRIGHT'),           category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightTail, value_down = -1,                                                        name = _('Tail Light Switch - DIM'),              category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightTail, value_down = 0,                                                         name = _('Tail Light Switch - OFF'),              category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightTail, value_down = 1, up = Keys.ExtLightTail, value_up = 0,                   name = _('Tail Light Switch - BRIGHT else OFF'),  category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightTail, value_down = -1, up = Keys.ExtLightTail, value_up = 0,                  name = _('Tail Light Switch - DIM else OFF'),     category = {_('Console Right'), _('Exterior Lights Panel')}},
 
-    {down = Keys.ExtLightFuselageCycle,                                                                name = _('Fuselage Light - Cycle'),                    category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightFuselage, value_down = 1,                                                     name = _('Fuselage Light Switch - BRIGHT'),            category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightFuselage, value_down = -1,                                                    name = _('Fuselage Light Switch - DIM'),               category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightFuselage, value_down = 0,                                                     name = _('Fuselage Light Switch - OFF'),               category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightFuselage, value_down = 1, up = Keys.ExtLightFuselage, value_up = 0,           name = _('Fuselage Light Switch - BRIGHT else OFF'),   category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightFuselage, value_down = -1, up = Keys.ExtLightFuselage, value_up = 0,          name = _('Fuselage Light Switch - DIM else OFF'),      category = {_('Console Right'), _('Exterior Lights Control Panel')}},
+    {down = Keys.ExtLightFuselageCycle,                                                                name = _('Fuselage Light - Cycle'),                    category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightFuselage, value_down = 1,                                                     name = _('Fuselage Light Switch - BRIGHT'),            category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightFuselage, value_down = -1,                                                    name = _('Fuselage Light Switch - DIM'),               category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightFuselage, value_down = 0,                                                     name = _('Fuselage Light Switch - OFF'),               category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightFuselage, value_down = 1, up = Keys.ExtLightFuselage, value_up = 0,           name = _('Fuselage Light Switch - BRIGHT else OFF'),   category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightFuselage, value_down = -1, up = Keys.ExtLightFuselage, value_up = 0,          name = _('Fuselage Light Switch - DIM else OFF'),      category = {_('Console Right'), _('Exterior Lights Panel')}},
 
-    {down = Keys.ExtLightFlashSteady, value_down = 1,                                                  name = _('Lighting Flash/Steady Switch - FLSH'),           category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightFlashSteady, value_down = 0,                                                  name = _('Lighting Flash/Steady Switch - STDY'),           category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightFlashSteadyToggle,                                                            name = _('Lighting Flash/Steady Switch - FLSH/STDY'),      category = {_('Console Right'), _('Exterior Lights Control Panel')}},
-    {down = Keys.ExtLightFlashSteady, value_down = 1, up = Keys.ExtLightFlashSteady, value_up = 0,     name = _('Lighting Flash/Steady Switch - FLSH else STDY'), category = {_('Console Right'), _('Exterior Lights Control Panel')}},
+    {down = Keys.ExtLightFlashSteady, value_down = 1,                                                  name = _('Lighting Flash/Steady Switch - FLSH'),           category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightFlashSteady, value_down = 0,                                                  name = _('Lighting Flash/Steady Switch - STDY'),           category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightFlashSteadyToggle,                                                            name = _('Lighting Flash/Steady Switch - FLSH/STDY'),      category = {_('Console Right'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightFlashSteady, value_down = 1, up = Keys.ExtLightFlashSteady, value_up = 0,     name = _('Lighting Flash/Steady Switch - FLSH else STDY'), category = {_('Console Right'), _('Exterior Lights Panel')}},
 	
 	-- AN/ARC-51A UHF Radio
 	{down = Keys.radio_ptt,                                                                     name = _('Radio Microphone Push to Talk (PTT)'),    category = {_('Throttle Grip'), _('Communications'), _('AN/ARC-51A UHF Radio')}},
@@ -626,9 +626,9 @@ join(res.axisCommands,{
     {action = device_commands.radar_angle_axis_abs, cockpit_device_id = devices.RADAR,                  name = _('AN/APG-53A Radar Antenna Tilt - Absolute'),  category = {_('Console Left'), _('Radar Control Panel', _('AN/APG-53A Radar'))}},
 
     -- Interior Lights Panel
-    {action = device_commands.intlight_instruments_AXIS, cockpit_device_id = devices.AVIONICS,          name = _('Lights Instrument Lights Control'), category = {_('Console Right'), _('Interior Lights Control Panel')}},
-    {action = device_commands.intlight_console_AXIS, cockpit_device_id = devices.AVIONICS,              name = _('Lights Console Lights Control'),    category = {_('Console Right'), _('Interior Lights Control Panel')}},
-    {action = device_commands.intlight_whiteflood_AXIS, cockpit_device_id = devices.AVIONICS,           name = _('Lights White Floodlights Control'),      category = {_('Console Right'), _('Interior Lights Control Panel')}},
+    {action = device_commands.intlight_instruments_AXIS, cockpit_device_id = devices.AVIONICS,          name = _('Lights Instrument Lights Control'), category = {_('Console Right'), _('Interior Lights Panel')}},
+    {action = device_commands.intlight_console_AXIS, cockpit_device_id = devices.AVIONICS,              name = _('Lights Console Lights Control'),    category = {_('Console Right'), _('Interior Lights Panel')}},
+    {action = device_commands.intlight_whiteflood_AXIS, cockpit_device_id = devices.AVIONICS,           name = _('Lights White Floodlights Control'),      category = {_('Console Right'), _('Interior Lights Panel')}},
 
     -- Aircraft Weapons Release System Panel
     {action = device_commands.AWRS_drop_interval_AXIS, cockpit_device_id = devices.WEAPON_SYSTEM,       name = _('AWRS Drop Interval Knob'),        category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},

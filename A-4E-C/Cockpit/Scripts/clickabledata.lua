@@ -42,10 +42,10 @@ elements["PNT_85"] = default_2_position_tumb("Speedbrake", devices.AIRBRAKES, de
 elements["PNT_128"] = default_3_position_tumb("Emergency Speedbrake", devices.AIRBRAKES, device_commands.speedbrake_emer,128)
 
 -- canopy lever
-elements["PNT_129"] = default_2_position_tumb("Canopy Handle", devices.CANOPY, Keys.Canopy, 0)
+elements["PNT_129"] = default_2_position_tumb("Canopy Lever", devices.CANOPY, Keys.Canopy, 0)
 elements["PNT_129"].sound = {{CANOPY_LEVER_OPEN,CANOPY_LEVER_CLOSE}}
 
-elements["PNT_132"] = multiposition_switch_limited("Flaps Lever", devices.FLAPS, device_commands.flaps, 132, 3, 1, false, -1.0)
+elements["PNT_132"] = multiposition_switch_limited("Flap Handle", devices.FLAPS, device_commands.flaps, 132, 3, 1, false, -1.0)
 elements["PNT_132"].sound = {{FLAPS_LEVER}}
 -- THROTTLE PANEL
 elements["PNT_80"] 	= default_3_position_tumb("Throttle Step", devices.ENGINE, device_commands.throttle_click,0, false, true)
@@ -311,19 +311,19 @@ elements["PNT_512"] = default_2_position_tumb("Compass Mode", devices.COMPASS, d
 elements["PNT_513"] = default_button("Compass Push-to-Sync", devices.COMPASS, device_commands.COMPASS_push_to_sync, 513) -- NO COMMAND
 
 -- T handles
-elements["PNT_1240"] = default_2_position_tumb("EMER GEAR Release", devices.GEAR, device_commands.emer_gear_release,1240)
+elements["PNT_1240"] = default_2_position_tumb("Emergency Landing Gear Release Handle", devices.GEAR, device_commands.emer_gear_release,1240)
 elements["PNT_1240"].animated = {true, true}
 elements["PNT_1240"].animation_speed = {15, 15}
 elements["PNT_1240"].sound = {{EMER_GEAR_PULL, EMER_GEAR_RELEASE}}
-elements["PNT_1241"] = default_2_position_tumb("EMER BOMB Release", devices.WEAPON_SYSTEM, device_commands.emer_bomb_release,1241)
+elements["PNT_1241"] = default_2_position_tumb("Emergency Stores Release Handle", devices.WEAPON_SYSTEM, device_commands.emer_bomb_release,1241)
 elements["PNT_1241"].animated = {true, true}
 elements["PNT_1241"].animation_speed = {15, 15}
 elements["PNT_1241"].sound = {{EMER_BOMB_PULL, EMER_BOMB_RELEASE}}
-elements["PNT_1242"] = default_2_position_tumb("MAN FLT CONT Release", devices.HYDRAULIC_SYSTEM, device_commands.man_flt_control_override,1242)
+elements["PNT_1242"] = default_2_position_tumb("Manual Flight Control Handle", devices.HYDRAULIC_SYSTEM, device_commands.man_flt_control_override,1242)
 elements["PNT_1242"].animated = {true, true}
 elements["PNT_1242"].animation_speed = {15, 15}
 elements["PNT_1242"].sound = {{EMER_BOMB_PULL, EMER_BOMB_RELEASE}}
-elements["PNT_1243"] = default_2_position_tumb("EMER GEN Release", devices.ELECTRIC_SYSTEM, device_commands.emer_gen_deploy,1243)
+elements["PNT_1243"] = default_2_position_tumb("Emergency Generator Release Handle", devices.ELECTRIC_SYSTEM, device_commands.emer_gen_deploy,1243)
 elements["PNT_1243"].animated = {true, true}
 elements["PNT_1243"].animation_speed = {15, 15}
 elements["PNT_1243"].sound = {{EMER_BOMB_PULL, EMER_BOMB_RELEASE}}
@@ -347,7 +347,7 @@ elements["PNT_225"] = default_3_position_tumb("Windshield Defrost Switch", devic
 elements["PNT_226"] = default_axis_limited("Cabin Temperature Knob", devices.ELECTRIC_SYSTEM, device_commands.cabin_temp , 226, 0.0, 0.3, false, false, {0,1} )
 
 -- EJECTION SEAT
-elements["PNT_24"] = default_2_position_tumb("Shoulder Harness Inertia Reel Control", devices.AVIONICS ,device_commands.CPT_shoulder_harness, 24, nil)
+elements["PNT_24"] = default_2_position_tumb("Shoulder Harness Control Handle", devices.AVIONICS ,device_commands.CPT_shoulder_harness, 24, nil)
 elements["PNT_24"].animated = {true, true}
 elements["PNT_24"].animation_speed = {7, 7}
 elements["PNT_24"].sound = {{HARNESS_LOCK, HARNESS_UNLOCK}}
