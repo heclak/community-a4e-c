@@ -26,7 +26,7 @@ elements["PNT_8"].animation_speed = {2, 2} -- multiply these numbers by the base
 elements["PNT_8"].sound = {{GEAR_LEVER_DOWN,GEAR_LEVER_UP}}
 
 --Remove tail hook level from clickables, until we can solve the tail hook problem in DCS replays. For now it moves to a gauge in mainpanel_init.lua
-elements["PNT_10"] = default_2_position_tumb("Tail Hook Handle", devices.GEAR, device_commands.Hook, 10)
+elements["PNT_10"] = default_2_position_tumb("Arresting Hook Handle", devices.GEAR, device_commands.Hook, 10)
 elements["PNT_10"].animated = {true, true}
 elements["PNT_10"].animation_speed = {2, 2} -- multiply these numbers by the base 1.0 second animation speed to get final speed. 2 means animates in 0.5 seconds.
 elements["PNT_10"].sound = {{TAILHOOK_HANDLE_DOWN,TAILHOOK_HANDLE_UP}}--{{TAILHOOK_HANDLE_DOWN},{KNOBCLICK_RIGHT_MID}}

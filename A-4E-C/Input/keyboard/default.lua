@@ -177,10 +177,10 @@ join(res.keyCommands,{
     {down = iCommandPlaneGearUp, up = iCommandPlaneGearDown,                                                                name = _('Landing Gear Handle - UP else DOWN'),             category = {_('Instrument Panel'), _('Systems')}},
 
     -- Arresting Hook Handle
-    {combos = {{key = 'G', reformers = {'LAlt'}}}, down = Keys.PlaneHook,                                                   name = _('Tail Hook Handle - UP/DOWN'),                     category = {_('Instrument Panel'), _('Systems')}},
-    {down = Keys.PlaneHookUp,                                                                                               name = _('Tail Hook Handle - UP'),                          category = {_('Instrument Panel'), _('Systems')}},
-    {down = Keys.PlaneHookDown,                                                                                             name = _('Tail Hook Handle - DOWN'),                        category = {_('Instrument Panel'), _('Systems')}},
-    {down = Keys.PlaneHookUp, up = Keys.PlaneHookDown,                                                                      name = _('Tail Hook Handle - UP else DOWN'),                category = {_('Instrument Panel'), _('Systems')}},
+    {combos = {{key = 'G', reformers = {'LAlt'}}}, down = Keys.PlaneHook,                                                   name = _('Arresting Hook Handle - UP/DOWN'),                     category = {_('Instrument Panel'), _('Systems')}},
+    {down = Keys.PlaneHookUp,                                                                                               name = _('Arresting Hook Handle - UP'),                          category = {_('Instrument Panel'), _('Systems')}},
+    {down = Keys.PlaneHookDown,                                                                                             name = _('Arresting Hook Handle - DOWN'),                        category = {_('Instrument Panel'), _('Systems')}},
+    {down = Keys.PlaneHookUp, up = Keys.PlaneHookDown,                                                                      name = _('Arresting Hook Handle - UP else DOWN'),                category = {_('Instrument Panel'), _('Systems')}},
 
     -- Misc Switches Panel
     {down = Keys.RadarTCPlanProfile, value_down = 1,                                                                                           name = _('Radar Terrain Clearance - PROFILE'),            category = {_('Instrument Panel'), _('Misc Switches Panel'), _('AN/APG-53A Radar')}},
