@@ -200,8 +200,8 @@ join(res.keyCommands,{
 
     {down = device_commands.master_test, up = device_commands.master_test, value_down = 1, value_up = 0, cockpit_device_id = devices.AVIONICS, name = _('Master Test Switch - ON else OFF'),             category = {_('Instrument Panel'), _('Miscellaneous Switches Panel')}},
 
-    {down = Keys.MissileVolumeInc,                                      name = _('Shrike/Sidewinder Volume Knob - Increment'),                  category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
-    {down = Keys.MissileVolumeDec,                                      name = _('Shrike/Sidewinder Volume Knob - Decrement'),                  category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
+    {down = Keys.MissileVolumeInc,                                      name = _('Shrike/Sidewinder Volume Knob - Rotary Increment'),           category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
+    {down = Keys.MissileVolumeDec,                                      name = _('Shrike/Sidewinder Volume Knob - Rotary Decrement'),           category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
     {down = Keys.MissileVolumeStartUp, up = Keys.MissileVolumeStop,     name = _('Shrike/Sidewinder Volume Knob - Continuous Increase'),        category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
     {down = Keys.MissileVolumeStartDown, up = Keys.MissileVolumeStop,   name = _('Shrike/Sidewinder Volume Knob - Continuous Decrease'),        category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
 
