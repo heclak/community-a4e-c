@@ -155,7 +155,7 @@ join(res.keyCommands,{
     {down = device_commands.GunsightDayNight, up = device_commands.GunsightDayNight, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.GUNSIGHT,    name = _('Gunsight Day-Night Switch - DAY else NIGHT'),         category = {_('Instrument Panel'), _('Gunsight Panel')}},
 
     -- Stopwatch
-    {down = device_commands.clock_stopwatch, up = device_commands.clock_stopwatch, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.CLOCK, name = _('Stopwatch - START/STOP/RESET'), category = {_('Instrument Panel'), _('Systems')}},
+    {down = device_commands.clock_stopwatch, up = device_commands.clock_stopwatch, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.CLOCK, name = _('Elapsed-Time Clock - START/STOP/RESET'), category = {_('Instrument Panel'), _('Systems')}},
 
     -- Altimeter
     {down = Keys.AltPressureInc,                                                                                            name = _('Altimeter Pressure - Rotary Increment'),         category = {_('Instrument Panel'), _('Systems')}},
@@ -182,32 +182,32 @@ join(res.keyCommands,{
     {down = Keys.PlaneHookDown,                                                                                             name = _('Arresting Hook Handle - DOWN'),                        category = {_('Instrument Panel'), _('Systems')}},
     {down = Keys.PlaneHookUp, up = Keys.PlaneHookDown,                                                                      name = _('Arresting Hook Handle - UP else DOWN'),                category = {_('Instrument Panel'), _('Systems')}},
 
-    -- Misc Switches Panel
-    {down = Keys.RadarTCPlanProfile, value_down = 1,                                                                                           name = _('Radar Terrain Clearance - PROFILE'),            category = {_('Instrument Panel'), _('Misc Switches Panel'), _('AN/APG-53A Radar')}},
-    {down = Keys.RadarTCPlanProfile, value_down = 0,                                                                                           name = _('Radar Terrain Clearance - PLAN'),               category = {_('Instrument Panel'), _('Misc Switches Panel'), _('AN/APG-53A Radar')}},
-    {down = Keys.RadarTCPlanProfile, value_down = -1,                                                                                          name = _('Radar Terrain Clearance - PROFILE/PLAN'),       category = {_('Instrument Panel'), _('Misc Switches Panel', _('AN/APG-53A Radar'))}},
-    {down = Keys.RadarTCPlanProfile, value_down = 1, up = Keys.RadarTCPlanProfile, value_up = 0,                                               name = _('Radar Terrain Clearance - PROFILE else PLAN'),  category = {_('Instrument Panel'), _('Misc Switches Panel'), _('AN/APG-53A Radar')}},
-    {down = Keys.RadarRangeLongShort, value_down = 1,                                                                                          name = _('Radar Range Switch - LONG'),                           category = {_('Instrument Panel'), _('Misc Switches Panel'), _('AN/APG-53A Radar')}},
-    {down = Keys.RadarRangeLongShort, value_down = 0,                                                                                          name = _('Radar Range Switch - SHORT'),                          category = {_('Instrument Panel'), _('Misc Switches Panel'), _('AN/APG-53A Radar')}},
-    {down = Keys.RadarRangeLongShort, value_down = -1,                                                                                         name = _('Radar Range Switch - LONG/SHORT'),                     category = {_('Instrument Panel'), _('Misc Switches Panel'), _('AN/APG-53A Radar')}},
-    {down = Keys.RadarRangeLongShort, value_down = 1, up = Keys.RadarRangeLongShort, value_up = 0,                                             name = _('Radar Range Switch - LONG else SHORT'),                category = {_('Instrument Panel'), _('Misc Switches Panel'), _('AN/APG-53A Radar')}},
+    -- Miscellaneous Switches Panel
+    {down = Keys.RadarTCPlanProfile, value_down = 1,                                                                                           name = _('Radar Terrain Clearance - PROFILE'),            category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('AN/APG-53A Radar')}},
+    {down = Keys.RadarTCPlanProfile, value_down = 0,                                                                                           name = _('Radar Terrain Clearance - PLAN'),               category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('AN/APG-53A Radar')}},
+    {down = Keys.RadarTCPlanProfile, value_down = -1,                                                                                          name = _('Radar Terrain Clearance - PROFILE/PLAN'),       category = {_('Instrument Panel'), _('Miscellaneous Switches Panel', _('AN/APG-53A Radar'))}},
+    {down = Keys.RadarTCPlanProfile, value_down = 1, up = Keys.RadarTCPlanProfile, value_up = 0,                                               name = _('Radar Terrain Clearance - PROFILE else PLAN'),  category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('AN/APG-53A Radar')}},
+    {down = Keys.RadarRangeLongShort, value_down = 1,                                                                                          name = _('Radar Range Switch - LONG'),                           category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('AN/APG-53A Radar')}},
+    {down = Keys.RadarRangeLongShort, value_down = 0,                                                                                          name = _('Radar Range Switch - SHORT'),                          category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('AN/APG-53A Radar')}},
+    {down = Keys.RadarRangeLongShort, value_down = -1,                                                                                         name = _('Radar Range Switch - LONG/SHORT'),                     category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('AN/APG-53A Radar')}},
+    {down = Keys.RadarRangeLongShort, value_down = 1, up = Keys.RadarRangeLongShort, value_up = 0,                                             name = _('Radar Range Switch - LONG else SHORT'),                category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('AN/APG-53A Radar')}},
 
-    {down = device_commands.bdhi_mode, value_down = -1, cockpit_device_id = devices.NAV,                                                       name = _('BDHI Switch - NAV PAC'),                        category = {_('Instrument Panel'), _('Misc Switches Panel'), _('AN/ASN-41 Navigation Computer'), _('AN/ARN-52 TACAN')}},
-    {down = device_commands.bdhi_mode, value_down = 0, cockpit_device_id = devices.NAV,                                                        name = _('BDHI Switch - TACAN'),                          category = {_('Instrument Panel'), _('Misc Switches Panel'), _('AN/ASN-41 Navigation Computer'), _('AN/ARN-52 TACAN')}},
-    {down = device_commands.bdhi_mode, value_down = 1, cockpit_device_id = devices.NAV,                                                        name = _('BDHI Switch - NAV CMPTR'),                      category = {_('Instrument Panel'), _('Misc Switches Panel'), _('AN/ASN-41 Navigation Computer'), _('AN/ARN-52 TACAN')}},
-    {down = device_commands.bdhi_mode, value_down = -1, up = device_commands.bdhi_mode, value_up = 0, cockpit_device_id = devices.NAV,         name = _('BDHI Switch - NAV PAC else TACAN'),             category = {_('Instrument Panel'), _('Misc Switches Panel'), _('AN/ASN-41 Navigation Computer'), _('AN/ARN-52 TACAN')}},
-    {down = device_commands.bdhi_mode, value_down = 1, up = device_commands.bdhi_mode, value_up = 0, cockpit_device_id = devices.NAV,          name = _('BDHI Switch - NAV CMPTR else TACAN'),           category = {_('Instrument Panel'), _('Misc Switches Panel'), _('AN/ASN-41 Navigation Computer'), _('AN/ARN-52 TACAN')}},
+    {down = device_commands.bdhi_mode, value_down = -1, cockpit_device_id = devices.NAV,                                                       name = _('BDHI Switch - NAV PAC'),                        category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('AN/ASN-41 Navigation Computer'), _('AN/ARN-52 TACAN')}},
+    {down = device_commands.bdhi_mode, value_down = 0, cockpit_device_id = devices.NAV,                                                        name = _('BDHI Switch - TACAN'),                          category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('AN/ASN-41 Navigation Computer'), _('AN/ARN-52 TACAN')}},
+    {down = device_commands.bdhi_mode, value_down = 1, cockpit_device_id = devices.NAV,                                                        name = _('BDHI Switch - NAV CMPTR'),                      category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('AN/ASN-41 Navigation Computer'), _('AN/ARN-52 TACAN')}},
+    {down = device_commands.bdhi_mode, value_down = -1, up = device_commands.bdhi_mode, value_up = 0, cockpit_device_id = devices.NAV,         name = _('BDHI Switch - NAV PAC else TACAN'),             category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('AN/ASN-41 Navigation Computer'), _('AN/ARN-52 TACAN')}},
+    {down = device_commands.bdhi_mode, value_down = 1, up = device_commands.bdhi_mode, value_up = 0, cockpit_device_id = devices.NAV,          name = _('BDHI Switch - NAV CMPTR else TACAN'),           category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('AN/ASN-41 Navigation Computer'), _('AN/ARN-52 TACAN')}},
 
-    {down = device_commands.master_test, up = device_commands.master_test, value_down = 1, value_up = 0, cockpit_device_id = devices.AVIONICS, name = _('Master Test Switch - ON else OFF'),             category = {_('Instrument Panel'), _('Misc Switches Panel')}},
+    {down = device_commands.master_test, up = device_commands.master_test, value_down = 1, value_up = 0, cockpit_device_id = devices.AVIONICS, name = _('Master Test Switch - ON else OFF'),             category = {_('Instrument Panel'), _('Miscellaneous Switches Panel')}},
 
-    {down = Keys.MissileVolumeInc,                                      name = _('Shrike/Sidewinder Volume Knob - Increment'),                  category = {_('Instrument Panel'), _('Misc Switches Panel'), _('Weapons')}},
-    {down = Keys.MissileVolumeDec,                                      name = _('Shrike/Sidewinder Volume Knob - Decrement'),                  category = {_('Instrument Panel'), _('Misc Switches Panel'), _('Weapons')}},
-    {down = Keys.MissileVolumeStartUp, up = Keys.MissileVolumeStop,     name = _('Shrike/Sidewinder Volume Knob - Continuous Increase'),        category = {_('Instrument Panel'), _('Misc Switches Panel'), _('Weapons')}},
-    {down = Keys.MissileVolumeStartDown, up = Keys.MissileVolumeStop,   name = _('Shrike/Sidewinder Volume Knob - Continuous Decrease'),        category = {_('Instrument Panel'), _('Misc Switches Panel'), _('Weapons')}},
+    {down = Keys.MissileVolumeInc,                                      name = _('Shrike/Sidewinder Volume Knob - Increment'),                  category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
+    {down = Keys.MissileVolumeDec,                                      name = _('Shrike/Sidewinder Volume Knob - Decrement'),                  category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
+    {down = Keys.MissileVolumeStartUp, up = Keys.MissileVolumeStop,     name = _('Shrike/Sidewinder Volume Knob - Continuous Increase'),        category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
+    {down = Keys.MissileVolumeStartDown, up = Keys.MissileVolumeStop,   name = _('Shrike/Sidewinder Volume Knob - Continuous Decrease'),        category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
 
-    {down = Keys.FuelGaugeExt,                                          name = _('Internal-External Fuel Switch - EXT'),                        category = {_('Instrument Panel'), _('Misc Switches Panel')}},
-    {down = Keys.FuelGaugeInt,                                          name = _('Internal-External Fuel Switch - INT'),                        category = {_('Instrument Panel'), _('Misc Switches Panel')}},
-    {down = Keys.FuelGaugeExt, up = Keys.FuelGaugeInt,                  name = _('Internal-External Fuel Switch - EXT else INT'),               category = {_('Instrument Panel'), _('Misc Switches Panel')}},
+    {down = Keys.FuelGaugeExt,                                          name = _('Internal-External Fuel Switch - EXT'),                        category = {_('Instrument Panel'), _('Miscellaneous Switches Panel')}},
+    {down = Keys.FuelGaugeInt,                                          name = _('Internal-External Fuel Switch - INT'),                        category = {_('Instrument Panel'), _('Miscellaneous Switches Panel')}},
+    {down = Keys.FuelGaugeExt, up = Keys.FuelGaugeInt,                  name = _('Internal-External Fuel Switch - EXT else INT'),               category = {_('Instrument Panel'), _('Miscellaneous Switches Panel')}},
 
     -- Armament Panel 
     {down = device_commands.arm_bomb, value_down = 1, cockpit_device_id = devices.WEAPON_SYSTEM,                                                    name = _('Bomb Arm Switch - NOSE & TAIL'),              category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
@@ -618,8 +618,8 @@ join(res.axisCommands,{
     {action = device_commands.ecm_msl_alert_axis_inner, cockpit_device_id = devices.RWR,                name = _('AN/APR-23 PRF Volume'),                     category = {_('AN/APR-23 RHWS (ECM)')}}, 
     {action = device_commands.ecm_msl_alert_axis_outer, cockpit_device_id = devices.RWR,                name = _('AN/APR-23 Missile Alert Volume'),           category = {_('AN/APR-23 RHWS (ECM)')}}, 
     
-    -- Misc Switches Panel
-    {action = device_commands.shrike_sidewinder_volume, cockpit_device_id = devices.WEAPON_SYSTEM,      name = _('Shrike/Sidewinder Volume Knob'),  category = {_('Instrument Panel'), _('Misc Switches Panel'), _('Weapons')}},
+    -- Miscellaneous Switches Panel
+    {action = device_commands.shrike_sidewinder_volume, cockpit_device_id = devices.WEAPON_SYSTEM,      name = _('Shrike/Sidewinder Volume Knob'),  category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
 
     -- Radar Control Panel
     {action = device_commands.radar_angle_axis, cockpit_device_id = devices.RADAR,                      name = _('AN/APG-53A Radar Antenna Tilt - Slew'),      category = {_('Console Left'), _('AN/APG-53A Radar')}},

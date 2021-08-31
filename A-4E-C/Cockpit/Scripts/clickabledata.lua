@@ -58,10 +58,10 @@ elements["PNT_100"].sound = {{STARTER_PUSH,STARTER_RELEASE}}
 elements["PNT_101"] = default_3_position_tumb("Drop Tank Pressurization Switch", devices.ENGINE, device_commands.ENGINE_drop_tanks_sw, 101, false, true, TOGGLECLICK_LEFT_MID) -- NO COMMAND
 elements["PNT_103"] = default_3_position_tumb("Fuel Dump Switch", devices.ENGINE, device_commands.ENGINE_wing_fuel_sw, 103, false, true, TOGGLECLICK_LEFT_MID) -- NO COMMAND
 elements["PNT_104"] = default_2_position_tumb("Fuel Control Switch", devices.ENGINE, device_commands.ENGINE_fuel_control_sw,104, TOGGLECLICK_LEFT_MID)
-elements["PNT_130"] = default_2_position_tumb("Manual Fuel Shutoff Lever", devices.ENGINE, device_commands.ENGINE_manual_fuel_shutoff, 130, nil, 3)
+elements["PNT_130"] = default_2_position_tumb("Manual Fuel Shutoff Control Lever", devices.ENGINE, device_commands.ENGINE_manual_fuel_shutoff, 130, nil, 3)
 -- elements["PNT_130"].updatable = false
 -- elements["PNT_130"].use_OBB = false
-elements["PNT_131"] = default_2_position_tumb("Manual Fuel Shutoff Catch", devices.ENGINE, device_commands.ENGINE_manual_fuel_shutoff_catch, 131, nil, 2) -- NO COMMAND
+elements["PNT_131"] = default_2_position_tumb("Manual Fuel Shutoff Control Catch", devices.ENGINE, device_commands.ENGINE_manual_fuel_shutoff_catch, 131, nil, 2) -- NO COMMAND
 --elements["PNT_201"] = default_3_position_tumb("Throttle cutoff", devices.ENGINE, device_commands.throttle,201,false)
 
 -- OXYGEN and ANTI-G PANEL
@@ -81,7 +81,7 @@ elements["PNT_136"] = multiposition_switch_limited("APC Temperature Switch", dev
 
 elements["PNT_139"] = default_button("Accelerometer Reset", devices.AVIONICS, device_commands.accel_reset, 139, nil, nil, TOGGLECLICK_MID_FWD)
 
-elements["PNT_146"] = default_button("Stopwatch", devices.CLOCK, device_commands.clock_stopwatch, 146)
+elements["PNT_146"] = default_button("Elapsed-Time Clock", devices.CLOCK, device_commands.clock_stopwatch, 146)
 
 -- ANGLE OF ANGLE INDEXER
 elements["PNT_853"] = default_axis_limited("AoA Indexer Dimming Wheel", devices.AVIONICS, device_commands.AOA_dimming_wheel_AXIS, 853, 1.0, 0.2, false, false, {-1,1} )

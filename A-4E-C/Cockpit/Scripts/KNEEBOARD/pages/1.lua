@@ -54,6 +54,14 @@ add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeb
 44 - Quick-Start 4. Emergency Procedures
 
 ================================
+8x - Cockpit Orientation
+================================
+80 -
+81 - Instrument Panel
+82 - Console Left
+83 - Console Right
+
+================================
 9x - Additional Guidance
 ================================
 90 -
