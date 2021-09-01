@@ -1,7 +1,5 @@
 dofile(LockOn_Options.common_script_path.."KNEEBOARD/indicator/definitions.lua")
 SetScale(FOV)
 
--- Controls Indicator Diagram
-
 -- add background image for kneeboard
-add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_8_panelr.png")
+add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_54.png")

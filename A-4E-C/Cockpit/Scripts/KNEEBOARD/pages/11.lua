@@ -5,7 +5,7 @@ SetScale(FOV)
 -- NAVIGATION LOG
 
 -- add background image for kneeboard
-add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_1_nav.png")
+add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_11.png")
 
 local gettext = require("i_18n")
 _ = gettext.translate
@@ -96,9 +96,9 @@ local function waypoint_name(waypoint_index)
 end
 
 -- BOARD TITLE
-local txt_BoardTitle = {}
-txt_BoardTitle = addSimpleTextStringCommon(txt_BoardTitle, "txt_BoardTitle", 0.0, POS_TITLE_Y, "NAVIGATION LOG", nil, predefined_font_title, "font_kneeboard_white")
-AddElement(txt_BoardTitle)
+--local txt_BoardTitle = {}
+--txt_BoardTitle = addSimpleTextStringCommon(txt_BoardTitle, "txt_BoardTitle", 0.0, POS_TITLE_Y, "NAVIGATION LOG", nil, predefined_font_title, "font_kneeboard_white")
+--AddElement(txt_BoardTitle)
 
 -- HEADERS
 local lat_label = {}
