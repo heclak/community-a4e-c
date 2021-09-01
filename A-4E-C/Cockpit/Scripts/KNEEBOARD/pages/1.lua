@@ -11,45 +11,32 @@ Catalogue enumeration and contents here.
 Assign pages an integer filename 10-99.
 For example, page "2 - 3" is "23.lua".
 
------------------------------------
-1 - MISSION INFORMATION
------------------------------------
-1 - 1 - Navigation Log
-1 - 2 - UHF Radio Presets
-1 - 3 - MCL/ICLS Data
-1 - 4 - Countermeasures Programmer
+0 - Welcome
+  0 - 1 - Table of Contents
 
------------------------------------
-2 - WEAPONS
------------------------------------
-2 - 1 - Master Arm & Bombs
-2 - 2 - AWRS, CP-741/A
-2 - 3 - Guns
-2 - 4 - Rockets
-2 - 5 - Missiles & AN/APR-23 RHWS
+1 - Mission
+  1 - 1 - Navigation
+  1 - 2 - Radio
+  1 - 3 - ILS Data
+  1 - 4 - Countermeasures
 
------------------------------------
-3 - FLIGHT
------------------------------------
-3 - 1 - Case III Recovery & APC
-3 - 2 - AFCS
-3 - 3 - Weight & Structural Limits
-3 - 4 - Airspeed Limits
+2 - Weapons
+  2 - 1 - Master Arm & Bombs
+  2 - 2 - AWRS & CP-741/A
+  2 - 3 - Guns
+  2 - 4 - Rockets
+  2 - 5 - Missiles & ECM
 
------------------------------------
-4 - CHECKLISTS
------------------------------------
-4 - 1 - Start Up
-4 - 2 - Taxi
-4 - 3 - Takeoff
-4 - 4 - Emergency
+3 - Flight
+  3 - 1 - AFCS (Autopilot)
+  3 - 2 - Case III Recovery & APC
+  3 - 3 - Weight & Structural Limits
+  3 - 4 - Airspeed Limits
 
------------------------------------
-5 - ORIENTATION
------------------------------------
-5 - 1 - Instrument Panel
-5 - 2 - Console Left
-5 - 3 - Console Right
-5 - 4 - Controls Indicator
+4 - Checklists
+  4 - 1 - Start-Up
+  4 - 2 - Taxi
+  4 - 3 - Takeoff
+  4 - 4 - Emergency
 
 ]]
