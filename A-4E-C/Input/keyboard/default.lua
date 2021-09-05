@@ -49,26 +49,26 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- Flight Control -------------------------
     ---------------------------------------------
-    {combos = {{key = 'Up'}}, down = iCommandPlaneUpStart, up = iCommandPlaneUpStop,                                     name = _('Aircraft Pitch - DOWN'),           category = {_('Stick'), _('Flight Control')}},
-    {combos = {{key = 'Down'}}, down = iCommandPlaneDownStart, up = iCommandPlaneDownStop,                               name = _('Aircraft Pitch - UP'),             category = {_('Stick'), _('Flight Control')}},
-    {combos = {{key = 'Left'}}, down = iCommandPlaneLeftStart, up = iCommandPlaneLeftStop,                               name = _('Aircraft Roll - LEFT'),            category = {_('Stick'), _('Flight Control')}},
-    {combos = {{key = 'Right'}}, down = iCommandPlaneRightStart, up = iCommandPlaneRightStop,                            name = _('Aircraft Roll - RIGHT'),           category = {_('Stick'), _('Flight Control')}},
-    {combos = {{key = 'Z'}}, down = iCommandPlaneLeftRudderStart, up = iCommandPlaneLeftRudderStop,                      name = _('Aircraft Rudder - LEFT'),          category = {_('Stick'), _('Flight Control')}},
-    {combos = {{key = 'X'}}, down = iCommandPlaneRightRudderStart, up = iCommandPlaneRightRudderStop,                    name = _('Aircraft Rudder - RIGHT'),         category = {_('Stick'), _('Flight Control')}},
+    {combos = {{key = 'Up'}}, down = iCommandPlaneUpStart, up = iCommandPlaneUpStop,                                     name = _('Aircraft Pitch - DOWN'),           category = {_('Control Stick'), _('Flight Control')}},
+    {combos = {{key = 'Down'}}, down = iCommandPlaneDownStart, up = iCommandPlaneDownStop,                               name = _('Aircraft Pitch - UP'),             category = {_('Control Stick'), _('Flight Control')}},
+    {combos = {{key = 'Left'}}, down = iCommandPlaneLeftStart, up = iCommandPlaneLeftStop,                               name = _('Aircraft Roll - LEFT'),            category = {_('Control Stick'), _('Flight Control')}},
+    {combos = {{key = 'Right'}}, down = iCommandPlaneRightStart, up = iCommandPlaneRightStop,                            name = _('Aircraft Roll - RIGHT'),           category = {_('Control Stick'), _('Flight Control')}},
+    {combos = {{key = 'Z'}}, down = iCommandPlaneLeftRudderStart, up = iCommandPlaneLeftRudderStop,                      name = _('Aircraft Rudder - LEFT'),          category = {_('Control Stick'), _('Flight Control')}},
+    {combos = {{key = 'X'}}, down = iCommandPlaneRightRudderStart, up = iCommandPlaneRightRudderStop,                    name = _('Aircraft Rudder - RIGHT'),         category = {_('Control Stick'), _('Flight Control')}},
 
     ---------------------------------------------
     -- Stick ------------------------------------
     ---------------------------------------------
-    {combos = {{key = '.', reformers = {'RCtrl'}}}, pressed = Keys.TrimUp, up = Keys.TrimStop,       name = _('Trimmer Switch - NOSE UP'),          category = {_('Stick'), _('Flight Control')}},
-    {combos = {{key = ';', reformers = {'RCtrl'}}}, pressed = Keys.TrimDown, up = Keys.TrimStop,     name = _('Trimmer Switch - NOSE DOWN'),        category = {_('Stick'), _('Flight Control')}},
-    {combos = {{key = ',', reformers = {'RCtrl'}}}, pressed = Keys.TrimLeft, up = Keys.TrimStop,     name = _('Trimmer Switch - LEFT WING DOWN'),   category = {_('Stick'), _('Flight Control')}},
-    {combos = {{key = '/', reformers = {'RCtrl'}}}, pressed = Keys.TrimRight, up = Keys.TrimStop,    name = _('Trimmer Switch - RIGHT WING DOWN'),  category = {_('Stick'), _('Flight Control')}},
-    {combos = {{key = 'T', reformers = {'LCtrl'}}}, pressed = Keys.TrimCancel, up = Keys.TrimStop,   name = _('Trimmer Reset (Hold)'),              category = {_('Stick'), _('Flight Control')}},
-    {combos = {{key = 'Space'}}, down = Keys.PlaneFireOn, up = Keys.PlaneFireOff,                    name = _('Gun-Rocket Trigger'),                category = {_('Stick'), _('Weapons')}},
-    {combos = {{key = 'Space', reformers = {'LAlt'}}}, down = Keys.PickleOn, up = Keys.PickleOff,    name = _('Bomb Release Button'),               category = {_('Stick'), _('Weapons')}},
-    {combos = {{key = 'A', reformers = {'LCtrl'}}}, down = Keys.AFCSOverride,                        name = _('AFCS Override Button'),              category = {_('Stick'), _('AFCS Control Panel')}},
-    {combos = {{key = 'Back'}}, down = Keys.ToggleStick,                                             name = _('Control Stick - HIDE/SHOW'),         category = {_('Stick'), _('View'), _('View Cockpit')}},
-    -- {down = Keys.nws_engage, up = Keys.nws_disengage,                                                name = _('Nose Wheel Steering - ON else OFF'), category = {_('Stick'), _('Systems')}},
+    {combos = {{key = '.', reformers = {'RCtrl'}}}, pressed = Keys.TrimUp, up = Keys.TrimStop,       name = _('Trim Switch - NOSE UP'),          category = {_('Control Stick'), _('Flight Control')}},
+    {combos = {{key = ';', reformers = {'RCtrl'}}}, pressed = Keys.TrimDown, up = Keys.TrimStop,     name = _('Trim Switch - NOSE DOWN'),        category = {_('Control Stick'), _('Flight Control')}},
+    {combos = {{key = ',', reformers = {'RCtrl'}}}, pressed = Keys.TrimLeft, up = Keys.TrimStop,     name = _('Trim Switch - LEFT WING DOWN'),   category = {_('Control Stick'), _('Flight Control')}},
+    {combos = {{key = '/', reformers = {'RCtrl'}}}, pressed = Keys.TrimRight, up = Keys.TrimStop,    name = _('Trim Switch - RIGHT WING DOWN'),  category = {_('Control Stick'), _('Flight Control')}},
+    {combos = {{key = 'T', reformers = {'LCtrl'}}}, pressed = Keys.TrimCancel, up = Keys.TrimStop,   name = _('Trim Reset (Hold)'),              category = {_('Control Stick'), _('Flight Control')}},
+    {combos = {{key = 'Space'}}, down = Keys.PlaneFireOn, up = Keys.PlaneFireOff,                    name = _('Gun-Rocket Trigger'),                category = {_('Control Stick'), _('Weapons')}},
+    {combos = {{key = 'Space', reformers = {'LAlt'}}}, down = Keys.PickleOn, up = Keys.PickleOff,    name = _('Bomb Release Button'),               category = {_('Control Stick'), _('Weapons')}},
+    {combos = {{key = 'A', reformers = {'LCtrl'}}}, down = Keys.AFCSOverride,                        name = _('Autopilot Override (AFCS Emergency Disconnect)'),              category = {_('Control Stick'), _('AFCS Control Panel')}},
+    {combos = {{key = 'Back'}}, down = Keys.ToggleStick,                                             name = _('Control Stick - HIDE/SHOW'),         category = {_('Control Stick'), _('View'), _('View Cockpit')}},
+    -- {down = Keys.nws_engage, up = Keys.nws_disengage,                                                name = _('Nose Wheel Steering - ON else OFF'), category = {_('Control Stick'), _('Systems')}},
 
     ---------------------------------------------
     -- Throttle Quadrant ------------------------
@@ -78,8 +78,8 @@ join(res.keyCommands,{
     {combos = {{key = 'Num+'}}, pressed = iCommandThrottleIncrease, up = iCommandThrottleStop,          name = _('Throttle Position Continuous - Increase'),        category = {_('Throttle Quadrant'), _('Flight Control')}},
     {combos = {{key = 'Num-'}}, pressed = iCommandThrottleDecrease, up = iCommandThrottleStop,          name = _('Throttle Position Continuous - Decrease'),        category = {_('Throttle Quadrant'), _('Flight Control')}},
 
-    {down = device_commands.throttle_click_ITER, value_down = 1, cockpit_device_id = devices.ENGINE,    name = _('Throttle Step Up - OFF/IGN/IDLE'),                category = {_('Throttle Quadrant'), _('Engine Control Panel')}},
-    {down = device_commands.throttle_click_ITER, value_down = -1, cockpit_device_id = devices.ENGINE,   name = _('Throttle Step Down - OFF/IGN/IDLE'),              category = {_('Throttle Quadrant'), _('Engine Control Panel')}},
+    {down = device_commands.throttle_click_ITER, value_down = 1, cockpit_device_id = devices.ENGINE,    name = _('Throttle Position Lock - Step Up (OFF/IGN/IDLE)'),                category = {_('Throttle Quadrant'), _('Engine Control Panel')}},
+    {down = device_commands.throttle_click_ITER, value_down = -1, cockpit_device_id = devices.ENGINE,   name = _('Throttle Position Lock - Step Down (OFF/IGN/IDLE)'),              category = {_('Throttle Quadrant'), _('Engine Control Panel')}},
 
     {down = Keys.ExtLightMaster, value_down = 1,                                                        name = _('Master Exterior Lights Switch - ON'),             category = {_('Throttle Grip'), _('Exterior Lights Panel')}},
     {down = Keys.ExtLightMaster, value_down = 0,                                                        name = _('Master Exterior Lights Switch - OFF'),            category = {_('Throttle Grip'), _('Exterior Lights Panel')}},
@@ -90,8 +90,8 @@ join(res.keyCommands,{
     {combos = {{key = 'B', reformers = {'LShift'}}}, down = iCommandPlaneAirBrakeOn,                    name = _('Speedbrake Switch - OPEN'),                       category = {_('Throttle Grip'), _('Flight Control')}},
     {combos = {{key = 'B', reformers = {'LCtrl'}}}, down = iCommandPlaneAirBrakeOff,                    name = _('Speedbrake Switch - CLOSE'),                      category = {_('Throttle Grip'), _('Flight Control')}},
 
-    {combos = {{key = 'Z', reformers = {'RCtrl'}}}, pressed = Keys.TrimLeftRudder, up = Keys.TrimStop,  name = _('Rudder Trim Switch - Rudder Left'),               category = {_('Throttle Quadrant'), _('Flight Control')}},
-    {combos = {{key = 'X', reformers = {'RCtrl'}}}, pressed = Keys.TrimRightRudder, up = Keys.TrimStop, name = _('Rudder Trim Switch - Rudder Right'),              category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {combos = {{key = 'Z', reformers = {'RCtrl'}}}, pressed = Keys.TrimLeftRudder, up = Keys.TrimStop,  name = _('Rudder Trim Switch - Left'),               category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {combos = {{key = 'X', reformers = {'RCtrl'}}}, pressed = Keys.TrimRightRudder, up = Keys.TrimStop, name = _('Rudder Trim Switch - Right'),              category = {_('Throttle Quadrant'), _('Flight Control')}},
 
     -- Flap Switch
     {combos = {{key = 'F'}}, down = iCommandPlaneFlaps,                                                 name = _('Flap Handle - UP/DOWN'),                         category = {_('Throttle Quadrant'), _('Flight Control')}},

@@ -39,4 +39,11 @@ For example, page "2 - 3" is "23.lua".
   4 - 3 - Takeoff
   4 - 4 - Emergency
 
+5 - Orientation
+  5 - 1 - Throttle & Stick
+  5 - 2 - Instrument Panel
+  5 - 3 - Console Left
+  5 - 4 - Console Right
+  5 - 5 - Controls
+
 ]]

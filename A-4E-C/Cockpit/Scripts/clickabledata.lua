@@ -38,8 +38,8 @@ elements["PNT_84"] = default_2_position_tumb("Spoiler Arm Switch", devices.SPOIL
 elements["PNT_133"] = default_2_position_tumb("JATO Arming Switch", devices.AVIONICS, device_commands.JATO_arm,133,TOGGLECLICK_LEFT_MID)
 elements["PNT_134"] = default_2_position_tumb("JATO Jettison Switch", devices.AVIONICS, device_commands.JATO_jettison,134,TOGGLECLICK_LEFT_MID)
 --Speedbrake
-elements["PNT_85"] = default_2_position_tumb("Speedbrake", devices.AIRBRAKES, device_commands.speedbrake,85,SPEEDBRAKE_SWITCH)
-elements["PNT_128"] = default_3_position_tumb("Emergency Speedbrake", devices.AIRBRAKES, device_commands.speedbrake_emer,128)
+elements["PNT_85"] = default_2_position_tumb("Speedbrake Switch", devices.AIRBRAKES, device_commands.speedbrake,85,SPEEDBRAKE_SWITCH)
+elements["PNT_128"] = default_3_position_tumb("Emergency Speedbrake Knob", devices.AIRBRAKES, device_commands.speedbrake_emer,128)
 
 -- canopy lever
 elements["PNT_129"] = default_2_position_tumb("Canopy Lever", devices.CANOPY, Keys.Canopy, 0)
@@ -48,9 +48,9 @@ elements["PNT_129"].sound = {{CANOPY_LEVER_OPEN,CANOPY_LEVER_CLOSE}}
 elements["PNT_132"] = multiposition_switch_limited("Flap Handle", devices.FLAPS, device_commands.flaps, 132, 3, 1, false, -1.0)
 elements["PNT_132"].sound = {{FLAPS_LEVER}}
 -- THROTTLE PANEL
-elements["PNT_80"] 	= default_3_position_tumb("Throttle Step", devices.ENGINE, device_commands.throttle_click,0, false, true)
+elements["PNT_80"] 	= default_3_position_tumb("Throttle Position Lock", devices.ENGINE, device_commands.throttle_click,0, false, true)
 elements["PNT_80"].sound = {{THROTTLE_DETENT}}
-elements["PNT_82"] 	= default_axis_limited("Rudder Trim", devices.TRIM, device_commands.rudder_trim, 82, 0.0, 0.3, false, false, {-1,1})
+elements["PNT_82"] 	= default_axis_limited("Rudder Trim Switch", devices.TRIM, device_commands.rudder_trim, 82, 0.0, 0.3, false, false, {-1,1})
 
 --ENGINE CONTROL PANEL
 elements["PNT_100"] = default_2_position_tumb("Engine Starter Switch", devices.ENGINE, device_commands.push_starter_switch,100)
@@ -274,7 +274,7 @@ elements["PNT_223"] = multiposition_switch_limited("Tail Light Switch", devices.
 
 -- MISC SWITCHES PANEL #53
 elements["PNT_250"] = multiposition_switch_limited("MCL Channel Selector Switch", devices.MCL, device_commands.mcl_channel_selector, 250, 20, 0.05, false, nil, KNOBCLICK_RIGHT_AFT, 2)
-elements["PNT_251"] = springloaded_3_pos_tumb("Seat Adjustment Switch(unimplemented)", devices.AVIONICS, device_commands.seat_adjustment, 251, false, KNOBCLICK_RIGHT_MID)
+elements["PNT_251"] = springloaded_3_pos_tumb("Seat Adjustment Switch (unimplemented)", devices.AVIONICS, device_commands.seat_adjustment, 251, false, KNOBCLICK_RIGHT_MID)
 elements["PNT_252"] = default_2_position_tumb("Emergency Generator Switch", devices.ELECTRIC_SYSTEM, device_commands.emer_gen_bypass, 252, TOGGLECLICK_RIGHT_AFT)
 elements["PNT_253"] = springloaded_forward_only_3_pos_tumb("AN/ARA-63 MCL Power Switch", devices.MCL, device_commands.mcl_power_switch, 253, false, TOGGLECLICK_RIGHT_AFT)
 elements["PNT_254"] = default_3_position_tumb("TACAN Antenna Control Switch (unimplemented)", devices.NAV, device_commands.tacan_antenna, 254, nil, false, TOGGLECLICK_RIGHT_AFT)
@@ -305,10 +305,10 @@ elements["PNT_370"] = default_2_position_tumb("Radio Squelch Disable", devices.R
 elements["PNT_372"] = multiposition_switch_limited("AN/ARC-51A UHF Radio Mode Switch", devices.RADIO, device_commands.arc51_mode, 372, 4, 0.1, false, 0, KNOBCLICK_RIGHT_MID)
 
 -- COMPASS CONTROLLER
-elements["PNT_509"] = default_axis_limited("Compass Latitude Knob", devices.COMPASS, device_commands.COMPASS_latitude, 509, 0, 0.3, false, false, {-1,1})
-elements["PNT_511"] = springloaded_3_pos_tumb("Compass Heading Set Knob", devices.COMPASS, device_commands.COMPASS_set_heading, 511, true, KNOBCLICK_RIGHT_MID)
-elements["PNT_512"] = default_2_position_tumb("Compass Mode", devices.COMPASS, device_commands.COMPASS_free_slaved_switch, 512, TOGGLECLICK_RIGHT_MID) -- NO COMMAND
-elements["PNT_513"] = default_button("Compass Push-to-Sync", devices.COMPASS, device_commands.COMPASS_push_to_sync, 513) -- NO COMMAND
+elements["PNT_509"] = default_axis_limited("Compass Latitude Knob (unimplemented)", devices.COMPASS, device_commands.COMPASS_latitude, 509, 0, 0.3, false, false, {-1,1})
+elements["PNT_511"] = springloaded_3_pos_tumb("Compass Heading Set Knob (unimplemented)", devices.COMPASS, device_commands.COMPASS_set_heading, 511, true, KNOBCLICK_RIGHT_MID)
+elements["PNT_512"] = default_2_position_tumb("Compass Mode (unimplemented)", devices.COMPASS, device_commands.COMPASS_free_slaved_switch, 512, TOGGLECLICK_RIGHT_MID) -- NO COMMAND
+elements["PNT_513"] = default_button("Compass Push-to-Sync (unimplemented)", devices.COMPASS, device_commands.COMPASS_push_to_sync, 513) -- NO COMMAND
 
 -- T handles
 elements["PNT_1240"] = default_2_position_tumb("Emergency Landing Gear Release Handle", devices.GEAR, device_commands.emer_gear_release,1240)

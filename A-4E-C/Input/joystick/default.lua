@@ -49,26 +49,26 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- Flight Control -------------------------
     ---------------------------------------------
-    {down = iCommandPlaneUpStart, up = iCommandPlaneUpStop,                             name = _('Aircraft Pitch - DOWN'),           category = {_('Stick'), _('Flight Control')}},
-    {down = iCommandPlaneDownStart, up = iCommandPlaneDownStop,                         name = _('Aircraft Pitch - UP'),             category = {_('Stick'), _('Flight Control')}},
-    {down = iCommandPlaneLeftStart, up = iCommandPlaneLeftStop,                         name = _('Aircraft Roll - LEFT'),            category = {_('Stick'), _('Flight Control')}},
-    {down = iCommandPlaneRightStart, up = iCommandPlaneRightStop,                       name = _('Aircraft Roll - RIGHT'),           category = {_('Stick'), _('Flight Control')}},
-    {down = iCommandPlaneLeftRudderStart, up = iCommandPlaneLeftRudderStop,             name = _('Aircraft Rudder - LEFT'),          category = {_('Stick'), _('Flight Control')}},
-    {down = iCommandPlaneRightRudderStart, up = iCommandPlaneRightRudderStop,           name = _('Aircraft Rudder - RIGHT'),         category = {_('Stick'), _('Flight Control')}},
+    {down = iCommandPlaneUpStart, up = iCommandPlaneUpStop,                             name = _('Aircraft Pitch - DOWN'),           category = {_('Control Stick'), _('Flight Control')}},
+    {down = iCommandPlaneDownStart, up = iCommandPlaneDownStop,                         name = _('Aircraft Pitch - UP'),             category = {_('Control Stick'), _('Flight Control')}},
+    {down = iCommandPlaneLeftStart, up = iCommandPlaneLeftStop,                         name = _('Aircraft Roll - LEFT'),            category = {_('Control Stick'), _('Flight Control')}},
+    {down = iCommandPlaneRightStart, up = iCommandPlaneRightStop,                       name = _('Aircraft Roll - RIGHT'),           category = {_('Control Stick'), _('Flight Control')}},
+    {down = iCommandPlaneLeftRudderStart, up = iCommandPlaneLeftRudderStop,             name = _('Aircraft Rudder - LEFT'),          category = {_('Control Stick'), _('Flight Control')}},
+    {down = iCommandPlaneRightRudderStart, up = iCommandPlaneRightRudderStop,           name = _('Aircraft Rudder - RIGHT'),         category = {_('Control Stick'), _('Flight Control')}},
 
     ---------------------------------------------
     -- Stick ------------------------------------
     ---------------------------------------------
-    {pressed = Keys.TrimUp, up = Keys.TrimStop,                                         name = _('Trimmer Switch - NOSE UP'),          category = {_('Stick'), _('Flight Control')}},
-    {pressed = Keys.TrimDown, up = Keys.TrimStop,                                       name = _('Trimmer Switch - NOSE DOWN'),        category = {_('Stick'), _('Flight Control')}},
-    {pressed = Keys.TrimLeft, up = Keys.TrimStop,                                       name = _('Trimmer Switch - LEFT WING DOWN'),   category = {_('Stick'), _('Flight Control')}},
-    {pressed = Keys.TrimRight, up = Keys.TrimStop,                                      name = _('Trimmer Switch - RIGHT WING DOWN'),  category = {_('Stick'), _('Flight Control')}},
-    {pressed = Keys.TrimCancel, up = Keys.TrimStop,                                     name = _('Trimmer Reset (Hold)'),              category = {_('Stick'), _('Flight Control')}},
-    {combos = {{key = 'JOY_BTN1'}}, down = Keys.PlaneFireOn, up = Keys.PlaneFireOff,    name = _('Gun-Rocket Trigger'),                category = {_('Stick'), _('Weapons')}},
-    {combos = {{key = 'JOY_BTN2'}}, down = Keys.PickleOn, up = Keys.PickleOff,          name = _('Bomb Release Button'),               category = {_('Stick'), _('Weapons')}},
-    {down = Keys.AFCSOverride,                                                          name = _('AFCS Override Button'),              category = {_('Stick'), _('AFCS Control Panel')}},
-    {down = Keys.ToggleStick,                                                           name = _('Control Stick - HIDE/SHOW'),         category = {_('Stick'), _('View'), _('View Cockpit')}},
-    -- {down = Keys.nws_engage, up = Keys.nws_disengage,                                   name = _('Nose Wheel Steering - ON else OFF'), category = {_('Stick'), _('Systems')}},
+    {pressed = Keys.TrimUp, up = Keys.TrimStop,                                         name = _('Trim Switch - NOSE UP'),          category = {_('Control Stick'), _('Flight Control')}},
+    {pressed = Keys.TrimDown, up = Keys.TrimStop,                                       name = _('Trim Switch - NOSE DOWN'),        category = {_('Control Stick'), _('Flight Control')}},
+    {pressed = Keys.TrimLeft, up = Keys.TrimStop,                                       name = _('Trim Switch - LEFT WING DOWN'),   category = {_('Control Stick'), _('Flight Control')}},
+    {pressed = Keys.TrimRight, up = Keys.TrimStop,                                      name = _('Trim Switch - RIGHT WING DOWN'),  category = {_('Control Stick'), _('Flight Control')}},
+    {pressed = Keys.TrimCancel, up = Keys.TrimStop,                                     name = _('Trim Reset (Hold)'),              category = {_('Control Stick'), _('Flight Control')}},
+    {combos = {{key = 'JOY_BTN1'}}, down = Keys.PlaneFireOn, up = Keys.PlaneFireOff,    name = _('Gun-Rocket Trigger'),                category = {_('Control Stick'), _('Weapons')}},
+    {combos = {{key = 'JOY_BTN2'}}, down = Keys.PickleOn, up = Keys.PickleOff,          name = _('Bomb Release Button'),               category = {_('Control Stick'), _('Weapons')}},
+    {down = Keys.AFCSOverride,                                                          name = _('Autopilot Override (AFCS Emergency Disconnect)'),              category = {_('Control Stick'), _('AFCS Control Panel')}},
+    {down = Keys.ToggleStick,                                                           name = _('Control Stick - HIDE/SHOW'),         category = {_('Control Stick'), _('View'), _('View Cockpit')}},
+    -- {down = Keys.nws_engage, up = Keys.nws_disengage,                                   name = _('Nose Wheel Steering - ON else OFF'), category = {_('Control Stick'), _('Systems')}},
 
     ---------------------------------------------
     -- Throttle Quadrant ------------------------
@@ -78,8 +78,8 @@ join(res.keyCommands,{
     {pressed = iCommandThrottleIncrease, up = iCommandThrottleStop,         name = _('Throttle Position Continuous - Increase'),        category = {_('Throttle Quadrant'), _('Flight Control')}},
     {pressed = iCommandThrottleDecrease, up = iCommandThrottleStop,         name = _('Throttle Position Continuous - Decrease'),        category = {_('Throttle Quadrant'), _('Flight Control')}},
 
-    {down = device_commands.throttle_click_ITER, value_down = 1, cockpit_device_id = devices.ENGINE,    name = _('Throttle Step Up - OFF/IGN/IDLE'),                category = {_('Throttle Quadrant'), _('Engine Control Panel')}},
-    {down = device_commands.throttle_click_ITER, value_down = -1, cockpit_device_id = devices.ENGINE,   name = _('Throttle Step Down - OFF/IGN/IDLE'),              category = {_('Throttle Quadrant'), _('Engine Control Panel')}},
+    {down = device_commands.throttle_click_ITER, value_down = 1, cockpit_device_id = devices.ENGINE,    name = _('Throttle Position Lock - Step Up (OFF/IGN/IDLE)'),                category = {_('Throttle Quadrant'), _('Engine Control Panel')}},
+    {down = device_commands.throttle_click_ITER, value_down = -1, cockpit_device_id = devices.ENGINE,   name = _('Throttle Position Lock - Step Down (OFF/IGN/IDLE)'),              category = {_('Throttle Quadrant'), _('Engine Control Panel')}},
 
     {down = Keys.ExtLightMaster, value_down = 1,                                                        name = _('Master Exterior Lights Switch - ON'),             category = {_('Throttle Grip'), _('Exterior Lights Panel')}},
     {down = Keys.ExtLightMaster, value_down = 0,                                                        name = _('Master Exterior Lights Switch - OFF'),            category = {_('Throttle Grip'), _('Exterior Lights Panel')}},
