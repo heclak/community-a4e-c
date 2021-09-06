@@ -192,6 +192,10 @@ Your correctly installed files should look something like the following image, s
 
 **Yes**! The A-4E-C will remain forever free!
 
+### Q: Are there any plans to obtain the Eagle Dynamics SDK, make the module official, or make the module a part of the default DCS install package?
+
+**No**, the A-4E-C will continue on as a free and open-source resource anyone can download and install to enjoy.
+
 ### Q: Can I donate to the A-4E-C project?
 
 **No**, we cannot accept donations, but we appreciate your words of support! There are so many good causes out there. Consider donating to one of those instead!
@@ -200,7 +204,7 @@ Your correctly installed files should look something like the following image, s
 
 **Yes**! First, join the [Community A-4E-C Discord server](https://discord.gg/tQZbkTQ) and introduce yourself! We can always use a hand from game artists, programmers or reliable testers as we continue to move the project forward. If you think you have something to contribute, don't hesitate to reach out in the chat.
 
-### Q: Is there a user manual or tutorials available?
+### Q: Is there a manual or tutorials?
 
 **Yes**! Locating the NATOPS manual for an A-4E/F is the gold standard for understanding this aircraft, but there is a lot of helpful guidance included in the kneeboard (press RSHIFT+K once inside the cockpit).
 
@@ -227,10 +231,6 @@ Past that, [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt
 ### Q: Are there any plans to simulate other variants or later models of the A-4?
 
 **No**, there are no plans nor keen interest to pursue this, especially since there is a lot left to add and improve one with our beloved A-4E-C. Additionally, the advanced avionics in later models would not be able to be completed in a satisfying manner.
-
-### Q: Are there any plans to obtain the Eagle Dynamics SDK, make the module official, or make the module a part of the default DCS install package?
-
-**No**, the A-4E-C will continue on as a free and open-source resource anyone can download and install to enjoy.
 
 ### Q: Why doesn't the A-4E-C work with my favorite mission or multiplayer scripting system?
 
