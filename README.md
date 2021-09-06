@@ -155,11 +155,11 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 - If you have multiple DCS-related folders in your `C:\Users\username\Saved Games`, for example, `DCS`, or `DCS.openbeta`. If you are unsure which folder your DCS World installation is using, locate the `dcs_variant.txt` file in the game files. If this file is present, its contents determines the folder structure your DCS World installation is using.
 
-- If you are recieving an authorization error, you have installed the module incorrectly. Double check the installation instructions above, ensure you have have installed the module to the correct folder, and do not have any improperly installed files remaining in your DCS world game files. Any conflicts will result in the persistence of this this error.
+- If you are recieving an authorization error at launch, ***you have installed the module incorrectly***. Revisit the installation instructions above. Be sure to remove any and all improperly installed files reinstalling the module again.
 
-- If you find you can't take control of the aircraft, ensure you have installed [Microsoft's Visual Studio 2015, 2017 and 2019 Redistributable libraries][The latest supported Visual C++ downloads](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0). Restart your computer after installation of the appropriate libraries (*vc_redist.x64.exe* for most users).
+- If you can load a mission but can't take control of the A-4E-C, ensure you have installed [Microsoft's Visual Studio 2015, 2017 and 2019 Redistributable libraries](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0). Restart your computer after installation of the appropriate libraries (this will be *vc_redist.x64.exe* for most users).
 
-- If you cannot find the A-4E-C as a unit option in the Mission Editor, Ensure the historical mode filter is disabled in the mission editor by toggling the clock icon at the bottom of the screen, as shown in the following screenshot:
+- If you can't find the A-4E-C in the Mission Editor, ensure the historical mode filter is disabled by toggling the clock icon at the bottom of the screen, as showin in this screenshot:
 
 ![Image of the Mission Editor pointing out the location of the Historical Filter](https://cdn.discordapp.com/attachments/518814186739073024/759230033960763422/unknown.png)
 
@@ -179,7 +179,7 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 **Q: Can I get involved with the A-4E-C project?**
 
-- Yes! [Join the Community A-4E-C Discord server](https://discord.gg/tQZbkTQ) and introduce yourself! We can always use a hand from game artists, programmers or reliable testers as we continue to move the project forward. If you think you have something to contribute, don't hesitate!
+- Yes! First, join the [Community A-4E-C Discord server](https://discord.gg/tQZbkTQ) and introduce yourself! We can always use a hand from game artists, programmers or reliable testers as we continue to move the project forward. If you think you have something to contribute, don't hesitate to reach out in the chat.
 
 **Q: Is there a user manual or tutorials available?**
 
@@ -189,8 +189,10 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 **Q: Is there a paint kit I can use to create my own A-4E-C liveries?**
 
-- Yes! This [A-4E-C Paintkit](https://drive.google.com/open?id=19w_bD8xHJiZpAi1JbA2xyPDJpl9dje-4) includes the aircraft's top, bottom and fuel tanks. See the included liveries for helpful examples when setting up you *description.lua* files. 
-- If you created liveries for older versions of the A-4E-C, you might need to update them to accommodate new changes in the external model's material names.
+- Yes! This [A-4E-C Paintkit](https://drive.google.com/open?id=19w_bD8xHJiZpAi1JbA2xyPDJpl9dje-4) includes the aircraft's top, bottom and fuel tanks. 
+- See the included liveries for helpful examples setting up your *description.lua* files. 
+- Liveries created for versions of the A-4E-C prior to 2.0 must update their *description.lua* to work.
+- Always place your created liveries just as you would for any other module, in `C:\Users\username\Saved Games\DCS.openbeta\Liveries\A-4E-C`. Never put your hard work at risk by installing liveries to the module's files!
 
 **Q: Can I fly the A-4E-C as a tanker?**
 
