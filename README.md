@@ -79,8 +79,8 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPI
   - Improved exterior and interior textures (thanks HellesBelle, Sport!)
   - Fixed exterior and cockpit model material names to avoid conflicts
 - **Liveries:**
-  - Added Community III: Forever Free
-  - Added Community IV: Sea Otter
+  - Added Community III: Forever Free, 2021 (Fictional)
+  - Added Community IV: Sea Otter, 2021 (Fictional)
   - Added Argentina FAA Falklands Brigada IV and V, 1982 (by GVad!)
   - Added Australian Navy Squadron 805, 1972 (by HellesBelle!)
   - Added Brazil Marinha do Brasil VF-1 LoViz, 2018
@@ -89,7 +89,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPI
   - Added Malaysia TUDM M32-29 No.9 Squadron, 2004 (by JacobBadshot)
   - Added RAF Empire Pilots Test School Raspberry Ripple (Fictional) (by FlyingHueman!)
   - Added RNZAF Golden T-Bird No.2, Squadron Ohakea, 1986 (by Corsair016)
-  - Improved inaccuracies across international liveries
+  - Improved inaccuracies and naming across liveries
 - **Quality of Life:**
   - Added kneeboard manual with systems procedures, structural limits, cockpit orientation, and help (thanks Rob, Sidekick)
   - Added in-cockpit sounds for improved user feedback
@@ -135,20 +135,19 @@ If you are upgrading from an older version of the A-4E-C, completely uninstall y
 - Download [the latest official A-4E-C release package](https://github.com/heclak/community-a4e-c/releases/). Do not download directly from the Github repository.
 - Place the `Mods\aircraft\A-4E-C` folder in into your Windows user folder's Saved Games folder, e.g. `C:\Users\username\Saved Games\DCS`
 - If you have installed other DCS World mods, you might already have the `Mods` and `aircraft` folders indicated in the file path. If this is the case, merge the new A-4E-C folder into the existing folders.
+- ***Never, ever install the A-4E-C files directly into your DCS World installation files!***
 
-### STEP 3: Launch DCS World and verify installation
+### STEP 3: Verify installation
 
-When you are confident your files are correctly installed, launch DCS World. If your installation was successful, the A-4E-C theme icon appears as a option in the main menu:
+Launch DCS World. If your installation was successful, the A-4E-C theme icon appears as a option in the main menu:
 
-![Image of DCS World Menu with A-4E-C installed](https://cdn.discordapp.com/attachments/518815335013679104/884483447169617920/unknown.png)
+![Image of DCS World Menu with A-4E-C Theme](https://cdn.discordapp.com/attachments/518815335013679104/884483447169617920/unknown.png)
 
 ### Installation Troubleshooting
 
-- **Never, ever install the A-4E-C files directly into your DCS World installation files!**
-
 - If you are recieving an authorization error at launch, **you have installed the module incorrectly**. Revisit the installation instructions above. Be sure to remove any and all improperly installed files before correctly installing the module. 
 
-- If you have multiple DCS-related folders in your `C:\Users\username\Saved Games`, for example, `DCS`, or `DCS.openbeta`. If you are unsure which folder your DCS World installation is using, locate the `dcs_variant.txt` file in the game files. If this file is present, its contents determines the folder structure your DCS World installation is using.
+  - If you have multiple DCS-related folders in your `C:\Users\username\Saved Games`, for example, `DCS`, or `DCS.openbeta`. If you are unsure which folder your DCS World installation is using, locate the `dcs_variant.txt` file in the game files. If this file is present, its contents determines the folder structure your DCS World installation is using.
 
 - Your correctly installed files should look something like the following image, substituting your Windows account name where the image displays *Partario*. If you're using the release branch of DCS World, the folder is `DCS` instead of `DCS.openbeta`.
 
@@ -208,7 +207,9 @@ Past that, [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt
 ### Q: Is there a paint kit I can use to create my own A-4E-C liveries?
 
 **Yes**! This [A-4E-C Paintkit](https://drive.google.com/open?id=19w_bD8xHJiZpAi1JbA2xyPDJpl9dje-4) includes the aircraft's top, bottom and fuel tanks. See the included liveries for helpful examples setting up your *description.lua* files. 
+
 - Liveries created for versions of the A-4E-C prior to 2.0 must update their *description.lua* to work.
+
 - Always place your created liveries just as you would for any other module, in `C:\Users\username\Saved Games\DCS.openbeta\Liveries\A-4E-C`. Never put your hard work at risk by installing liveries to the module's files!
 
 ### Q: Can I fly the A-4E-C as a tanker?
