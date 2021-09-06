@@ -57,46 +57,46 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPI
 - **Systems:**
   - Added AFCS stability augmentation
   - Added AN/ARA-63 MCL (ICLS)
-  - Added AN/ARC-51A UHF Radio (thanks Harald)
+  - Added AN/ARC-51A UHF Radio *(thanks Harald)*
   - Added AN/ARN-52 TACAN
   - Added AN/ASN-41 Nav Computer drift on long flights and heavy maneuvers
   - Added CP-741/A bombing computer
   - Added fuel flow system
   - Added oxygen system
   - Improved Approach Power Compensator (APC) behavior
-  - Fixed spoiler behavior to deploy/stow properly (weight on wheels, engine RPM under 70%) (thanks pohlinkzei)
+  - Fixed spoiler behavior to deploy/stow properly (weight on wheels, engine RPM under 70%) *(thanks pohlinkzei)*
 - **Weapons and Loadouts:**
   - Added SUU-25 parachute illumination pod
   - Added empty fuel tanks
-  - Improved AIM-9 missiles (now available on outer pylons as well)
+  - Improved AIM-9 missile loadouts, they are available to mount on stations 4 and 5
   - Removed non-functional items: AGM-12 Bullpup, AGM-62 Walleye, D-704 Refueling Pod
-- **Misions:**
-  - Added new instant action missions across all maps (by Sidekick65, Cubeboy, Shadowfrost, SPINEG)
+- **Missions:**
+  - Added new instant action missions across all maps *(thanks Sidekick65, Cubeboy, Shadowfrost, SPINEG)*
   - Added runway strike and anti-ship strike roles
 - **Textures:**
   - Added unique helmets, pilot uniforms and patches
   - Added preliminary damage textures
-  - Improved exterior and interior textures (thanks HellesBelle, Sport!)
+  - Improved exterior and interior textures *(thanks HellesBelle, Sport)*
   - Fixed exterior and cockpit model material names to avoid conflicts
 - **Liveries:**
   - Added Community III: Forever Free, 2021 (Fictional)
   - Added Community IV: Sea Otter, 2021 (Fictional)
-  - Added Argentina FAA Falklands Brigada IV and V, 1982 (by GVad!)
-  - Added Australian Navy Squadron 805, 1972 (by HellesBelle!)
+  - Added Argentina FAA Falklands Brigada IV and V, 1982 *(thanks GVad)*
+  - Added Australian Navy Squadron 805, 1972 *(thanks HellesBelle)*
   - Added Brazil Marinha do Brasil VF-1 LoViz, 2018
-  - Added Brazil Marinha do Brasil VF-1 15 AÑOS, 2013 (by Bungo!)
-  - Added Finland FiAF, 1984 (Fictional) (by FinCenturion!)
-  - Added Malaysia TUDM M32-29 No.9 Squadron, 2004 (by JacobBadshot)
-  - Added RAF Empire Pilots Test School Raspberry Ripple (Fictional) (by FlyingHueman!)
-  - Added RNZAF Golden T-Bird No.2, Squadron Ohakea, 1986 (by Corsair016)
+  - Added Brazil Marinha do Brasil VF-1 15 AÑOS, 2013 *(thanks Bungo)*
+  - Added Finland FiAF, 1984 (Fictional) *(thanks FinCenturion)*
+  - Added Malaysia TUDM M32-29 No.9 Squadron, 2004 *(by JacobBadshot)*
+  - Added RAF Empire Pilots Test School Raspberry Ripple (Fictional) *(thanks FlyingHueman)*
+  - Added RNZAF Golden T-Bird No.2, Squadron Ohakea, 1986 *(thanks Corsair016)*
   - Improved inaccuracies and naming across liveries
 - **Quality of Life:**
-  - Added kneeboard manual with systems procedures, structural limits, cockpit orientation, and help (thanks Rob, Sidekick)
+  - Added kneeboard manual with systems procedures, structural limits, cockpit orientation, and help *(thanks Rob, Sidekick65)*
   - Added in-cockpit sounds for improved user feedback
   - Added AN/ARC-51 UHF Radio frequency presets printout to right console panel
   - Added slats lock for aerobatic performance teams
   - Added dozens of inputs and variant input options, and new inputs categories
-  - Added cockpit controls indicator (see page 5-5 in the kneeboard)
+  - Added cockpit controls indicator (press RCTRL+ENTER in the cockpit)
   - Added special menu options for trim speed, cockpit shake, CSS mode FFB Deflection, and use rudder for differential braking
   - Added Argentina and Chile as available countries
   - Improved labeling alignment across tooltips, inputs and NATOPS manual for easy searching
@@ -105,7 +105,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPI
   - Improved smokewinder pod operation (weapon function select independent)
   - Improved main menu logos and iconography
   - Fixed FFB stick support
-  - Fixed lots, and lots, and we mean LOTS of bugs (thanks to the many A-4E-C users who helped identify these!)
+  - Fixed lots, and lots, and we mean LOTS of bugs *(thanks to the many A-4E-C users who helped identify, replicate and solve these!)*
 
 [See full changelog](https://github.com/heclak/community-a4e-c/blob/master/CHANGELOG.md)
 
@@ -202,7 +202,7 @@ Your correctly installed files should look something like the following image, s
 
 ### Q: Is there a user manual or tutorials available?
 
-**Yes**! Locating the NATOPS manual for an A-4E or F is the gold standard for understanding this aircraft, but there is a lot of helpful guidance included in the kneeboard (press RSHIFT+K once inside the cockpit).
+**Yes**! Locating the NATOPS manual for an A-4E/F is the gold standard for understanding this aircraft, but there is a lot of helpful guidance included in the kneeboard (press RSHIFT+K once inside the cockpit).
 
 Past that, [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt_8Jw9ByL10ar6b8rQg) features high-quality video tutorials on many systems.
 
