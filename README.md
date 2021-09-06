@@ -161,7 +161,7 @@ Your correctly installed files should look something like the following image, s
 
 - If you can load a mission, but can't take control of the A-4E-C, ensure you have installed [Microsoft's Visual Studio 2015, 2017 and 2019 Redistributable libraries](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0). Restart your computer after installation of the appropriate libraries. For most users, this is *vc_redist.x64.exe*.
 
-- If you can't find the A-4E-C in the Mission Editor, ensure the historical mode filter is disabled by toggling the clock icon at the bottom of the screen, as showin in the following screenshot:
+- If you can't find the A-4E-C in the Mission Editor, ensure the historical mode filter is disabled by toggling the clock icon at the bottom of the screen, as shown in the following screenshot:
 
 ![Image of the Mission Editor pointing out the location of the Historical Filter](https://cdn.discordapp.com/attachments/518814186739073024/759230033960763422/unknown.png)
 
