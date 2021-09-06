@@ -1,6 +1,6 @@
 ![Community A-4E-C for DCS World](https://user-images.githubusercontent.com/46121009/57830942-41b3da00-77e6-11e9-8e8c-1b7274927bb0.jpg)
 
-## Features
+## About the A-4E-C Project
 
 The A-4 was a cold war workhorse which proved to be a capable, reliable light attack aircraft to dozens of nations around the world. From the jungles of southeast Asia, to the desert of Sinai, to the coasts of South America, the scooter was a common sight above battlefields around the world for decades.
 
@@ -8,7 +8,7 @@ The Community A-4E-C represents more than three years of work on behalf of the d
 
 We thank the DCS World community for their support and contributions over the years, and dedicate the module to our friend, mentor and lead coder, Eric "Gospadin" Mudama. His passion and brilliance left a mark on us all. This labor of love which would not have been possible without him.
 
-**DO NOT redistribute this mod without permission!**
+***DO NOT redistribute this mod without permission!***
 
 ### Contributing Developers
 
@@ -121,7 +121,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPI
 
 ## Installation
 
-Failure to perform these steps will result in DCS World not recognizing the module, inability to use the module, input errors when using the module, or client integrity check failures on multiplayer servers that require them. Never install the A-4E-C files directly into your DCS World installation files!
+Failure to perform these steps will result in DCS World not recognizing the module, inability to use the module, input errors when using the module, or client integrity check failures on multiplayer servers that require them. Never install the A-4E-C files directly into your DCS World installation files! Installation size is around 1 GB.
 
 ### STEP 1: Upgrading from an older release
 
@@ -164,11 +164,7 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 ### Q: Is it really free?
 
-**Yes**! Forever free!
-
-### Q: How large is the module?
-
-Installation size is around 1 GB.
+**Yes**! The A-4E-C will remain forever free!
 
 ### Q: Can I donate to the A-4E-C project?
 
@@ -180,35 +176,35 @@ Installation size is around 1 GB.
 
 ### Q: Is there a user manual or tutorials available?
 
-**Yes**! Locating the NATOPS manual for an A-4E or F is the gold standard for understanding this aircraft, buit there quite a bit of helpful guidance included in the kneeboard (press RSHIFT+K once inside the cockpit) to get you started.
+**Yes**! Locating the NATOPS manual for an A-4E or F is the gold standard for understanding this aircraft, but there is a lot of helpful guidance included in the kneeboard (press RSHIFT+K once inside the cockpit).
 
 Past that, [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt_8Jw9ByL10ar6b8rQg) features high-quality video tutorials on many systems.
 
 ### Q: Is there a paint kit I can use to create my own A-4E-C liveries?
 
-**Yes!** This [A-4E-C Paintkit](https://drive.google.com/open?id=19w_bD8xHJiZpAi1JbA2xyPDJpl9dje-4) includes the aircraft's top, bottom and fuel tanks. See the included liveries for helpful examples setting up your *description.lua* files. 
+**Yes**! This [A-4E-C Paintkit](https://drive.google.com/open?id=19w_bD8xHJiZpAi1JbA2xyPDJpl9dje-4) includes the aircraft's top, bottom and fuel tanks. See the included liveries for helpful examples setting up your *description.lua* files. 
 - Liveries created for versions of the A-4E-C prior to 2.0 must update their *description.lua* to work.
 - Always place your created liveries just as you would for any other module, in `C:\Users\username\Saved Games\DCS.openbeta\Liveries\A-4E-C`. Never put your hard work at risk by installing liveries to the module's files!
 
 ### Q: Can I fly the A-4E-C as a tanker?
 
-Not at this time.
+**No**, not at this time.
 
 ### Q: What about the AGM-12 Bullpup or AGM-62 Walleye?
 
-**No**. Implementing additional guided weapons would require access to the SDK, and the cockpit model lacks the TV monitor used for its display.
+**No**, implementing additional guided weapons would require access to the SDK, and the cockpit model lacks the TV monitor used for its display.
 
 ### Q: Why is my standalone server rejecting missions with the A-4E-C?
 
-A standalone server requires an installation of the A-4E-C module in order to host any missions that feature it.
+A standalone server requires an installation of the A-4E-C module in order to host missions that feature it.
 
 ### Q: Is there a way I can host missions with the A-4E-C on my multiplayer server that won't lock out players who do not have the module installed?
 
-**Yes**, but it's a little involved. It's not DCS that is locking players out, but the Mission Editor deciding that any mission with an A4-E-C placed down is going to require the module. As there's no in-engine way of de-flagging this, you'll need to get hands-on with your mission files.
+**Yes**! You will need to be ready to get a little hands-on with your mission files. The Mission Editor dictates that any mission with an A4-E-C in it requires the module (just as it would any other aircraft), and it's *.miz* mission files are, in fact, *.zip* files. 
 
-You may or may not already know that the *.miz* mission files are, in fact, *.zip* files. So, take the mission file you desire to edit, and make a copy with a *.zip* extension. Find somewhere handy to unzip it.
+Make a copy of your *.miz* file, and rename it with a *.zip* file extension, and unzip it.
 
-Inside, you will find a *mission* file (no extension). Open this file in your text editor of choice (Notepad works just fine), and search required to find the mission's list of required modules under the listings, and then remove the A-4E-C line entry, as shown in this example:
+Inside, you will find a *mission* file (no extension). Open this file in your text editor of choice (Notepad works just fine), and search for `requiredModules`. Remove the A-4E-C's entry, as shown in this example:
 
 ```
 ["requiredModules"] = 
@@ -217,18 +213,17 @@ Inside, you will find a *mission* file (no extension). Open this file in your te
 }
 ```
 
+Once you have completed the edit, save the *mission* file, and re-create a new *.zip* (carefully maintaining proper folder structure, *of course*). Rename your modified mission *.zip* back to a DCS *.miz* file extension instead.
 
-Once you have completed these edits, save the mission file, and re-create a new *.zip* (carefully maintaining proper folder structure, *of course*), then rename the *.zip* file with a *.miz* file extension instead.
-
-Finally, test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS will display any A4-E-C units as default-livery Su-27s, and players without the module will  not be able to take control of the module, just as if they did not own an official DCS module.
+Finally, test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS will display any A4-E-C units as default-livery Su-27s, and players without the module cannot take control of unit, just as if they did not own any other DCS module in a multiplayer mission.
 
 ### Q: Are there any plans to do other variants or later models of the A-4?
 
-**No**. There are no plans nor keen interest to pursue this, especially since there is a lot left to add and improve one with our beloved A-4E-C. Additionally, the advanced avionics in later models would not be able to be completed in a satisfying manner.
+**No**, there are no plans nor keen interest to pursue this, especially since there is a lot left to add and improve one with our beloved A-4E-C. Additionally, the advanced avionics in later models would not be able to be completed in a satisfying manner.
 
 ### Q: Are there any plans to make the module official, obtain the Eagle Dynamics SDK, or make the module a part of the default DCS install package?
 
-**No**. the A-4E-C will continue on as a free and open-source resource you and your friends can download and install to enjoy.
+**No**, the A-4E-C will continue on as a free and open-source resource you and your friends can download and install to enjoy.
 
 ### Q: Why doesn't the A-4E-C work with my favorite mission or multiplayer scripting system?
 
