@@ -136,10 +136,6 @@ If you are upgrading from an older version of the A-4E-C, completely uninstall y
 - Place the `Mods\aircraft\A-4E-C` folder in into your Windows user folder's Saved Games folder, e.g. `C:\Users\username\Saved Games\DCS`
 - If you have installed other DCS World mods, you might already have the `Mods` and `aircraft` folders indicated in the file path. If this is the case, merge the new A-4E-C folder into the existing folders.
 
-Your correctly installed files should look something like the following image, substituting your Windows account name where the image displays *Partario*. If you're using the release branch of DCS World, the folder is `DCS` instead of `DCS.openbeta`.
-
-![Image of A-4E-C installation](https://cdn.discordapp.com/attachments/518815335013679104/884510274697187399/unknown.png)
-
 ### STEP 3: Launch DCS World and verify installation
 
 When you are confident your files are correctly installed, launch DCS World. If your installation was successful, the A-4E-C theme icon appears as a option in the main menu:
@@ -150,17 +146,21 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 - **Never, ever install the A-4E-C files directly into your DCS World installation files!**
 
-- If you are recieving an authorization error at launch, **you have installed the module incorrectly**. Revisit the installation instructions above. Be sure to remove any and all improperly installed files before reinstalling the module.
+- If you are recieving an authorization error at launch, **you have installed the module incorrectly**. Revisit the installation instructions above. Be sure to remove any and all improperly installed files before correctly installing the module. 
+
+- If you have multiple DCS-related folders in your `C:\Users\username\Saved Games`, for example, `DCS`, or `DCS.openbeta`. If you are unsure which folder your DCS World installation is using, locate the `dcs_variant.txt` file in the game files. If this file is present, its contents determines the folder structure your DCS World installation is using.
+
+- Your correctly installed files should look something like the following image, substituting your Windows account name where the image displays *Partario*. If you're using the release branch of DCS World, the folder is `DCS` instead of `DCS.openbeta`.
+
+![Image of A-4E-C installation](https://cdn.discordapp.com/attachments/518815335013679104/884510274697187399/unknown.png)
 
 - If the A-4E-C icon theme and icon are missing from the DCS main menu, you have incorrectly downloaded the module. [Download the latest version of the A-4E-C Here](https://github.com/heclak/community-a4e-c/releases/)
 
-- If you can load a mission, but can't take control of the A-4E-C, ensure you have installed [Microsoft's Visual Studio 2015, 2017 and 2019 Redistributable libraries](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0). Restart your computer after installation of the appropriate libraries (this will be *vc_redist.x64.exe* for most users).
+- If you can load a mission, but can't take control of the A-4E-C, ensure you have installed [Microsoft's Visual Studio 2015, 2017 and 2019 Redistributable libraries](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0). Restart your computer after installation of the appropriate libraries. For most users, this is *vc_redist.x64.exe*.
 
-- If you can't find the A-4E-C in the Mission Editor, ensure the historical mode filter is disabled by toggling the clock icon at the bottom of the screen, as showin in this screenshot:
+- If you can't find the A-4E-C in the Mission Editor, ensure the historical mode filter is disabled by toggling the clock icon at the bottom of the screen, as showin in the following screenshot:
 
 ![Image of the Mission Editor pointing out the location of the Historical Filter](https://cdn.discordapp.com/attachments/518814186739073024/759230033960763422/unknown.png)
-
-- If you have multiple DCS-related folders in your `C:\Users\username\Saved Games`, for example, `DCS`, or `DCS.openbeta`. If you are unsure which folder your DCS World installation is using, locate the `dcs_variant.txt` file in the game files. If this file is present, its contents determines the folder structure your DCS World installation is using.
 
 ## Frequently Asked Questions
 
