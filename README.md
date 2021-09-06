@@ -208,12 +208,12 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 - Yes, but it's a little involved. It's not DCS that is locking players out, but the Mission Editor deciding that any mission with an A4-E-C placed down is going to require the module. As there's no in-engine way of de-flagging this, you'll need to get hands-on with your mission files.
 - You may or may not already know that the *.miz* mission files are, in fact, *.zip* files. So, take the mission file you desire to edit, and make a copy with a *.zip* extension. Find somewhere handy to unzip it.
-- Inside, you will find a *mission* file (no extension). Open this file in your text editor of choice (Notepad works just fine), and search required to find the mission's list of required modules under the listings, and then remove the A-4E-C entry, as shown in this example:
+- Inside, you will find a *mission* file (no extension). Open this file in your text editor of choice (Notepad works just fine), and search required to find the mission's list of required modules under the listings, and then remove the A-4E-C line entry, as shown in this example:
 
 ```
 ["requiredModules"] = 
 {
-     ["A-4E-C"] = "A-4E-C", -- delete this line
+     ["A-4E-C"] = "A-4E-C",
 }
 ```
 
@@ -232,5 +232,5 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 - Some scripts or other utilities need to be informed of the A-4E-C's existence in order to accommodate it. If you know of a mod or script that should accommodate it, be sure to let the author know!
 
-**Q: What's the song in the menu?**
+**Q: What's the theme song in the DCS main menu?**
 - Crow, by [Eric Haugen](https://erichaugen.bandcamp.com/releases)
