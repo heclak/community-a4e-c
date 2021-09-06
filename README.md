@@ -125,14 +125,14 @@ Failure to perform these steps will result in DCS World not recognizing the modu
 
 ### STEP 1: Upgrading from an older release
 
-If you are upgrading from an older version of the A-4E-C, completely uninstall your old version before installing [the latest release](https://github.com/heclak/community-a4e-c/releases/). If this is a brand new installation, skip this and move on to Step 2.
+If you are upgrading from an older version of the A-4E-C, completely uninstall your old version. If this is a brand new installation, skip this and move on to Step 2.
 
 - First, uninstall the module's files from `C:\Users\username\Saved Games\DCS\Mods\aircraft\A-4E-C`
 - Next reset your A-4E-C input bindings by deleting the contents of `C:\Users\username\Saved Games\DCS\Config\Input\A-4E-C`
 
 ### STEP 2: Installing the module files
 
-- Download the latest official A-4E-C release package. Do not download directly from the Github repository.
+- Download [the latest official A-4E-C release package](https://github.com/heclak/community-a4e-c/releases/). Do not download directly from the Github repository.
 - Place the `Mods\aircraft\A-4E-C` folder in into your Windows user folder's Saved Games folder, e.g. `C:\Users\username\Saved Games\DCS`
 - If you have installed other DCS World mods, you might already have the `Mods` and `aircraft` folders indicated in the file path. If this is the case, merge the new A-4E-C folder into the existing folders.
 
@@ -154,7 +154,7 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 ![Image of A-4E-C installation](https://cdn.discordapp.com/attachments/518815335013679104/884510274697187399/unknown.png)
 
-- If the A-4E-C icon theme and icon are missing from the DCS main menu, you have incorrectly downloaded the module. [Download the latest version of the A-4E-C](https://github.com/heclak/community-a4e-c/releases/)
+- If the A-4E-C icon theme and icon are missing from the DCS main menu, you have incorrectly downloaded the module. Download [the latest official A-4E-C release package](https://github.com/heclak/community-a4e-c/releases/).
 
 - If you can load a mission, but can't take control of the A-4E-C, ensure you have installed [Microsoft's Visual Studio 2015, 2017 and 2019 Redistributable libraries](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0). Restart your computer after installation of the appropriate libraries. For most users, this is *vc_redist.x64.exe*.
 
