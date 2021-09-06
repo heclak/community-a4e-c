@@ -125,7 +125,7 @@ Failure to perform these steps will result in DCS World not recognizing the modu
 
 ### STEP 1: Upgrading from an older release
 
-If you are upgrading from an older version of the A-4E-C, completely uninstall your old version. If this is a brand new installation, skip this and move on to Step 2.
+- If you are upgrading from an older version of the A-4E-C, completely uninstall your old version. If this is a brand new installation, skip this and move on to Step 2.
 
 - First, uninstall the module's files from `C:\Users\username\Saved Games\DCS\Mods\aircraft\A-4E-C`
 
@@ -137,7 +137,7 @@ If you are upgrading from an older version of the A-4E-C, completely uninstall y
 
 - Place the `Mods\aircraft\A-4E-C` folder in into your Windows user folder's Saved Games folder for DCS, e.g. `C:\Users\username\Saved Games\DCS`
 
-- If you have installed other DCS World mods, you might already have the `Mods` and `aircraft` folders indicated in the file path. If this is the case, merge the new A-4E-C folder into the existing folders.
+- If you have installed other DCS World mods, you might already have the `Mods` and `aircraft` folders indicated in the file path. If so, merge the new A-4E-C folder into the existing folders.
 
 - **Never install the A-4E-C files directly into your DCS World installation files!**
 
@@ -167,9 +167,9 @@ Your correctly installed files should look something like the following image, s
 
 ### Multiplayer Troubleshooting
 
-- If you wish to host missions using the DCS standalone server, the server's installation must include the A-4E-C module.
+- A DCS standalone server hosting missions with the A-4E-C must have the A-4E-C module installed.
 
-- Additionally, in order to host players who do not have the A-4E-C module installed on missions that feature it, you will need to be ready to get a little hands-on with your mission files. The Mission Editor dictates that any mission with an A4-E-C in it requires the module (just as it would any other aircraft), and it's *.miz* mission files are, in fact, *.zip* files.
+- A server can host players who do not have the A-4E-C module installed on missions that feature it, you will need to be ready to get a little hands-on with your mission files. The Mission Editor dictates that any mission with an A4-E-C in it requires the module (just as it would any other aircraft), and it's *.miz* mission files are, in fact, *.zip* files.
 
 - Make a copy of your *.miz* file, and rename it with a *.zip* file extension, and unzip it.
 
