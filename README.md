@@ -64,7 +64,7 @@ We thank the DCS World community for their support and contributions over the ye
   - Added empty fuel tanks
   - Improved AIM-9 missiles (now available on outer pylons as well)
   - Removed non-functional items: AGM-12 Bullpup, AGM-62 Walleye, D-704 Refueling Pod
-- **Misions: **
+- **Misions:**
   - Added new instant action missions across all maps (by Sidekick65, Cubeboy, Shadowfrost, SPINEG)
   - Added runway strike and anti-ship strike roles
 - **Textures:**
@@ -124,7 +124,7 @@ If you are upgrading from an older version of the A-4E-C, completely uninstall y
 - First, uninstall the module's files from `C:\Users\username\Saved Games\DCS\Mods\aircraft\A-4E-C`
 - Next reset your A-4E-C input bindings by deleting the contents of `C:\Users\username\Saved Games\DCS\Config\Input\A-4E-C`
 
-### STEP 2: Installing the module files.
+### STEP 2: Installing the module files
 
 - Download the latest official A-4E-C release package. Do not download directly from the Github repository.
 - Place the `Mods\aircraft\A-4E-C` folder in into your Windows user folder's Saved Games folder, e.g. `C:\Users\username\Saved Games\DCS`
