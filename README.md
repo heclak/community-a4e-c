@@ -141,7 +141,7 @@ Next, your A-4E-C input bindings must be reset and rebound. If this is a new ins
 
 Your correctly installed files should look something like the following image, substituting your Windows account name where the image displays *Partario*. If you're using the release branch of DCS World, the folder is `DCS` instead of `DCS.openbeta`.
 
-![Image of A-4E-C installation](https://cdn.discordapp.com/attachments/518815335013679104/884482488666320936/unknown.png)
+![Image of A-4E-C installation](https://cdn.discordapp.com/attachments/518815335013679104/884510274697187399/unknown.png)
 
 ### STEP 3: Launch DCS World and verify installation
 
