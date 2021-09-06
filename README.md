@@ -1,5 +1,7 @@
 ![Community A-4E-C for DCS World](https://user-images.githubusercontent.com/46121009/57830942-41b3da00-77e6-11e9-8e8c-1b7274927bb0.jpg)
 
+## Features
+
 The A-4 was a cold war workhorse which proved to be a capable, reliable light attack aircraft to dozens of nations around the world. From the jungles of southeast Asia, to the desert of Sinai, to the coasts of South America, the scooter was a common sight above battlefields around the world for decades.
 
 The Community A-4E-C represents more than three years of work on behalf of the development team. We're proud to present our most comprehensive DCS World module to date, featuring a realistic flight model, improved systems, increased functionality across all DCS World's available maps, including full carrier compatibility and air-to-air refueling, unique sounds, keybinds and features to increase ease of use and immersion when flying this now-venerable module.
@@ -8,9 +10,13 @@ We thank the DCS World community for their support and contributions over the ye
 
 **DO NOT redistribute this mod without permission!**
 
-- ***Contributing Developers:*** Gospadin, Heclak, Joshua Nelson, plusnine, Farlander, gyrovague, kryb/Archimaede, Merker, Jones, Nero
+### Contributing Developers
 
-- ***Community Contributors:*** SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPINEG, Shadowfrost, Sport, rudel-chw, Luciano, Malamem, pohlinkzei, HellesBelles, Bungo, Corsair016, FlyingHueman, JacobBadShot, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
+Gospadin, Heclak, Joshua Nelson, plusnine, Farlander, gyrovague, kryb/Archimaede, Merker, Jones, Nero
+
+### Community Contributors
+
+SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPINEG, Shadowfrost, Sport, rudel-chw, Luciano, Malamem, pohlinkzei, HellesBelles, Bungo, Corsair016, FlyingHueman, JacobBadShot, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
 
 ## Features
 
