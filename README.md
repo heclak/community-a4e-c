@@ -146,7 +146,7 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 ![Image of DCS World Menu with A-4E-C installed](https://cdn.discordapp.com/attachments/518815335013679104/884483447169617920/unknown.png)
 
-## Installation Troubleshooting
+### Installation Troubleshooting
 
 - **Never, ever install the A-4E-C files directly into your DCS World installation files!**
 
@@ -160,7 +160,7 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 - If you have multiple DCS-related folders in your `C:\Users\username\Saved Games`, for example, `DCS`, or `DCS.openbeta`. If you are unsure which folder your DCS World installation is using, locate the `dcs_variant.txt` file in the game files. If this file is present, its contents determines the folder structure your DCS World installation is using.
 
-## Frequently Asked Questions and Troubleshooting
+## Frequently Asked Questions
 
 ### Q: Is it really free?
 
