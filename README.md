@@ -62,12 +62,12 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPI
   - Added fuel flow system
   - Added oxygen system
   - Improved Approach Power Compensator (APC) behavior
-  - Fixed spoiler behavior to deploy/stow properly WRT throttle and engine RPM (thanks pohlinkzei)
+  - Fixed spoiler behavior to deploy/stow properly (weight on wheels, engine RPM under 70%) (thanks pohlinkzei)
 - Weapons and Loadouts:
-  - Added AIM-9 missiles availability to outer pylons
   - Added SUU-25 parachute illumination pod
   - Added empty fuel tanks
-  - Removed non-functional guided weapons (AGM-12 Bullpup, AGM-62 Walleye)
+  - Improved AIM-9 missiles (now available on outer pylons as well)
+  - Removed non-functional items: AGM-12 Bullpup, AGM-62 Walleye, D-704 Refueling Pod
 - Misions: 
   - Added new instant action missions across all maps (by Sidekick65, Cubeboy, Shadowfrost, SPINEG)
   - Added runway strike and anti-ship strike roles
@@ -89,19 +89,18 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPI
   - Added RNZAF Golden T-Bird No.2, Squadron Ohakea, 1986 (by Corsair016)
   - Improved inaccuracies across international liveries
 - Quality of Life:
-  - Added kneeboard manual with systems procedures, quirks and user tips (thanks Rob, Sidekick)
+  - Added kneeboard manual with systems procedures, structural limits, cockpit orientation, and help (thanks Rob, Sidekick)
   - Added in-cockpit sounds for improved user feedback
   - Added AN/ARC-51 UHF Radio frequency presets printout to right console panel
   - Added slats lock for aerobatic performance teams
-  - Added loads of new keybinds for various input options
-  - Added new system-specific categories for easier keybind searching
+  - Added dozens of inputs and variant input options, and new inputs categories
   - Added cockpit controls indicator (see page 5-5 in the kneeboard)
+  - Added special menu options for trim speed, cockpit shake, CSS mode FFB Deflection, and use rudder for differential braking
   - Added Argentina and Chile as available countries
-  - Improved labeling alignment across tooltips, inputs and NATOPS manual
-  - Improved special menu options
-  - Improved smokewinder pod operation (weapon function select independent)
+  - Improved labeling alignment across tooltips, inputs and NATOPS manual for easy searching
   - Improved trim reset for smoother performance
   - Improved keyboard axis input centering
+  - Improved smokewinder pod operation (weapon function select independent)
   - Improved main menu logos and iconography
   - Fixed FFB stick support
   - Fixed lots, and lots, and we mean LOTS of bugs (thanks to the many A-4E-C users who helped identify these!)
@@ -198,7 +197,7 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 **Q: What about the AGM-12 Bullpup or AGM-62 Walleye?**
 
-- No, implementing additional guided weapons would require access to the SDK. Additionally, the specific airframe/cockpit that we have modelled is not equipped to accommodate the AGM-62 Walleye. A-4Es that were able to carry the AGM-62 Walleye had the ground radar display replaced with a TV monitor for use with the AGM-62 Walleye.
+- No, implementing additional guided weapons would require access to the SDK, and the cockpit model lacks the TV monitor used for its display.
 
 **Q: Why is my standalone server rejecting missions with the A-4E-C?**
 
@@ -208,16 +207,16 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 - Yes, but it's a little involved. It's not DCS that is locking players out, but the Mission Editor deciding that any mission with an A4-E-C placed down is going to require the module. As there's no in-engine way of de-flagging this, you'll need to get hands-on with your mission files.
 - You may or may not already know that the *.miz* mission files are, in fact, *.zip* files. So, take the mission file you desire to edit, and make a copy with a *.zip* extension. Find somewhere handy to unzip it.
-- Inside, you will find a *mission* file (no extension). Open this file in your text-editor of choice, and search required to find the mission's list of required modules under the **["requiredModules"]**  listings, and then remove the A-4E-C entry from the list, as shown in Line 32 in this screenshot:
+- Inside, you will find a *mission* file (no extension). Open this file in your text editor of choice (Notepad works just fine), and search required to find the mission's list of required modules under the **["requiredModules"]**  listings, and then remove the A-4E-C entry from the list, as shown in Line 32 in this screenshot:
 
 ![Image of a mission file with the A4-E-C required module on Line 32](https://cdn.discordapp.com/attachments/518815335013679104/851940052627095633/unknown.png)
 
-- Save the mission file, and re-create a new *.zip* (carefully maintaining proper folder structure, *of course*) and rename the *.zip* file with a *.miz* file extension instead.
-- Test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS will display any A4-E-C units as default-livery Su-27s, and players without the module will  not be able to take control of the module, as if they did not own an official aircraft.
+- Save the mission file, and re-create a new *.zip* (carefully maintaining proper folder structure, *of course*), then rename the *.zip* file with a *.miz* file extension instead.
+- Test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS will display any A4-E-C units as default-livery Su-27s, and players without the module will  not be able to take control of the module, just as if they did not own an official DCS module.
 
 **Q: Are there any plans to do other variants or later models of the A-4?**
 
-- There are no plans nor keen interest to pursue this. There is a lot left to add for our beloved A-4E-C, and the advanced avionics in later models would not be able to be completed in a satisfying manner.
+- There are no plans nor keen interest to pursue this. There is a lot left to add and improve one with our beloved A-4E-C. Additionally, the advanced avionics in later models would not be able to be completed in a satisfying manner.
 
 **Q: Are there any plans to make the module official, obtain the Eagle Dynamics SDK, or make the module a part of the default DCS install package?**
 
@@ -225,7 +224,7 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 **Q: Why doesn't the A-4E-C work with my favorite mission or multiplayer scripting system?**
 
-- Some scripts or other utilities need to be informed of the A-4E-C's existence in order to accommodate it. If you have a favorite popular mod, script that should accommodate it, be sure to let the author know!
+- Some scripts or other utilities need to be informed of the A-4E-C's existence in order to accommodate it. If you know of a mod or script that should accommodate it, be sure to let the author know!
 
 **Q: What's the song in the menu?**
 - Crow, by [Eric Haugen](https://erichaugen.bandcamp.com/releases)

@@ -1,4 +1,4 @@
-name = "Community A-4E II: Winter Splinter"
+name = "Community A-4E II: Winter Splinter, 2019 (Fictional)"
 countries = {
     "ABH",  --Abkhazia
     "ARG",  --Argentina

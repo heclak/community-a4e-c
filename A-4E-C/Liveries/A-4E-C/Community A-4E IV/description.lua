@@ -1,4 +1,4 @@
-name = "Community A-4E IV: Sea Otter"
+name = "Community A-4E IV: Sea Otter, 2021 (Fictional)"
 countries = {
     "ABH",  --Abkhazia
     "ARG",  --Argentina

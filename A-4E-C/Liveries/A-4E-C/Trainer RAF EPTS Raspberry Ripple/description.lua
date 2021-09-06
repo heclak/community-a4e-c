@@ -1,5 +1,5 @@
 -- this community livery by FlyingHueman
-name = "RAF Empire Pilots Test School Raspberry Ripple (Fictional)"
+name = "RAF Empire Pilots Test School Raspberry Ripple, 2021 (Fictional)"
 countries = {"USA", "UK"}
 
 livery = {
