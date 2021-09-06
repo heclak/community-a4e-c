@@ -114,12 +114,9 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPI
 - Jettisoning Mk-77 mod 0 and mod 1 bombs causes CTD
 - Missions created in DCS 2.7+ occasionally render the AN/ASN-41 Navigation Computer inoperable
 - Pilot blacks out when throttling up to hook up to catapult on SuperCarrier
+- Dispensing high volumes of bomblets (40+) from SUU-7/CBU-1/CBU-2 can cause performance dip or crashes to desktop
 
 [see full issue list](https://github.com/heclak/community-a4e-c/issues/)
-
-#### Dispensing high volumes of bomblets (40+) from SUU-7/CBU-1/CBU-2 causes serious performance dip and/or crashes to desktop
-
-- Drop bomblets in lower release settings via the kneeboard (RShift+K by default), mission editor, or the Automatic Weapons Release System (AWRS)
 
 ## Installation
 
@@ -131,11 +128,11 @@ If you are upgrading from an older version of the A-4E-C, perform these followin
 
 First, completely delete the currently installed A-4E-C files before installing the new version.
 
-- Delete the contents of your A-4E-C installation folder: `C:\Users\username\Saved Games\DCS\Mods\aircraft\A-4E-C`
+- Delete the contents of `C:\Users\username\Saved Games\DCS\Mods\aircraft\A-4E-C`
 
 Next, your A-4E-C input bindings must be reset and rebound. If this is a new installation, you can skip this step and move on to Step 2.
 
-- Delete the contents of your A-4E-C input settings: `C:\Users\username\Saved Games\DCS\Config\Input\A-4E-C`
+- Delete the contents of `C:\Users\username\Saved Games\DCS\Config\Input\A-4E-C`
 
 ### STEP 2: Installing the module files.
 
@@ -145,13 +142,13 @@ Next, your A-4E-C input bindings must be reset and rebound. If this is a new ins
 
 Your correctly installed files should look something like the following image, substituting your Windows account name where the image displays Partario. If you're using the release branch of DCS World, the folder is `DCS` instead of `DCS.openbeta`.
 
-![Image of A-4E-C installation](https://cdn.discordapp.com/attachments/692479717055397968/879491611799748688/unknown.png)
+![Image of A-4E-C installation](https://cdn.discordapp.com/attachments/518815335013679104/884482488666320936/unknown.png)
 
 ### STEP 3: Launch DCS World and verify installation
 
 When you are confident your files are correctly installed, launch DCS World. If your installation was successful, the A-4E-C theme icon appears as a option in the main menu:
 
-![Image of DCS World Menu with A-4E-C installed](https://cdn.discordapp.com/attachments/692479717055397968/879493860345147462/unknown.png)
+![Image of DCS World Menu with A-4E-C installed](https://cdn.discordapp.com/attachments/518815335013679104/884483447169617920/unknown.png)
 
 ## Installation Troubleshooting
 
