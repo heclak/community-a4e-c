@@ -129,17 +129,17 @@ First, completely delete the currently installed A-4E-C files before installing 
 
 - Delete the contents of `C:\Users\username\Saved Games\DCS\Mods\aircraft\A-4E-C`
 
-Next, your A-4E-C input bindings must be reset and rebound. If this is a new installation, you can skip this step and move on to Step 2.
+Next, your A-4E-C input bindings must be reset and rebound. If this is a new installation, you can skip this and move on to Step 2.
 
 - Delete the contents of `C:\Users\username\Saved Games\DCS\Config\Input\A-4E-C`
 
 ### STEP 2: Installing the module files.
 
 - Download the latest official A-4E-C release package. Do not download directly from the Github repository.
-- Place the included `Mods\aircraft\A-4E-C` folder in into your `C:\Users\username\Saved Games\DCS` folder.
+- Place the `Mods\aircraft\A-4E-C` folder in into your Windows user folder's Saved Games folder, e.g. `C:\Users\username\Saved Games\DCS`
 - If you have installed other DCS World mods, you might already have the `Mods` and `aircraft` folders indicated in the file path. If this is the case, merge the new A-4E-C folder into the existing folders.
 
-Your correctly installed files should look something like the following image, substituting your Windows account name where the image displays Partario. If you're using the release branch of DCS World, the folder is `DCS` instead of `DCS.openbeta`.
+Your correctly installed files should look something like the following image, substituting your Windows account name where the image displays *Partario*. If you're using the release branch of DCS World, the folder is `DCS` instead of `DCS.openbeta`.
 
 ![Image of A-4E-C installation](https://cdn.discordapp.com/attachments/518815335013679104/884482488666320936/unknown.png)
 
@@ -157,7 +157,7 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 - If you are recieving an authorization error, you have installed the module incorrectly. Double check the installation instructions above, ensure you have have installed the module to the correct folder, and do not have any improperly installed files remaining in your DCS world game files. Any conflicts will result in the persistence of this this error.
 
-- If you find you can't take control of the aircraft, ensure you have installed Microsoft's Visual Studio 2015, 2017 and 2019 Redistributable libraries. Windows users running DCS world are typically running x64, so you will want to download and install vc_redist.x64.exe (~15 MB) from the following page, install the library, and then restart your computer: (https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0)
+- If you find you can't take control of the aircraft, ensure you have installed [Microsoft's Visual Studio 2015, 2017 and 2019 Redistributable libraries][The latest supported Visual C++ downloads](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0). Restart your computer after installation of the appropriate libraries (*vc_redist.x64.exe* for most users).
 
 - If you cannot find the A-4E-C as a unit option in the Mission Editor, Ensure the historical mode filter is disabled in the mission editor by toggling the clock icon at the bottom of the screen, as shown in the following screenshot:
 
@@ -183,8 +183,9 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 **Q: Is there a user manual or tutorials available?**
 
-- There is helpful pilot guidance included in the kneeboard. The NATOPS manual for an A-4E/F is the gold standard.
-- [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt_8Jw9ByL10ar6b8rQg) features high-quality tutorials on weapon systems.
+- There is helpful pilot guidance included in the kneeboard (press RSHIFT+K once inside the cockpit).
+- Locating the NATOPS manual for an A-4E or F is the gold standard for understanding this aircraft.
+- [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt_8Jw9ByL10ar6b8rQg) features high-quality tutorials on many systems.
 
 **Q: Is there a paint kit I can use to create my own A-4E-C liveries?**
 
@@ -207,9 +208,14 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 - Yes, but it's a little involved. It's not DCS that is locking players out, but the Mission Editor deciding that any mission with an A4-E-C placed down is going to require the module. As there's no in-engine way of de-flagging this, you'll need to get hands-on with your mission files.
 - You may or may not already know that the *.miz* mission files are, in fact, *.zip* files. So, take the mission file you desire to edit, and make a copy with a *.zip* extension. Find somewhere handy to unzip it.
-- Inside, you will find a *mission* file (no extension). Open this file in your text editor of choice (Notepad works just fine), and search required to find the mission's list of required modules under the **["requiredModules"]**  listings, and then remove the A-4E-C entry from the list, as shown in Line 32 in this screenshot:
+- Inside, you will find a *mission* file (no extension). Open this file in your text editor of choice (Notepad works just fine), and search required to find the mission's list of required modules under the listings, and then remove the A-4E-C entry, as shown in this example:
 
-![Image of a mission file with the A4-E-C required module on Line 32](https://cdn.discordapp.com/attachments/518815335013679104/851940052627095633/unknown.png)
+```
+["requiredModules"] = 
+{
+     ["A-4E-C"] = "A-4E-C", -- delete this line
+}
+```
 
 - Save the mission file, and re-create a new *.zip* (carefully maintaining proper folder structure, *of course*), then rename the *.zip* file with a *.miz* file extension instead.
 - Test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS will display any A4-E-C units as default-livery Su-27s, and players without the module will  not be able to take control of the module, just as if they did not own an official DCS module.
