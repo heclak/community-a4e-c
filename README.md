@@ -145,13 +145,13 @@ Launch DCS World. If your installation was successful, the A-4E-C theme icon app
 
 ### Installation Troubleshooting
 
-- If you are recieving an authorization error at launch, **you have installed the module incorrectly**. Revisit the installation instructions above. Be sure to remove any and all improperly installed files before correctly installing the module. 
-
-  - If you have multiple DCS-related folders in your `C:\Users\username\Saved Games`, for example, `DCS`, or `DCS.openbeta`. If you are unsure which folder your DCS World installation is using, locate the `dcs_variant.txt` file in the game files. If this file is present, its contents determines the folder structure your DCS World installation is using.
-
-- Your correctly installed files should look something like the following image, substituting your Windows account name where the image displays *Partario*. If you're using the release branch of DCS World, the folder is `DCS` instead of `DCS.openbeta`.
+Your correctly installed files should look something like the following image, substituting your Windows account name where the image displays *Partario*. If you're using the release branch of DCS World, the folder is `DCS` instead of `DCS.openbeta`.
 
 ![Image of A-4E-C installation](https://cdn.discordapp.com/attachments/518815335013679104/884510274697187399/unknown.png)
+
+- If you are recieving an authorization error at launch, **you have installed the module incorrectly**. Revisit the installation instructions above. Be sure to remove any and all improperly installed files before correctly installing the module. 
+
+- If you have multiple DCS-related folders in your `C:\Users\username\Saved Games`, for example, `DCS`, or `DCS.openbeta`. If you are unsure which folder your DCS World installation is using, locate the `dcs_variant.txt` file in the game files. If this file is present, its contents determines the folder structure your DCS World installation is using.
 
 - If the A-4E-C icon theme and icon are missing from the DCS main menu, you have incorrectly downloaded the module. Download [the latest official A-4E-C release package](https://github.com/heclak/community-a4e-c/releases/).
 
@@ -182,7 +182,7 @@ Launch DCS World. If your installation was successful, the A-4E-C theme icon app
 
 - Once you have completed the edit, save the *mission* file, and re-create a new *.zip* (carefully maintaining proper folder structure, *of course*). Rename your modified mission *.zip* back to a DCS *.miz* file extension instead.
 
- - Finally, test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS will display any A4-E-C units as default-livery Su-27s, and players without the module cannot take control of unit, just as if they did not own any other DCS module in a multiplayer mission.
+- Finally, test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS will display any A4-E-C units as default-livery Su-27s, and players without the module cannot take control of unit, just as if they did not own any other DCS module in a multiplayer mission.
 
 ## Frequently Asked Questions
 
