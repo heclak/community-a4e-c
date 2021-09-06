@@ -128,13 +128,17 @@ Failure to perform these steps will result in DCS World not recognizing the modu
 If you are upgrading from an older version of the A-4E-C, completely uninstall your old version. If this is a brand new installation, skip this and move on to Step 2.
 
 - First, uninstall the module's files from `C:\Users\username\Saved Games\DCS\Mods\aircraft\A-4E-C`
+
 - Next reset your A-4E-C input bindings by deleting the contents of `C:\Users\username\Saved Games\DCS\Config\Input\A-4E-C`
 
 ### STEP 2: Installing the module files
 
 - Download [the latest official A-4E-C release package](https://github.com/heclak/community-a4e-c/releases/). Do not download directly from the Github repository.
+
 - Place the `Mods\aircraft\A-4E-C` folder in into your Windows user folder's Saved Games folder for DCS, e.g. `C:\Users\username\Saved Games\DCS`
+
 - If you have installed other DCS World mods, you might already have the `Mods` and `aircraft` folders indicated in the file path. If this is the case, merge the new A-4E-C folder into the existing folders.
+
 - **Never install the A-4E-C files directly into your DCS World installation files!**
 
 ### STEP 3: Verify installation
@@ -145,7 +149,7 @@ Launch DCS World. If your installation was successful, the A-4E-C theme icon app
 
 ### Installation Troubleshooting
 
-Your correctly installed files should look something like the following image, substituting your Windows account name where the image displays *Partario*. If you're using the release branch of DCS World, the folder is `DCS` instead of `DCS.openbeta`.
+Your correctly installed files should look something like the following image, substituting your Windows account name where the image displays *Partario*. If you're using the release branch of DCS World, the folder is `DCS` instead of `DCS.openbeta`:
 
 ![Image of A-4E-C installation](https://cdn.discordapp.com/attachments/518815335013679104/884510274697187399/unknown.png)
 
@@ -165,9 +169,7 @@ Your correctly installed files should look something like the following image, s
 
 - If you wish to host missions using the DCS standalone server, the server's installation must include the A-4E-C module.
 
-- Additionally, in order to host players who do not have the A-4E-C module installed on missions that feature it, you will need to be ready to get a little hands-on with your mission files:
-
-- The Mission Editor dictates that any mission with an A4-E-C in it requires the module (just as it would any other aircraft), and it's *.miz* mission files are, in fact, *.zip* files.
+- Additionally, in order to host players who do not have the A-4E-C module installed on missions that feature it, you will need to be ready to get a little hands-on with your mission files. The Mission Editor dictates that any mission with an A4-E-C in it requires the module (just as it would any other aircraft), and it's *.miz* mission files are, in fact, *.zip* files.
 
 - Make a copy of your *.miz* file, and rename it with a *.zip* file extension, and unzip it.
 
