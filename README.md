@@ -133,9 +133,9 @@ If you are upgrading from an older version of the A-4E-C, completely uninstall y
 ### STEP 2: Installing the module files
 
 - Download [the latest official A-4E-C release package](https://github.com/heclak/community-a4e-c/releases/). Do not download directly from the Github repository.
-- Place the `Mods\aircraft\A-4E-C` folder in into your Windows user folder's Saved Games folder, e.g. `C:\Users\username\Saved Games\DCS`
+- Place the `Mods\aircraft\A-4E-C` folder in into your Windows user folder's Saved Games folder for DCS, e.g. `C:\Users\username\Saved Games\DCS`
 - If you have installed other DCS World mods, you might already have the `Mods` and `aircraft` folders indicated in the file path. If this is the case, merge the new A-4E-C folder into the existing folders.
-- ***Never, ever install the A-4E-C files directly into your DCS World installation files!***
+- **Never install the A-4E-C files directly into your DCS World installation files!**
 
 ### STEP 3: Verify installation
 
@@ -210,7 +210,9 @@ Past that, [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt
 
 - Liveries created for versions of the A-4E-C prior to 2.0 must update their *description.lua* to work.
 
-- Always place your created liveries just as you would for any other module, in `C:\Users\username\Saved Games\DCS.openbeta\Liveries\A-4E-C`. Never put your hard work at risk by installing liveries to the module's files!
+- Always place your created liveries just as you would for any other module, in `C:\Users\username\Saved Games\DCS.openbeta\Liveries\A-4E-C`. 
+
+- ***Never put your hard work at risk by installing liveries to the module's files!***
 
 ### Q: Can I fly the A-4E-C as a tanker?
 
