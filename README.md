@@ -150,9 +150,11 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 - **Never, ever install the A-4E-C files directly into your DCS World installation files!**
 
-- If you are recieving an authorization error at launch, **you have installed the module incorrectly**. Revisit the installation instructions above. Be sure to remove any and all improperly installed files reinstalling the module again.
+- If you are recieving an authorization error at launch, **you have installed the module incorrectly**. Revisit the installation instructions above. Be sure to remove any and all improperly installed files before reinstalling the module.
 
-- If you can load a mission but can't take control of the A-4E-C, ensure you have installed [Microsoft's Visual Studio 2015, 2017 and 2019 Redistributable libraries](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0). Restart your computer after installation of the appropriate libraries (this will be *vc_redist.x64.exe* for most users).
+- If the A-4E-C icon theme and icon are missing from the DCS main menu, you have incorrectly downloaded the module. [Download the latest version of the A-4E-C Here](https://github.com/heclak/community-a4e-c/releases/)
+
+- If you can load a mission, but can't take control of the A-4E-C, ensure you have installed [Microsoft's Visual Studio 2015, 2017 and 2019 Redistributable libraries](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0). Restart your computer after installation of the appropriate libraries (this will be *vc_redist.x64.exe* for most users).
 
 - If you can't find the A-4E-C in the Mission Editor, ensure the historical mode filter is disabled by toggling the clock icon at the bottom of the screen, as showin in this screenshot:
 
