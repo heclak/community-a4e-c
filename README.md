@@ -162,6 +162,29 @@ When you are confident your files are correctly installed, launch DCS World. If 
 
 ![Image of the Mission Editor pointing out the location of the Historical Filter](https://cdn.discordapp.com/attachments/518814186739073024/759230033960763422/unknown.png)
 
+### Multiplayer Troubleshooting
+
+- If you wish to host missions using the DCS standalone server, the server's installation must include the A-4E-C module.
+
+- Additionally, in order to host players who do not have the A-4E-C module installed on missions that feature it, you will need to be ready to get a little hands-on with your mission files:
+
+- The Mission Editor dictates that any mission with an A4-E-C in it requires the module (just as it would any other aircraft), and it's *.miz* mission files are, in fact, *.zip* files.
+
+- Make a copy of your *.miz* file, and rename it with a *.zip* file extension, and unzip it.
+
+- Inside, you will find a *mission* file (no extension). Open this file in your text editor of choice (Notepad works just fine), and search for `requiredModules`. Remove the A-4E-C's entry, as shown in this example:
+
+```
+["requiredModules"] = 
+{
+     ["A-4E-C"] = "A-4E-C",
+}
+```
+
+- Once you have completed the edit, save the *mission* file, and re-create a new *.zip* (carefully maintaining proper folder structure, *of course*). Rename your modified mission *.zip* back to a DCS *.miz* file extension instead.
+
+ - Finally, test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS will display any A4-E-C units as default-livery Su-27s, and players without the module cannot take control of unit, just as if they did not own any other DCS module in a multiplayer mission.
+
 ## Frequently Asked Questions
 
 ### Q: Is it really free?
@@ -192,40 +215,17 @@ Past that, [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt
 
 **No**, not at this time.
 
-### Q: What about the AGM-12 Bullpup or AGM-62 Walleye?
+### Q: Will guided weapons like AGM-12 Bullpup or AGM-62 Walleye be added?
 
-**No**, implementing additional guided weapons would require access to the SDK, and the cockpit model lacks the TV monitor used for its display.
+**No**, implementing additional guided weapons would require access to the Eagle Dynamics SDK, and the cockpit model lacks the TV monitor used for its display.
 
-### Q: Why is my standalone server rejecting missions with the A-4E-C?
-
-A standalone server requires an installation of the A-4E-C module in order to host missions that feature it.
-
-### Q: Is there a way I can host missions with the A-4E-C on my multiplayer server that won't lock out players who do not have the module installed?
-
-**Yes**! You will need to be ready to get a little hands-on with your mission files. The Mission Editor dictates that any mission with an A4-E-C in it requires the module (just as it would any other aircraft), and it's *.miz* mission files are, in fact, *.zip* files. 
-
-Make a copy of your *.miz* file, and rename it with a *.zip* file extension, and unzip it.
-
-Inside, you will find a *mission* file (no extension). Open this file in your text editor of choice (Notepad works just fine), and search for `requiredModules`. Remove the A-4E-C's entry, as shown in this example:
-
-```
-["requiredModules"] = 
-{
-     ["A-4E-C"] = "A-4E-C",
-}
-```
-
-Once you have completed the edit, save the *mission* file, and re-create a new *.zip* (carefully maintaining proper folder structure, *of course*). Rename your modified mission *.zip* back to a DCS *.miz* file extension instead.
-
-Finally, test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS will display any A4-E-C units as default-livery Su-27s, and players without the module cannot take control of unit, just as if they did not own any other DCS module in a multiplayer mission.
-
-### Q: Are there any plans to do other variants or later models of the A-4?
+### Q: Are there any plans to simulate other variants or later models of the A-4?
 
 **No**, there are no plans nor keen interest to pursue this, especially since there is a lot left to add and improve one with our beloved A-4E-C. Additionally, the advanced avionics in later models would not be able to be completed in a satisfying manner.
 
-### Q: Are there any plans to make the module official, obtain the Eagle Dynamics SDK, or make the module a part of the default DCS install package?
+### Q: Are there any plans to obtain the Eagle Dynamics SDK, make the module official, or make the module a part of the default DCS install package?
 
-**No**, the A-4E-C will continue on as a free and open-source resource you and your friends can download and install to enjoy.
+**No**, the A-4E-C will continue on as a free and open-source resource anyone can download and install to enjoy.
 
 ### Q: Why doesn't the A-4E-C work with my favorite mission or multiplayer scripting system?
 
