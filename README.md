@@ -111,7 +111,7 @@ We thank the DCS World community for their support and contributions over the ye
 - Pilot blacks out when throttling up to hook up to catapult on SuperCarrier
 - Dispensing high volumes of bomblets (40+) from SUU-7/CBU-1/CBU-2 can cause performance dip or crashes to desktop
 
-[see full issue list](https://github.com/heclak/community-a4e-c/issues/)
+[See full issue list](https://github.com/heclak/community-a4e-c/issues/)
 
 ## Installation
 
