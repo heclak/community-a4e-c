@@ -137,6 +137,10 @@ planes = {
         name = _("Free Flight"),
         file = "Nevada A-4E-C Free Flight.miz"
     },
+    {
+        name = _("Stormy Weather"),
+        file = "Nevada A-4E-C Stormy Weather.miz"
+    },
 
     -- Syria
     {

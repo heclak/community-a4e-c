@@ -92,7 +92,7 @@ elements["PNT_161"] = default_2_position_tumb("AFCS Engage Switch", devices.AFCS
 elements["PNT_162"] = default_2_position_tumb("AFCS Heading Select Switch", devices.AFCS, device_commands.afcs_hdg_sel,162, TOGGLECLICK_LEFT_AFT)
 elements["PNT_163"] = default_2_position_tumb("AFCS Altitude Switch", devices.AFCS, device_commands.afcs_alt,163, TOGGLECLICK_LEFT_AFT)
 elements["PNT_164"] = default_axis_limited("AFCS Heading Select Pull-to-Set Knob", devices.AFCS, device_commands.afcs_hdg_set, 164, 0.0, 0.3, false, true, {0,1} )
-elements["PNT_165"] = default_2_position_tumb("AFCS Stability Augmentation (Yaw Damper) Switch", devices.AFCS, device_commands.afcs_stab_aug,165, TOGGLECLICK_LEFT_AFT)
+elements["PNT_165"] = default_2_position_tumb("AFCS Stability Augmentation Switch (Yaw Damper)", devices.AFCS, device_commands.afcs_stab_aug,165, TOGGLECLICK_LEFT_AFT)
 elements["PNT_166"] = default_2_position_tumb("AFCS Aileron Trim Switch (unimplemented)", devices.AFCS, device_commands.afcs_ail_trim,166, TOGGLECLICK_LEFT_AFT)
 
 -- RADAR SCOPE #20
