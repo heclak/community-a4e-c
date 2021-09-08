@@ -32,7 +32,7 @@ local diff = {
 					["key"] = "JOY_BTN22",
 				},
 			},
-			["name"] = "Flaps Switch - UP else STOP",
+			["name"] = "Flap Handle - UP else STOP",
 		},
 		["d10012pnilu10010cdnilvdnilvpnilvunil"] = {
 			["added"] = {
@@ -40,7 +40,7 @@ local diff = {
 					["key"] = "JOY_BTN23",
 				},
 			},
-			["name"] = "Flaps Switch - DOWN else STOP",
+			["name"] = "Flap Handle - DOWN else STOP",
 		},
 		["d10016pnilu10017cdnilvdnilvpnilvunil"] = {
 			["name"] = "Gun-Rocket Trigger",
@@ -80,7 +80,7 @@ local diff = {
 					["key"] = "JOY_BTN15",
 				},
 			},
-			["name"] = "JATO Firing Button",
+			["name"] = "JATO Firing Button (ALE-29A Burst)",
 		},
 		["d147pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
