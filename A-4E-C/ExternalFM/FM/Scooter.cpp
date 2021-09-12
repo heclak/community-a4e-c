@@ -192,7 +192,7 @@ void init(const char* config)
 	s_fm = new Scooter::FlightModel( *s_state, *s_input, *s_airframe, *s_engine, *s_interface, s_splines );
 	s_radio = new Scooter::Radio(*s_interface);
 	s_ils = new Scooter::ILS(*s_interface);
-	s_fuelSystem = new Scooter::FuelSystem2( *s_engine, *s_state );
+	s_fuelSystem = new Scooter::FuelSystem2( *s_engine, *s_state, *s_airframe );
 	s_beacon = new Scooter::Beacon(*s_interface);
 	
 }
@@ -850,6 +850,7 @@ double ed_fm_get_param(unsigned index)
 
 bool ed_fm_pop_simulation_event(ed_fm_simulation_event& out)
 {
+
 	if (s_airframe->catapultState() == Scooter::Airframe::ON_CAT_NOT_READY && !s_airframe->catapultStateSent())
 	{
 		out.event_type = ED_FM_EVENT_CARRIER_CATAPULT;

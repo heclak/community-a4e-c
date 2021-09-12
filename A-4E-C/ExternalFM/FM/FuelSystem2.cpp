@@ -4,9 +4,10 @@
 namespace Scooter
 {
 
-FuelSystem2::FuelSystem2( Scooter::Engine2& engine, Scooter::AircraftState& state ) :
+FuelSystem2::FuelSystem2( Scooter::Engine2& engine, Scooter::AircraftState& state, Scooter::Airframe& airframe ) :
 	m_engine( engine ),
-	m_state( state )
+	m_state( state ),
+	m_airframe( airframe )
 {
 
 }
@@ -208,6 +209,20 @@ void FuelSystem2::update( double dt )
 	if ( m_dumpingFuel )
 		addFuelToTank( TANK_WING, -c_fuelDumpRate * dt, 15.0 );
 
+	double tankIntegrityL = m_airframe.getDamageElement( Scooter::Airframe::Damage::WING_L_IN );
+	double tankIntegrityR = m_airframe.getDamageElement( Scooter::Airframe::Damage::WING_R_IN );
+
+	if ( tankIntegrityL < 0.8 )
+	{
+		double rate = abs( 0.8 - tankIntegrityL );
+		addFuelToTank( TANK_WING, -c_fuelLeakRate * rate * dt, 15.0 );
+	}
+
+	if ( tankIntegrityR < 0.8 )
+	{
+		double rate = abs( 0.8 - tankIntegrityR );
+		addFuelToTank( TANK_WING, -c_fuelLeakRate * rate * dt, 15.0 );
+	}
 
 	int tankToTransfer = m_wingTankBypass ? TANK_FUSELAGE : TANK_WING;
 

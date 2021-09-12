@@ -3,6 +3,7 @@
 #include "Engine2.h"
 #include "Maths.h"
 #include "Data.h"
+#include "Airframe.h"
 #include <assert.h>
 
 //kg/s
@@ -10,6 +11,7 @@
 #define c_fuelTransferRateExternWingToWing 0.60
 #define c_fuelTransferRateExternCentreToWing 0.69
 #define c_fuelTransferRateWingToFuseEmergency 1.1
+#define c_fuelLeakRate 4.0
 
 //Pressure at which, with no boost pump, we start to lose engine power
 //due to not being able to provide enough fuel to the engine.
@@ -26,7 +28,7 @@ class FuelSystem2 : public BaseComponent
 {
 public:
 
-	FuelSystem2( Scooter::Engine2& engine, Scooter::AircraftState& state );
+	FuelSystem2( Scooter::Engine2& engine, Scooter::AircraftState& state, Scooter::Airframe& airframe );
 	virtual void zeroInit();
 	virtual void coldInit();
 	virtual void hotInit();
@@ -106,6 +108,7 @@ private:
 
 	Scooter::Engine2& m_engine;
 	Scooter::AircraftState& m_state;
+	Scooter::Airframe& m_airframe;
 };
 
 void FuelSystem2::setBoostPumpPower( bool power )
