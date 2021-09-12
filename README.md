@@ -54,6 +54,8 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPI
   - Added SuperCarrier compatibility
   - Added air-to-air refueling
   - Added original exterior engine sound set
+  - Added many interior sounds
+  - Improved interior sound localization and feedback
 - **Systems:**
   - Added AFCS stability augmentation
   - Added AN/ARA-63 MCL (ICLS)
@@ -91,15 +93,14 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPI
   - Added RNZAF Golden T-Bird No.2, Squadron Ohakea, 1986 *(thanks Corsair016)*
   - Improved inaccuracies and naming across liveries
 - **Quality of Life:**
-  - Added kneeboard manual with systems procedures, structural limits, cockpit orientation, and help *(thanks Rob, Sidekick65)*
-  - Added in-cockpit sounds for improved user feedback
+  - Added manual with systems procedures, structural limits, cockpit orientation, and help (available in the kneeboard and in PDF) *(thanks Rob, Sidekick65)*
   - Added AN/ARC-51 UHF Radio frequency presets printout to right console panel
   - Added slats lock for aerobatic performance teams
   - Added dozens of inputs and variant input options, and new inputs categories
   - Added cockpit controls indicator (press RCTRL+ENTER in the cockpit)
   - Added special menu options for trim speed, cockpit shake, CSS mode FFB Deflection, and use rudder for differential braking
   - Added Argentina and Chile as available countries
-  - Improved labeling alignment across tooltips, inputs and NATOPS manual for easy searching
+  - Improved labeling alignment across tooltips, inputs, user manual and NATOPS manual for easy searching
   - Improved trim reset for smoother performance
   - Improved keyboard axis input centering
   - Improved smokewinder pod operation (weapon function select independent)
