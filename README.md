@@ -216,9 +216,9 @@ Past that, [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt
 
 **Yes**! This [A-4E-C Paintkit](https://drive.google.com/open?id=19w_bD8xHJiZpAi1JbA2xyPDJpl9dje-4) includes the aircraft's top, bottom and fuel tanks. See the included liveries for helpful examples setting up your *description.lua* files.
 
-- Liveries created for versions of the A-4E-C prior to 2.0 must update their *description.lua* to work.
+- Liveries created for versions of the A-4E-C prior to 2.0 must update the material names in their *description.lua*
 
-- Always place your created liveries just as you would for any other module, in `C:\Users\username\Saved Games\DCS\Liveries\A-4E-C`.
+- Install original or downloaded liveries just as you would for any other module, in `C:\Users\username\Saved Games\DCS\Liveries\A-4E-C`
 
 - ***Never put your hard work at risk by installing liveries to the module's files!***
 
