@@ -88,12 +88,12 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPI
   - Added Brazil Marinha do Brasil VF-1 LoViz, 2018
   - Added Brazil Marinha do Brasil VF-1 15 AÑOS, 2013 *(thanks Bungo)*
   - Added Finland FiAF, 1984 (Fictional) *(thanks FinCenturion)*
-  - Added Malaysia TUDM M32-29 No.9 Squadron, 2004 *(by JacobBadshot)*
+  - Added Malaysia TUDM M32-29 No.9 Squadron, 2004 *(thanks JacobBadshot)*
   - Added RAF Empire Pilots Test School Raspberry Ripple (Fictional) *(thanks FlyingHueman)*
   - Added RNZAF Golden T-Bird No.2, Squadron Ohakea, 1986 *(thanks Corsair016)*
   - Improved inaccuracies and naming across liveries
 - **Quality of Life:**
-  - Added manual with systems procedures, structural limits, cockpit orientation, and help (available in the kneeboard and in PDF) *(thanks Rob, Sidekick65)*
+  - Added kneeboard manual *(thanks Rob, Sidekick65)*
   - Added AN/ARC-51 UHF Radio frequency presets printout to right console panel
   - Added slats lock for aerobatic performance teams
   - Added dozens of inputs and variant input options, and new inputs categories
