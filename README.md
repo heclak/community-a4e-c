@@ -48,7 +48,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPI
 
 ### Version 2.0 Changelog: Featured Items
 
-- **Features:** 
+- **Features:**
   - Added External Flight Model (EFM) with flight dynamics, suspension, slat simulation, differential braking, cockpit shake, wing vapour and more
   - Added Pratt & Whitney J52-P-8A engine simulation
   - Added SuperCarrier compatibility
@@ -112,7 +112,6 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPI
 ### Known Bugs and Incompatibilities
 
 - Incompatible with CH-53E "Super Stallion" mod (DCS bug)
-- Jettisoning Mk-77 mod 0 and mod 1 bombs causes CTD
 - Missions created in DCS 2.7+ occasionally render the AN/ASN-41 Navigation Computer inoperable
 - Pilot blacks out when throttling up to hook up to catapult on SuperCarrier
 - Dispensing high volumes of bomblets (40+) from SUU-7/CBU-1/CBU-2 can cause performance dip or crashes to desktop
@@ -153,7 +152,7 @@ Your correctly installed files should look something like the following image, s
 
 ![Image of A-4E-C installation](https://cdn.discordapp.com/attachments/518815335013679104/884510274697187399/unknown.png)
 
-- If you are recieving an authorization error at launch, **you have installed the module incorrectly**. Revisit the installation instructions above. Be sure to remove any and all improperly installed files before correctly installing the module. 
+- If you are recieving an authorization error at launch, **you have installed the module incorrectly**. Revisit the installation instructions above. Be sure to remove any and all improperly installed files before correctly installing the module.
 
 - If you have multiple DCS-related folders in your `C:\Users\username\Saved Games`, for example, `DCS`, or `DCS.openbeta`. If you are unsure which folder your DCS World installation is using, locate the `dcs_variant.txt` file in the game files. If this file is present, its contents determines the folder structure your DCS World installation is using.
 
@@ -176,7 +175,7 @@ Your correctly installed files should look something like the following image, s
 - Inside, you will find a *mission* file (no extension). Open this file in your text editor of choice (Notepad works just fine), and search for `requiredModules`. Remove the A-4E-C's entry, as shown in this example:
 
 ```
-["requiredModules"] = 
+["requiredModules"] =
 {
      ["A-4E-C"] = "A-4E-C",
 }
@@ -206,17 +205,17 @@ Your correctly installed files should look something like the following image, s
 
 ### Q: Is there a manual or tutorials?
 
-**Yes**! Locating the NATOPS manual for an A-4E/F is the gold standard for understanding this aircraft, but there is a lot of helpful guidance included in the kneeboard (press RSHIFT+K once inside the cockpit).
+**Yes**! Locating the NATOPS manual for an A-4E/F is the gold standard for understanding this aircraft, but there is a lot of helpful guidance included in the user manual (to access this on the kneeboard, press RSHIFT+K once inside the cockpit, check your the `C:\Users\username\Saved Games\DCS\Mods\aircraft\A-4E-C\Docs` folder for a PDF, or [read it online](https://drive.google.com/drive/folders/1_DPA00CWoRfIsqgh7HYabvpFrOdtBxPi)).
 
 Past that, [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt_8Jw9ByL10ar6b8rQg) features high-quality video tutorials on many systems.
 
 ### Q: Is there a paint kit I can use to create my own A-4E-C liveries?
 
-**Yes**! This [A-4E-C Paintkit](https://drive.google.com/open?id=19w_bD8xHJiZpAi1JbA2xyPDJpl9dje-4) includes the aircraft's top, bottom and fuel tanks. See the included liveries for helpful examples setting up your *description.lua* files. 
+**Yes**! This [A-4E-C Paintkit](https://drive.google.com/open?id=19w_bD8xHJiZpAi1JbA2xyPDJpl9dje-4) includes the aircraft's top, bottom and fuel tanks. See the included liveries for helpful examples setting up your *description.lua* files.
 
 - Liveries created for versions of the A-4E-C prior to 2.0 must update their *description.lua* to work.
 
-- Always place your created liveries just as you would for any other module, in `C:\Users\username\Saved Games\DCS.openbeta\Liveries\A-4E-C`. 
+- Always place your created liveries just as you would for any other module, in `C:\Users\username\Saved Games\DCS.openbeta\Liveries\A-4E-C`.
 
 - ***Never put your hard work at risk by installing liveries to the module's files!***
 
