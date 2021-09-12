@@ -149,13 +149,13 @@ Launch DCS World. If your installation was successful, the A-4E-C theme icon app
 
 ### Installation Troubleshooting
 
-Your correctly installed files should look something like the following image, substituting your Windows account name where the image displays *Partario*. If you're using the release branch of DCS World, the folder is `DCS` instead of `DCS.openbeta`:
+Your correctly installed files should look something like the following image, substituting your Windows account name where the image displays *Partario*. If you're using the openbeta branch of DCS World, the folder might be `DCS.openbeta` instead of `DCS`:
 
-![Image of A-4E-C installation](https://cdn.discordapp.com/attachments/518815335013679104/884510274697187399/unknown.png)
-
-- If you are recieving an authorization error at launch, **you have installed the module incorrectly**. Revisit the installation instructions above. Be sure to remove any and all improperly installed files before correctly installing the module.
+![Image of A-4E-C installation](https://cdn.discordapp.com/attachments/518815335013679104/886633761670828112/unknown.png)
 
 - If you have multiple DCS-related folders in your `C:\Users\username\Saved Games`, for example, `DCS`, or `DCS.openbeta`. If you are unsure which folder your DCS World installation is using, locate the `dcs_variant.txt` file in the game files. If this file is present, its contents determines the folder structure your DCS World installation is using.
+
+- If you are receiving an authorization error at launch, **you have installed the module incorrectly**. Revisit the installation instructions above. Be sure to remove any and all improperly installed files before correctly installing the module.
 
 - If the A-4E-C icon theme and icon are missing from the DCS main menu, you have incorrectly downloaded the module. Download [the latest official A-4E-C release package](https://github.com/heclak/community-a4e-c/releases/).
 
