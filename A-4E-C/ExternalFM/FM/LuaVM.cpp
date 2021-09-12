@@ -1,5 +1,17 @@
+//=========================================================================//
+//
+//		FILE NAME	: LuaVM.cpp
+//		AUTHOR		: Joshua Nelson
+//		DATE		: Feb 2021
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Lua helper, for config files.
+//
+//================================ Includes ===============================//
 #include "LuaVM.h"
 #include <stdio.h>
+//=========================================================================//
 
 LuaVM::LuaVM()
 {

@@ -1174,8 +1174,8 @@ function update_asn41()
             asn41_draw_winddir(091)
             asn41_valid:set(1)
             asn41_range:set(0)
-            asn41_bearing:set( 120 )
-            asn41_track:set( 30 )
+            asn41_bearing:set( 30 ) -- thick needle 2
+            asn41_track:set( 120 ) -- thin needle 1
         end
     elseif asn41_state == "asn41-off" then
         if asn41_input ~= "OFF" then

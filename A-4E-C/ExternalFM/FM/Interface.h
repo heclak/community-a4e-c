@@ -161,6 +161,7 @@ public:
 		m_engineStall = m_api.pfn_ed_cockpit_get_parameter_handle( "SND_INST_ENGINE_STALL" );
 
 		m_disableRadar = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_RADAR_DISABLED" );
+		m_wheelBrakeAssist = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_WHEEL_BRAKE_ASSIST" );
 
 	}
 
@@ -558,9 +559,9 @@ public:
 		return getParamNumber(m_engineIgnition);
 	}
 
-	inline double getNWS()
+	inline bool getNWS()
 	{
-		return getParamNumber(m_nws);
+		return getParamNumber(m_nws) > 0.5;
 	}
 
 	inline double getCockpitShake()
@@ -606,6 +607,11 @@ public:
 	inline double getRTankCapacity()
 	{
 		return getParamNumber( m_rTankCapacity );
+	}
+
+	inline bool getWheelBrakeAssist()
+	{
+		return getParamNumber( m_wheelBrakeAssist ) > 0.5;
 	}
 		 
 	void* m_test = NULL;
@@ -759,6 +765,7 @@ private:
 	void* m_engineStall = NULL;
 
 	void* m_disableRadar = NULL;
+	void* m_wheelBrakeAssist = NULL;
 };
 
 

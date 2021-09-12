@@ -73,7 +73,7 @@ local diff = {
 			["name"] = "Absolute Camera Vertical View",
 		},
 		["a3112cd32"] = {
-			["name"] = "Thrust",
+			["name"] = "Throttle",
 			["removed"] = {
 				[1] = {
 					["key"] = "JOY_Z",
@@ -135,7 +135,7 @@ local diff = {
 					["key"] = "JOY_BTN10",
 				},
 			},
-			["name"] = "FLAP Switch - UP/DOWN",
+			["name"] = "Flaps Switch - UP/DOWN",
 		},
 		["d73pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
@@ -183,7 +183,7 @@ local diff = {
 					["key"] = "JOY_BTN6",
 				},
 			},
-			["name"] = "Throttle Smoothly - Increase",
+			["name"] = "Throttle Continuous - Increase",
 		},
 		["dnilp1033u1034cdnilvdnilvpnilvunil"] = {
 			["added"] = {
@@ -191,7 +191,7 @@ local diff = {
 					["key"] = "JOY_BTN5",
 				},
 			},
-			["name"] = "Throttle Smoothly - Decrease",
+			["name"] = "Throttle Continuous - Decrease",
 		},
 		["dnilp32u214cdnilvdnilvpnilvunil"] = {
 			["name"] = "View Left slow",

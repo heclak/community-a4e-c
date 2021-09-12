@@ -478,7 +478,7 @@ A_4E_C =  {
 	-----------------------------------------------------------------------
 	----------------- SUSPENSION CODE BEGINS
 	-----------------------------------------------------------------------
-    tand_gear_max = math.rad(90.0), --turns out we actually need this for the animation to line up
+    tand_gear_max = math.rad(180.0), --turns out we actually need this for the animation to line up
 	--[[
     nose_gear_pos                            = {2.72, -2.78, 0}, -- {2.72, -2.37, 0},    --      2.72,       -2.28,    0
     main_gear_pos                            = {-0.79, -2.86, 1.18}, -- {-0.79, -2.42, 1.18},    --  0.79,   -2.35,    1.18

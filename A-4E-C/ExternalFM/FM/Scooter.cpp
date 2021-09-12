@@ -58,6 +58,11 @@ static void cleanup();
 static inline double rawAOAToUnits( double rawAOA );
 static void checkCorruption(const char* str);
 static void dumpMem( unsigned char* ptr, size_t size );
+static void checkCompatibility( const char* path );
+static bool searchFolder( const char* root, const char* folder, const char* file );
+
+//========================== Static Constants =============================//
+static constexpr bool s_NWSEnabled = false;
 
 //=========================================================================//
 
@@ -103,6 +108,72 @@ static void dumpMem( unsigned char* ptr, size_t size )
 	}
 
 
+}
+
+bool searchFolder( const char* root, const char* folder, const char* file )
+{
+	char path[200];
+	sprintf_s( path, 200, "%s%s\\%s", root, folder, file );
+	WIN32_FIND_DATAA data;
+	HANDLE fileHandle = FindFirstFileA( path, &data );
+
+	return fileHandle != INVALID_HANDLE_VALUE;
+}
+
+void checkCompatibility(const char* path)
+{
+	char aircraftFolder[200];
+	strcpy_s( aircraftFolder, 200, path );
+
+	char* ptr = aircraftFolder;
+	while ( *ptr )
+	{
+		if ( *ptr == '/' )
+			*ptr = '\\';
+		ptr++;
+	}
+
+	char* lastSlash = strrchr( aircraftFolder, '\\' );
+
+	//WHAT?
+	if ( ! lastSlash )
+		return;
+
+	*(lastSlash + 1) = 0;
+
+	char searchPath[200];
+	sprintf_s( searchPath, 200, "%s*", aircraftFolder );
+
+	WIN32_FIND_DATAA data;
+	HANDLE handle = FindFirstFileA( searchPath, &data );
+	if ( handle == INVALID_HANDLE_VALUE )
+		return;
+
+	bool found = false;
+
+	do
+	{
+		if ( strcmp( data.cFileName, ".." ) == 0 || strcmp( data.cFileName, "." ) == 0 )
+			continue;
+
+		if ( data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY && searchFolder( aircraftFolder, data.cFileName, "CH_53.lua" ) )
+		{
+			found = true;
+			break;
+		}
+	} while ( FindNextFileA( handle, &data ) );
+
+	if ( ! found )
+		return;
+	
+	int selection = MessageBoxA( 
+		NULL, 
+		"The CH-53E mod is completely incompatible with the A-4E-C due to a DCS bug triggered\
+ by the CH-53E configuration. This bug causes memory corruption and undefined behaviour.\
+ To use the A-4E-C uninstall the CH-53E mod.", 
+		"FATAL ERROR - Sikorsky CH-53E Mod Detected", MB_OK | MB_ICONERROR );
+
+	std::terminate();
 }
 
 void init(const char* config)
@@ -268,7 +339,7 @@ void ed_fm_simulate(double dt)
 	//dumpMem( (unsigned char*)s_fuelSystem, sizeof( Scooter::FuelSystem2 ) );
 
 	//Update
-	s_input->update();
+	s_input->update(s_interface->getWheelBrakeAssist());
 	s_radio->update();
 	s_engine->updateEngine(dt);
 	s_airframe->airframeUpdate(dt);
@@ -702,7 +773,7 @@ void ed_fm_set_draw_args (EdDrawArgument * drawargs,size_t size)
 
 	drawargs[AIRBRAKE].f = s_airframe->getSpeedBrakePosition();
 
-	//drawargs[HOOK].f = s_airframe->getHookPosition();
+	//drawargs[HOOK].f = 1.0;//s_airframe->getHookPosition();
 
 	drawargs[STABILIZER_TRIM].f = s_airframe->getStabilizerAnim();
 
@@ -778,9 +849,15 @@ double ed_fm_get_param(unsigned index)
 	case ED_FM_SUSPENSION_2_RELATIVE_BRAKE_MOMENT:
 		return s_interface->getChocks() ? 1.0 : s_input->brakeRight();
 	case ED_FM_SUSPENSION_0_WHEEL_SELF_ATTITUDE:
-		return s_interface->getNWS() > 0.5 ? 0.0 : 1.0;
+		if constexpr ( s_NWSEnabled )
+			return s_interface->getNWS() ? 0.0 : 1.0;
+		else
+			return 1.0; //want castoring when NWS feature is disabled
 	case ED_FM_SUSPENSION_0_WHEEL_YAW:
-		return s_interface->getNWS() > 0.5 ? -s_input->yaw() * 0.5 : 0.0; //rotation to 45 degrees, half 90 (range of the wheel)
+		if ( s_NWSEnabled )
+			return s_interface->getNWS() ? -s_input->yaw() * 0.5 : 0.0; //rotation to 45 degrees, half 90 (range of the wheel)
+		else
+			return 0.0;
 	case ED_FM_STICK_FORCE_CENTRAL_PITCH:  // i.e. trimmered position where force feeled by pilot is zero
 		s_input->setFFBEnabled(true);
 		return s_airframe->getElevatorZeroForceDeflection();
@@ -942,6 +1019,11 @@ void ed_fm_suspension_feedback(int idx, const ed_fm_suspension_info* info)
 	{
 		s_airframe->setNoseCompression( info->struct_compression );
 	}
+
+	if ( idx > 2 )
+	{
+		printf( "Something Else\n" );
+	}
 		
 	//
 	//("Force(%lf, %lf, %lf)\n", info->acting_force[0], info->acting_force[1], info->acting_force[2]);
@@ -966,6 +1048,8 @@ void ed_fm_set_plugin_data_install_path ( const char* path )
 	init(path);
 
 	g_safeToRun = isSafeContext();
+
+	checkCompatibility( path );
 }
 
 void ed_fm_configure ( const char* cfg_path )

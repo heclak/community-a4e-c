@@ -1,4 +1,5 @@
 local optionsData_cockpitShake = get_plugin_option_value("A-4E-C", "cockpitShake", "local")
+local optionsData_wheelBrakeAssist = get_plugin_option_value("A-4E-C", "wheelBrakeAssist", "local")
 
 local fm_gear_nose = get_param_handle("FM_GEAR_NOSE")
 local fm_gear_left = get_param_handle("FM_GEAR_LEFT")
@@ -88,6 +89,7 @@ local fm_acceleration_z = get_param_handle("FM_ACCELERATION_Z")
 local fm_cas = get_param_handle("FM_CAS")
 
 local fm_radar_disabled = get_param_handle("FM_RADAR_DISABLED")
+local fm_wheel_brake_assist = get_param_handle("FM_WHEEL_BRAKE_ASSIST")
 
 local tanks = {
     [1] = fm_l_tank_capacity,
@@ -221,6 +223,10 @@ function fm_setCP741Power(value)
     fm_cp741_power:set(value)
 end
 
+function fm_setWheelBrakeAssist(value)
+    fm_wheel_brake_assist:set(value and 1.0 or 0.0)
+end
+
 function fm_getFuelFlow()
     return fm_fuel_flow:get()
 end
@@ -330,6 +336,7 @@ function fm_getCalibratedAirSpeed()
 end
 
 fm_setCockpitShake(2.0 * optionsData_cockpitShake/100.0)
+fm_setWheelBrakeAssist(optionsData_wheelBrakeAssist)
 
 function get_efm_data_bus()
     local efm_data_bus = {}

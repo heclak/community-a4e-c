@@ -511,26 +511,6 @@ local unitPayloads = {
 			},
 		},
 		[21] = {
-			["name"] = "D-704 Buddy Pod, Fuel 300G *2",
-			["pylons"] = {
-				[1] = {
-					["CLSID"] = "{D-704_BUDDY_POD}",
-					["num"] = 3,
-				},
-				[2] = {
-					["CLSID"] = "{DFT-300gal_LR}",
-					["num"] = 2,
-				},
-				[3] = {
-					["CLSID"] = "{DFT-300gal_LR}",
-					["num"] = 4,
-				},
-			},
-			["tasks"] = {
-				[1] = 13,
-			},
-		},
-		[22] = {
 			["name"] = "AGM-45B *4",
 			["pylons"] = {
 				[1] = {
@@ -554,7 +534,7 @@ local unitPayloads = {
 				[1] = 29,
 			},
 		},
-		[23] = {
+		[22] = {
 			["name"] = "Mk-83 *5, Mk-82 *2",
 			["pylons"] = {
 				[1] = {
@@ -582,7 +562,7 @@ local unitPayloads = {
 				[1] = 32,
 			},
 		},
-		[24] = {
+		[23] = {
 			["name"] = "Mk-81 SE *18",
 			["pylons"] = {
 				[1] = {
@@ -610,7 +590,7 @@ local unitPayloads = {
 				[1] = 32,
 			},
 		},
-		[25] = {
+		[24] = {
 			["name"] = "Mk-81 SE *12, Fuel 300G",
 			["pylons"] = {
 				[1] = {
@@ -639,7 +619,7 @@ local unitPayloads = {
 				[2] = 31,
 			},
 		},
-		[26] = {
+		[25] = {
 			["name"] = "Mk-84 *2, Fuel 300G",
 			["pylons"] = {
 				[1] = {
@@ -659,7 +639,7 @@ local unitPayloads = {
 				[1] = 32,
 			},
 		},
-		[27] = {
+		[26] = {
 			["name"] = "CBU-2/A *2, Mk-82 SE *2, Fuel 300G",
 			["pylons"] = {
 				[1] = {
@@ -687,7 +667,7 @@ local unitPayloads = {
 				[1] = 32,
 			},
 		},
-		[28] = {
+		[27] = {
 			["name"] = "Mk-4 HIPEG *3, LAU-10 *2",
 			["pylons"] = {
 				[1] = {
@@ -715,7 +695,7 @@ local unitPayloads = {
 				[1] = 31,
 			},
 		},
-		[29] = {
+		[28] = {
 			["name"] = "Mk-81 SE *10, LAU-10 *2, Fuel 300G",
 			["pylons"] = {
 				[1] = {
@@ -744,7 +724,7 @@ local unitPayloads = {
 				[2] = 29,
 			},
 		},
-		[30] = {
+		[29] = {
 			["name"] = "AGM-45B *2",
 			["pylons"] = {
 				[1] = {
@@ -760,27 +740,27 @@ local unitPayloads = {
 				[1] = 29,
 			},
 		},
+		[30] = {
+            ["name"] = "GAR-8 *2, Fuel 150G",
+            ["pylons"] = {
+                [1] = {
+                    ["CLSID"] = "{GAR-8}",
+                    ["num"] = 2,
+                },
+                [2] = {
+                    ["CLSID"] = "{GAR-8}",
+                    ["num"] = 4,
+                },
+                [3] = {
+                    ["CLSID"] = "{DFT-150gal}",
+                    ["num"] = 3,
+                },
+            },
+            ["tasks"] = {
+                [1] = 11,
+            },
+        },
 		[31] = {
-			["name"] = "AGM-62B Walleye *2, Fuel 300G",
-			["pylons"] = {
-				[1] = {
-					["CLSID"] = "{C40A1E3A-DD05-40D9-85A4-217729E37FAE}",
-					["num"] = 4,
-				},
-				[2] = {
-					["CLSID"] = "{C40A1E3A-DD05-40D9-85A4-217729E37FAE}",
-					["num"] = 2,
-				},
-				[3] = {
-					["CLSID"] = "{DFT-300gal}",
-					["num"] = 3,
-				},
-			},
-			["tasks"] = {
-				[1] = 29,
-			},
-		},
-		[32] = {
 			["name"] = "AGM-45B *2, Fuel 300G *2",
 			["pylons"] = {
 				[1] = {
@@ -804,7 +784,7 @@ local unitPayloads = {
 				[1] = 29,
 			},
 		},
-		[33] = {
+		[32] = {
 			["name"] = "Mk-82 *12",
 			["pylons"] = {
 				[1] = {
@@ -832,7 +812,7 @@ local unitPayloads = {
 				[1] = 32,
 			},
 		},
-		[34] = {
+		[33] = {
 			["name"] = "CBU-2/A *2, Mk-20 *2, Fuel 300G",
 			["pylons"] = {
 				[1] = {
@@ -860,7 +840,7 @@ local unitPayloads = {
 				[1] = 32,
 			},
 		},
-		[35] = {
+		[34] = {
 			["name"] = "Mk-4 HIPEG *3",
 			["pylons"] = {
 				[1] = {
@@ -880,7 +860,7 @@ local unitPayloads = {
 				[1] = 31,
 			},
 		},
-		[36] = {
+		[35] = {
 			["name"] = "AGM-45B *2, LAU-10 *2",
 			["pylons"] = {
 				[1] = {
@@ -904,7 +884,7 @@ local unitPayloads = {
 				[1] = 29,
 			},
 		},
-		[37] = {
+		[36] = {
 			["name"] = "FFAR M156 WP *38, M257 Illumination *14, Fuel 300G",
 			["pylons"] = {
 				[1] = {
@@ -932,7 +912,7 @@ local unitPayloads = {
 				[1] = 16,
 			},
 		},
-		[38] = {
+		[37] = {
 			["name"] = "FFAR M156 WP *38, M257 Illumination *14, Mk-82 SE *6",
 			["pylons"] = {
 				[1] = {
@@ -960,7 +940,7 @@ local unitPayloads = {
 				[1] = 16,
 			},
 		},
-		[39] = {
+		[38] = {
 			["name"] = "FFAR M156 WP *38, Mk-82 SE *2, Mk-4 HIPEG",
 			["pylons"] = {
 				[1] = {
@@ -988,7 +968,7 @@ local unitPayloads = {
 				[1] = 16,
 			},
 		},
-		[40] = {
+		[39] = {
 			["name"] = "Mk-4 HIPEG *2, FFAR M156 WP *19, LAU-10, M257 Illumination *7",
 			["pylons"] = {
 				[1] = {
@@ -1016,7 +996,7 @@ local unitPayloads = {
 				[1] = 16,
 			},
 		},
-		[41] = {
+		[40] = {
 			["name"] = "Fuel 300G *3 (Ferry)",
 			["pylons"] = {
 				[1] = {
@@ -1035,7 +1015,7 @@ local unitPayloads = {
 			["tasks"] = {
 			},
 		},
-		[42] = {
+		[41] = {
 			["name"] = "CBU-2/A *2, LAU-10 *2, Fuel 300G",
 			["pylons"] = {
 				[1] = {
@@ -1063,7 +1043,7 @@ local unitPayloads = {
 				[1] = 32,
 			},
 		},
-        [43] = {
+        [42] = {
 			["name"] = "Mk-82 *8, Fuel 150G *2",
 			["pylons"] = {
 				[1] = {
@@ -1092,7 +1072,7 @@ local unitPayloads = {
 				[2] = 31,
 			},
 		},
-        [44] = {
+        [43] = {
 			["name"] = "Mk-82 SE *8, Fuel 150G *2",
 			["pylons"] = {
 				[1] = {
@@ -1121,7 +1101,7 @@ local unitPayloads = {
 				[2] = 31,
 			},
 		},
-        [45] = {
+        [44] = {
 			["name"] = "GAR-8 *2, Fuel 300G",
 			["pylons"] = {
 				[1] = {
@@ -1141,26 +1121,6 @@ local unitPayloads = {
 				[1] = 11,
 			},
 		},
-        [46] = {
-            ["name"] = "GAR-8 *2, Fuel 150G",
-            ["pylons"] = {
-                [1] = {
-                    ["CLSID"] = "{GAR-8}",
-                    ["num"] = 2,
-                },
-                [2] = {
-                    ["CLSID"] = "{GAR-8}",
-                    ["num"] = 4,
-                },
-                [3] = {
-                    ["CLSID"] = "{DFT-150gal}",
-                    ["num"] = 3,
-                },
-            },
-            ["tasks"] = {
-                [1] = 11,
-            },
-        },
 	},
 	["tasks"] = {
 	},

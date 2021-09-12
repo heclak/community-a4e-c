@@ -1,7 +1,7 @@
 dofile(LockOn_Options.common_script_path.."KNEEBOARD/indicator/definitions.lua")
 SetScale(FOV)
 
--- BOMBING TABLE
+-- AN/APR-23 RADAR HOMING AND WARNING SYSTEM TABLE
 
 -- add background image for kneeboard
-add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_rockets.png")
+add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_2_rhws.png")

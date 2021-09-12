@@ -7,14 +7,14 @@ BUFF_SIZE = 65536
 
 def generate_hashes(files, root, fm_folder):
     header = """#pragma once
-    #include <Windows.h>
+#include <Windows.h>
 
-    static WCHAR* files[] = {}
+static WCHAR* files[] = {}
 
-    static BYTE hashes[][32] = {}
+static BYTE hashes[][32] = {}
     """
 
-    file_string = "{"
+    file_string = "{\n"
     hash_string = "{\n"
 
     print("==== Hashes ====")
@@ -22,7 +22,7 @@ def generate_hashes(files, root, fm_folder):
     for file in files:
         sha1 = hashlib.sha1()
         path = os.path.join(root, file)
-        file_string += "L\"" + file + "\"" + ','
+        file_string += "\tL\"" + file + "\"" + ',\n'
         f = open (path, 'rb')
         while True:
             data = f.read(BUFF_SIZE)
@@ -37,8 +37,10 @@ def generate_hashes(files, root, fm_folder):
 
         hash_string += "\t{"
 
-        for i in xrange(0, len(digest)):
-            value = struct.unpack('B', digest[i])[0]
+        for i in range(0, len(digest)):
+            #print(digest[i])
+            #value = struct.unpack('B', bytes(digest[i]))[0]
+            value = digest[i]
             hash_string += "0x{:02x}".format(value) + ','
 
         hash_string = hash_string[:-1]
@@ -49,7 +51,7 @@ def generate_hashes(files, root, fm_folder):
 
 
     file_string= file_string[:-1]
-    file_string += "};"
+    file_string += "\n};"
 
     header_file = open(os.path.join(fm_folder, "Hashes.h"), "w+")
     header_file.write(header.format(file_string, hash_string))
@@ -60,12 +62,12 @@ def normalise_file_endings(file):
     os.rename(file, file + "_")
     
 
-    fileRead = open(file + "_", "rU")
+    fileRead = open(file + "_", "rb")
     if fileRead:
         text = fileRead.read()
         fileRead.close()
 
-        text = text.replace('\r\n','\n')
+        text = text.replace(b'\r\n',b'\n')
 
         fileWrite = open(file, "wb+")
         if fileWrite:

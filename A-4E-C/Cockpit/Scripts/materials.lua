@@ -12,7 +12,7 @@ materials["DBG_CLEAR"]   = {0, 0, 0, 0}
 materials["BLOB_COLOR"] = blob_color
 materials["RADAR_FOV"] 	= {17, 80, 7, 0}
 materials["RADAR_GRID"] = {0, 96, 48, 192}
-materials["RADAR_SCRIBE"] = {0, 192, 129, 176}
+materials["RADAR_SCRIBE"] = {0, 192, 0, 128} -- temporary, to be overridden in 2.1
 materials["GUNSIGHT_GLASS"] = {0, 120, 0, 128}
 materials["GUNSIGHT_COLOR"] = {255, 48, 0, 255}
 

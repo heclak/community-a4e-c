@@ -66,16 +66,28 @@ function post_initialize()
     gunsight_reflector_param:set(reflector_pos)
     gunsight_reflector_rot_param:set(reflector_pos)
     dev:performClickableAction(device_commands.GunsightKnob, reflector_pos, false)
-    dev:performClickableAction(device_commands.GunsightBrightness, (135/360), false) -- set to brightest
+    dev:performClickableAction(device_commands.GunsightBrightness, (135/360), false)
     local birth = LockOn_Options.init_conditions.birth_place
     if birth=="GROUND_HOT" or birth=="AIR_HOT" then
         power_on = true
         power_on_time = -100
         gunsight_visible:set(1)
     end
+
+    -- night time setup
+    local abstime = get_absolute_model_time()
+    local hours = abstime / 3600.0
+
+    if hours <= 6 or hours >= 17 then
+        dev:performClickableAction(device_commands.GunsightDayNight, 1.0, false)
+    end
+
 end
 
 function SetCommand(command,value)
+
+    local nightbright = 0.25 --brightness reduction factor when night switch is engaged
+
     if (command == device_commands.GunsightKnob) then
         -- print_message_to_user("gunsight:"..tostring(value))
         --[[
@@ -98,7 +110,7 @@ function SetCommand(command,value)
         dev:performClickableAction(device_commands.GunsightKnob, normalisedValue, false)
     elseif (command == device_commands.GunsightDayNight) then
         daynight = value -- value 0=day, 1=night
-        adjusted_brightness = (daynight==1) and (brightness*0.5) or (brightness)
+        adjusted_brightness = (daynight==1) and (brightness * nightbright) or (brightness)
         --gunsight_daynight_param:set(adjusted_brightness)
     elseif (command == device_commands.GunsightBrightness) then
         gunsight_brightness_pos = value
@@ -114,7 +126,7 @@ function SetCommand(command,value)
         elseif (value>=(315/360) and value<(350/360)) then
             brightness=1
         end
-        adjusted_brightness = (daynight==1) and (brightness*0.5) or (brightness)
+        adjusted_brightness = (daynight==1) and (brightness * nightbright) or (brightness)
         --gunsight_daynight_param:set(adjusted_brightness)
     end
 
