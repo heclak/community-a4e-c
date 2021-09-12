@@ -215,7 +215,7 @@ Past that, [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt
 
 - Liveries created for versions of the A-4E-C prior to 2.0 must update their *description.lua* to work.
 
-- Always place your created liveries just as you would for any other module, in `C:\Users\username\Saved Games\DCS.openbeta\Liveries\A-4E-C`.
+- Always place your created liveries just as you would for any other module, in `C:\Users\username\Saved Games\DCS\Liveries\A-4E-C`.
 
 - ***Never put your hard work at risk by installing liveries to the module's files!***
 
