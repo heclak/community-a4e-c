@@ -145,7 +145,7 @@ Failure to perform these steps will result in DCS World not recognizing the modu
 
 Launch DCS World. If your installation was successful, the A-4E-C theme icon appears as a option in the main menu:
 
-![Image of DCS World Menu with A-4E-C Theme](https://cdn.discordapp.com/attachments/518815335013679104/884483447169617920/unknown.png)
+![Image of DCS World Menu with A-4E-C Theme](https://cdn.discordapp.com/attachments/518815335013679104/886636891431141466/unknown.png)
 
 ### Installation Troubleshooting
 
@@ -159,7 +159,7 @@ Your correctly installed files should look something like the following image, s
 
 - If the A-4E-C icon theme and icon are missing from the DCS main menu, you have incorrectly downloaded the module. Download [the latest official A-4E-C release package](https://github.com/heclak/community-a4e-c/releases/).
 
-- If you can load a mission, but can't take control of the A-4E-C, ensure you have installed [Microsoft's Visual Studio 2015, 2017 and 2019 Redistributable libraries](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0). Restart your computer after installation of the appropriate libraries. For most users, this is *vc_redist.x64.exe*.
+- If you can load a mission, but can't take control of the A-4E-C, ensure you have installed [Microsoft's Visual Studio 2015, 2017 and 2019 Redistributable libraries](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0). Restart your computer after installation of the appropriate libraries. For most users, this is `vc_redist.x64.exe`
 
 - If you can't find the A-4E-C in the Mission Editor, ensure the historical mode filter is disabled by toggling the clock icon at the bottom of the screen, as shown in the following screenshot:
 
@@ -169,11 +169,11 @@ Your correctly installed files should look something like the following image, s
 
 - A DCS standalone server hosting missions with the A-4E-C must have the A-4E-C module installed.
 
-- A server can host players who do not have the A-4E-C module installed on missions that feature it, you will need to be ready to get a little hands-on with your mission files. The Mission Editor dictates that any mission with an A4-E-C in it requires the module (just as it would any other aircraft), and it's *.miz* mission files are, in fact, *.zip* files.
+- A server can host players who do not have the A-4E-C module installed on missions that feature it, you will need to be ready to get a little hands-on with your mission files. The Mission Editor dictates that any mission with an A4-E-C in it requires the module (just as it would any other aircraft), and it's `.miz` mission files are, in fact, `.zip` files.
 
-- Make a copy of your *.miz* file, and rename it with a *.zip* file extension, and unzip it.
+- Make a copy of your `.miz` file, and rename it with a `.zip` file extension, and unzip it.
 
-- Inside, you will find a *mission* file (no extension). Open this file in your text editor of choice (Notepad works just fine), and search for `requiredModules`. Remove the A-4E-C's entry, as shown in this example:
+- Inside, you will find a `mission` file (no extension). Open this file in your text editor of choice (Notepad works just fine), and search for `requiredModules`. Remove the A-4E-C's entry, as shown in this example:
 
 ```
 ["requiredModules"] =
@@ -182,7 +182,7 @@ Your correctly installed files should look something like the following image, s
 }
 ```
 
-- Once you have completed the edit, save the *mission* file, and re-create a new *.zip* (carefully maintaining proper folder structure, *of course*). Rename your modified mission *.zip* back to a DCS *.miz* file extension instead.
+- Once you have completed the edit, save the `mission` file, and re-create a new `.zip` (carefully maintaining proper folder structure, *of course*). Rename your modified mission `.zip` back to a DCS `.miz` file extension instead.
 
 - Finally, test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS will display any A4-E-C units as default-livery Su-27s, and players without the module cannot take control of unit, just as if they did not own any other DCS module in a multiplayer mission.
 
