@@ -205,10 +205,9 @@ Your correctly installed files should look something like the following image, s
 
 ### Q: Is there a manual or tutorials?
 
-**Yes**! Locating the NATOPS manual for an A-4E/F is the gold standard for understanding this aircraftm but there is a lot of helpful guidance included in the user manual. To access the manual:
-- Open the kneeboard by pressing RSHIFT+K once inside the cockpit,
-- Read the PDF manual in `C:\Users\username\Saved Games\DCS\Mods\aircraft\A-4E-C\Docs`, or
-- [Read the PDF online](https://drive.google.com/drive/folders/1_DPA00CWoRfIsqgh7HYabvpFrOdtBxPi)).
+**Yes**! Locating the NATOPS manual for an A-4E/F is the gold standard for understanding this aircraft, but there is a lot of helpful guidance included in the user manual. To access the manual:
+- Once inside the cockpit, open the kneeboard by pressing RSHIFT+K
+- Read the PDF manual in `C:\Users\username\Saved Games\DCS\Mods\aircraft\A-4E-C\Docs` or [read the PDF online](https://drive.google.com/drive/folders/1_DPA00CWoRfIsqgh7HYabvpFrOdtBxPi)
 
 Past that, [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt_8Jw9ByL10ar6b8rQg) features high-quality video tutorials on many systems.
 
