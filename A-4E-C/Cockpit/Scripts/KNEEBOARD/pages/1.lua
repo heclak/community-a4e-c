@@ -16,7 +16,7 @@ For example, page "2 - 3" is "23.lua".
 
 1 - Mission
   1 - 1 - Navigation
-  1 - 2 - Radio
+  1 - 2 - Radio & TACAN
   1 - 3 - ILS Data
   1 - 4 - Countermeasures
 

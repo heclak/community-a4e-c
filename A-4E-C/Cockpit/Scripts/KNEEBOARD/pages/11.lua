@@ -16,7 +16,8 @@ function AddElement(object)
 end
 
 -- fonts
-FontSizeX1	= 0.0075
+--FontSizeX1	= 0.0075
+FontSizeX1	= 0.007
 FontSizeY1	= FontSizeX1
 
 predefined_font_title	= {FontSizeY1,			FontSizeX1,			0.0,		0.0}
