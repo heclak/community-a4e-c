@@ -1,4 +1,5 @@
 #pragma once
+#include <random>
 #include "RadarScope.h"
 #include "AircraftState.h"
 #include "Units.h"
@@ -109,6 +110,8 @@ private:
 	void updateGimbalProfile(double dt);
 	void resetScanData();
 	void scanOneLine(bool detail);
+	void scanOneLine2( bool detail );
+	void scanOneLine3( bool detail );
 	bool scanOneRay( double pitchAngle, double yawAngle,  double& range );
 
 	void drawScan();
@@ -171,6 +174,11 @@ private:
 	double m_storage = 1.0;
 	bool m_cleared = false;
 	bool m_planSwitch = true;
+
+	// Monte Carlo Stuff
+	std::default_random_engine m_generator;
+	std::normal_distribution<double> m_normal;
+	std::uniform_real_distribution<double> m_uniform;
 
 };
 

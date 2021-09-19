@@ -19,10 +19,26 @@ constexpr double c_aGain = y1Gain * x1Gain - c_bGain * y1Gain;
 constexpr static size_t c_rays = SIDE_LENGTH * 2;
 constexpr static size_t c_raysAG = 7;
 
+constexpr static double c_pulseLength = 1.0e-6;
+constexpr static double c_pulseDistance = c_pulseLength * 3.0e8;
+
+constexpr static size_t c_samplesPerFrame = 100;//150;
+
+constexpr static double c_beamSigma = 0.03705865456;
+constexpr static double c_SNR = 1.5e-4;
+
+static double f( double x )
+{
+	return ( 1.0 / ( c_beamSigma * sqrt( 2.0 * PI ) ) ) * exp( -0.5 * pow( x / c_beamSigma, 2.0 ) );
+}
+
 Scooter::Radar::Radar( Interface& inter, AircraftState& state ):
 	m_scope(inter),
 	m_aircraftState(state),
-	m_interface(inter)
+	m_interface(inter),
+	m_normal(0.0, c_beamSigma ),
+	m_uniform(0.0, 2.0 * PI),
+	m_generator(23)
 {
 	//for ( size_t i = 0; i < SIDE_LENGTH; i++ )
 		//m_scanLine[i] = Vec3f();
@@ -98,7 +114,7 @@ bool Scooter::Radar::handleInput( int command, float value )
 		m_detail = value * (5.0_deg - 0.5_deg) + 0.5_deg;
 		return true;
 	case DEVICE_COMMANDS_RADAR_GAIN:
-		m_gain = c_aGain / (value - c_bGain);
+		m_gain = ( 1.0 - value * 0.9999 ); //c_aGain / (value - c_bGain);//(1.0 - value);//
 		return true;
 	case DEVICE_COMMANDS_RADAR_BRILLIANCE:
 		m_brilliance = value;
@@ -178,7 +194,6 @@ void Scooter::Radar::update( double dt )
 		m_scope.setBottomRange( m_rangeSwitch ? 0.4 : 0.2 );
 		m_scale = m_rangeSwitch ? 2.0 : 1.0;
 		scanPlan( dt );
-		drawScan();
 		break;
 
 	case STATE_TC_PLAN:
@@ -187,7 +202,6 @@ void Scooter::Radar::update( double dt )
 		m_scope.setSideRange( 0.0 );
 		m_scope.setBottomRange( m_rangeSwitch ? 0.2 : 0.1 );
 		m_scope.setProfileScribe( RadarScope::OFF );
-		drawScan();
 		break;
 	case STATE_TC_PROFILE:
 		m_scale = m_rangeSwitch ? 1.0 : 0.5;
@@ -208,9 +222,6 @@ void Scooter::Radar::update( double dt )
 
 	warmup( dt );
 
-	
-
-	
 	updateObstacleLight(dt);
 	m_scope.setObstacle( m_obstacleIndicator && (m_obstacleCount > 0), m_obstacleVolume );
 	m_scope.update( dt );
@@ -246,16 +257,24 @@ void Scooter::Radar::resetScanData()
 
 void Scooter::Radar::scanPlan( double dt )
 {
-	m_scanned = (m_scanned + 1) % 2;
+	constexpr int framesPerAzimuth = 4;
+	m_scanned = (m_scanned + 1) % framesPerAzimuth;
 
-	if ( m_scanned )
-		return;
+	if ( m_scanned == 0 )
+	{
+		//Sweep this big 'ol torch left and right.
+		updateGimbalPlan();
 
-	//Sweep this big 'ol torch left and right.
-	updateGimbalPlan();
+		//We don't care about the obs light in plan mode.
+		resetObstacleData();
 
-	//We don't care about the obs light in plan mode.
-	resetObstacleData();
+		//Reset data for this line.
+		resetScanData();
+	}
+
+	// Collected all data so draw the scan now.
+	if ( m_scanned == (framesPerAzimuth - 1) )
+		drawScan();
 
 	// What the fuck has gone wrong.
 	// I would crash it here but, people
@@ -265,9 +284,70 @@ void Scooter::Radar::scanPlan( double dt )
 
 	
 	
-	//Reset data for this line.
-	resetScanData();
-	scanOneLine(m_state == STATE_TC_PLAN);
+	
+	scanOneLine2(m_state == STATE_TC_PLAN);
+}
+
+void Scooter::Radar::scanOneLine3( bool detail )
+{
+	float x = 1.0 - 2.0 * (float)m_xIndex / (float)SIDE_LENGTH;
+	double yawAngle = x * 30.0_deg;
+
+	double range = 0.0;
+
+	double theta = 0.0;
+
+	for ( size_t i = 0; i < c_samplesPerFrame; i++ )
+	{
+		double phi = m_uniform( m_generator );
+
+		double xRay = theta * cos( phi );
+		double pitchAngle = theta * sin( phi );
+
+		//float y = -1.0 + 2.0 * (float)i / (float)c_rays;
+		//double pitchAngle = 2.5_deg * y;
+
+		if ( ! detail || abs( pitchAngle ) <= m_detail )
+		{
+			if ( scanOneRay( pitchAngle, xRay + yawAngle, range ) )
+			{
+				//If there is a possible obstacle then record this info.
+				setObstacle( range );
+			}
+		}
+
+		theta += 0.02 / f( theta );
+	}
+
+	printf( "%lf\n", theta );
+}
+
+void Scooter::Radar::scanOneLine2( bool detail )
+{
+	float x = 1.0 - 2.0 * (float)m_xIndex / (float)SIDE_LENGTH;
+	double yawAngle = x * 30.0_deg;
+
+	double range = 0.0;
+	for ( size_t i = 0; i < c_samplesPerFrame; i++ )
+	{
+		double theta = m_normal( m_generator );
+		double phi = m_uniform( m_generator );
+
+		double xRay = theta * cos( phi );
+		double pitchAngle = theta * sin( phi );
+
+		//float y = -1.0 + 2.0 * (float)i / (float)c_rays;
+		//double pitchAngle = 2.5_deg * y;
+
+		if ( ! detail || abs( pitchAngle ) <= m_detail )
+		{
+			if ( scanOneRay( pitchAngle, xRay + yawAngle, range ) )
+			{
+				//If there is a possible obstacle then record this info.
+				setObstacle( range );
+			}
+		}
+	}
 }
 
 void Scooter::Radar::scanOneLine(bool detail)
@@ -318,7 +398,11 @@ bool Scooter::Radar::scanOneRay( double pitchAngle, double yawAngle, double& ran
 		Vec3 normal = getNormal( ground.x, ground.z );
 
 		double reflectivity = getReflection( dir, normal, (TerrainType)type );
-		reflectivity *= m_gain;
+
+		/*if ( reflectivity < c_SNR )
+			return false;*/
+		
+		reflectivity *= 1.0e-3 / m_gain;//rangeKM * rangeKM / (1e5 * m_gain);
 
 		double warningAngle = -calculateWarningAngle( range );
 
@@ -327,145 +411,30 @@ bool Scooter::Radar::scanOneRay( double pitchAngle, double yawAngle, double& ran
 
 
 		size_t yIndex;
+		size_t yIndexMax;
 		if ( rangeToDisplayIndex( range, yIndex ) )
 		{
-			m_scanIntensity[yIndex] += clamp( reflectivity, 0.0, 1.0 );
-			m_scanAngle[yIndex] = std::max( m_scanAngle[yIndex], relativePitch );
+			if ( ! rangeToDisplayIndex( range + c_pulseDistance, yIndexMax ) )
+			{
+				m_scanIntensity[yIndex] = clamp( m_scanIntensity[yIndex] + reflectivity, 0.0, 1.0 );
+				m_scanAngle[yIndex] = std::max( m_scanAngle[yIndex], relativePitch );
+			}
+			else
+			{
+				double num = (double)yIndexMax - (double)yIndex;
+				double intensity = reflectivity / num;
+
+				for ( size_t i = yIndex; i <= yIndexMax; i++ )
+				{
+					m_scanIntensity[i] = clamp( m_scanIntensity[i] + reflectivity, 0.0, 1.0 );
+					m_scanAngle[i] = std::max( m_scanAngle[i], relativePitch );
+				}
+			}
 		}
 	}
 
 	return obstacle;
 }
-
-//void Scooter::Radar::scan(double dt)
-//{
-//	
-//
-//	if ( m_state == STATE_TC && ! m_planSwitch )
-//	{
-//		m_xIndex = SIDE_LENGTH / 2;
-//
-//		m_sweepAngle += 5.0 * dt * m_direction;
-//
-//		if ( m_sweepAngle >= 15.0_deg )
-//		{
-//			m_sweepAngle = 15.0_deg;
-//			m_direction = -1;
-//
-//			//Every time we hit the edge of the scan decrease the obstacle
-//			//counter.
-//			updateObstacleData();
-//		}
-//		else if ( m_sweepAngle <= -10.0_deg )
-//		{
-//			m_sweepAngle = -10.0_deg;
-//			m_direction = 1;
-//
-//			//Every time we hit the edge of the scan decrease the obstacle
-//			//counter.
-//			updateObstacleData();
-//		}
-//
-//		//printf( "A %lf\n", m_sweepAngle );
-//	}
-//	else
-//	{
-//		//We don't care about the obstacle in any other mode.
-//		resetObstacleData();
-//
-//		m_scanned = (m_scanned + 1) % 2;
-//
-//		if ( m_scanned )
-//			return;
-//
-//		m_sweepAngle = m_angle;
-//		m_xIndex += m_direction;
-//
-//		if ( m_xIndex >= (SIDE_LENGTH - 1) )
-//		{
-//			m_xIndex = (SIDE_LENGTH - 1);
-//			m_direction = -1;
-//		}
-//		else if ( m_xIndex <= 0 )
-//		{
-//			m_xIndex = 0;
-//			m_direction = 1;
-//		}
-//	}
-//
-//	
-//
-//
-//	if ( ! m_terrain )
-//		return;
-//
-//	Vec3 pos = m_aircraftState.getWorldPosition();
-//
-//	for ( size_t i = 0; i < SIDE_LENGTH; i++ )
-//	{
-//		m_scanLine[i] = 0.0;
-//		m_scanProfile[i] = -10000.0;
-//	}
-//		
-//
-//	float x = 1.0 - 2.0 * (float)m_xIndex / (float)SIDE_LENGTH;
-//
-//
-//	const size_t rays = SIDE_LENGTH * 2;
-//
-//	for ( size_t i = 0; i < rays; i++ )
-//	{
-//
-//		float y = -1.0 + 2.0 * (float)i / (float)rays;
-//
-//		bool found = false;
-//
-//		double pitchAngle = 2.5_deg * y;
-//
-//		//TODO Break into separate function.
-//		if ( m_state != STATE_TC ||  abs( pitchAngle ) <= m_detail )
-//		{
-//			double relativePitch;
-//			if ( m_aoaCompSwitch )
-//				relativePitch = pitchAngle - m_sweepAngle - m_aircraftState.getAOA() * cos( m_aircraftState.getAngle().x );
-//			else
-//				relativePitch = pitchAngle - m_sweepAngle;
-//
-//			double pitch = relativePitch + m_aircraftState.getAngle().z;
-//
-//			Vec3 dir = directionVector( pitch, m_aircraftState.getAngle().y + 30.0_deg * x );
-//			Vec3 ground;
-//			found = getIntersection( ground, pos, dir );
-//
-//			if ( found )
-//			{
-//				double range = magnitude( ground - pos );
-//				unsigned char type = getType( ground.x, ground.z );
-//
-//				Vec3 normal = getNormal( ground.x, ground.z );
-//
-//				double reflectivity = getReflection(dir, normal, (TerrainType)type);
-//				reflectivity *= m_gain;
-//
-//				double warningAngle = -calculateWarningAngle( range );
-//
-//				
-//				if ( warningAngle < relativePitch )
-//				{
-//					setObstacle( range );
-//				}
-//					
-//
-//				size_t yIndex;
-//				if ( rangeToDisplayIndex( range, yIndex ) )
-//				{
-//					m_scanIntensity[yIndex] += clamp( reflectivity, 0.0, 1.0 );
-//					m_scanAngle[yIndex] = std::max( m_scanAngle[yIndex], relativePitch );
-//				}
-//			}
-//		}
-//	}
-//}
 
 void Scooter::Radar::drawScan()
 {

@@ -351,6 +351,46 @@ dialog = {
 					["skin"] = HelpSkin,
 					["type"] = "Static",
 				},
+				["experimentalRadarLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 200,
+							["x"] = LeftColumnX + 25,
+							["y"] = 350,
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_EXPERIMENTAL_RADAR_CHECK_LABEL",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsCaptionSkin",
+						},
+					},
+					["type"] = "Static",
+				},
+				["experimentalRadarCheckbox"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 50,
+							["x"] = LeftColumnX,
+							["y"] = 352,
+						},
+						["enabled"] = true,
+						["state"] = true,
+						["tabOrder"] = 0,
+						["text"] = "",
+						["tooltip"] = "$A4E_EXPERIMENTAL_RADAR_CHECK_TOOLTIP",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = CheckBoxSkin,
+					["type"] = "CheckBox",
+				},
 				--------------------------------
 			},
 			["params"] = {
