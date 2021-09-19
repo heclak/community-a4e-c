@@ -1,0 +1,446 @@
+#pragma once
+#include <random>
+#include "RadarScope.h"
+#include "AircraftState.h"
+#include "Units.h"
+#include "Maths.h"
+#include "BaseComponent.h"
+
+constexpr static double c_obstructionPeriod = 2.0;
+
+struct Vec3f
+{
+	Vec3f() {}
+	Vec3f( const Vec3& v ) :
+		x( v.x ), y( v.y ), z( v.z )
+	{}
+
+	float x = 0.0;
+	float y = 0.0;
+	float z = 0.0;
+};
+
+extern "C"
+{
+	void* _find_vfptr_fnc( void*, intptr_t );
+}
+
+typedef bool (*FNC_INTERSECTION)(void* object, Vec3f* point, Vec3f* direction, float maxDist, Vec3f* out);
+typedef unsigned char (*FNC_TYPE)(void* object, float x, float z);
+typedef void (*FNC_GET_NORMAL)(void* object, Vec3f* n, float x, float z);
+
+namespace Scooter
+{
+
+class Radar : public BaseComponent
+{
+public:
+	Radar( Interface& inter, AircraftState& state );
+
+	virtual void zeroInit();
+	virtual void coldInit();
+	virtual void hotInit();
+	virtual void airborneInit();
+	
+	bool handleInput( int command, float value );
+	void update(double dt);
+	inline void setDisable( bool disabled );
+	inline double getRange();
+
+private:
+
+	enum TerrainType
+	{
+		LAND = 0,
+		SEA = 1,
+		ROAD = 2,
+		RIVER = 4,
+		CITY = 5,
+		LAKE = 7,
+		FOREST = 49,
+		FARMLAND = 22
+	};
+
+	enum State
+	{
+		STATE_OFF,
+		STATE_STBY,
+		STATE_SRCH,
+		STATE_TC_PROFILE,
+		STATE_TC_PLAN,
+		STATE_AG,
+	};
+
+	enum Mode
+	{
+		MODE_OFF,
+		MODE_STBY,
+		MODE_SRCH,
+		MODE_TC,
+		MODE_AG,
+	};
+
+
+	inline double rangeToDisplay( double range );
+	inline bool rangeToDisplayIndex( double range, size_t& index );
+	
+	inline State getState();
+	inline void warmup( double rate );
+	inline void transitionState( State from, State to );
+
+	inline unsigned char getType( double x, double z );
+	inline bool getIntersection( Vec3& out, const Vec3& pos, const Vec3& dir, double maxRange = 0.0 );
+	inline Vec3 getNormal(double x, double z);
+	inline double calculateWarningAngle( double range );
+	inline void updateObstacleData();
+	inline void resetObstacleData();
+	inline void setObstacle(double range);
+	inline void updateObstacleLight( double dt );
+	
+	static inline bool coordToIndex( double coord, size_t& index );
+	static inline bool findIndex( size_t horizontalScanIndex, size_t verticalScanIndex, size_t& index );
+	static inline void indexToScreenCoords( size_t index, double& x, double& y );
+	static inline bool screenCoordToIndex( double x, double y, size_t& index );
+	static inline double getReflection( const Vec3& dir, const Vec3& normal, TerrainType type );
+	static inline double typeReflectivity( TerrainType type );
+	static inline double angleAxisToCommand( double axis );
+
+	void scanPlan(double dt);
+	void updateGimbalPlan();
+	void updateGimbalProfile(double dt);
+	void resetScanData();
+	void scanOneLine(bool detail);
+	void scanOneLine2( bool detail );
+	void scanOneLine3( bool detail );
+	bool scanOneRay( double pitchAngle, double yawAngle,  double& range );
+
+	void drawScan();
+	void scanAG(double dt);
+	void scanProfile( double dt );
+	void drawScanAG();
+	void drawScanProfile();
+	void clearScan();
+	void resetLineDraw();
+	void resetDraw();
+
+
+	RadarScope m_scope;
+	AircraftState& m_aircraftState;
+	Interface& m_interface;
+	void* m_terrain = nullptr;
+
+	double m_scale = 1.0;
+
+	int m_xIndex = 25;
+	int m_yIndex = 0;
+	double m_y = 0.0;
+	int m_direction = -1;
+	int m_scanned = 0;
+	bool m_disabled = true;
+
+	//Intensity of return and Pitch Angle against range index.
+	double m_scanIntensity[SIDE_LENGTH];
+	double m_scanAngle[SIDE_LENGTH];
+
+	//Constants
+	const double m_warmupTime = 180.0;
+	const double m_angularResolution = 1.0_deg;
+
+	//Internal States
+	double m_warmup = 0.0;
+	double m_scanHeight = 2.5_deg;
+	bool m_locked = false;
+	bool m_converged = false;
+	double m_range = 0.0;
+	double m_sweepAngle = 0.0;
+	State m_state = STATE_OFF;
+
+	//Obstacle related stuff
+	bool m_obstacleIndicator = false;
+	double m_obstacleTimer = 0.0;
+	double m_minObsRange = 0.0;
+	int m_obstacleCount = 0;
+	bool m_obstacle = false;
+	double m_obstacleVolume = 1.0;
+
+	//Switches
+	State m_modeSwitch = STATE_OFF;
+	bool m_rangeSwitch = false;
+	bool m_aoaCompSwitch = false;
+	double m_angle = 0.0;
+	double m_detail = 1.0;
+	double m_gain = 1.0;
+	double m_brilliance = 1.0;
+	double m_storage = 1.0;
+	bool m_cleared = false;
+	bool m_planSwitch = true;
+
+	// Monte Carlo Stuff
+	std::default_random_engine m_generator;
+	std::normal_distribution<double> m_normal;
+	std::uniform_real_distribution<double> m_uniform;
+
+};
+
+
+double Radar::rangeToDisplay( double range )
+{
+	return -1.0 + 2.0 * range / (20.0_nauticalMile * m_scale);
+}
+
+bool Radar::rangeToDisplayIndex( double range, size_t& index )
+{
+	index = round(SIDE_LENGTH * range / (20.0_nauticalMile * m_scale));
+
+	if ( index >= 0 && index < SIDE_LENGTH )
+		return true;
+	else
+		return false;
+}
+
+bool Radar::coordToIndex( double coord, size_t& index )
+{
+	index = round(((coord + 1.0) / 2.0) * (double)SIDE_LENGTH);
+
+	if ( index >= 0 && index < SIDE_LENGTH )
+		return true;
+	else
+		return false;
+}
+
+
+void Radar::transitionState( State from, State to )
+{
+	switch ( from )
+	{
+	case STATE_AG:
+		resetLineDraw();
+		break;
+	case STATE_TC_PROFILE:
+		resetDraw();
+		m_cleared = false;
+		clearScan();
+		break;
+	}
+
+	switch ( to )
+	{
+	case STATE_AG:
+		m_cleared = false;
+		clearScan();
+		break;
+	case STATE_TC_PROFILE:
+		m_cleared = false;
+		clearScan();
+		break;
+	}
+}
+
+double Radar::getReflection( const Vec3& dir, const Vec3& normal, TerrainType type )
+{
+	return typeReflectivity( type )* normalize( -dir )* normalize( normal );
+}
+
+double Radar::typeReflectivity( TerrainType type )
+{
+	switch ( type )
+	{
+	case LAND:
+		return 1.0;
+	case ROAD:
+		return 0.8;
+	case SEA:
+		return 0.01;
+	case RIVER:
+		return 0.001;
+	case LAKE:
+		return 0.001;
+	case FOREST:
+		return 1.2 + random() * 0.1;
+	case CITY:
+		return 1.5 + random() * 0.5;
+	case FARMLAND:
+		return 1.1;
+	}
+
+	return 1.0;
+}
+
+void Radar::setDisable( bool disabled )
+{
+	m_disabled = disabled;
+}
+
+void Radar::warmup( double rate )
+{
+	m_warmup += rate;
+	m_warmup = clamp( m_warmup, 0.0, m_warmupTime );
+}
+
+void Radar::indexToScreenCoords( size_t index, double& x, double& y )
+{
+	size_t xI = index % SIDE_LENGTH;
+	size_t yI = index / SIDE_LENGTH;
+
+	x = ((double)xI / (double)SIDE_LENGTH) * 2.0 - 1.0;
+	y = ((double)yI / (double)SIDE_LENGTH) * 2.0 - 1.0;
+}
+
+bool Radar::screenCoordToIndex( double x, double y, size_t& index )
+{
+	size_t xI = round(((x + 1.0) / 2.0) * SIDE_LENGTH);
+	size_t yI = round(((y + 1.0) / 2.0) * SIDE_LENGTH);
+
+	return findIndex( xI, yI, index);
+}
+
+bool Radar::findIndex( size_t horizontalScanIndex, size_t verticalScanIndex, size_t& index )
+{
+	index = horizontalScanIndex + verticalScanIndex * SIDE_LENGTH;
+
+	if ( index >= 0 && index < MAX_BLOBS )
+		return true;
+	else
+		return false;
+}
+
+double Radar::angleAxisToCommand( double axis )
+{
+	double fraction = abs( axis );
+
+	//0.4 is the centre point.
+	//Since it is 25.0_deg * value - 10.0_deg
+	//If axis is greater than zero it scales linearly over the remaining upper 0.6 range.
+	//If axis is less than zero it scales linearly over the remaining lower 0.4 range.
+	return axis > 0 ? 0.4 + 0.6 * axis : 0.4 + 0.4 * axis;
+
+
+}
+
+void Radar::resetObstacleData()
+{
+	m_minObsRange = 1.0e6;
+	m_obstacleCount = 0;
+}
+
+void Radar::updateObstacleData()
+{
+	m_obstacleCount--;
+
+	if ( m_obstacleCount < 0 )
+		resetObstacleData();
+}
+
+void Radar::setObstacle(double range)
+{
+	//m_obstacle = true;
+
+	m_obstacleCount = 2;
+
+	if ( range < m_minObsRange )
+		m_minObsRange = range;
+}
+
+unsigned char Radar::getType( double x, double z )
+{
+	FNC_TYPE getType = (FNC_TYPE)_find_vfptr_fnc( m_terrain, 0x50 );
+	return getType( m_terrain, (float)x, (float)z );
+}
+
+
+bool Radar::getIntersection( Vec3& out, const Vec3& pos, const Vec3& dir, double maxRange )
+{
+	if ( maxRange == 0.0 )
+		maxRange = 20.0_nauticalMile * m_scale;
+
+	FNC_INTERSECTION getIntersection = (FNC_INTERSECTION)_find_vfptr_fnc( m_terrain, 0x68 );
+
+	Vec3f posf( pos );
+	Vec3f dirf( dir );
+	Vec3f outf;
+	bool success = getIntersection( m_terrain, &posf, &dirf, maxRange, &outf );
+
+	out.x = outf.x;
+	out.y = outf.y;
+	out.z = outf.z;
+
+	return success;
+}
+
+
+Vec3 Radar::getNormal( double x, double z )
+{
+	FNC_GET_NORMAL getNormal = (FNC_GET_NORMAL)_find_vfptr_fnc( m_terrain, 0x58 );
+	Vec3f normf;
+	getNormal( m_terrain, &normf, (float)x, (float)z );
+
+	Vec3 norm( normf.x, normf.y, normf.z );
+	return norm;
+}
+
+double Radar::getRange()
+{
+	return m_range;
+}
+
+Radar::State Radar::getState()
+{
+	if ( ! m_interface.getElecMonitoredAC() )
+		return STATE_OFF;
+
+	switch ( m_modeSwitch )
+	{
+	case MODE_OFF:
+		return STATE_OFF;
+	case MODE_STBY:
+		return STATE_STBY;
+	case MODE_SRCH:
+		return STATE_SRCH;
+	case MODE_TC:
+		if ( m_planSwitch )
+			return STATE_TC_PLAN;
+		else
+			return STATE_TC_PROFILE;
+	case MODE_AG:
+		return STATE_AG;
+	}
+
+	return STATE_OFF;
+}
+
+double Radar::calculateWarningAngle( double range )
+{
+	if ( range <= 1000.0_feet )
+		return 90.0_deg;
+
+	return asin( 1000.0_feet / range );
+}
+
+void Radar::updateObstacleLight( double dt )
+{
+	m_obstacleTimer += dt;
+
+	//Fix this kinda hacky solution.
+	if ( m_state != STATE_TC_PROFILE )
+	{
+		m_obstacleTimer = 0.0;
+		m_obstacleIndicator = false;
+		return;
+	}
+
+	if ( m_obstacleTimer > c_obstructionPeriod )
+	{
+		m_obstacleTimer = 0.0;
+		m_obstacleIndicator = false;
+	}
+	else
+	{
+		double obsTime = c_obstructionPeriod * (1.0 - (m_minObsRange / (20.0_nauticalMile * m_scale)));
+		if ( m_obstacleTimer < obsTime )
+			m_obstacleIndicator = true;
+		else
+			m_obstacleIndicator = false;
+	}
+}
+
+} // end namespace scooter

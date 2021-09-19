@@ -76,7 +76,7 @@ public:
 	inline void setSelectedTank( Tank tank );
 	inline void setFuelDumping(bool dumping);
 
-private:
+public:
 
 	double m_fuel[NUMBER_OF_TANKS] = { 0.0, 0.0, 0.0, 0.0, 0.0 };
 	double m_fuelPrevious[NUMBER_OF_TANKS] = { 0.0, 0.0, 0.0, 0.0, 0.0 };
@@ -86,7 +86,7 @@ private:
 	double m_fuelCapacity[NUMBER_OF_TANKS] = { 731.0, 1737.0, 0.0, 0.0, 0.0 }; //changed it to 1737 to match the values from the entry.
 	Vec3 m_fuelPos[NUMBER_OF_TANKS] = { Vec3(), Vec3(), Vec3(), Vec3(), Vec3() };
 
-	bool m_enginePump = true;
+	const bool m_enginePump = true;
 	bool m_boostPump = true;
 	bool m_boostPumpPressure = false;
 	bool m_externalTankPressure = true;

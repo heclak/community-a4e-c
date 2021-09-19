@@ -31,6 +31,7 @@
 #include "ILS.h"
 #include "Commands.h"
 #include "Beacon.h"
+#include "Radar.h"
 
 //============================= Statics ===================================//
 static Scooter::AircraftState* s_state = NULL;
@@ -48,6 +49,8 @@ static Scooter::ILS* s_ils = NULL;
 static std::vector<LERX> s_splines;
 
 static Scooter::Beacon* s_beacon = NULL;
+static Scooter::Radar* s_radar = NULL;
+static unsigned char* s_testBuffer = NULL;
 
 //========================== Static Functions =============================//
 static void init( const char* config );
@@ -194,7 +197,11 @@ void init(const char* config)
 	s_ils = new Scooter::ILS(*s_interface);
 	s_fuelSystem = new Scooter::FuelSystem2( *s_engine, *s_state );
 	s_beacon = new Scooter::Beacon(*s_interface);
-	
+	s_radar = new Scooter::Radar( *s_interface, *s_state );
+
+	//checkCorruption(__FUNCTION__);
+	//printf( "Offset: %llx\n", (intptr_t)(&s_fuelSystem->m_enginePump) - (intptr_t)s_fuelSystem );
+	//dumpMem( (unsigned char*)s_fuelSystem, sizeof( Scooter::FuelSystem2 ) );
 }
 
 void cleanup()
@@ -211,6 +218,7 @@ void cleanup()
 	delete s_ils;
 	delete s_fuelSystem;
 	delete s_beacon;
+	delete s_radar;
 
 	s_luaVM = NULL;
 	s_state = NULL;
@@ -224,8 +232,19 @@ void cleanup()
 	s_ils = NULL;
 	s_fuelSystem = NULL;
 	s_beacon = NULL;
+	s_radar = NULL;
 
 	s_splines.clear();
+}
+
+void checkCorruption(const char* str)
+{
+	//printf( "Validating Test buffer...\n" );
+
+	if ( ! s_fuelSystem->m_enginePump )
+		printf( "Memory corrupted! %s\n", str );
+	else
+		printf( "Memory Fine %str\n", str );
 }
 
 double rawAOAToUnits( double rawAOA )
@@ -273,6 +292,7 @@ void ed_fm_simulate(double dt)
 	//Pre update
 	if ( s_interface->getAvionicsAlive() )
 	{
+
 		//s_sidewinder->init();
 		//s_sidewinder->update();
 		//s_ils->test();
@@ -294,7 +314,7 @@ void ed_fm_simulate(double dt)
 		);
 
 		s_avionics->getComputer().setGunsightAngle( s_interface->getGunsightAngle() );
-		s_avionics->getComputer().setTarget( s_interface->getSetTarget(), s_interface->getSlantRange() );
+		s_avionics->getComputer().setTarget( s_interface->getSetTarget(), s_interface->getRadarDisabled() ? s_interface->getSlantRange() : s_radar->getRange() );
 		s_avionics->getComputer().setPower( s_interface->getCP741Power() );
 
 		s_input->pitchTrim() = s_interface->getPitchTrim();
@@ -310,9 +330,13 @@ void ed_fm_simulate(double dt)
 		s_state->setGForce( s_interface->getGForce() );
 
 		s_fuelSystem->setBoostPumpPower( s_interface->getElecMonitoredAC() );
-
+		s_radar->setDisable( s_interface->getRadarDisabled() );
 
 	}
+
+
+	//checkCorruption( __FUNCTION__ );
+	//dumpMem( (unsigned char*)s_fuelSystem, sizeof( Scooter::FuelSystem2 ) );
 
 	//Update
 	s_input->update(s_interface->getWheelBrakeAssist());
@@ -323,7 +347,11 @@ void ed_fm_simulate(double dt)
 	s_avionics->updateAvionics(dt);
 	s_fm->calculateAero(dt);
 	s_beacon->update();
+	s_radar->update( dt );
 
+
+	//s_scope->setBlob( 1, 0.5, 0.5, 1.0 );
+	
 	//Post update
 	s_interface->setRPM(s_engine->getRPMNorm()*100.0);
 	s_interface->setFuelFlow( s_engine->getFuelFlow() );
@@ -608,6 +636,8 @@ void ed_fm_set_command
 		{
 
 		}*/
+		if ( s_radar->handleInput( command, value ) )
+			return;
 
 		if ( s_fuelSystem->handleInput( command, value ) )
 			return;
@@ -921,6 +951,7 @@ void ed_fm_cold_start()
 	s_avionics->coldInit();
 	s_state->coldInit();
 	s_fuelSystem->coldInit();
+	s_radar->coldInit();
 }
 
 void ed_fm_hot_start()
@@ -932,6 +963,7 @@ void ed_fm_hot_start()
 	s_avionics->hotInit();
 	s_state->hotInit();
 	s_fuelSystem->hotInit();
+	s_radar->hotInit();
 }
 
 void ed_fm_hot_start_in_air()
@@ -943,6 +975,7 @@ void ed_fm_hot_start_in_air()
 	s_avionics->airborneInit();
 	s_state->airborneInit();
 	s_fuelSystem->airborneInit();
+	s_radar->airborneInit();
 }
 
 void ed_fm_repair()

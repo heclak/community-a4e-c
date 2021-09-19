@@ -4,6 +4,8 @@ dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.script_path.."Systems/radar_scope_api.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 
+local cpp_radar_disabled = not get_plugin_option_value("A-4E-C", "experimentalRadar", "local")
+
 local dev = GetSelf()
 
 local Terrain = require('terrain')
@@ -918,10 +920,38 @@ function apg53a_draw_a2g()
     end
 end
 
-
+function check_disabled()
+    if cpp_radar_disabled then
+        efm_data_bus.fm_setRadarDisabled(1.0)
+        return false
+    else
+        efm_data_bus.fm_setRadarDisabled(0.0)
+        return true
+    end
+end
 
 
 function SetCommand(command,value)
+
+    --[[
+    if command == device_commands.radar_storage then
+        if value > 0.5 then
+            cpp_radar_disabled = true
+            check_disabled()
+        else
+            cpp_radar_disabled = false
+            check_disabled()
+        end
+    end
+    ]]
+
+
+    --print_message_to_user(value)
+    if check_disabled() then
+        return
+    end
+
+
     local mode_changed=false
     if command == device_commands.radar_planprofile then
         apg53a_planprofile = apg53a_planprofilelist[ value+1 ]
@@ -1313,6 +1343,12 @@ end
 
 local elec_26=true
 function update()
+
+    if check_disabled() then
+        return
+    end
+
+
     if get_elec_26V_ac_ok() then
         if not elec_26 then -- triggered on power restoration
             change_state(apg53a_state, apg53a_state)

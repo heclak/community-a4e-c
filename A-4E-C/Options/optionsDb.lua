@@ -40,4 +40,6 @@ return {
 	cssActivate				= DbOption.new():setValue(15):slider(Range(1,100)),
 
 	wheelBrakeAssist        = DbOption.new():setValue(false):checkbox(),
+
+	experimentalRadar       = DbOption.new():setValue(false):checkbox(),
 }
