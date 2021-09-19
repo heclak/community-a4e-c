@@ -2,26 +2,60 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
-## Unreleased
+## Version 2.0.0-RC1 - 19 Sep 2021
 
 ### Added
-- added custom view positioning for VR HMDs. Position is lowered and moved slightly forwarded from the previous position
-- added aircraft tasks (Reconnaissance, Escort)
-- added radio frequency printouts on the AN/ARC-51 label. Labels are dynamically generated from the mission file
-- added new miscellaneous switch panel on right console
-- added VR config to allow the use of VR controllers (throttle function is incomplete)
+- Added radio channel presets printouts to radio panel.
+- Added PDF manual and improved kneeboard documentation.
+- Added custom view positioning for VR HMDs. Position is lowered and moved slightly forwarded from the previous position
+- Added aircraft tasks (Reconnaissance, Escort)
+- Added radio frequency printouts on the AN/ARC-51 label. Labels are dynamically generated from the mission file
+- Added new miscellaneous switch panel on right console
+- Added VR config to allow the use of VR controllers (throttle function is incomplete)
+- Added helmet textures.
+- Added Community IV: Sea Otter, 2021 (Fictional)
+- Added Australian Navy Squadron 805, 1972 *(thanks HellesBelle)*
+- Added Brazil Marinha do Brasil VF-1 LoViz, 2018
+- Added Finland FiAF, 1984 (Fictional) *(thanks FinCenturion)*
+- Added Malaysia TUDM M32-29 No.9 Squadron, 2004 *(thanks JacobBadshot)*
+- Added RAF Empire Pilots Test School Raspberry Ripple (Fictional) *(thanks FlyingHueman)*
+- Added RNZAF Golden T-Bird No.2, Squadron Ohakea, 1986 *(thanks Corsair016)*
+- Added new keybinds.
+- Added roles for mission editor.
+- Added gunsight and radar night time setup.
+- Added warning for incompatibility with CH-53.
+- Added Experimental APG-53A improvments (this is not yet finished must be enabled from special menu).
+- Added Steering assist.
+- Added misc missions.
+
 
 ### Changed
-- updated mirror code for better rear visibility in mirrors
-- lowered default cockpit view to allow visibility of the zero mil position
+- Updated mirror code for better rear visibility in mirrors.
+- Lowered default cockpit view to allow visibility of the zero mil position.
+- Improved ground handling and break handling.
+- Improved inaccuracies and naming across liveries
+- Aligned controls indicator to bottom-left (friendlier for VR).
+- Gunsight color.
+- Updated default controller bindings for warthog throttle and CH Fighter Stick.
+- Improved keybinding names.
+- Radar filter colours.
+- Changed radar to be compatibile with SRS pull request.
 
 ### Deprecated
 
 ### Removed
-- removed loadouts that were non-functional
+- Loadouts that were non-functional
+- Nose Wheel Steering
+- Weapons that do not have their supplementary systems modelled.
 
 ### Fixed
-- fixed incorrect LABS tone function where the tone stops when the readied stations are empty
+- Incorrect LABS tone function where the tone stops when the readied stations are empty.
+- Mis-labeling of radar PLAN/PROFILE switches.
+- Issue #399 where airframe stress sounds need to be clamped.
+- Issue where ARC-51 GXMIT returned nil state.
+- Spoilers not engaging at 70% RPM *(thanks pohlinkzei)*.
+- Issue #408 MK-77 jettison crash.
+- TACAN/MCL beacons still transmitting when the unit is dead.
 
 ## Version 2.0.0-beta-5.1 - 30 May 2021
 

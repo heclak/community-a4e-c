@@ -1,5 +1,6 @@
 dofile(LockOn_Options.script_path.."fonts.lua")
 dofile(LockOn_Options.common_script_path.."Fonts/fonts_cmn.lua")
+dofile(LockOn_Options.script_path.."RADAR/Indicator/radar_display_settings.lua")
 
 -------MATERIALS-------
 materials = {}
@@ -8,7 +9,7 @@ materials["DBG_BLACK"]   = {0, 0, 0, 100}
 materials["DBG_GREEN"]   = {0, 80, 0, 255}
 materials["DBG_RED"]     = {255, 0, 0, 100}
 materials["DBG_CLEAR"]   = {0, 0, 0, 0}
-materials["BLOB_COLOR"] = {0, 255, 0, 255} -- temporary, to be overridden in 2.1
+materials["BLOB_COLOR"] = blob_color
 materials["RADAR_FOV"] 	= {17, 80, 7, 0}
 materials["RADAR_GRID"] = {0, 96, 48, 192}
 materials["RADAR_SCRIBE"] = {0, 192, 0, 128} -- temporary, to be overridden in 2.1

@@ -109,12 +109,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ED_FM_TEMPLATE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>CockpitBase.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(SolutionDir)/include/Cockpit;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)include\Cockpit;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -191,6 +192,8 @@
     <ClInclude Include="LERX.h" />
     <ClInclude Include="LuaVM.h" />
     <ClInclude Include="Maths.h" />
+    <ClInclude Include="Radar.h" />
+    <ClInclude Include="RadarScope.h" />
     <ClInclude Include="Radio.h" />
     <ClInclude Include="Scooter.h" />
     <ClInclude Include="ED_FM_API.h" />
@@ -203,6 +206,7 @@
     <ClInclude Include="Tacan.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="Units.h" />
     <ClInclude Include="Vec3.h" />
   </ItemGroup>
   <ItemGroup>
@@ -235,6 +239,8 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="LuaVM.cpp" />
     <ClCompile Include="Maths.cpp" />
+    <ClCompile Include="Radar.cpp" />
+    <ClCompile Include="RadarScope.cpp" />
     <ClCompile Include="Radio.cpp" />
     <ClCompile Include="Safe.cpp" />
     <ClCompile Include="Shake.cpp" />

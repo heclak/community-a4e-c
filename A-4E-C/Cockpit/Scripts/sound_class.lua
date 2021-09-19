@@ -15,7 +15,7 @@ SOUND_ONCE = 2
 SOUND_ALWAYS = 3
 SOUND_ALWAYS_CONTROLLED = 4
 
-function Sound_Player.new(sndhost, sound_file, param, type, min_speed, max_speed, factor, fade)
+function Sound_Player.new(sndhost, sound_file, param, type, min_speed, max_speed, factor, fade, volume_param)
     local self = setmetatable({}, Sound_Player)
     self.sound = sndhost:create_sound(sound_file)
     self.type = type or SOUND_ONCE
@@ -28,6 +28,7 @@ function Sound_Player.new(sndhost, sound_file, param, type, min_speed, max_speed
     self.fade = fade or 0.0
     self.volume = 0.0
     self.airspeed_param = get_param_handle("FM_AIRSPEED")
+    self.volume_param = volume_param
 
     --self.update_fnc = nil
 
@@ -69,6 +70,11 @@ function Sound_Player:updateOnce()
             self.played = false
         end
     end
+
+    if self.volume_param ~= nil then
+        self.sound:update(nil, self.volume_param:get(), nil)
+    end
+
 end
 
 function Sound_Player:updateContinuous()
@@ -81,6 +87,10 @@ function Sound_Player:updateContinuous()
     elseif self.param:get() <= 0.0 and self.played then
         self.sound:stop()
         self.played = false
+    end
+
+    if self.volume_param ~= nil then
+        self.sound:update(nil, self.volume_param:get(), nil)
     end
 end
 

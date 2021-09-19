@@ -96,10 +96,10 @@ elements["PNT_165"] = default_2_position_tumb("AFCS Stability Augmentation Switc
 elements["PNT_166"] = default_2_position_tumb("AFCS Aileron Trim Switch (unimplemented)", devices.AFCS, device_commands.afcs_ail_trim,166, TOGGLECLICK_LEFT_AFT)
 
 -- RADAR SCOPE #20
-elements["PNT_400"] = default_axis_limited("Radar Storage", devices.RADAR, device_commands.radar_storage, 400, 0.0, 0.3, false, false, {-1,1})
-elements["PNT_401"] = default_axis_limited("Radar Brilliance", devices.RADAR, device_commands.radar_brilliance, 401, 0.0, 0.3, false, false, {-1,1})
-elements["PNT_402"] = default_axis_limited("Radar Detail", devices.RADAR, device_commands.radar_detail, 402, 0.0, 0.3, false, false, {-1,1})
-elements["PNT_403"] = default_axis_limited("Radar Gain", devices.RADAR, device_commands.radar_gain, 403, 0.0, 0.3, false, false, {-1,1})
+elements["PNT_400"] = default_axis_limited("Radar Storage", devices.RADAR, device_commands.radar_storage, 400, 0.0, 0.3, false, false, {0,1})
+elements["PNT_401"] = default_axis_limited("Radar Brilliance", devices.RADAR, device_commands.radar_brilliance, 401, 0.0, 0.3, false, false, {0,1})
+elements["PNT_402"] = default_axis_limited("Radar Detail", devices.RADAR, device_commands.radar_detail, 402, 0.0, 0.3, false, false, {0,1})
+elements["PNT_403"] = default_axis_limited("Radar Gain", devices.RADAR, device_commands.radar_gain, 403, 0.0, 0.05, false, false, {0,1})
 elements["PNT_404"] = default_axis_limited("Radar Reticle", devices.RADAR, device_commands.radar_reticle, 404, 0.0, 0.3, false, false, {-1,1})
 elements["PNT_405"] = default_2_position_tumb("Radar Filter Plate", devices.RADAR, device_commands.radar_filter, 405)
 elements["PNT_405"].animated = {true, true}
