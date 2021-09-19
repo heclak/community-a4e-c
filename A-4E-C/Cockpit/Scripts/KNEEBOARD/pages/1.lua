@@ -30,8 +30,9 @@ For example, page "2 - 3" is "23.lua".
 3 - Flight
   3 - 1 - AFCS (Autopilot)
   3 - 2 - Case III Recovery & APC
-  3 - 3 - Weight & Structural Limits
-  3 - 4 - Airspeed Limits
+  3 - 3 - Fuel & In-Air Refueling
+  3 - 4 - Weight & Structural Limits
+  3 - 5 - Airspeed Limits
 
 4 - Checklists
   4 - 1 - Start-Up
