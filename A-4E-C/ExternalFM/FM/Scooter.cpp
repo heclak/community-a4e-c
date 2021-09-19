@@ -171,9 +171,11 @@ void checkCompatibility(const char* path)
 		"The CH-53E mod is completely incompatible with the A-4E-C due to a DCS bug triggered\
  by the CH-53E configuration. This bug causes memory corruption and undefined behaviour.\
  To use the A-4E-C uninstall the CH-53E mod.", 
-		"FATAL ERROR - Sikorsky CH-53E Mod Detected", MB_OK | MB_ICONERROR );
+		"FATAL ERROR - Sikorsky CH-53E Mod Detected", MB_ABORTRETRYIGNORE | MB_ICONERROR );
 
-	std::terminate();
+
+	if ( selection != IDIGNORE )
+		std::terminate();
 }
 
 void init(const char* config)
