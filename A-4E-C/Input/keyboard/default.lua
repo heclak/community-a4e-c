@@ -71,35 +71,35 @@ join(res.keyCommands,{
     -- {down = Keys.nws_engage, up = Keys.nws_disengage,                                                name = _('Nose Wheel Steering - ON else OFF'), category = {_('Control Stick'), _('Systems')}},
 
     ---------------------------------------------
-    -- Throttle Quadrant ------------------------
+    -- Throttle Panel ------------------------
     ---------------------------------------------
-    {combos = {{key = 'PageUp'}}, down = iCommandPlaneAUTIncreaseRegime,                                name = _('Throttle Position - Increment'),                  category = {_('Throttle Quadrant'), _('Flight Control')}},
-    {combos = {{key = 'PageDown'}}, down = iCommandPlaneAUTDecreaseRegime,                              name = _('Throttle Position - Decrement'),                  category = {_('Throttle Quadrant'), _('Flight Control')}},
-    {combos = {{key = 'Num+'}}, pressed = iCommandThrottleIncrease, up = iCommandThrottleStop,          name = _('Throttle Position Continuous - Increase'),        category = {_('Throttle Quadrant'), _('Flight Control')}},
-    {combos = {{key = 'Num-'}}, pressed = iCommandThrottleDecrease, up = iCommandThrottleStop,          name = _('Throttle Position Continuous - Decrease'),        category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {combos = {{key = 'PageUp'}}, down = iCommandPlaneAUTIncreaseRegime,                                name = _('Throttle Position - Increment'),                  category = {_('Throttle Panel'), _('Flight Control')}},
+    {combos = {{key = 'PageDown'}}, down = iCommandPlaneAUTDecreaseRegime,                              name = _('Throttle Position - Decrement'),                  category = {_('Throttle Panel'), _('Flight Control')}},
+    {combos = {{key = 'Num+'}}, pressed = iCommandThrottleIncrease, up = iCommandThrottleStop,          name = _('Throttle Position Continuous - Increase'),        category = {_('Throttle Panel'), _('Flight Control')}},
+    {combos = {{key = 'Num-'}}, pressed = iCommandThrottleDecrease, up = iCommandThrottleStop,          name = _('Throttle Position Continuous - Decrease'),        category = {_('Throttle Panel'), _('Flight Control')}},
 
-    {down = device_commands.throttle_click_ITER, value_down = 1, cockpit_device_id = devices.ENGINE,    name = _('Throttle Position Lock - Step Up (OFF/IGN/IDLE)'),                category = {_('Throttle Quadrant'), _('Engine Control Panel')}},
-    {down = device_commands.throttle_click_ITER, value_down = -1, cockpit_device_id = devices.ENGINE,   name = _('Throttle Position Lock - Step Down (OFF/IGN/IDLE)'),              category = {_('Throttle Quadrant'), _('Engine Control Panel')}},
+    {down = device_commands.throttle_click_ITER, value_down = 1, cockpit_device_id = devices.ENGINE,    name = _('Throttle Position Lock - Step Up (OFF/IGN/IDLE)'),                category = {_('Throttle Panel'), _('Engine Control Panel')}},
+    {down = device_commands.throttle_click_ITER, value_down = -1, cockpit_device_id = devices.ENGINE,   name = _('Throttle Position Lock - Step Down (OFF/IGN/IDLE)'),              category = {_('Throttle Panel'), _('Engine Control Panel')}},
 
-    {down = Keys.ExtLightMaster, value_down = 1,                                                        name = _('Master Exterior Lights Switch - ON'),             category = {_('Throttle Grip'), _('Exterior Lights Panel')}},
-    {down = Keys.ExtLightMaster, value_down = 0,                                                        name = _('Master Exterior Lights Switch - OFF'),            category = {_('Throttle Grip'), _('Exterior Lights Panel')}},
-    {combos = {{key = 'L'}}, down = Keys.ExtLightMasterToggle,                                          name = _('Master Exterior Lights Switch - ON/OFF'),         category = {_('Throttle Grip'), _('Exterior Lights Panel')}},
-    {down = Keys.ExtLightMaster, value_down = 1, up = Keys.ExtLightMaster, value_up = 0,                name = _('Master Exterior Lights Switch - ON else OFF'),    category = {_('Throttle Grip'), _('Exterior Lights Panel')}},
-    {combos = {{key = 'B'}}, down = iCommandPlaneAirBrake,                                              name = _('Speedbrake Switch - OPEN/CLOSE'),                 category = {_('Throttle Grip'), _('Flight Control')}},
-    {down = iCommandPlaneAirBrakeOn, up = iCommandPlaneAirBrakeOff,                                     name = _('Speedbrake Switch - OPEN else CLOSE'),            category = {_('Throttle Grip'), _('Flight Control')}},
-    {combos = {{key = 'B', reformers = {'LShift'}}}, down = iCommandPlaneAirBrakeOn,                    name = _('Speedbrake Switch - OPEN'),                       category = {_('Throttle Grip'), _('Flight Control')}},
-    {combos = {{key = 'B', reformers = {'LCtrl'}}}, down = iCommandPlaneAirBrakeOff,                    name = _('Speedbrake Switch - CLOSE'),                      category = {_('Throttle Grip'), _('Flight Control')}},
+    {down = Keys.ExtLightMaster, value_down = 1,                                                        name = _('Master Exterior Lights Switch - ON'),             category = {_('Throttle Panel'), _('Throttle Grip'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightMaster, value_down = 0,                                                        name = _('Master Exterior Lights Switch - OFF'),            category = {_('Throttle Panel'), _('Throttle Grip'), _('Exterior Lights Panel')}},
+    {combos = {{key = 'L'}}, down = Keys.ExtLightMasterToggle,                                          name = _('Master Exterior Lights Switch - ON/OFF'),         category = {_('Throttle Panel'), _('Throttle Grip'), _('Exterior Lights Panel')}},
+    {down = Keys.ExtLightMaster, value_down = 1, up = Keys.ExtLightMaster, value_up = 0,                name = _('Master Exterior Lights Switch - ON else OFF'),    category = {_('Throttle Panel'), _('Throttle Grip'), _('Exterior Lights Panel')}},
+    {combos = {{key = 'B'}}, down = iCommandPlaneAirBrake,                                              name = _('Speedbrake Switch - OPEN/CLOSE'),                 category = {_('Throttle Panel'), _('Throttle Grip'), _('Flight Control')}},
+    {down = iCommandPlaneAirBrakeOn, up = iCommandPlaneAirBrakeOff,                                     name = _('Speedbrake Switch - OPEN else CLOSE'),            category = {_('Throttle Panel'), _('Throttle Grip'), _('Flight Control')}},
+    {combos = {{key = 'B', reformers = {'LShift'}}}, down = iCommandPlaneAirBrakeOn,                    name = _('Speedbrake Switch - OPEN'),                       category = {_('Throttle Panel'), _('Throttle Grip'), _('Flight Control')}},
+    {combos = {{key = 'B', reformers = {'LCtrl'}}}, down = iCommandPlaneAirBrakeOff,                    name = _('Speedbrake Switch - CLOSE'),                      category = {_('Throttle Panel'), _('Throttle Grip'), _('Flight Control')}},
 
-    {combos = {{key = 'Z', reformers = {'RCtrl'}}}, pressed = Keys.TrimLeftRudder, up = Keys.TrimStop,  name = _('Rudder Trim Switch - Left'),               category = {_('Throttle Quadrant'), _('Flight Control')}},
-    {combos = {{key = 'X', reformers = {'RCtrl'}}}, pressed = Keys.TrimRightRudder, up = Keys.TrimStop, name = _('Rudder Trim Switch - Right'),              category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {combos = {{key = 'Z', reformers = {'RCtrl'}}}, pressed = Keys.TrimLeftRudder, up = Keys.TrimStop,  name = _('Rudder Trim Switch - Left'),               category = {_('Throttle Panel'), _('Flight Control')}},
+    {combos = {{key = 'X', reformers = {'RCtrl'}}}, pressed = Keys.TrimRightRudder, up = Keys.TrimStop, name = _('Rudder Trim Switch - Right'),              category = {_('Throttle Panel'), _('Flight Control')}},
 
     -- Flap Switch
-    {combos = {{key = 'F'}}, down = iCommandPlaneFlaps,                                                 name = _('Flap Handle - UP/DOWN'),                         category = {_('Throttle Quadrant'), _('Flight Control')}},
-    {combos = {{key = 'F', reformers = {'LCtrl'}}}, down = iCommandPlaneFlapsOn,                        name = _('Flap Handle - DOWN'),                            category = {_('Throttle Quadrant'), _('Flight Control')}},
-    {combos = {{key = 'F', reformers = {'LShift'}}}, down = iCommandPlaneFlapsOff,                      name = _('Flap Handle - UP'),                              category = {_('Throttle Quadrant'), _('Flight Control')}},
-    {combos = {{key = 'F', reformers = {'LAlt'}}}, down = Keys.PlaneFlapsStop,                          name = _('Flap Handle - STOP'),                            category = {_('Throttle Quadrant'), _('Flight Control')}},
-    {down = Keys.PlaneFlapsDownHotas, up = Keys.PlaneFlapsStop,                                         name = _('Flap Handle - DOWN else STOP'),                  category = {_('Throttle Quadrant'), _('Flight Control')}},
-    {down = Keys.PlaneFlapsUpHotas, up = Keys.PlaneFlapsStop,                                           name = _('Flap Handle - UP else STOP'),                    category = {_('Throttle Quadrant'), _('Flight Control')}},
+    {combos = {{key = 'F'}}, down = iCommandPlaneFlaps,                                                 name = _('Flap Handle - UP/DOWN'),                         category = {_('Throttle Panel'), _('Flight Control')}},
+    {combos = {{key = 'F', reformers = {'LCtrl'}}}, down = iCommandPlaneFlapsOn,                        name = _('Flap Handle - DOWN'),                            category = {_('Throttle Panel'), _('Flight Control')}},
+    {combos = {{key = 'F', reformers = {'LShift'}}}, down = iCommandPlaneFlapsOff,                      name = _('Flap Handle - UP'),                              category = {_('Throttle Panel'), _('Flight Control')}},
+    {combos = {{key = 'F', reformers = {'LAlt'}}}, down = Keys.PlaneFlapsStop,                          name = _('Flap Handle - STOP'),                            category = {_('Throttle Panel'), _('Flight Control')}},
+    {down = Keys.PlaneFlapsDownHotas, up = Keys.PlaneFlapsStop,                                         name = _('Flap Handle - DOWN else STOP'),                  category = {_('Throttle Panel'), _('Flight Control')}},
+    {down = Keys.PlaneFlapsUpHotas, up = Keys.PlaneFlapsStop,                                           name = _('Flap Handle - UP else STOP'),                    category = {_('Throttle Panel'), _('Flight Control')}},
 
     ---------------------------------------------
     -- AN/ALE-29A Chaff Control Panel -----------
@@ -514,7 +514,7 @@ join(res.keyCommands,{
     {down = Keys.ExtLightFlashSteady, value_down = 1, up = Keys.ExtLightFlashSteady, value_up = 0,     name = _('Lighting Flash/Steady Switch - FLSH else STDY'), category = {_('Console Right'), _('Exterior Lights Panel')}},
 	
 	-- AN/ARC-51A UHF Radio
-	{combos = {{key = '\\', reformers = {'RAlt'}}}, down = Keys.radio_ptt,                      name = _('Radio Microphone Push to Talk (PTT)'),    category = {_('Throttle Grip'), _('Communications'), _('AN/ARC-51A UHF Radio')}},
+	{combos = {{key = '\\', reformers = {'RAlt'}}}, down = Keys.radio_ptt,                      name = _('Radio Microphone Push to Talk (PTT)'),    category = {_('Throttle Panel'), _('Throttle Grip'), _('Communications'), _('AN/ARC-51A UHF Radio')}},
     {combos = {{key = 'U', reformers = {'RCtrl'}}}, down = Keys.UHF10MHzInc,                    name = _('Radio Frequency 10 MHz - Increase'),      category = {_('AN/ARC-51A UHF Radio')}},
     {combos = {{key = 'U', reformers = {'RAlt'}}}, down = Keys.UHF10MHzDec,                     name = _('Radio Frequency 10 MHz - Decrease'),      category = {_('AN/ARC-51A UHF Radio')}},
     {combos = {{key = 'I', reformers = {'RCtrl'}}}, down = Keys.UHF1MHzInc,                     name = _('Radio Frequency 1 MHz - Increase'),       category = {_('AN/ARC-51A UHF Radio')}},
