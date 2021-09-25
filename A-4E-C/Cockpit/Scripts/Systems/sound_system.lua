@@ -292,8 +292,9 @@ function post_initialize()
     }
 
     -- initialise sounds
-    snd_catapultTakeoff = sndhost_cockpit:create_sound("Aircrafts/A-4E-C/A4E-CarrierCatapultTakeoff_In")
-    snd_catapultLaunchbarDisconnect = sndhost_cockpit:create_sound("Aircrafts/A-4E-C/A4E-CarrierLaunchBarDisconnect")
+    -- it appears DCS standardizes these sounds across modules and calls are no longer required
+    -- snd_catapultTakeoff = sndhost_cockpit:create_sound("Aircrafts/A-4E-C/A4E-CarrierCatapultTakeoff_In")
+    -- snd_catapultLaunchbarDisconnect = sndhost_cockpit:create_sound("Aircrafts/A-4E-C/A4E-CarrierLaunchBarDisconnect")
 
     param_catapult_takeoff:set(-1)
 end
