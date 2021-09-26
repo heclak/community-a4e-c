@@ -302,15 +302,20 @@ void Scooter::FlightModel::calculateLocalPhysicsParams(double dt)
 	}
 
 	//Clamped to prevent strange behaviour from the lack of precision in the timestep.
-	m_aoaDot = clamp(dAOA / dt, -10.0 * PI, 10.0 * PI);
+	double aoaDot = clamp(dAOA / dt, -10.0 * PI, 10.0 * PI);
+	m_aoaDotAverage.add( aoaDot );
+	m_aoaDot = m_aoaDotAverage.value();
 
+	//Note we should be able to remove this hack now.
 	//Nose compression + Lower than 50 kts.
 	if ( m_airframe.getNoseCompression() > 0.05 && magnitude(m_state.getLocalSpeed()) < 25.0 )
 	{
 		m_aoaDot = 0.0;
 	}
 
-	m_betaDot = clamp( dBeta / dt, -10 * PI, 10.0 * PI );
+	double betaDot = clamp( dBeta / dt, -10 * PI, 10.0 * PI );
+	m_betaDotAverage.add( betaDot );
+	m_betaDot = m_betaDotAverage.value();
 
 	//Get airspeed and scalar speed squared.
 	m_airspeed = m_state.getWorldVelocity() - m_state.getWorldWindVelocity();
@@ -353,20 +358,24 @@ void Scooter::FlightModel::drag()
 
 void Scooter::FlightModel::calculateElements()
 {
+	//m_forces.clear();
+
 	m_lwForce = 0.0;
 	m_rwForce = 0.0;
 
 	Vec3 dragElem = windAxisToBody(m_CDwindAxesComp, m_state.getAOA(), m_state.getBeta() );
 	
-
-	m_elementLSlat.setLDFactor(1.1 * m_airframe.getSlatLPosition(), m_airframe.getSlatLPosition());
-	m_elementRSlat.setLDFactor(1.1 * m_airframe.getSlatRPosition(), m_airframe.getSlatRPosition());
+	m_elementLSlat.setLDFactor(1.6 * m_airframe.getSlatLPosition() * m_airframe.getFlapDamage(), m_airframe.getSlatLPosition() * m_airframe.getFlapDamage() );
+	m_elementRSlat.setLDFactor(1.6 * m_airframe.getSlatRPosition() * m_airframe.getFlapDamage(), m_airframe.getSlatRPosition() * m_airframe.getFlapDamage() );
 	m_elementLFlap.setLDFactor(m_airframe.getFlapsPosition() * m_airframe.getFlapDamage(), m_airframe.getFlapsPosition());
 	m_elementRFlap.setLDFactor(m_airframe.getFlapsPosition() * m_airframe.getFlapDamage(), m_airframe.getFlapsPosition());
 	m_elementLSpoiler.setLDFactor(m_airframe.getSpoilerPosition() * m_airframe.getSpoilerDamage(), m_airframe.getSpoilerPosition());
 	m_elementRSpoiler.setLDFactor(m_airframe.getSpoilerPosition() * m_airframe.getSpoilerDamage(), m_airframe.getSpoilerPosition());
-	m_elementHorizontalStab.setLDFactor( 0.25 * m_airframe.getHoriStabDamage(), 0.85 * m_airframe.getHoriStabDamage());
-	m_elementVerticalStab.setLDFactor( 0.35 * m_airframe.getVertStabDamage(), 0.85 * m_airframe.getVertStabDamage());
+	//m_elementHorizontalStab.setLDFactor( 0.25 * m_airframe.getHoriStabDamage(), 0.85 * m_airframe.getHoriStabDamage());
+	//m_elementVerticalStab.setLDFactor( 0.35 * m_airframe.getVertStabDamage(), 0.85 * m_airframe.getVertStabDamage());
+
+	m_elementHorizontalStab.setLDFactor( 0.25 * m_airframe.getHoriStabDamage(), 0.85 * m_airframe.getHoriStabDamage() );
+	m_elementVerticalStab.setLDFactor( 0.35 * m_airframe.getVertStabDamage(), 0.85 * m_airframe.getVertStabDamage() );
 	//printf("beta: %lf, aoa: %lf\n", toDegrees(m_elementVerticalStab.getAOA()));
 
 	/*m_elementLAil.setLDFactor(m_airframe.getAileron() * m_airframe.getAileronDamage(), m_airframe.getAileron() * 0.05 * m_airframe.getAileronDamage());
@@ -397,9 +406,9 @@ void Scooter::FlightModel::calculateElements()
 	//m_moment += m_elementRAil.getMoment();
 	m_moment += m_elementHorizontalStab.getMoment();
 	m_moment += m_elementVerticalStab.getMoment();
-	
-	//addForceElement(m_elementHorizontalStab);
-	//addForceElement(m_elementVerticalStab);
+
+	//addForceElement(m_elementHorizontalStab, false);
+	//addForceElement(m_elementVerticalStab, false);
 
 	// i:0-8 = LW, i:8-17 = RW
 	float damage = 1.0;
@@ -415,7 +424,7 @@ void Scooter::FlightModel::calculateElements()
 		{
 			damage = m_airframe.getRWingDamage();
 		}*/
-		damage = m_airframe.getDamageElement( wingElementToDamageC[i] );
+		damage = m_airframe.getDamageElement( wingElementToDamage[i] );
 
 		m_elements[i].setLDFactor(1.0 * damage, 0.7 * damage);
 		m_elements[i].calculateElementPhysics();

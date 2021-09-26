@@ -106,11 +106,11 @@ void Scooter::AeroElement::elementLift()
 {
 	if (m_type == HORIZONTAL || m_type == AILERON || m_type == ELEVATOR)
 	{
-		m_LDwindAxes.y = m_kElem * (m_CLalpha(m_aoa) * abs(cos(m_beta)) * m_liftFactor * m_damageElem);
+		m_LDwindAxes.y = m_kElem * (m_CLalpha(m_aoa) * (cos(m_beta)) * m_liftFactor * m_damageElem);
 	}
 	else if (m_type == VERTICAL || m_type == RUDDER)
 	{
-		m_LDwindAxes.z = m_kElem * (m_CLalpha(m_aoa) * abs(cos(m_beta)) * m_liftFactor * m_damageElem);
+		m_LDwindAxes.z = m_kElem * (m_CLalpha(m_aoa) * (cos(m_beta)) * m_liftFactor * m_damageElem);
 	}
 	else
 	{
@@ -120,7 +120,11 @@ void Scooter::AeroElement::elementLift()
 
 void Scooter::AeroElement::elementDrag()
 {
-	m_LDwindAxes.x = -m_kElem * (m_CDalpha(m_aoa) * abs(cos(m_beta)) * m_dragFactor);
+	double cosBeta = cos( m_beta );
+	/*if ( m_type != RUDDER )
+		cosBeta = abs( cosBeta );*/
+
+	m_LDwindAxes.x = -m_kElem * ( m_CDalpha( m_aoa ) * cosBeta * m_dragFactor );
 }
 
 void Scooter::AeroElement::calculateElementPhysics()
@@ -142,28 +146,38 @@ void Scooter::AeroElement::calculateElementPhysics()
 	Vec3 flightPath = m_airspeed;
 	Vec3 flightPathProjectedAOA = flightPath - ((flightPath * spanVec) / (spanVec * spanVec)) * spanVec;
 	Vec3 flightPathProjectedBeta = flightPath - ((flightPath * m_surfaceNormal) / (m_surfaceNormal * m_surfaceNormal)) * m_surfaceNormal;
-	m_aoa = atan2(cross(forwardVec, flightPathProjectedAOA) * spanVec, forwardVec * flightPathProjectedAOA);
+
+	m_aoa = atan2( cross( forwardVec, flightPathProjectedAOA ) * spanVec, forwardVec * flightPathProjectedAOA );
+	
+
+	if ( m_type == RUDDER || m_type == ELEVATOR )
+		m_beta = 0.0;
+	else
+		m_beta = atan2( cross( forwardVec, flightPathProjectedBeta ) * m_surfaceNormal, forwardVec * flightPathProjectedBeta );
+
 	
 	if (m_aoaModifier) // if the element has control surfaces
 	{
 		m_aoa += controlInput();
 	}
-	
-	m_beta = atan2(cross(forwardVec, flightPathProjectedBeta)*m_surfaceNormal, forwardVec* flightPathProjectedBeta);
-	//m_beta = m_state.getBeta();
+
+
 	elementLift();
 	elementDrag();
 
 	updateLERX();
 	
-	//printf("lift vector (w): LDVec = %lf, %lf, %lf\n", m_LDwindAxes.x, m_LDwindAxes.y, m_LDwindAxes.z);
+	
 	if (m_type == HORIZONTAL || m_type == AILERON || m_type == ELEVATOR)
 	{
-		m_RForceElement = windAxisToBody(m_LDwindAxes, m_aoa, m_beta);
+		m_RForceElement = windAxisToBody( m_LDwindAxes, m_aoa, m_beta );
+		//printf( "alpha: %lf, beta: %lf, lift vector (w): LDVec = %lf, %lf, %lf, Body: %lf, %lf, %lf\n", m_aoa, m_beta, m_LDwindAxes.x, m_LDwindAxes.y, m_LDwindAxes.z, m_RForceElement.x, m_RForceElement.y, m_RForceElement.z );	
 	}
 	else if (m_type == VERTICAL || m_type == RUDDER)
 	{
 		m_RForceElement = windAxisToBody(m_LDwindAxes, m_beta, m_aoa);
+		//printf( "alpha: %lf, beta: %lf, lift vector (w): LDVec = %lf, %lf, %lf, Body: %lf, %lf, %lf\n", m_aoa, m_beta, m_LDwindAxes.x, m_LDwindAxes.y, m_LDwindAxes.z, m_RForceElement.x, m_RForceElement.y, m_RForceElement.z );
+		//printf( "CD(aoa): %lf\n", m_CDalpha( m_aoa ) );
 	}
 	else
 	{
@@ -171,7 +185,7 @@ void Scooter::AeroElement::calculateElementPhysics()
 	}
 
 	Vec3 deltaCentreOfPressure = m_cp - Vec3(0.0, 0.0, m_state.getCOM().z);
-	m_moment = cross(deltaCentreOfPressure, m_RForceElement);
+	m_moment = cross( deltaCentreOfPressure, m_RForceElement);
 }
 
 double Scooter::AeroControlElement::controlInput()

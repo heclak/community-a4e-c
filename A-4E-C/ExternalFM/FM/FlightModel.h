@@ -24,7 +24,14 @@
 #include "Maths.h"
 #include "Timer.h"
 #include "AircraftState.h"
+#include "MovingAverage.h"
 //=========================================================================//
+
+struct Force
+{
+	Vec3 pos;
+	Vec3 force;
+};
 
 namespace Scooter
 {//begin namespace
@@ -102,6 +109,8 @@ public:
 	inline double getLoadFactor() const;
 	inline void setCockpitShakeModifier( double mod );
 
+	inline std::vector<Force>& getForces() { return m_forces; }
+
 private:
 
 	//=====================BIG WARNING=====================//
@@ -147,6 +156,9 @@ private:
 	//double m_aoa; //angle of attack
 	double m_aoaPrevious; //previous frame angle of attack
 	double m_aoaDot; //aoa per unit time
+	MovingAverage<double, 10> m_aoaDotAverage;
+	MovingAverage<double, 10> m_betaDotAverage;
+
 	//double m_beta; //angle of slip
 	double m_betaPrevious;
 	double m_betaDot;
@@ -261,6 +273,8 @@ private:
 	std::vector<AeroControlElement> m_elementsC;
 	std::vector<LERX>& m_splines;
 
+	std::vector<Force> m_forces;
+
 
 	Input& m_controls; //for now
 
@@ -329,11 +343,17 @@ void FlightModel::addForceDir(const Vec3& force, const Vec3& dir)
 
 void FlightModel::addForceElement(AeroElement elem, bool leftWing)
 {
-	//Add the force to the overall force
+	// Add the force to the overall force
 	m_force += elem.getForce();
 
-	//Calculate the "moment" (actually torque)
+	// Calculate the "moment" (actually torque)
 	m_moment += elem.getMoment();
+
+	/*Force f;
+	f.force = elem.getForce();
+	f.pos = elem.getCOP();
+
+	m_forces.push_back( f );*/
 
 	if ( leftWing )
 		m_lwForce += elem.getForce().y;
@@ -344,6 +364,13 @@ void FlightModel::addForceElement(AeroElement elem, bool leftWing)
 void FlightModel::addForce( const Vec3& force )
 {
 	m_force += force;
+
+	/*Force f;
+	f.force = force;
+	f.pos = m_state.getCOM();
+
+	m_forces.push_back( f );*/
+
 }
 
 void FlightModel::L_stab()
@@ -354,13 +381,13 @@ void FlightModel::L_stab()
 	//DO NOT DELETE!!!
 	//Cla(m_state.getMach())* Cla_a(std::abs(m_state.getAOA()))* aileron()* m_airframe.getAileronDamage()
 	//Clb(0.0)* m_state.getBeta()* m_airframe.getVertStabDamage()
-	//+m_p * (Clp(0.0) * m_state.getOmega().x + Clr(0.0) * m_state.getOmega().y)
+	//m_moment.x += m_p * ( Clp( 0.0 ) * m_state.getOmega().x + Clr( 0.0 ) * m_state.getOmega().y );
 }
 
 void FlightModel::M_stab()
 {
 	double horizDamage = m_airframe.getHoriStabDamage();
-	double wingDamage = (m_airframe.getLWingDamage() + m_airframe.getRWingDamage())/2.0;
+	//double wingDamage = (m_airframe.getLWingDamage() + m_airframe.getRWingDamage())/2.0;
 	m_moment.z += m_k * m_chord * (CmM( m_state.getMach() ) * 0.15 + 0.008 * m_airframe.getSpeedBrakePosition()) + 0.25 * m_scalarV * m_totalWingArea * m_chord * m_chord * horizDamage * (Cmadot( m_state.getMach() ) * m_aoaDot * 6.5);
 	//DO NOT DELETE!!!
 	//0.5 * Cmde( m_state.getMach() ) * Cmde_a( std::abs( m_state.getAOA() ) ) * elevator() * m_airframe.getElevatorDamage() + 
