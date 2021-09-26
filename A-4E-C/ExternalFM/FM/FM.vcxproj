@@ -192,6 +192,7 @@
     <ClInclude Include="LERX.h" />
     <ClInclude Include="LuaVM.h" />
     <ClInclude Include="Maths.h" />
+    <ClInclude Include="MovingAverage.h" />
     <ClInclude Include="Radar.h" />
     <ClInclude Include="RadarScope.h" />
     <ClInclude Include="Radio.h" />
