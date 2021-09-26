@@ -68,9 +68,10 @@ void Scooter::Radar::zeroInit()
 	if ( m_disabled )
 		return;
 
-	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_GAIN, 0.85 );
+	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_GAIN, 0.90 );
 	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_BRILLIANCE, 1.0 );
-	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_DETAIL, 0.3 );
+	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_DETAIL, 0.0 );
+	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_STORAGE, 0.1 );
 }
 
 void Scooter::Radar::coldInit()
@@ -99,7 +100,8 @@ bool Scooter::Radar::handleInput( int command, float value )
 		m_rangeSwitch = (bool)value;
 		return true;
 	case DEVICE_COMMANDS_RADAR_ANGLE:
-		m_angle = -10.0_deg + 25.0_deg * value ;
+		m_angleSwitch = value;
+		m_angle = -10.0_deg + 25.0_deg * m_angleSwitch;
 		return true;
 	case DEVICE_COMMANDS_RADAR_AOACOMP:
 		m_aoaCompSwitch = (bool)value;
@@ -136,6 +138,75 @@ bool Scooter::Radar::handleInput( int command, float value )
 	case DEVICE_COMMANDS_RADAR_ANGLE_AXIS_ABS:
 		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_ANGLE, angleAxisToCommand(value));
 		return true;
+	case KEYS_RADARMODE:
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_MODE, (float)( ( m_modeSwitch + 1 ) % MODE_NUM ) / 10.0f );
+		return true;
+	case KEYS_RADARMODECW:
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_MODE, std::min( (float)( m_modeSwitch + 1 ), (float)MODE_AG ) / 10.0f );
+		return true;
+	case KEYS_RADARMODECCW:
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_MODE, std::max((float)( m_modeSwitch - 1 ), 0.0f) / 10.0f );
+		return true;
+	case KEYS_RADARMODEOFF:
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_MODE, (float)MODE_OFF / 10.0f );
+		return true;
+	case KEYS_RADARMODESTBY:
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_MODE, (float)MODE_STBY / 10.0f );
+		return true;
+	case KEYS_RADARMODESEARCH:
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_MODE, (float)MODE_SRCH / 10.0f );
+		return true;
+	case KEYS_RADARMODETC:
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_MODE, (float)MODE_TC / 10.0f );
+		return true;
+	case KEYS_RADARMODEA2G:
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_MODE, (float)MODE_AG / 10.0f );
+		return true;
+	case KEYS_RADARTCPLANPROFILE:
+		if ( value == -1.0 )
+			ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_PLANPROFILE, !m_planSwitch );
+		else
+			ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_PLANPROFILE, value );
+		return true;
+	case KEYS_RADARRANGELONGSHORT:
+		if ( value == -1.0 )
+			ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_RANGE, !m_rangeSwitch );
+		else
+			ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_RANGE, value );
+		return true;
+	case KEYS_RADARAOACOMP:
+		if ( value == -1.0 )
+			ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_AOACOMP, !m_aoaCompSwitch );
+		else
+			ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_AOACOMP, value );
+		return true;
+	case KEYS_RADARVOLUME:
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_VOLUME, clamp(m_obstacleVolume + (value == 1.0 ? 0.1 : -0.1), 0.0, 1.0) );
+		return true;
+	case KEYS_RADARTILTINC:
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_ANGLE, clamp(0.04 + m_angleSwitch, 0.0, 1.0) );
+		return true;
+	case KEYS_RADARTILTDEC:
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_ANGLE, clamp(-0.04 + m_angleSwitch, 0.0, 1.0) );
+		return true;
+	case KEYS_RADARTILTSTARTUP:
+		m_radarTilting = 1;
+		return true;
+	case KEYS_RADARTILTSTARTDOWN:
+		m_radarTilting = -1;
+		return true;
+	case KEYS_RADARTILTSTOP:
+		m_radarTilting = 0;
+		return true;
+	case KEYS_RADARVOLUMESTARTUP:
+		m_volumeMoving = 1;
+		return true;
+	case KEYS_RADARVOLUMESTARTDOWN:
+		m_volumeMoving = -1;
+		return true;
+	case KEYS_RADARVOLUMESTOP:
+		m_volumeMoving = 0;
+		return true;
 	}
 
 	return false;
@@ -161,6 +232,12 @@ void Scooter::Radar::update( double dt )
 		clearScan();
 		return;
 	}
+
+	if ( m_volumeMoving )
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_VOLUME, clamp(m_obstacleVolume + dt * (double)m_volumeMoving, 0.0, 1.0 ) );
+
+	if ( m_radarTilting )
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_ANGLE, clamp( m_angleSwitch + dt * (double)m_radarTilting , 0.0, 1.0 ) );
 
 	if ( ! m_interface.getElecMonitoredAC() )
 		return;

@@ -78,6 +78,7 @@ private:
 		MODE_SRCH,
 		MODE_TC,
 		MODE_AG,
+		MODE_NUM,
 	};
 
 
@@ -137,6 +138,8 @@ private:
 	int m_direction = -1;
 	int m_scanned = 0;
 	bool m_disabled = true;
+	int m_radarTilting = 0;
+	int m_volumeMoving = 0;
 
 	//Intensity of return and Pitch Angle against range index.
 	double m_scanIntensity[SIDE_LENGTH];
@@ -167,6 +170,8 @@ private:
 	State m_modeSwitch = STATE_OFF;
 	bool m_rangeSwitch = false;
 	bool m_aoaCompSwitch = false;
+	double m_angleSwitch = 0.0;
+
 	double m_angle = 0.0;
 	double m_detail = 1.0;
 	double m_gain = 1.0;
@@ -250,17 +255,17 @@ double Radar::typeReflectivity( TerrainType type )
 	case ROAD:
 		return 0.8;
 	case SEA:
-		return 0.01;
+		return 0.001;
 	case RIVER:
-		return 0.001;
+		return 0.0001;
 	case LAKE:
-		return 0.001;
+		return 0.0001;
 	case FOREST:
-		return 1.2 + random() * 0.1;
+		return 2.0;// + random() * 0.1;
 	case CITY:
-		return 1.5 + random() * 0.5;
+		return 3.0;// + random() * 0.5;
 	case FARMLAND:
-		return 1.1;
+		return 1.2;
 	}
 
 	return 1.0;

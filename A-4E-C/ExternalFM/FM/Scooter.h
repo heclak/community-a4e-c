@@ -244,7 +244,7 @@ extern "C"
 	ED_FM_API void ed_fm_hot_start_in_air();
 
 	ED_FM_API double ed_fm_get_shake_amplitude();
-	//ED_FM_API bool ed_fm_enable_debug_info();
+	ED_FM_API bool ed_fm_enable_debug_info();
 	ED_FM_API void ed_fm_suspension_feedback(int idx, const ed_fm_suspension_info* info);
 
 	ED_FM_API void ed_fm_repair ();

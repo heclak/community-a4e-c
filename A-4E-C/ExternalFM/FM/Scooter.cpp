@@ -599,6 +599,7 @@ void ed_fm_set_command
 	case KEYS_BRAKESON:
 		s_input->leftBrakeAxis().keyIncrease();
 		s_input->rightBrakeAxis().keyIncrease();
+		//s_airframe->breakWing();
 		break;
 	case KEYS_BRAKESOFF:
 		s_input->leftBrakeAxis().reset();
@@ -638,18 +639,19 @@ void ed_fm_set_command
 		{
 
 		}*/
-		if ( s_radar->handleInput( command, value ) )
-			return;
-
-		if ( s_fuelSystem->handleInput( command, value ) )
-			return;
-
-		if ( s_avionics->handleInput( command, value ) )
-			return;
-
-		if ( s_engine->handleInput( command, value ) )
-			return;
 	}
+
+	if ( s_radar->handleInput( command, value ) )
+		return;
+
+	if ( s_fuelSystem->handleInput( command, value ) )
+		return;
+
+	if ( s_avionics->handleInput( command, value ) )
+		return;
+
+	if ( s_engine->handleInput( command, value ) )
+		return;
 }
 
 /*
@@ -882,6 +884,8 @@ double ed_fm_get_param(unsigned index)
 
 bool ed_fm_pop_simulation_event(ed_fm_simulation_event& out)
 {
+	static int counter = 1;
+
 	if (s_airframe->catapultState() == Scooter::Airframe::ON_CAT_NOT_READY && !s_airframe->catapultStateSent())
 	{
 		out.event_type = ED_FM_EVENT_CARRIER_CATAPULT;
@@ -988,10 +992,27 @@ void ed_fm_repair()
 bool ed_fm_add_local_force_component( double & x,double &y,double &z,double & pos_x,double & pos_y,double & pos_z )
 {
 	return false;
+
+	/*if ( s_fm->getForces().empty() )
+		return false;
+
+	Force f = s_fm->getForces().back();
+	s_fm->getForces().pop_back();
+
+	x = f.force.x;
+	y = f.force.y;
+	z = f.force.z;
+
+	pos_x = f.pos.x;
+	pos_y = f.pos.y;
+	pos_z = f.pos.z;
+
+	return true;*/
 }
 
 bool ed_fm_add_global_force_component( double & x,double &y,double &z,double & pos_x,double & pos_y,double & pos_z )
 {
+
 	return false;
 }
 
