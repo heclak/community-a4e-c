@@ -1,3 +1,0 @@
-inherit = "A4E-CarrierCatapult_In"
-wave = "Effects/Aircrafts/CarrierLaunchBarDisconnect_In"
-gain = 1.0

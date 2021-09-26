@@ -1,3 +1,0 @@
-inherit = "A4E-CarrierCatapult_In"
-wave = "Effects/Aircrafts/CarrierCatapultTakeoff_In"
-gain = 0.5
