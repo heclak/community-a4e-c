@@ -46,8 +46,8 @@ planes = {
         file = "Caucasus A-4E-C Shrike.miz"
     },
     {
-        name = _("Aerial Refueling"),
-        file = "Caucasus A-4E-C Aerial Refueling.miz"
+        name = _("Air Refueling"),
+        file = "Caucasus A-4E-C Air Refueling.miz"
     },
     {
         name = _("Dogfight: A-4E-C (Trained)"),
