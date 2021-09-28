@@ -9,43 +9,45 @@ add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeb
 Insert new pages as needed.
 Catalogue enumeration and contents here.
 Assign pages an integer filename 10-99.
-For example, page "2 - 3" is "23.lua".
+For example, page "23" is "23.lua".
 
-0 - Welcome
-  0 - 1 - Table of Contents
+0 Welcome
+  01 Table of Contents
 
-1 - Mission
-  1 - 1 - Navigation
-  1 - 2 - Radio & TACAN
-  1 - 3 - ILS Data
-  1 - 4 - Countermeasures
+1 Mission
+  11 Navigation
+  12 Radio & TACAN
+  13 ILS Data
+  14 Countermeasures
 
-2 - Weapons
-  2 - 1 - Master Arm & Bombs
-  2 - 2 - AWRS & CP-741/A
-  2 - 3 - Guns
-  2 - 4 - Rockets
-  2 - 5 - Missiles & ECM
+2 Weapons
+  21 Master Arm & Bombs
+  22 Weapon Delivery
+  23 Guns
+  24 Rockets
+  25 Missiles & ECM
 
-3 - Flight
-  3 - 1 - AFCS (Autopilot)
-  3 - 2 - Case I Recovery & APC
-  3 - 3 - Case III Recovery
-  3 - 4 - Fuel & In-Air Refueling
-  3 - 5 - Weight & Structural Limits
-  3 - 6 - Airspeed Limits
+3 Flight
+  31 Autopilot
+  32 Case I Recovery & APC
+  33 Case III Recovery
+  34 Fuel & Air Refueling
+  35 Structural Limits
+  36 Airspeed Limits
 
-4 - Checklists
-  4 - 1 - Start-Up
-  4 - 2 - Taxi
-  4 - 3 - Takeoff
-  4 - 4 - Emergency
+4 Checklists
+  41 Start-Up
+  42 Taxi
+  43 Takeoff
+  44 Takeoff (cont.)
+  45 Landing
+  46 Emergency
 
-5 - Orientation
-  5 - 1 - Throttle & Stick
-  5 - 2 - Instrument Panel
-  5 - 3 - Console Left
-  5 - 4 - Console Right
-  5 - 5 - Controls
+5 Orientation
+  51 Throttle & Stick
+  52 Instrument Panel
+  53 Console Left
+  54 Console Right
+  55 Controls
 
 ]]
