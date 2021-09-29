@@ -1,25 +1,37 @@
+dofile(LockOn_Options.script_path.."devices.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."APR-25_RWR/rwr_apr-25_api.lua")
+dofile(LockOn_Options.script_path.."command_defs.lua")
 
 
+local dev = GetSelf()
+local update_time_step = 0.05
+make_default_activity(update_time_step)
+--device_timer_dt     = 0.02  	--0.2 
+
+dev:listen_command(device_commands.new_apr25_sound_on)
+dev:listen_command(device_commands.new_apr25_volume)
+dev:listen_command(device_commands.new_apr25_power)
+
+NO_BAND = 0
+I_BAND_RADAR = 1
+G_BAND_RADAR = 2
+E_BAND_RADAR = 3
 
 
-device_timer_dt     = 0.02  	--0.2 
+local apr25_power = false
 
+local apr25_band_enabled = {
+    [NO_BAND] = false,
+    [I_BAND_RADAR] = true,
+    [G_BAND_RADAR] = true,
+    [E_BAND_RADAR] = true,
+}
 
-i_band_enabled = true
-g_band_enabled = true
-e_band_enabled = true
-aaa_defeat_enabled = false
-
-
-
-
-
-g_band_high = false
-
-
+local apr25_aaa_defeat = false
+local apr25_audio = false
+local apr25_volume = 0.1
 
 
 
@@ -40,11 +52,7 @@ GENERAL_TYPE_SHIP = 3
 --priority some abstract priority number on the order of hundreds
 --time is time since the last recieved signal.
 
-NO_BAND = 0
-I_BAND_RADAR = 1
-G_BAND_RADAR = 2
-E_BAND_RADAR = 3
-C_BAND_RADAR = 4
+
 
 emitter_info = {}
 
@@ -93,13 +101,40 @@ emitter_pos = {
 
 launch_timers = {}
 
-local dev = GetSelf()
 
-local update_time_step = 0.05
-make_default_activity(update_time_step)
+function new_apr25_power(value)
+    apr25_power = (value == 1.0)
+end
 
-function get_fan_song_variant(i)
-    local unit_id = rwr_api:get(i, "source")
+function new_apr25_sound_on(value)
+    apr25_audio = (value == 1.0)
+end
+
+function new_apr25_volume(value)
+    apr25_volume = (1.0 + value) / 2.0
+end
+
+commands = {
+    [device_commands.new_apr25_sound_on] = new_apr25_sound_on,
+    [device_commands.new_apr25_volume] = new_apr25_volume,
+    [device_commands.new_apr25_power] = new_apr25_power,
+}
+
+function SetCommand(command, value)
+    --print_message_to_user(command.. " / "..value)
+    if commands[command] then
+        commands[command](value)
+    end
+end
+
+function post_initialize()
+    print_message_to_user("HELLO")
+end
+
+
+
+
+function get_fan_song_variant(unit_id)
     if fan_song_variant[unit_id] == nil then
         local number = math.mod(math.floor(unit_id / 256.0), 10)
         
@@ -109,25 +144,23 @@ function get_fan_song_variant(i)
     return fan_song_variant[unit_id]
 end
 
-function get_unit_type(i)
-    local unit_type = rwr_api:get(i, "unit_type")
+function get_unit_type(unit_type, unit_id)
     if unit_type == "SNR_75V" then
-        unit_type = unit_type .. get_fan_song_variant(i)
+        unit_type = unit_type .. get_fan_song_variant(unit_id)
     end
 
     return unit_type
 end
 
 function reset_emitter_position(i)
-    emitter_pos[i] = {r = 0, a= 0 }
+    emitter_pos[i] = { unit_id = nil, r = 0, a= 0 }
 end
 
-function update_emitter_position(i)
-    local r = rwr_api:get(i, "power")
-    local a = rwr_api:get(i, "azimuth")
+function update_emitter_position(i, r, a, unit_id)
 
-    if emitter_pos[i] == nil or emitter_pos[i].r == 0 then
+    if emitter_pos[i] == nil or emitter_pos[i].unit_id ~= unit_id then
         emitter_pos[i] = {
+            unit_id = unit_id,
             r = r,
             a = a,
         }
@@ -204,6 +237,12 @@ end
 
 function update_audio(general_type, type, signal, power)
 
+    if not apr25_audio then
+        return
+    end
+
+    power = power * apr25_volume
+
     local info = emitter_info[type]
 
     if info then
@@ -239,12 +278,17 @@ end
 
 
 
-function should_draw(i)
-    if rwr_api:get(i, "signal") ~= SIGNAL_LAUNCH then
+function should_draw(signal, raw_unit_type, band)
+
+    if apr25_band_enabled[band] == false then
+        return false
+    end
+
+    if signal ~= SIGNAL_LAUNCH then
         return true
     end
 
-    if rwr_api:get(i, "unit_type") ~= "SNR_75V" then
+    if raw_unit_type ~= "SNR_75V" then
         return true
     end
 
@@ -263,14 +307,15 @@ function should_draw(i)
 end
 
 
-function SetCommand(command, value)
-    
+
+
+function get_power_variation()
+    return math.random() * 0.1
 end
 
-function post_initialize()
-    
+function get_azimuth_variation()
+    return math.random() * 0.05
 end
-
 
 delay = 0
 
@@ -310,6 +355,13 @@ function update()
     rwr_api:reset()
     reset_audio()
     
+    if not get_elec_aft_mon_ac_ok() or not apr25_power then
+        return
+    end
+    
+    
+
+    --bit_i_band()
 
     for i=1, num_contacts do
 
@@ -318,10 +370,13 @@ function update()
         if power > 0.0 and rwr_api:get(i, "time") < 3.0 then
 
             local general_type = rwr_api:get(i, "general_type")
-            local type = get_unit_type(i)
+            local raw_unit_type = rwr_api:get(i, "unit_type")
+            local unit_id = rwr_api:get(i,"source")
+            local type = get_unit_type(raw_unit_type, unit_id)
             local signal = rwr_api:get(i, "signal")
+            local azimuth = rwr_api:get(i, "azimuth")
             
-            update_emitter_position(i)  
+            update_emitter_position(i, power, azimuth, unit_id)  
             update_audio(general_type, type, signal, power)
 
             local band, radar_gain = get_radar_band(general_type, type)
@@ -329,10 +384,10 @@ function update()
 
             if line_type ~= nil then
 
-                power = (emitter_pos[i].r + math.random() * 0.1) * radar_gain
-
-                if should_draw(i) then
-                    rwr_api:set(emitter_pos[i].a + math.random() * 0.05, power, line_type)
+                
+                power = (emitter_pos[i].r + get_power_variation()) * radar_gain
+                if should_draw(signal, raw_unit_type, band) then
+                    rwr_api:set(emitter_pos[i].a + get_azimuth_variation(), power, line_type)
                 end
             end
 
@@ -348,10 +403,10 @@ function update()
 end
 
 function bit(band)
-    rwr_api:set(math.rad(45), 0.8, band)
-    rwr_api:set(math.rad(135), 0.8, band)
-    rwr_api:set(math.rad(225), 0.8, band)
-    rwr_api:set(math.rad(315), 0.8, band)
+    rwr_api:set(math.rad(45)  + get_azimuth_variation(), 0.8  + get_power_variation(), band)
+    rwr_api:set(math.rad(135) + get_azimuth_variation(), 0.8  + get_power_variation(), band)
+    rwr_api:set(math.rad(225) + get_azimuth_variation(), 0.8  + get_power_variation(), band)
+    rwr_api:set(math.rad(315) + get_azimuth_variation(), 0.8  + get_power_variation(), band)
 end
 
 function bit_i_band()

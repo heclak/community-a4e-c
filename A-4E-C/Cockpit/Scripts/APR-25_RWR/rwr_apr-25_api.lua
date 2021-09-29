@@ -60,12 +60,17 @@ rwr_api = {
     lines_used = 0,
     line_settings = {
         [SOLID] = {gap = nil, length = nil},
-        [DASHED] = {gap = 0.05, length = 0.75},
+        [DASHED] = {gap = 0.04, length = 0.08},
         [DOTTED] = {gap = 0.04, length = 0.04 },
     }
 }
 
 function rwr_api:get(i, item)
+    
+    if self.contacts[i] == nil then
+        print_message_to_user(i)
+    end
+    
     return self.contacts[i][item]:get()
 end
 
