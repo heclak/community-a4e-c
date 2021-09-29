@@ -28,7 +28,7 @@ function Sound_Player.new(sndhost, sound_file, param, type, min_speed, max_speed
     self.fade = fade or 0.0
     self.volume = 0.0
     self.airspeed_param = get_param_handle("FM_AIRSPEED")
-    self.volume_param = volume_param
+    self.volume_param = get_param_handle(volume_param)
 
     --self.update_fnc = nil
 

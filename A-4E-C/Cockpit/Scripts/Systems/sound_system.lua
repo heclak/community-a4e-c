@@ -287,8 +287,17 @@ function post_initialize()
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsSpeedbrakeMove", "SND_CONT_HYD_MOV", SOUND_CONTINUOUS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsSpeedbrakeStop", "SND_INST_HYD_STOP", SOUND_ONCE),
 
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/obsttone", "D_GLARE_OBST", SOUND_CONTINUOUS, nil, nil, nil, nil, "APG53_OBST_VOLUME")
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/obsttone", "D_GLARE_OBST", SOUND_CONTINUOUS, nil, nil, nil, nil, "APG53_OBST_VOLUME"),
 
+
+        --APR-25 RWR SOUNDS
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-rwr-hum-loop",          "RWR_BACK_GROUND", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-rwr-e-sam-lo-loop",     "RWR_FAN_SONG_TROUGH_E_HI", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-rwr-e-sam-hi-loop",     "RWR_FAN_SONG_TROUGH_E_LO", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-rwr-aaa-lo-loop",       "RWR_FAN_SONG_TROUGH_G_LO", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-rwr-aaa-hi-loop",       "RWR_FAN_SONG_LORO_G", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-rwr-i-sam-lo-loop",     "RWR_LOW_BLOW_LO", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-rwr-ai-loop",           "RWR_AI_GENERAL", SOUND_ALWAYS),
     }
 
     -- initialise sounds

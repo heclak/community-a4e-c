@@ -47,6 +47,7 @@ devices["NVG"]              = counter()
 devices["EFM_DATA_BUS"]	  = counter()
 devices["MCL"]			  = counter()
 devices["ADI_AJB3A"]	  = counter()
+devices["RWR_APR25"]	  = counter()
 
 -- temporary dummy devices
 devices["TEMP1"]            = counter()
