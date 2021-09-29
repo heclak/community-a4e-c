@@ -19,7 +19,7 @@ materials["RADAR_SCALE_FILTER"] = {255,0,0,255}
 materials["RADAR_SCRIBE"] = blob_color--{0, 192, 0, 128} -- temporary, to be overridden in 2.1
 materials["GUNSIGHT_GLASS"] = {0, 120, 0, 128}
 materials["GUNSIGHT_COLOR"] = {255, 48, 0, 255}
-materials["RWR_CONTACT"] = {0,255,0,255}
+materials["RWR_CONTACT"] = {192, 255, 8, 255}
 
 
 local IndicationTexturesPath = LockOn_Options.script_path.."../Resources/IndicationTextures/"

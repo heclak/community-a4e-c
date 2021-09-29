@@ -2,18 +2,9 @@ dofile(LockOn_Options.common_script_path.."elements_defs.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 
 -- set color values are r, g, b, a, with a min-max of 0, 255
-local draw_background           = MakeMaterial("arcade.tga", {0, 50, 0, 255})
-local draw_strength             = MakeMaterial("arcade.tga", {0, 255, 0, 255})
-local draw_contact              = MakeMaterial("arcade.tga", {0, 255, 100, 255})
-local draw_transparent          = MakeMaterial("arcade.tga", {0, 0, 0, 0})
-local draw_percentile           = MakeMaterial("arcade.tga", {255, 0, 0, 32})
-local draw_percentile_strong    = MakeMaterial("arcade.tga", {255, 0, 0, 128})
-local draw_axis                 = MakeMaterial("arcade.tga", {255, 0, 0, 255})
-local draw_hidden               = MakeMaterial("arcade.tga", {255, 0, 0, 0})
-local draw_input                = MakeMaterial("arcade.tga", {255, 255, 0, 255})
-local draw_indicator            = MakeMaterial("arcade.tga", {255, 0, 0, 255})
-local draw_gear                 = MakeMaterial("arcade.tga", {255, 0, 0, 255})
-local draw_debug                = MakeMaterial("arcade.tga", {0, 255, 255, 255})
+local draw_background           = MakeMaterial("arcade.tga", {2, 24, 1, 255})
+local draw_strength             = MakeMaterial("arcade.tga", {48, 64, 32, 255})
+-- materials.lua has the contact colour
 
 local draw_on                   = MakeMaterial("arcade.tga", {128, 0, 0, 255})
 local draw_off                  = MakeMaterial("arcade.tga", {255, 0, 0, 255})
