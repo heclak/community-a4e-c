@@ -587,4 +587,7 @@ device_commands =
     seat_adjustment         = __counter(),
 
     fuel_transfer_bypass    = __counter(),
+    new_apr25_power = __counter(),
+    new_apr25_sound_on = __counter(),
+    new_apr25_volume = __counter(),
 }

@@ -208,7 +208,7 @@ function post_initialize()
 end
 ---------------------------------
 function SetCommand(command,value)
-	--	print_message_to_user(command .. " / " ..value)
+		--print_message_to_user(command .. " / " ..value)
 	
 	-----------------
 	-- keys
@@ -265,6 +265,7 @@ function SetCommand(command,value)
 	-----------------
 	if command == device_commands.ecm_apr25_off then
 		rwr_apr25_power = value
+		dispatch_action(devices.RWR_APR25, device_commands.new_apr25_power, value)
 		
 	-- APR-25/ALQ audio toggle switch
 	elseif command == device_commands.ecm_apr25_audio then
@@ -276,6 +277,7 @@ function SetCommand(command,value)
 		-- elseif rwr_apr25_alq_audio == 0 then -- APR-25
 		-- 	prf_audio_state = 1
 		-- end
+		dispatch_action(devices.RWR_APR25, device_commands.new_apr25_sound_on, value)
 			
 	-- APR-27 Power Toggle Switch
 	elseif command == device_commands.ecm_apr27_off then
@@ -285,6 +287,7 @@ function SetCommand(command,value)
 	elseif command == device_commands.ecm_msl_alert_axis_inner then
 		volume_prf = LinearTodB(((round(value/0.8,2))+1	)*0.5)
 		volume_prf_pos = value
+		dispatch_action(devices.RWR_APR25, device_commands.new_apr25_volume, value)
 	
 	-- MSL Volume Knob			
 	elseif command == device_commands.ecm_msl_alert_axis_outer then
