@@ -89,6 +89,7 @@ creators[devices.EFM_DATA_BUS]		= {"avLuaDevice", LockOn_Options.script_path.."E
 creators[devices.MCL]             = {"avLuaDevice", LockOn_Options.script_path.."Nav/ara63_mcl.lua"}
 creators[devices.ADI_AJB3A]       = {"avLuaDevice", LockOn_Options.script_path.."Systems/adi_ajb3a.lua"}
 creators[devices.NVG_CONTROLS]       = {"avLuaDevice", LockOn_Options.script_path.."HELMET/NVG_Controls.lua"}
+creators[devices.RWR_APR25]       = {"avLuaDevice"           ,LockOn_Options.script_path.."APR-25_RWR/rwr_apr-25.lua"}
 
 -- creators[devices.TEST]        = {"avLuaDevice"                        ,LockOn_Options.script_path.."test_device.lua"}
 -- creators[devices.ADI]         = {"avBaseIKP"                          ,LockOn_Options.script_path.."adi.lua"}
@@ -106,6 +107,9 @@ creators[devices.NVG_CONTROLS]       = {"avLuaDevice", LockOn_Options.script_pat
 -- creators[devices.NAV_TERRAIN] = {"avLuaDevice"                        ,LockOn_Options.script_path.."Nav/terrainmask.lua"}
 
 -- Indicators
+
+tmp_tpl = {sz_I = 0.0, sx_I = 1.0, sy_I = 0.0, rz_I = 0.0, ry_I =0.0}
+
 indicators                  = {}
 indicators[#indicators + 1] = {"ccIndicator" ,            LockOn_Options.script_path.."HUD/Indicator/init.lua"      ,                 nil, {{"PNT_HUD_CENTER"  ,"PNT_HUD_DOWN"  ,"PNT_HUD_RIGHT"}}}
 indicators[#indicators + 1] = {"ccIndicator" ,            LockOn_Options.script_path.."HUD/Indicator/init_debug.lua",                 nil, {{"PNT_RADAR_CENTER","PNT_RADAR_DOWN","PNT_RADAR_RIGHT"}}} -- debug
@@ -113,6 +117,11 @@ indicators[#indicators + 1] = {"ccIndicator" ,            LockOn_Options.script_
 indicators[#indicators + 1] = {"ccControlsIndicatorBase", LockOn_Options.script_path.."ControlsIndicator/ControlsIndicator.lua",      nil}
 indicators[#indicators + 1] = {"ccIndicator" ,            LockOn_Options.script_path.."AN_ARC51/indicator/frequency_labels_init.lua", nil, {{"PNT_RADIO_CENTER","PNT_RADIO_DOWN","PNT_RADIO_RIGHT"}}}
 
+
+indicators[#indicators + 1] = {"ccIndicator",
+                               LockOn_Options.script_path.."APR-25_RWR/Indicators/Indicator.lua",
+                               nil,
+                               {{},{sx = -0.395, sy = -0.46, sz = 0.234, rz = -9}}}
 --RADAROFF indicators[#indicators + 1] = {"ccIndicator",LockOn_Options.script_path.."RADAR/Indicator/init.lua",--init script
 --RADAROFF   nil,--id of parent device
 --RADAROFF   {
