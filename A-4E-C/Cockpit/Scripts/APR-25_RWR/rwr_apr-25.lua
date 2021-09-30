@@ -58,12 +58,18 @@ emitter_info = {}
 
 
 emitter_default_sounds = {
-    [GENERAL_TYPE_EWR] = nil,
+    [GENERAL_TYPE_EWR] = {
+        [SIGNAL_SEARCH] = get_param_handle("RWR_EWR_GENERAL"),
+    },
     [GENERAL_TYPE_AIRCRAFT] = {
         [SIGNAL_SEARCH] = get_param_handle("RWR_AI_GENERAL"),
     },
-    [GENERAL_TYPE_SURFACE] = nil,
-    [GENERAL_TYPE_SHIP] = nil,
+    [GENERAL_TYPE_SURFACE] = nil, = {
+        [SIGNAL_SEARCH] = get_param_handle("RWR_SURFACE_GENERAL"),
+    },
+    [GENERAL_TYPE_SHIP] = nil, = {
+        [SIGNAL_SEARCH] = get_param_handle("RWR_SHIP_GENERAL"),
+    },
 }
 
 function add_emitter(name, band, gain, search, lock, launch)
