@@ -289,19 +289,23 @@ function post_initialize()
 
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/obsttone", "D_GLARE_OBST", SOUND_CONTINUOUS, nil, nil, nil, nil, "APG53_OBST_VOLUME"),
 
-
         --APR-25 RWR SOUNDS
+        -- system sounds
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-rwr-hum-loop",              "RWR_BACK_GROUND", SOUND_ALWAYS),
+        -- generics
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_ewr_lo",             "RWR_EWR_LO", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_surface_lo",         "RWR_SURFACE_LO", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_surface_hi",         "RWR_SURFACE_HI", SOUND_ALWAYS)
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_ship_lo",            "RWR_SHIP_LO", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_ship_hi",            "RWR_SHIP_HI", SOUND_ALWAYS)
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_ai_default",         "RWR_AI_GENERAL", SOUND_ALWAYS),
+        -- specific radars
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_sam_fansong_e_lo",   "RWR_FAN_SONG_TROUGH_E_LO", SOUND_ALWAYS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_sam_fansong_e_hi",   "RWR_FAN_SONG_TROUGH_E_HI", SOUND_ALWAYS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_sam_fansong_g_lo",   "RWR_FAN_SONG_TROUGH_G_LO", SOUND_ALWAYS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_sam_fansong_g_hi",   "RWR_FAN_SONG_TROUGH_G_HI", SOUND_ALWAYS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-rwr-aaa-hi-loop",           "RWR_FAN_SONG_LORO_G", SOUND_ALWAYS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-rwr-i-sam-lo-loop",         "RWR_LOW_BLOW_LO", SOUND_ALWAYS),
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_ai_default",         "RWR_AI_GENERAL", SOUND_ALWAYS),
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_ship_lo",            "RWR_SHIP_LO", SOUND_ALWAYS),
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_ship_hi",            "RWR_SHIP_HI", SOUND_ALWAYS)
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_ewr_lo",             "RWR_EWR_LO", SOUND_ALWAYS),
     }
 
     -- initialise sounds
