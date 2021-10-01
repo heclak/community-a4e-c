@@ -154,7 +154,7 @@ function update_emitter_position(i, r, a, unit_id, unit_type)
             r = r,
             a = a,
         }
-        print_message_to_user(tostring(unit_type).." "..tostring(r).." "..tostring(a))
+        print_message_to_user(rwr_api:get(i, "unit_type").." ("..rwr_api:get(i, "general_type").."), "..tostring(r)..", "..tostring(a))
     else
         local x1 = emitter_pos[i].r * math.cos(emitter_pos[i].a)
         local y1 = emitter_pos[i].r * math.sin(emitter_pos[i].a)
