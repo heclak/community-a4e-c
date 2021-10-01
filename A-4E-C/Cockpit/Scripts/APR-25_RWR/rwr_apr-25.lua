@@ -78,15 +78,72 @@ function add_emitter(name, band, gain, search, lock, launch)
     }
 end
 
---UNIT LIST: https://github.com/pydcs/dcs/blob/master/dcs/vehicles.py
-
 add_emitter("ZSU-23-4 Shilka",      E_BAND_RADAR,       0.7)                                                                                --SPAAA ZSU-23-4 Shilka "Gun Dish"
 --SA-2     ("SNR_75V")                                                                                                                      --SAM SA-2 S-75 "Fan Song" TR variants
 add_emitter("SNR_75VE",             E_BAND_RADAR,       1.0, "RWR_FAN_SONG_TROUGH_E_LO", "RWR_FAN_SONG_TROUGH_E_HI")                        --SAM SA-2 E (see below)
 add_emitter("SNR_75VG",             G_BAND_RADAR,       1.0, "RWR_FAN_SONG_TROUGH_G_LO", "RWR_FAN_SONG_TROUGH_E_HI", "RWR_FAN_SONG_LORO_G") --SAM SA-2 G (see below)
 add_emitter("snr s-125 tr",         E_BAND_RADAR,       1.0, "RWR_LOW_BLOW_LO")                                                             --SAM SA-3 S-125 "Low Blow" TR
---add_emitter("RLS_19J6",             I_BAND_RADAR,       1.0, "RWR_SA5_LO")                                                                  --SAM SA-5 S-200 ST-68U "Tin Shield" SR
 add_emitter("RPC_5N62V",            I_BAND_RADAR,       1.0, "RWR_SA5_LO", "RWR_SA5_HI")                                                    --SAM SA-5 S-200 "Square Pair" TR
+
+--UNIT LIST: https://github.com/pydcs/dcs/blob/master/dcs/vehicles.py
+
+----------------------------------------------------------------------
+--VEHICLES
+----------------------------------------------------------------------
+--1L13 EWR                      --EWR 1L13
+--55G6 EWR                      --EWR 55G6
+--Dog Ear radar                 --MCC-SR Sborka "Dog Ear" SR
+--M1097 Avenger                 --SAM Avenger (Stinger)
+--M48 Chaparral                 --SAM Chaparral M48
+--Hawk cwar                     --SAM Hawk CWAR AN/MPQ-55
+--Hawk tr                       --SAM Hawk TR (AN/MPQ-46)
+--Hawk sr                       --SAM Hawk SR (AN/MPQ-50)
+--M6 Linebacker                 --SAM Linebacker - Bradley M6
+--p-19 s-125 sr                 --SAM SA-2/3/5 P19 "Flat Face" SR 
+--RLS_19J6                      --SAM SA-5 S-200 ST-68U "Tin Shield" SR
+--Kub 1S91 str                  --SAM SA-6 Kub "Straight Flush" STR
+--Kub 2P25 ln                   --SAM SA-6 Kub "Gainful" TEL
+--Osa 9A33 ln                   --SAM SA-8 Osa "Gecko" TEL
+--Strela-1 9P31                 --SAM SA-9 Strela 1 "Gaskin" TEL
+--S-300PS 40B6MD sr             --SAM SA-10 S-300 "Grumble" Clam Shell SR
+--S-300PS 64H6E s               --SAM SA-10 S-300 "Grumble" Big Bird SR 
+--S-300PS 40B6M tr              --SAM SA-10 S-300 "Grumble" Flap Lid TR 
+--SA-11 Buk SR 9S18M1           --SAM SA-11 Buk "Gadfly" Snow Drift SR
+--SA-11 Buk LN 9A310M1          --SAM SA-11 Buk "Gadfly" Fire Dome TEL
+--Strela-10M3                   --SAM SA-13 Strela 10M3 "Gopher" TEL
+--Tor 9A331                     --SAM SA-15 Tor "Gauntlet"
+--2S6 Tunguska                  --SAM SA-19 Tunguska "Grison" 
+--Roland Radar                  --SAM Roland EWR
+--NASAMS_Radar_MPQ64F1          --SAM NASAMS SR MPQ64F1
+--rapier_fsa_blindfire_radar    --SAM Rapier Blindfire TR
+--Gepard                        --SPAAA Gepard
+--Vulcan                        --SPAAA Vulcan M163
+
+----------------------------------------------------------------------
+--SHIPS
+----------------------------------------------------------------------
+--PIOTR                         --Battlecruiser 1144.2 Pyotr Velikiy
+--TICONDEROG                    --CG Ticonderoga
+--ALBATROS                      --Corvette 1124.4 Grisha
+--MOLNIYA                       --Corvette 1241.1 Molniya
+--MOSCOW                        --Cruiser 1164 Moskva
+--KUZNECOW                      --CV 1143.5 Admiral Kuznetsov
+--CV_1143_5                     --CV 1143.5 Admiral Kuznetsov(2017)
+--VINSON                        --CVN-70 Carl Vinson
+--CVN_71                        --CVN-71 Theodore Roosevelt
+--CVN_72                        --CVN-72 Abraham Lincoln
+--Stennis                       --CVN-74 John C. Stennis
+--CVN_73                        --CVN-73 George Washington 
+--CVN_75                        --CVN-75 Harry S. Truman
+--USS_Arleigh_Burke_IIa         --DDG Arleigh Burke IIa
+--La_Combattante_II             --FAC La Combattante IIa
+--PERRY                         --FFG Oliver Hazard Perry
+--REZKY                         --Frigate 1135M Rezky
+--NEUSTRASH                     --Frigate 11540 Neustrashimy
+--LHA_Tarawa                    --LHA-1 Tarawa
+--Type_052B                     --Type 052B Destroyer
+--Type_054A                     --Type 054A Frigate
+--Type_052C                     --Type 052C Destroyer
 
 band_map = {
     [I_BAND_RADAR] = DASHED,
