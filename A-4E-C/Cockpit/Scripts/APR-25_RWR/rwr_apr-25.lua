@@ -78,11 +78,15 @@ function add_emitter(name, band, gain, search, lock, launch)
     }
 end
 
-add_emitter("ZSU-23-4 Shilka",      E_BAND_RADAR,       0.7)
-add_emitter("SNR_75VE",             E_BAND_RADAR,       1.0, "RWR_FAN_SONG_TROUGH_E_LO", "RWR_FAN_SONG_TROUGH_E_HI")
-add_emitter("SNR_75VG",             G_BAND_RADAR,       1.0, "RWR_FAN_SONG_TROUGH_G_LO", "RWR_FAN_SONG_TROUGH_E_HI", "RWR_FAN_SONG_LORO_G")
-add_emitter("snr s-125 tr",         E_BAND_RADAR,       1.0, "RWR_LOW_BLOW_LO")
-add_emitter("SA5V28",               I_BAND_RADAR,       1.0, "RWR_SA5_LO", "RWR_SA5_HI")
+--UNIT LIST: https://github.com/pydcs/dcs/blob/master/dcs/vehicles.py
+
+add_emitter("ZSU-23-4 Shilka",      E_BAND_RADAR,       0.7)                                                                                --SPAAA ZSU-23-4 Shilka "Gun Dish"
+--SA-2     ("SNR_75V")                                                                                                                      --SAM SA-2 S-75 "Fan Song" TR variants
+add_emitter("SNR_75VE",             E_BAND_RADAR,       1.0, "RWR_FAN_SONG_TROUGH_E_LO", "RWR_FAN_SONG_TROUGH_E_HI")                        --SAM SA-2 E (see below)
+add_emitter("SNR_75VG",             G_BAND_RADAR,       1.0, "RWR_FAN_SONG_TROUGH_G_LO", "RWR_FAN_SONG_TROUGH_E_HI", "RWR_FAN_SONG_LORO_G") --SAM SA-2 G (see below)
+add_emitter("snr s-125 tr",         E_BAND_RADAR,       1.0, "RWR_LOW_BLOW_LO")                                                             --SAM SA-3 S-125 "Low Blow" TR
+--add_emitter("RLS_19J6",             I_BAND_RADAR,       1.0, "RWR_SA5_LO")                                                                  --SAM SA-5 S-200 ST-68U "Tin Shield" SR
+add_emitter("RPC_5N62V",            I_BAND_RADAR,       1.0, "RWR_SA5_LO", "RWR_SA5_HI")                                                    --SAM SA-5 S-200 "Square Pair" TR
 
 band_map = {
     [I_BAND_RADAR] = DASHED,
@@ -122,7 +126,7 @@ function SetCommand(command, value)
 end
 
 function post_initialize()
-    print_message_to_user("HELLO")
+    print_message_to_user("APR-25 RWR INIT")
 end
 
 function get_fan_song_variant(unit_id)
