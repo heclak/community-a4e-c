@@ -4,7 +4,6 @@ dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."APR-25_RWR/rwr_apr-25_api.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 
-
 local dev = GetSelf()
 local update_time_step = 0.05
 make_default_activity(update_time_step)
@@ -18,7 +17,7 @@ NO_BAND = 0
 I_BAND_RADAR = 1
 G_BAND_RADAR = 2
 E_BAND_RADAR = 3
-
+H_BAND_RADAR = 4
 
 local apr25_power = false
 
@@ -27,14 +26,12 @@ local apr25_band_enabled = {
     [I_BAND_RADAR] = true,
     [G_BAND_RADAR] = true,
     [E_BAND_RADAR] = true,
+    [H_BAND_RADAR] = true,
 }
 
 local apr25_aaa_defeat = false
 local apr25_audio = false
 local apr25_volume = 0.1
-
-
-
 
 --Signal
 SIGNAL_SEARCH = 1
@@ -52,10 +49,7 @@ GENERAL_TYPE_SHIP = 3
 --priority some abstract priority number on the order of hundreds
 --time is time since the last recieved signal.
 
-
-
 emitter_info = {}
-
 
 emitter_default_sounds = {
     [GENERAL_TYPE_EWR] = {
@@ -64,11 +58,11 @@ emitter_default_sounds = {
     [GENERAL_TYPE_AIRCRAFT] = {
         [SIGNAL_SEARCH] = get_param_handle("RWR_AI_GENERAL"),
     },
-    [GENERAL_TYPE_SURFACE] = nil, = {
+    [GENERAL_TYPE_SURFACE] = {
         [SIGNAL_SEARCH] = get_param_handle("RWR_SURFACE_LO"),
         [SIGNAL_LOCK] = get_param_handle("RWR_SURFACE_HI"),
     },
-    [GENERAL_TYPE_SHIP] = nil, = {
+    [GENERAL_TYPE_SHIP] = {
         [SIGNAL_SEARCH] = get_param_handle("RWR_SHIP_LO"),
         [SIGNAL_LOCK] = get_param_handle("RWR_SHIP_HI"),
     },
@@ -91,24 +85,18 @@ add_emitter("SNR_75VE",             E_BAND_RADAR,       1.0, "RWR_FAN_SONG_TROUG
 add_emitter("SNR_75VG",             G_BAND_RADAR,       1.0, "RWR_FAN_SONG_TROUGH_G_LO", "RWR_FAN_SONG_TROUGH_E_HI", "RWR_FAN_SONG_LORO_G")
 add_emitter("snr s-125 tr",         E_BAND_RADAR,       1.0, "RWR_LOW_BLOW_LO")
 
-
-
 band_map = {
     [I_BAND_RADAR] = DASHED,
     [G_BAND_RADAR] = DOTTED,
     [E_BAND_RADAR] = SOLID,
+    [H_BAND_RADAR] = SOLID,
 }
 
-fan_song_variant = {
+fan_song_variant = {}
 
-}
-
-emitter_pos = {
-
-}
+emitter_pos = {}
 
 launch_timers = {}
-
 
 function new_apr25_power(value)
     apr25_power = (value == 1.0)
@@ -139,16 +127,12 @@ function post_initialize()
     print_message_to_user("HELLO")
 end
 
-
-
-
 function get_fan_song_variant(unit_id)
     if fan_song_variant[unit_id] == nil then
         local number = math.mod(math.floor(unit_id / 256.0), 10)
         
         fan_song_variant[unit_id] = number > 3 and "E" or "G"
     end
-
     return fan_song_variant[unit_id]
 end
 
@@ -156,7 +140,6 @@ function get_unit_type(unit_type, unit_id)
     if unit_type == "SNR_75V" then
         unit_type = unit_type .. get_fan_song_variant(unit_id)
     end
-
     return unit_type
 end
 
@@ -172,11 +155,8 @@ function update_emitter_position(i, r, a, unit_id)
             r = r,
             a = a,
         }
-
         print_message_to_user(tostring(r).." "..tostring(a))
     else
-
-
         local x1 = emitter_pos[i].r * math.cos(emitter_pos[i].a)
         local y1 = emitter_pos[i].r * math.sin(emitter_pos[i].a)
 
@@ -189,19 +169,14 @@ function update_emitter_position(i, r, a, unit_id)
         emitter_pos[i].r = math.sqrt(x3*x3 + y3*y3)
         emitter_pos[i].a = math.atan2(y3, x3)
 
-
-
-
         --emitter_pos[i].r = emitter_pos[i].r + (r - emitter_pos[i].r) * update_time_step
 
         --local delta = math.pi - math.abs(math.fmod(a - emitter_pos[i].a, 2.0 * math.pi))
         --emitter_pos[i].a = emitter_pos[i].a + delta * update_time_step
     end
-
 end
 
 function update_lights(i)
-
 
 end
 
@@ -217,8 +192,6 @@ end
 
 function get_default(general_type, signal, power)
 
-
-
 end
 
 function reset_audio()
@@ -233,7 +206,6 @@ function reset_audio()
             end
         end
     end
-
 
     for i1,v1 in pairs(emitter_info) do
         for i2,v2 in ipairs(v1.audio) do
@@ -275,7 +247,7 @@ function get_radar_band(general_type, type)
     end
 
     local info = emitter_info[type]
-    --print_message_to_user(tostring(unit)..tostring(info.band))
+    print_message_to_user(tostring(unit)..tostring(info.band))
 
     if info ~= nil then
         return info.band, info.gain
@@ -283,8 +255,6 @@ function get_radar_band(general_type, type)
 
     return NO_BAND, 1.0
 end
-
-
 
 function should_draw(signal, raw_unit_type, band)
 
@@ -313,9 +283,6 @@ function should_draw(signal, raw_unit_type, band)
 
     return false
 end
-
-
-
 
 function get_power_variation()
     return math.random() * 0.1
@@ -367,12 +334,9 @@ function update()
         return
     end
     
-    
-
     --bit_i_band()
 
     for i=1, num_contacts do
-
 
         local power = rwr_api:get(i, "power")
         if power > 0.0 and rwr_api:get(i, "time") < 3.0 then
@@ -392,22 +356,15 @@ function update()
 
             if line_type ~= nil then
 
-                
                 power = (emitter_pos[i].r + get_power_variation()) * radar_gain
                 if should_draw(signal, raw_unit_type, band) then
                     rwr_api:set(emitter_pos[i].a + get_azimuth_variation(), power, line_type)
                 end
             end
-
-
         else
             reset_emitter_position(i)
         end
-
     end
-
-    
-
 end
 
 function bit(band)

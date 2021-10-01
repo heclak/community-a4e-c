@@ -311,6 +311,8 @@ function post_initialize()
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_sam_fansong_g_hi",   "RWR_FAN_SONG_TROUGH_G_HI", SOUND_ALWAYS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-rwr-aaa-hi-loop",           "RWR_FAN_SONG_LORO_G", SOUND_ALWAYS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-rwr-i-sam-lo-loop",         "RWR_LOW_BLOW_LO", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa5_h_lo",       "RWR_SA5_LO", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa5_h_hi",       "RWR_SA5_HI", SOUND_ALWAYS),
     }
 
     -- initialise sounds
