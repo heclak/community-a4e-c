@@ -17,7 +17,6 @@ NO_BAND = 0
 I_BAND_RADAR = 1
 G_BAND_RADAR = 2
 E_BAND_RADAR = 3
-H_BAND_RADAR = 4
 
 local apr25_power = false
 
@@ -26,7 +25,6 @@ local apr25_band_enabled = {
     [I_BAND_RADAR] = true,
     [G_BAND_RADAR] = true,
     [E_BAND_RADAR] = true,
-    [H_BAND_RADAR] = true,
 }
 
 local apr25_aaa_defeat = false
@@ -84,12 +82,12 @@ add_emitter("ZSU-23-4 Shilka",      E_BAND_RADAR,       0.7)
 add_emitter("SNR_75VE",             E_BAND_RADAR,       1.0, "RWR_FAN_SONG_TROUGH_E_LO", "RWR_FAN_SONG_TROUGH_E_HI")
 add_emitter("SNR_75VG",             G_BAND_RADAR,       1.0, "RWR_FAN_SONG_TROUGH_G_LO", "RWR_FAN_SONG_TROUGH_E_HI", "RWR_FAN_SONG_LORO_G")
 add_emitter("snr s-125 tr",         E_BAND_RADAR,       1.0, "RWR_LOW_BLOW_LO")
+add_emitter("SA5V28",               I_BAND_RADAR,       1.0, "RWR_SA5_LO", "RWR_SA5_HI")
 
 band_map = {
     [I_BAND_RADAR] = DASHED,
     [G_BAND_RADAR] = DOTTED,
     [E_BAND_RADAR] = SOLID,
-    [H_BAND_RADAR] = SOLID,
 }
 
 fan_song_variant = {}
@@ -147,15 +145,16 @@ function reset_emitter_position(i)
     emitter_pos[i] = { unit_id = nil, r = 0, a= 0 }
 end
 
-function update_emitter_position(i, r, a, unit_id)
+function update_emitter_position(i, r, a, unit_id, unit_type)
 
     if emitter_pos[i] == nil or emitter_pos[i].unit_id ~= unit_id then
         emitter_pos[i] = {
+            unit_type = unit_type,
             unit_id = unit_id,
             r = r,
             a = a,
         }
-        print_message_to_user(tostring(r).." "..tostring(a))
+        print_message_to_user(tostring(unit_type).." "..tostring(r).." "..tostring(a))
     else
         local x1 = emitter_pos[i].r * math.cos(emitter_pos[i].a)
         local y1 = emitter_pos[i].r * math.sin(emitter_pos[i].a)
@@ -269,7 +268,6 @@ function should_draw(signal, raw_unit_type, band)
     if raw_unit_type ~= "SNR_75V" then
         return true
     end
-
 
     if launch_timers[i] == nil or launch_timers[i] <= 0.0 then
         launch_timers[i] = 0.3
