@@ -59,16 +59,18 @@ emitter_info = {}
 
 emitter_default_sounds = {
     [GENERAL_TYPE_EWR] = {
-        [SIGNAL_SEARCH] = get_param_handle("RWR_EWR_GENERAL"),
+        [SIGNAL_SEARCH] = get_param_handle("RWR_EWR_LO"),
     },
     [GENERAL_TYPE_AIRCRAFT] = {
         [SIGNAL_SEARCH] = get_param_handle("RWR_AI_GENERAL"),
     },
     [GENERAL_TYPE_SURFACE] = nil, = {
-        [SIGNAL_SEARCH] = get_param_handle("RWR_SURFACE_GENERAL"),
+        [SIGNAL_SEARCH] = get_param_handle("RWR_SURFACE_LO"),
+        [SIGNAL_LOCK] = get_param_handle("RWR_SURFACE_HI"),
     },
     [GENERAL_TYPE_SHIP] = nil, = {
-        [SIGNAL_SEARCH] = get_param_handle("RWR_SHIP_GENERAL"),
+        [SIGNAL_SEARCH] = get_param_handle("RWR_SHIP_LO"),
+        [SIGNAL_LOCK] = get_param_handle("RWR_SHIP_HI"),
     },
 }
 
