@@ -145,11 +145,10 @@ function reset_emitter_position(i)
     emitter_pos[i] = { unit_id = nil, r = 0, a= 0 }
 end
 
-function update_emitter_position(i, r, a, unit_id, unit_type)
+function update_emitter_position(i, r, a, unit_id)
 
     if emitter_pos[i] == nil or emitter_pos[i].unit_id ~= unit_id then
         emitter_pos[i] = {
-            unit_type = unit_type,
             unit_id = unit_id,
             r = r,
             a = a,
@@ -246,7 +245,7 @@ function get_radar_band(general_type, type)
     end
 
     local info = emitter_info[type]
-    print_message_to_user(tostring(unit)..tostring(info.band))
+    --print_message_to_user(tostring(unit)..tostring(info.band))
 
     if info ~= nil then
         return info.band, info.gain
