@@ -78,17 +78,17 @@ function add_emitter(name, band, gain, search, lock, launch)
     }
 end
 
-add_emitter("ZSU-23-4 Shilka",      E_BAND_RADAR,       0.7)                                                                                --SPAAA ZSU-23-4 Shilka "Gun Dish"
---SA-2     ("SNR_75V")                                                                                                                      --SAM SA-2 S-75 "Fan Song" TR variants
-add_emitter("SNR_75VE",             E_BAND_RADAR,       1.0, "RWR_FAN_SONG_TROUGH_E_LO", "RWR_FAN_SONG_TROUGH_E_HI")                        --SAM SA-2 E (see below)
-add_emitter("SNR_75VG",             G_BAND_RADAR,       1.0, "RWR_FAN_SONG_TROUGH_G_LO", "RWR_FAN_SONG_TROUGH_E_HI", "RWR_FAN_SONG_LORO_G") --SAM SA-2 G (see below)
-add_emitter("snr s-125 tr",         E_BAND_RADAR,       1.0, "RWR_LOW_BLOW_LO")                                                             --SAM SA-3 S-125 "Low Blow" TR
-add_emitter("RPC_5N62V",            I_BAND_RADAR,       1.0, "RWR_SA5_LO", "RWR_SA5_HI")                                                    --SAM SA-5 S-200 "Square Pair" TR
+add_emitter("ZSU-23-4 Shilka",   E_BAND_RADAR,  0.7)                                                                                --SPAAA ZSU-23-4 Shilka "Gun Dish"
+--         ("SNR_75V")                                                                                                              --SAM SA-2 S-75 "Fan Song" TR
+add_emitter("SNR_75VE",          E_BAND_RADAR,  1.0, "RWR_FAN_SONG_TROUGH_E_LO", "RWR_FAN_SONG_TROUGH_E_HI")                        ----E-band (get_fan_song_variant)
+add_emitter("SNR_75VG",          G_BAND_RADAR,  1.0, "RWR_FAN_SONG_TROUGH_G_LO", "RWR_FAN_SONG_TROUGH_E_HI", "RWR_FAN_SONG_LORO_G") ----G-band (get_fan_song_variant)
+add_emitter("snr s-125 tr",      E_BAND_RADAR,  1.0, "RWR_LOW_BLOW_LO")                                                             --SAM SA-3 S-125 "Low Blow" TR
+add_emitter("RPC_5N62V",         I_BAND_RADAR,  1.0, "RWR_SA5_LO", "RWR_SA5_HI")                                                    --SAM SA-5 S-200 "Square Pair" TR
 
 --UNIT LIST: https://github.com/pydcs/dcs/blob/master/dcs/vehicles.py
 
 ----------------------------------------------------------------------
---VEHICLES
+--VEHICLES                      --UNIT NAME
 ----------------------------------------------------------------------
 --1L13 EWR                      --EWR 1L13
 --55G6 EWR                      --EWR 55G6
@@ -120,7 +120,7 @@ add_emitter("RPC_5N62V",            I_BAND_RADAR,       1.0, "RWR_SA5_LO", "RWR_
 --Vulcan                        --SPAAA Vulcan M163
 
 ----------------------------------------------------------------------
---SHIPS
+--SHIPS                         --UNIT NAME
 ----------------------------------------------------------------------
 --PIOTR                         --Battlecruiser 1144.2 Pyotr Velikiy
 --TICONDEROG                    --CG Ticonderoga
