@@ -51,7 +51,7 @@ emitter_info = {}
 
 emitter_default_sounds = {
     [GENERAL_TYPE_EWR] = {
-        [SIGNAL_SEARCH] = get_param_handle("RWR_EWR_LO"), -- 7.5-second low growl pulse
+        [SIGNAL_SEARCH] = get_param_handle("RWR_EWR"), -- 7.5-second low growl pulse
     },
     [GENERAL_TYPE_AIRCRAFT] = {
         [SIGNAL_SEARCH] = get_param_handle("RWR_AI_GENERAL"), -- Solid tone (I-band)
@@ -62,8 +62,8 @@ emitter_default_sounds = {
     [GENERAL_TYPE_SHIP] = {
         --Might be good to produce a few ship variants,
         --since any sound can only be playing once?
-        [SIGNAL_SEARCH] = get_param_handle("RWR_SHIP_LO"), --6.5-second EWR pulse
-        [SIGNAL_LOCK] = get_param_handle("RWR_SHIP_HI"), --Solid tone (E-band)
+        [SIGNAL_SEARCH] = get_param_handle("RWR_SHIP_DEFAULT_LO"), --6.5-second EWR pulse
+        [SIGNAL_LOCK] = get_param_handle("RWR_SHIP_DEFAULT_HI"), --Solid tone (E-band)
     },
 }
 
@@ -98,8 +98,10 @@ end
 --==========================================================================================
 --MCC-SR Sborka "Dog Ear" SR                --Dog Ear radar                 --F/G
 --SAM Hawk SR (AN/MPQ-50)                   --Hawk sr                       --H/I/J
---SAM SA-2/3/5 P19 "Flat Face" SR           --p-19 s-125 sr                 --E/F
---SAM SA-5 S-200 ST-68U "Tin Shield" SR     --RLS_19J6                      --E/F
+--SAM SA-2/3/5 P19 "Flat Face" SR           --p-19 s-125 sr                 --E/F, 12s rotation
+add_emitter("p-19 s-125 sr", E_BAND_RADAR, nil, "RWR_SA2_SEARCH")
+--SAM SA-5 S-200 ST-68U "Tin Shield" SR     --RLS_19J6                      --E/F, 6/12s rotation
+add_emitter("RLS_19J6", E_BAND_RADAR, nil, "RWR_SA5_SEARCH")
 --SAM SA-10 S-300 "Grumble" Clam Shell SR   --S-300PS 40B6MD sr             --E/F
 --SAM SA-10 S-300 "Grumble" Big Bird SR     --S-300PS 64H6E s               --E/F
 --SAM SA-11 Buk "Gadfly" Snow Drift SR      --SA-11 Buk SR 9S18M1           --E
@@ -114,14 +116,14 @@ end
 --SAM Linebacker - Bradley M6               --M6 Linebacker                 --H/I
 --SAM Rapier Blindfire TR                   --rapier_fsa_blindfire_radar    --F
 --SAM SA-2 S-75 "Fan Song" TR               --SNR_75V                       --E/G variants assigned below
-add_emitter("SNR_75VE", E_BAND_RADAR, 1.0, "RWR_FAN_SONG_TROUGH_E_LO", "RWR_FAN_SONG_TROUGH_E_HI")
-add_emitter("SNR_75VG", G_BAND_RADAR, 1.0, "RWR_FAN_SONG_TROUGH_G_LO", "RWR_FAN_SONG_TROUGH_E_HI", "RWR_FAN_SONG_LORO_G")
+--add_emitter("SNR_75VE", E_BAND_RADAR, 1.0, "RWR_SA2_E_LO", "RWR_SA2_E_HI")
+--add_emitter("SNR_75VG", G_BAND_RADAR, 1.0, "RWR_SA2_G_LO", "RWR_SA2_G_LO", "RWR_SA2_G_LAUNCH")
 --SAM SA-3 S-125 "Low Blow" TR              --snr s-125 tr                  --E
-add_emitter("snr s-125 tr", E_BAND_RADAR, 1.0, "RWR_LOW_BLOW_LO")
+add_emitter("snr s-125 tr", E_BAND_RADAR, 1.0, "RWR_SA3_LO")
 --SAM SA-5 S-200 "Square Pair" TR           --RPC_5N62V                     --I
 add_emitter("RPC_5N62V", I_BAND_RADAR, 1.0, "RWR_SA5_LO", "RWR_SA5_HI")
 --SAM SA-6 Kub "Straight Flush" STR         --Kub 1S91 str                  --I
-add_emitter("Kub 1S91 str", I_BAND_RADAR, 1.0, "RWR_SURFACE_LO", "RWR_SURFACE_HI")
+add_emitter("Kub 1S91 str", I_BAND_RADAR, 1.0, "RWR_SA6_LO", "RWR_SA6_HI")
 --SAM SA-8 Osa "Gecko" TEL                  --Osa 9A33 ln                   --I
 --SAM SA-9 Strela 1 "Gaskin" TEL            --Strela-1 9P31                 --E/F
 --SAM SA-10 S-300 "Grumble" Flap Lid TR     --S-300PS 40B6M tr              --H/I/J
@@ -134,11 +136,11 @@ add_emitter("Kub 1S91 str", I_BAND_RADAR, 1.0, "RWR_SURFACE_LO", "RWR_SURFACE_HI
 --VEHICLES                                  --EMITTER ID                    --BAND (NATO)
 --==========================================================================================
 --SPAAA Gepard                              --Gepard                        --E
-add_emitter("Gepard", E_BAND_RADAR, 0.7)
---SPAAA Vulcan M163                         --SPAAA Vulcan M163             --E
-add_emitter("SPAAA Vulcan M163", E_BAND_RADAR, 0.7)
+add_emitter("Gepard", E_BAND_RADAR, 0.7, "RWR_VEHICLE_GEPARD")
+--SPAAA Vulcan M163                         --Vulcan                        --E
+add_emitter("Vulcan", E_BAND_RADAR, 0.7, "RWR_VEHICLE_VULCAN")
 --SPAAA ZSU-23-4 Shilka "Gun Dish"          --ZSU-23-4 Shilka               --E
-add_emitter("ZSU-23-4 Shilka", E_BAND_RADAR, 0.7)
+add_emitter("ZSU-23-4 Shilka", E_BAND_RADAR, 0.7, "RWR_VEHICLE_SHILKA")
 
 --==========================================================================================
 --SHIPS                                     --EMITTER ID                    --BAND (NATO)
