@@ -51,19 +51,19 @@ emitter_info = {}
 
 emitter_default_sounds = {
     [GENERAL_TYPE_EWR] = {
-        [SIGNAL_SEARCH] = get_param_handle("RWR_EWR_LO"),
+        [SIGNAL_SEARCH] = get_param_handle("RWR_EWR_LO"), -- 7.5-second low growl pulse
     },
     [GENERAL_TYPE_AIRCRAFT] = {
-        [SIGNAL_SEARCH] = get_param_handle("RWR_AI_GENERAL"),
+        [SIGNAL_SEARCH] = get_param_handle("RWR_AI_GENERAL"), -- Solid tone (I-band)
     },
     [GENERAL_TYPE_SURFACE] = {
-        --No defaults: they would apply to surface search radar units
+        --No default, creates too many false positives
     },
     [GENERAL_TYPE_SHIP] = {
         --Might be good to produce a few ship variants,
         --since any sound can only be playing once?
-        [SIGNAL_SEARCH] = get_param_handle("RWR_SHIP_LO"),
-        [SIGNAL_LOCK] = get_param_handle("RWR_SHIP_HI"),
+        [SIGNAL_SEARCH] = get_param_handle("RWR_SHIP_LO"), --6.5-second EWR pulse
+        [SIGNAL_LOCK] = get_param_handle("RWR_SHIP_HI"), --Solid tone (E-band)
     },
 }
 
@@ -79,71 +79,69 @@ function add_emitter(name, band, gain, search, lock, launch)
     }
 end
 
---=====================================================================================
+--==========================================================================================
 --UNIT LIST: https://github.com/pydcs/dcs/blob/master/dcs/vehicles.py
---=====================================================================================
 
---=====================================================================================
---EARLY WARNING RADARS                      --EMITTER ID                    --NOTES
---=====================================================================================
+--==========================================================================================
+--EARLY WARNING RADARS                      --EMITTER ID                    --BAND (NATO)
+--==========================================================================================
 --EWR 55G6                                  --55G6 EWR
 --EWR IL13                                  --IL13 EWR
---SAM Roland EWR                            --Roland Radar                  --Reports as Surface
-add_emitter("Roland Radar", nil, nil, "RWR_EWR_LO")
---SAM Hawk CWAR AN/MPQ-55                   --Hawk cwar                     --Reports as Surface
-add_emitter("Hawk cwar", nil, nil, "RWR_EWR_LO")
 
---=====================================================================================
---SEARCH RADARS                             --EMITTER ID                    --NOTES
---=====================================================================================
---MCC-SR Sborka "Dog Ear" SR                --Dog Ear radar                 
---SAM Hawk SR (AN/MPQ-50)                   --Hawk sr
---SAM SA-2/3/5 P19 "Flat Face" SR           --p-19 s-125 sr
---SAM SA-5 S-200 ST-68U "Tin Shield" SR     --RLS_19J6
---SAM SA-10 S-300 "Grumble" Clam Shell SR   --S-300PS 40B6MD sr
---SAM SA-10 S-300 "Grumble" Big Bird SR     --S-300PS 64H6E s
---SAM SA-11 Buk "Gadfly" Snow Drift SR      --SA-11 Buk SR 9S18M1
---SAM NASAMS SR MPQ64F1                     --NASAMS_Radar_MPQ64F1
+--These items report as surface radars, but operate more like EWRs.
+--SAM Roland EWR                            --Roland Radar
+--SAM Hawk CWAR AN/MPQ-55                   --Hawk cwar
 
---=====================================================================================
---TRACKING RADARS                           --EMITTER ID                    --NOTES
---=====================================================================================
---SAM Avenger (Stinger)                     --M1097 Avenger
---SAM Chaparral M48                         --M48 Chaparral                 --D-band
---SAM Hawk TR (AN/MPQ-46)                   --Hawk tr                       --J-band HPIR
---SAM Linebacker - Bradley M6               --M6 Linebacker
---SAM Rapier Blindfire TR                   --rapier_fsa_blindfire_radar    --F-band
---SAM SA-2 S-75 "Fan Song" TR               --SNR_75V                       --E/G-band equipment variants assigned below
+--==========================================================================================
+--SEARCH RADARS                             --EMITTER ID                    --BAND (NATO)
+--==========================================================================================
+--MCC-SR Sborka "Dog Ear" SR                --Dog Ear radar                 --F/G
+--SAM Hawk SR (AN/MPQ-50)                   --Hawk sr                       --H/I/J
+--SAM SA-2/3/5 P19 "Flat Face" SR           --p-19 s-125 sr                 --E/F
+--SAM SA-5 S-200 ST-68U "Tin Shield" SR     --RLS_19J6                      --E/F
+--SAM SA-10 S-300 "Grumble" Clam Shell SR   --S-300PS 40B6MD sr             --E/F
+--SAM SA-10 S-300 "Grumble" Big Bird SR     --S-300PS 64H6E s               --E/F
+--SAM SA-11 Buk "Gadfly" Snow Drift SR      --SA-11 Buk SR 9S18M1           --E
+--SAM NASAMS SR MPQ64F1                     --NASAMS_Radar_MPQ64F1          --H/I
+
+--==========================================================================================
+--TRACKING RADARS                           --EMITTER ID                    --BAND (NATO)
+--==========================================================================================
+--SAM Avenger (Stinger)                     --M1097 Avenger                 --H/I
+--SAM Chaparral M48                         --M48 Chaparral                 --D
+--SAM Hawk TR (AN/MPQ-46)                   --Hawk tr                       --J (HPIR)
+--SAM Linebacker - Bradley M6               --M6 Linebacker                 --H/I
+--SAM Rapier Blindfire TR                   --rapier_fsa_blindfire_radar    --F
+--SAM SA-2 S-75 "Fan Song" TR               --SNR_75V                       --E/G variants assigned below
 add_emitter("SNR_75VE", E_BAND_RADAR, 1.0, "RWR_FAN_SONG_TROUGH_E_LO", "RWR_FAN_SONG_TROUGH_E_HI")
 add_emitter("SNR_75VG", G_BAND_RADAR, 1.0, "RWR_FAN_SONG_TROUGH_G_LO", "RWR_FAN_SONG_TROUGH_E_HI", "RWR_FAN_SONG_LORO_G")
---SAM SA-3 S-125 "Low Blow" TR              --snr s-125 tr                  --E-band
+--SAM SA-3 S-125 "Low Blow" TR              --snr s-125 tr                  --E
 add_emitter("snr s-125 tr", E_BAND_RADAR, 1.0, "RWR_LOW_BLOW_LO")
---SAM SA-5 S-200 "Square Pair" TR           --RPC_5N62V                     --I-band
+--SAM SA-5 S-200 "Square Pair" TR           --RPC_5N62V                     --I
 add_emitter("RPC_5N62V", I_BAND_RADAR, 1.0, "RWR_SA5_LO", "RWR_SA5_HI")
---SAM SA-6 Kub "Straight Flush" STR         --Kub 1S91 str                  --I-band
+--SAM SA-6 Kub "Straight Flush" STR         --Kub 1S91 str                  --I
 add_emitter("Kub 1S91 str", I_BAND_RADAR, 1.0, "RWR_SURFACE_LO", "RWR_SURFACE_HI")
---SAM SA-8 Osa "Gecko" TEL                  --Osa 9A33 ln                   --I-band
-add_emitter("Osa 9A33 ln", I_BAND_RADAR, 1.0, "RWR_SURFACE_LO", "RWR_SURFACE_HI")
---SAM SA-9 Strela 1 "Gaskin" TEL            --Strela-1 9P31
---SAM SA-10 S-300 "Grumble" Flap Lid TR     --S-300PS 40B6M tr
---SAM SA-11 Buk "Gadfly" Fire Dome TEL      --SA-11 Buk LN 9A310M1
---SAM SA-13 Strela 10M3 "Gopher" TEL        --Strela-10M3
---SAM SA-15 Tor "Gauntlet"                  --Tor 9A331
---SAM SA-19 Tunguska "Grison"               --2S6 Tunguska
+--SAM SA-8 Osa "Gecko" TEL                  --Osa 9A33 ln                   --I
+--SAM SA-9 Strela 1 "Gaskin" TEL            --Strela-1 9P31                 --E/F
+--SAM SA-10 S-300 "Grumble" Flap Lid TR     --S-300PS 40B6M tr              --H/I/J
+--SAM SA-11 Buk "Gadfly" Fire Dome TEL      --SA-11 Buk LN 9A310M1          --H/I
+--SAM SA-13 Strela 10M3 "Gopher" TEL        --Strela-10M3                   --F/G
+--SAM SA-15 Tor "Gauntlet"                  --Tor 9A331                     --K
+--SAM SA-19 Tunguska "Grison"               --2S6 Tunguska                  --H/I
 
---=====================================================================================
---VEHICLES                                  --EMITTER ID                    --NOTES
---=====================================================================================
---SPAAA Gepard                              --Gepard
+--==========================================================================================
+--VEHICLES                                  --EMITTER ID                    --BAND (NATO)
+--==========================================================================================
+--SPAAA Gepard                              --Gepard                        --E
 add_emitter("Gepard", E_BAND_RADAR, 0.7)
---SPAAA Vulcan M163                         --SPAAA Vulcan M163
+--SPAAA Vulcan M163                         --SPAAA Vulcan M163             --E
 add_emitter("SPAAA Vulcan M163", E_BAND_RADAR, 0.7)
---SPAAA ZSU-23-4 Shilka "Gun Dish"          --ZSU-23-4 Shilka               --E-band
+--SPAAA ZSU-23-4 Shilka "Gun Dish"          --ZSU-23-4 Shilka               --E
 add_emitter("ZSU-23-4 Shilka", E_BAND_RADAR, 0.7)
 
---=====================================================================================
---SHIPS                                     --EMITTER ID                    --NOTES
---=====================================================================================
+--==========================================================================================
+--SHIPS                                     --EMITTER ID                    --BAND (NATO)
+--==========================================================================================
 --Battlecruiser 1144.2 Pyotr Velikiy        --PIOTR
 --CG Ticonderoga                            --TICONDEROG
 --Corvette 1124.4 Grisha                    --ALBATROS
@@ -166,6 +164,8 @@ add_emitter("ZSU-23-4 Shilka", E_BAND_RADAR, 0.7)
 --Type 052B Destroyer                       --Type_052B
 --Type 054A Frigate                         --Type_054A
 --Type 052C Destroyer                       --Type_052C
+
+--==========================================================================================
 
 band_map = {
     [I_BAND_RADAR] = DASHED,
