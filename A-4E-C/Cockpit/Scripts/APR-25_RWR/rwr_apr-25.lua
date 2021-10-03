@@ -81,6 +81,7 @@ end
 
 --==========================================================================================
 --UNIT LIST: https://github.com/pydcs/dcs/blob/master/dcs/vehicles.py
+--RADAR BANDS: https://en.wikipedia.org/wiki/Radio_spectrum#EU,_NATO,_US_ECM_frequency_designations
 
 --==========================================================================================
 --EARLY WARNING RADARS                      --EMITTER ID                    --BAND (NATO)
