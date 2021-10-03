@@ -116,8 +116,8 @@ add_emitter("RLS_19J6", E_BAND_RADAR, nil, "RWR_SA5_SEARCH")
 --SAM Linebacker - Bradley M6               --M6 Linebacker                 --H/I
 --SAM Rapier Blindfire TR                   --rapier_fsa_blindfire_radar    --F
 --SAM SA-2 S-75 "Fan Song" TR               --SNR_75V                       --E/G variants assigned below
---add_emitter("SNR_75VE", E_BAND_RADAR, 1.0, "RWR_SA2_E_LO", "RWR_SA2_E_HI")
---add_emitter("SNR_75VG", G_BAND_RADAR, 1.0, "RWR_SA2_G_LO", "RWR_SA2_G_LO", "RWR_SA2_G_LAUNCH")
+add_emitter("SNR_75VE", E_BAND_RADAR, 1.0, "RWR_SA2_E_LO", "RWR_SA2_E_HI")
+add_emitter("SNR_75VG", G_BAND_RADAR, 1.0, "RWR_SA2_G_LO", "RWR_SA2_G_LO", "RWR_SA2_G_LAUNCH")
 --SAM SA-3 S-125 "Low Blow" TR              --snr s-125 tr                  --E
 add_emitter("snr s-125 tr", E_BAND_RADAR, 1.0, "RWR_SA3_LO")
 --SAM SA-5 S-200 "Square Pair" TR           --RPC_5N62V                     --I
