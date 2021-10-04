@@ -80,8 +80,20 @@ function add_emitter(name, band, gain, search, lock, launch)
 end
 
 --==========================================================================================
---UNIT LIST: https://github.com/pydcs/dcs/blob/master/dcs/vehicles.py
+--GROUND UNIT LIST: https://github.com/pydcs/dcs/blob/master/dcs/vehicles.py
+--AIRCRAFT LIST: https://github.com/pydcs/dcs/blob/master/dcs/planes.py
 --RADAR BANDS: https://en.wikipedia.org/wiki/Radio_spectrum#EU,_NATO,_US_ECM_frequency_designations
+
+--[[
+    Now, only one unit using the default can be heard, even if several are in range.
+    Perhaps for EWRs and Search radars, it might be more efficient to assign a rotation speed:
+    Once the rotation speed is reached, if the radar still has contact, play a sample (bank) once.
+    This would allow for more cluttered and complex radar environments and sample banks
+    of chirps could be easily re-pitched to to suit a new individual unit's entry.
+    I'm also noticing a longer initialization period, which I think is related to having 
+    too many continuous sounds playinh. It might be wise to set these to continuous instead, 
+    and only play them when called for by a signal.
+--]]
 
 --==========================================================================================
 --EARLY WARNING RADARS                      --EMITTER ID                    --BAND (NATO)
@@ -89,7 +101,7 @@ end
 --EWR 55G6                                  --55G6 EWR
 --EWR IL13                                  --IL13 EWR
 
---These items report as surface radars, but operate more like EWRs.
+--These items are surface radars, but operate more like EWRs:
 --SAM Roland EWR                            --Roland Radar
 --SAM Hawk CWAR AN/MPQ-55                   --Hawk cwar
 
@@ -167,6 +179,60 @@ add_emitter("ZSU-23-4 Shilka", E_BAND_RADAR, 0.7, "RWR_VEHICLE_SHILKA")
 --Type 052B Destroyer                       --Type_052B
 --Type 054A Frigate                         --Type_054A
 --Type 052C Destroyer                       --Type_052C
+
+--==========================================================================================
+--AIRCRAFT                                  --EMITTER ID                    --BAND (NATO)
+--==========================================================================================
+--A-50
+--AJS37
+--AV-8B N/A
+--C-101CC
+--C-101EB
+--E-2D
+--E-3A
+--F-4E
+--F-5E
+--F-5E-3
+--F-14A-135GR
+--F-14B
+--F-15C
+--F-15E
+--F-16A
+--F-16A MLU
+--F-16C bl.50
+--F-16C bl.52d
+--F-16CM bl.50
+--F-117A
+--F/A-18A
+--F/A-18C
+--F/A-18C Lot 20
+--J-11A
+--JF-17
+--KJ-2000
+--L-39C
+--L-39ZA
+--M-2000C
+--MiG-15bis
+--MiG-19P
+--MiG-21Bis
+--MiG-25PD
+--MiG-24RBT
+--MiG-27K
+--MiG-29A
+--MiG-29S
+--MiG-31
+--Su-17M4
+--Su-24M
+--Su-24MR
+--Su-25
+--Su-25T
+--Su-25TM
+--Su-27
+--Su-30
+--Su-33
+--Su-34
+--Tornado GR4
+--Tornado IDS
 
 --==========================================================================================
 
