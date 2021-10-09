@@ -246,10 +246,10 @@ function post_initialize()
 
     sndhost = create_sound_host("COCKPIT_ARMS","HEADPHONES",0,0,0)
     labs_tone = sndhost:create_sound("Aircrafts/A-4E-C/bombtone") -- refers to sdef file, and sdef file content refers to sound file, see DCSWorld/Sounds/sdef/_example.sdef
-    aim9seek = sndhost:create_sound("Aircrafts/Cockpits/AIM9")
-    aim9lock = sndhost:create_sound("Aircrafts/Cockpits/SidewinderLow")
-    --aim9lock2 = sndhost:create_sound("Aircrafts/Cockpits/SidewinderLowQuiet")
-    --aim9lock3 = sndhost:create_sound("Aircrafts/Cockpits/SidewinderHigh")
+    aim9seek = sndhost:create_sound("Aircrafts/A-4E-C/a-4e_aim9_lo")
+    aim9lock = sndhost:create_sound("Aircrafts/A-4E-C/a-4e_aim9_hi")
+    aim9lock2 = sndhost:create_sound("Aircrafts/A-4E-C/a-4e_aim9_hi")
+    aim9lock3 = sndhost:create_sound("Aircrafts/A-4E-C/a-4e_aim9_hi")
 
 	selected_station = 1
 	ECM_status = false
