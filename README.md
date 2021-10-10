@@ -70,8 +70,9 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPI
 - **Weapons and Loadouts:**
   - Added SUU-25 parachute illumination pod
   - Added empty fuel tanks
+  - Added unique AIM-9 Sidewinder missile sounds (fixes missing sound bug)
   - Improved AIM-9 missile loadouts, they are available to mount on stations 4 and 5
-  - Removed non-functional items: AGM-12 Bullpup, AGM-62 Walleye, D-704 Refueling Pod
+  - Removed non-functional loadout options: AGM-12 Bullpup, AGM-62 Walleye, D-704 Refueling Pod *(see FAQ)*
 - **Missions:**
   - Added new instant action missions across all maps *(thanks Sidekick65, Cubeboy, Shadowfrost, SPINEG)*
   - Added runway strike and anti-ship strike roles
@@ -112,7 +113,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, Sidekick65, SPI
 
 ### Known Bugs and Incompatibilities
 
-- Incompatible with CH-53E "Super Stallion" mod (DCS bug)
+- Incompatible with AH-6J Little Bird, CH-47 Chinook, and CH-53E Super Stallion mods (DCS bug)
 - Missions created in DCS 2.7+ occasionally render the AN/ASN-41 Navigation Computer inoperable
 - Pilot blacks out when throttling up to hook up to catapult on SuperCarrier
 - Dispensing high volumes of bomblets (40+) from SUU-7/CBU-1/CBU-2 can cause performance dip or crashes to desktop
