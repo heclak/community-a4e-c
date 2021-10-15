@@ -5,13 +5,14 @@ Please list the changes you've made in this file. We should try to follow the gu
 ## Version 2.0.0-RC2 - 19 Sep 2021
 
 ### Added
-- Mode to switch between automatic carrier speed and mass calculations and ones tuned for the stennis and supercarrier. Use automatic mode with modded aircraft carriers to make launches more realistic. Stennis/Supercarrier mode is default. There is a keybind Ctrl+U to switch by default.
-- New keybinds
+- A new mode switch for carrier launches - DEFAULT mode supports the Stennis and Supercarrier. A new mode, AUTO makes speed and mass calculations when launching from  aircraft carrier mods (for example, the HMAS Melbourne) more realistic. A new keybind for Catapult Power Mode is provided (Default: 'LCtrl+U')
 - Flight Model: added inital implementation of ground effect.
-- Added gravity to slats (not just spring force).
-- New sidewinder sounds (to also fix the bug where people hear no sounds).
-- Brazil loviz fuel tank.
-- More kneeboard pages.
+- Added gravity to slats (not just spring force)
+- Added AIM-9 sidewinder sounds (this fixes the bug where the some useres were missing sidewinder tones).
+- Added new default keybinds for AFCS, BDHI, chaff, fuel system, gunsight, master exterior light switch
+- Added unique fuel tank to 'Brazil Marinha do Brasil VF-1 LoViz, 2018' livery
+- Added kneeboard pages for detail on takeoff, taxi, and landings. ('RShift+K')
+- Aligned 'Throttle Panel' category to kneeboard
 
 ### Changed
 - Flight Model:
@@ -31,8 +32,9 @@ Please list the changes you've made in this file. We should try to follow the gu
 - Fixed radar keybind that was not showing.
 - Blacking out when in the wake turbulance of another aircraft.
 - Volume of some sounds not being correctly adjusted.
-- Fixed Argentina aniversary livery.
-- Kneeboard alignment issues.
+- Fixed typo in Brazil Marinha do Brasil VF-1 15 ANOS, 2013
+- Fixed roughmets for 'RNZAF Golden T-Bird No.2, Squadron Ohakea, 1986' livery
+- Kneeboard errors.
 
 ## Version 2.0.0-RC1 - 19 Sep 2021
 
