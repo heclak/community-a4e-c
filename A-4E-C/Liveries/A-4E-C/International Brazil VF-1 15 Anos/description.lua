@@ -1,5 +1,5 @@
 -- this community livery by Bungo
-name = "Brazil Marinha do Brasil VF-1 15 AÑOS, 2013"
+name = "Brazil Marinha do Brasil VF-1 15 ANOS, 2013"
 countries = {"USA", "BRA"}
 
 livery = {
@@ -10,8 +10,8 @@ livery = {
   {"Gear and metal", DIFFUSE, "a4e_intl_bra_15anos_bot", true};
   {"Cockpit", DIFFUSE, "a4e_intl_bra_15anos_bot", true};
   --{"Front",	0, "a4e_ext_front", true};
-  {"cockpitWheelHardpoints", DIFFUSE, "a4e_intl_bra_15anos_bot", true};
-  {"Gear Bay", DIFFUSE, "a4e_intl_bra_15anos_bot", true};
+  --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
+  --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
 
   -- flaps, used on most liveries
   {"flaps_001", DIFFUSE, "empty", true};
@@ -54,4 +54,7 @@ livery = {
 
   -- custom fuel tank: 300 gallon center
   {"fuel_300c_a4e", DIFFUSE, "a4e_intl_bra_15anos_ft", true};
+  
+  -- custom fuel tank: 400 gallon
+  --{"fuel_400_a4e", DIFFUSE, "uvmapsfueltank_dft400", true};
 }

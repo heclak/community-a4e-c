@@ -46,13 +46,13 @@ livery = {
   {"tail_100", DIFFUSE, "empty", true};
 
   -- custom fuel tanks: 150 gallon
-  --{"fuel_150_a4e", DIFFUSE, "uvmapsfueltank_dft150_dft300", true};
+  {"fuel_150_a4e", DIFFUSE, "a4e_intl_bra_loviz_ft", true};
 
   -- custom fuel tank: 300 gallon left/right
-  --{"fuel_300lr_a4e", DIFFUSE, "uvmapsfueltank_dft150_dft300", true};
+  {"fuel_300lr_a4e", DIFFUSE, "a4e_intl_bra_loviz_ft", true};
 
   -- custom fuel tank: 300 gallon center
-  --{"fuel_300c_a4e", DIFFUSE, "uvmapsfueltank_dft150_dft300", true};
+  {"fuel_300c_a4e", DIFFUSE, "a4e_intl_bra_loviz_ft", true};
 
   -- custom fuel tank: 400 gallon
   --{"fuel_400_a4e", DIFFUSE, "uvmapsfueltank_dft400", true};
