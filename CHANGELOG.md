@@ -2,6 +2,38 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
+## Version 2.0.0-RC2 - 19 Sep 2021
+
+### Added
+- Mode to switch between automatic carrier speed and mass calculations and ones tuned for the stennis and supercarrier. Use automatic mode with modded aircraft carriers to make launches more realistic. Stennis/Supercarrier mode is default. There is a keybind Ctrl+U to switch by default.
+- New keybinds
+- Flight Model: added inital implementation of ground effect.
+- Added gravity to slats (not just spring force).
+- New sidewinder sounds (to also fix the bug where people hear no sounds).
+- Brazil loviz fuel tank.
+- More kneeboard pages.
+
+### Changed
+- Flight Model:
+  - Significantly increased slats lift.
+  - Increased induced drag at high AOA.
+  - Surfaces, horizontal stab, elevator, vertical stab, rudder, to not use beta, as this previously caused an ill defined wind axes to body transformation at high beta values causing the lift/drag values to be inverted.
+  - Removed unrealistic negation of lift and drag caused by the issue above at > 90 deg aoa or beta.
+
+- XY moment of inertia to match real value (effects tumbling).
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Radar keybinds for experimental radar.
+- Fixed radar keybind that was not showing.
+- Blacking out when in the wake turbulance of another aircraft.
+- Volume of some sounds not being correctly adjusted.
+- Fixed Argentina aniversary livery.
+- Kneeboard alignment issues.
+
 ## Version 2.0.0-RC1 - 19 Sep 2021
 
 ### Added
