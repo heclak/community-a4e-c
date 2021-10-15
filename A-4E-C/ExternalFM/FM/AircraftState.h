@@ -32,8 +32,9 @@ public:
 	virtual void airborneInit();
 
 	inline void setCurrentStateBodyAxis(double aoa, double beta, const Vec3& angle, const Vec3& omega, const Vec3& omegaDot, const Vec3& speed, const Vec3& airspeed, const Vec3& acceleration);
-	inline void setCurrentStateWorldAxis( const Vec3& worldPosition, const Vec3& worldVelocity, const Vec3& worldDirection );
+	inline void setCurrentStateWorldAxis( const Vec3& worldPosition, const Vec3& worldVelocity, const Vec3& worldDirection, const Vec3& globalDown );
 	inline void setCurrentAtmosphere( double temperature, double speedOfSound, double density, double pressure, const Vec3& wind );
+	inline void setSurface( double surfaceHeight, const Vec3& surfaceNormal );
 
 	inline void setMach( double mach );
 	inline void setRadarAltitude( double altitude );
@@ -68,7 +69,10 @@ public:
 	//Then calculate it from the global acceleration values.
 	inline const double getGForce() const;
 
+	inline const Vec3& getGlobalDownVectorInBody() const;
 
+	inline const Vec3& getSurfaceNormal() const;
+	inline const double getSurfaceHeight() const;
 
 
 private:
@@ -83,6 +87,9 @@ private:
 	Vec3 m_localAirspeed;
 	Vec3 m_localAcceleration;
 	Vec3 m_com; //centre of mass
+	Vec3 m_globalDownInLocal;
+	Vec3 m_surfaceNormal;
+
 	double m_aoa;
 	double m_beta;
 	double m_mach;
@@ -92,6 +99,7 @@ private:
 	double m_pressure;
 	double m_radarAltitude;
 	double m_gs;
+	double m_surfaceHeight;
 };
 
 	
@@ -119,12 +127,14 @@ void AircraftState::setCurrentStateBodyAxis(
 void AircraftState::setCurrentStateWorldAxis( 
 	const Vec3& worldPosition,
 	const Vec3& worldVelocity,
-	const Vec3& worldDirection
+	const Vec3& worldDirection,
+	const Vec3& globalDown
 )
 {
 	m_worldPosition = worldPosition;
 	m_worldVelocity = worldVelocity;
 	m_worldDirection = worldDirection;
+	m_globalDownInLocal = globalDown;
 }
 
 void AircraftState::setCurrentAtmosphere( 
@@ -140,6 +150,12 @@ void AircraftState::setCurrentAtmosphere(
 	m_airDensity = density;
 	m_pressure = pressure;
 	m_worldWind = wind;
+}
+
+void AircraftState::setSurface( double surfaceHeight, const Vec3& surfaceNormal )
+{
+	m_surfaceHeight = surfaceHeight;
+	m_surfaceNormal = surfaceNormal;
 }
 
 void AircraftState::setMach( double mach )
@@ -264,6 +280,21 @@ const Vec3& AircraftState::getCOM() const
 const double AircraftState::getGForce() const
 {
 	return m_gs;
+}
+
+const Vec3& AircraftState::getGlobalDownVectorInBody() const
+{
+	return m_globalDownInLocal;
+}
+
+const Vec3& AircraftState::getSurfaceNormal() const
+{
+	return m_surfaceNormal;
+}
+
+const double AircraftState::getSurfaceHeight() const
+{
+	return m_surfaceHeight;
 }
 
 }

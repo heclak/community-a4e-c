@@ -240,7 +240,7 @@ void Scooter::FlightModel::airborneInit()
 void Scooter::FlightModel::calculateAero(double dt)
 {
 	calculateLocalPhysicsParams(dt);
-	slats(dt);
+	slats( dt );
 	lift();
 	drag();
 	calculateElements();
@@ -342,10 +342,18 @@ void Scooter::FlightModel::lift()
 
 void Scooter::FlightModel::drag()
 {
+	double geNormalFactor = abs( normalize( m_state.getSurfaceNormal() ) * normalize( -m_state.getGlobalDownVectorInBody() ) );
+	double geFactor = clamp(m_totalWingSpan - m_state.getSurfaceHeight(), 0.0, m_totalWingSpan) / m_totalWingSpan;
+
+	constexpr double geStrength = 0.4;
+	double ge = ( 1.0 - geStrength * geFactor * geNormalFactor );
+
+	printf( "Surface Height: %lf, Factor: %lf, Normal Factor: %lf\n", m_state.getSurfaceHeight(), geFactor, geNormalFactor );
+
 	double CD = dCDspeedBrake(0.0) * m_airframe.getSpeedBrakePosition() +
 		CDbeta(m_state.getBeta()) +
 		CDde(0.0) * abs(elevator()) +
-		CDmach(m_state.getMach()) + CDi(m_state.getAOA()) * pow(CLalpha(m_state.getAOA()), 2.0) +
+		CDmach(m_state.getMach()) + ge * CDi(m_state.getAOA()) * pow(CLalpha(m_state.getAOA()), 2.0) +
 		m_airframe.getGearLPosition() * CDMainGear +
 		m_airframe.getGearRPosition() * CDMainGear +
 		m_airframe.getGearNPosition() * CDNoseGear;
@@ -485,19 +493,26 @@ void Scooter::FlightModel::slats(double& dt)
 		return;
 	}
 
+	// Direction of the slat slider.
+	//Vec3 accDirection( -0.94, 0.34, 0.0 );
+	Vec3 accDirection = normalize(Vec3( -0.94, 0.34, 0.0 ));
 
+	Vec3 gravityVec = m_state.getGlobalDownVectorInBody() * m_slatMass * 9.8;
+
+	double gravity = gravityVec * accDirection;
 
 	double forceL = (m_elementLSlat.get_kElem() / m_totalWingArea) * m_slatArea * slatCL(m_elementLSlat.getAOA());
 	double forceR = (m_elementLSlat.get_kElem() / m_totalWingArea) * m_slatArea * slatCL(m_elementRSlat.getAOA());
 
-	Vec3 accDirection(-0.94, 0.34, 0.0);
-	double accAircraft = normalize(accDirection) * m_state.getLocalAcceleration();
+	//printf( "%lf, %lf\n", forceL, forceR );
+	
+	double accAircraft = accDirection * m_state.getLocalAcceleration();
 
 	double x_L = m_airframe.getSlatLPosition();
 	double x_R = m_airframe.getSlatRPosition();
 
-	double a_L = accAircraft + (0.09 * forceL - m_slatDamping * m_LslatVel - 0.09 * m_slatSpring * (x_L-1.5) ) / m_slatMass;
-	double a_R = accAircraft + (0.09 * forceR - m_slatDamping * m_RslatVel - 0.09 * m_slatSpring * (x_R-1.5) ) / m_slatMass;
+	double a_L = accAircraft + (0.09 * forceL - gravity - m_slatDamping * m_LslatVel - 0.09 * m_slatSpring * (x_L-1.5) ) / m_slatMass;
+	double a_R = accAircraft + (0.09 * forceR - gravity  - m_slatDamping * m_RslatVel - 0.09 * m_slatSpring * (x_R-1.5) ) / m_slatMass;
 
 	m_LslatVel += a_L * dt;
 	m_RslatVel += a_R * dt;

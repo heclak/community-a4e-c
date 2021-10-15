@@ -34,6 +34,8 @@ void Scooter::AircraftState::zeroInit()
 	m_localAirspeed = Vec3();
 	m_localAcceleration = Vec3();
 	m_com = Vec3();
+	m_globalDownInLocal = Vec3();
+	m_surfaceNormal = Vec3();
 
 	m_aoa = 0.0;
 	m_beta = 0.0;
@@ -44,6 +46,7 @@ void Scooter::AircraftState::zeroInit()
 	m_speedOfSound = 0.0;
 	m_radarAltitude = 0.0;
 	m_gs = 0.0;
+	m_surfaceHeight = 0.0;
 }
 
 void Scooter::AircraftState::coldInit()

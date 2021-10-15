@@ -260,6 +260,7 @@ dev:listen_command(Keys.OxygenToggle)
 dev:listen_command(Keys.AltPressureStartUp)
 dev:listen_command(Keys.AltPressureStartDown)
 dev:listen_command(Keys.AltPressureStop)
+dev:listen_command(Keys.cat_power_toggle)
 
 function dump_table(t)
     for key,value in pairs(t) do
@@ -509,6 +510,8 @@ function SetCommand(command,value)
         --  end
     elseif command == Keys.OxygenToggle then
         dev:performClickableAction(device_commands.oxygen_switch,oxygen_enabled and 0 or 1,false)
+    elseif command == Keys.cat_power_toggle then
+        efm_data_bus.fm_toggleCatMode()
     else
         print("Unknown command:"..command.." Value:"..value)
     end

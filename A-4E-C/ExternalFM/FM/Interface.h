@@ -163,6 +163,8 @@ public:
 		m_disableRadar = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_RADAR_DISABLED" );
 		m_wheelBrakeAssist = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_WHEEL_BRAKE_ASSIST" );
 
+		m_autoCatMode = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_CAT_AUTO_MODE" );
+
 	}
 
 	cockpit_param_api& api()
@@ -273,6 +275,11 @@ public:
 	inline bool getRadarDisabled()
 	{
 		return getParamNumber( m_disableRadar ) > 0.5;
+	}
+
+	inline bool getCatAutoMode()
+	{
+		return getParamNumber( m_autoCatMode ) > 0.5;
 	}
 
 	inline void setEngineStall( bool stall )
@@ -766,6 +773,8 @@ private:
 
 	void* m_disableRadar = NULL;
 	void* m_wheelBrakeAssist = NULL;
+
+	void* m_autoCatMode = NULL;
 };
 
 

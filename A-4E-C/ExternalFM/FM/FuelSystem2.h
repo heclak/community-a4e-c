@@ -76,7 +76,7 @@ public:
 	inline void setSelectedTank( Tank tank );
 	inline void setFuelDumping(bool dumping);
 
-public:
+private:
 
 	double m_fuel[NUMBER_OF_TANKS] = { 0.0, 0.0, 0.0, 0.0, 0.0 };
 	double m_fuelPrevious[NUMBER_OF_TANKS] = { 0.0, 0.0, 0.0, 0.0, 0.0 };

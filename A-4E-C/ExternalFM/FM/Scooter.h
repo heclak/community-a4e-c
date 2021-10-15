@@ -236,6 +236,14 @@ extern "C"
 	ED_FM_API bool ed_fm_pop_simulation_event(ed_fm_simulation_event& out);
 	ED_FM_API bool ed_fm_push_simulation_event(const ed_fm_simulation_event& in);
 
+	ED_FM_API void ed_fm_set_surface( double		h,//surface height under the center of aircraft
+		double		h_obj,//surface height with objects
+		unsigned		surface_type,
+		double		normal_x,//components of normal vector to surface
+		double		normal_y,//components of normal vector to surface
+		double		normal_z//components of normal vector to surface
+	);
+
 	/*
 	call backs for diffrenrt starting conditions
 	*/

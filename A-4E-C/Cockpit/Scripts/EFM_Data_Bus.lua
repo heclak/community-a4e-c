@@ -91,11 +91,25 @@ local fm_cas = get_param_handle("FM_CAS")
 local fm_radar_disabled = get_param_handle("FM_RADAR_DISABLED")
 local fm_wheel_brake_assist = get_param_handle("FM_WHEEL_BRAKE_ASSIST")
 
+local fm_cat_auto_mode = get_param_handle("FM_CAT_AUTO_MODE")
+
 local tanks = {
     [1] = fm_l_tank_capacity,
     [2] = fm_c_tank_capacity,
     [3] = fm_r_tank_capacity,
 }
+
+function fm_toggleCatMode(value)
+    local cur = fm_cat_auto_mode:get()
+    if cur == 1.0 then
+        cur = 0.0
+        print_message_to_user("Catapult Manual Mode - Stennis/Nimitz")
+    else
+        cur = 1.0
+        print_message_to_user("Catapult Auto Mode - Any other carrier")
+    end
+    fm_cat_auto_mode:set(cur)
+end
 
 function fm_setRadarDisabled(value)
     fm_radar_disabled:set(value)
@@ -372,6 +386,7 @@ function get_efm_data_bus()
     efm_data_bus.fm_setTacanID = fm_setTacanID
     efm_data_bus.fm_setTacanName = fm_setTacanName
     efm_data_bus.fm_setRadarDisabled = fm_setRadarDisabled
+    efm_data_bus.fm_toggleCatMode = fm_toggleCatMode
 
 
     efm_data_bus.fm_getGunsightAngle = fm_getGunsightAngle
@@ -394,6 +409,7 @@ function get_efm_data_bus()
     efm_data_bus.fm_tacanValid = fm_tacanValid
     efm_data_bus.fm_getICLSHeading = fm_getICLSHeading
     efm_data_bus.fm_getWorldAcceleration = fm_getWorldAcceleration
+    
 
     return efm_data_bus
    

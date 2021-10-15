@@ -365,6 +365,7 @@ Keys =
     ArmsEmerSelCW                  = __custom_counter(),
     ArmsEmerSelCCW                 = __custom_counter(),
     FuelControl                    = __custom_counter(),
+    cat_power_toggle               = __custom_counter(),
 }
 
 start_command   = 3000

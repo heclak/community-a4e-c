@@ -45,7 +45,7 @@ public:
 		double gunsightAngle
 	)
 	{
-		state.setCurrentStateWorldAxis( { 0.0, altitude, 0.0 }, velocity, Vec3() );
+		state.setCurrentStateWorldAxis( { 0.0, altitude, 0.0 }, velocity, Vec3(), Vec3() );
 		state.setRadarAltitude( radarAltitude );
 		state.setCurrentStateBodyAxis( 0.0, 0.0, { 0.0, 0.0, toRad( pitchAngle ) }, Vec3(), Vec3(), Vec3(), Vec3(), Vec3() );
 		computer.setGunsightAngle( gunsightAngle );

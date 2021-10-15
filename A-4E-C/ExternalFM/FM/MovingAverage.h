@@ -29,7 +29,7 @@ inline void MovingAverage<T,N>::setAll( T value )
 {
 	for ( size_t i = 0; i < N; i++ )
 	{
-		m_values[N] = value;
+		m_values[i] = value;
 	}
 }
 

@@ -156,7 +156,8 @@ void checkCompatibility(const char* path)
 		if ( strcmp( data.cFileName, ".." ) == 0 || strcmp( data.cFileName, "." ) == 0 )
 			continue;
 
-		if ( data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY && searchFolder( aircraftFolder, data.cFileName, "CH_53.lua" ) )
+		if ( data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY && 
+			(searchFolder( aircraftFolder, data.cFileName, "CH_53.lua" ) || searchFolder( aircraftFolder, data.cFileName, "Ch47_Chinook.lua" ) ) )
 		{
 			found = true;
 			break;
@@ -168,11 +169,12 @@ void checkCompatibility(const char* path)
 	
 	int selection = MessageBoxA( 
 		NULL, 
-		"The CH-53E mod is completely incompatible with the A-4E-C due to a DCS bug triggered\
- by the CH-53E configuration. This bug causes memory corruption and undefined behaviour.\
- To use the A-4E-C uninstall the CH-53E mod.", 
-		"FATAL ERROR - Sikorsky CH-53E Mod Detected", MB_ABORTRETRYIGNORE | MB_ICONERROR );
+		"The CH-53E and CH-47 mods are completely incompatible with the A-4E-C due to a DCS bug triggered\
+ by the CH-53E and CH-47 configuration. This bug causes memory corruption and undefined behaviour.\
+ To use the A-4E-C uninstall the CH-53E and CH-47 mods.", 
+		"FATAL ERROR - CH-53E and/or CH-47 Mods Detected", MB_ABORTRETRYIGNORE | MB_ICONERROR );
 
+	LOG( "ERROR: Incompatible mod found!\n" );
 
 	if ( selection != IDIGNORE )
 		std::terminate();
@@ -243,10 +245,10 @@ void checkCorruption(const char* str)
 {
 	//printf( "Validating Test buffer...\n" );
 
-	if ( ! s_fuelSystem->m_enginePump )
+	/*if ( ! s_fuelSystem->m_enginePump )
 		printf( "Memory corrupted! %s\n", str );
 	else
-		printf( "Memory Fine %str\n", str );
+		printf( "Memory Fine %str\n", str );*/
 }
 
 double rawAOAToUnits( double rawAOA )
@@ -474,9 +476,29 @@ void ed_fm_set_current_state
 	direction.y = xy + wz;
 	direction.z = xz - wy;
 
-	s_state->setCurrentStateWorldAxis(Vec3(px, py, pz), Vec3(vx, vy, vz), direction);
+	
 
 	s_interface->setWorldAcceleration( Vec3( ax, ay, az ) );
+
+	Vec3 globalUp;
+	double x2 = x + x;
+	double yz = y * z2;
+	double wx = w * x2;
+
+	double xx = x * x2;
+
+	globalUp.x = xy + wz;
+	globalUp.y = 1.0 - (xx + zz);
+	globalUp.z = yz - wx;
+
+	s_state->setCurrentStateWorldAxis( Vec3( px, py, pz ), Vec3( vx, vy, vz ), direction, -globalUp );
+
+
+	Force f;
+	f.force = globalUp * s_airframe->getMass() * 9.81;
+	f.pos = s_state->getCOM();
+
+	//s_fm->getForces().push_back( f );
 }
 
 
@@ -511,6 +533,19 @@ void ed_fm_set_current_state_body_axis
 void ed_fm_on_damage( int element, double element_integrity_factor )
 {
 	s_airframe->setIntegrityElement((Scooter::Airframe::Damage)element, (float)element_integrity_factor);
+}
+
+void ed_fm_set_surface
+( 
+	double		h,//surface height under the center of aircraft
+	double		h_obj,//surface height with objects
+	unsigned	surface_type,
+	double		normal_x,//components of normal vector to surface
+	double		normal_y,//components of normal vector to surface
+	double		normal_z//components of normal vector to surface
+)
+{
+	s_state->setSurface( s_state->getWorldPosition().y - h_obj, Vec3( normal_x, normal_y, normal_z ) );
 }
 
 /*
@@ -626,6 +661,9 @@ void ed_fm_set_command
 		if ( s_airframe->getNoseCompression() > 0.01 && magnitude(s_state->getLocalSpeed()) < 25.0 )
 			s_airframe->toggleSlatsLocked();
 		break;
+	case KEYS_CAT_POWER_TOGGLE:
+
+
 	default:
 		;// printf( "number %d: %lf\n", command, value );
 	}
@@ -895,11 +933,20 @@ bool ed_fm_pop_simulation_event(ed_fm_simulation_event& out)
 	}
 	else if (s_airframe->catapultState() == Scooter::Airframe::ON_CAT_READY)
 	{
+		bool autoMode = s_interface->getCatAutoMode();
+		double thrust = 0.0;
+		double speed = 0.0;
+		if ( ! autoMode )
+		{
+			speed = 60.0f + 20.0 * std::min( s_airframe->getMass() / c_maxTakeoffMass, 1.0 );
+			thrust = s_engine->getThrust();
+		}
+
 		out.event_type = ED_FM_EVENT_CARRIER_CATAPULT;
 		out.event_params[0] = 1;
 		out.event_params[1] = 3.0f;
-		out.event_params[2] = 60.0f + 20.0 * std::min(s_airframe->getMass() / c_maxTakeoffMass, 1.0);
-		out.event_params[3] = s_engine->getThrust();
+		out.event_params[2] = speed;
+		out.event_params[3] = thrust;
 		s_airframe->catapultState() = Scooter::Airframe::ON_CAT_WAITING;
 		return true;
 	}
@@ -991,9 +1038,8 @@ void ed_fm_repair()
 
 bool ed_fm_add_local_force_component( double & x,double &y,double &z,double & pos_x,double & pos_y,double & pos_z )
 {
-	return false;
 
-	/*if ( s_fm->getForces().empty() )
+	if ( s_fm->getForces().empty() )
 		return false;
 
 	Force f = s_fm->getForces().back();
@@ -1007,7 +1053,7 @@ bool ed_fm_add_local_force_component( double & x,double &y,double &z,double & po
 	pos_y = f.pos.y;
 	pos_z = f.pos.z;
 
-	return true;*/
+	return true;
 }
 
 bool ed_fm_add_global_force_component( double & x,double &y,double &z,double & pos_x,double & pos_y,double & pos_z )
