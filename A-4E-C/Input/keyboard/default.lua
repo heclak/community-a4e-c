@@ -16,7 +16,7 @@ join(res.keyCommands,{
     --------------------------------------------- 
     {down = iCommandPilotGestureSalute,                                                                             name = _('Pilot Salute'),                                category = {_('Communications')}},
     {combos = {{key = 'U'}}, down = iCommandPlaneShipTakeOff,                                                       name = _('Catapult Hook-Up'),                            category = {_('Communications')}},
-    {combos = {{key = 'U', reformers = {'LCtrl'}}}, down = Keys.cat_power_toggle,                                   name = _('Catapult Toggle Power Mode'),                  category = {_('Communications')}},
+    {combos = {{key = 'U', reformers = {'LCtrl'}}}, down = Keys.cat_power_toggle,                                   name = _('Catapult Power Mode - DEFAULT/AUTO'),                  category = {_('Communications')}},
     {combos = {{key = 'S', reformers = {'LShift', 'LAlt'}}}, down = Keys.ToggleSlatsLock,                           name = _('Slats - LOCK/UNLOCK'),                         category = {_('Communications')}},
     {combos = {{key = '2', reformers = {'RShift','RAlt'}}},	down = Keys.ChangeCBU2AQuantity, value_down = 1,        name = _('CBU-2/A Release Quantity - 1/2/3'),            category = {_('Communications'), _('Kneeboard'), _('AN/ALE-29A Chaff Dispensing System')}},
     {combos = {{key = '3', reformers = {'RShift','RAlt'}}},	down = Keys.ChangeCBU2BAQuantity, value_down = 1,       name = _('CBU-2B/A Release Quantity - 1/2/3/4/6/SALVO'), category = {_('Communications'), _('Kneeboard'), _('AN/ALE-29A Chaff Dispensing System')}},
