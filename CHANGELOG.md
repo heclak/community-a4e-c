@@ -2,7 +2,7 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
-## Version 2.0.0-RC2 - 19 Sep 2021
+## Version 2.0.0-RC2 - 16 Oct 2021
 
 ### Added
 - A new mode switch for carrier launches - DEFAULT mode supports the Stennis and Supercarrier. A new mode, AUTO makes speed and mass calculations when launching from  aircraft carrier mods (for example, the HMAS Melbourne) more realistic. A new keybind for Catapult Power Mode is provided (Default: 'LCtrl+U')
