@@ -107,10 +107,10 @@ function fm_toggleCatMode(value)
     local cur = fm_cat_auto_mode:get()
     if cur == 1.0 then
         cur = 0.0
-        print_message_to_user("Catapult Manual Mode - Stennis/Nimitz")
+        print_message_to_user("Catapult Power Mode - DEFAULT (Forrestal, Stennis, SuperCarrier)")
     else
         cur = 1.0
-        print_message_to_user("Catapult Auto Mode - Any other carrier")
+        print_message_to_user("Catapult Power Mode - AUTO (carrier mods)")
     end
     fm_cat_auto_mode:set(cur)
 end
