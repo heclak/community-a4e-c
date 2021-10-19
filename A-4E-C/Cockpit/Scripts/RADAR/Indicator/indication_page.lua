@@ -120,7 +120,7 @@ function create_textured_box(UL_X,UL_Y,DR_X,DR_Y)
     return object
 end
 
-max_blobs=2500
+max_blobs=5000--2500
 
 for i=1,max_blobs do
     radar_blob 					= create_textured_box(-blob_scale/2,-blob_scale/2,blob_scale/2,blob_scale/2)
@@ -149,10 +149,7 @@ end
 
 dofile(LockOn_Options.script_path.."Systems/radar_scope_api.lua")
 
-local max=math.floor(math.sqrt(max_blobs))
-for i=1,max_blobs do
-    set_blob(i,-1+(i%max)*(2/max), -1+math.floor(i/max)*(2/max), 0.0)
-end
+
 set_profile_scribe(0)
 
 --[[

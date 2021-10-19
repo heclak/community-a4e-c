@@ -226,6 +226,8 @@ vvi = get_param_handle("VVI")
 local vvi_wma = WMA(0.025,0)     -- 0.025 per tick, 20 ticks/sec, 2 seconds to fully adapt
 
 
+local auto_catapult_power = false
+
 -----------------------------------------------------------------------------
 -- Gauge Initialisation
 
@@ -295,6 +297,9 @@ function enumerate_fueltanks()
 end
 
 function post_initialize()
+
+    auto_catapult_power = get_aircraft_property("Auto_Catapult_Power")
+    --efm_data_bus.fm_setCatMode(auto_catapult_power)
 
     local abstime = get_absolute_model_time()
     local hours = abstime / 3600.0

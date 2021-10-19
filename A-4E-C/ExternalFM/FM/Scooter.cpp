@@ -201,7 +201,7 @@ void init(const char* config)
 	s_ils = new Scooter::ILS(*s_interface);
 	s_fuelSystem = new Scooter::FuelSystem2( *s_engine, *s_state );
 	s_beacon = new Scooter::Beacon(*s_interface);
-	s_radar = new Scooter::Radar( *s_interface, *s_state );
+	s_radar = new Scooter::Radar( *s_interface, *s_state, *s_beacon );
 
 	//checkCorruption(__FUNCTION__);
 	//printf( "Offset: %llx\n", (intptr_t)(&s_fuelSystem->m_enginePump) - (intptr_t)s_fuelSystem );
@@ -335,7 +335,6 @@ void ed_fm_simulate(double dt)
 
 		s_fuelSystem->setBoostPumpPower( s_interface->getElecMonitoredAC() );
 		s_radar->setDisable( s_interface->getRadarDisabled() );
-
 	}
 
 

@@ -46,6 +46,16 @@ void Scooter::RadarScope::update( double dt )
 	}
 }
 
+void Scooter::RadarScope::addToDisplay( double value )
+{
+	for ( size_t i = 0; i < MAX_BLOBS; i++ )
+	{
+		double currentValue = m_interface.getParamNumber( m_opacityParams[i] );
+
+		setBlobOpacity( i, clamp( currentValue + currentValue * value, 0.0, SCREEN_GAIN ) );
+	}
+}
+
 Scooter::RadarScope::~RadarScope()
 {
 	delete[] m_xParams;

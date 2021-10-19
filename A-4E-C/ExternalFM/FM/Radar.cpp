@@ -29,28 +29,27 @@ constexpr static double c_SNR = 1.5e-4;
 
 static double f( double x )
 {
-	return ( 1.0 / ( c_beamSigma * sqrt( 2.0 * PI ) ) ) * exp( -0.5 * pow( x / c_beamSigma, 2.0 ) );
+	return exp( -0.5 * pow( x / c_beamSigma, 2.0 ) );
 }
 
-Scooter::Radar::Radar( Interface& inter, AircraftState& state ):
-	m_scope(inter),
-	m_aircraftState(state),
-	m_interface(inter),
-	m_normal(0.0, c_beamSigma ),
-	m_uniform(0.0, 2.0 * PI),
-	m_generator(23)
+static double fNorm( double x )
+{
+	return ( 1.0 / ( c_beamSigma * sqrt( 2.0 * PI ) ) ) * f(x);
+}
+
+Scooter::Radar::Radar( Interface& inter, AircraftState& state, Beacon& beacon ) :
+	m_scope( inter ),
+	m_aircraftState( state ),
+	m_interface( inter ),
+	m_beacon( beacon ),
+	m_normal( 0.0, c_beamSigma ),
+	m_uniform( 0.0, 2.0 * PI ),
+	m_generator( 23 )
 {
 	//for ( size_t i = 0; i < SIDE_LENGTH; i++ )
 		//m_scanLine[i] = Vec3f();
 
-	for ( size_t i = 0; i < MAX_BLOBS; i++ )
-	{
-		double x;
-		double y;
-
-		indexToScreenCoords( i, x, y );
-		m_scope.setBlobPos( i, x, y );
-	}
+	resetDraw();
 
 	HMODULE dll = GetModuleHandleA( "worldgeneral.dll" );
 
@@ -116,13 +115,13 @@ bool Scooter::Radar::handleInput( int command, float value )
 		m_detail = value * (5.0_deg - 0.5_deg) + 0.5_deg;
 		return true;
 	case DEVICE_COMMANDS_RADAR_GAIN:
-		m_gain = ( 1.0 - value * 0.9999 ); //c_aGain / (value - c_bGain);//(1.0 - value);//
+		m_gain = exp( -9 * value );//( 1.0 - value * 0.9999 ); //c_aGain / (value - c_bGain);//(1.0 - value);//
 		return true;
 	case DEVICE_COMMANDS_RADAR_BRILLIANCE:
 		m_brilliance = value;
 		return true;
 	case DEVICE_COMMANDS_RADAR_STORAGE:
-		m_storage = (1.0 - 0.01) * pow(1.0 - value, 3.0) + 0.01;
+		m_storage = value * 0.1; //(1.0 - 0.01) * pow(1.0 - value, 3.0) + 0.01;
 		return true;
 	case DEVICE_COMMANDS_RADAR_PLANPROFILE:
 		//This should perhaps be a state change.
@@ -325,7 +324,7 @@ void Scooter::Radar::updateGimbalPlan()
 
 void Scooter::Radar::resetScanData()
 {
-	for ( size_t i = 0; i < SIDE_LENGTH; i++ )
+	for ( size_t i = 0; i < SIDE_HEIGHT; i++ )
 	{
 		m_scanIntensity[i] = 0.0;
 		m_scanAngle[i] = -10000.0;
@@ -415,7 +414,6 @@ void Scooter::Radar::scanOneLine2( bool detail )
 
 		//float y = -1.0 + 2.0 * (float)i / (float)c_rays;
 		//double pitchAngle = 2.5_deg * y;
-
 		if ( ! detail || abs( pitchAngle ) <= m_detail )
 		{
 			if ( scanOneRay( pitchAngle, xRay + yawAngle, range ) )
@@ -425,6 +423,8 @@ void Scooter::Radar::scanOneLine2( bool detail )
 			}
 		}
 	}
+
+	findShips( yawAngle, detail );
 }
 
 void Scooter::Radar::scanOneLine(bool detail)
@@ -449,12 +449,39 @@ void Scooter::Radar::scanOneLine(bool detail)
 	}
 }
 
+void Scooter::Radar::findShips( double yawAngle, bool detail )
+{
+	Vec3 beamDirection = directionVector( m_aircraftState.getAngle().z - m_sweepAngle, m_aircraftState.getAngle().y + yawAngle );
+	
+	std::vector<Ship>& ships = m_beacon.updateShips();
+
+	for ( size_t i = 0; i < ships.size(); i++ )
+	{
+		Vec3 r = ships[i].pos - m_aircraftState.getWorldPosition();
+		double dot = normalize(r) * beamDirection;
+		double angle = acos( dot );
+		if ( angle < 2.5_deg )
+		{
+			double range = magnitude( r );
+			double elevation = asin( r.y / range );
+			//printf( "Range: %lf, Elevation %lf, Azimith\n", range, elevation );
+			size_t index;
+			if ( rangeToDisplayIndex( range, index ) && ( ! detail || abs(elevation) <= m_detail ) ) 
+			{
+				double headingDiff = toRad(ships[i].heading + 45.0) - m_aircraftState.getAngle().y;
+				double gain = f( angle ) * getShipGain( ships[i].rcs, range ) * ( abs(sin( headingDiff )) + 0.1 );
+				m_scanIntensity[index] += gain;
+			}
+		}
+	}
+}
+
 bool Scooter::Radar::scanOneRay( double pitchAngle, double yawAngle, double& range )
 {
 	Vec3 pos = m_aircraftState.getWorldPosition();
 
 	bool obstacle = false;
-
+	
 	double relativePitch;
 	if ( m_aoaCompSwitch )
 		relativePitch = pitchAngle - m_sweepAngle - m_aircraftState.getAOA() * cos( m_aircraftState.getAngle().x );
@@ -479,7 +506,7 @@ bool Scooter::Radar::scanOneRay( double pitchAngle, double yawAngle, double& ran
 		/*if ( reflectivity < c_SNR )
 			return false;*/
 		
-		reflectivity *= 1.0e-3 / m_gain;//rangeKM * rangeKM / (1e5 * m_gain);
+		reflectivity *= 2.0e-4 / m_gain;//rangeKM * rangeKM / (1e5 * m_gain);
 
 		double warningAngle = -calculateWarningAngle( range );
 
@@ -491,21 +518,21 @@ bool Scooter::Radar::scanOneRay( double pitchAngle, double yawAngle, double& ran
 		size_t yIndexMax;
 		if ( rangeToDisplayIndex( range, yIndex ) )
 		{
-			if ( ! rangeToDisplayIndex( range + c_pulseDistance, yIndexMax ) )
-			{
-				m_scanIntensity[yIndex] = clamp( m_scanIntensity[yIndex] + reflectivity, 0.0, 1.0 );
-				m_scanAngle[yIndex] = std::max( m_scanAngle[yIndex], relativePitch );
-			}
-			else
+			if ( rangeToDisplayIndex( range + c_pulseDistance, yIndexMax ) && yIndexMax > yIndex )
 			{
 				double num = (double)yIndexMax - (double)yIndex;
 				double intensity = reflectivity / num;
 
 				for ( size_t i = yIndex; i <= yIndexMax; i++ )
 				{
-					m_scanIntensity[i] = clamp( m_scanIntensity[i] + reflectivity, 0.0, 1.0 );
+					m_scanIntensity[i] += intensity; //clamp( m_scanIntensity[i] + intensity, 0.0, 1.0 );
 					m_scanAngle[i] = std::max( m_scanAngle[i], relativePitch );
 				}
+			}
+			else
+			{
+				m_scanIntensity[yIndex] += reflectivity; //clamp( m_scanIntensity[yIndex] + reflectivity, 0.0, 1.0 );
+				m_scanAngle[yIndex] = std::max( m_scanAngle[yIndex], relativePitch );
 			}
 		}
 	}
@@ -517,26 +544,28 @@ void Scooter::Radar::drawScan()
 {
 	m_cleared = false;
 
-	for ( size_t i = 0; i < SIDE_LENGTH; i++ )
-	{
-		size_t index;
-		findIndex( m_xIndex, i, index );
+	m_scope.addToDisplay( -m_storage );
 
-		double decay = -m_storage;
+	//for ( size_t i = 0; i < SIDE_LENGTH; i++ )
+	//{
+	//	size_t index;
+	//	findIndex( m_xIndex, i, index );
 
-		if ( m_xIndex == 0 || m_xIndex == (SIDE_LENGTH - 1) )
-			decay *= 2.0;
+	//	double decay = -m_storage;
 
-		m_scope.addBlobOpacity( index, decay );
-		//m_scope.setBlobOpacity( index, 0.0 );
-	}
+	//	if ( m_xIndex == 0 || m_xIndex == (SIDE_LENGTH - 1) )
+	//		decay *= 2.0;
+
+	//	m_scope.addBlobOpacity( index, decay );
+	//	//m_scope.setBlobOpacity( index, 0.0 );
+	//}
 		
 
-	for ( size_t i = 0; i < SIDE_LENGTH; i++ )
+	for ( size_t i = 0; i < SIDE_HEIGHT; i++ )
 	{
 		if ( m_scanIntensity[i] == 0.0 )
 		{
-			bool inLimits = i > 0 && i < (SIDE_LENGTH - 1);
+			bool inLimits = i > 0 && i < (SIDE_HEIGHT - 1);
 
 			if ( inLimits && m_scanIntensity[i + 1] != 0.0 && m_scanIntensity[i - 1] != 0.0 )
 			{
@@ -548,7 +577,10 @@ void Scooter::Radar::drawScan()
 
 		size_t index;
 		findIndex( m_xIndex, i, index );
-		m_scope.setBlobOpacity( index, m_brilliance * clamp( m_scanIntensity[i], 0.0, 1.0) );
+
+		
+		m_scope.addBlobOpacity(index, m_brilliance * m_scanIntensity[i]);
+
 	}
 }
 
@@ -673,7 +705,7 @@ void Scooter::Radar::drawScanProfile()
 
 	bool obstacle = false;
 	
-	for ( size_t i = 0; i < SIDE_LENGTH; i++ )
+	for ( size_t i = 0; i < SIDE_HEIGHT; i++ )
 	{
 		if ( m_scanIntensity[i] == 0.0 )
 			continue;
@@ -682,8 +714,8 @@ void Scooter::Radar::drawScanProfile()
 		double normalisedAngle = (15.0_deg / 25.0_deg) + (m_scanAngle[i] / 25.0_deg); //clamp((10.0_deg - m_scanProfile[i]) / 25.0_deg, 0.0, 1.0);
 
 		size_t index;
-		if ( findIndex( i, round(normalisedAngle * (double)SIDE_LENGTH), index ) )
-			m_scope.setBlobOpacity( index, m_brilliance * clamp( m_scanIntensity[i], 0.0, 1.0 ) );
+		if ( findIndex( i * SIDE_RATIO, round(normalisedAngle * (double)SIDE_HEIGHT), index ) )
+			m_scope.addBlobOpacity( index, m_brilliance *  m_scanIntensity[i] );
 	}
 
 	m_cleared = false;

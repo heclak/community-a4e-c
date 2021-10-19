@@ -348,7 +348,7 @@ void Scooter::FlightModel::drag()
 	constexpr double geStrength = 0.4;
 	double ge = ( 1.0 - geStrength * geFactor * geNormalFactor );
 
-	printf( "Surface Height: %lf, Factor: %lf, Normal Factor: %lf\n", m_state.getSurfaceHeight(), geFactor, geNormalFactor );
+	//printf( "Surface Height: %lf, Factor: %lf, Normal Factor: %lf\n", m_state.getSurfaceHeight(), geFactor, geNormalFactor );
 
 	double CD = dCDspeedBrake(0.0) * m_airframe.getSpeedBrakePosition() +
 		CDbeta(m_state.getBeta()) +

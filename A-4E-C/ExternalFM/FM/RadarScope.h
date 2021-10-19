@@ -3,8 +3,11 @@
 #include "Maths.h"
 
 #define SIDE_LENGTH 50
-#define MAX_BLOBS (SIDE_LENGTH * SIDE_LENGTH)
+#define SIDE_HEIGHT 100
+#define SIDE_RATIO ((double)SIDE_LENGTH/(double)SIDE_HEIGHT)
+#define MAX_BLOBS (SIDE_LENGTH * SIDE_HEIGHT)
 
+#define SCREEN_GAIN 50.0
 
 namespace Scooter
 {
@@ -35,9 +38,11 @@ public:
 	inline void setBottomRange( double range );
 	inline void setObstacle( bool light, double volume );
 
+	void addToDisplay( double value );
+
 	void update( double dt );
 
-private:
+public:
 	Interface& m_interface;
 
 	void** m_xParams;
@@ -60,7 +65,7 @@ void RadarScope::addBlobOpacity( size_t index, double value )
 {
 	double currentValue = m_interface.getParamNumber( m_opacityParams[index] );
 
-	setBlobOpacity( index, clamp(currentValue + value, 0.0, 1.0) );
+	setBlobOpacity( index, clamp(currentValue + value, 0.0, SCREEN_GAIN ) );
 }
 
 void RadarScope::setBlobOpacity( size_t index, double value )

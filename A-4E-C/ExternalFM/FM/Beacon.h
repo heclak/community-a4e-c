@@ -21,6 +21,7 @@
 
 #include "Vec3.h"
 #include "Interface.h"
+#include "Ship.h"
 
 #ifndef USE_OBJECT_FINDER
 typedef bool ObjectFinder;
@@ -41,6 +42,8 @@ public:
 	inline const Vec3& getPosition() const;
 	inline const float getHeading() const; //degrees
 
+	inline std::vector<Ship>& updateShips();
+
 private:
 	Interface& m_interface;
 
@@ -49,7 +52,16 @@ private:
 	
 
 	ObjectFinder m_finder;
+
+	std::unordered_map<uint32_t, Ship> m_ships;
 };
+
+inline std::vector<Ship>& Beacon::updateShips()
+{
+#ifdef USE_OBJECT_FINDER
+	return m_finder.updateShips();
+#endif
+}
 
 inline const Vec3& Beacon::getPosition() const
 {

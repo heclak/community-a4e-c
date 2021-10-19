@@ -99,6 +99,10 @@ local tanks = {
     [3] = fm_r_tank_capacity,
 }
 
+function fm_setCatMode(value)
+    fm_cat_auto_mode:set(value and 1.0 or 0.0)
+end
+
 function fm_toggleCatMode(value)
     local cur = fm_cat_auto_mode:get()
     if cur == 1.0 then
@@ -387,6 +391,7 @@ function get_efm_data_bus()
     efm_data_bus.fm_setTacanName = fm_setTacanName
     efm_data_bus.fm_setRadarDisabled = fm_setRadarDisabled
     efm_data_bus.fm_toggleCatMode = fm_toggleCatMode
+    efm_data_bus.fm_setCatMode = fm_setCatMode
 
 
     efm_data_bus.fm_getGunsightAngle = fm_getGunsightAngle

@@ -5,6 +5,7 @@
 #include "Units.h"
 #include "Maths.h"
 #include "BaseComponent.h"
+#include "Beacon.h"
 
 constexpr static double c_obstructionPeriod = 2.0;
 
@@ -35,7 +36,7 @@ namespace Scooter
 class Radar : public BaseComponent
 {
 public:
-	Radar( Interface& inter, AircraftState& state );
+	Radar( Interface& inter, AircraftState& state, Beacon& beacon );
 
 	virtual void zeroInit();
 	virtual void coldInit();
@@ -53,12 +54,15 @@ private:
 	{
 		LAND = 0,
 		SEA = 1,
+		SHORE = 3,
 		ROAD = 2,
 		RIVER = 4,
 		CITY = 5,
 		LAKE = 7,
+		RAILWAY = 9,
 		FOREST = 49,
-		FARMLAND = 22
+		FARMLAND = 22,
+		AIRFIELD = 23,
 	};
 
 	enum State
@@ -105,6 +109,7 @@ private:
 	static inline double getReflection( const Vec3& dir, const Vec3& normal, TerrainType type );
 	static inline double typeReflectivity( TerrainType type );
 	static inline double angleAxisToCommand( double axis );
+	static inline double getShipGain( double rcs, double range );
 
 	void scanPlan(double dt);
 	void updateGimbalPlan();
@@ -114,6 +119,7 @@ private:
 	void scanOneLine2( bool detail );
 	void scanOneLine3( bool detail );
 	bool scanOneRay( double pitchAngle, double yawAngle,  double& range );
+	void findShips( double yawAngle, bool detail );
 
 	void drawScan();
 	void scanAG(double dt);
@@ -128,6 +134,8 @@ private:
 	RadarScope m_scope;
 	AircraftState& m_aircraftState;
 	Interface& m_interface;
+	Beacon& m_beacon;
+
 	void* m_terrain = nullptr;
 
 	double m_scale = 1.0;
@@ -142,8 +150,8 @@ private:
 	int m_volumeMoving = 0;
 
 	//Intensity of return and Pitch Angle against range index.
-	double m_scanIntensity[SIDE_LENGTH];
-	double m_scanAngle[SIDE_LENGTH];
+	double m_scanIntensity[SIDE_HEIGHT];
+	double m_scanAngle[SIDE_HEIGHT];
 
 	//Constants
 	const double m_warmupTime = 180.0;
@@ -184,7 +192,6 @@ private:
 	std::default_random_engine m_generator;
 	std::normal_distribution<double> m_normal;
 	std::uniform_real_distribution<double> m_uniform;
-
 };
 
 
@@ -195,19 +202,9 @@ double Radar::rangeToDisplay( double range )
 
 bool Radar::rangeToDisplayIndex( double range, size_t& index )
 {
-	index = round(SIDE_LENGTH * range / (20.0_nauticalMile * m_scale));
+	index = round( SIDE_HEIGHT * range / (20.0_nauticalMile * m_scale));
 
-	if ( index >= 0 && index < SIDE_LENGTH )
-		return true;
-	else
-		return false;
-}
-
-bool Radar::coordToIndex( double coord, size_t& index )
-{
-	index = round(((coord + 1.0) / 2.0) * (double)SIDE_LENGTH);
-
-	if ( index >= 0 && index < SIDE_LENGTH )
+	if ( index >= 0 && index < SIDE_HEIGHT )
 		return true;
 	else
 		return false;
@@ -253,6 +250,8 @@ double Radar::typeReflectivity( TerrainType type )
 	case LAND:
 		return 1.0;
 	case ROAD:
+		return 0.7;
+	case SHORE:
 		return 0.8;
 	case SEA:
 		return 0.001;
@@ -260,14 +259,19 @@ double Radar::typeReflectivity( TerrainType type )
 		return 0.0001;
 	case LAKE:
 		return 0.0001;
+	case RAILWAY:
+		return 50.0;
 	case FOREST:
 		return 2.0;// + random() * 0.1;
 	case CITY:
-		return 3.0;// + random() * 0.5;
+		return 0.8 + ( random() < 0.7 ? 50.0 : 0.0 );// + random() * 0.5;
 	case FARMLAND:
 		return 1.2;
+	case AIRFIELD:
+		return 0.7;
 	}
 
+	printf( "%d\n", type );
 	return 1.0;
 }
 
@@ -288,13 +292,13 @@ void Radar::indexToScreenCoords( size_t index, double& x, double& y )
 	size_t yI = index / SIDE_LENGTH;
 
 	x = ((double)xI / (double)SIDE_LENGTH) * 2.0 - 1.0;
-	y = ((double)yI / (double)SIDE_LENGTH) * 2.0 - 1.0;
+	y = ((double)yI / (double)SIDE_HEIGHT) * 2.0 - 1.0;
 }
 
 bool Radar::screenCoordToIndex( double x, double y, size_t& index )
 {
 	size_t xI = round(((x + 1.0) / 2.0) * SIDE_LENGTH);
-	size_t yI = round(((y + 1.0) / 2.0) * SIDE_LENGTH);
+	size_t yI = round(((y + 1.0) / 2.0) * SIDE_HEIGHT);
 
 	return findIndex( xI, yI, index);
 }
@@ -320,6 +324,12 @@ double Radar::angleAxisToCommand( double axis )
 	return axis > 0 ? 0.4 + 0.6 * axis : 0.4 + 0.4 * axis;
 
 
+}
+
+double Radar::getShipGain( double rcs, double range )
+{
+	range /= 1000.0;
+	return c_radarGain * rcs / pow( range, 4 );
 }
 
 void Radar::resetObstacleData()

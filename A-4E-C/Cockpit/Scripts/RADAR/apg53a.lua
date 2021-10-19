@@ -194,7 +194,20 @@ function clear_all_blobs()
     end
 end
 
+function reset_blobs()
+    local max=math.floor(math.sqrt(max_blobs))
+    for i=1,max_blobs do
+        set_blob(i,-1+(i%max)*(2/max), -1+math.floor(i/max)*(2/max), 0.0)
+    end
+end
+
 function post_initialize()
+
+    if not check_disabled() then
+        reset_blobs()
+    end
+    
+
     -- initialize sounds first
     sndhost = create_sound_host("COCKPIT_RADAR","HEADPHONES",0,0,0)
     obsttone = sndhost:create_sound("Aircrafts/A-4E-C/obsttone") -- refers to sdef file, and sdef file content refers to sound file, see DCSWorld/Sounds/sdef/_example.sdef
