@@ -7,7 +7,7 @@
 #define SIDE_RATIO ((double)SIDE_LENGTH/(double)SIDE_HEIGHT)
 #define MAX_BLOBS (SIDE_LENGTH * SIDE_HEIGHT)
 
-#define SCREEN_GAIN 50.0
+#define SCREEN_GAIN 1.0
 
 namespace Scooter
 {
@@ -26,7 +26,7 @@ public:
 	RadarScope( Interface& inter );
 	~RadarScope();
 
-	inline void addBlobOpacity( size_t index, double value );
+	inline void addBlobOpacity( size_t index, double value, double brilliance );
 	inline void setBlobOpacity( size_t index, double value );
 	inline void setBlob( size_t index, double x, double y, double opacity );
 	inline void setBlobPos( size_t index, double x, double y );
@@ -61,11 +61,11 @@ public:
 	bool m_obstacle = false;
 };
 
-void RadarScope::addBlobOpacity( size_t index, double value )
+void RadarScope::addBlobOpacity( size_t index, double value, double brilliance )
 {
 	double currentValue = m_interface.getParamNumber( m_opacityParams[index] );
 
-	setBlobOpacity( index, clamp(currentValue + value, 0.0, SCREEN_GAIN ) );
+	setBlobOpacity( index, clamp(currentValue + value * brilliance, 0.0, SCREEN_GAIN * brilliance ) );
 }
 
 void RadarScope::setBlobOpacity( size_t index, double value )

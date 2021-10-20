@@ -264,7 +264,7 @@ double Radar::typeReflectivity( TerrainType type )
 	case FOREST:
 		return 2.0;// + random() * 0.1;
 	case CITY:
-		return 0.8 + ( random() < 0.7 ? 50.0 : 0.0 );// + random() * 0.5;
+		return 0.8 + ( random() < 0.7 ? 100.0 : 0.0 );// + random() * 0.5;
 	case FARMLAND:
 		return 1.2;
 	case AIRFIELD:

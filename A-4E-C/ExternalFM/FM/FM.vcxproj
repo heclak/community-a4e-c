@@ -87,7 +87,7 @@
     <LinkIncremental>false</LinkIncremental>
     <TargetName>A-4E-C</TargetName>
     <OutDir>..\..\bin\</OutDir>
-    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

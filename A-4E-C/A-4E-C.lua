@@ -21,7 +21,11 @@ local function coltMK12(tbl)
     tbl.supply      =
     {
         shells = {"20x110mm HE-I", "20x110mm AP-I", "20x110mm AP-T"},
-        mixes  = {{1,2,1,2,1,3}},   -- 50% HE-i, 25% AP-I, 25% AP-T
+        mixes  = {
+            {1,2,1,3},
+            {1,1,1,1,1,3},
+            {3},
+        },   -- 50% HE-i, 25% AP-I, 25% AP-T
         count  = 100,
     }
     if tbl.mixes then
@@ -840,11 +844,12 @@ A_4E_C =  {
                 }),
     },
 
-    -- ammo_type = {
-        -- _("CM Combat Mix"),
-        -- _("HEI High Explosive Incendiary"),
-        -- _("TP Target Practice"),
-    -- },
+    ammo_type_default = 1,
+    ammo_type = {
+        _("CM Combat Mix"),
+        _("HEI High Explosive Incendiary"),
+        _("AP-T")
+    },
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
     Pylons =     {

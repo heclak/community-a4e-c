@@ -13,7 +13,7 @@
 #include "Vec3.h"
 #include <stdint.h>
 
-constexpr static double c_radarGain = 2.0e-1;
+constexpr static double c_radarGain = 2.0e0;
 
 struct Ship
 {

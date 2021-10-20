@@ -579,7 +579,7 @@ void Scooter::Radar::drawScan()
 		findIndex( m_xIndex, i, index );
 
 		
-		m_scope.addBlobOpacity(index, m_brilliance * m_scanIntensity[i]);
+		m_scope.addBlobOpacity(index, m_scanIntensity[i], m_brilliance);
 
 	}
 }
@@ -696,7 +696,7 @@ void Scooter::Radar::drawScanProfile()
 {
 	for ( size_t i = 0; i < MAX_BLOBS; i++ )
 	{
-		m_scope.addBlobOpacity( i, -m_storage );
+		m_scope.addBlobOpacity( i, -m_storage, m_brilliance );
 		double x;
 		double y;
 		indexToScreenCoords( i, x, y );
@@ -715,7 +715,7 @@ void Scooter::Radar::drawScanProfile()
 
 		size_t index;
 		if ( findIndex( i * SIDE_RATIO, round(normalisedAngle * (double)SIDE_HEIGHT), index ) )
-			m_scope.addBlobOpacity( index, m_brilliance *  m_scanIntensity[i] );
+			m_scope.addBlobOpacity( index, m_scanIntensity[i], m_brilliance );
 	}
 
 	m_cleared = false;
