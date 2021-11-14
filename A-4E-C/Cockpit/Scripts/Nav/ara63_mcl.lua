@@ -49,7 +49,7 @@ local icls_to_object_id = {}
 local beacon_offsets = {
     ["Stennis"]  = {18.0, 13.0, 9.0},
     ["hmas_melbourne_wip"]  = {9.0, 7.5, 5.5},
-	["hmas_melbourne"]  = {9.0, 7.5, 5.5},
+    ["hmas_melbourne"]  = {9.0, 7.5, 5.5},
 }
 
 -------------------------------------------
