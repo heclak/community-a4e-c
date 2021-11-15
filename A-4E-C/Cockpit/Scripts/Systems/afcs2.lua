@@ -910,7 +910,12 @@ function update_afcs()
         end
         return
     elseif afcs_state == AFCS_STATE_ATTITUDE_ONLY then
-        afcs_hold_bank(afcs_bank_angle_hold)
+        if afcs_bank_angle_hold > 5 or afcs_bank_angle_hold < -5 then
+            afcs_hold_bank(afcs_bank_angle_hold)
+        else
+            --Heading hold mode (submode of attitude hold mode)
+            afcs_hold_bank(0)
+        end
         afcs_hold_pitch(afcs_pitch_angle_hold)
     elseif afcs_state == AFCS_STATE_ATTITUDE_HDG then
         afcs_hold_bank(afcs_find_heading_desired_bank_angle())
