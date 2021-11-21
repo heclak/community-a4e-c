@@ -12,6 +12,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Generate_Control_Headers", 
 		{30A7F19A-ED9B-4E78-99E7-C40FB579973A} = {30A7F19A-ED9B-4E78-99E7-C40FB579973A}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Avionics", "Avionics\Avionics.vcxproj", "{06B17028-F107-4159-B99E-DB914DC31349}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -44,6 +46,14 @@ Global
 		{F6EFF4C6-EF0E-4E02-AA48-542AF3B24541}.Release|Win32.Build.0 = Release|Win32
 		{F6EFF4C6-EF0E-4E02-AA48-542AF3B24541}.Release|x64.ActiveCfg = Release|x64
 		{F6EFF4C6-EF0E-4E02-AA48-542AF3B24541}.Release|x64.Build.0 = Release|x64
+		{06B17028-F107-4159-B99E-DB914DC31349}.Debug|Win32.ActiveCfg = Debug|Win32
+		{06B17028-F107-4159-B99E-DB914DC31349}.Debug|Win32.Build.0 = Debug|Win32
+		{06B17028-F107-4159-B99E-DB914DC31349}.Debug|x64.ActiveCfg = Debug|x64
+		{06B17028-F107-4159-B99E-DB914DC31349}.Debug|x64.Build.0 = Debug|x64
+		{06B17028-F107-4159-B99E-DB914DC31349}.Release|Win32.ActiveCfg = Release|Win32
+		{06B17028-F107-4159-B99E-DB914DC31349}.Release|Win32.Build.0 = Release|Win32
+		{06B17028-F107-4159-B99E-DB914DC31349}.Release|x64.ActiveCfg = Release|x64
+		{06B17028-F107-4159-B99E-DB914DC31349}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
