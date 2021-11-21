@@ -116,6 +116,7 @@ function append_beacons_to_id(groups, tacan_to_id, icls_to_id)
             search_for_task_beacons(tasks, group_beacon_data)
         end
         local unit_id = value["units"][1]["unitId"]
+        local unit_type = value["units"][1]["type"]
 
         for i,unit in ipairs(group_beacon_data) do
             local unit_id_to_use = unit_id
@@ -128,21 +129,21 @@ function append_beacons_to_id(groups, tacan_to_id, icls_to_id)
             local table_to_use = tacan_to_id
 
             if unit.type == "icls" then
-                append_group_beacon_data(icls_to_id, unit.channel, unit_id_to_use, name, unit.callsign, false)
+                append_group_beacon_data(icls_to_id, unit.channel, unit_id_to_use, name, unit.callsign, false, unit_type)
             else
-                append_group_beacon_data(tacan_to_id, unit.channel, unit_id_to_use, name, unit.callsign, unit.air_to_air)
+                append_group_beacon_data(tacan_to_id, unit.channel, unit_id_to_use, name, unit.callsign, unit.air_to_air, unit_type)
             end
         end
     end
 end
 
-function append_group_beacon_data(t, channel, unit_id, name, callsign, air_to_air)
+function append_group_beacon_data(t, channel, unit_id, name, callsign, air_to_air, unit_type)
     if t[channel] == nil then
         t[channel] = {}
-        t[channel][1] = { id = unit_id, name = name, callsign = callsign, air_to_air = air_to_air }
+        t[channel][1] = { id = unit_id, name = name, callsign = callsign, air_to_air = air_to_air, type = unit_type }
     else
         local len = #t[channel]
-        t[channel][len+1] = { id = unit_id, name = name, callsign = callsign, air_to_air = air_to_air }
+        t[channel][len+1] = { id = unit_id, name = name, callsign = callsign, air_to_air = air_to_air, type = unit_type }
     end
 end
 

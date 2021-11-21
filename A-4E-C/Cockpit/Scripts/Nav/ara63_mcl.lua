@@ -43,6 +43,16 @@ local ils_data, marker_data = get_ils_data_in_format()
 local tacan_to_object_id = {}
 local icls_to_object_id = {}
 
+-- Beacon offset in format [x offset (forward-backward), z offset(left-right), deck angle]
+--
+-- deck angle of Melbourne found at https://www.navy.gov.au/history/angled-flight-deck
+
+local beacon_offsets = {
+    ["Stennis"] = {18.0, 13.0, 9.0},
+    ["hmas_melbourne_wip"] = {60.0, 0.0, 5.5},
+    ["hmas_melbourne"] = {60.0, 0.0, 5.5},
+}
+
 -------------------------------------------
 --           FILE VARIABLES
 -------------------------------------------
@@ -301,11 +311,27 @@ function fetch_current_ils()
             --This is really lazy, I just couldn't
             --be bothered to create another 2d rotation
             --function.
-            x_dir.x = -x_dir.x * 18.0
-            x_dir.z = -x_dir.z * 18.0
+            local x_offset = 18.0
+            local z_offset = 13.0
 
-            z_dir.x = z_dir.x * 13.0
-            z_dir.z = z_dir.z * 13.0
+            -- Nimitz class deck angle = 9.0 deg
+            -- Majestic class deck angle = 5.5 deg
+            local deck_angle = 9.0
+			
+            local ship_os = beacon_offsets[object_data.type]
+            -- override the default values if ship type found
+            if ship_os then
+                --print_message_to_user("x= "..tostring(ship_os[1]).." z= "..tostring(ship_os[2]).." angle= "..tostring(ship_os[3]))
+                x_offset = ship_os[1]
+                z_offset = ship_os[2]
+                deck_angle = ship_os[3]
+            end
+			
+            x_dir.x = -x_dir.x * x_offset
+            x_dir.z = -x_dir.z * x_offset
+
+            z_dir.x = z_dir.x * z_offset
+            z_dir.z = z_dir.z * z_offset
 
             x = x + x_dir.x + z_dir.x
             z = z + x_dir.z + z_dir.z
@@ -326,7 +352,7 @@ function fetch_current_ils()
                         y = y,
                         z = z, 
                     },
-                    direction = heading - 9,
+                    direction = heading - deck_angle,
                     frequency = 0,
                 },
 
@@ -337,7 +363,7 @@ function fetch_current_ils()
                         z = z,
                         
                     },
-                    direction = heading - 9,
+                    direction = heading - deck_angle,
                     frequency = 0,
                 },
             }
