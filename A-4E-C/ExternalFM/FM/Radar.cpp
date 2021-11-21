@@ -4,6 +4,7 @@
 #include <math.h>
 #include "cockpit_base_api.h"
 #include "Devices.h"
+#include "ShipFinder.h"
 
 //TODO Rewrite this pile of shit.
 
@@ -451,10 +452,15 @@ void Scooter::Radar::scanOneLine(bool detail)
 
 void Scooter::Radar::findShips( double yawAngle, bool detail )
 {
+	const std::vector<Ship>* shipsPtr = getShips();
+
+	if ( ! shipsPtr )
+		return;
+
+	const std::vector<Ship>& ships = *shipsPtr;
+
 	Vec3 beamDirection = directionVector( m_aircraftState.getAngle().z - m_sweepAngle, m_aircraftState.getAngle().y + yawAngle );
 	
-	std::vector<Ship>& ships = m_beacon.updateShips();
-
 	for ( size_t i = 0; i < ships.size(); i++ )
 	{
 		Vec3 r = ships[i].pos - m_aircraftState.getWorldPosition();
