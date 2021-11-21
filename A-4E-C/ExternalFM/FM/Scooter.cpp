@@ -352,6 +352,33 @@ void ed_fm_simulate(double dt)
 	s_beacon->update();
 	s_radar->update( dt );
 
+	
+	//yaw += dyaw;
+	//pitch += dpitch;
+	//
+	////update_command( s_missile, s_state->getWorldPosition(), s_avionics->getComputer().m_target );
+	//Vec3 pos;
+	////printf( "%lf,%lf,%lf -> %lf, %lf, %lf\n", dir.x, dir.y, dir.z, new_dir.x, new_dir.y, new_dir.z);
+
+	//double new_yaw = 0.0;
+	//double new_pitch = 0.0;
+	//Vec3 dir = get_vecs( s_missile, new_pitch, new_yaw, pos );
+
+	//static int counter = 0;
+	//counter = ( counter + 1 ) % 300;
+	//if ( ! s_steering && counter == 0 )
+	//{
+	//	yaw = new_yaw;
+	//	pitch = new_pitch;
+	//}
+	//	
+	//printf( "%d Steering\n", s_steering );
+
+	//Vec3 new_dir = Scooter::directionVector( pitch, yaw );
+	//Vec3 newPos = new_dir * 1000.0 + pos;
+	//printf( "Spot pos: %lf,%lf,%lf Missile Pos: %lf,%lf,%lf\n", newPos.x, newPos.y, newPos.z, pos.x,pos.y,pos.z );
+	//set_laser_spot_pos( s_spot, newPos );
+	
 
 	//s_scope->setBlob( 1, 0.5, 0.5, 1.0 );
 	
@@ -556,6 +583,7 @@ void ed_fm_set_command
 	float value
 )
 {
+
 	switch (command)
 	{
 	case Scooter::Control::PITCH:
@@ -633,7 +661,6 @@ void ed_fm_set_command
 	case KEYS_BRAKESON:
 		s_input->leftBrakeAxis().keyIncrease();
 		s_input->rightBrakeAxis().keyIncrease();
-		//s_airframe->breakWing();
 		break;
 	case KEYS_BRAKESOFF:
 		s_input->leftBrakeAxis().reset();
@@ -660,8 +687,6 @@ void ed_fm_set_command
 		if ( s_airframe->getNoseCompression() > 0.01 && magnitude(s_state->getLocalSpeed()) < 25.0 )
 			s_airframe->toggleSlatsLocked();
 		break;
-	case KEYS_CAT_POWER_TOGGLE:
-
 
 	default:
 		;// printf( "number %d: %lf\n", command, value );
@@ -886,9 +911,9 @@ double ed_fm_get_param(unsigned index)
 	case ED_FM_ENGINE_1_COMBUSTION:
 		return s_engine->getFuelFlow() / c_fuelFlowMax;
 	case ED_FM_SUSPENSION_1_RELATIVE_BRAKE_MOMENT:
-		return s_interface->getChocks() ? 1.0 : s_input->brakeLeft();
+		return s_interface->getChocks() ? 1.0 : pow(s_input->brakeLeft(), 4.0);
 	case ED_FM_SUSPENSION_2_RELATIVE_BRAKE_MOMENT:
-		return s_interface->getChocks() ? 1.0 : s_input->brakeRight();
+		return s_interface->getChocks() ? 1.0 : pow(s_input->brakeRight(), 4.0);
 	case ED_FM_SUSPENSION_0_WHEEL_SELF_ATTITUDE:
 		if constexpr ( s_NWSEnabled )
 			return s_interface->getNWS() ? 0.0 : 1.0;
