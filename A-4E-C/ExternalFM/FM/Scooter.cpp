@@ -41,7 +41,6 @@ static Scooter::Engine2* s_engine = NULL;
 static Scooter::Airframe* s_airframe = NULL;
 static Scooter::FlightModel* s_fm = NULL;
 static Scooter::Avionics* s_avionics = NULL;
-static Scooter::Radio* s_radio = NULL;
 static Scooter::FuelSystem2* s_fuelSystem = NULL;
 static LuaVM* s_luaVM = NULL;
 static Scooter::ILS* s_ils = NULL;
@@ -197,7 +196,6 @@ void init(const char* config)
 	s_airframe = new Scooter::Airframe( *s_state, *s_input, *s_engine );
 	s_avionics = new Scooter::Avionics( *s_input, *s_state, *s_interface );
 	s_fm = new Scooter::FlightModel( *s_state, *s_input, *s_airframe, *s_engine, *s_interface, s_splines );
-	s_radio = new Scooter::Radio(*s_interface);
 	s_ils = new Scooter::ILS(*s_interface);
 	s_fuelSystem = new Scooter::FuelSystem2( *s_engine, *s_state );
 	s_beacon = new Scooter::Beacon(*s_interface);
@@ -218,7 +216,6 @@ void cleanup()
 	delete s_airframe;
 	delete s_avionics;
 	delete s_fm;
-	delete s_radio;
 	delete s_ils;
 	delete s_fuelSystem;
 	delete s_beacon;
@@ -232,7 +229,6 @@ void cleanup()
 	s_airframe = NULL;
 	s_avionics = NULL;
 	s_fm = NULL;
-	s_radio = NULL;
 	s_ils = NULL;
 	s_fuelSystem = NULL;
 	s_beacon = NULL;
@@ -343,13 +339,11 @@ void ed_fm_simulate(double dt)
 
 	//Update
 	s_input->update(s_interface->getWheelBrakeAssist());
-	s_radio->update();
 	s_engine->updateEngine(dt);
 	s_airframe->airframeUpdate(dt);
 	s_fuelSystem->update( dt );
 	s_avionics->updateAvionics(dt);
 	s_fm->calculateAero(dt);
-	s_beacon->update();
 	s_radar->update( dt );
 
 	
@@ -678,9 +672,6 @@ void ed_fm_set_command
 		break;
 	case KEYS_BRAKESOFFRIGHT:
 		s_input->rightBrakeAxis().reset();
-		break;
-	case KEYS_RADIO_PTT:
-		s_radio->toggleRadioMenu();
 		break;
 	case KEYS_TOGGLESLATSLOCK:
 		//Weight on wheels plus lower than 50 kts.

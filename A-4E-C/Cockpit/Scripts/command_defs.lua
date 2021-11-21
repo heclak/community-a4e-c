@@ -366,6 +366,14 @@ Keys =
     ArmsEmerSelCCW                 = __custom_counter(),
     FuelControl                    = __custom_counter(),
     cat_power_toggle               = __custom_counter(),
+    
+
+    bullpup_up = __custom_counter(),
+    bullpup_down = __custom_counter(),
+    bullpup_left = __custom_counter(),
+    bullpup_right = __custom_counter(),
+    bullpup_yaw_stop = __custom_counter(),
+    bullpup_pitch_stop = __custom_counter(),
 }
 
 start_command   = 3000

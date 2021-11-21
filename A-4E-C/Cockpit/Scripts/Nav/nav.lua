@@ -9,6 +9,8 @@ dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 dofile(LockOn_Options.script_path.."Systems/air_data_computer_api.lua")
 dofile(LockOn_Options.script_path.."Systems/tacan_efm_api.lua")
 
+avionics = require_avionics()
+
 startup_print("nav: load")
 
 local dev = GetSelf()
@@ -2102,6 +2104,7 @@ function fetch_object_beacon_data(channel, air_to_air)
             position = { x = 0.0, y = 0.0, z = 0.0 },
             callsign = object.callsign,
             objectID = object.id,
+            objectName = object.name,
             ntype = NAV_TYPE_TCN,
             frequency = 0.0,
             channel = channel,
@@ -2132,11 +2135,13 @@ function update_object_beacon(cur_beacon)
     if cur_beacon == nil or not cur_beacon.mobile then
         return false
     end
-    cur_beacon.position.x, cur_beacon.position.y, cur_beacon.position.z = tacan_efm_api:getPosition()
+    --cur_beacon.position.x, cur_beacon.position.y, cur_beacon.position.z = tacan_efm_api:getPosition()
+    cur_beacon.position = avionics.MissionObjects.getObjectPosition(cur_beacon.objectID, cur_beacon.objectName)
 
     --print_message_to_user(tostring(cur_beacon.position.x).." "..tostring(cur_beacon.position.y).." "..tostring(cur_beacon.position.z))
 
-    if not efm_data_bus.fm_tacanValid() then
+    if cur_beacon.position == nil then
+        cur_beacon.position = {x = 0.0, y = 0.0, z = 0.0}
         return false
     end
 

@@ -8,6 +8,8 @@ dofile(LockOn_Options.script_path.."Systems/mission_utils.lua")
 dofile(LockOn_Options.script_path.."Systems/adi_needles_api.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 
+avionics = require_avionics()
+
 local dev = GetSelf()
 
 local Terrain = require('terrain')
@@ -280,10 +282,15 @@ function fetch_current_ils()
         mcl_efm_api:setObjectID(object_data.id)
         mcl_efm_api:setObjectName(object_data.name)
 
-        if mcl_efm_api:isValid() then
+        local position = avionics.MissionObjects.getObjectPosition(object_data.id, object_data.name)
 
-            local x, y, z = mcl_efm_api:getPosition()
-            local heading = mcl_efm_api:getHeading()
+        if position then
+
+            local x = position.x
+            local y = position.y
+            local z = position.z
+
+            local heading = avionics.MissionObjects.getObjectBearing(object_data.id, object_data.name)
 
             local z_dir = bearing_to_vec2d(heading - 90)
             local x_dir = bearing_to_vec2d(heading)

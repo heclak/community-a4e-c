@@ -711,3 +711,47 @@ function normalize_vec2d(vec)
 	}
 	return new_vec
 end
+
+local function stub(self, ...) 
+  return nil
+end
+
+local function new(cls, ...)
+  tbl = getmetatable(cls)
+  tbl.__index = tbl
+
+  return setmetatable({}, tbl)
+end
+
+function require_avionics()
+  package.cpath = package.cpath..";"..LockOn_Options.script_path.."..\\..\\bin\\?.dll"
+  success,result = pcall(require,'ScooterAvionics')
+
+  if success and result ~= false then
+    return result
+  else
+    -- These stub out the functions that are required by ScooterAvionics.dll
+    -- This is so that if someone rebuilds the open-source part of the code
+    -- they can still use the aircraft without errors.
+    local stubs = {
+      ExtendedRadio = setmetatable({}, {
+        __call = new,
+        init = stub,
+        setPower = stub,
+        pushToTalk = stub,
+      }),
+
+      AdvancedWeaponSystem = setmetatable({}, {
+        __call = new,
+        launch = stub,
+        updateSteering = stub,
+      }),
+
+      MissionObjects = {
+        getObjectBearing = stub,
+        getObjectPosition = stub,
+      },
+    }
+    return stubs
+  end
+end
