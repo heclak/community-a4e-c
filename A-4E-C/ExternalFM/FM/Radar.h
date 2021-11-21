@@ -9,18 +9,6 @@
 
 constexpr static double c_obstructionPeriod = 2.0;
 
-struct Vec3f
-{
-	Vec3f() {}
-	Vec3f( const Vec3& v ) :
-		x( v.x ), y( v.y ), z( v.z )
-	{}
-
-	float x = 0.0;
-	float y = 0.0;
-	float z = 0.0;
-};
-
 extern "C"
 {
 	void* _find_vfptr_fnc( void*, intptr_t );

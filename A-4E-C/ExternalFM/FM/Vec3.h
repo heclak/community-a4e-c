@@ -167,5 +167,17 @@ inline double magnitudeSquared( const Vec3& a )
 	return dot( a, a );
 }
 
+struct Vec3f
+{
+	Vec3f() {}
+	Vec3f( const Vec3& v ) :
+		x( v.x ), y( v.y ), z( v.z )
+	{}
+
+	float x = 0.0;
+	float y = 0.0;
+	float z = 0.0;
+};
+
 #endif
 
