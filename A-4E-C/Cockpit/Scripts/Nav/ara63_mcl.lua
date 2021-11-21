@@ -1,4 +1,3 @@
-dofile(LockOn_Options.script_path.."Systems/mcl_efm_api.lua")
 dofile(LockOn_Options.script_path.."Nav/ils_utils.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
@@ -288,9 +287,6 @@ function fetch_current_ils()
     if objects then
 
         local object_data = objects[1]
-
-        mcl_efm_api:setObjectID(object_data.id)
-        mcl_efm_api:setObjectName(object_data.name)
 
         local position = avionics.MissionObjects.getObjectPosition(object_data.id, object_data.name)
 

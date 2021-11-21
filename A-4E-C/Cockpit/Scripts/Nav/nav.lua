@@ -7,7 +7,6 @@ dofile(LockOn_Options.script_path.."Nav/NAV_util.lua")
 dofile(LockOn_Options.script_path.."Nav/ils_utils.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 dofile(LockOn_Options.script_path.."Systems/air_data_computer_api.lua")
-dofile(LockOn_Options.script_path.."Systems/tacan_efm_api.lua")
 
 avionics = require_avionics()
 
@@ -2111,18 +2110,6 @@ function fetch_object_beacon_data(channel, air_to_air)
             air_to_air = object.air_to_air,
             mobile = true,
         }
-
-        if object.id then
-            tacan_efm_api:setObjectID(object.id)
-        else
-            tacan_efm_api:setObjectID(0)
-        end
-
-        if object.name then
-            tacan_efm_api:setObjectName(object.name)
-        else
-            tacan_efm_api:setObjectName("")
-        end
 
         return cur_beacon
     end
