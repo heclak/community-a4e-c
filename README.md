@@ -16,7 +16,7 @@ Gospadin, Heclak, Joshua Nelson, plusnine, Farlander, gyrovague, kryb/Archimaede
 
 ### Community Contributors
 
-SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohlinkzei, Coragem, Sidekick65, SPINEG, Shadowfrost, Sport, rudel-chw, Luciano, Malamem, HellesBelles, Bungo, Corsair016, FlyingHueman, JacobBadShot, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
+SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohlinkzei, Coragem, Sidekick65, SPINEG, Shadowfrost, Sport, rudel-chw, Luciano, Malamem, HellesBelles, Bungo, Corsair016, FlyingHueman, JacobBadShot, JP Gabobo, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
 
 ## Features
 
@@ -79,7 +79,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 - **Textures:**
   - Added unique helmets, pilot uniforms and patches
   - Added preliminary damage textures
-  - Improved exterior and interior textures *(thanks HellesBelle, Sport)*
+  - Improved exterior and interior textures *(thanks HellesBelle, Sport, JP Gabobo)*
   - Fixed exterior and cockpit model material names to avoid conflicts
 - **Liveries:**
   - Added Community III: Forever Free, 2021 (Fictional)
@@ -90,6 +90,9 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Added Brazil Marinha do Brasil VF-1 15 AÑOS, 2013 *(thanks Bungo)*
   - Added Finland FiAF, 1984 (Fictional) *(thanks FinCenturion)*
   - Added Malaysia TUDM M32-29 No.9 Squadron, 2004 *(thanks JacobBadshot)*
+  - Added USN VA-46 Clansmen, 1967
+  - Added USN VA-83 Black Lancers, 1966
+  - Added USN VA-106 Gladiators, 1967
   - Added RAF Empire Pilots Test School Raspberry Ripple (Fictional) *(thanks FlyingHueman)*
   - Added RNZAF Golden T-Bird No.2, Squadron Ohakea, 1986 *(thanks Corsair016)*
   - Improved inaccuracies and naming across liveries
