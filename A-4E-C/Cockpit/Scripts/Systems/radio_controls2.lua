@@ -98,7 +98,6 @@ end
 
 function post_initialize()
     uhf_radio_device = GetDevice(devices.UHF_RADIO)
-    print_message_to_user(recursively_traverse(extended_dev))
 	arc51_set_knobs_to_frequency(arc51_radio_presets[1])
 
     extended_dev:init()
