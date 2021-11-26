@@ -602,10 +602,13 @@ function afcs_transition_state(from, to)
         end
 
     elseif to == AFCS_STATE_ATTITUDE_ONLY then
-
         afcs_bank_angle_hold = math.deg(sensor_data.getRoll())
+        if math.abs(afcs_bank_angle_hold) < 5 then
+            --Heading hold mode (submode of attitude hold mode)
+            afcs_bank_angle_hold = 0
+        end
+        
         afcs_pitch_angle_hold = math.deg(sensor_data.getPitch())
-
         pitch_pid:reset(pitch_trim_handle:get())
         roll_pid:reset(roll_trim_handle:get())
 

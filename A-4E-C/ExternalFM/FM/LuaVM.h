@@ -24,7 +24,7 @@ extern "C"
 #include "../include/lua/lualib.h"
 }
 
-#pragma comment(lib, "../include/lua/lib/lua.lib")
+#pragma comment(lib, "../libs/lua.lib")
 
 class LuaVM
 {

@@ -2,6 +2,30 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
+## Version 2.0.0-RC3 - 28 Nov 2021
+
+### Added
+- New skins.
+
+
+### Changed
+- Experimental Radar:
+  - Updated screen simulation to be more realistic.
+  - Updated storage to be more realistic.
+  - Updated radar reflection values for cities and other reflective terrain features.
+  - Ships can now be detected on radar.
+
+
+### Deprecated
+
+### Removed
+
+### Fixed
+- Issue #392 allowing the deck offset and angle to be adjusted based on ship type. *(thanks OpticFlowX)*
+- Reversion from CSS (or inital engage) to ATTITUDE should roll the aircraft level when within 5 degrees. *(thanks OpticFlowX)*
+- JTAC was missing from radio menu.
+- Fixed kneeboard page 1-2 overprinting.
+
 ## Version 2.0.0-RC2 - 16 Oct 2021
 
 ### Added

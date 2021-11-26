@@ -23,14 +23,12 @@
 #include "Avionics.h"
 #include "Interface.h"
 #include "AircraftState.h"
-#include "Radio.h"
 #include "FuelSystem2.h"
 #include "Maths.h"
 #include "LuaVM.h"
 #include "LERX.h"
 #include "ILS.h"
 #include "Commands.h"
-#include "Beacon.h"
 #include "Radar.h"
 
 //============================= Statics ===================================//
@@ -41,14 +39,12 @@ static Scooter::Engine2* s_engine = NULL;
 static Scooter::Airframe* s_airframe = NULL;
 static Scooter::FlightModel* s_fm = NULL;
 static Scooter::Avionics* s_avionics = NULL;
-static Scooter::Radio* s_radio = NULL;
 static Scooter::FuelSystem2* s_fuelSystem = NULL;
 static LuaVM* s_luaVM = NULL;
 static Scooter::ILS* s_ils = NULL;
 
 static std::vector<LERX> s_splines;
 
-static Scooter::Beacon* s_beacon = NULL;
 static Scooter::Radar* s_radar = NULL;
 static unsigned char* s_testBuffer = NULL;
 
@@ -197,11 +193,9 @@ void init(const char* config)
 	s_airframe = new Scooter::Airframe( *s_state, *s_input, *s_engine );
 	s_avionics = new Scooter::Avionics( *s_input, *s_state, *s_interface );
 	s_fm = new Scooter::FlightModel( *s_state, *s_input, *s_airframe, *s_engine, *s_interface, s_splines );
-	s_radio = new Scooter::Radio(*s_interface);
 	s_ils = new Scooter::ILS(*s_interface);
 	s_fuelSystem = new Scooter::FuelSystem2( *s_engine, *s_state );
-	s_beacon = new Scooter::Beacon(*s_interface);
-	s_radar = new Scooter::Radar( *s_interface, *s_state, *s_beacon );
+	s_radar = new Scooter::Radar( *s_interface, *s_state );
 
 	//checkCorruption(__FUNCTION__);
 	//printf( "Offset: %llx\n", (intptr_t)(&s_fuelSystem->m_enginePump) - (intptr_t)s_fuelSystem );
@@ -218,10 +212,8 @@ void cleanup()
 	delete s_airframe;
 	delete s_avionics;
 	delete s_fm;
-	delete s_radio;
 	delete s_ils;
 	delete s_fuelSystem;
-	delete s_beacon;
 	delete s_radar;
 
 	s_luaVM = NULL;
@@ -232,10 +224,8 @@ void cleanup()
 	s_airframe = NULL;
 	s_avionics = NULL;
 	s_fm = NULL;
-	s_radio = NULL;
 	s_ils = NULL;
 	s_fuelSystem = NULL;
-	s_beacon = NULL;
 	s_radar = NULL;
 
 	s_splines.clear();
@@ -343,15 +333,40 @@ void ed_fm_simulate(double dt)
 
 	//Update
 	s_input->update(s_interface->getWheelBrakeAssist());
-	s_radio->update();
 	s_engine->updateEngine(dt);
 	s_airframe->airframeUpdate(dt);
 	s_fuelSystem->update( dt );
 	s_avionics->updateAvionics(dt);
 	s_fm->calculateAero(dt);
-	s_beacon->update();
 	s_radar->update( dt );
 
+	
+	//yaw += dyaw;
+	//pitch += dpitch;
+	//
+	////update_command( s_missile, s_state->getWorldPosition(), s_avionics->getComputer().m_target );
+	//Vec3 pos;
+	////printf( "%lf,%lf,%lf -> %lf, %lf, %lf\n", dir.x, dir.y, dir.z, new_dir.x, new_dir.y, new_dir.z);
+
+	//double new_yaw = 0.0;
+	//double new_pitch = 0.0;
+	//Vec3 dir = get_vecs( s_missile, new_pitch, new_yaw, pos );
+
+	//static int counter = 0;
+	//counter = ( counter + 1 ) % 300;
+	//if ( ! s_steering && counter == 0 )
+	//{
+	//	yaw = new_yaw;
+	//	pitch = new_pitch;
+	//}
+	//	
+	//printf( "%d Steering\n", s_steering );
+
+	//Vec3 new_dir = Scooter::directionVector( pitch, yaw );
+	//Vec3 newPos = new_dir * 1000.0 + pos;
+	//printf( "Spot pos: %lf,%lf,%lf Missile Pos: %lf,%lf,%lf\n", newPos.x, newPos.y, newPos.z, pos.x,pos.y,pos.z );
+	//set_laser_spot_pos( s_spot, newPos );
+	
 
 	//s_scope->setBlob( 1, 0.5, 0.5, 1.0 );
 	
@@ -556,6 +571,7 @@ void ed_fm_set_command
 	float value
 )
 {
+
 	switch (command)
 	{
 	case Scooter::Control::PITCH:
@@ -633,7 +649,6 @@ void ed_fm_set_command
 	case KEYS_BRAKESON:
 		s_input->leftBrakeAxis().keyIncrease();
 		s_input->rightBrakeAxis().keyIncrease();
-		//s_airframe->breakWing();
 		break;
 	case KEYS_BRAKESOFF:
 		s_input->leftBrakeAxis().reset();
@@ -652,16 +667,11 @@ void ed_fm_set_command
 	case KEYS_BRAKESOFFRIGHT:
 		s_input->rightBrakeAxis().reset();
 		break;
-	case KEYS_RADIO_PTT:
-		s_radio->toggleRadioMenu();
-		break;
 	case KEYS_TOGGLESLATSLOCK:
 		//Weight on wheels plus lower than 50 kts.
 		if ( s_airframe->getNoseCompression() > 0.01 && magnitude(s_state->getLocalSpeed()) < 25.0 )
 			s_airframe->toggleSlatsLocked();
 		break;
-	case KEYS_CAT_POWER_TOGGLE:
-
 
 	default:
 		;// printf( "number %d: %lf\n", command, value );
@@ -886,9 +896,9 @@ double ed_fm_get_param(unsigned index)
 	case ED_FM_ENGINE_1_COMBUSTION:
 		return s_engine->getFuelFlow() / c_fuelFlowMax;
 	case ED_FM_SUSPENSION_1_RELATIVE_BRAKE_MOMENT:
-		return s_interface->getChocks() ? 1.0 : s_input->brakeLeft();
+		return s_interface->getChocks() ? 1.0 : pow(s_input->brakeLeft(), 4.0);
 	case ED_FM_SUSPENSION_2_RELATIVE_BRAKE_MOMENT:
-		return s_interface->getChocks() ? 1.0 : s_input->brakeRight();
+		return s_interface->getChocks() ? 1.0 : pow(s_input->brakeRight(), 4.0);
 	case ED_FM_SUSPENSION_0_WHEEL_SELF_ATTITUDE:
 		if constexpr ( s_NWSEnabled )
 			return s_interface->getNWS() ? 0.0 : 1.0;

@@ -243,7 +243,7 @@ bool LuaVM::outputCommands( const char* name )
 	if ( ! file )
 		return false;
 
-	fprintf( file,  "enum Command\n{\n" );
+	fprintf( file,  "#pragma once\nenum Command\n{\n" );
 
 	if ( ! writeTableKeysToFile( file, "Keys" ) )
 	{
@@ -269,7 +269,7 @@ bool LuaVM::outputDevices( const char* name )
 	if ( ! file )
 		return false;
 
-	fprintf( file, "enum Devices\n{\n" );
+	fprintf( file, "#pragma once\nenum Devices\n{\n" );
 	if ( ! writeTableKeysToFile( file, "devices" ) )
 	{
 		printf( "ERROR: Couldn't get devices table." );

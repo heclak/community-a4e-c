@@ -87,7 +87,7 @@ int getA4Root( WCHAR* buffer, DWORD length )
 	HMODULE hm = NULL;
 	if ( ! GetModuleHandleEx(
 		GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
-		(LPCWSTR)&ed_fm_simulate, &hm ) )
+		(LPCWSTR)ed_fm_simulate, &hm ) )
 	{
 		LOG( "GetModuleHandle failed: %d", GetLastError() );
 		return 0;
