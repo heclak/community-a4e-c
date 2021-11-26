@@ -67,10 +67,10 @@ void Scooter::Radar::zeroInit()
 	if ( m_disabled )
 		return;
 
-	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_GAIN, 0.90 );
+	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_GAIN, 0.50 );
 	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_BRILLIANCE, 1.0 );
 	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_DETAIL, 0.0 );
-	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_STORAGE, 0.1 );
+	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_STORAGE, 0.06 );
 }
 
 void Scooter::Radar::coldInit()
@@ -81,11 +81,23 @@ void Scooter::Radar::coldInit()
 void Scooter::Radar::hotInit()
 {
 	zeroInit();
+
+	if ( m_disabled )
+		return;
+
+	m_warmup = m_warmupTime;
+	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_MODE, 0.1 );
 }
 
 void Scooter::Radar::airborneInit()
 {
 	zeroInit();
+
+	if ( m_disabled )
+		return;
+
+	m_warmup = m_warmupTime;
+	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_MODE, 0.1 );
 }
 
 bool Scooter::Radar::handleInput( int command, float value )
@@ -99,8 +111,7 @@ bool Scooter::Radar::handleInput( int command, float value )
 		m_rangeSwitch = (bool)value;
 		return true;
 	case DEVICE_COMMANDS_RADAR_ANGLE:
-		m_angleSwitch = value;
-		m_angle = -10.0_deg + 25.0_deg * m_angleSwitch;
+		angle( value );
 		return true;
 	case DEVICE_COMMANDS_RADAR_AOACOMP:
 		m_aoaCompSwitch = (bool)value;
@@ -112,24 +123,21 @@ bool Scooter::Radar::handleInput( int command, float value )
 		m_scope.setFilter( ! (bool)value );
 		return true;
 	case DEVICE_COMMANDS_RADAR_DETAIL:
-		m_detail = value * (5.0_deg - 0.5_deg) + 0.5_deg;
+		detail( value );
 		return true;
 	case DEVICE_COMMANDS_RADAR_GAIN:
-		m_gain = exp( -9 * value );//( 1.0 - value * 0.9999 ); //c_aGain / (value - c_bGain);//(1.0 - value);//
+		gain( value );
 		return true;
 	case DEVICE_COMMANDS_RADAR_BRILLIANCE:
 		m_brilliance = value;
 		return true;
 	case DEVICE_COMMANDS_RADAR_STORAGE:
-		m_storage = value * 0.1; //(1.0 - 0.01) * pow(1.0 - value, 3.0) + 0.01;
+		storage( value );
+		printf( "%lf\n", value );
 		return true;
 	case DEVICE_COMMANDS_RADAR_PLANPROFILE:
 		//This should perhaps be a state change.
 		m_planSwitch = ! (bool)value;
-		resetDraw();
-		m_cleared = false;
-		clearScan();
-
 		return true;
 	case DEVICE_COMMANDS_RADAR_VOLUME:
 		m_obstacleVolume = value;
@@ -183,10 +191,10 @@ bool Scooter::Radar::handleInput( int command, float value )
 		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_VOLUME, clamp(m_obstacleVolume + (value == 1.0 ? 0.1 : -0.1), 0.0, 1.0) );
 		return true;
 	case KEYS_RADARTILTINC:
-		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_ANGLE, clamp(0.04 + m_angleSwitch, 0.0, 1.0) );
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_ANGLE, clamp(0.04 + m_angleKnob, 0.0, 1.0) );
 		return true;
 	case KEYS_RADARTILTDEC:
-		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_ANGLE, clamp(-0.04 + m_angleSwitch, 0.0, 1.0) );
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_ANGLE, clamp(-0.04 + m_angleKnob, 0.0, 1.0) );
 		return true;
 	case KEYS_RADARTILTSTARTUP:
 		m_radarTilting = 1;
@@ -228,7 +236,6 @@ void Scooter::Radar::update( double dt )
 
 	if ( m_disabled )
 	{
-		clearScan();
 		return;
 	}
 
@@ -236,15 +243,10 @@ void Scooter::Radar::update( double dt )
 		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_VOLUME, clamp(m_obstacleVolume + dt * (double)m_volumeMoving, 0.0, 1.0 ) );
 
 	if ( m_radarTilting )
-		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_ANGLE, clamp( m_angleSwitch + dt * (double)m_radarTilting , 0.0, 1.0 ) );
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_ANGLE, clamp( m_angleKnob + dt * (double)m_radarTilting , 0.0, 1.0 ) );
 
 	if ( ! m_interface.getElecMonitoredAC() )
 		return;
-
-
-
-	//if ( previous == MODE_AG && previous != m_modeSwitch )
-		//resetAGDraw();
 
 	State newState = getState();
 	
@@ -254,10 +256,12 @@ void Scooter::Radar::update( double dt )
 		m_state = newState;
 	}
 
+	double warmupAmount = dt;
+
 	switch ( m_state )
 	{
 	case STATE_OFF:
-		warmup( -0.5 * dt );
+		warmupAmount = -0.5 * dt;
 		clearScan();
 		break;
 
@@ -277,7 +281,6 @@ void Scooter::Radar::update( double dt )
 		scanPlan( dt );
 		m_scope.setSideRange( 0.0 );
 		m_scope.setBottomRange( m_rangeSwitch ? 0.2 : 0.1 );
-		m_scope.setProfileScribe( RadarScope::OFF );
 		break;
 	case STATE_TC_PROFILE:
 		m_scale = m_rangeSwitch ? 1.0 : 0.5;
@@ -295,8 +298,8 @@ void Scooter::Radar::update( double dt )
 		break;
 	}
 
-
-	warmup( dt );
+	warmup( warmupAmount );
+	
 
 	updateObstacleLight(dt);
 	m_scope.setObstacle( m_obstacleIndicator && (m_obstacleCount > 0), m_obstacleVolume );
@@ -467,14 +470,14 @@ void Scooter::Radar::findShips( double yawAngle, bool detail )
 		double angle = acos( dot );
 		if ( angle < 2.5_deg )
 		{
-			double range = magnitude( r );
+			double range = getCorrectedRange(magnitude( r ));
 			double elevation = asin( r.y / range );
 			//printf( "Range: %lf, Elevation %lf, Azimith\n", range, elevation );
 			size_t index;
 			if ( rangeToDisplayIndex( range, index ) && ( ! detail || abs(elevation) <= m_detail ) ) 
 			{
 				double headingDiff = toRad(ships[i].heading + 45.0) - m_aircraftState.getAngle().y;
-				double gain = f( angle ) * getShipGain( ships[i].rcs, range ) * ( abs(sin( headingDiff )) + 0.1 );
+				double gain = f( angle ) * getShipGain( ships[i].rcs, range ) * ( abs(sin( headingDiff )) + 0.1 ) * getWarmupFactor();
 				m_scanIntensity[index] += gain;
 			}
 		}
@@ -501,15 +504,13 @@ bool Scooter::Radar::scanOneRay( double pitchAngle, double yawAngle, double& ran
 
 	if ( found )
 	{
-		range = magnitude( ground - pos );
+		range = getCorrectedRange( magnitude( ground - pos ) );
 		unsigned char type = getType( ground.x, ground.z );
 
 		Vec3 normal = getNormal( ground.x, ground.z );
 
-		double reflectivity = getReflection( dir, normal, (TerrainType)type );
+		double reflectivity = getReflection( dir, normal, (TerrainType)type ) * getWarmupFactor();
 
-		/*if ( reflectivity < c_SNR )
-			return false;*/
 		
 		reflectivity *= 2.0e-4 / m_gain;//rangeKM * rangeKM / (1e5 * m_gain);
 
@@ -547,8 +548,6 @@ bool Scooter::Radar::scanOneRay( double pitchAngle, double yawAngle, double& ran
 
 void Scooter::Radar::drawScan()
 {
-	m_cleared = false;
-
 	m_scope.addToDisplay( -m_storage );
 
 	//for ( size_t i = 0; i < SIDE_LENGTH; i++ )
@@ -619,12 +618,13 @@ void Scooter::Radar::scanAG(double dt)
 		{
 			Vec3 normal = getNormal( ground.x, ground.z );
 			TerrainType type = (TerrainType)getType( ground.x, ground.z );
-			double reflection = getReflection( dir, normal, type );
+			double reflection = getReflection( dir, normal, type ) * getWarmupFactor();
 
 			//Return must be sufficiently strong
 			if ( reflection > 0.01 )
 			{
-				double foundRange = magnitude( ground - pos );
+				double warmupFactor = getWarmupFactor();
+				double foundRange = getCorrectedRange( magnitude( ground - pos ) );
 
 				if ( foundRange < m_range || ! m_locked )
 				{
@@ -722,8 +722,6 @@ void Scooter::Radar::drawScanProfile()
 		if ( findIndex( i * SIDE_RATIO, round(normalisedAngle * (double)SIDE_HEIGHT), index ) )
 			m_scope.addBlobOpacity( index, m_scanIntensity[i], m_brilliance );
 	}
-
-	m_cleared = false;
 }
 
 void Scooter::Radar::resetLineDraw()
@@ -740,15 +738,10 @@ void Scooter::Radar::resetLineDraw()
 
 void Scooter::Radar::clearScan()
 {
-	if ( m_cleared )
-		return;
-
 	for ( size_t i = 0; i < MAX_BLOBS; i++ )
 	{
 		m_scope.setBlobOpacity( i, 0.0 );
 	}
-
-	m_cleared = true;
 }
 
 

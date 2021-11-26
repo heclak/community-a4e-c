@@ -99,7 +99,16 @@ private:
 	static inline double angleAxisToCommand( double axis );
 	static inline double getShipGain( double rcs, double range );
 
+	inline double getCorrectedRange( double range )
+	{
+		double warmupFactor = getWarmupFactor();
+		return clamp(warmupFactor * range, 0.0, 40.0_nauticalMile);
+	}
+	
+	inline double getWarmupFactor();
+
 	void scanPlan(double dt);
+	void updateWarmup(double dt);
 	void updateGimbalPlan();
 	void updateGimbalProfile(double dt);
 	void resetScanData();
@@ -165,21 +174,55 @@ private:
 	State m_modeSwitch = STATE_OFF;
 	bool m_rangeSwitch = false;
 	bool m_aoaCompSwitch = false;
-	double m_angleSwitch = 0.0;
 
 	double m_angle = 0.0;
 	double m_detail = 1.0;
 	double m_gain = 1.0;
 	double m_brilliance = 1.0;
 	double m_storage = 1.0;
-	bool m_cleared = false;
 	bool m_planSwitch = true;
+
+	double m_storageKnob = 0.0;
+	double m_gainKnob = 0.0;
+	double m_angleKnob = 0.0;
+	double m_detailKnob = 0.0;
+
+	inline void storage( double value )
+	{
+		m_storageKnob = value;
+		m_storage = ( 0.25 - 0.02 ) * value + 0.02;
+	}
+	inline void gain( double value ) 
+	{ 
+		m_gainKnob = value;
+		m_gain = exp( -9 * value );
+	}
+	inline void detail( double value )
+	{ 
+		m_detailKnob = value;
+		m_detail = value * ( 5.0_deg - 0.5_deg ) + 0.5_deg;
+	}
+	inline void angle( double value ) 
+	{ 
+		m_angleKnob = value;
+		m_angle = -10.0_deg + 25.0_deg * value;
+	}
 
 	// Monte Carlo Stuff
 	std::default_random_engine m_generator;
 	std::normal_distribution<double> m_normal;
 	std::uniform_real_distribution<double> m_uniform;
 };
+
+double Radar::getWarmupFactor()
+{
+	if ( m_warmup >= m_warmupTime )
+		return 1.0;
+
+	double warmupAmount = 1.0 - ( m_warmup / m_warmupTime );
+
+	return 1.0 + ( 2.0 * random() - 1.0 ) * warmupAmount;
+}
 
 
 double Radar::rangeToDisplay( double range )
@@ -203,11 +246,12 @@ void Radar::transitionState( State from, State to )
 	switch ( from )
 	{
 	case STATE_AG:
-		resetLineDraw();
+		resetDraw();
+		clearScan();
 		break;
 	case STATE_TC_PROFILE:
 		resetDraw();
-		m_cleared = false;
+		m_scope.setProfileScribe( RadarScope::OFF );
 		clearScan();
 		break;
 	}
@@ -215,11 +259,10 @@ void Radar::transitionState( State from, State to )
 	switch ( to )
 	{
 	case STATE_AG:
-		m_cleared = false;
+		resetLineDraw();
 		clearScan();
 		break;
 	case STATE_TC_PROFILE:
-		m_cleared = false;
 		clearScan();
 		break;
 	}
