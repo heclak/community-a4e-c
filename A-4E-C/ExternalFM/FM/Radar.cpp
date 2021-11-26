@@ -133,7 +133,6 @@ bool Scooter::Radar::handleInput( int command, float value )
 		return true;
 	case DEVICE_COMMANDS_RADAR_STORAGE:
 		storage( value );
-		printf( "%lf\n", value );
 		return true;
 	case DEVICE_COMMANDS_RADAR_PLANPROFILE:
 		//This should perhaps be a state change.
@@ -623,7 +622,6 @@ void Scooter::Radar::scanAG(double dt)
 			//Return must be sufficiently strong
 			if ( reflection > 0.01 )
 			{
-				double warmupFactor = getWarmupFactor();
 				double foundRange = getCorrectedRange( magnitude( ground - pos ) );
 
 				if ( foundRange < m_range || ! m_locked )
