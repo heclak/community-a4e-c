@@ -176,7 +176,6 @@
     <ClInclude Include="Avionics.h" />
     <ClInclude Include="Axis.h" />
     <ClInclude Include="BaseComponent.h" />
-    <ClInclude Include="Beacon.h" />
     <ClInclude Include="cockpit_base_api.h" />
     <ClInclude Include="Commands.h" />
     <ClInclude Include="CP741.h" />
@@ -195,7 +194,6 @@
     <ClInclude Include="MovingAverage.h" />
     <ClInclude Include="Radar.h" />
     <ClInclude Include="RadarScope.h" />
-    <ClInclude Include="Radio.h" />
     <ClInclude Include="Scooter.h" />
     <ClInclude Include="ED_FM_API.h" />
     <ClInclude Include="ED_FM_Utility.h" />
@@ -220,7 +218,6 @@
     <ClCompile Include="Airframe.cpp" />
     <ClCompile Include="Avionics.cpp" />
     <ClCompile Include="Axis.cpp" />
-    <ClCompile Include="Beacon.cpp" />
     <ClCompile Include="CP741.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
@@ -244,7 +241,6 @@
     <ClCompile Include="Maths.cpp" />
     <ClCompile Include="Radar.cpp" />
     <ClCompile Include="RadarScope.cpp" />
-    <ClCompile Include="Radio.cpp" />
     <ClCompile Include="Safe.cpp" />
     <ClCompile Include="Shake.cpp" />
     <ClCompile Include="Scooter.cpp" />

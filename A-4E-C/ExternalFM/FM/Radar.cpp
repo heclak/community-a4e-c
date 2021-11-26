@@ -38,11 +38,10 @@ static double fNorm( double x )
 	return ( 1.0 / ( c_beamSigma * sqrt( 2.0 * PI ) ) ) * f(x);
 }
 
-Scooter::Radar::Radar( Interface& inter, AircraftState& state, Beacon& beacon ) :
+Scooter::Radar::Radar( Interface& inter, AircraftState& state ) :
 	m_scope( inter ),
 	m_aircraftState( state ),
 	m_interface( inter ),
-	m_beacon( beacon ),
 	m_normal( 0.0, c_beamSigma ),
 	m_uniform( 0.0, 2.0 * PI ),
 	m_generator( 23 )

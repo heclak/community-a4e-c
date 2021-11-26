@@ -5,7 +5,7 @@
 #include "Units.h"
 #include "Maths.h"
 #include "BaseComponent.h"
-#include "Beacon.h"
+#include "Ship.h"
 
 constexpr static double c_obstructionPeriod = 2.0;
 
@@ -24,7 +24,7 @@ namespace Scooter
 class Radar : public BaseComponent
 {
 public:
-	Radar( Interface& inter, AircraftState& state, Beacon& beacon );
+	Radar( Interface& inter, AircraftState& state );
 
 	virtual void zeroInit();
 	virtual void coldInit();
@@ -122,7 +122,6 @@ private:
 	RadarScope m_scope;
 	AircraftState& m_aircraftState;
 	Interface& m_interface;
-	Beacon& m_beacon;
 
 	void* m_terrain = nullptr;
 
