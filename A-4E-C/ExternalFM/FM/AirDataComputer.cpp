@@ -17,18 +17,19 @@ Scooter::AirDataComputer::AirDataComputer
 
 void Scooter::AirDataComputer::calculateTAS()
 {
-	m_tas = c_speedOfSound* m_state.getMach() * sqrt( m_state.getTemperature() / c_standardTemp );
+
+	m_tas = c_speedOfSound* m_state.getMeasuredMach() * sqrt( m_state.getTemperature() / c_standardTemp );
 }
 
 void Scooter::AirDataComputer::calculateEAS()
 {
-	m_eas = c_speedOfSound * m_state.getMach() * sqrt( m_state.getPressure() / c_standardPressure );
+	m_eas = c_speedOfSound * m_state.getMeasuredMach() * sqrt( m_state.getPressure() / c_standardPressure );
 }
 
 void Scooter::AirDataComputer::calculateCAS()
 {
 	double d = m_state.getPressure() / c_standardPressure;
-	double M = m_state.getMach();
+	double M = m_state.getMeasuredMach();
 	m_cas = m_eas * (1.0 + 0.125 * (1.0 - d) * M * M + (3.0 / 640.0 * (1.0 - 10.0 * d + 9 * d * d) * M * M * M * M));
 }
 

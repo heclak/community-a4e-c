@@ -23,14 +23,12 @@
 #include "Avionics.h"
 #include "Interface.h"
 #include "AircraftState.h"
-#include "Radio.h"
 #include "FuelSystem2.h"
 #include "Maths.h"
 #include "LuaVM.h"
 #include "LERX.h"
 #include "ILS.h"
 #include "Commands.h"
-#include "Beacon.h"
 #include "Radar.h"
 
 //============================= Statics ===================================//
@@ -47,7 +45,6 @@ static Scooter::ILS* s_ils = NULL;
 
 static std::vector<LERX> s_splines;
 
-static Scooter::Beacon* s_beacon = NULL;
 static Scooter::Radar* s_radar = NULL;
 static unsigned char* s_testBuffer = NULL;
 
@@ -198,8 +195,7 @@ void init(const char* config)
 	s_fm = new Scooter::FlightModel( *s_state, *s_input, *s_airframe, *s_engine, *s_interface, s_splines );
 	s_ils = new Scooter::ILS(*s_interface);
 	s_fuelSystem = new Scooter::FuelSystem2( *s_engine, *s_state );
-	s_beacon = new Scooter::Beacon(*s_interface);
-	s_radar = new Scooter::Radar( *s_interface, *s_state, *s_beacon );
+	s_radar = new Scooter::Radar( *s_interface, *s_state );
 
 	//checkCorruption(__FUNCTION__);
 	//printf( "Offset: %llx\n", (intptr_t)(&s_fuelSystem->m_enginePump) - (intptr_t)s_fuelSystem );
@@ -218,7 +214,6 @@ void cleanup()
 	delete s_fm;
 	delete s_ils;
 	delete s_fuelSystem;
-	delete s_beacon;
 	delete s_radar;
 
 	s_luaVM = NULL;
@@ -231,7 +226,6 @@ void cleanup()
 	s_fm = NULL;
 	s_ils = NULL;
 	s_fuelSystem = NULL;
-	s_beacon = NULL;
 	s_radar = NULL;
 
 	s_splines.clear();

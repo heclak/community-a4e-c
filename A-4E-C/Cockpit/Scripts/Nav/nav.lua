@@ -413,9 +413,9 @@ function post_initialize()
     asn41_ppos_lon = geopos.lon
 
     math.randomseed(asn41_ppos_lat)
-    pitch_err = 0.02 * randDir()
-    roll_err = 0.02 * randDir()
-    heading_err = 0.02 * randDir()
+    pitch_err = 0.00 * randDir()
+    roll_err = 0.00 * randDir()
+    heading_err = 0.5 * randDir()
 
     dev:performClickableAction(device_commands.tacan_ch_major, 0.0, true)
     dev:performClickableAction(device_commands.tacan_ch_minor, 0.1, true)
@@ -860,6 +860,8 @@ function getGroundSpeedFromDoppler(precision)
     v_ground_x = round(v_ground_x, precision)
     v_ground_z = round(v_ground_z, precision)
 
+    --print_message_to_user(tostring(v_ground_x).." "..tostring(v_ground_z))
+
     return v_ground_x, v_ground_z
 end
 
@@ -880,12 +882,12 @@ end
 
 function getAirDataComputerVariables(precision)
 
-    precision = math.max(precision or 4, 1)
+    precision = precision or 4
 
     local tas = round(Air_Data_Computer:getTAS(), precision - 1)
-    local roll = round(sensor_data.getRoll() + roll_err, precision)
-    local pitch = round(sensor_data.getPitch() + pitch_err, precision)
-    local heading = round(-sensor_data.getHeading() + heading_err, precision)
+    local roll = round(sensor_data.getRoll(), precision)
+    local pitch = round(sensor_data.getPitch(), precision)
+    local heading = round(2.0 * math.pi - sensor_data.getHeading(), precision)
     local aoa = round(sensor_data.getAngleOfAttack(), precision)
 
     return tas, pitch, roll, heading, aoa
@@ -895,19 +897,19 @@ function getVelocityFromAirDataComputer()
 
     local tas, pitch, roll, heading, aoa = getAirDataComputerVariables()
 
-    local sinRoll = math.sin(roll)
-    local cosRoll = math.cos(roll)
+    --print_message_to_user(tas*1.94384)
 
-    local horizontalAirspeed = tas * math.cos(pitch - aoa * cosRoll)
-    heading = heading - aoa * sinRoll
+    local aoaPitch = aoa * math.cos(roll)
+    local aoaYaw = aoa * math.sin(roll)
 
-    --local ax, ay, az = efm_data_bus.fm_getWorldAcceleration()
+    local vx,vy,vz = directionVector(pitch - aoaPitch, heading - aoaYaw)
 
-    local vx = horizontalAirspeed * math.cos(heading)-- + update_time_step * ax
-    local vz = horizontalAirspeed * math.sin(heading)-- + update_time_step * az
+    vx = vx * tas
+    vz = vz * tas
+
+    --print_message_to_user("Speed Diff "..math.abs(math.sqrt(vx^2 + vz^2) - math.sqrt(vxa^2 + vza^2)))
 
     --print_message_to_user( "Heading " .. tostring(heading).." errvx: " .. tostring(errvx) .. " errvz: "..tostring(errvz) )
-    --print_message_to_user(tostring(errvx) .. " vx_actual : "..tostring(vax).." vx_calc : "..tostring(vx))
 
 
     return vx, vz
@@ -938,11 +940,11 @@ function updateIntegratedLatLong()
 
     local halfdtSqr = 0.5 * (update_time_step ^ 2)
 
-    asn41_integrate_x = asn41_integrate_x + (vx - asn41_wind_x) * update_time_step 
-    asn41_integrate_z = asn41_integrate_z + (vz - asn41_wind_z) * update_time_step
+    -- The rounding here represents the systematic error (the actual scientific definition)
+    asn41_integrate_x = asn41_integrate_x + roundBase(vx - asn41_wind_x, 0, 3) * update_time_step 
+    asn41_integrate_z = asn41_integrate_z + roundBase(vz - asn41_wind_z, 0, 3) * update_time_step
 
     local drift = calculate_drift()
-
     --print_message_to_user("Drift: "..tostring(drift/1000.0))
 
     local geopos = lo_to_geo_coords(asn41_integrate_x, asn41_integrate_z)
@@ -1447,7 +1449,11 @@ end
 function apn153_calculate_wind_vector(ground_track_x, ground_track_z)
     local vx, vz = getVelocityFromAirDataComputer()
     local vgx, vgz = getGroundSpeedFromDoppler()
-    return (vx - vgx), (vz - vgz)
+
+    local wx = vx - vgx
+    local wz = vz - vgz
+
+    return wx,wz
 end
 
 -- This function is executed by the AN/APN-153 for purposes of preventing large impluses in

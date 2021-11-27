@@ -8,6 +8,18 @@ function startup_print(...)
     print(...)
 end
 
+function directionVector(pitch,yaw)
+  local cosPitch = math.cos(pitch)
+  local sinPitch = math.sin(pitch)
+  local cosYaw = math.cos(yaw)
+  local sinYaw = math.sin(yaw)
+
+  local x = cosYaw * cosPitch
+  local z = sinYaw * cosPitch
+  local y = sinPitch
+
+  return x,y,z
+end
 
 -- rounds the number 'num' to the number of decimal places in 'idp'
 --
@@ -17,6 +29,11 @@ end
 function round(num, idp)
     local mult = 10^(idp or 0)
     return math.floor(num * mult + 0.5) / mult
+end
+
+function roundBase(num,idp,base)
+  num = num / base
+  return round(num, idp) * base
 end
 
 function clamp(value, minimum, maximum)

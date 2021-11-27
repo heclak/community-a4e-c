@@ -17,6 +17,7 @@
 #include "BaseComponent.h"
 #include <math.h>
 #include "Vec3.h"
+#include "Maths.h"
 //=========================================================================//
 
 namespace Scooter
@@ -61,6 +62,7 @@ public:
 	inline const double getAOA() const;
 	inline const double getBeta() const;
 	inline const double getMach() const;
+	inline const double getMeasuredMach() const;
 	inline const double getRadarAltitude() const;
 
 	inline const Vec3& getCOM() const;
@@ -200,6 +202,13 @@ void AircraftState::setRadarAltitude( double altitude )
 const double AircraftState::getMach() const
 {
 	return m_mach;
+}
+
+const double AircraftState::getMeasuredMach() const
+{
+	double lowMachFactor = clamp(pow(m_mach / 0.12, 3.0), 0.0, 1.0);
+
+	return m_mach * lowMachFactor;
 }
 
 const double AircraftState::getAirDensity() const
