@@ -34,6 +34,10 @@ For example, page "23" is "23.lua".
   34 Fuel & Air Refueling
   35 Structural Limits
   36 Airspeed Limits
+  37 Ground Radar: Search
+  38 Ground Radar: Terrain Clearance
+  39 Ground Radar: Scope Distortion
+  40 Ground Radar: Air-to-Ground
 
 4 Checklists
   41 Start-Up
