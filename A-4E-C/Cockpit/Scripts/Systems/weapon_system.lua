@@ -400,7 +400,9 @@ function ripple_sequence_end()
     debug_print("Ripple Sequence Ended")
     labs_tone:stop()
     pickle_engaged = false
-    trigger_engaged = false
+    if function_selector == FUNC_ROCKETS then
+      trigger_engaged = false
+    end
     ripple_sequence_position = 0
     glare_labs_annun_state = false -- turn off labs light
 	 bombing_computer_target_set = false
@@ -558,12 +560,8 @@ function update()
 
 
         for i = 1, num_stations do
-            local station_info = WeaponSystem:get_station_info(i-1)
-            if station_info.weapon.level2 == wsType_Shell then
-                debug_print("if Gunpod bypass STATION_READY")
-                readied_stations_empty = false
-            end
-            if station_states[i] == STATION_READY then                
+            if station_states[i] == STATION_READY then
+                local station_info = WeaponSystem:get_station_info(i-1)
                 debug_print("station "..tostring(i)..": CLSID="..tostring(station_info.CLSID)..": count="..tostring(station_info.count)..",state="..tostring(station_states[i])..",l2="..tostring(station_info.weapon.level2)..",l3="..tostring(station_info.weapon.level3))
                 if station_info.count > 0 then 
                     readied_stations_empty = false
@@ -582,18 +580,18 @@ function update()
         
         for py = 1, num_stations, 1 do
 
-            if weapon_release_count >= max_weapon_release_count and function_selector ~= FUNC_OFF then
+            local station_is_not_gunpod = WeaponSystem:get_station_info(py).weapon.level2 ~= wsType_Shell
+
+            if weapon_release_count >= max_weapon_release_count and function_selector ~= FUNC_OFF and station_is_not_gunpod then
                 break
-				  
             end
 
-            i = pylon_order[next_pylon]
+            local i = pylon_order[next_pylon]
             next_pylon = next_pylon+1
 
             if next_pylon > 5 then
                 next_pylon = 1
             end
-
             
             local station = WeaponSystem:get_station_info(i-1)
             
