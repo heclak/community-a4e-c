@@ -227,10 +227,10 @@ join(res.keyCommands,{
     {down = Keys.Radar_Det_Step_Dec,                                    name = _('Radar Indicator Detail Knob - Decrement'),                category = {_('AN/APG-53A Radar Indicator')}},
     {down = Keys.Radar_Det_Cont_Up, up = Keys.Radar_Det_Cont_Stop,     name = _('Radar Indicator Detail Knob - Continuous Increase'),      category = {_('AN/APG-53A Radar Indicator')}},
     {down = Keys.Radar_Det_Cont_Down, up = Keys.Radar_Det_Cont_Stop,   name = _('Radar Indicator Detail Knob - Continuous Decrease'),      category = {_('AN/APG-53A Radar Indicator')}},
-    -- {down = Keys.Radar_Ret_Step_Inc,                                    name = _('Radar Indicator Reticle Knob - Increment'),               category = {_('AN/APG-53A Radar Indicator')}},
-    -- {down = Keys.Radar_Ret_Step_Dec,                                    name = _('Radar Indicator Reticle Knob - Decrement'),               category = {_('AN/APG-53A Radar Indicator')}},
-    -- {down = Keys.Radar_Ret_Cont_Up, up = Keys.Radar_Ret_Cont_Stop,     name = _('Radar Indicator Reticle Knob - Continuous Increase'),     category = {_('AN/APG-53A Radar Indicator')}},
-    -- {down = Keys.Radar_Ret_Cont_Down, up = Keys.Radar_Ret_Cont_Stop,   name = _('Radar Indicator Reticle Knob - Continuous Decrease'),     category = {_('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Ret_Step_Inc,                                    name = _('Radar Indicator Reticle Knob - Increment'),               category = {_('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Ret_Step_Dec,                                    name = _('Radar Indicator Reticle Knob - Decrement'),               category = {_('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Ret_Cont_Up, up = Keys.Radar_Ret_Cont_Stop,     name = _('Radar Indicator Reticle Knob - Continuous Increase'),     category = {_('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Ret_Cont_Down, up = Keys.Radar_Ret_Cont_Stop,   name = _('Radar Indicator Reticle Knob - Continuous Decrease'),     category = {_('AN/APG-53A Radar Indicator')}},
 
     -- Armament Panel 
     {down = device_commands.arm_bomb, value_down = 1, cockpit_device_id = devices.WEAPON_SYSTEM,                                                    name = _('Bomb Arm Switch - NOSE & TAIL'),              category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
