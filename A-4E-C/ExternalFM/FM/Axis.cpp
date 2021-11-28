@@ -32,8 +32,7 @@ Axis::Axis(
 
 void Axis::zeroInit()
 {
-	m_decrease = false;
-	m_increase = false;
+	m_dir = 0;
 	m_value = m_reset;
 }
 
@@ -54,8 +53,20 @@ void Axis::airborneInit()
 
 void Axis::update()
 {
-	int dir = (int)m_increase - (int)m_decrease;
-
-	m_value += m_sensitivity * (double)dir * (0.2 + fabs(m_value) * m_linear);
+	m_value += m_sensitivity * (double)m_dir * (0.2 + fabs(m_value) * m_linear);
 	m_value = std::max( std::min( m_max, m_value ), m_min );
+
+
+
+	if ( m_slowReset )
+	{
+		int sign = (int)copysign( 1.0, m_reset - m_value );
+
+		if ( sign != m_dir )
+		{
+			m_dir = 0;
+			m_value = m_reset;
+			m_slowReset = false;
+		}
+	}
 }

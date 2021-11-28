@@ -6,17 +6,27 @@ Please list the changes you've made in this file. We should try to follow the gu
 
 ### Added
 - Added 3 new USN liveries for USS Forrestal 1967.
-
+- New Radar:
+  - Added reticle bulb to see the range lines easier.
+  - Added keybinds for the radar display knobs.
+  - Kneeboard pages: 3-7 -> 3-10.
+- Curvature for brake. This emulates the force one would feel while braking. The brakes now lock while rolling fast at ~75%.
 
 
 ### Changed
 - New Radar:
   - Enabled this radar by default.
+  - Range lines are now drawn on top of the radar returns.
   - Updated screen simulation to be more realistic.
   - Updated storage to be more realistic.
   - Updated radar reflection values for cities and other reflective terrain features.
   - Ships can now be detected on radar.
-
+- Textures updated:
+  - Eject section seat.
+  - Cockpit textures external. *(thanks JP Gabobo)*
+  - ADI ball and climb indicator.
+- AN/ASN-41 error was being cancelled due to mathematical operation. This has been rectified. The drift will now be significant (1-2 nautical miles per hour, depending on manoeuvres).
+- Slow release for brakes when using keyboard rather than instantly going to zero. This allows the brakes to be feathered below the point where the wheels lock.
 
 ### Deprecated
 

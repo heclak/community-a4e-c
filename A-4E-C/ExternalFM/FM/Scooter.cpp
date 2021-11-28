@@ -651,21 +651,21 @@ void ed_fm_set_command
 		s_input->rightBrakeAxis().keyIncrease();
 		break;
 	case KEYS_BRAKESOFF:
-		s_input->leftBrakeAxis().reset();
-		s_input->rightBrakeAxis().reset();
+		s_input->leftBrakeAxis().slowReset();
+		s_input->rightBrakeAxis().slowReset();
 		break;
 
 	case KEYS_BRAKESONLEFT:
 		s_input->leftBrakeAxis().keyIncrease();
 		break;
 	case KEYS_BRAKESOFFLEFT:
-		s_input->leftBrakeAxis().reset();
+		s_input->leftBrakeAxis().slowReset();
 		break;
 	case KEYS_BRAKESONRIGHT:
 		s_input->rightBrakeAxis().keyIncrease();
 		break;
 	case KEYS_BRAKESOFFRIGHT:
-		s_input->rightBrakeAxis().reset();
+		s_input->rightBrakeAxis().slowReset();
 		break;
 	case KEYS_TOGGLESLATSLOCK:
 		//Weight on wheels plus lower than 50 kts.
@@ -896,9 +896,9 @@ double ed_fm_get_param(unsigned index)
 	case ED_FM_ENGINE_1_COMBUSTION:
 		return s_engine->getFuelFlow() / c_fuelFlowMax;
 	case ED_FM_SUSPENSION_1_RELATIVE_BRAKE_MOMENT:
-		return s_interface->getChocks() ? 1.0 : pow(s_input->brakeLeft(), 4.0);
+		return s_interface->getChocks() ? 1.0 : pow(s_input->brakeLeft(), 3.0);
 	case ED_FM_SUSPENSION_2_RELATIVE_BRAKE_MOMENT:
-		return s_interface->getChocks() ? 1.0 : pow(s_input->brakeRight(), 4.0);
+		return s_interface->getChocks() ? 1.0 : pow(s_input->brakeRight(), 3.0);
 	case ED_FM_SUSPENSION_0_WHEEL_SELF_ATTITUDE:
 		if constexpr ( s_NWSEnabled )
 			return s_interface->getNWS() ? 0.0 : 1.0;
