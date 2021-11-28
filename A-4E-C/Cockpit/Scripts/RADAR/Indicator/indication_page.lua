@@ -120,7 +120,7 @@ function create_textured_box(UL_X,UL_Y,DR_X,DR_Y)
     return object
 end
 
-max_blobs=5000--2500
+max_blobs=35 * 50--2500
 
 for i=1,max_blobs do
     radar_blob 					= create_textured_box(-blob_scale/2,-blob_scale/2,blob_scale/2,blob_scale/2)

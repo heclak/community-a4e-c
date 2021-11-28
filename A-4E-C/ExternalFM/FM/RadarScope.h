@@ -3,7 +3,7 @@
 #include "Maths.h"
 
 #define SIDE_LENGTH 50
-#define SIDE_HEIGHT 100
+#define SIDE_HEIGHT 35
 #define SIDE_RATIO ((double)SIDE_LENGTH/(double)SIDE_HEIGHT)
 #define MAX_BLOBS (SIDE_LENGTH * SIDE_HEIGHT)
 

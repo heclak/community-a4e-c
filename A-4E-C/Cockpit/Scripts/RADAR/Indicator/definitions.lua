@@ -13,4 +13,4 @@ function AddElement(object)
 end
 
 z_offset = 0
-blob_scale=0.08
+blob_scale=0.10

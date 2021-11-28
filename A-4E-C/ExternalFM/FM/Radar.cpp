@@ -220,13 +220,15 @@ bool Scooter::Radar::handleInput( int command, float value )
 
 void Scooter::Radar::resetDraw()
 {
+	double dy = (0.4 / (double)SIDE_HEIGHT);
+
 	for ( size_t i = 0; i < MAX_BLOBS; i++ )
 	{
 		double x;
 		double y;
 
 		indexToScreenCoords( i, x, y );
-		m_scope.setBlobPos( i, x, y );
+		m_scope.setBlobPos( i, x, y + dy * randomCentred() );
 	}
 }
 
