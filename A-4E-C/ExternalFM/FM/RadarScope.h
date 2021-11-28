@@ -1,6 +1,6 @@
 #pragma once
-#include "Interface.h"
 #include "Maths.h"
+#include "Interface.h"
 
 #define SIDE_LENGTH 50
 #define SIDE_HEIGHT 35

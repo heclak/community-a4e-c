@@ -1,5 +1,4 @@
 #include "RadarScope.h"
-#include "Globals.h"
 
 
 

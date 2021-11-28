@@ -11,7 +11,6 @@
 //
 //================================ Includes ===============================//
 #include "stdafx.h"
-#include "Globals.h"
 #include "Scooter.h"
 #include <Math.h>
 #include <stdio.h>
@@ -30,6 +29,7 @@
 #include "ILS.h"
 #include "Commands.h"
 #include "Radar.h"
+#include "Globals.h"
 
 //============================= Statics ===================================//
 static Scooter::AircraftState* s_state = NULL;

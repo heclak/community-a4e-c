@@ -13,11 +13,12 @@
 //						See equivelent file for lua EFM_Data_Bus.lua.
 //
 //================================ Includes ===============================//
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "../include/Cockpit/ccParametersAPI.h"
-#include "Globals.h"
 #include "Vec3.h"
+#include "Globals.h"
 
 //=========================================================================//
 
