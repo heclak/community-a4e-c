@@ -35,6 +35,7 @@ Scooter::RadarScope::RadarScope( Interface& inter ) :
 
 	m_obstacleLight = m_interface.api().pfn_ed_cockpit_get_parameter_handle( "D_GLARE_OBST" );
 	m_obstacleVolume = m_interface.api().pfn_ed_cockpit_get_parameter_handle( "APG53_OBST_VOLUME" );
+	m_reticle = m_interface.api().pfn_ed_cockpit_get_parameter_handle( "RADAR_RETICLE" );
 }
 
 void Scooter::RadarScope::update( double dt )

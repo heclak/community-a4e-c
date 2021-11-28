@@ -155,6 +155,7 @@ private:
 	int m_storageMoving = 0;
 	int m_gainMoving = 0;
 	int m_detailMoving = 0;
+	int m_reticleMoving = 0;
 
 
 	//Intensity of return and Pitch Angle against range index.
@@ -198,6 +199,7 @@ private:
 	double m_gainKnob = 0.0;
 	double m_angleKnob = 0.0;
 	double m_detailKnob = 0.0;
+	double m_reticleKnob = 0.0;
 
 	inline void storage( double value )
 	{

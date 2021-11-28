@@ -100,7 +100,7 @@ elements["PNT_400"] = default_axis_limited("Radar Indicator Storage", devices.RA
 elements["PNT_401"] = default_axis_limited("Radar Indicator Brilliance", devices.RADAR, device_commands.radar_brilliance, 401, 0.0, 0.3, false, false, {0,1})
 elements["PNT_402"] = default_axis_limited("Radar Indicator Detail", devices.RADAR, device_commands.radar_detail, 402, 0.0, 0.3, false, false, {0,1})
 elements["PNT_403"] = default_axis_limited("Radar Indicator Gain", devices.RADAR, device_commands.radar_gain, 403, 0.0, 0.05, false, false, {0,1})
-elements["PNT_404"] = default_axis_limited("Radar Indicator Reticle", devices.RADAR, device_commands.radar_reticle, 404, 0.0, 0.3, false, false, {-1,1})
+elements["PNT_404"] = default_axis_limited("Radar Indicator Reticle", devices.RADAR, device_commands.radar_reticle, 404, 0.0, 0.1, false, false, {0,1})
 elements["PNT_405"] = default_2_position_tumb("Radar Indicator Filter Plate", devices.RADAR, device_commands.radar_filter, 405)
 elements["PNT_405"].animated = {true, true}
 elements["PNT_405"].animation_speed = {4, 4} -- animation duration = 1/value. 4 means animates in .25 seconds.

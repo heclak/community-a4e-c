@@ -38,6 +38,8 @@ public:
 	inline void setBottomRange( double range );
 	inline void setObstacle( bool light, double volume );
 
+	inline void setReticle(double value ) { m_interface.setParamNumber( m_reticle, value ); }
+
 	void addToDisplay( double value );
 
 	void update( double dt );
@@ -57,6 +59,7 @@ public:
 	void* m_bottomRange = NULL;
 	void* m_obstacleLight = NULL;
 	void* m_obstacleVolume = NULL;
+	void* m_reticle = NULL;
 
 	bool m_obstacle = false;
 };

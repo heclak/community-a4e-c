@@ -149,6 +149,9 @@ bool Scooter::Radar::handleInput( int command, float value )
 	case DEVICE_COMMANDS_RADAR_VOLUME:
 		m_obstacleVolume = value;
 		return true;
+	case DEVICE_COMMANDS_RADAR_RETICLE:
+		m_reticleKnob = value;
+		return true;
 	case DEVICE_COMMANDS_RADAR_ANGLE_AXIS_ABS:
 		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_ANGLE, angleAxisToCommand(value));
 		return true;
@@ -280,6 +283,21 @@ bool Scooter::Radar::handleInput( int command, float value )
 	case KEYS_RADAR_DET_CONT_STOP:
 		m_detailMoving = 0;
 		return true;
+	case KEYS_RADAR_RET_STEP_INC:
+		setKnob( DEVICE_COMMANDS_RADAR_RETICLE, m_reticleKnob + c_knobStep );
+		return true;
+	case KEYS_RADAR_RET_STEP_DEC:
+		setKnob( DEVICE_COMMANDS_RADAR_RETICLE, m_reticleKnob - c_knobStep );
+		return true;
+	case KEYS_RADAR_RET_CONT_UP:
+		m_reticleMoving = 1;
+		return true;
+	case KEYS_RADAR_RET_CONT_DOWN:
+		m_reticleMoving = -1;
+		return true;
+	case KEYS_RADAR_RET_CONT_STOP:
+		m_reticleMoving = 0;
+		return true;
 	}
 
 	return false;
@@ -313,10 +331,15 @@ void Scooter::Radar::update( double dt )
 	moveKnob( DEVICE_COMMANDS_RADAR_DETAIL,			m_detailKnob,		dt * c_knobSpeed, m_detailMoving );
 	moveKnob( DEVICE_COMMANDS_RADAR_GAIN,			m_gainKnob,			dt * c_knobSpeed, m_gainMoving );
 	moveKnob( DEVICE_COMMANDS_RADAR_STORAGE,		m_storageKnob,		dt * c_knobSpeed, m_storageMoving );
+	moveKnob( DEVICE_COMMANDS_RADAR_RETICLE,		m_reticleKnob,		dt * c_knobSpeed, m_reticleMoving );
 
 
 	if ( ! m_interface.getElecMonitoredAC() )
-		return;
+	{
+		m_scope.setReticle( 0.0 );
+	}
+
+	m_scope.setReticle( m_reticleKnob / 2.0 );
 
 	State newState = getState();
 	
