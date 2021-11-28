@@ -5,11 +5,13 @@ Please list the changes you've made in this file. We should try to follow the gu
 ## Version 2.0.0-RC3 - 28 Nov 2021
 
 ### Added
-- New skins.
+- Added 3 new USN liveries for USS Forrestal 1967.
+
 
 
 ### Changed
-- Experimental Radar:
+- New Radar:
+  - Enabled this radar by default.
   - Updated screen simulation to be more realistic.
   - Updated storage to be more realistic.
   - Updated radar reflection values for cities and other reflective terrain features.

@@ -351,7 +351,7 @@ dialog = {
 					["skin"] = HelpSkin,
 					["type"] = "Static",
 				},
-				["experimentalRadarLabel"] = {
+				["oldRadarLabel"] = {
 					["params"] = {
 						["bounds"] = {
 							["h"] = 24,
@@ -360,7 +360,7 @@ dialog = {
 							["y"] = 350,
 						},
 						["enabled"] = true,
-						["text"] = "$A4E_EXPERIMENTAL_RADAR_CHECK_LABEL",
+						["text"] = "$A4E_OLD_RADAR_CHECK_LABEL",
 						["tooltip"] = "",
 						["visible"] = true,
 						["zindex"] = 0,
@@ -372,7 +372,7 @@ dialog = {
 					},
 					["type"] = "Static",
 				},
-				["experimentalRadarCheckbox"] = {
+				["oldRadarCheckbox"] = {
 					["params"] = {
 						["bounds"] = {
 							["h"] = 24,
@@ -384,7 +384,7 @@ dialog = {
 						["state"] = true,
 						["tabOrder"] = 0,
 						["text"] = "",
-						["tooltip"] = "$A4E_EXPERIMENTAL_RADAR_CHECK_TOOLTIP",
+						["tooltip"] = "$A4E_OLD_RADAR_CHECK_TOOLTIP",
 						["visible"] = true,
 						["zindex"] = 0,
 					},

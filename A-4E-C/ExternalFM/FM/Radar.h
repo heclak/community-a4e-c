@@ -1,10 +1,13 @@
 #pragma once
 #include <random>
+#include "Devices.h"
+#include "Commands.h"
 #include "RadarScope.h"
 #include "AircraftState.h"
 #include "Units.h"
 #include "Maths.h"
 #include "BaseComponent.h"
+#include "cockpit_base_api.h"
 #include "Ship.h"
 
 constexpr static double c_obstructionPeriod = 2.0;
@@ -142,8 +145,17 @@ private:
 	int m_direction = -1;
 	int m_scanned = 0;
 	bool m_disabled = true;
+
+
 	int m_radarTilting = 0;
 	int m_volumeMoving = 0;
+
+
+	int m_brillianceMoving = 0;
+	int m_storageMoving = 0;
+	int m_gainMoving = 0;
+	int m_detailMoving = 0;
+
 
 	//Intensity of return and Pitch Angle against range index.
 	double m_scanIntensity[SIDE_HEIGHT];
@@ -206,6 +218,18 @@ private:
 	{ 
 		m_angleKnob = value;
 		m_angle = -10.0_deg + 25.0_deg * value;
+	}
+
+	inline void setKnob( Command command, double value, double min = 0.0, double max = 1.0 )
+	{
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, command, clamp( value, min, max ) );
+	}
+
+	inline void moveKnob( Command command, double current, double change, int direction, double min = 0.0, double max = 1.0 )
+	{
+		if ( ! direction )
+			return;
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, command, clamp( current + change * (double)direction, min, max ) );
 	}
 
 	// Monte Carlo Stuff

@@ -4,7 +4,7 @@ dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.script_path.."Systems/radar_scope_api.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 
-local cpp_radar_disabled = not get_plugin_option_value("A-4E-C", "experimentalRadar", "local")
+local cpp_radar_disabled = get_plugin_option_value("A-4E-C", "oldRadar", "local")
 
 local dev = GetSelf()
 

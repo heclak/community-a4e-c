@@ -1,9 +1,6 @@
 #include "Radar.h"
 #include "Maths.h"
-#include "Commands.h"
 #include <math.h>
-#include "cockpit_base_api.h"
-#include "Devices.h"
 #include "ShipFinder.h"
 
 //TODO Rewrite this pile of shit.
@@ -27,6 +24,10 @@ constexpr static size_t c_samplesPerFrame = 100;//150;
 
 constexpr static double c_beamSigma = 0.03705865456;
 constexpr static double c_SNR = 1.5e-4;
+
+constexpr static double c_knobStep = 0.04;
+
+constexpr static double c_knobSpeed = 0.5;
 
 static double f( double x )
 {
@@ -66,6 +67,13 @@ void Scooter::Radar::zeroInit()
 
 	if ( m_disabled )
 		return;
+
+	m_radarTilting = 0;
+	m_volumeMoving = 0;
+	m_brillianceMoving = 0;
+	m_storageMoving = 0;
+	m_gainMoving = 0;
+	m_detailMoving = 0;
 
 	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_GAIN, 0.50 );
 	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_BRILLIANCE, 1.0 );
@@ -213,6 +221,65 @@ bool Scooter::Radar::handleInput( int command, float value )
 	case KEYS_RADARVOLUMESTOP:
 		m_volumeMoving = 0;
 		return true;
+	case KEYS_RADAR_BRIL_STEP_INC:
+		setKnob( DEVICE_COMMANDS_RADAR_BRILLIANCE, m_brilliance + c_knobStep );
+	case KEYS_RADAR_BRIL_STEP_DEC:
+		setKnob( DEVICE_COMMANDS_RADAR_BRILLIANCE, m_brilliance - c_knobStep );
+		return true;
+	case KEYS_RADAR_BRIL_CONT_UP:
+		m_brillianceMoving = 1;
+		return true;
+	case KEYS_RADAR_BRIL_CONT_DOWN:
+		m_brillianceMoving = -1;
+		return true;
+	case KEYS_RADAR_BRIL_CONT_STOP:
+		m_brillianceMoving = 0;
+		return true;
+	case KEYS_RADAR_STOR_STEP_INC:
+		setKnob( DEVICE_COMMANDS_RADAR_STORAGE, m_storageKnob + c_knobStep );
+		return true;
+	case KEYS_RADAR_STOR_STEP_DEC:
+		setKnob( DEVICE_COMMANDS_RADAR_STORAGE, m_storageKnob - c_knobStep );
+		return true;
+	case KEYS_RADAR_STOR_CONT_UP:
+		m_storageMoving = 1;
+		return true;
+	case KEYS_RADAR_STOR_CONT_DOWN:
+		m_storageMoving = -1;
+		return true;
+	case KEYS_RADAR_STOR_CONT_STOP:
+		m_storageMoving = 0;
+		return true;
+	case KEYS_RADAR_GAIN_STEP_INC:
+		setKnob( DEVICE_COMMANDS_RADAR_GAIN, m_gainKnob + c_knobStep );
+		return true;
+	case KEYS_RADAR_GAIN_STEP_DEC:
+		setKnob( DEVICE_COMMANDS_RADAR_GAIN, m_gainKnob - c_knobStep );
+		return true;
+	case KEYS_RADAR_GAIN_CONT_UP:
+		m_gainMoving = 1;
+		return true;
+	case KEYS_RADAR_GAIN_CONT_DOWN:
+		m_gainMoving = -1;
+		return true;
+	case KEYS_RADAR_GAIN_CONT_STOP:
+		m_gainMoving = 0;
+		return true;
+	case KEYS_RADAR_DET_STEP_INC:
+		setKnob( DEVICE_COMMANDS_RADAR_DETAIL, m_detailKnob + c_knobStep );
+		return true;
+	case KEYS_RADAR_DET_STEP_DEC:
+		setKnob( DEVICE_COMMANDS_RADAR_DETAIL, m_detailKnob - c_knobStep );
+		return true;
+	case KEYS_RADAR_DET_CONT_UP:
+		m_detailMoving = 1;
+		return true;
+	case KEYS_RADAR_DET_CONT_DOWN:
+		m_detailMoving = -1;
+		return true;
+	case KEYS_RADAR_DET_CONT_STOP:
+		m_detailMoving = 0;
+		return true;
 	}
 
 	return false;
@@ -240,11 +307,13 @@ void Scooter::Radar::update( double dt )
 		return;
 	}
 
-	if ( m_volumeMoving )
-		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_VOLUME, clamp(m_obstacleVolume + dt * (double)m_volumeMoving, 0.0, 1.0 ) );
+	moveKnob( DEVICE_COMMANDS_RADAR_VOLUME,			m_obstacleVolume,	dt * c_knobSpeed, m_volumeMoving );
+	moveKnob( DEVICE_COMMANDS_RADAR_ANGLE,			m_angleKnob,		dt * c_knobSpeed, m_radarTilting );
+	moveKnob( DEVICE_COMMANDS_RADAR_BRILLIANCE,		m_brilliance,		dt * c_knobSpeed, m_brillianceMoving );
+	moveKnob( DEVICE_COMMANDS_RADAR_DETAIL,			m_detailKnob,		dt * c_knobSpeed, m_detailMoving );
+	moveKnob( DEVICE_COMMANDS_RADAR_GAIN,			m_gainKnob,			dt * c_knobSpeed, m_gainMoving );
+	moveKnob( DEVICE_COMMANDS_RADAR_STORAGE,		m_storageKnob,		dt * c_knobSpeed, m_storageMoving );
 
-	if ( m_radarTilting )
-		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_ANGLE, clamp( m_angleKnob + dt * (double)m_radarTilting , 0.0, 1.0 ) );
 
 	if ( ! m_interface.getElecMonitoredAC() )
 		return;

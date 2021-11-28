@@ -41,5 +41,5 @@ return {
 
 	wheelBrakeAssist        = DbOption.new():setValue(false):checkbox(),
 
-	experimentalRadar       = DbOption.new():setValue(false):checkbox(),
+	oldRadar       = DbOption.new():setValue(false):checkbox(),
 }
