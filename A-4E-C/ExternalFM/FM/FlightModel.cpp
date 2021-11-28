@@ -14,9 +14,9 @@
 #include <algorithm>
 #include <fstream>
 #include "FlightModel.h"
-#include "Globals.h"
 #include "Data.h"
 #include "Maths.h"
+#include "Globals.h"
 //=========================================================================//
 
 typedef Scooter::Airframe::Damage D;
