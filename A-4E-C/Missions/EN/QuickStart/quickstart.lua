@@ -14,7 +14,7 @@ planes = {
         file = "Caucasus A-4E-C Takeoff.miz"
     },
     {
-        name = _("Carrier Launch"),
+        name = _("Carrier Start"),
         file = "Caucasus A-4E-C Carrier Start.miz"
     },
     {
@@ -88,7 +88,7 @@ planes = {
         file = "Persian Gulf A-4E-C Takeoff.miz"
     },
     {
-        name = _("Carrier Launch"),
+        name = _("Carrier Start"),
         file = "Persian Gulf A-4E-C Carrier Start.miz"
     },
     {
@@ -156,7 +156,7 @@ planes = {
         file = "Syria A-4E-C Takeoff.miz"
     },
     {
-        name = _("Carrier Launch"),
+        name = _("Carrier Start"),
         file = "Syria A-4E-C Carrier Start.miz"
     },
     {
@@ -170,8 +170,8 @@ planes = {
         file = "Marianas A-4E-C Cold Start.miz"
     },
     {
-        name = _("Carrier Launch"),
-        file = "Marianas A-4E-C Carrier Launch.miz"
+        name = _("Carrier Start"),
+        file = "Marianas A-4E-C Carrier Start.miz"
     },
     {
         name = _("Free Flight"),
