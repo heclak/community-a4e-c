@@ -16,6 +16,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 ### Changed
 - New Radar:
   - Enabled this radar by default.
+  - Range lines can now be lit by the reticle knob.
   - Range lines are now drawn on top of the radar returns.
   - Updated screen simulation to be more realistic.
   - Updated storage to be more realistic.
@@ -33,6 +34,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 ### Removed
 
 ### Fixed
+- Partially fixed long standing performance degrade due to the large number of blobs for the radar.
 - Issue #392 allowing the deck offset and angle to be adjusted based on ship type. *(thanks OpticFlowX)*
 - Reversion from CSS (or inital engage) to ATTITUDE should roll the aircraft level when within 5 degrees. *(thanks OpticFlowX)*
 - JTAC was missing from radio menu.
