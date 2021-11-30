@@ -25,6 +25,7 @@ local tblCPLocalList = oms.getTblCPLocalList(modulelocation)
 return {
 	trimSpeed				= DbOption.new():setValue(0):combo({DbOption.Item(_('100% (default)')):Value(0),
 																DbOption.Item(_('50%')):Value(1),
+																DbOption.Item(_('25%')):Value(2),
 																}),
 
 	--[[catapultLaunchMode		= DbOption.new():setValue(0):combo({DbOption.Item(_('MIL Power')):Value(0),

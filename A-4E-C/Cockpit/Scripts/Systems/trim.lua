@@ -71,6 +71,8 @@ if optionsData_trimspeed == 0 then
 	trimspeedfactor = 1
 elseif optionsData_trimspeed == 1 then
 	trimspeedfactor = 0.5
+elseif optionsData_trimspeed == 2 then
+	trimspeedfactor = 0.25
 else
 	trimspeedfactor = 1
 end
