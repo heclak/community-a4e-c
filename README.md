@@ -232,7 +232,10 @@ Past that, [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt
 
 ### Q: Will guided weapons like AGM-12 Bullpup or AGM-62 Walleye be added?
 
-**No**, implementing additional guided weapons would require access to the Eagle Dynamics SDK, and the cockpit model lacks the TV monitor used for its display.
+There are some cursory plans to implement the AGM-12C Bullpup. The A-4E-C cockpit model lacks the TV monitor used for the Walleye display.
+
+### Q: Why doesn't the A-4E-C have a nosewheel steering button?
+There is insufficient evidence to suggest that the A-4E had NWS. According to our research the the revisions and reworks relating to the NWS were applied to only the -F models. If you find evidence that E's did in fact have NWS, please share it!
 
 ### Q: Are there any plans to simulate other variants or later models of the A-4?
 
