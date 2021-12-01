@@ -88,6 +88,7 @@ join(res.keyCommands,{
     {down = Keys.ExtLightMaster, value_down = 1, up = Keys.ExtLightMaster, value_up = 0,                name = _('Master Exterior Lights Switch - ON else OFF'),    category = {_('Throttle Panel'), _('Throttle Grip'), _('Exterior Lights Panel')}},
     {combos = {{key = 'B'}}, down = iCommandPlaneAirBrake,                                              name = _('Speedbrake Switch - OPEN/CLOSE'),                 category = {_('Throttle Panel'), _('Throttle Grip'), _('Flight Control')}},
     {down = iCommandPlaneAirBrakeOn, up = iCommandPlaneAirBrakeOff,                                     name = _('Speedbrake Switch - OPEN else CLOSE'),            category = {_('Throttle Panel'), _('Throttle Grip'), _('Flight Control')}},
+    {down = iCommandPlaneAirBrakeOff, up = iCommandPlaneAirBrakeOn,                                     name = _('Speedbrake Switch - CLOSE else OPEN'),            category = {_('Throttle Panel'), _('Throttle Grip'), _('Flight Control')}},
     {combos = {{key = 'B', reformers = {'LShift'}}}, down = iCommandPlaneAirBrakeOn,                    name = _('Speedbrake Switch - OPEN'),                       category = {_('Throttle Panel'), _('Throttle Grip'), _('Flight Control')}},
     {combos = {{key = 'B', reformers = {'LCtrl'}}}, down = iCommandPlaneAirBrakeOff,                    name = _('Speedbrake Switch - CLOSE'),                      category = {_('Throttle Panel'), _('Throttle Grip'), _('Flight Control')}},
 
