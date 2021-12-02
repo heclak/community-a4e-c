@@ -15,7 +15,8 @@ function post_initialize()
     startup_print("radarwarn: postinit")
 
     sndhost = create_sound_host("COCKPIT_RADAR_WARN","HEADPHONES",0,0,0)
-    radartone = sndhost:create_sound("Aircrafts/A-4E-C/radarwarn") -- refers to sdef file, and sdef file content refers to sound file, see DCSWorld/Sounds/sdef/_example.sdef
+    radarwarntone = sndhost:create_sound("Aircrafts/A-4E-C/a-4e_CockpitRadarAltimeterWarn") -- Radar Altimeter Warning Tone
+    -- radarlocktone = sndhost:create_sound("Aircrafts/A-4E-C/a-4e_CockpitRadarAltimeterLock") -- Radar Altimeter Lock Status Change Tone
     local birth = LockOn_Options.init_conditions.birth_place
     if birth=="GROUND_HOT" or birth=="GROUND_COLD" then
         dev:performClickableAction(device_commands.radar_alt_switch, -1, false)  -- disable radar warning on ground starts
@@ -147,7 +148,7 @@ AFC 423: Disable LAWS Unreliability Tone with APR-27 Installed (Wiring Mod.)
             if prev_altitude > warning_altitude and altitude_feet < warning_altitude and radar_enabled then
                 played=true
                 ticker = 0
-                radartone:play_once()
+                radarwarntone:play_once()
             end
         end
         prev_altitude = altitude_feet
