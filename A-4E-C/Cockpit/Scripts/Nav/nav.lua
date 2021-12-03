@@ -314,6 +314,11 @@ function get_declination()
     return dec
 end
 
+function get_calculated_true_heading()
+    result = sensor_data.getMagneticHeading() + math.rad(asn41_magvar_offset)
+    return result 
+end
+
 -- measures the deviation between grid north (delta x, fixed z) and "true" north in lat/long at that point
 function get_true_deviation_from_grid(x,z)
     return true_bearing_viall_from_xz(x-1000, z, x+1000, z)
@@ -351,6 +356,8 @@ local tacan_audio_active = false
 
 
 function post_initialize()
+    asn41_magvar_offset = round(get_declination(),1)
+
     startup_print("nav: postinit")
     sndhost = create_sound_host("COCKPIT_TACAN","HEADPHONES",0,0,0)
     morse_dot_snd = sndhost:create_sound("Aircrafts/A-4E-C/MorzeDot") -- refers to sdef file, and sdef file content refers to sound file, see DCSWorld/Sounds/sdef/_example.sdef
@@ -413,9 +420,9 @@ function post_initialize()
     asn41_ppos_lon = geopos.lon
 
     math.randomseed(asn41_ppos_lat)
-    pitch_err = 0.00 * randDir()
-    roll_err = 0.00 * randDir()
-    heading_err = 0.5 * randDir()
+    pitch_err = 0.02 * randDir()
+    roll_err = 0.02 * randDir()
+    heading_err = 0.02 * randDir()
 
     dev:performClickableAction(device_commands.tacan_ch_major, 0.0, true)
     dev:performClickableAction(device_commands.tacan_ch_minor, 0.1, true)
@@ -857,8 +864,8 @@ function getGroundSpeedFromDoppler(precision)
     local v_ground_x, v_ground_y, v_ground_z = sensor_data.getSelfVelocity()
 
 
-    v_ground_x = round(v_ground_x, precision)
-    v_ground_z = round(v_ground_z, precision)
+    v_ground_x = roundBase(v_ground_x, 0, 5)
+    v_ground_z = roundBase(v_ground_z, 0, 5)
 
     --print_message_to_user(tostring(v_ground_x).." "..tostring(v_ground_z))
 
@@ -886,8 +893,8 @@ function getAirDataComputerVariables(precision)
 
     local tas = round(Air_Data_Computer:getTAS(), precision - 1)
     local roll = round(sensor_data.getRoll(), precision)
-    local pitch = round(sensor_data.getPitch(), precision)
-    local heading = round(2.0 * math.pi - sensor_data.getHeading(), precision)
+    local pitch = round(sensor_data.getPitch(),precision)
+    local heading = round(get_calculated_true_heading(),precision)
     local aoa = round(sensor_data.getAngleOfAttack(), precision)
 
     return tas, pitch, roll, heading, aoa
@@ -941,10 +948,10 @@ function updateIntegratedLatLong()
     local halfdtSqr = 0.5 * (update_time_step ^ 2)
 
     -- The rounding here represents the systematic error (the actual scientific definition)
-    asn41_integrate_x = asn41_integrate_x + roundBase(vx - asn41_wind_x, 0, 3) * update_time_step 
-    asn41_integrate_z = asn41_integrate_z + roundBase(vz - asn41_wind_z, 0, 3) * update_time_step
+    asn41_integrate_x = asn41_integrate_x + (vx - asn41_wind_x) * update_time_step 
+    asn41_integrate_z = asn41_integrate_z + (vz - asn41_wind_z) * update_time_step
 
-    local drift = calculate_drift()
+    --local drift = calculate_drift()
     --print_message_to_user("Drift: "..tostring(drift/1000.0))
 
     local geopos = lo_to_geo_coords(asn41_integrate_x, asn41_integrate_z)
@@ -1147,12 +1154,12 @@ function asn41_update_range_and_bearing(dest)
     end
 
 
-    local declination = get_declination()
+    --local declination = get_declination()
 
     --------------------------------------------------------
     -- second, calculate bearing
     bearing = forward_azimuth_bearing(lat1,lon1,lat2,lon2)
-    asn41_bearing:set( bearing - declination )
+    asn41_bearing:set( bearing - asn41_magvar_offset )
 
     --------------------------------------------------------
     -- third, calculate track based on wind influence
@@ -1470,6 +1477,9 @@ end
 local apn153_mode_error = 0
 local apn153_mode_error_change = 0
 
+local apn153_altitude_error = 1
+local apn153_altitude_error_change = 0
+
 -- execute the AN/APN-153 speed & drift calculation from last position
 -- speed is the hypotenus distance per unit time between old and new coordinates
 -- drift is calculated as the arctangent of dx (northing) / dz (easting) adjusted based on the compass
@@ -1500,6 +1510,20 @@ function apn153_speed_and_drift(land)
     elseif drift > 180 then
         drift = drift - 360 -- handle the opposite (flying north, strong easterly wind)
     end
+
+    if apn153_altitude_error_change <= 0 then
+        apn153_altitude_error = 1.0 + randomf(0.03,0.06) * (sensor_data.getRadarAltitude() / 10000.0)
+        apn153_altitude_error_change = math.random(100,200)
+
+        --print_message_to_user("Drift: "..tostring(calculate_drift()/1000.0))
+        --print_message_to_user("Altitude Error: "..apn153_altitude_error)
+    end
+    
+    apn153_wind_x = apn153_wind_x * apn153_altitude_error
+    apn153_wind_z = apn153_wind_z * apn153_altitude_error   
+    apn153_altitude_error_change = apn153_altitude_error_change - 1
+    drift = drift * apn153_mode_error
+    speed = speed * apn153_mode_error
 
     -- add a random 3-5% error to both speed and drift if your land/sea mode is configured improperly.
     -- 'land' mode over sea will return 3-5% slower
