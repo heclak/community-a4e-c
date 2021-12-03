@@ -49,7 +49,7 @@ static std::vector<LERX> s_splines;
 static Scooter::Radar* s_radar = NULL;
 static unsigned char* s_testBuffer = NULL;
 
-static Logger* s_logger;
+//static Logger* s_logger;
 
 //========================== Static Functions =============================//
 static void init( const char* config );
@@ -358,11 +358,11 @@ void ed_fm_simulate(double dt)
 	s_fm->calculateAero(dt);
 	s_radar->update( dt );
 
-	s_logger->time( dt );
+	/*s_logger->time( dt );
 	s_logger->entry( s_state->getAOA() );
 	s_logger->entry( s_state->getOmega().z );
 	s_logger->entry( s_state->getOmegaDot().z );
-	s_logger->entry( s_input->pitchAxis().getValue(), true );
+	s_logger->entry( s_input->pitchAxis().getValue(), true );*/
 
 
 	//yaw += dyaw;
