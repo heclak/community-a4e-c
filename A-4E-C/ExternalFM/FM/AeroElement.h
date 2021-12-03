@@ -37,6 +37,7 @@ namespace Scooter
 		enum Type
 		{
 			ELEVATOR,
+			HORIZONTAL_STAB,
 			RUDDER,
 			AILERON,
 			HORIZONTAL,

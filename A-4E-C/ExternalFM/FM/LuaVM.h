@@ -35,7 +35,8 @@ public:
 	lua_State* L();
 	
 	bool dofile( const char* path );
-	double getGlobalNumber(const char* name);
+	bool getGlobalNumber( const char* name, double& number );
+	const char* getGlobalString( const char* name );
 	bool getGlobalTableNumber( const char* table, const char* key, float& result );
 	void getSplines( const char* name, std::vector<LERX>& vec );
 	bool outputCommands( const char* name );

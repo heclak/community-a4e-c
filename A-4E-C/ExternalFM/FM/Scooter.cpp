@@ -30,6 +30,7 @@
 #include "Commands.h"
 #include "Radar.h"
 #include "Globals.h"
+#include "Logger.h"
 
 //============================= Statics ===================================//
 static Scooter::AircraftState* s_state = NULL;
@@ -48,6 +49,8 @@ static std::vector<LERX> s_splines;
 static Scooter::Radar* s_radar = NULL;
 static unsigned char* s_testBuffer = NULL;
 
+static Logger* s_logger;
+
 //========================== Static Functions =============================//
 static void init( const char* config );
 static void cleanup();
@@ -59,6 +62,10 @@ static bool searchFolder( const char* root, const char* folder, const char* file
 
 //========================== Static Constants =============================//
 static constexpr bool s_NWSEnabled = false;
+
+static double s_wingTankOffset = 0.0;
+static double s_fuseTankOffset = 0.0;
+static double s_extTankOffset = 0.0;
 
 //=========================================================================//
 
@@ -185,6 +192,11 @@ void init(const char* config)
 	sprintf_s( configFile, 200, "%s/Config/config.lua", config );
 	s_luaVM->dofile( configFile );
 	s_luaVM->getSplines( "splines", s_splines );
+	//s_luaVM->getGlobalNumber( "external_tank_offset", s_extTankOffset);
+	//s_luaVM->getGlobalNumber( "fuselage_tank_offset", s_fuseTankOffset );
+	//s_luaVM->getGlobalNumber( "wing_tank_offset", s_wingTankOffset );
+
+	//printf( "EXT: %lf, WNG: %lf, FUS: %lf\n", s_extTankOffset, s_wingTankOffset, s_fuseTankOffset );
 
 	s_state = new Scooter::AircraftState;
 	s_interface = new Scooter::Interface;
@@ -196,6 +208,10 @@ void init(const char* config)
 	s_ils = new Scooter::ILS(*s_interface);
 	s_fuelSystem = new Scooter::FuelSystem2( *s_engine, *s_state );
 	s_radar = new Scooter::Radar( *s_interface, *s_state );
+	//s_logger = new Logger( s_luaVM->getGlobalString("logger_file") );
+
+	//s_fuelSystem->setTankPos( Scooter::FuelSystem2::TANK_FUSELAGE, Vec3( s_fuseTankOffset, 0.0, 0.0 ) );
+	//s_fuelSystem->setTankPos( Scooter::FuelSystem2::TANK_WING, Vec3( s_wingTankOffset, 0.0, 0.0 ) );
 
 	//checkCorruption(__FUNCTION__);
 	//printf( "Offset: %llx\n", (intptr_t)(&s_fuelSystem->m_enginePump) - (intptr_t)s_fuelSystem );
@@ -215,6 +231,7 @@ void cleanup()
 	delete s_ils;
 	delete s_fuelSystem;
 	delete s_radar;
+	//delete s_logger;
 
 	s_luaVM = NULL;
 	s_state = NULL;
@@ -227,6 +244,7 @@ void cleanup()
 	s_ils = NULL;
 	s_fuelSystem = NULL;
 	s_radar = NULL;
+	//s_logger = NULL;
 
 	s_splines.clear();
 }
@@ -252,9 +270,9 @@ void ed_fm_add_local_force(double & x,double &y,double &z,double & pos_x,double 
 	y = s_fm->getForce().y;
 	z = s_fm->getForce().z;
 
-	pos_x = s_fm->getCOM().x;
-	pos_y = s_fm->getCOM().y;
-	pos_z = s_fm->getCOM().z;
+	pos_x = s_state->getCOM().x;
+	pos_y = s_state->getCOM().y;
+	pos_z = s_state->getCOM().z;
 }
 
 void ed_fm_add_global_force(double & x,double &y,double &z,double & pos_x,double & pos_y,double & pos_z)
@@ -280,8 +298,8 @@ void ed_fm_add_local_moment(double & x,double &y,double &z)
 
 void ed_fm_simulate(double dt)
 {
-	if ( ! g_safeToRun )
-		return;
+	//if ( ! g_safeToRun )
+		//return;
 
 	//Pre update
 	if ( s_interface->getAvionicsAlive() )
@@ -340,7 +358,13 @@ void ed_fm_simulate(double dt)
 	s_fm->calculateAero(dt);
 	s_radar->update( dt );
 
-	
+	s_logger->time( dt );
+	s_logger->entry( s_state->getAOA() );
+	s_logger->entry( s_state->getOmega().z );
+	s_logger->entry( s_state->getOmegaDot().z );
+	s_logger->entry( s_input->pitchAxis().getValue(), true );
+
+
 	//yaw += dyaw;
 	//pitch += dpitch;
 	//
@@ -434,9 +458,10 @@ void ed_fm_set_current_mass_state
 	double moment_of_inertia_z
 )
 {
-	//printf( "Mass: %lf\n", mass );
+	
 	s_airframe->setMass(mass);
 	Vec3 com = Vec3( center_of_mass_x, center_of_mass_y, center_of_mass_z );
+	printf( "COM: %lf, %lf, %lf\n", com.x,com.y,com.z );
 	s_state->setCOM( com );
 	s_fm->setCOM(com);
 }
@@ -738,13 +763,13 @@ bool ed_fm_change_mass  (double & delta_mass,
 		return false;
 	}
 
-	Vec3 pos = s_fuelSystem->getFuelPos(tank);
+	const Vec3& pos = s_fuelSystem->getFuelPos(tank);
 	//Vec3 r = pos - s_state->getCOM();
 	
 	delta_mass = s_fuelSystem->getFuelQtyDelta(tank);
 	s_fuelSystem->setFuelPrevious( tank );
 
-	//printf( "Tank %d, Pos: %lf, %lf, %lf, dm: %lf\n", tank, pos.x, pos.y, pos.z, delta_mass );
+	//printf( "Tank %d, Pos: %lf, %lf, %lf, dm=%lf\n", tank, pos.x, pos.y, pos.z, delta_mass );
 
 	delta_mass_pos_x = pos.x;
 	delta_mass_pos_y = pos.y;
@@ -787,8 +812,10 @@ void  ed_fm_set_external_fuel (int	 station,
 								double y,
 								double z)
 {
+	constexpr double tankOffset = 0.45;
+
 	//printf( "Station: %d, Fuel: %lf, Z: %lf, COM %lf\n", station, fuel, z, s_state->getCOM().z );
-	s_fuelSystem->setFuelQty( (Scooter::FuelSystem2::Tank)(station + 1), Vec3( x, y, z ), fuel );
+	s_fuelSystem->setFuelQty( (Scooter::FuelSystem2::Tank)(station + 1), Vec3( x - tankOffset, y, z ), fuel );//0.25
 }
 /*
 	get external fuel volume 

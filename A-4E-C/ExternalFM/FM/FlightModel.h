@@ -388,7 +388,10 @@ void FlightModel::M_stab()
 {
 	double horizDamage = m_airframe.getHoriStabDamage();
 	//double wingDamage = (m_airframe.getLWingDamage() + m_airframe.getRWingDamage())/2.0;
-	m_moment.z += m_k * m_chord * (CmM( m_state.getMach() ) * 0.15 + 0.008 * m_airframe.getSpeedBrakePosition()) + 0.25 * m_scalarV * m_totalWingArea * m_chord * m_chord * horizDamage * (Cmadot( m_state.getMach() ) * m_aoaDot * 6.5);
+
+	double elev = -0.38 * comp_e( m_state.getMach() ) * Cmde_a( std::abs( m_elementHorizontalStab.getAOA() ) ) * elevator() * m_airframe.getElevatorDamage();
+
+	m_moment.z += m_k * m_chord * ( elev + CmM( m_state.getMach() ) * 0.15 + 0.008 * m_airframe.getSpeedBrakePosition()) + 0.25 * m_scalarV * m_totalWingArea * m_chord * m_chord * horizDamage * (Cmadot( m_state.getMach() ) * m_aoaDot * 6.5 );
 	//DO NOT DELETE!!!
 	//0.5 * Cmde( m_state.getMach() ) * Cmde_a( std::abs( m_state.getAOA() ) ) * elevator() * m_airframe.getElevatorDamage() + 
 	/*Cmalpha(m_state.getMach())* m_state.getAOA()* wingDamage * 1.5
@@ -404,7 +407,7 @@ void FlightModel::N_stab()
 	//DO NOT DELETE!!!
 	//m_q * (Cndr(0.0) * rudder() * m_airframe.getRudderDamage()) +
 	//-Cnb(m_state.getBeta()) * vertDamage * 0.8
-	//	+ m_p * (Cnr(0.0) * m_state.getOmega().y * vertDamage);//(Cnr(0.0)*m_omega.y); //This needs to be fixed, constants like 0.8 are temporary!!!
+	//	+ m_p * (Cnr(0.0) * m_state.getOmega().y * vertDamage);//(); //This needs to be fixed, constants like 0.8 are temporary!!!
 }
 
 double FlightModel::elevator()
