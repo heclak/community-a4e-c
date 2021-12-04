@@ -28,7 +28,7 @@ static int vapourMapC[10] = {};
 static D wingElementToDamage[] = {D::WING_L_CENTER, D::WING_L_CENTER, D::WING_L_IN, D::WING_L_IN, D::WING_R_IN, D::WING_R_IN, D::WING_R_CENTER, D::WING_R_CENTER};
 static D wingElementToDamageC[] = {D::AILERON_L, D::WING_L_OUT, D::WING_L_OUT, D::WING_L_OUT, D::WING_L_CENTER, D::WING_R_CENTER, D::WING_R_OUT, D::WING_R_OUT, D::WING_R_OUT, D::AILERON_L };
 
-constexpr double c_cpX = -0.15;//0.1;
+constexpr double c_cpX = -0.25;//0.1;
 
 #undef min
 
@@ -121,7 +121,7 @@ Scooter::FlightModel::FlightModel
 	Cmq(d_Cmq, 0.13176098, 1.0006616),
 	Cmadot(d_Cmadot, 0.0, 1.0),
 	CmM(d_CmM, 0.06761245, 1.0),
-	Cmde_a({1.2, 0.1, 0.0}, 20.0_deg, 60.0_deg),
+	Cmde_a({1.2, 0.1}, 30.0_deg, 40.0_deg),
 	
 	//Cnb({0.36}, 0.0, 1.0), //0.12
 	Cnb(d_Cnb, -0.785398163, 0.785398163),
