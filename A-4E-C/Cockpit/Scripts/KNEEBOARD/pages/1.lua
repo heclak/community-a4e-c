@@ -20,38 +20,43 @@ For example, page "23" is "23.lua".
   13 ILS Data
   14 Countermeasures
 
-2 Weapons
-  21 Master Arm & Bombs
-  22 Weapon Delivery
-  23 Guns
-  24 Rockets
-  25 Missiles & ECM
+2 Radar
+  21 AN/APN-141 Radar Altimiter
+  22 AN/APG-53A Radar (Display Indicator)
+  23 Ground Radar (Search)
+  24 Ground Radar (Terrain Clearance)
+  25 Ground Radar (Scope Distortion)
+  26 Ground Radar (Air-to-Ground)
 
-3 Flight
-  31 Autopilot
-  32 Case I Recovery & APC
-  33 Case III Recovery
-  34 Fuel & Air Refueling
-  35 Structural Limits
-  36 Airspeed Limits
-  37 Ground Radar: Search
-  38 Ground Radar: Terrain Clearance
-  39 Ground Radar: Scope Distortion
-  40 Ground Radar: Air-to-Ground
+3 Weapons
+  31 Master Arm & Bombs
+  32 Weapon Delivery
+  33 Guns
+  34 Rockets
+  35 Missiles & ECM
 
-4 Checklists
-  41 Start-Up
-  42 Taxi
-  43 Takeoff
-  44 Takeoff (cont.)
-  45 Landing
-  46 Emergency
+4 Flight
+  41 Autopilot
+  42 Case I Recovery & APC
+  43 Case III Recovery
+  44 Fuel & Air Refueling
+  45 Structural Limits
+  46 Airspeed Limits
 
-5 Orientation
-  51 Throttle & Stick
-  52 Instrument Panel
-  53 Console Left
-  54 Console Right
-  55 Controls
+5 Checklists
+  51 Start-Up
+  52 Pre-Taxi
+  53 Pre-Takeoff
+  54 Takeoff
+  55 Landing
+  56 Emergency (Engine Flame Out, Air Start, Low Precautionary Approach)
+  57 Emergency (High Precautionary Flameout Approach)
+
+6 Orientation
+  61 Throttle & Stick
+  62 Instrument Panel
+  63 Console Left
+  64 Console Right
+  65 Controls
 
 ]]

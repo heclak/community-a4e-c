@@ -1,4 +1,3 @@
-
 dofile(LockOn_Options.common_script_path.."KNEEBOARD/indicator/definitions.lua")
 SetScale(FOV)
 
