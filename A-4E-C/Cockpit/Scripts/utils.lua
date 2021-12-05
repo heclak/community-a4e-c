@@ -2,7 +2,9 @@ dofile(LockOn_Options.script_path.."../../Sounds/Sounders/Curve.lua")
 
 -- Utility functions/classes
 
-
+function randomf(lower,upper)
+  return lower + math.random() * (upper - lower)
+end
 
 function startup_print(...)
     print(...)
@@ -507,6 +509,30 @@ end
 -- read the target value (latest value passed to the get_WMA_wrap() function)
 function WMA_wrap:get_target_val ()
     return self.target_val
+end
+
+Random_Walker = {}
+Random_Walker.__index = Random_Walker
+setmetatable(Random_Walker,
+  {
+    __call = function(cls, ...) return cls.new(...) end
+  }
+)
+
+function Random_Walker.new(speed, min, max, start)
+  local self = setmetatable({}, Random_Walker)
+  self.speed = speed
+  self.min = min
+  self.max = max
+  self.pos = start
+  self.vel = 0.0
+  return self
+end
+
+function Random_Walker:update(timestep)
+  local step = randomf(-self.speed, self.speed)
+  self.vel = clamp(self.vel + step * timestep, self.min,self.max)
+  self.pos = clamp(self.pos + self.vel * timestep, self.min,self.max)
 end
 
 --------------------------------------------------------------------

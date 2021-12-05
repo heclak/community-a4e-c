@@ -11,6 +11,7 @@
 //
 //================================ Includes ===============================//
 #include "AeroElement.h"
+#include "Units.h"
 //================================ Includes ===============================//
 
 Scooter::AeroElement::AeroElement
@@ -65,7 +66,7 @@ Scooter::AeroControlElement::AeroControlElement
 	Vec3 surfaceNormal,
 	double area
 ) :
-	AeroElement(state, controlSurfaceType, CLalpha, CDalpha, cp, surfaceNormal, area), m_airframe{ airframe }, m_compressElev{ nullptr }
+	AeroElement(state, controlSurfaceType, CLalpha, CDalpha, cp, surfaceNormal, area ), m_airframe{ airframe }, m_compressElev{ nullptr }
 {
 	m_aoaModifier = true;
 }
@@ -104,7 +105,7 @@ void Scooter::AeroElement::airborneInit()
 
 void Scooter::AeroElement::elementLift()
 {
-	if (m_type == HORIZONTAL || m_type == AILERON || m_type == ELEVATOR)
+	if (m_type == HORIZONTAL || m_type == AILERON || m_type == ELEVATOR || m_type == HORIZONTAL_STAB )
 	{
 		m_LDwindAxes.y = m_kElem * (m_CLalpha(m_aoa) * (cos(m_beta)) * m_liftFactor * m_damageElem);
 	}
@@ -150,7 +151,7 @@ void Scooter::AeroElement::calculateElementPhysics()
 	m_aoa = atan2( cross( forwardVec, flightPathProjectedAOA ) * spanVec, forwardVec * flightPathProjectedAOA );
 	
 
-	if ( m_type == RUDDER || m_type == ELEVATOR )
+	if ( m_type == RUDDER || m_type == ELEVATOR || m_type == HORIZONTAL_STAB )
 		m_beta = 0.0;
 	else
 		m_beta = atan2( cross( forwardVec, flightPathProjectedBeta ) * m_surfaceNormal, forwardVec * flightPathProjectedBeta );
@@ -168,7 +169,7 @@ void Scooter::AeroElement::calculateElementPhysics()
 	updateLERX();
 	
 	
-	if (m_type == HORIZONTAL || m_type == AILERON || m_type == ELEVATOR)
+	if (m_type == HORIZONTAL || m_type == AILERON || m_type == ELEVATOR || m_type == HORIZONTAL_STAB )
 	{
 		m_RForceElement = windAxisToBody( m_LDwindAxes, m_aoa, m_beta );
 		//printf( "alpha: %lf, beta: %lf, lift vector (w): LDVec = %lf, %lf, %lf, Body: %lf, %lf, %lf\n", m_aoa, m_beta, m_LDwindAxes.x, m_LDwindAxes.y, m_LDwindAxes.z, m_RForceElement.x, m_RForceElement.y, m_RForceElement.z );	
@@ -184,7 +185,8 @@ void Scooter::AeroElement::calculateElementPhysics()
 		printf("ERROR: could not calculate resultant force");
 	}
 
-	Vec3 deltaCentreOfPressure = m_cp - Vec3(0.0, 0.0, m_state.getCOM().z);
+	Vec3 deltaCentreOfPressure = m_cp - m_state.getCOM(); //-Vec3(0.0, 0.0, m_state.getCOM().z); 
+	//Vec3 deltaCentreOfPressure = m_cp - Vec3(0.0, 0.0, m_state.getCOM().z); 
 	m_moment = cross( deltaCentreOfPressure, m_RForceElement);
 }
 
@@ -192,11 +194,16 @@ double Scooter::AeroControlElement::controlInput()
 {
 	switch (m_type) // might be cleaner to call a function in each case
 	{
+	case HORIZONTAL_STAB:
+	{
+		double hStabIncidence = -m_airframe.getStabilizer();
+		return hStabIncidence;
+	}
 	case ELEVATOR:
 	{
-		double elevator = -m_airframe.getElevator() * toRad(30) * (*m_compressElev)(m_state.getMach());
+		double elevator = m_airframe.elevatorAngle();//* ( *m_compressElev )( m_state.getMach() );
 		double hStabIncidence = -m_airframe.getStabilizer();
-		return (elevator + hStabIncidence);
+		return hStabIncidence + elevator;
 	}
 	case RUDDER:
 		return -m_airframe.getRudder() * toRad(17);

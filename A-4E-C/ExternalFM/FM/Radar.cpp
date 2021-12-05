@@ -334,12 +334,14 @@ void Scooter::Radar::update( double dt )
 	moveKnob( DEVICE_COMMANDS_RADAR_RETICLE,		m_reticleKnob,		dt * c_knobSpeed, m_reticleMoving );
 
 
-	if ( ! m_interface.getElecMonitoredAC() )
+	if ( m_interface.getElecMonitoredAC() )
+	{
+		m_scope.setReticle( m_reticleKnob / 2.0 );
+	}
+	else
 	{
 		m_scope.setReticle( 0.0 );
 	}
-
-	m_scope.setReticle( m_reticleKnob / 2.0 );
 
 	State newState = getState();
 	

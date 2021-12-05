@@ -189,6 +189,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="LERX.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="LuaVM.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="MovingAverage.h" />

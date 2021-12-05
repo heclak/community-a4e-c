@@ -204,7 +204,7 @@ private:
 	inline void storage( double value )
 	{
 		m_storageKnob = value;
-		m_storage = ( 0.25 - 0.02 ) * value + 0.02;
+		m_storage = ( 0.25 - 0.02 ) * ( 1.0 - value ) + 0.02;
 	}
 	inline void gain( double value ) 
 	{ 
@@ -214,7 +214,7 @@ private:
 	inline void detail( double value )
 	{ 
 		m_detailKnob = value;
-		m_detail = value * ( 5.0_deg - 0.5_deg ) + 0.5_deg;
+		m_detail = ( 1.0 - value ) * ( 2.5_deg - 0.25_deg ) + 0.25_deg;
 	}
 	inline void angle( double value ) 
 	{ 

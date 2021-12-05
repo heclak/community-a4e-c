@@ -29,6 +29,31 @@ LuaVM::~LuaVM()
 	m_state = NULL;
 }
 
+bool LuaVM::getGlobalNumber(const char* name, double& number )
+{
+	lua_getglobal( m_state, name );
+	if ( lua_isnumber( m_state, -1 ) )
+	{
+		number = lua_tonumber(m_state, -1);
+		return true;
+	}
+	lua_pop( m_state, 1 );
+
+	number = 0.0;
+	return false;
+}
+
+const char* LuaVM::getGlobalString( const char* name )
+{
+	lua_getglobal( m_state, name );
+	if ( lua_isstring( m_state, -1 ) )
+	{
+		return lua_tostring( m_state, -1 );
+	}
+	lua_pop( m_state, 1 );
+	return "";
+}
+
 bool LuaVM::getGlobalTableNumber( const char* table, const char* key, float& result )
 {
 	lua_getglobal( m_state, table );
