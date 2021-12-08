@@ -295,7 +295,7 @@ elements["PNT_258"] = default_2_position_tumb("AFCS 1-N-2 Guard Switch", devices
 elements["PNT_259"] = springloaded_3_pos_tumb("AFCS 1-N-2 Switch", devices.AFCS, device_commands.afcs_test, 259, true, KNOBCLICK_RIGHT_AFT)
 
 -- AN/ARC-51A UHF RADIO #67
-elements["PNT_361"] = multiposition_switch_limited("Radio Preset Channel", devices.RADIO, device_commands.arc51_freq_preset, 361, 20, 0.05, false, 0.00, KNOBCLICK_RIGHT_MID)
+elements["PNT_361"] = multiposition_switch_limited("Radio Preset Channel Selector", devices.RADIO, device_commands.arc51_freq_preset, 361, 20, 0.05, false, 0.00, KNOBCLICK_RIGHT_MID)
 elements["PNT_365"] = default_axis_limited("Radio Volume", devices.RADIO, device_commands.arc51_volume, 365, 0.5, 0.3, false, false, {0,1})
 elements["PNT_366"] = multiposition_switch_limited("Radio Frequency Mode", devices.RADIO, device_commands.arc51_xmitmode, 366, 3, 1, true, -1, KNOBCLICK_RIGHT_MID)
 elements["PNT_367"] = multiposition_switch_limited("Radio Frequency 10 MHz", devices.RADIO, device_commands.arc51_freq_XXooo, 367, 18, 0.05, false, 0, KNOBCLICK_RIGHT_MID)
