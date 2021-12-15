@@ -52,6 +52,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Added External Flight Model (EFM) with flight dynamics, suspension, slat simulation, differential braking, cockpit shake, wing vapour and more
   - Added Pratt & Whitney J52-P-8A engine simulation
   - Added SuperCarrier compatibility
+  - Added carrier mod support (HMAS Melbourne, HMS Hermes)
   - Added air-to-air refueling
   - Added original exterior engine sound set
   - Added many interior sounds
