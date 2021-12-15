@@ -118,7 +118,6 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 ### Known Bugs and Incompatibilities
 
 - Incompatible with AH-6J Little Bird, CH-47 Chinook, and CH-53E Super Stallion mods (DCS bug)
-- Missions created in DCS 2.7+ occasionally render the AN/ASN-41 Navigation Computer inoperable
 - Pilot blacks out when throttling up to hook up to catapult on SuperCarrier
 - Dispensing high volumes of bomblets (40+) from SUU-7/CBU-1/CBU-2 can cause performance dip or crashes to desktop
 
