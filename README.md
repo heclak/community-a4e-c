@@ -4,7 +4,7 @@
 
 The A-4 was a cold war workhorse which proved to be a capable, reliable light attack aircraft to dozens of nations around the world. From the jungles of southeast Asia, to the desert of Sinai, to the coasts of South America, the scooter was a common sight above battlefields around the world for decades.
 
-The Community A-4E-C represents more than three years of work on behalf of the development team. We're proud to present our most comprehensive DCS World module to date, featuring a realistic flight model, improved systems, increased functionality across all DCS World's available maps, including full carrier compatibility and air-to-air refueling, unique sounds, keybinds and features to increase ease of use and immersion when flying this now-venerable module.
+The Community A-4E-C represents more than five years of work on behalf of the development team. We're proud to present our most comprehensive DCS World module to date, featuring a realistic flight model, improved systems, increased functionality across all DCS World's available maps, including full carrier compatibility, radios, air-to-air refueling, unique sounds, keybinds and quality of life improvements.
 
 We thank the DCS World community for their support and contributions over the years, and dedicate the module to our friend, mentor and lead coder, Eric "Gospadin" Mudama. His passion and brilliance left a mark on us all. This labor of love which would not have been possible without him.
 
@@ -60,7 +60,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 - **Systems:**
   - Added AFCS stability augmentation
   - Added AN/ARA-63 MCL (ICLS)
-  - Added AN/ARC-51A UHF Radio *(thanks Harald)*
+  - Added AN/ARC-51A UHF Radio with VOIP *(thanks Harald)*
   - Added AN/ARN-52 TACAN
   - Added AN/ASN-41 Nav Computer drift on long flights and heavy maneuvers
   - Added CP-741/A bombing computer
@@ -69,6 +69,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Improved Approach Power Compensator (APC) behavior
   - Fixed spoiler behavior to deploy/stow properly (weight on wheels, engine RPM under 70%) *(thanks pohlinkzei)*
 - **Weapons and Loadouts:**
+  - Added BDU-33 training bombs
   - Added SUU-25 parachute illumination pod
   - Added empty fuel tanks
   - Added unique AIM-9 Sidewinder missile sounds (fixes missing sound bug)
@@ -77,6 +78,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 - **Missions:**
   - Added new instant action missions across all maps *(thanks Sidekick65, Cubeboy, Shadowfrost, SPINEG)*
   - Added runway strike and anti-ship strike roles
+  - Improved instant action missions
 - **Textures:**
   - Added unique helmets, pilot uniforms and patches
   - Added preliminary damage textures
@@ -103,7 +105,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Added slats lock for aerobatic performance teams
   - Added dozens of inputs and variant input options, and new inputs categories
   - Added cockpit controls indicator (press RCTRL+ENTER in the cockpit)
-  - Added special menu options for trim speed, cockpit shake, CSS mode FFB Deflection, and use rudder for differential braking
+  - Added special menu options for Trim Speed, Cockpit Shake, CSS mode FFB Deflection, Simple Braking (Rudder Assist)
   - Added Argentina and Chile as available countries
   - Improved labeling alignment across tooltips, inputs, user manual and NATOPS manual for easy searching
   - Improved trim reset for smoother performance
@@ -232,7 +234,7 @@ Past that, [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt
 
 ### Q: Will guided weapons like AGM-12 Bullpup or AGM-62 Walleye be added?
 
-There are some cursory plans to implement the AGM-12C Bullpup. The A-4E-C cockpit model lacks the TV monitor used for the Walleye display.
+The AGM-12C Bullpup is possibility with more work, but no promises just yet! Our A-4E-C cockpit model lacks the TV monitor used for the Walleye display.
 
 ### Q: Why doesn't the A-4E-C have a nosewheel steering button?
 There is insufficient evidence to suggest that the A-4E had NWS. According to our research the the revisions and reworks relating to the NWS were applied to only the -F models. If you find evidence that E's did in fact have NWS, please share it!
