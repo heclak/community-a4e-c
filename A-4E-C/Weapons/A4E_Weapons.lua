@@ -1411,6 +1411,7 @@ local bomb_data =
     ["AN-M57"]        = {   mass = 113.0        ,   wstype = {4,5,9,282},               pic = 'us_AN-M57.png', cx = 0.00035,        ofs = 0.0,      PictureBlendColor = true  }, 
     ["AN-M81"]        = {   mass = AN_M81.mass  ,   wstype = AN_M81.wsTypeOfWeapon,     pic = 'an-m81.png',    cx = AN_M81.Cx,      ofs = 0.0,      PictureBlendColor = false },
     ["AN-M88"]        = {   mass = AN_M88.mass  ,   wstype = AN_M88.wsTypeOfWeapon,     pic = 'an-m88.png',    cx = AN_M88.Cx,      ofs = 0.0,      PictureBlendColor = false },
+    ["BDU-33"]        = {   mass = 11.3         ,   wstype = {4,5,9,69},                pic = 'bdu-33.png',    cx = 0.00000143,     ofs = 0.0,      PictureBlendColor = false },
 }
 
 local rack_data =
@@ -1773,6 +1774,10 @@ declare_loadout(rackme_a4e("Mk-82 Snakeye", 4, 0))         -- {Mk-82 Snakeye_MER
 declare_loadout(rackme_a4e("Mk-82 Snakeye", 3, 0))         -- {Mk-82 Snakeye_TER_3_C}
 declare_loadout(rackme_a4e("Mk-82 Snakeye", 2,-1))         -- {Mk-82 Snakeye_TER_2_L}
 declare_loadout(rackme_a4e("Mk-82 Snakeye", 2, 1))         -- {Mk-82 Snakeye_TER_2_R}
+
+declare_loadout(rackme_a4e("BDU-33", 5, -1))
+declare_loadout(rackme_a4e("BDU-33", 5, 1))
+declare_loadout(rackme_a4e("BDU-33", 6, 0))
 
 declare_loadout(rackme_a4e("Mk-83", 3, 0))                 -- {Mk-83_TER_3_C}
 declare_loadout(rackme_a4e("Mk-83", 2, 0))                 -- {Mk-83_TER_2_C}

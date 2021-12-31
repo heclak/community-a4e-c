@@ -211,7 +211,7 @@ local function get_inboard_weapons( side )
         { CLSID = "{AN-M57_TER_2_"..side.."}" },              -- AN-M57A1 x2 250 lb GP HE (129 lb TNT)
         { CLSID = "{AN-M81_MER_5_"..side.."}" },              -- AN-M81 x5 260 lb Fragmentation (34.1 lb Comp B)
         { CLSID = "{AN-M88_MER_5_"..side.."}" },              -- AN-M88 x5 216 lb Fragmentation (47 lb Comp B)
-        { CLSID = "{BRU41_6X_BDU-33}" },					  -- BRU-41 6*BDU-33
+        { CLSID = "{BDU-33_MER_5_"..side.."}" },              -- BDU-33 x5
 
         -- GUN PODS --
         {CLSID = "{Mk4 HIPEG}", connector = rocketConnector, arg_value = 0.2 },  -- Mk 4 Mod 0 HIPEG gun pod
@@ -310,7 +310,8 @@ local function get_centerline_weapons( side )
         { CLSID = "{AN-M57_TER_3_"..side.."}" },                -- AN-M57A1 x3 250 lb GP HE (129 lb TNT)
         { CLSID = "{AN-M81_MER_6_"..side.."}" },                -- AN-M81 x6 260 lb Fragmentation (34.1 lb Comp B)
         { CLSID = "{AN-M88_MER_6_"..side.."}" },                -- AN-M88 x6 216 lb Fragmentation (47 lb Comp B)
-        { CLSID = "{BRU41_6X_BDU-33}" },					    -- BRU-41 6*BDU-33
+        { CLSID = "{BDU-33_MER_6_"..side.."}" },              -- BDU-33 x5
+
 
         -- GUN PODS --
         { CLSID = "{Mk4 HIPEG}", connector = rocketConnector, arg_value = 0.2 },  -- Mk 4 Mod 0 HIPEG gun pod
