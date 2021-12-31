@@ -399,6 +399,7 @@ Keys =
     Radar_Ret_Cont_Up              = __custom_counter(),
     Radar_Ret_Cont_Down            = __custom_counter(),
     Radar_Ret_Cont_Stop            = __custom_counter(),
+    radio_ptt_voip                = __custom_counter(),
 
 }
 

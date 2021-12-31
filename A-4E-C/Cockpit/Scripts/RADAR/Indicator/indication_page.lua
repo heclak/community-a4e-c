@@ -177,8 +177,8 @@ radar_scale.h_clip_relation  = h_clip_relations.COMPARE
 radar_scale.level			= RADAR_DEFAULT_LEVEL
 Add(radar_scale)
 
-set_profile_scribe(0)
 dofile(LockOn_Options.script_path.."Systems/radar_scope_api.lua")
+set_profile_scribe(0)
 
 --[[
 blob_op_params[50]:set(1)

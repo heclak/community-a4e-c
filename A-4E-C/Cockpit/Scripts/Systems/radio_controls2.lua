@@ -41,6 +41,7 @@ dev:listen_command(Keys.UHFVolumeStartUp)
 dev:listen_command(Keys.UHFVolumeStartDown)
 dev:listen_command(Keys.UHFVolumeStop)
 dev:listen_command(Keys.radio_ptt)
+dev:listen_command(Keys.radio_ptt_voip)
 
 efm_data_bus = get_efm_data_bus()
 
@@ -221,6 +222,8 @@ function SetCommand(command,value)
         arc51_volume_moving = 0
     elseif command == Keys.radio_ptt then
         extended_dev:pushToTalk()
+    elseif command == Keys.radio_ptt_voip then
+        extended_dev:pushToTalkVOIP(value == 1)
     end
 end
 

@@ -684,7 +684,7 @@ limits are reached or the table is exhausted.
 
 @return VOID
 ]]--
-function recursively_print(table_to_print, max_depth, max_number_tables, filepath)
+function recursively_print(table_to_print, filepath, max_depth, max_number_tables)
   file = io.open(filepath, "w")
 	file:write("Key,Value\n")
   str = recursively_traverse(table_to_print,max_depth,max_number_tables)
