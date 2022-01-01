@@ -4,7 +4,7 @@
 
 The A-4 was a cold war workhorse which proved to be a capable, reliable light attack aircraft to dozens of nations around the world. From the jungles of southeast Asia, to the desert of Sinai, to the coasts of South America, the scooter was a common sight above battlefields around the world for decades.
 
-The Community A-4E-C represents more than five years of work on behalf of the development team. We're proud to present our most comprehensive DCS World module to date, featuring a realistic flight model, improved systems, increased functionality across all DCS World's available maps, including full carrier compatibility, radios, air-to-air refueling, unique sounds, keybinds and quality of life improvements.
+The Community A-4E-C represents more than five years of work on behalf of the development team. We're proud to present our most comprehensive DCS World module to date, featuring a realistic flight model, improved systems, increased functionality across all DCS World's available maps, including full carrier compatibility, radios, air-to-air refueling, unique sounds, improved controls and inputs and more.
 
 We thank the DCS World community for their support and contributions over the years, and dedicate the module to our friend, mentor and lead coder, Eric "Gospadin" Mudama. His passion and brilliance left a mark on us all. This labor of love which would not have been possible without him.
 
@@ -49,79 +49,80 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 ### Version 2.0 Changelog: Featured Items
 
 - **Features:**
-  - Added External Flight Model (EFM) with flight dynamics, suspension, slat simulation, differential braking, cockpit shake, wing vapour and more
-  - Added Pratt & Whitney J52-P-8A engine simulation
-  - Added SuperCarrier compatibility
-  - Added carrier mod support (HMAS Melbourne, HMS Hermes)
-  - Added air-to-air refueling
-  - Added original exterior engine sound set
-  - Added many interior sounds
-  - Improved interior sound localization and feedback
+  - Added External Flight Model (EFM) with flight dynamics, suspension, slat simulation, differential braking, cockpit shake, wing vapour and more.
+  - Added Pratt & Whitney J52-P-8A engine simulation.
+  - Added SuperCarrier compatibility.
+  - Added carrier mod support (HMAS Melbourne, HMS Hermes).
+  - Added air-to-air refueling.
+  - Added original exterior engine sound set.
+  - Added many interior sounds.
+  - Improved interior sound localization and feedback.
 - **Systems:**
-  - Added AFCS stability augmentation
-  - Added AN/ARA-63 MCL (ICLS)
-  - Added AN/ARC-51A UHF Radio with VOIP *(thanks Harald)*
-  - Added AN/ARN-52 TACAN
-  - Added AN/ASN-41 Nav Computer drift on long flights and heavy maneuvers
-  - Added CP-741/A bombing computer
-  - Added fuel flow system
-  - Added oxygen system
-  - Improved Approach Power Compensator (APC) behavior
-  - Fixed spoiler behavior to deploy/stow properly (weight on wheels, engine RPM under 70%) *(thanks pohlinkzei)*
+  - Added AFCS stability augmentation.
+  - Added AN/ARA-63 MCL (ICLS).
+  - Added AN/ARC-51A UHF Radio with VOIP. *(thanks Harald)*
+  - Added AN/ARN-52 TACAN.
+  - Added AN/ASN-41 Nav Computer drift on long flights and heavy maneuvers.
+  - Added CP-741/A bombing computer.
+  - Added fuel flow system.
+  - Added oxygen system.
+  - Improved Approach Power Compensator. (APC) behavior
+  - Fixed spoiler behavior to deploy/stow properly (weight on wheels, engine RPM under 70%). *(thanks pohlinkzei)*
 - **Weapons and Loadouts:**
-  - Added BDU-33 training bombs
-  - Added SUU-25 parachute illumination pod
-  - Added empty fuel tanks
-  - Added unique AIM-9 Sidewinder missile sounds (fixes missing sound bug)
-  - Improved AIM-9 missile loadouts, they are available to mount on stations 4 and 5
-  - Removed non-functional loadout options: AGM-12 Bullpup, AGM-62 Walleye, D-704 Refueling Pod *(see FAQ)*
+  - Added BDU-33 training bombs.
+  - Added SUU-25 parachute illumination pod.
+  - Added empty fuel tanks.
+  - Added unique AIM-9 missile sounds (fixes missing sound bug).
+  - Improved AIM-9 missile loadouts, they are available to mount on stations 4 and 5.
+  - Removed non-functional loadout options to reduce confusion: AGM-12C Bullpup, AGM-62 Walleye, D-704 Refueling Pod *(see FAQ)*.
 - **Missions:**
-  - Added new instant action missions across all maps *(thanks Sidekick65, Cubeboy, Shadowfrost, SPINEG)*
-  - Added runway strike and anti-ship strike roles
-  - Improved instant action missions
+  - Added new instant action missions across all maps *(thanks Sidekick65, Cubeboy, Shadowfrost, SPINEG)*.
+  - Added runway strike and anti-ship strike roles.
+  - Improved instant action missions.
+  - Added Argentina and Chile to available countries.
 - **Textures:**
-  - Added unique helmets, pilot uniforms and patches
-  - Added preliminary damage textures
-  - Improved exterior and interior textures *(thanks HellesBelle, Sport, JP Gabobo)*
-  - Fixed exterior and cockpit model material names to avoid conflicts
+  - Added unique helmets, pilot uniforms and patches.
+  - Added preliminary damage textures.
+  - Improved exterior and interior textures. *(thanks HellesBelle, Sport, JP Gabobo)*
+  - Fixed exterior and cockpit model material names to avoid conflicts.
 - **Liveries:**
-  - Added Community III: Forever Free, 2021 (Fictional)
-  - Added Community IV: Sea Otter, 2021 (Fictional)
-  - Added Argentina FAA Falklands Brigada IV and V, 1982 *(thanks GVad)*
-  - Added Australian Navy Squadron 805, 1972 *(thanks HellesBelle)*
-  - Added Brazil Marinha do Brasil VF-1 LoViz, 2018
-  - Added Brazil Marinha do Brasil VF-1 15 AÑOS, 2013 *(thanks Bungo)*
-  - Added Finland FiAF, 1984 (Fictional) *(thanks FinCenturion)*
-  - Added Malaysia TUDM M32-29 No.9 Squadron, 2004 *(thanks JacobBadshot)*
-  - Added USN VA-46 Clansmen, 1967
-  - Added USN VA-83 Black Lancers, 1966
-  - Added USN VA-106 Gladiators, 1967
-  - Added RAF Empire Pilots Test School Raspberry Ripple (Fictional) *(thanks FlyingHueman)*
-  - Added RNZAF Golden T-Bird No.2, Squadron Ohakea, 1986 *(thanks Corsair016)*
-  - Improved inaccuracies and naming across liveries
+  - Added Community III: Forever Free, 2021 (Fictional).
+  - Added Community IV: Sea Otter, 2021 (Fictional).
+  - Added Argentina FAA Falklands Brigada IV and V, 1982. *(thanks GVad)*
+  - Added Australian Navy Squadron 805, 1972. *(thanks HellesBelle)*
+  - Added Brazil Marinha do Brasil VF-1 LoViz, 2018.
+  - Added Brazil Marinha do Brasil VF-1 15 AÑOS, 2013. *(thanks Bungo)*
+  - Added Finland FiAF, 1984 (Fictional). *(thanks FinCenturion)*
+  - Added Malaysia TUDM M32-29 No.9 Squadron, 2004. *(thanks JacobBadshot)*
+  - Added USN VA-46 Clansmen, 1967.
+  - Added USN VA-83 Black Lancers, 1966.
+  - Added USN VA-106 Gladiators, 1967.
+  - Added RAF Empire Pilots Test School Raspberry Ripple (Fictional). *(thanks FlyingHueman)*
+  - Added RNZAF Golden T-Bird No.2, Squadron Ohakea, 1986. *(thanks Corsair016)*
+  - Improved inaccuracies and naming across liveries.
 - **Quality of Life:**
-  - Added kneeboard manual *(thanks Rob, Sidekick65)*
+  - Added kneeboard manual. *(thanks Rob, Sidekick65)*
   - Added AN/ARC-51 UHF Radio frequency presets printout to right console panel
-  - Added slats lock for aerobatic performance teams
-  - Added dozens of inputs and variant input options, and new inputs categories
-  - Added cockpit controls indicator (press RCTRL+ENTER in the cockpit)
-  - Added special menu options for Trim Speed, Cockpit Shake, CSS mode FFB Deflection, Simple Braking (Rudder Assist)
-  - Added Argentina and Chile as available countries
-  - Improved labeling alignment across tooltips, inputs, user manual and NATOPS manual for easy searching
-  - Improved trim reset for smoother performance
-  - Improved keyboard axis input centering
-  - Improved smokewinder pod operation (weapon function select independent)
-  - Improved main menu logos and iconography
-  - Fixed FFB stick support
-  - Fixed lots, and lots, and we mean LOTS of bugs *(thanks to the many A-4E-C users who helped identify, replicate and solve these!)*
+  - Added slats lock for aerobatic performance teams.
+  - Added dozens of inputs and variant input options, and new inputs categories.
+  - Added cockpit controls indicator (press RCTRL+ENTER in the cockpit).
+  - Added special menu options for Trim Speed, Cockpit Shake, CSS mode FFB Deflection, Simple Braking (Rudder Assist).
+  - Added Argentina and Chile as available countries.
+  - Improved labeling alignment across tooltips, inputs, user manual and NATOPS manual for easy searching.
+  - Improved trim reset for smoother performance.
+  - Improved keyboard axis input centering.
+  - Improved smokewinder pod operation (weapon function select independent).
+  - Improved main menu logos and iconography.
+  - Fixed FFB stick support.
+  - Fixed lots, and lots, and we mean LOTS of bugs. *(thanks to the many A-4E-C users who helped identify, replicate and solve these!)*
 
 [See full changelog](https://github.com/heclak/community-a4e-c/blob/master/CHANGELOG.md)
 
 ### Known Bugs and Incompatibilities
 
-- Incompatible with AH-6J Little Bird, CH-47 Chinook, and CH-53E Super Stallion mods (DCS bug)
-- Pilot blacks out when throttling up to hook up to catapult on SuperCarrier
-- Dispensing high volumes of bomblets (40+) from SUU-7/CBU-1/CBU-2 can cause performance dip or crashes to desktop
+- Incompatible with AH-6J Little Bird, CH-47 Chinook, and CH-53E Super Stallion mods (DCS bug).
+- Pilot blacks out when throttling up to hook up to catapult on SuperCarrier.
+- Dispensing high volumes of bomblets (40+) from SUU-7/CBU-1/CBU-2 can cause performance dip or crashes to desktop.
 
 [See full issue list](https://github.com/heclak/community-a4e-c/issues/)
 
@@ -151,7 +152,7 @@ Failure to perform these steps will result in DCS World not recognizing the modu
 
 Launch DCS World. If your installation was successful, the A-4E-C theme icon appears as a option in the main menu:
 
-![Image of DCS World Menu with A-4E-C Theme](https://cdn.discordapp.com/attachments/518815335013679104/886636891431141466/unknown.png)
+![Image of DCS World Menu with A-4E-C Theme](https://cdn.discordapp.com/attachments/518815335013679104/926862242182488136/unknown.png)
 
 ### Installation Troubleshooting
 
@@ -234,7 +235,7 @@ Past that, [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt
 
 ### Q: Will guided weapons like AGM-12 Bullpup or AGM-62 Walleye be added?
 
-The AGM-12C Bullpup is possibility with more work, but no promises just yet! Our A-4E-C cockpit model lacks the TV monitor used for the Walleye display.
+The AGM-12C Bullpup is a possibility with more work, but no promises just yet! Our A-4E-C cockpit model lacks the TV monitor used for the Walleye display.
 
 ### Q: Why doesn't the A-4E-C have a nosewheel steering button?
 There is insufficient evidence to suggest that the A-4E had NWS. According to our research the the revisions and reworks relating to the NWS were applied to only the -F models. If you find evidence that E's did in fact have NWS, please share it!
