@@ -226,6 +226,8 @@ vvi = get_param_handle("VVI")
 local vvi_wma = WMA(0.025,0)     -- 0.025 per tick, 20 ticks/sec, 2 seconds to fully adapt
 
 
+local auto_catapult_power = false
+
 -----------------------------------------------------------------------------
 -- Gauge Initialisation
 
@@ -260,6 +262,7 @@ dev:listen_command(Keys.OxygenToggle)
 dev:listen_command(Keys.AltPressureStartUp)
 dev:listen_command(Keys.AltPressureStartDown)
 dev:listen_command(Keys.AltPressureStop)
+dev:listen_command(Keys.cat_power_toggle)
 
 function dump_table(t)
     for key,value in pairs(t) do
@@ -294,6 +297,9 @@ function enumerate_fueltanks()
 end
 
 function post_initialize()
+
+    auto_catapult_power = get_aircraft_property("Auto_Catapult_Power")
+    --efm_data_bus.fm_setCatMode(auto_catapult_power)
 
     local abstime = get_absolute_model_time()
     local hours = abstime / 3600.0
@@ -464,6 +470,15 @@ function SetCommand(command,value)
         lights_floodwhite_val = value
         -- print_message_to_user("flood value: "..value)
 
+    elseif command == Keys.IntLightBrightness then
+        if lights_floodred_val == FLOODRED_BRIGHT then
+            dev:performClickableAction(device_commands.intlight_brightness, -1, false)
+        elseif lights_floodred_val == FLOODRED_MED then
+            dev:performClickableAction(device_commands.intlight_brightness, 0, false)
+        else
+            dev:performClickableAction(device_commands.intlight_brightness, 1, false)
+        end
+        
     elseif command == device_commands.intlight_whiteflood_CHANGE then
         local newValue = lights_floodwhite_val + value
         if newValue > 1.0 then
@@ -500,6 +515,8 @@ function SetCommand(command,value)
         --  end
     elseif command == Keys.OxygenToggle then
         dev:performClickableAction(device_commands.oxygen_switch,oxygen_enabled and 0 or 1,false)
+    elseif command == Keys.cat_power_toggle then
+        efm_data_bus.fm_toggleCatMode()
     else
         print("Unknown command:"..command.." Value:"..value)
     end

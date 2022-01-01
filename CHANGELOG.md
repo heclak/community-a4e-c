@@ -2,410 +2,295 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
-## Unreleased
+## Version 2.0.0 - 1 Jan 2022
 
 ### Added
-- added custom view positioning for VR HMDs. Position is lowered and moved slightly forwarded from the previous position
-- added aircraft tasks (Reconnaissance, Escort)
-- added radio frequency printouts on the AN/ARC-51 label. Labels are dynamically generated from the mission file
-- added new miscellaneous switch panel on right console
-- added VR config to allow the use of VR controllers (throttle function is incomplete)
+- Flight Model:
+  - Realistic Flight Dynamics (it's pretty nifty).
+  - Realistic Engine Simulation.
+  - Flight control actuators.
+  - Realistic force based slat simulation (spring and gravity).
+  - Stabiliser trim.
+  - Wing vapour effect.
+  - Cockpit shake effect.
+  - Basic wing overstress.
+  - Damage to engine and aerodynamic surfaces (physically simulation only).
+  - Realistic suspension.
+  - Differential brakes.
+  - Compatibility with all carriers.
 
-### Changed
-- updated mirror code for better rear visibility in mirrors
-- lowered default cockpit view to allow visibility of the zero mil position
+- Systems:
+  - Fuel system:
+    - Zero and negative g effects on fuel flow.
+    - Boost pump, Engine pump and Wing pump failure effects.
+    - Emergency transfer is simulated.
+    - Caution panel ladder lights for boost and transfer.
+    - Fuel panel switch functions.
+    - Bypass switch can bypass the wing tank in case of wing leak.
+    - Flight refuel switch no longer bypasses wing tank, this enables/disables external tank flight refueling.
+  - CP-741/A Bombing Computer:
+      - In range light illuminates when within a distance that pulling up 45 degrees would release the bombs.
+  - AN/ARC-51A UHF Radio:
+    - Radio with VOIP *(thanks TheRealHarold)*
+    - Salute option and Request Launch options to radio menu.
+  - AN/ARN-52 TACAN and AN/ARA-63 MCL:
+      - TACAN for moving objects (tankers and ships) and portable TACAN stations.
+      - Manual Carrier Landing (MCL/ICLS) system and its bit test.
+      - Note for TACAN and MCL/ICLS: The method used relies on the mission file. This means for a TACAN or MCL to be detected the unit (or unit with the same unit name) must exist in the mission file. Replacement objects can be spawned in to replace dead units however they must have a name which contains the original name to be correctly found by the TACAN and MCL system. This method should work 99% of the time with regular missions however if you run into trouble it is worth checking the following conditions:
+        - Unit with TACAN/MCL exists in the mission file (placed in editor).
+        - Equivalent unit with a name which contains the original name of the unit placed in the editor (for example UNIT3 would find a unit named UNIT3_OTHERSTUFF, if UNIT3 needed to be respawned).
+        - Unit does not share a channel regardless of X or Y band.
+  - AN/APG-53A Radar overhaul:
+    - Radar can cast many more rays per frame.
+    - Gaussian beam shape is simulated using monte carlo sampling.
+    - Range lines can now be lit by the reticle knob, and are now drawn on top of the radar returns and remain visible.
+    - Updated screen simulation and storage to be more realistic.
+    - Updated radar reflection values for cities and other reflective terrain features.
+    - Ships can be detected by the radar.
+    - A Legacy Mode option in special menu is present allows might save users with older CPUs some performance.
+  - AN/ASN-41 Navigation Computer:
+    - System now integrates from starting position functioning correctly.
+    - Integration happens in D1 and D2 only, set to D1 or D2 to have the correct position. Switching to STBY will pause the integration.
+    - The AN/APN-153 Doppler Navigation Radar is vital to preventing drift. Minor errors are introduced for sensors producing drift over time. Average drift is about 2 - 3 nautical miles per hour. Drift will increase with heavy maneouvering.
+  - AFCS and APC:
+    - Re-wrote AFCS and APC for EFM integration.
+    - AFCS rolls out when disabling heading mode.
+    - AFCS test (cursory implementation, the indicators do not function correctly yet).
+    - Stability Augmentation Switch (yaw damper).
+  - Catapult Power Mode toggle for carrier launches - DEFAULT mode supports the Stennis and Supercarrier. A new mode, AUTO makes speed and mass calculations when launching from  aircraft carrier mods (for example, the HMAS Melbourne) more realistic. (Default: 'LCtrl+U').
+  - Oxygen system (hypoxia is enabled).
+  - Air data computer AXC-666 for AN/ASN-41 and CP-741/A, no external functionality, but this lays some ground work for more realistic simulation.
 
-### Deprecated
+- Weapons and Loadouts:
+  - SUU-25 Parachute illumination pod for night ops.
+  - Empty Fuel Tanks.
+  - AIM-9 missiles available on outboard stations (thanks to the evidence of VF-45)
 
-### Removed
-- removed loadouts that were non-functional
-
-### Fixed
-- fixed incorrect LABS tone function where the tone stops when the readied stations are empty
-
-## Version 2.0.0-beta-5.1 - 30 May 2021
-
-### This is a hotfix for the engine sounds for some DCS modules being overwritten by A-4E sounds. Please check the changelog for 2.0.0-beta-5.
-
-### Added
-- TACAN and MCL training mission
-
-### Fixed
-- Engine sounds for some DCS modules being overwritten by A-4E sounds
-
-### This is a hotfix for the engine sounds for some DCS modules being overwritten by A-4E sounds. Please check the changelog for 2.0.0-beta-5.
-
-## Version 2.0.0-beta-5 - 29 May 2021
-
-### You must delete and rebind all your keys if NOT updating from beta-4
-See readme for instructions.
-
-### Added
-- Manual Carrier Landing (MCL/ICLS) system and its bit test
-- TACAN for moving objects (tankers and ships) and portable tacan stations
-
-Note for TACAN and MCL(ICLS). The method used relies on the mission file. This means
-for a TACAN or MCL to be detected the unit (or unit with the same unit name) must exist
-in the mission file. Replacement objects can be spawned in to replace dead units however
-they must have a name which contains the original name to be correctly found by the TACAN
-and MCL system. This method should work 99% of the time with regular missions however if
-you run into trouble it is worth checking the following conditions:
-  - Unit with TACAN/MCL exists in the mission file (placed in editor)
-  - Equivalent unit with a name which contains the original name of the unit placed in the editor
-  - Unit does not share a channel regardless of X or Y band
-
-- Quick Start Missions: 
-    - Adverse weather carrier landing 
-    - Carrier landing
-    - Bomb trucking
-    - Aerial Refueling
-
-- 3d Model:
-  - Added MCL Panel
-  - Added Misc Switches Panel
-  - Implemented AFCS Test panel switches
+- Cockpit Model:
+  - Radio frequency printouts on the AN/ARC-51 label. Labels are dynamically generated from the mission file.
+  - MCL Panel.
+  - Misc Switches Panel on Right Console.
+  - AFCS Test panel switches.
 
 - Textures:
-  - Individualised Pilot appearances
-  - Damage textures
-  - Cockpit normal maps
-  - Retouched cockpit interior
-  - Countermeasures dispensers
-
-- Sounds:
-  - Wing stress
-  - External engine sounds
-  - Wind rushing sound
-
-- Air data computer AXC-666 for AN/ASN-41 and CP-741/A, no external functionality but lays some ground work for more realistic simualtion
-
-- AN/ASN-41 Integrator:
-  - Now integrates from starting position functioning correctly
-  - Integration happens in D1 and D2 only, set to D1 or D2 to have the correct position. Switching to STBY will pause the integration
-  - APN-153 radar is vital to preventing drift
-  - Minor errors are introduced for sensors producing drift over time
-  - Normal drift is about 2 - 3 nautical miles per hour
-  - Drift will increase with lots of maneouvers
-
-- Kneeboard:
-  - Startup checklist
-  - Taxi checklist
-  - Takeoff checklist
-  - Emergency procedures
-  - Bomb table and CP-741/A procedure
-  - Case III landing and APC procedure
-
-- AFCS test (WIP: indicators do not function correctly at the moment)
-- Basic wing overstress
-- Misc Keybinds
-- Controls Indicator
-- APC Version 2 for EFM
-
-### Changed
-- Fuel System:
-  - New bypass switch will bypass the wing tank in case of wing leak.
-  - Flight refuel switch will no longer bypass wing tank, this enables/disables external tank flight refueling.
-
-- Engine damage has now more dynamic effect
-- Beta calculated per surface rather than using the overall airframe beta. This fixes some edge of the envelope nastiness
-- Rudder pedal animation no longer tied to rudder
-- AFCS will not engage with rudder uncentred
-- Gunsight colour
-- ILS mode on TACAN has been changed to A/A and functions as such
-- Slats lift increased slightly
-- Increased wing drag onset at > 40 degrees angle of attack
-- Textures renamed to be standardised, to prevent all known mod conflicts
-- Keybinds recategorised correctly
-
-### Deprecated
-
-### Removed
-
-### Fixed
-- M-81 and M-88 bomb negative pylon drag after release from MER/TER rack
-- Engine windmilling at low speed
-- Airspeed indicator uses calibrated airspeed instead of equivalent airspeed.
-- Fuel trans light not displaying when integral wing tank empty
-- Wheel animations
-- Mid Air refueling not completing with external tanks
-
-### Known Issues
-- Chocks only partially stop the aircraft (brakes are used as a placeholder)
-- Pilot can blackout from cat shot
-- Pilot can blackout from rolling too fast
-- ASN-41 Navigation Computer - PPOS and Desintation knob keybindings do not work (the in-cockpit knobs still work perfectly fine)
-
-### You must delete and rebind all your keys if NOT updating from beta-4
-See readme for instructions.
-
-## Version 2.0.0-beta-4 - 08 May 2021
-
-### You must delete and rebind all your keys after updating to beta-4
-See readme for instructions.
-
-### Added
-
-- Cockpit engine sounds (preliminary)
-- Normal Maps
+  - Individualised helmet textures and pilot appearances.
+  - Damage textures.
+  - Cockpit normal maps.
+  - Cockpit interior.
+  - Countermeasures dispensers.
+  - Normal maps.
 
 - Liveries:
-  - Community A-4E-C III "Forever Free"
-  - Argentine Brigada IV
-  - Argentine Brigada V
+  - Community A-4E-C III "Forever Free".
+  - Community A-4E-C IV "Sea Otter".
+  - Argentine Brigada IV.
+  - Argentine Brigada V.
+  - 3 new USN liveries for USS Forrestal 1967.
+  - Community IV: Sea Otter, 2021 (Fictional).
+  - Australian Navy Squadron 805, 1972. *(thanks HellesBelle)*
+  - Brazil Marinha do Brasil VF-1 LoViz, 2018.
+  - Finland FiAF, 1984 (Fictional). *(thanks FinCenturion)*
+  - Malaysia TUDM M32-29 No.9 Squadron, 2004. *(thanks JacobBadshot)*
+  - RAF Empire Pilots Test School Raspberry Ripple. (Fictional) *(thanks FlyingHueman)*
+  - RNZAF Golden T-Bird No.2, Squadron Ohakea, 1986. *(thanks Corsair016)*
+  - Unique fuel tank to 'Brazil Marinha do Brasil VF-1 LoViz, 2018' livery.
 
-- Weapon Function Selector: CMPTR Animation position. The CP-741/A is now on this position
-- Very basic oxygen system **(hypoxia is enabled)**
+- Sounds:
+  User Feedback:
+  - Huffer airflow valve.
+  - Engine ignitor.
+  - Engine operation.
+  - Avionics initialisation whine.
+  - Gear pod door and locking.
+  - Gear, flap and airbrake hydraulics.
+  - Aerodynamic slats stoppage.
+  - Ariflow, with additives for Gear, Flaps, Speedbrake and Spoilers.
+  - Cockpit rattle at high AOA.
+  - Wing stress.
+  - Landing gear overspeed.
+  - Fuel sloshing.
+  - Wheels touchdown.
+  - Flaps lever.
+  - Emergency levers.
+  - Illumination potentiometers.
+  - Radar filter plate positioning.
+  - Speedbrake switch.
+  - Harness lever.
+  - AIM-9 sidewinder (fixes the bug where the some useres were missing sidewinder tones).
 
+- Missions:
+  - Reconnaissance and Escort aircraft tasks.
+  - Argentina and Chile to countries and assigned appropriate liveries.
+  - gunsight and radar night time setup.
+  - Adverse weather carrier landing.
+  - Carrier landing.
+  - Bomb trucking.
+  - Aerial Refueling.
+  - New missions from sidekick65, SPINEG, Cubeboy.
 
-- Keybinds:
-  - AFCS
-  - TACAN
-  - Fuel System
-  - Oxygen System
-  - Radar Altimeter
-  - ECM
-  - ARC-51 Radio
-  - Gunsight
-  - Master test switch
-  - Altimiter pressure
-  - Missile volume knob
-  - ASN-41 Keybinds
-  - Weapon Function Selector
+- Inputs:
+  - Basic support for FFB joysticks.
+  - Controls Indicator.
+  - Custom view positioning for VR HMDs. Position is lowered and moved slightly forwarded from the previous position
+  - VR config to allow the use of VR controllers (throttle function is incomplete).
+  - Special menu options:
+    - Slider for FFB sticks at which deflection of the stick to switch into AFCS CSS mode.
+    - Simple Braking (Ruder-Assist).
+  - New inputs for slats lock toggle keybind (for fomation flying), AFCS, BDHI, chaff panel, fuel system, gunsight, master exterior light switch, AN/ARN-52 TACAN, oxygen system, AN/APN-141 Radar Altimeter, ECM panel, AN/ARC-51 Radio, Master Test Switch, Altimiter pressure, Weapon Function Selector, and many more.
+
+- PDF manual and kneeboard documentation with checklists and guidance on many aircraft systems. *(Thanks to the many community contributors and proofreaders for their assistance compiling this information)*
 
 ### Changed
+
+- General:
+  - Menu icon.
+  - Menu screen.
+  - Updated installation and troubleshooting instructions.
+
+- Flight Model:
+  - Surfaces, horizontal stab, elevator, vertical stab, rudder, to not use beta, as this previously caused an ill defined wind axes to body transformation at high beta values causing the lift/drag values to be inverted.
+  - Significantly increased slats lift.
+  - Increased induced drag at high AoA (unrealistic negation of lift and drag caused by the issue above at > 90 deg AoA or beta).
+  - Increased wing drag onset at > 40 degrees AoA.
+  - Beta calculated per surface rather than using the overall airframe beta. This fixes some edge of the envelope nastiness
+  - XY moment of inertia to match real value (effects tumbling).
+  - Slats lift increased slightly.
+  - Engine damage has now more dynamic effect.
+  - Improved ground handling and break handling.
+  - Slow release for brakes when using keyboard rather than instantly going to zero. This allows the brakes to be feathered below the point where the wheels lock.
+  - Overhaul centre of gravity modelling.
+
+- Systems:
+  - AFCS will not engage with rudder uncentred.
+  - Re-wrote AFCS for EFM integration.
+  - ILS mode on TACAN has been changed to A/A and functions as such.
+  - Changed radar to be compatibile with SRS pull request.
+  - ASN-41 Navigation Computer:
+    - AN/ASN-41 error was being cancelled due to mathematical operation. This has been rectified. The drift will now be significant (1-2 nautical miles per hour, depending on manoeuvres).
+    - Slew knob can be used to change the destination coordinates in STBY, D1, and D2 modes.
+    - Push-to-set knobs no longer change coordinates in D1 and D2 modes.
+  - Fuel System:
+    - New bypass switch will bypass the wing tank in case of wing leak.
+    - Flight refuel switch will no longer bypass wing tank, this enables/disables external tank flight refueling.
+
+- Animation:
+  - Rudder pedal animation no longer tied to rudder position.
+  - Updated mirror code for better rear visibility in mirrors.
+  - Lowered default cockpit view to allow visibility of the zero mil position.
+  - Nosewheel castering adjusted to match animation.
 
 - Textures:
-  - Weapon Function Selector labels
-  - Canopy Seal
-  - Gunsight
-  - Roughmets
-  - Wheels and gear
-  - Engine Exhaust
-  - New weathering
-  - Cockpit metallic objects for 2.7
-  - Cockpit Radar screen for 2.7
+  - Textures renamed to be standardised, to prevent all known mod conflicts.
+  - Roughmets, weathering, normal maps.
+  - Wheels and gear.
+  - Cockpit textures (in external view). *(thanks JP Gabobo)*
+  - Engine exhaust. *(Thanks HellesBelle)*
+  - Weapon Function Selector labels.
+  - Canopy seal.
+  - Gunsight. (*thanks Sport)*
+  - Radar screen and filter.
+  - Ejection seat and handle.
+  - ADI and backup.
+  - Many cockpit objects.
 
-- Keybind:
-  - "Ship Takeoff Position" changed to "Catapult Hook-Up"
-  - Renamed fuel pressurisation
+- Sounds:
+  - LABS tone is played when the Bomb Release Button is depressed CMPTR mode.
+  - Improved sound mixing.
+  - Updated main menu intro sound.
+  - Sound mixing.
+  - More realistic engine ignitor timing.
 
-- ASN-41 Navigation Computer:
-  - Slew knob can be used to change the destination lat/long in STBY, D1, and D2 modes
-  - push-to-set knobs will no longer change lat/long in D1 and D2 modes
+- Liveries:
+  - Standardised livery lua files.
+  - Improved inaccuracies and naming across liveries.
 
-- Quickstart missions weather updated for 2.7
-- More realistic engine ignitor timing
-- Readme: installation and troubleshooting instructions
-- Moved keybinds to increase EFM maintainability: **this unforuntately destroys all your existing keybinds**
-- Icons
+- Inputs:
+  - Keybinds recategorised.
+  - Improved keybinding names.
+  - Renamed fuel pressurisation.
+  - Updated default controller bindings for Warthog throttle and CH Fighter Stick.
+  - Moved keybinds to increase EFM maintainability: **this unforuntately destroys all your existing keybinds**.
+  - Aligned controls indicator to bottom-left (friendlier for VR).
+  - Keyboard: aileron response now resets. Elevator does not.
 
-### Deprecated
-
-### Removed
-- Duplicate multiplayer chat command
-
-### Fixed
-- Connecting to the SuperCarrier will no longer get stuck
-- Empty tanks fueling correctly at tanker
-- AFCS to roll out correctly when disabled during heading turn
-
-
-### Known Issues
-- Chocks do not stop the aircraft
-- Pilot can blackout from cat shot
-- Pilot can blackout from rolling too fast
-- APC may not respond fast enough
-- ASN-41 Navigation Computer - PPOS and Desintation knob keybindings do not work (the in-cockpit knobs still work perfectly fine)
-
-### You must delete and rebind all your keys after updating to beta-4
-See readme for instructions.
-
-## Version 2.0.0-beta-3 - 05 April 2021
-
-#### Warning you will need to delete and rebind your control bindings as described in the installation steps IF you are upgrading from the SFM.
-
-### Added
-- Sounds
-  - New engine igniter sound scheme
-  - Huffer airflow valve
-  - Fuel sloshing
-  - Added touchdown sound
-
-- New fuel system
-  - Fuel system simulates all the pumps in the system. This lays the ground work for some interesting failures/damage
-  - Negative g effects on fuel flow
-  - Zero g effects on fuel flow
-  - Boost pump failure effects
-  - Engine pump failure effects
-  - Wing pump failure effects
-  - Emergency transfer simulated
-  - Enabled lights for boost and transfer
-  - Implemented fuel panel switch functions
-
-- AFCS rolls out when disabling heading mode
-- Empty Fuel Tanks
-- Sidewinders to outboard stations (thanks to the evidence of VF-45)
-- Slats lock toggle keybind (for fomation flying)
-- Added Chile to list of Countries.
-
-### Changed
-- Updated main menu intro sound
-- Nosewheel steering range adjusted to match animation
-- Standardised liveries lua
-- Keyboard: aileron response now resets.
-- Sound mixing.
-
-### Deprecated
+- Missions:
+  - Quickstart missions weather updated for 2.7.
+  - TACAN and MCL training mission.
+  - The radio manual frequency now starts at the channel 1 preset.
+  - Enabled cockpit lights by default between the 1700 and 0500 hours.
 
 ### Removed
-- Old fuel system
+- Systems:
+  - SFM carrier launch mechanism (fake afterburner).
+  - SFM special menu options.
+  - Landing gear overspeed message.
+  - Removed gunsight slaving to the radar. The gunsight must now be set to zero when using the CP-741/A bombing computer.
+  - Old fuel system.
+  - Nose wheel steering.
+
+- Weapons and Loadouts:
+  - Loadouts that were non-functional.
+  - Weapons that do not have their supplementary systems modelled.
+
+- Inputs:
+  - Duplicate multiplayer chat command.
 
 ### Fixed
-- USMC Livery fixes
-- Fixed bort numbers on some USMC liveries
-- Readme PDF corruption in official build
-- Smokewinders
-- Brake issue causing brakes to jump to 50% application
-- Radar altimiter index knob.
+- Flight Model:
+  - Carrier Launch Mechanism present on runways (see removed).
+  - Carrier trap from airstart causes explosion.
+  - Aircraft drift during carrier operations.
+  - Brakes no longer jump to 50% application.
+  - Aircraft no longer gets stuck connecting to SuperCarrier.
+  - Spoilers extend at 70% RPM *(thanks pohlinkzei)*.
+  - Wake turbulance from another aircraft no longer causes pilot blackouts.
 
+- Systems:
+  - Fuel System:
+    - Empty tanks fueling correctly at tanker.
+    - Fuel trans light displays if the integral wing tank empty.
+  - AFCS:
+    - AFCS now rolls out correctly when disabled during heading turn.
+    - Reversion from CSS (or inital engage) to ATTITUDE should roll the aircraft level when within 5 degrees. *(thanks OpticFlowX)*
+  - AN/ARC-51A UHF Radio:
+    - Volume knob no longer starts at at 0.
+    - JTAC no longer missing from comms menu.
+    - ARC-51 GXMIT no longer returns a nil state.
+  - AN/APN-141 Radar Altimiter index knob.
+  - AN/ARN-52 TACAN or AN/ARA-63 MCL beacons no longer behave as if they are transmitting if the source is destroyed.
+  - Deck offset and angle can now be adjusted based on ship type. *(thanks OpticFlowX)*
+  - AN/APG-53A Ground Radar performance improvements.
+  - Flap blowback valve behavior.
+  - Airspeed indicator uses calibrated airspeed instead of equivalent airspeed.
 
-### Known Issues
-- Chocks do not stop the aircraft
-- Pilot can blackout from cat shot
-- Pilot can blackout from rolling too fast
-- APC may not respond fast enough
-- Connecting to the super carrier will get you stuck for a bit, just keep the power high and you will move into position after 30 seconds or so.
-- The CMPTR switch has not been animated yet please use the LABS switch in the meantime.
+- Weapons:
+  - M-81 and M-88 bomb negative pylon drag after release from MER/TER rack.
+  - MK-77 jettison no longer causes crash to desktop.
+  - Corrected negative drag issue caused by the CBU 1 and 2 Bomblets.
+  - Corrected LABS tone function when the readied stations are empty.
+  - Restored smokewinder pod functionality.
 
-#### Warning you will need to delete and rebind your control bindings as described in the installation steps IF you are upgrading from the SFM.
+- Animations:
+  - Wheel spinning.
+  - Engine windmilling at low speed.
 
-## Version 2.0.0-beta-2 - 13 February 2021
+- Textures:
+  - Mis-labeling of radar PLAN/PROFILE on the Miscellaenous Switches Panel.
 
-### Added
-- Slider for FFB sticks at which deflection of the stick to switch into AFCS CSS mode.
-- Quick Start Missions (thanks sidekick65, SPINEG, Cubeboy).
-- Added SUU-25 Parachute illumination pod for night ops.
-- CP741 in range light illuminates when within a distance that pulling up 45 degrees would release the bombs.
-- Wheel brake axis for both brakes.
+- Liveries:
+  - USMC fixes.
+  - Eliminated typo in Brazil Marinha do Brasil VF-1 15 ANOS, 2013.
+  - Updated roughmets for 'RNZAF Golden T-Bird No.2, Squadron Ohakea, 1986' livery.
 
-- Sounds
-  - Avionics Whine
-  - Emergency Levers
-  - Illumination Potentiometers
-  - Radar Screen Cover
-  - Speedbrake switch
-  - Flaps lever
-  - Spoiler airflow
-  - Harness lever
-  - Engine ignitor sound
-  - Airbrake movement sound.
-  - Landing gear overspeed sound.
+- Sounds:
+  - Clamped airframe stress sound.
+  - Adjusted volume of some sounds to be less distracting.
 
-### Changed
-
-- LABS tone is played whenever the pickle is pressed CMPTR mode.
-- Improved sound mixing
-- Menu icon
-- Menu screen.
-- Enabled cockpit lights by default between the hours of 1700 and 0500.
-- Keyboard commands for roll and pitch no longer reset to centre.
-- The radio manual frequency now starts at the channel 1 preset.
-
-### Deprecated
-
-### Removed
-- Bunch of deprecated special menu options.
-- Landing gear overspeed message.
-- Removed ability for the Gunsight to slave to the radar. The gunsight must now be set to zero when using the CP-741/A bombing computer.
-
-### Fixed
-- Trim setting in the customisation menu
-- FFB pitch trim not working.
-- FFB not working AFCS.
-- Hook controls not bindable on peripherals.
-- Stab Aug switch saying unimplemented.
-- Bomblet drag issue for the CBU 1 and 2 allowing the A-4 to go supersonic.
-- Radio volume knob starting at 0.
-
-### Known Issues
-- Chocks do not stop the aircraft
-- Pilot can blackout from cat shot
-- Pilot can blackout from rolling too fast
-- APC may not respond fast enough
-- Connecting to the super carrier will get you stuck for a bit, just keep the power high and you will move into position after 30 seconds or so.
-- The CMPTR switch has not been animated yet please use the LABS switch in the meantime.
-
-## Version 2.0.0-beta-1 - 4 February 2021
-
-#### Warning you will need to delete and rebind your control bindings as described in the installation steps.
-
-### Added
-- EFM
-  - Realistic Flight Dynamics (it's pretty nifty)
-  - Realistic Suspension
-  - Differential Brakes
-  - Nose wheel steering
-  - Realistic Engine Simulation
-  - Realistic force based slat simulation
-  - Damage to engine and aerodynamic surfaces (physically simulated only)
-  - Cockpit shake effect
-  - Wing vapour effect
-  - Compatibility with regular carrier
-  - Carrier hook up keybind (Ship Takeoff Position)
-  - Basic compatibility with Supercarrier
-  - Added Salute option to radio menu
-  - Added Request Launch option to radio menu
-  - Added stabiliser trim
-  - Flight control actuators
-
-- Sounds
-  - Gear door
-  - Gear locking
-  - Gear hydraulic
-  - Flap stop
-  - Flap hydraulic
-  - Slat stop
-  - Gear airflow
-  - Flap airflow
-  - Speedbrake airflow
-  - Spoiler airflow
-  - Cockpit rattle at high AOA
-
-
-- Avionics
-  - CP-741/A Bombing computer
-  - Yaw damper (stab aug switch on AFCS panel)
-  - ILS Navigation (see kneeboard pages for presets)
-  - Enabled Radio (see kneeboard pages for presets, thanks to the TheRealHarold for filling in the missing pieces of the puzzle on this one)
-
-- Basic support for FFB joysticks
-
-### Changed
-- Added Argentina/ARG to countries and assigned appropriate livery
-- Re-wrote AFCS for EFM integration
-
-### Deprecated
-- SFM Fake afterburner
-- Everything on the special menu, except cockpit shake
-
-### Removed
-- SFM Carrier Launch Mechanism
-
-### Fixed
-- Hook clickable
-- Flap blowback valve
-- Carrier Launch Mechanism present on runways (see removed)
-- Carrier trap from airstart causes explosion
-- Aircraft drift during carrier operations
-
-### Known Issues
-- Chocks do not stop the aircraft
-- Pilot can blackout from cat shot
-- Pilot can blackout from rolling too fast
-- APC may not respond fast enough
-- Connecting to the super carrier will get you stuck for a bit, just keep the power high and you will move into position after 30 seconds or so.
-- The CMPTR switch has not been animated yet please use the LABS switch in the meantime.
-
+- Inputs:
+  - Hook controls are now bindable by peripherals.
+  - FFB pitch trim now works.
+  - FFB now works for the AFCS.
+  - Restored missing AN/APG-53A Radar bindings.
 
 ## Version 1.4.2 - 4 October 2020
 
@@ -497,7 +382,7 @@ See readme for instructions.
 - added radar scope glow. radar scope glow is linked to brilliance setting
 - added option to disable catapult location checks (client side checks)
 - toggle switches and multiposition switches are now animated
-- added initial implementation of huffer simulation and sounds. moved external power logic to the huffer. 
+- added initial implementation of huffer simulation and sounds. moved external power logic to the huffer.
 - added native NVG and NVG keybindings
 - added clickable shoulder harness handle and secondary ejection handle
 - added function for APN-153 to calculate wind vector and pass to ASN-41
@@ -825,7 +710,7 @@ Other Changes:
 
 Weapon Systems:
 
-- SALVO mode will now correctly only dispense one weapon from each readied station per weapon release pulse from AWRSAWRS QTY SEL will now correctly limit the number of times the weapons are released in the RIPPLE modes. 
+- SALVO mode will now correctly only dispense one weapon from each readied station per weapon release pulse from AWRSAWRS QTY SEL will now correctly limit the number of times the weapons are released in the RIPPLE modes.
 - AWE-1(AWRS) now powered from the monitor dc bus. Master arm switch no longer turns off the AWE-1
 - Weapons will no longer be released from centerline station when in STEP PAIRS or RIPPLE PAIRS
 - Station of equal priority are now required for weapon release in PAIRS modes.

@@ -14,15 +14,19 @@ planes = {
         file = "Caucasus A-4E-C Takeoff.miz"
     },
     {
-        name = _("Carrier Launch"),
+        name = _("Carrier Start"),
         file = "Caucasus A-4E-C Carrier Start.miz"
     },
     {
-        name = _("Carrier Approach and Landing"),
-        file = "Caucasus A-4E-C Carrier Approach.miz"
+        name = _("Carrier Approach and Landing - Case I"),
+        file = "Caucasus A-4E-C Case I.miz"
     },
     {
-        name = _("Carrier Approach and Landing (Adverse Weather)"),
+        name = _("Carrier Approach and Landing - Case III"),
+        file = "Caucasus A-4E-C Case III.miz"
+    },
+    {
+        name = _("Carrier Approach and Landing - Adverse Weather"),
         file = "Caucasus A-4E-C Carrier Approach Adverse Weather.miz"
     },
     {
@@ -46,8 +50,8 @@ planes = {
         file = "Caucasus A-4E-C Shrike.miz"
     },
     {
-        name = _("Aerial Refueling"),
-        file = "Caucasus A-4E-C Aerial Refueling.miz"
+        name = _("Air Refueling"),
+        file = "Caucasus A-4E-C Air Refueling.miz"
     },
     {
         name = _("Dogfight: A-4E-C (Trained)"),
@@ -88,7 +92,7 @@ planes = {
         file = "Persian Gulf A-4E-C Takeoff.miz"
     },
     {
-        name = _("Carrier Launch"),
+        name = _("Carrier Start"),
         file = "Persian Gulf A-4E-C Carrier Start.miz"
     },
     {
@@ -137,6 +141,10 @@ planes = {
         name = _("Free Flight"),
         file = "Nevada A-4E-C Free Flight.miz"
     },
+    {
+        name = _("Stormy Weather"),
+        file = "Nevada A-4E-C Stormy Weather.miz"
+    },
 
     -- Syria
     {
@@ -152,12 +160,30 @@ planes = {
         file = "Syria A-4E-C Takeoff.miz"
     },
     {
-        name = _("Carrier Launch"),
+        name = _("Carrier Start"),
         file = "Syria A-4E-C Carrier Start.miz"
     },
     {
         name = _("Free Flight"),
         file = "Syria A-4E-C Free Flight.miz"
+    },
+
+    -- Marianas
+    {
+        name = _("Cold Start"),
+        file = "Marianas A-4E-C Cold Start.miz"
+    },
+    {
+        name = _("Carrier Start"),
+        file = "Marianas A-4E-C Carrier Start.miz"
+    },
+    {
+        name = _("Free Flight"),
+        file = "Marianas A-4E-C Free Flight.miz"
+    },
+    {
+        name = _("Bombing Range"),
+        file = "Marianas A-4E-C Bombing Range.miz"
     },
 
 }

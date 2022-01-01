@@ -25,8 +25,10 @@ Scooter::Input::Input():
 }
 
 
-void Scooter::Input::update()
+void Scooter::Input::update(bool brakeAssist)
 {
+	m_brakeAssist = brakeAssist;
+
 	m_pitchAxis.update();
 	m_rollAxis.update();
 	m_yawAxis.update();

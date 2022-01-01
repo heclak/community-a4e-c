@@ -1,5 +1,17 @@
+//=========================================================================//
+//
+//		FILE NAME	: LuaVM.cpp
+//		AUTHOR		: Joshua Nelson
+//		DATE		: Feb 2021
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Lua helper, for config files.
+//
+//================================ Includes ===============================//
 #include "LuaVM.h"
 #include <stdio.h>
+//=========================================================================//
 
 LuaVM::LuaVM()
 {
@@ -15,6 +27,31 @@ LuaVM::~LuaVM()
 	lua_close( m_state );
 	//m_api.pfn_destroy_lua_vm( m_state );
 	m_state = NULL;
+}
+
+bool LuaVM::getGlobalNumber(const char* name, double& number )
+{
+	lua_getglobal( m_state, name );
+	if ( lua_isnumber( m_state, -1 ) )
+	{
+		number = lua_tonumber(m_state, -1);
+		return true;
+	}
+	lua_pop( m_state, 1 );
+
+	number = 0.0;
+	return false;
+}
+
+const char* LuaVM::getGlobalString( const char* name )
+{
+	lua_getglobal( m_state, name );
+	if ( lua_isstring( m_state, -1 ) )
+	{
+		return lua_tostring( m_state, -1 );
+	}
+	lua_pop( m_state, 1 );
+	return "";
 }
 
 bool LuaVM::getGlobalTableNumber( const char* table, const char* key, float& result )
@@ -231,7 +268,7 @@ bool LuaVM::outputCommands( const char* name )
 	if ( ! file )
 		return false;
 
-	fprintf( file,  "enum Command\n{\n" );
+	fprintf( file,  "#pragma once\nenum Command\n{\n" );
 
 	if ( ! writeTableKeysToFile( file, "Keys" ) )
 	{
@@ -257,7 +294,7 @@ bool LuaVM::outputDevices( const char* name )
 	if ( ! file )
 		return false;
 
-	fprintf( file, "enum Devices\n{\n" );
+	fprintf( file, "#pragma once\nenum Devices\n{\n" );
 	if ( ! writeTableKeysToFile( file, "devices" ) )
 	{
 		printf( "ERROR: Couldn't get devices table." );

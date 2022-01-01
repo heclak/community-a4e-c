@@ -1,4 +1,4 @@
-name = "USN Naval Fighter Weapons School - Gray"
+name = "USN Naval Fighter Weapons School (Gray), 1980"
 countries = {"USA"}
 
 livery = {

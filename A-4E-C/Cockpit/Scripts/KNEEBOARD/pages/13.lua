@@ -6,7 +6,7 @@ SetScale(FOV)
 -- ILS DATA
 
 -- add background image for kneeboard
-add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_1_ils.png")
+add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_13.png")
 
 local gettext = require("i_18n")
 _ = gettext.translate
@@ -17,16 +17,17 @@ function AddElement(object)
 end
 
 -- fonts
-FontSizeX1	= 0.0075
+--FontSizeX1	= 0.0075
+FontSizeX1	= 0.0065
 FontSizeY1	= FontSizeX1
 
 predefined_font_title	= {FontSizeY1,			FontSizeX1,			0.0,		0.0}
-predefined_font_header	= {FontSizeY1 * 0.9,	FontSizeX1 * 0.9,	0.0,	    0.0}
+predefined_font_header	= {FontSizeY1 * 0.85,	FontSizeX1 * 0.85,	0.0,	    0.0}
 predefined_font_item	= {FontSizeY1 * 0.75,	FontSizeX1 * 0.75,	-0.0009,	0.0}
 
 
 -- lines
-local FirstLineY	= 1.3
+local FirstLineY	= 1.25
 local LineSizeY		= 0.095
 
 local function getLineY(line)
@@ -91,11 +92,11 @@ function get_bearing(channel)
 end
 
 data_x_positions = {
-    [1] = -0.86,
-    [2] = -0.57,
-    [3] = -0.07,
-    [4] = 0.42,
-    [5] = 0.78,
+    [1] = -0.7,
+    [2] = -0.4,
+    [3] = 0.0,
+    [4] = 0.4,
+    [5] = 0.7,
 
 }
 function add_channel(line, channel)
@@ -132,26 +133,26 @@ function add_channel(line, channel)
 end
 
 -----------------------------------------------------------------
---                         WEAPONS CONFIG
+--                         ICLS DATA CONFIG
 -----------------------------------------------------------------
 
-txt_BoardTitle				= CreateElement "ceStringPoly"
-txt_BoardTitle.name			= "txt_BoardTitle"
-txt_BoardTitle.material		= "font_kneeboard_white"
-txt_BoardTitle.init_pos		= {0.0, getLineY(0), 0}
-txt_BoardTitle.value		= _("MCL/ILS/ICLS DATA")
-txt_BoardTitle.alignment	= "CenterBottom"
-txt_BoardTitle.stringdefs	= predefined_font_title
-AddElement(txt_BoardTitle)
+--txt_BoardTitle				= CreateElement "ceStringPoly"
+--txt_BoardTitle.name			= "txt_BoardTitle"
+--txt_BoardTitle.material		= "font_kneeboard_white"
+--txt_BoardTitle.init_pos		= {0.0, getLineY(0), 0}
+--txt_BoardTitle.value		= _("MCL/ILS/ICLS DATA")
+--txt_BoardTitle.alignment	= "CenterBottom"
+--txt_BoardTitle.stringdefs	= predefined_font_title
+--AddElement(txt_BoardTitle)
 
 
 headings = {"CHN", "CODE", "NAME", "FREQ", "BRG"}
 heading_x_position = {
-    [1] = -0.75,
-    [2] = -0.43,
-    [3] = 0.07,
-    [4] = 0.57,
-    [5] = 0.9,
+    [1] = -0.6,
+    [2] = -0.25,
+    [3] = 0.125,
+    [4] = 0.525,
+    [5] = 0.8,
 
 }
 txt_heading = {}

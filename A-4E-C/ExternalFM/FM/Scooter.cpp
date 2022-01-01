@@ -11,7 +11,6 @@
 //
 //================================ Includes ===============================//
 #include "stdafx.h"
-#include "Globals.h"
 #include "Scooter.h"
 #include <Math.h>
 #include <stdio.h>
@@ -23,14 +22,16 @@
 #include "Avionics.h"
 #include "Interface.h"
 #include "AircraftState.h"
-#include "Radio.h"
 #include "FuelSystem2.h"
 #include "Maths.h"
 #include "LuaVM.h"
 #include "LERX.h"
 #include "ILS.h"
 #include "Commands.h"
-#include "Beacon.h"
+#include "Radar.h"
+#include "Globals.h"
+#include "Logger.h"
+#include "Asteroids.h"
 
 //============================= Statics ===================================//
 static Scooter::AircraftState* s_state = NULL;
@@ -40,14 +41,17 @@ static Scooter::Engine2* s_engine = NULL;
 static Scooter::Airframe* s_airframe = NULL;
 static Scooter::FlightModel* s_fm = NULL;
 static Scooter::Avionics* s_avionics = NULL;
-static Scooter::Radio* s_radio = NULL;
 static Scooter::FuelSystem2* s_fuelSystem = NULL;
 static LuaVM* s_luaVM = NULL;
 static Scooter::ILS* s_ils = NULL;
+static Asteroids* s_asteroids = NULL;
 
 static std::vector<LERX> s_splines;
 
-static Scooter::Beacon* s_beacon = NULL;
+static Scooter::Radar* s_radar = NULL;
+static unsigned char* s_testBuffer = NULL;
+
+//static Logger* s_logger;
 
 //========================== Static Functions =============================//
 static void init( const char* config );
@@ -57,6 +61,13 @@ static void checkCorruption(const char* str);
 static void dumpMem( unsigned char* ptr, size_t size );
 static void checkCompatibility( const char* path );
 static bool searchFolder( const char* root, const char* folder, const char* file );
+
+//========================== Static Constants =============================//
+static constexpr bool s_NWSEnabled = false;
+
+static double s_wingTankOffset = 0.0;
+static double s_fuseTankOffset = 0.0;
+static double s_extTankOffset = 0.0;
 
 //=========================================================================//
 
@@ -150,7 +161,8 @@ void checkCompatibility(const char* path)
 		if ( strcmp( data.cFileName, ".." ) == 0 || strcmp( data.cFileName, "." ) == 0 )
 			continue;
 
-		if ( data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY && searchFolder( aircraftFolder, data.cFileName, "CH_53.lua" ) )
+		if ( data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY && 
+			(searchFolder( aircraftFolder, data.cFileName, "CH_53.lua" ) || searchFolder( aircraftFolder, data.cFileName, "Ch47_Chinook.lua" ) ) )
 		{
 			found = true;
 			break;
@@ -162,12 +174,15 @@ void checkCompatibility(const char* path)
 	
 	int selection = MessageBoxA( 
 		NULL, 
-		"The CH-53E mod is completely incompatible with the A-4E-C due to a DCS bug triggered\
- by the CH-53E configuration. This bug causes memory corruption and undefined behaviour.\
- To use the A-4E-C uninstall the CH-53E mod.", 
-		"FATAL ERROR - Sikorsky CH-53E Mod Detected", MB_OK | MB_ICONERROR );
+		"The CH-53E and CH-47 mods are completely incompatible with the A-4E-C due to a DCS bug triggered\
+ by the CH-53E and CH-47 configuration. This bug causes memory corruption and undefined behaviour.\
+ To use the A-4E-C uninstall the CH-53E and CH-47 mods.", 
+		"FATAL ERROR - CH-53E and/or CH-47 Mods Detected", MB_ABORTRETRYIGNORE | MB_ICONERROR );
 
-	std::terminate();
+	LOG( "ERROR: Incompatible mod found!\n" );
+
+	if ( selection != IDIGNORE )
+		std::terminate();
 }
 
 void init(const char* config)
@@ -179,6 +194,11 @@ void init(const char* config)
 	sprintf_s( configFile, 200, "%s/Config/config.lua", config );
 	s_luaVM->dofile( configFile );
 	s_luaVM->getSplines( "splines", s_splines );
+	//s_luaVM->getGlobalNumber( "external_tank_offset", s_extTankOffset);
+	//s_luaVM->getGlobalNumber( "fuselage_tank_offset", s_fuseTankOffset );
+	//s_luaVM->getGlobalNumber( "wing_tank_offset", s_wingTankOffset );
+
+	//printf( "EXT: %lf, WNG: %lf, FUS: %lf\n", s_extTankOffset, s_wingTankOffset, s_fuseTankOffset );
 
 	s_state = new Scooter::AircraftState;
 	s_interface = new Scooter::Interface;
@@ -187,11 +207,18 @@ void init(const char* config)
 	s_airframe = new Scooter::Airframe( *s_state, *s_input, *s_engine );
 	s_avionics = new Scooter::Avionics( *s_input, *s_state, *s_interface );
 	s_fm = new Scooter::FlightModel( *s_state, *s_input, *s_airframe, *s_engine, *s_interface, s_splines );
-	s_radio = new Scooter::Radio(*s_interface);
 	s_ils = new Scooter::ILS(*s_interface);
 	s_fuelSystem = new Scooter::FuelSystem2( *s_engine, *s_state );
-	s_beacon = new Scooter::Beacon(*s_interface);
-	
+	s_radar = new Scooter::Radar( *s_interface, *s_state );
+	s_asteroids = new Asteroids( s_interface );
+	//s_logger = new Logger( s_luaVM->getGlobalString("logger_file") );
+
+	//s_fuelSystem->setTankPos( Scooter::FuelSystem2::TANK_FUSELAGE, Vec3( s_fuseTankOffset, 0.0, 0.0 ) );
+	//s_fuelSystem->setTankPos( Scooter::FuelSystem2::TANK_WING, Vec3( s_wingTankOffset, 0.0, 0.0 ) );
+
+	//checkCorruption(__FUNCTION__);
+	//printf( "Offset: %llx\n", (intptr_t)(&s_fuelSystem->m_enginePump) - (intptr_t)s_fuelSystem );
+	//dumpMem( (unsigned char*)s_fuelSystem, sizeof( Scooter::FuelSystem2 ) );
 }
 
 void cleanup()
@@ -204,10 +231,11 @@ void cleanup()
 	delete s_airframe;
 	delete s_avionics;
 	delete s_fm;
-	delete s_radio;
 	delete s_ils;
 	delete s_fuelSystem;
-	delete s_beacon;
+	delete s_radar;
+	delete s_asteroids;
+	//delete s_logger;
 
 	s_luaVM = NULL;
 	s_state = NULL;
@@ -217,12 +245,23 @@ void cleanup()
 	s_airframe = NULL;
 	s_avionics = NULL;
 	s_fm = NULL;
-	s_radio = NULL;
 	s_ils = NULL;
 	s_fuelSystem = NULL;
-	s_beacon = NULL;
+	s_radar = NULL;
+	s_asteroids = NULL;
+	//s_logger = NULL;
 
 	s_splines.clear();
+}
+
+void checkCorruption(const char* str)
+{
+	//printf( "Validating Test buffer...\n" );
+
+	/*if ( ! s_fuelSystem->m_enginePump )
+		printf( "Memory corrupted! %s\n", str );
+	else
+		printf( "Memory Fine %str\n", str );*/
 }
 
 double rawAOAToUnits( double rawAOA )
@@ -236,9 +275,9 @@ void ed_fm_add_local_force(double & x,double &y,double &z,double & pos_x,double 
 	y = s_fm->getForce().y;
 	z = s_fm->getForce().z;
 
-	pos_x = s_fm->getCOM().x;
-	pos_y = s_fm->getCOM().y;
-	pos_z = s_fm->getCOM().z;
+	pos_x = s_state->getCOM().x;
+	pos_y = s_state->getCOM().y;
+	pos_z = s_state->getCOM().z;
 }
 
 void ed_fm_add_global_force(double & x,double &y,double &z,double & pos_x,double & pos_y,double & pos_z)
@@ -270,6 +309,7 @@ void ed_fm_simulate(double dt)
 	//Pre update
 	if ( s_interface->getAvionicsAlive() )
 	{
+
 		//s_sidewinder->init();
 		//s_sidewinder->update();
 		//s_ils->test();
@@ -291,7 +331,7 @@ void ed_fm_simulate(double dt)
 		);
 
 		s_avionics->getComputer().setGunsightAngle( s_interface->getGunsightAngle() );
-		s_avionics->getComputer().setTarget( s_interface->getSetTarget(), s_interface->getSlantRange() );
+		s_avionics->getComputer().setTarget( s_interface->getSetTarget(), s_interface->getRadarDisabled() ? s_interface->getSlantRange() : s_radar->getRange() );
 		s_avionics->getComputer().setPower( s_interface->getCP741Power() );
 
 		s_input->pitchTrim() = s_interface->getPitchTrim();
@@ -307,20 +347,62 @@ void ed_fm_simulate(double dt)
 		s_state->setGForce( s_interface->getGForce() );
 
 		s_fuelSystem->setBoostPumpPower( s_interface->getElecMonitoredAC() );
-
-
+		s_radar->setDisable( s_interface->getRadarDisabled() );
 	}
 
+
+	//checkCorruption( __FUNCTION__ );
+	//dumpMem( (unsigned char*)s_fuelSystem, sizeof( Scooter::FuelSystem2 ) );
+
 	//Update
-	s_input->update();
-	s_radio->update();
+	s_input->update(s_interface->getWheelBrakeAssist());
 	s_engine->updateEngine(dt);
 	s_airframe->airframeUpdate(dt);
 	s_fuelSystem->update( dt );
 	s_avionics->updateAvionics(dt);
 	s_fm->calculateAero(dt);
-	s_beacon->update();
+	s_radar->update( dt );
 
+	if ( s_interface->egg() )
+	{
+		egg( dt, s_asteroids, *s_input );
+	}
+
+	/*s_logger->time( dt );
+	s_logger->entry( s_state->getAOA() );
+	s_logger->entry( s_state->getOmega().z );
+	s_logger->entry( s_state->getOmegaDot().z );
+	s_logger->entry( s_input->pitchAxis().getValue(), true );*/
+
+
+	//yaw += dyaw;
+	//pitch += dpitch;
+	//
+	////update_command( s_missile, s_state->getWorldPosition(), s_avionics->getComputer().m_target );
+	//Vec3 pos;
+	////printf( "%lf,%lf,%lf -> %lf, %lf, %lf\n", dir.x, dir.y, dir.z, new_dir.x, new_dir.y, new_dir.z);
+
+	//double new_yaw = 0.0;
+	//double new_pitch = 0.0;
+	//Vec3 dir = get_vecs( s_missile, new_pitch, new_yaw, pos );
+
+	//static int counter = 0;
+	//counter = ( counter + 1 ) % 300;
+	//if ( ! s_steering && counter == 0 )
+	//{
+	//	yaw = new_yaw;
+	//	pitch = new_pitch;
+	//}
+	//	
+	//printf( "%d Steering\n", s_steering );
+
+	//Vec3 new_dir = Scooter::directionVector( pitch, yaw );
+	//Vec3 newPos = new_dir * 1000.0 + pos;
+	//printf( "Spot pos: %lf,%lf,%lf Missile Pos: %lf,%lf,%lf\n", newPos.x, newPos.y, newPos.z, pos.x,pos.y,pos.z );
+	//set_laser_spot_pos( s_spot, newPos );
+
+	//s_scope->setBlob( 1, 0.5, 0.5, 1.0 );
+	
 	//Post update
 	s_interface->setRPM(s_engine->getRPMNorm()*100.0);
 	s_interface->setFuelFlow( s_engine->getFuelFlow() );
@@ -385,9 +467,10 @@ void ed_fm_set_current_mass_state
 	double moment_of_inertia_z
 )
 {
-	//printf( "Mass: %lf\n", mass );
+	
 	s_airframe->setMass(mass);
 	Vec3 com = Vec3( center_of_mass_x, center_of_mass_y, center_of_mass_z );
+	//printf( "COM: %lf, %lf, %lf\n", com.x,com.y,com.z );
 	s_state->setCOM( com );
 	s_fm->setCOM(com);
 }
@@ -441,9 +524,29 @@ void ed_fm_set_current_state
 	direction.y = xy + wz;
 	direction.z = xz - wy;
 
-	s_state->setCurrentStateWorldAxis(Vec3(px, py, pz), Vec3(vx, vy, vz), direction);
+	
 
 	s_interface->setWorldAcceleration( Vec3( ax, ay, az ) );
+
+	Vec3 globalUp;
+	double x2 = x + x;
+	double yz = y * z2;
+	double wx = w * x2;
+
+	double xx = x * x2;
+
+	globalUp.x = xy + wz;
+	globalUp.y = 1.0 - (xx + zz);
+	globalUp.z = yz - wx;
+
+	s_state->setCurrentStateWorldAxis( Vec3( px, py, pz ), Vec3( vx, vy, vz ), direction, -globalUp );
+
+
+	Force f;
+	f.force = globalUp * s_airframe->getMass() * 9.81;
+	f.pos = s_state->getCOM();
+
+	//s_fm->getForces().push_back( f );
 }
 
 
@@ -480,6 +583,19 @@ void ed_fm_on_damage( int element, double element_integrity_factor )
 	s_airframe->setIntegrityElement((Scooter::Airframe::Damage)element, (float)element_integrity_factor);
 }
 
+void ed_fm_set_surface
+( 
+	double		h,//surface height under the center of aircraft
+	double		h_obj,//surface height with objects
+	unsigned	surface_type,
+	double		normal_x,//components of normal vector to surface
+	double		normal_y,//components of normal vector to surface
+	double		normal_z//components of normal vector to surface
+)
+{
+	s_state->setSurface( s_state->getWorldPosition().y - h_obj, Vec3( normal_x, normal_y, normal_z ) );
+}
+
 /*
 input handling
 */
@@ -489,6 +605,7 @@ void ed_fm_set_command
 	float value
 )
 {
+
 	switch (command)
 	{
 	case Scooter::Control::PITCH:
@@ -568,30 +685,34 @@ void ed_fm_set_command
 		s_input->rightBrakeAxis().keyIncrease();
 		break;
 	case KEYS_BRAKESOFF:
-		s_input->leftBrakeAxis().reset();
-		s_input->rightBrakeAxis().reset();
+		s_input->leftBrakeAxis().slowReset();
+		s_input->rightBrakeAxis().slowReset();
 		break;
 
 	case KEYS_BRAKESONLEFT:
 		s_input->leftBrakeAxis().keyIncrease();
 		break;
 	case KEYS_BRAKESOFFLEFT:
-		s_input->leftBrakeAxis().reset();
+		s_input->leftBrakeAxis().slowReset();
 		break;
 	case KEYS_BRAKESONRIGHT:
 		s_input->rightBrakeAxis().keyIncrease();
 		break;
 	case KEYS_BRAKESOFFRIGHT:
-		s_input->rightBrakeAxis().reset();
-		break;
-	case KEYS_RADIO_PTT:
-		s_radio->toggleRadioMenu();
+		s_input->rightBrakeAxis().slowReset();
 		break;
 	case KEYS_TOGGLESLATSLOCK:
 		//Weight on wheels plus lower than 50 kts.
 		if ( s_airframe->getNoseCompression() > 0.01 && magnitude(s_state->getLocalSpeed()) < 25.0 )
 			s_airframe->toggleSlatsLocked();
 		break;
+	case KEYS_PLANEFIREON:
+		s_asteroids->fire( true );
+		break;
+	case KEYS_PLANEFIREOFF:
+		s_asteroids->fire( false );
+		break;
+
 	default:
 		;// printf( "number %d: %lf\n", command, value );
 	}
@@ -605,16 +726,19 @@ void ed_fm_set_command
 		{
 
 		}*/
-
-		if ( s_fuelSystem->handleInput( command, value ) )
-			return;
-
-		if ( s_avionics->handleInput( command, value ) )
-			return;
-
-		if ( s_engine->handleInput( command, value ) )
-			return;
 	}
+
+	if ( s_radar->handleInput( command, value ) )
+		return;
+
+	if ( s_fuelSystem->handleInput( command, value ) )
+		return;
+
+	if ( s_avionics->handleInput( command, value ) )
+		return;
+
+	if ( s_engine->handleInput( command, value ) )
+		return;
 }
 
 /*
@@ -654,13 +778,13 @@ bool ed_fm_change_mass  (double & delta_mass,
 		return false;
 	}
 
-	Vec3 pos = s_fuelSystem->getFuelPos(tank);
+	const Vec3& pos = s_fuelSystem->getFuelPos(tank);
 	//Vec3 r = pos - s_state->getCOM();
 	
 	delta_mass = s_fuelSystem->getFuelQtyDelta(tank);
 	s_fuelSystem->setFuelPrevious( tank );
 
-	//printf( "Tank %d, Pos: %lf, %lf, %lf, dm: %lf\n", tank, pos.x, pos.y, pos.z, delta_mass );
+	//printf( "Tank %d, Pos: %lf, %lf, %lf, dm=%lf\n", tank, pos.x, pos.y, pos.z, delta_mass );
 
 	delta_mass_pos_x = pos.x;
 	delta_mass_pos_y = pos.y;
@@ -703,8 +827,10 @@ void  ed_fm_set_external_fuel (int	 station,
 								double y,
 								double z)
 {
+	constexpr double tankOffset = 0.45;
+
 	//printf( "Station: %d, Fuel: %lf, Z: %lf, COM %lf\n", station, fuel, z, s_state->getCOM().z );
-	s_fuelSystem->setFuelQty( (Scooter::FuelSystem2::Tank)(station + 1), Vec3( x, y, z ), fuel );
+	s_fuelSystem->setFuelQty( (Scooter::FuelSystem2::Tank)(station + 1), Vec3( x - tankOffset, y, z ), fuel );//0.25
 }
 /*
 	get external fuel volume 
@@ -812,13 +938,19 @@ double ed_fm_get_param(unsigned index)
 	case ED_FM_ENGINE_1_COMBUSTION:
 		return s_engine->getFuelFlow() / c_fuelFlowMax;
 	case ED_FM_SUSPENSION_1_RELATIVE_BRAKE_MOMENT:
-		return s_interface->getChocks() ? 1.0 : s_input->brakeLeft();
+		return s_interface->getChocks() ? 1.0 : pow(s_input->brakeLeft(), 3.0);
 	case ED_FM_SUSPENSION_2_RELATIVE_BRAKE_MOMENT:
-		return s_interface->getChocks() ? 1.0 : s_input->brakeRight();
+		return s_interface->getChocks() ? 1.0 : pow(s_input->brakeRight(), 3.0);
 	case ED_FM_SUSPENSION_0_WHEEL_SELF_ATTITUDE:
-		return s_interface->getNWS() > 0.5 ? 0.0 : 1.0;
+		if constexpr ( s_NWSEnabled )
+			return s_interface->getNWS() ? 0.0 : 1.0;
+		else
+			return 1.0; //want castoring when NWS feature is disabled
 	case ED_FM_SUSPENSION_0_WHEEL_YAW:
-		return s_interface->getNWS() > 0.5 ? -s_input->yaw() * 0.5 : 0.0; //rotation to 45 degrees, half 90 (range of the wheel)
+		if ( s_NWSEnabled )
+			return s_interface->getNWS() ? -s_input->yaw() * 0.5 : 0.0; //rotation to 45 degrees, half 90 (range of the wheel)
+		else
+			return 0.0;
 	case ED_FM_STICK_FORCE_CENTRAL_PITCH:  // i.e. trimmered position where force feeled by pilot is zero
 		s_input->setFFBEnabled(true);
 		return s_airframe->getElevatorZeroForceDeflection();
@@ -841,6 +973,8 @@ double ed_fm_get_param(unsigned index)
 
 bool ed_fm_pop_simulation_event(ed_fm_simulation_event& out)
 {
+	static int counter = 1;
+
 	if (s_airframe->catapultState() == Scooter::Airframe::ON_CAT_NOT_READY && !s_airframe->catapultStateSent())
 	{
 		out.event_type = ED_FM_EVENT_CARRIER_CATAPULT;
@@ -850,11 +984,20 @@ bool ed_fm_pop_simulation_event(ed_fm_simulation_event& out)
 	}
 	else if (s_airframe->catapultState() == Scooter::Airframe::ON_CAT_READY)
 	{
+		bool autoMode = s_interface->getCatAutoMode();
+		double thrust = 0.0;
+		double speed = 0.0;
+		if ( ! autoMode )
+		{
+			speed = 60.0f + 20.0 * std::min( s_airframe->getMass() / c_maxTakeoffMass, 1.0 );
+			thrust = s_engine->getThrust();
+		}
+
 		out.event_type = ED_FM_EVENT_CARRIER_CATAPULT;
 		out.event_params[0] = 1;
 		out.event_params[1] = 3.0f;
-		out.event_params[2] = 60.0f + 20.0 * std::min(s_airframe->getMass() / c_maxTakeoffMass, 1.0);
-		out.event_params[3] = s_engine->getThrust();
+		out.event_params[2] = speed;
+		out.event_params[3] = thrust;
 		s_airframe->catapultState() = Scooter::Airframe::ON_CAT_WAITING;
 		return true;
 	}
@@ -912,6 +1055,7 @@ void ed_fm_cold_start()
 	s_avionics->coldInit();
 	s_state->coldInit();
 	s_fuelSystem->coldInit();
+	s_radar->coldInit();
 }
 
 void ed_fm_hot_start()
@@ -923,6 +1067,7 @@ void ed_fm_hot_start()
 	s_avionics->hotInit();
 	s_state->hotInit();
 	s_fuelSystem->hotInit();
+	s_radar->hotInit();
 }
 
 void ed_fm_hot_start_in_air()
@@ -934,6 +1079,7 @@ void ed_fm_hot_start_in_air()
 	s_avionics->airborneInit();
 	s_state->airborneInit();
 	s_fuelSystem->airborneInit();
+	s_radar->airborneInit();
 }
 
 void ed_fm_repair()
@@ -943,11 +1089,27 @@ void ed_fm_repair()
 
 bool ed_fm_add_local_force_component( double & x,double &y,double &z,double & pos_x,double & pos_y,double & pos_z )
 {
-	return false;
+
+	if ( s_fm->getForces().empty() )
+		return false;
+
+	Force f = s_fm->getForces().back();
+	s_fm->getForces().pop_back();
+
+	x = f.force.x;
+	y = f.force.y;
+	z = f.force.z;
+
+	pos_x = f.pos.x;
+	pos_y = f.pos.y;
+	pos_z = f.pos.z;
+
+	return true;
 }
 
 bool ed_fm_add_global_force_component( double & x,double &y,double &z,double & pos_x,double & pos_y,double & pos_z )
 {
+
 	return false;
 }
 

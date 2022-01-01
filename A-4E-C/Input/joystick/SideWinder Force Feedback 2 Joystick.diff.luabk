@@ -6,7 +6,7 @@ local diff = {
 					["key"] = "JOY_SLIDER1",
 				},
 			},
-			["name"] = "Thrust",
+			["name"] = "Throttle",
 			["removed"] = {
 				[1] = {
 					["key"] = "JOY_Z",
@@ -24,7 +24,7 @@ local diff = {
 					["key"] = "JOY_BTN4",
 				},
 			},
-			["name"] = "AFCS Override Button",
+			["name"] = "Autopilot Override (AFCS Emergency Disconnect)",
 		},
 		["d10135pnilu10136cdnilvdnilvpnilvunil"] = {
 			["added"] = {
@@ -32,7 +32,7 @@ local diff = {
 					["key"] = "JOY_BTN6",
 				},
 			},
-			["name"] = "Wheel Brake - ON/OFF",
+			["name"] = "Wheel Brake",
 		},
 		["d68pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
@@ -48,7 +48,7 @@ local diff = {
 					["key"] = "JOY_BTN5",
 				},
 			},
-			["name"] = "FLAP Switch - UP/DOWN",
+			["name"] = "Flap Handle - UP/DOWN",
 		},
 		["d73pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
@@ -64,7 +64,7 @@ local diff = {
 					["key"] = "JOY_BTN_POV1_D",
 				},
 			},
-			["name"] = "Trimmer Switch - NOSE UP",
+			["name"] = "Trim Switch - NOSE UP",
 		},
 		["dnilp10114u10119cdnilvdnilvpnilvunil"] = {
 			["added"] = {
@@ -72,7 +72,7 @@ local diff = {
 					["key"] = "JOY_BTN_POV1_U",
 				},
 			},
-			["name"] = "Trimmer Switch - NOSE DOWN",
+			["name"] = "Trim Switch - NOSE DOWN",
 		},
 		["dnilp10115u10119cdnilvdnilvpnilvunil"] = {
 			["added"] = {
@@ -80,7 +80,7 @@ local diff = {
 					["key"] = "JOY_BTN_POV1_L",
 				},
 			},
-			["name"] = "Trimmer Switch - LEFT WING DOWN",
+			["name"] = "Trim Switch - LEFT WING DOWN",
 		},
 		["dnilp10116u10119cdnilvdnilvpnilvunil"] = {
 			["added"] = {
@@ -88,7 +88,7 @@ local diff = {
 					["key"] = "JOY_BTN_POV1_R",
 				},
 			},
-			["name"] = "Trimmer Switch - RIGHT WING DOWN",
+			["name"] = "Trim Switch - RIGHT WING DOWN",
 		},
 		["dnilp210u214cdnilvdnilvpnilvunil"] = {
 			["name"] = "View Up Right slow",

@@ -13,10 +13,14 @@
 //
 //================================ Includes ===============================//
 #include <stdio.h>
+#include "ED_FM_API.h"
 //=========================================================================//
 
+#undef max
+#undef min
+
 extern FILE* g_log;
-extern int g_safeToRun;
+extern ED_FM_API int g_safeToRun;
 extern bool g_logging;
 extern bool g_disableRadio;
 

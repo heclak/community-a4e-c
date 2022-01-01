@@ -2,12 +2,26 @@ dofile(LockOn_Options.script_path.."../../Sounds/Sounders/Curve.lua")
 
 -- Utility functions/classes
 
-
+function randomf(lower,upper)
+  return lower + math.random() * (upper - lower)
+end
 
 function startup_print(...)
     print(...)
 end
 
+function directionVector(pitch,yaw)
+  local cosPitch = math.cos(pitch)
+  local sinPitch = math.sin(pitch)
+  local cosYaw = math.cos(yaw)
+  local sinYaw = math.sin(yaw)
+
+  local x = cosYaw * cosPitch
+  local z = sinYaw * cosPitch
+  local y = sinPitch
+
+  return x,y,z
+end
 
 -- rounds the number 'num' to the number of decimal places in 'idp'
 --
@@ -17,6 +31,11 @@ end
 function round(num, idp)
     local mult = 10^(idp or 0)
     return math.floor(num * mult + 0.5) / mult
+end
+
+function roundBase(num,idp,base)
+  num = num / base
+  return round(num, idp) * base
 end
 
 function clamp(value, minimum, maximum)
@@ -492,6 +511,30 @@ function WMA_wrap:get_target_val ()
     return self.target_val
 end
 
+Random_Walker = {}
+Random_Walker.__index = Random_Walker
+setmetatable(Random_Walker,
+  {
+    __call = function(cls, ...) return cls.new(...) end
+  }
+)
+
+function Random_Walker.new(speed, min, max, start)
+  local self = setmetatable({}, Random_Walker)
+  self.speed = speed
+  self.min = min
+  self.max = max
+  self.pos = start
+  self.vel = 0.0
+  return self
+end
+
+function Random_Walker:update(timestep)
+  local step = randomf(-self.speed, self.speed)
+  self.vel = clamp(self.vel + step * timestep, self.min,self.max)
+  self.pos = clamp(self.pos + self.vel * timestep, self.min,self.max)
+end
+
 --------------------------------------------------------------------
 
 Constant_Speed_Controller = {}
@@ -531,6 +574,10 @@ end
 
 function Constant_Speed_Controller:get_position()
   return self.pos
+end
+
+function Constant_Speed_Controller:set_position(x)
+  self.pos = x
 end
 
 
@@ -637,7 +684,7 @@ limits are reached or the table is exhausted.
 
 @return VOID
 ]]--
-function recursively_print(table_to_print, max_depth, max_number_tables, filepath)
+function recursively_print(table_to_print, filepath, max_depth, max_number_tables)
   file = io.open(filepath, "w")
 	file:write("Key,Value\n")
   str = recursively_traverse(table_to_print,max_depth,max_number_tables)
@@ -706,4 +753,48 @@ function normalize_vec2d(vec)
 		z = vec.z / mag
 	}
 	return new_vec
+end
+
+local function stub(self, ...) 
+  return nil
+end
+
+local function new(cls, ...)
+  tbl = getmetatable(cls)
+  tbl.__index = tbl
+
+  return setmetatable({}, tbl)
+end
+
+function require_avionics()
+  package.cpath = package.cpath..";"..LockOn_Options.script_path.."..\\..\\bin\\?.dll"
+  success,result = pcall(require,'ScooterAvionics')
+
+  if success and result ~= false then
+    return result
+  else
+    -- These stub out the functions that are required by ScooterAvionics.dll
+    -- This is so that if someone rebuilds the open-source part of the code
+    -- they can still use the aircraft without errors.
+    local stubs = {
+      ExtendedRadio = setmetatable({}, {
+        __call = new,
+        init = stub,
+        setPower = stub,
+        pushToTalk = stub,
+      }),
+
+      AdvancedWeaponSystem = setmetatable({}, {
+        __call = new,
+        launch = stub,
+        updateSteering = stub,
+      }),
+
+      MissionObjects = {
+        getObjectBearing = stub,
+        getObjectPosition = stub,
+      },
+    }
+    return stubs
+  end
 end

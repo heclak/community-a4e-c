@@ -1,4 +1,4 @@
-name = "RNZAF Kiwi Red"
+name = "RNZAF Kiwi Red, 2011"
 countries = {"USA", "AUS"}
 
 livery = {

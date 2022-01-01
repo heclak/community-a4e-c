@@ -1,4 +1,5 @@
 dofile(LockOn_Options.script_path.."RADAR/Indicator/definitions.lua")
+dofile(LockOn_Options.script_path.."RADAR/Indicator/radar_display_settings.lua")
 
 
 yscale=0.8527
@@ -81,9 +82,10 @@ function add_1000ft_profile_scribe(max_range_nm)
     scribe.element_params = {"RADAR_PROFILE_SCRIBE_"..tostring(max_range_nm).."NM","RADAR_FILTER"}
     scribe.controllers = {
         {"opacity_using_parameter", 0},
-        {"change_color_when_parameter_equal_to_number", 1, 1, 0.02, 0.001, 0.0}, -- temporary, to be overridden in 2.1
+        {"change_color_when_parameter_equal_to_number", 1, 1, blob_color_filter[1], blob_color_filter[2], blob_color_filter[3]},
     }
     scribe.additive_alpha   = true
+    scribe.use_mipfilter    = true
 
 	Add(scribe)
 	return scribe
@@ -119,9 +121,9 @@ function create_textured_box(UL_X,UL_Y,DR_X,DR_Y)
     return object
 end
 
-max_blobs=2500
+max_blobs= 35 * 50--2500
 
-for i=1,max_blobs do
+for i=0,(max_blobs-1) do
     radar_blob 					= create_textured_box(-blob_scale/2,-blob_scale/2,blob_scale/2,blob_scale/2)
     radar_blob.material       	= "BLOB_TEXTURE"
     radar_blob.name 			= create_guid_string()
@@ -135,7 +137,7 @@ for i=1,max_blobs do
         {"move_up_down_using_parameter", 0, 0.0383},
         {"move_left_right_using_parameter", 1, 0.0383},
         {"opacity_using_parameter",2},
-        {"change_color_when_parameter_equal_to_number", 3, 1, 0.02, 0.001, 0.0}, -- temporary, to be overridden in 2.1
+        {"change_color_when_parameter_equal_to_number", 3, 1, blob_color_filter[1], blob_color_filter[2], blob_color_filter[3]},
     }
 
     radar_blob.use_mipfilter    = true
@@ -146,12 +148,36 @@ for i=1,max_blobs do
     Add(radar_blob)
 end
 
-dofile(LockOn_Options.script_path.."Systems/radar_scope_api.lua")
+radar_scale_light = create_textured_box(-1,-1,1,1)
+radar_scale_light.material = "RADAR_SCALE_RET"
+radar_scale_light.name = create_guid_string()
+radar_scale_light.init_pos = {0,0.004,z_offset - 0.09}
+radar_scale_light.init_rot = {0, 0, 0}
+radar_scale_light.collimated = false
+radar_scale_light.element_params = {"RADAR_RETICLE","RADAR_FILTER"}
+radar_scale_light.controllers = {
+    {"opacity_using_parameter",0},
+    {"change_color_when_parameter_equal_to_number", 1, 1, reticle_color_filter[1], reticle_color_filter[2], reticle_color_filter[3]},
+}
+radar_scale_light.use_mipfilter    = true
+radar_scale_light.additive_alpha   = false
+radar_scale_light.h_clip_relation  = h_clip_relations.COMPARE
+radar_scale_light.level			= RADAR_DEFAULT_LEVEL
+Add(radar_scale_light)
 
-local max=math.floor(math.sqrt(max_blobs))
-for i=1,max_blobs do
-    set_blob(i,-1+(i%max)*(2/max), -1+math.floor(i/max)*(2/max), 0.0)
-end
+radar_scale = create_textured_box(-1,-1,1,1)
+radar_scale.material = "RADAR_SCALE"
+radar_scale.name = create_guid_string()
+radar_scale.init_pos = {0,0,z_offset - 0.1}
+radar_scale.init_rot		= {0, 0, 0}
+radar_scale.collimated	  	= false
+radar_scale.use_mipfilter    = true
+radar_scale.additive_alpha   = true
+radar_scale.h_clip_relation  = h_clip_relations.COMPARE
+radar_scale.level			= RADAR_DEFAULT_LEVEL
+Add(radar_scale)
+
+dofile(LockOn_Options.script_path.."Systems/radar_scope_api.lua")
 set_profile_scribe(0)
 
 --[[

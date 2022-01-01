@@ -1,3 +1,4 @@
+#pragma once
 enum Devices
 {
 DEVICES_TEMP5 = 43,

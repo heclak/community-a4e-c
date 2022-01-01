@@ -13,6 +13,7 @@
 //
 //================================ Includes ===============================//
 #include "BaseComponent.h"
+#include <math.h>
 //=========================================================================//
 
 class Axis : public BaseComponent
@@ -29,14 +30,15 @@ public:
 	inline void keyIncrease();
 	inline void keyDecrease();
 	inline void reset();
+	inline void slowReset();
 	inline void stop();
 	inline const double getValue() const;
 
 private:
 	double m_value = 0.0;
 
-	bool m_increase = false;
-	bool m_decrease = false;
+	int m_dir = 0;
+	bool m_slowReset = false;
 
 	const double m_sensitivity;
 	const double m_min;
@@ -48,31 +50,44 @@ private:
 void Axis::updateAxis( double axis )
 {
 	m_value = axis;
-	m_increase = false;
-	m_decrease = false;
+	m_dir = 0;
 }
 
 void Axis::stop()
 {
-	m_increase = false;
-	m_decrease = false;
+	m_dir = 0;
+	m_slowReset = false;
 }
 
 void Axis::reset()
 {
 	m_value = m_reset;
-	m_increase = false;
-	m_decrease = false;
+	m_dir = 0;
+	m_slowReset = false;
+}
+
+void Axis::slowReset()
+{
+	m_dir = (int)copysign( 1.0, m_reset - m_value );
+	m_slowReset = true;
 }
 
 void Axis::keyIncrease()
 {
-	m_increase = true;
+	if ( m_slowReset )
+		m_dir = 0;
+
+	m_dir += 1;
+	m_slowReset = false;
 }
 
 void Axis::keyDecrease()
 {
-	m_decrease = true;
+	if ( m_slowReset )
+		m_dir = 0;
+
+	m_dir -= 1;
+	m_slowReset = false;
 }
 
 const double Axis::getValue() const

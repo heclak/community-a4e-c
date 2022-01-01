@@ -13,11 +13,12 @@
 //						See equivelent file for lua EFM_Data_Bus.lua.
 //
 //================================ Includes ===============================//
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "../include/Cockpit/ccParametersAPI.h"
-#include "Globals.h"
 #include "Vec3.h"
+#include "Globals.h"
 
 //=========================================================================//
 
@@ -160,6 +161,14 @@ public:
 		m_averageLoadFactor = m_api.pfn_ed_cockpit_get_parameter_handle( "SND_ALWS_DAMAGE_AIRFRAME_STRESS" );
 		m_engineStall = m_api.pfn_ed_cockpit_get_parameter_handle( "SND_INST_ENGINE_STALL" );
 
+		m_disableRadar = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_RADAR_DISABLED" );
+		m_wheelBrakeAssist = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_WHEEL_BRAKE_ASSIST" );
+
+		m_autoCatMode = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_CAT_AUTO_MODE" );
+		m_egg = m_api.pfn_ed_cockpit_get_parameter_handle( "EGG" );
+		m_eggScore = m_api.pfn_ed_cockpit_get_parameter_handle( "EGG_SCORE" );
+		m_eggHighScore = m_api.pfn_ed_cockpit_get_parameter_handle( "EGG_HIGH_SCORE" );
+
 	}
 
 	cockpit_param_api& api()
@@ -180,6 +189,21 @@ public:
 	inline void airbornInit()
 	{
 
+	}
+
+	inline bool egg()
+	{
+		return getParamNumber( m_egg ) > 0.5;
+	}
+
+	inline void eggScore( int score )
+	{
+		setParamNumber( m_eggScore, score );
+	}
+
+	inline void eggHighScore( int score )
+	{
+		setParamNumber( m_eggHighScore, score );
 	}
 
 	inline void testFnc()
@@ -265,6 +289,16 @@ public:
 		getParamString( m_mclUnitName, buffer, size );
 
 		//printf( "%s\n", buffer );
+	}
+
+	inline bool getRadarDisabled()
+	{
+		return getParamNumber( m_disableRadar ) > 0.5;
+	}
+
+	inline bool getCatAutoMode()
+	{
+		return getParamNumber( m_autoCatMode ) > 0.5;
 	}
 
 	inline void setEngineStall( bool stall )
@@ -551,9 +585,9 @@ public:
 		return getParamNumber(m_engineIgnition);
 	}
 
-	inline double getNWS()
+	inline bool getNWS()
 	{
-		return getParamNumber(m_nws);
+		return getParamNumber(m_nws) > 0.5;
 	}
 
 	inline double getCockpitShake()
@@ -600,25 +634,33 @@ public:
 	{
 		return getParamNumber( m_rTankCapacity );
 	}
+
+	inline bool getWheelBrakeAssist()
+	{
+		return getParamNumber( m_wheelBrakeAssist ) > 0.5;
+	}
 		 
 	void* m_test = NULL;
-private:
-	inline double getParamNumber(void* ptr) const
+
+	inline void setParamNumber( void* ptr, double number )
+	{
+		m_api.pfn_ed_cockpit_update_parameter_with_number( ptr, number );
+	}
+	inline double getParamNumber( void* ptr ) const
 	{
 		double result;
-		m_api.pfn_ed_cockpit_parameter_value_to_number(ptr, result, false);
+		m_api.pfn_ed_cockpit_parameter_value_to_number( ptr, result, false );
 		return result;
 	}
+
+private:
 
 	inline void getParamString(void* ptr, char* buffer, unsigned int bufferSize) const
 	{
 		m_api.pfn_ed_cockpit_parameter_value_to_string(ptr, buffer, bufferSize);
 	}
 
-	inline void setParamNumber(void* ptr, double number)
-	{
-		m_api.pfn_ed_cockpit_update_parameter_with_number(ptr, number);
-	}
+	
 
 	inline void setParamString(void* ptr, const char* string)
 	{
@@ -747,6 +789,15 @@ private:
 	void* m_ADC_CAS = NULL;
 
 	void* m_engineStall = NULL;
+
+	void* m_disableRadar = NULL;
+	void* m_wheelBrakeAssist = NULL;
+
+	void* m_autoCatMode = NULL;
+
+	void* m_egg = NULL;
+	void* m_eggScore = NULL;
+	void* m_eggHighScore = NULL;
 };
 
 

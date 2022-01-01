@@ -4,6 +4,7 @@ dofile(LockOn_Options.script_path.."Systems/hydraulic_system_api.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.script_path.."sound_params.lua")
+dofile(LockOn_Options.script_path.."ControlsIndicator/ControlsIndicator_api.lua")
 
 -- This file includes both gear and tailhook behavior/systems
 --
@@ -229,7 +230,14 @@ function update_gear()
             sound_params.snd_inst_damage_gear_overspeed:set(0.0)
         end
     end
-    
+
+    -- update the nosewheel position to facilitate free castering nosewheel
+    -- output from DCS requires some parsing to properly map the nosewheel animation beyond the 90 degree point
+    local nose_wheel_pos = get_aircraft_draw_argument_value(1000)
+    local post_nose_wheel_post = nose_wheel_pos * math.sqrt(2) / math.pi
+    set_aircraft_draw_argument_value(2, post_nose_wheel_post)
+    -- print_message_to_user("pre: "..nose_wheel_pos.."   post: "..post_nose_wheel_post)
+
     sound_params.snd_cont_gear_mov:set(0.0)
     sound_params.snd_inst_gear_stop:set(1.0)
 
@@ -472,12 +480,20 @@ function update_gear()
         GEAR_ERR = 0
         print_message_to_user("Ground crew reset landing gear")
     end
+
+    ControlsIndicator_api.nosewheel_pos_param:set(clamp(get_aircraft_draw_argument_value(2), -0.5, 0.5))
 end
 
 local tail_hook_param = get_param_handle("D_TAIL_HOOK")
 function update_hook()
     -- NOTE: we do not need to draw this ourselves, SFM always draws it based on built-in capabilities
-    hook_controller:update(HOOK_TARGET)
+    local cur_val = get_aircraft_draw_argument_value(25)
+
+    if math.abs(cur_val - hook_controller:get_position()) < 0.01 then 
+        hook_controller:update(HOOK_TARGET)
+    else
+        hook_controller:set_position(cur_val)
+    end
 
     set_aircraft_draw_argument_value(25,hook_controller:get_position())
 
@@ -487,6 +503,7 @@ function update_hook()
     --local tail_hook = get_aircraft_draw_argument_value(25)
     --tail_hook_param:set(hook_controller:get_position())
 end
+
 
 function update()
     update_gear()

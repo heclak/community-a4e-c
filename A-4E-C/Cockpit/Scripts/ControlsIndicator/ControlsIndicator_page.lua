@@ -334,7 +334,7 @@ wbrakel_scale.vertices          = {
                                     {2.0 * sizeX, line_width},
                                     {2.0 * sizeX, -line_width}
                                   }
-wbrakel_scale.init_pos          = {-sizeX, 0.5 * sizeX}
+wbrakel_scale.init_pos          = {-sizeX, -0.5 * sizeX}
 wbrakel_scale.init_rot          = {0, 0, 0}
 wbrakel_scale.material          = draw_transparent
 wbrakel_scale.parent_element    = pitch_scale.name 
@@ -342,7 +342,7 @@ AddElement(wbrakel_scale)
 
 -- scale WHEELBRAKE RIGHT position
 wbraker_scale                   = Copy(wbrakel_scale)
-wbrakel_scale.init_pos          = {-sizeX, -0.5 * sizeX}
+wbrakel_scale.init_pos          = {-sizeX, 0.5 * sizeX}
 AddElement(wbraker_scale)
 
 -- draw WHEELBRAKE LEFT position
@@ -402,7 +402,7 @@ throttle_p_index.controllers    = {{"move_up_down_using_parameter", 0, -3.0 * ds
 throttle_p_index.parent_element = throttle_pos1.name
 AddElement(throttle_p_index)
 
--- draw NOSEWHEEL STEERING status
+-- draw NOSEWHEEL CENTER position
 nws_center                      = Copy(pitch_scale)
 nws_center.vertices             = {
                                     {-2.25 * ds, -2.25 * ds},
@@ -417,6 +417,16 @@ nws_center.material             = draw_axis
 nws_center.parent_element       = pitch_scale.name
 AddElement(nws_center)
 
+-- draw NOSEWHEEL CASTER status
+nosewheel_pos                       = Copy(nws_center)
+nosewheel_pos.tex_params	          = {394.5 / 512, 256.5 / 512, 2 * tex_scale, 2 * tex_scale}
+nosewheel_pos.material              = draw_input
+nosewheel_pos.element_params        = {ControlsIndicator_api.nosewheel_pos_param_string}
+nosewheel_pos.controllers           = {{"move_up_down_using_parameter", 0, 1.5 * sizeX}}
+AddElement(nosewheel_pos)
+
+--[[
+-- nosewheel steering indicator (deprecated)
 nws_index                       = Copy(nws_center)
 nws_index.init_pos              = {-(sizeX + rudder_offset), 0}
 nws_index.tex_params	          = {394.5 / 512, 256.5 / 512, 2 * tex_scale, 2 * tex_scale}
@@ -429,6 +439,7 @@ AddElement(nws_index)
 nws_mask                        = Copy(nws_center)
 nws_mask.init_pos               = {-(sizeX + rudder_offset), 0}
 AddElement(nws_mask)
+]]
 
 -- draw PITCH AND ROLL (STICK) position
 stick_position					        = CreateElement "ceTexPoly"
@@ -451,6 +462,19 @@ stick_position.init_pos = {0, 0}
 stick_position.init_rot = {-90, 0}
 stick_position.parent_element   = pitch_scale.name
 AddElement(stick_position)
+
+
+-- mark RUDDER center
+rudder_center                    = Copy(roll_scale)
+rudder_center.init_pos           = {-(sizeX + rudder_offset), 0}
+rudder_center.vertices          = {
+                                    {-2.0 * line_width, -line_width},
+                                    {-2.0 * line_width, line_width},
+                                    {2.0 * line_width, line_width},
+                                    {2.0 * line_width, -line_width}
+                                  }
+rudder_center.init_rot          = {0, 0}
+AddElement(rudder_center)
 
 -- scale RUDDER
 rudder_scale                    = Copy(roll_scale)
@@ -494,4 +518,3 @@ throttlefm_index.element_params   = {ControlsIndicator_api.throttle_fm_move_para
 throttlefm_index.material         = draw_input
 throttlefm_index.parent_element   = throttle_scale.name
 AddElement(throttlefm_index)
-

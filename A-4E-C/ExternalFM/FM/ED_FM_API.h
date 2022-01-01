@@ -6,9 +6,13 @@
 // defined with this macro as being exported.
 
 #pragma once
+#ifndef ED_FM_API_H
+#define ED_FM_API_H
 
-#ifdef ED_FM_EXPORTS
+#ifdef ED_FM_TEMPLATE_EXPORTS
 #define ED_FM_API __declspec(dllexport)
 #else
 #define ED_FM_API __declspec(dllimport)
+#endif
+
 #endif

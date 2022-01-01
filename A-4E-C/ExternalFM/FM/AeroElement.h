@@ -37,6 +37,7 @@ namespace Scooter
 		enum Type
 		{
 			ELEVATOR,
+			HORIZONTAL_STAB,
 			RUDDER,
 			AILERON,
 			HORIZONTAL,
@@ -68,6 +69,7 @@ namespace Scooter
 		inline double get_kElem() { return m_kElem; }
 		inline Vec3 getForce() { return m_RForceElement; }
 		inline Vec3 getMoment() { return m_moment; }
+		inline Vec3 getCOP() { return m_cp; }
 
 	protected:
 		const double m_area; // Area of element [m]

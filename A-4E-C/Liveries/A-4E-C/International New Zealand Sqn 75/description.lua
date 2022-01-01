@@ -1,4 +1,4 @@
-name = "RNZAF Squadron 75"
+name = "RNZAF Squadron 75, 1982"
 countries = {"USA", "AUS"}
 
 livery = {

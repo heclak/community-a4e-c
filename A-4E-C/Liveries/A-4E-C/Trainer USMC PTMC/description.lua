@@ -1,4 +1,4 @@
-name = "USMC Pacific Missile Test Center"
+name = "USMC Pacific Missile Test Center, 1978"
 countries = {"USA"}
 
 livery =

@@ -1,214 +1,255 @@
-![Community A-4E-C for DCS World](https://user-images.githubusercontent.com/46121009/57830942-41b3da00-77e6-11e9-8e8c-1b7274927bb0.jpg)
+![Community A-4E-C for DCS World, v2.0](https://cdn.discordapp.com/attachments/518815335013679104/884550978131619870/unknown.png)
 
-The Community A-4E-C represents more than three years of work on behalf of the development team. We’re proud to present the most comprehensive DCS World module to date, boasting such capabilities as air-to-ground radar and carrier operations. The A-4 was a cold war workhorse, providing a capable, reliable light attack aircraft to dozens of nations around the world. From the Sinai Desert to the Jungles of Vietnam, the A-4 was a common sight above cold war battlefields.
+## About the A-4E-C Project
 
-After severel years of development, we are pleased to announce version 2.0 of the module, with a realistic flight model, the addition of a CP-741/a CCRP bombing computer, increased DCS functionality, increased carrier compatibility, and myriad new sounds and keybinds to increase your ease of use and immersion when flying this now-venerable module.
+The A-4 was a cold war workhorse which proved to be a capable, reliable light attack aircraft to dozens of nations around the world. From the jungles of southeast Asia, to the desert of Sinai, to the coasts of South America, the scooter was a common sight above battlefields around the world for decades.
 
-We thank the DCS World community for their support over the years, and dedicate the module to our friend, mentor and lead coder, Eric “Gospadin” Mudama. His passion and brilliance left a mark on us all, and this labor of love which would not have been possible without him.
+The A-4E-C represents more than five years of work on behalf of the development team. We're thrilled to share our most comprehensive DCS World module to date in this 2.0 *"Forever Free"* update, featuring a realistic flight model, improved systems simulations, increased functionality across all DCS World's available maps, full carrier compatibility, radios, air refueling, and improvements to the ground radar, sound feedback, textures, controls and inputs. This update also adds a user manual in PDF format as well as in the DCS kneeboard, packed with useful checklists and procedures that cover everything from start-up to weapons deployment.
 
-**Please DO NOT redistribute this mod without permission!**
+If you haven't flown the A-4E-C since version 1.4, this is a great time to see it again for the first time. If you're new to DCS World, we hope you will find the A-4E-C a good option to learn to fly, and instructive in helping you decide what other modules you might want to pursue next.
 
-## Contributing Developers
+We'd like to thank the dozens of people in the DCS World community who have made contributions in bug reports, liveries, expertise, research, videos, community flight instruction, server hosting and for their camaraderie over the years. We dedicate the module to the memory of Eric "Gospadin" Mudama. This labor of love would not have been possible without his initial coding and project coordination.
+
+***DO NOT redistribute this mod without permission!***
+
+### Contributing Developers
 
 Gospadin, Heclak, Joshua Nelson, plusnine, Farlander, gyrovague, kryb/Archimaede, Merker, Jones, Nero
 
-## Special Thanks
+### Community Contributors
 
-SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, Gvad, Sidekick65, HellesBelles, SPINEG, Shadowfrost, Sport, rudel-chw, Luciano, Malamem, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
+SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohlinkzei, Coragem, Sidekick65, SPINEG, Shadowfrost, Sport, Historiker, rudel-chw, Luciano, Malamem, HellesBelles, Bungo, Corsair016, FlyingHueman, JacobBadShot, JP Gabobo, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
 
 ## Features
 
 - Realistic external flight model and engine simulation
 - Clickable cockpit
 - Carrier landing and takeoff
-- Air-to-air refueling
-- AN/APG-53A Radar (air-to-ground)
-- AN/APN-153 Doppler Nav
-- AN/ASN-41 Nav Computer  
-- AFCS
-- ARC-51A UHF Radio
-- ARN-52 TACAN
-- ARA-63 MCL (ICLS)
-- CP-741/a Bombing computer (CCRP)
-- Shrike anti-radiation missile
+- Air refueling
+- AN/APN-153 Doppler Navigation Radar
+- AN/ASN-41 Navigation Computer
+- AN/ARC-51 UHF Radio
+- AN/ARN-52 TACAN
+- AN/ARA-63 MCL (ICLS)
+- AN/APN-141 Radar Altimeter
+- AN/APG-53A Radar
+- AN/APR-23 Radar Homing and Warning System (ECM)
+- AN/ALE-29A Chaff Dispensing System
+- Automatic Flight Control System (AFCS)
+- Approach Power Compensator (APC)
+- AWE-1 Aircraft Weapons Release System (AWRS)
+- CP-741/A Bombing computer (CCRP)
+- AGM-45A Shrike anti-radiation missile (SEAD)
 - New weapons:
   - AN- series WWII munitions: M66, M81, M88
-  - MK4 HIPEG 20 mm gunpod
+  - MK4 HIPEG 20mm gunpod
   - Mk-77 napalm canister
   - SUU-7 bomblet dispenser
 - Unique sounds inside and outside the aircraft
+- User manual (PDF and Kneeboard)
 
 ### Version 2.0 Changelog: Featured Items
 
-- Features: External Flight Model (EFM) with flight dynamics, suspension, slat simulation, cockpit shake, wing vapour and more.
-- Features: Realistic engine simulation
-- Features: Added SuperCarrier compatibility
-- Features: Added ARC-51A UHF Radio functions (thanks Harald)
-- Features: Added ARN-52 TACAN and ARA-63 MCL (ICLS) functions
-- Features: Added CP-741/a bombing computer (set CMPTR on weapon selector and use slick bombs)
-- Features: Added air-to-air refueling capabilities
-- Features: Added nosewheel steering and differential braking
-- Features: Added SUU-25 Parachute illumination pod for night ops
-- Systems: AFCS Added stability augmentation (be sure to enable this yaw-dampening system on the AFCS panel before takeoff!)
-- Systems: Added sidewinders to loadout options on outer pylons
-- Systems: Added SUU-25 parachute illumination pod to loadout options
-- Systems: Added empty fuel tanks to loadout options
-- Systems: Added fuel flow system
-- Systems: Added oxygen system (pilots must now beware of hypoxia!)
-- Systems: Added drift to AN/ASN-41 Nav Computer
-- Misions: Added instant action missions (thanks Sidekick65, Cubeboy, Shadowfrost and SPINEG)
-- Misions: Added runway strike and anti-ship strike roles
-- Textures: Exterior texture improvements, added normal maps (thanks HellesBelles for their contribution)
-- Textures: Cockpit improvements, added normal maps (thanks Sport for their contribution)
-- Textures: Added a diverse array of new helmets and pilot uniforms and patches across liveries
-- Liveries: Added Argentina and Chile as available countries for the A-4E-C
-- Liveries: Added Argentine Brigada (thanks GVad, for these paints and much more)
-- Liveries: Added Community III: Forever Free livery
-- Liveries: Reformatted livery description.lua templates (livery creators, see our updated paintkit)
-- Liveries: Inaccuracies corrected (within the available modex systems, with great apologies to the non-USN/USMC operators)
-- Quality of Life: Added loads of new keybinds (thanks to the userbase for documenting many of these.)
-- Quality of Life: Added cockpit controls indicator
-- Quality of Life: Added several new helpful kneeboard pages (thanks to Rob for drafting several pages)
-- Quality of Life: Trim reset now provides a smooth transition
-- Quality of Life: Added in-cockpit sounds and improved user feedback
-- Quality of Life: Revised special menu options
-- Quality of Life: Fixed FFB stick support
-- Quality of Life: Slats locking option for aerobatic performance teams
-- Quality of Life: Smokewinder pod easier to operate (weapon select independent)
-- Quality of Life: Lots, and lots, and we mean LOTS of bug fixes
+- **Features:**
+  - Added External Flight Model (EFM) with flight dynamics, suspension, slat simulation, differential braking, cockpit shake, wing vapour and more.
+  - Added Pratt & Whitney J52-P-8A engine simulation.
+  - Added SuperCarrier compatibility.
+  - Added carrier mod support (HMAS Melbourne, HMS Hermes).
+  - Added air-to-air refueling.
+  - Added exterior engine sounds.
+  - Added many interior sounds.
+  - Improved interior sound localization and feedback.
+- **Systems:**
+  - Added AFCS stability augmentation.
+  - Added AN/ARC-51A UHF Radio with VOIP. *(thanks Harald)*
+  - Added AN/ARN-52 TACAN.
+  - Added AN/ARA-63 MCL (ICLS).
+  - Added AN/ASN-41 Navigation Computer drift on long flights and heavy maneuvers.
+  - Added CP-741/A bombing computer.
+  - Added fuel flow system.
+  - Added oxygen system.
+  - Improved Approach Power Compensator (APC) behavior.
+  - Fixed spoiler behavior to deploy/stow properly (weight on wheels, engine RPM under 70%). *(thanks pohlinkzei)*
+- **Weapons and Loadouts:**
+  - Added BDU-33 training bombs.
+  - Added SUU-25 parachute illumination pod.
+  - Added empty fuel tanks.
+  - Added AIM-9 growl and lock tones (fixes missing sound bug).
+  - Improved AIM-9 missile loadouts, sidewinters are now available to mount on stations 4 and 5.
+  - Removed non-functional loadout options to reduce confusion about module functionality: AGM-12C Bullpup, AGM-62 Walleye, D-704 Refueling Pod *(see FAQ)*.
+- **Missions:**
+  - Added new instant action missions across all maps *(thanks Sidekick65, Cubeboy, Shadowfrost, SPINEG)*.
+  - Added runway strike and anti-ship strike roles.
+  - Improved instant action missions.
+  - Added Argentina and Chile to available countries.
+- **Textures:**
+  - Added unique helmets, pilot uniforms and patches.
+  - Added preliminary damage textures.
+  - Improved exterior and interior textures. *(thanks HellesBelle, Sport, JP Gabobo)*
+  - Fixed exterior and cockpit model material names to avoid conflicts.
+- **Liveries:**
+  - Added Community III: Forever Free, 2021 (Fictional).
+  - Added Community IV: Sea Otter, 2021 (Fictional).
+  - Added Argentina FAA Falklands Brigada IV and V, 1982. *(thanks GVad)*
+  - Added Australian Navy Squadron 805, 1972. *(thanks HellesBelle)*
+  - Added Brazil Marinha do Brasil VF-1 LoViz, 2018.
+  - Added Brazil Marinha do Brasil VF-1 15 AÑOS, 2013. *(thanks Bungo)*
+  - Added Finland FiAF, 1984 (Fictional). *(thanks FinCenturion)*
+  - Added Malaysia TUDM M32-29 No.9 Squadron, 2004. *(thanks JacobBadshot)*
+  - Added USN VA-46 Clansmen, 1967.
+  - Added USN VA-83 Black Lancers, 1966.
+  - Added USN VA-106 Gladiators, 1967.
+  - Added RAF Empire Pilots Test School Raspberry Ripple (Fictional). *(thanks FlyingHueman)*
+  - Added RNZAF Golden T-Bird No.2, Squadron Ohakea, 1986. *(thanks Corsair016)*
+  - Improved inaccuracies and naming across liveries.
+- **Quality of Life:**
+  - Added PDF and kneeboard manual (press RSHIFT+K) in the cockpit. *(thanks Rob, Sidekick65)*
+  - Added cockpit controls indicator (press RCTRL+ENTER in the cockpit).
+  - Added AN/ARC-51 UHF Radio frequency presets printout to right console panel.
+  - Added new input categories.
+  - Added dozens of inputs and variant input options.
+  - Added special menu options for Trim Speed, Cockpit Shake, CSS mode FFB Deflection, Simple Braking (Rudder Assist).
+  - Added a command to request the ground crew to lock the slats (useful for aerobatic formation flying).
+  - Improved labeling alignment across tooltips, inputs, user manual and NATOPS manual for easy searching.
+  - Improved trim reset for smoother performance.
+  - Improved keyboard axis input behavior and recentering.
+  - Improved smokewinder pod operation (weapon function select independent).
+  - Improved main menu logos and iconography. *(thanks Sport)*
+  - Fixed FFB stick support.
+  - Fixed lots, and lots, and we mean LOTS of bugs. *(thanks to the many A-4E-C users who helped identify, replicate and solve these!)*
 
 [See full changelog](https://github.com/heclak/community-a4e-c/blob/master/CHANGELOG.md)
 
 ### Known Bugs and Incompatibilities
 
-- Incompatible with the CH-53E "Super Stallion" mod (due to a DCS bug). At this time, there is no solution for this incompatibility short of the user choosing to keep only one of these two modules installed.
-- Pilot blacks out when hooking into SuperCarrier (throttle up hard to cat-in!)
-- Fuel system cuts off if auto pause is left on for too long
-- Throttle position occasionally stuck in OFF position after rearm
-- Some missions created in DCS 2.7 or later render navigation system inoperable
-- TEST press can cause ECM panel lights to stick on
-- IN RANGE lamp flickers when TEST is pressed
-- AN/ASN-41 navigation BDHI needle animations swapped in test mode
+- Incompatible with AH-6J Little Bird, CH-47 Chinook, and CH-53E Super Stallion mods (DCS bug).
+- Pilot blacks out when throttling up to hook up to catapult on SuperCarrier.
+- Dispensing high volumes of bomblets (40+) from SUU-7/CBU-1/CBU-2 can cause performance dip or crashes to desktop.
 
-[see full issue list](https://github.com/heclak/community-a4e-c/issues/)
-
-#### Dispensing high volumes of bomblets (40+) from SUU-7/CBU-1/CBU-2 causes serious performance dip and/or crashes to desktop
-
-- Drop bomblets in lower release settings via the kneeboard (RShift+K by default), mission editor, or the Automatic Weapons Release System (AWRS).
+[See full issue list](https://github.com/heclak/community-a4e-c/issues/)
 
 ## Installation
 
-Failure to perform these steps will result in DCS World not recognizing the module, inability to use the module, input errors when using the module, or client integrity check failures on multiplayer servers that require them. Never install the A-4E-C files directly into your DCS World installation files!
+Failure to perform these steps will result in DCS World not recognizing the module, inability to use the module, input errors when using the module, or client integrity check failures on multiplayer servers that require them. Never install the A-4E-C files directly into your DCS World installation files! Installation size is around 1 GB.
 
 ### STEP 1: Upgrading from an older release
 
-If you are upgrading from an older version of the A-4E-C, perform these following actions. You must completely delete the currently installed A-4E-C files before installing the new version, as some important files have been removed for this.
+- If you are upgrading from an older version of the A-4E-C, completely uninstall your old version. If this is a brand new installation, skip this and move on to Step 2.
 
-Additionally your input bindings must be reset and rebound in order to accommodate this release’s enhanced control scheme. If this is a new installation, you can skip this step and move on to Step 2.
+- First, uninstall the module's files from `C:\Users\username\Saved Games\DCS\Mods\aircraft\A-4E-C`
 
-- Delete the contents of your old A-4E-C installation folder: `C:\Users\username\Saved Games\DCS\Mods\aircraft\A-4E-C`
-- Delete your A-4E-C input settings by opening the following folder: `C:\Users\username\Saved Games\DCS\Config\Input\A-4E-C`
-- Delete the joystick, keyboard, mouse and trackir folders.
+- Next reset your A-4E-C input bindings by deleting the contents of `C:\Users\username\Saved Games\DCS\Config\Input\A-4E-C`
 
-### STEP 2: Installing the module files.
+### STEP 2: Installing the module files
 
-- Download the latest official A-4E-C release package. Do not download directly from the Github repository.
-- Place the included `Mods\aircraft\A-4E-C` folder in into your `C:\Users\username\Saved Games\DCS` folder.
-- If you have installed other DCS World mods, you might already have the `Mods` and `aircraft` folders indicated in the file path. If this is the case, merge the new A-4E-C folder into the existing folders.
+- Download [the latest official A-4E-C release package](https://github.com/heclak/community-a4e-c/releases/). Do not download directly from the Github repository.
 
-Your correctly installed files should look something like the following image, substituting your Windows account name where the image displays Partario. If you're using the release branch of DCS World, the folder is `DCS` instead of `DCS.openbeta`.
+- Place the `Mods\aircraft\A-4E-C` folder in into your Windows user folder's Saved Games folder for DCS, e.g. `C:\Users\username\Saved Games\DCS`
 
-![Image of A-4E-C installation](https://user-images.githubusercontent.com/46121009/84217257-3b358600-aafe-11ea-9203-20d787b09662.png)
+- If you have installed other DCS World mods, you might already have the `Mods` and `aircraft` folders indicated in the file path. If so, merge the new A-4E-C folder into the existing folders.
 
-### STEP 3: Launch DCS World and verify installation
+- **Never install the A-4E-C files directly into your DCS World installation files!**
 
-When you are confident your files are correctly installed, launch DCS World. If your installation was successful, the A-4E-C theme icon appears as a option in the main menu:
+### STEP 3: Verify installation
 
-![Image of DCS World Menu with A-4E installed](https://cdn.discordapp.com/attachments/518815071858589697/720094260699070464/unknown.png)
+Launch DCS World. If your installation was successful, the A-4E-C theme icon appears as a option in the main menu:
 
-## Installation Troubleshooting
+![Image of DCS World Menu with A-4E-C Theme](https://cdn.discordapp.com/attachments/518815335013679104/926862242182488136/unknown.png)
 
-- Never, ever install the A-4E-C files directly into your DCS World installation files! This will cause your DCS World to not locate the module, create conflicts with other modules, and other problems.
+### Installation Troubleshooting
 
-- If you have multiple DCS-related folders in your `C:\Users\username\Saved Games`, for example, `DCS`, or `DCS.openbeta`. If you are unsure which folder your DCS World installation is using, locate the `dcs_variant.txt` file in the game files. If this file is present, its contents determines the folder structure your DCS World installation is using.
+Your correctly installed files should look something like the following image, substituting your Windows account name where the image displays *Partario*. If you're using the openbeta branch of DCS World, the folder might be `DCS.openbeta` instead of `DCS`:
 
-- If you are recieving an authorization error, you have installed the module incorrectly. Double check the installation instructions above, ensure you have have installed the module to the correct folder, and do not have any improperly installed files remaining in your DCS world game files. Any conflicts will result in the persistence of this this error.
+![Image of A-4E-C installation](https://cdn.discordapp.com/attachments/518815335013679104/886633761670828112/unknown.png)
 
-- If you find you can't take control of the aircraft, ensure you have installed Microsoft's Visual Studio 2015, 2017 and 2019 Redistributable libraries. Windows users running DCS world are typically running x64, so you will want to download and install vc_redist.x64.exe (~15 MB) from the following page, install the library, and then restart your computer: (https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0)
+- If you have multiple DCS-related folders in your `C:\Users\username\Saved Games`, for example, `DCS`, or `DCS.openbeta`. If you are unsure which folder your DCS World installation is using, locate the `dcs_variant.txt` file in the game files. If this file is present, its contents determines the folder structure your DCS World installation is using. Alternately, load DCS world and use the mission editor to create and save a mission. Search this mission file using Windows explorer to locate the proper folder structure.
 
-- If you cannot find the A-4E-C as a unit option in the Mission Editor, Ensure the historical mode filter is disabled in the mission editor by toggling the clock icon at the bottom of the screen, as shown in the following screenshot:
+- If you are receiving an authorization error at launch, **you have installed the module incorrectly**. Revisit the installation instructions above. Be sure to remove any and all improperly installed files before correctly installing the module.
+
+- If the A-4E-C icon in the DCS main menu shows a default DCS logo, is missing the theme background and music (or you experience crashes when loading a mission), you have incorrectly downloaded the module. [Download the latest official A-4E-C release package](https://github.com/heclak/community-a4e-c/releases/).
+
+- If you can load a mission, but can't take control of the A-4E-C, ensure you have installed [Microsoft's Visual Studio 2015, 2017 and 2019 Redistributable libraries](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0). Restart your computer after installation of the appropriate libraries. For most users, this is `vc_redist.x64.exe`
+
+- If you can't find the A-4E-C in the Mission Editor, ensure the historical mode filter is disabled by toggling the clock icon at the bottom of the screen, as shown in the following screenshot:
 
 ![Image of the Mission Editor pointing out the location of the Historical Filter](https://cdn.discordapp.com/attachments/518814186739073024/759230033960763422/unknown.png)
 
-## Frequently Asked Questions and Troubleshooting
+### Multiplayer Troubleshooting
 
-**Q: Is it really free?**
+- A DCS standalone server hosting missions with the A-4E-C must have the A-4E-C module installed.
 
-- Yes, it’s really free!
+- A server can host players who do not have the A-4E-C module installed on missions that feature it, you will need to be ready to get a little hands-on with your mission files. The Mission Editor dictates that any mission with an A4-E-C in it requires the module (just as it would any other aircraft), and it's `.miz` mission files are, in fact, `.zip` files.
 
-**Q: How large is the module?**
+- Make a copy of your `.miz` file, and rename it with a `.zip` file extension, and unzip it.
 
-- The download file is ~700 MB. Installation size is ~800 MB.
+- Inside, you will find a `mission` file (no extension). Open this file in your text editor of choice (Notepad works just fine), and search for `requiredModules`. Remove the A-4E-C's entry, as shown in this example:
 
-**Q: Can I donate to the A-4E-C project?**
+```
+["requiredModules"] =
+{
+     ["A-4E-C"] = "A-4E-C",
+}
+```
 
-- We cannot accept donations, but we appreciate your words of support! There are so many good causes out there. Consider donating to one of those instead!
+- Once you have completed the edit, save the `mission` file, and re-create a new `.zip` (carefully maintaining proper folder structure, *of course*). Rename your modified mission `.zip` back to a DCS `.miz` file extension instead.
 
-**Q: Can I get involved with the A-4E-C project?**
+- Finally, test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS will display any A4-E-C units as default-livery Su-27s, and players without the module cannot take control of unit, just as if they did not own any other DCS module in a multiplayer mission.
 
-- Yes! [Join the Community A-4E-C Discord server](https://discord.gg/tQZbkTQ) and introduce yourself! We can always use a hand from game artists, programmers or reliable testers as we continue to move the project forward. If you think you have something to contribute, don’t hesitate!
+## Frequently Asked Questions
 
-**Q: The roll seems really sensetive!**
-- The A-4E-C can perform a staggering 720 degrees of roll each second. If you're used to FC3 or more FBW aircraft, it can take a while to get used to how active piloting can be, especially if you have a short joystick. 
-If you're having difficulty, ensure your joystick's input is calibrated.
-- Setting the roll Axis Tune in the DCS controls menu curves of 20 and a Y saturation of 60-80 seems to work well for most users without fancy joysticks while retaining most operational flight manoeuvrability.
-- If you're having difficulty trimming the aircraft evening, you can adjust the trim speed to 50% in DCS World's main menu under the Special Options for the A-4E-C.
+### Q: Is it really free?
 
-**Q: Is there a user manual or tutorials available?**
+**Yes**! The A-4E-C will remain forever free!
 
-- There is some helpful pilot guidance included in the kneeboard. The NATOPS manual for the A-4E is the gold standard, but [Heclak's Community A-4E Guide](https://docs.google.com/presentation/d/1cUH7jpAoGHm-IzUDnv_NDhiZlvX55Q9WvpgR1d9ksYY/edit?usp=sharing) is a great resource for operating the sim (althought it may take us some time to get it up to date with 2.0's features), and [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt_8Jw9ByL10ar6b8rQg) features many good tutorials on systems and weaponry.
+### Q: Are there any plans to obtain the Eagle Dynamics SDK, make the module official, or make the module a part of the default DCS install package?
 
-**Q: Is there a paint kit I can use to create my own A-4E-C liveries?**
+**No**, the A-4E-C will continue on as a free and open-source resource anyone can download and install to enjoy.
 
-- Yes! This [A-4E-C Paintkit](https://drive.google.com/open?id=19w_bD8xHJiZpAi1JbA2xyPDJpl9dje-4) includes the aircraft’s top, bottom and fuel tanks. See the included liveries for lua examples. If you created liveries for older versions of the A-4E-C, you might need to update them to accommodate new changes in the external model in the newer version.
+### Q: Can I donate to the A-4E-C project?
 
-**Q: Can I fly the A-4E-C as a tanker?**
+**No**, we cannot accept donations, but we appreciate your words of support! There are so many good causes out there. Consider donating to one of those instead!
 
-- The A-4E-C serving as a player-piloted tanker would also require access to the SDK.
+### Q: Can I get involved with the A-4E-C project?
 
-**Q: What about the AGM-12 Bullpup or AGM-62 Walleye?**
+**Yes**! First, join the [Community A-4E-C Discord server](https://discord.gg/tQZbkTQ) and introduce yourself! We can always use a hand from game artists, programmers or reliable testers as we continue to move the project forward. If you think you have something to contribute, don't hesitate to reach out in the chat.
 
-- Implementing guided weapons would also require access to the SDK. Additionally, the specific airframe/cockpit that we have modelled is not equipped to accommodate the AGM-62 Walleye. A-4Es that were able to carry the AGM-62 Walleye had the ground radar display replaced with a TV monitor for use with the AGM-62 Walleye.
+### Q: Is there a manual or tutorials?
 
-**Q: Why is my standalone server rejecting missions with the A-4E-C?**
+**Yes**! Locating the NATOPS manual for an A-4E/F is the gold standard for understanding this aircraft, but there is a lot of helpful guidance included in the user manual. To access the manual:
+- Once inside the cockpit, open the kneeboard by pressing RSHIFT+K
+- Read the PDF manual in `C:\Users\username\Saved Games\DCS\Mods\aircraft\A-4E-C\Docs` or [read it online](https://drive.google.com/drive/folders/1_DPA00CWoRfIsqgh7HYabvpFrOdtBxPi)
 
-- A standalone server requires an installation of the A-4E-C module in order to host missions that feature it.
+Past that, [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt_8Jw9ByL10ar6b8rQg) features high-quality video tutorials on many systems.
 
-**Q: Is there a way I can host missions with the A-4E-C on my multiplayer server that won't lock out players who do not have the module installed?**
+### Q: Is there a paint kit I can use to create my own A-4E-C liveries?
 
-- Yes, but it's a little involved. It's not DCS that is locking players out, but the Mission Editor deciding that any mission with an A4-E-C placed down is going to require the module.
+**Yes**! This [A-4E-C Paintkit](https://drive.google.com/open?id=19w_bD8xHJiZpAi1JbA2xyPDJpl9dje-4) includes the aircraft's top, bottom and fuel tanks. See the included liveries for helpful examples setting up your *description.lua* files.
 
-- As there's no in-engine way of de-flagging this, you'll need to get hands-on with your mission files.
-You may or may not already know that the *.miz* mission files are, in fact, *.zip* files. So, take the mission file you desire to edit, and make a copy with a *.zip* extension. Find somewhere handy to unzip it.
-- Inside, you will find a *mission* file (no extension). Open this file in your text-editor of choice, and search required to find the mission's list of required modules under the **["requiredModules"]**  listings, and then remove the A-4E-C entry from the list, as shown in Line 32 in this screenshot:
+- Liveries created for versions of the A-4E-C prior to 2.0 must update the material names in their *description.lua*
 
-![Image of a mission file with the A4-E-C required module on Line 32](https://cdn.discordapp.com/attachments/518815335013679104/851940052627095633/unknown.png)
+- Install original or downloaded liveries just as you would for any other module, in `C:\Users\username\Saved Games\DCS\Liveries\A-4E-C`
 
-- Save the mission file, and re-create a new *.zip* (carefully maintaining proper folder structure, *bien sur*) and renaming it with a *.miz* file extension.
-- Test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS should display any A4-E-C units as default-livery Su-27s, and players without the module should not be able to take control of the module, as if they did not own a for-pay aircraft.
+- ***Never put your hard work at risk by installing liveries to the module's files!***
 
-**Q: Are there any plans to do other variants or later models of the A-4?**
+### Q: Can I fly the A-4E-C as a tanker?
 
-- There are no plans no keen interest to pursue this. There is a lot left to add for our beloved A-4E-C, and the advanced avionics in later models would not be able to be completed in a satisfying manner.
+**No**, not at this time.
 
+### Q: Will guided weapons like AGM-12 Bullpup or AGM-62 Walleye be added?
 
-**Q: Are there any plans to make the module official, obtain the Eagle Dynamics SDK, or make the module a part of the default DCS install package?**
+The AGM-12C Bullpup is a possibility with more work, but no promises just yet! Our A-4E-C cockpit model lacks the TV monitor used for the Walleye display.
 
-- No, there are no plans nor keen interest to pursue this. The project will continue as a free and open-source resource you can download and install to enjoy.
+### Q: Why doesn't the A-4E-C have a nosewheel steering button?
+There is insufficient evidence to suggest that the A-4E had NWS. According to our research the the revisions and reworks relating to the NWS were applied to only the -F models. If you find evidence that E's did in fact have NWS, please share it!
 
-**Q: Why doesn't the A-4E-C work with my favorite mission or multiplayer scripting system?**
+### Q: Are there any plans to simulate other variants or later models of the A-4?
 
-- Some scripts or other utilities need to be informed of the A-4E-C's existence in order to accommodate it. If you have a favorite popular mod, script that should accommodate it, be sure to let the author know!
+**No**, there are no plans nor keen interest to pursue this, especially since there is a lot left to add and improve one with our beloved A-4E-C. Additionally, the advanced avionics in later models would not be able to be completed in a satisfying manner.
 
-**Q: What's the song in the menu?**
-- Crow, by [Eric Haugen](https://erichaugen.bandcamp.com/releases)
+### Q: Why doesn't the A-4E-C work with my favorite mission or multiplayer scripting system?
+
+Some scripts or other utilities need to be informed of the A-4E-C's existence or other specificities in order to accommodate it. If you know of a mod or script that should accommodate it, be sure to let the author know!
+
+### Q: What's the theme song in the DCS main menu?
+
+*Crow*, by [Eric Haugen](https://erichaugen.bandcamp.com/releases)

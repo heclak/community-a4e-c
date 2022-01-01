@@ -676,7 +676,7 @@ mk77mod0 =
 	model     		= "A4E_Mk77mod0",
 	user_name 		= _("Mk-77 mod 0"),
 	wsTypeOfWeapon  = {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, WSTYPE_PLACEHOLDER},
-	scheme    		= "bomb-common",
+	scheme    		= "bomb-parashute",
 	class_name		= "wAmmunitionBallute",
 	type      		= 0,
 	mass      		= 340,
@@ -692,8 +692,8 @@ mk77mod0 =
 			cx_factor   	= 1,
             L               = 1.05,
             I               = 33.282267,
-            Ma              = 2.746331,
-            Mw              = 2.146083,
+            Ma              = -0.1,--2.746331,
+            Mw              = 0.1,--2.146083,
             wind_time       = 1000.000000,
             wind_sigma      = 80.000000,
 	},
@@ -784,7 +784,7 @@ mk77mod1 =
     model     		= "A4E_Mk77mod1",
     user_name 		= _("Mk-77 mod 1"),
     wsTypeOfWeapon  = {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, WSTYPE_PLACEHOLDER},
-    scheme    		= "bomb-common",
+    scheme    		= "bomb-parashute",
     class_name		= "wAmmunitionBallute",
     type      		= 0,
     mass      		= 230,
@@ -800,8 +800,8 @@ mk77mod1 =
             cx_factor   	= 1,
             L               = 1.05,
             I               = 33.282267,
-            Ma              = 2.746331,
-            Mw              = 2.146083,
+            Ma              = -0.1,--2.746331,
+            Mw              = 0.1,--2.146083,
             wind_time       = 1000.000000,
             wind_sigma      = 80.000000,
     },
@@ -1397,17 +1397,21 @@ declare_loadout(make_cbu_a4e("CBU-2B/A", "BLU-3B", math.floor(409/cbu_mult))) --
 -- numbers are used to fix models where the origin is too far back.
 local bomb_data =
 {
-    --use shapename,        mass,       wstype,                 image,                  drag,               offset (m)
-    ["Mk-81"]         = { mass = 118          ,   wstype = {4,5,9,30},              pic = 'mk81.png',      cx = 0.00018, ofs = -0.0508, PictureBlendColor = false },  -- 2" offset back
-    ["Mk-81SE"]       = { mass = MK_81SE.mass ,   wstype = MK_81SE.wsTypeOfWeapon,  pic = 'mk81SE.png',    cx = MK_81SE.Cx, ofs = 0.0,     PictureBlendColor = false },  -- 0" offset back
-    ["Mk-82"]         = { mass = 241          ,   wstype = {4,5,9,31},              pic = 'mk82.png',      cx = 0.00025, ofs = -0.0762, PictureBlendColor = false },  -- 3" offset back
-    ["Mk-82 Snakeye"] = { mass = 241          ,   wstype = {4,5,9,79},              pic = 'mk82air.png',   cx = 0.00025, ofs = -0.2540, PictureBlendColor = false },  -- 10" offset back
-    ["Mk-83"]         = { mass = 447          ,   wstype = {4,5,9,32},              pic = 'mk83.png',      cx = 0.00035, ofs = 0.0,     PictureBlendColor = false },  -- 0" offset, hangars are in wrong place
-    ["Mk-77 mod 1"]   = { mass = mk77mod1.mass,   wstype = mk77mod1.wsTypeOfWeapon, pic = 'mk77mod1.png',  cx = mk77mod1.Cx,   ofs = 0.0,     PictureBlendColor = false },  -- drag number is garbage
-    ["Mk-20"]         = { mass = 222          ,   wstype = {4,5,38,45},             pic = 'mk20.png',      cx = 0.00070, ofs = 0.0,     PictureBlendColor = false },
-    ["AN-M57"]        = { mass = 113.0        ,   wstype = {4,5,9,271},             pic = 'us_AN-M57.png', cx = 0.00035, ofs = 0.0,     PictureBlendColor = true  },
-    ["AN-M81"]        = { mass = AN_M81.mass  ,   wstype = AN_M81.wsTypeOfWeapon,   pic = 'an-m81.png',    cx = AN_M81.Cx, ofs = 0.0,     PictureBlendColor = false },
-    ["AN-M88"]        = { mass = AN_M88.mass  ,   wstype = AN_M88.wsTypeOfWeapon,   pic = 'an-m88.png',    cx = AN_M88.Cx, ofs = 0.0,     PictureBlendColor = false },
+    --use shapename,        mass,                   wstype,                             image,                 drag,                offset (m)
+    --                                              volatile hardcoded values
+    --                                              may need periodic updates
+    --                                              if patches reenumerate things
+    ["Mk-81"]         = {   mass = 118          ,   wstype = {4,5,9,30},                pic = 'mk81.png',      cx = 0.00018,        ofs = -0.0508,  PictureBlendColor = false },  -- 2" offset back
+    ["Mk-81SE"]       = {   mass = MK_81SE.mass ,   wstype = MK_81SE.wsTypeOfWeapon,    pic = 'mk81SE.png',    cx = MK_81SE.Cx,     ofs = 0.0,      PictureBlendColor = false },  -- 0" offset back
+    ["Mk-82"]         = {   mass = 241          ,   wstype = {4,5,9,31},                pic = 'mk82.png',      cx = 0.00025,        ofs = -0.0762,  PictureBlendColor = false },  -- 3" offset back
+    ["Mk-82 Snakeye"] = {   mass = 241          ,   wstype = {4,5,9,79},                pic = 'mk82air.png',   cx = 0.00025,        ofs = -0.2540,  PictureBlendColor = false },  -- 10" offset back
+    ["Mk-83"]         = {   mass = 447          ,   wstype = {4,5,9,32},                pic = 'mk83.png',      cx = 0.00035,        ofs = 0.0,      PictureBlendColor = false },  -- 0" offset, hangars are in wrong place
+    ["Mk-77 mod 1"]   = {   mass = mk77mod1.mass,   wstype = mk77mod1.wsTypeOfWeapon,   pic = 'mk77mod1.png',  cx = mk77mod1.Cx,    ofs = 0.0,      PictureBlendColor = false },  -- drag number is garbage
+    ["Mk-20"]         = {   mass = 222          ,   wstype = {4,5,38,45},               pic = 'mk20.png',      cx = 0.00070,        ofs = 0.0,      PictureBlendColor = false },
+    ["AN-M57"]        = {   mass = 113.0        ,   wstype = {4,5,9,282},               pic = 'us_AN-M57.png', cx = 0.00035,        ofs = 0.0,      PictureBlendColor = true  }, 
+    ["AN-M81"]        = {   mass = AN_M81.mass  ,   wstype = AN_M81.wsTypeOfWeapon,     pic = 'an-m81.png',    cx = AN_M81.Cx,      ofs = 0.0,      PictureBlendColor = false },
+    ["AN-M88"]        = {   mass = AN_M88.mass  ,   wstype = AN_M88.wsTypeOfWeapon,     pic = 'an-m88.png',    cx = AN_M88.Cx,      ofs = 0.0,      PictureBlendColor = false },
+    ["BDU-33"]        = {   mass = 11.3         ,   wstype = {4,5,9,69},                pic = 'bdu-33.png',    cx = 0.00000143,     ofs = 0.0,      PictureBlendColor = false },
 }
 
 local rack_data =
@@ -1770,6 +1774,10 @@ declare_loadout(rackme_a4e("Mk-82 Snakeye", 4, 0))         -- {Mk-82 Snakeye_MER
 declare_loadout(rackme_a4e("Mk-82 Snakeye", 3, 0))         -- {Mk-82 Snakeye_TER_3_C}
 declare_loadout(rackme_a4e("Mk-82 Snakeye", 2,-1))         -- {Mk-82 Snakeye_TER_2_L}
 declare_loadout(rackme_a4e("Mk-82 Snakeye", 2, 1))         -- {Mk-82 Snakeye_TER_2_R}
+
+declare_loadout(rackme_a4e("BDU-33", 5, -1))
+declare_loadout(rackme_a4e("BDU-33", 5, 1))
+declare_loadout(rackme_a4e("BDU-33", 6, 0))
 
 declare_loadout(rackme_a4e("Mk-83", 3, 0))                 -- {Mk-83_TER_3_C}
 declare_loadout(rackme_a4e("Mk-83", 2, 0))                 -- {Mk-83_TER_2_C}

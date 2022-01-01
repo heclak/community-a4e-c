@@ -1,4 +1,15 @@
 #pragma once
+//=========================================================================//
+//
+//		FILE NAME	: LuaVM.h
+//		AUTHOR		: Joshua Nelson
+//		DATE		: Feb 2021
+//
+//		This file falls under the licence found in the root ExternalFM directory.
+//
+//		DESCRIPTION	:	Lua helper, for config files.
+//
+//================================ Includes ===============================//
 #include "../include/Cockpit/ccParametersAPI.h"
 #include "../include/FM/wHumanCustomPhysicsAPI.h"
 #include <vector>
@@ -13,7 +24,7 @@ extern "C"
 #include "../include/lua/lualib.h"
 }
 
-#pragma comment(lib, "../include/lua/lib/lua.lib")
+#pragma comment(lib, "../libs/lua.lib")
 
 class LuaVM
 {
@@ -24,7 +35,8 @@ public:
 	lua_State* L();
 	
 	bool dofile( const char* path );
-	double getGlobalNumber(const char* name);
+	bool getGlobalNumber( const char* name, double& number );
+	const char* getGlobalString( const char* name );
 	bool getGlobalTableNumber( const char* table, const char* key, float& result );
 	void getSplines( const char* name, std::vector<LERX>& vec );
 	bool outputCommands( const char* name );

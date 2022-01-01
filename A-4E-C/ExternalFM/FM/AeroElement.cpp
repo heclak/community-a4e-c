@@ -11,6 +11,7 @@
 //
 //================================ Includes ===============================//
 #include "AeroElement.h"
+#include "Units.h"
 //================================ Includes ===============================//
 
 Scooter::AeroElement::AeroElement
@@ -65,7 +66,7 @@ Scooter::AeroControlElement::AeroControlElement
 	Vec3 surfaceNormal,
 	double area
 ) :
-	AeroElement(state, controlSurfaceType, CLalpha, CDalpha, cp, surfaceNormal, area), m_airframe{ airframe }, m_compressElev{ nullptr }
+	AeroElement(state, controlSurfaceType, CLalpha, CDalpha, cp, surfaceNormal, area ), m_airframe{ airframe }, m_compressElev{ nullptr }
 {
 	m_aoaModifier = true;
 }
@@ -104,13 +105,13 @@ void Scooter::AeroElement::airborneInit()
 
 void Scooter::AeroElement::elementLift()
 {
-	if (m_type == HORIZONTAL || m_type == AILERON || m_type == ELEVATOR)
+	if (m_type == HORIZONTAL || m_type == AILERON || m_type == ELEVATOR || m_type == HORIZONTAL_STAB )
 	{
-		m_LDwindAxes.y = m_kElem * (m_CLalpha(m_aoa) * abs(cos(m_beta)) * m_liftFactor * m_damageElem);
+		m_LDwindAxes.y = m_kElem * (m_CLalpha(m_aoa) * (cos(m_beta)) * m_liftFactor * m_damageElem);
 	}
 	else if (m_type == VERTICAL || m_type == RUDDER)
 	{
-		m_LDwindAxes.z = m_kElem * (m_CLalpha(m_aoa) * abs(cos(m_beta)) * m_liftFactor * m_damageElem);
+		m_LDwindAxes.z = m_kElem * (m_CLalpha(m_aoa) * (cos(m_beta)) * m_liftFactor * m_damageElem);
 	}
 	else
 	{
@@ -120,7 +121,11 @@ void Scooter::AeroElement::elementLift()
 
 void Scooter::AeroElement::elementDrag()
 {
-	m_LDwindAxes.x = -m_kElem * (m_CDalpha(m_aoa) * abs(cos(m_beta)) * m_dragFactor);
+	double cosBeta = cos( m_beta );
+	/*if ( m_type != RUDDER )
+		cosBeta = abs( cosBeta );*/
+
+	m_LDwindAxes.x = -m_kElem * ( m_CDalpha( m_aoa ) * cosBeta * m_dragFactor );
 }
 
 void Scooter::AeroElement::calculateElementPhysics()
@@ -142,47 +147,63 @@ void Scooter::AeroElement::calculateElementPhysics()
 	Vec3 flightPath = m_airspeed;
 	Vec3 flightPathProjectedAOA = flightPath - ((flightPath * spanVec) / (spanVec * spanVec)) * spanVec;
 	Vec3 flightPathProjectedBeta = flightPath - ((flightPath * m_surfaceNormal) / (m_surfaceNormal * m_surfaceNormal)) * m_surfaceNormal;
-	m_aoa = atan2(cross(forwardVec, flightPathProjectedAOA) * spanVec, forwardVec * flightPathProjectedAOA);
+
+	m_aoa = atan2( cross( forwardVec, flightPathProjectedAOA ) * spanVec, forwardVec * flightPathProjectedAOA );
+	
+
+	if ( m_type == RUDDER || m_type == ELEVATOR || m_type == HORIZONTAL_STAB )
+		m_beta = 0.0;
+	else
+		m_beta = atan2( cross( forwardVec, flightPathProjectedBeta ) * m_surfaceNormal, forwardVec * flightPathProjectedBeta );
+
 	
 	if (m_aoaModifier) // if the element has control surfaces
 	{
 		m_aoa += controlInput();
 	}
-	
-	m_beta = atan2(cross(forwardVec, flightPathProjectedBeta)*m_surfaceNormal, forwardVec* flightPathProjectedBeta);
-	//m_beta = m_state.getBeta();
+
+
 	elementLift();
 	elementDrag();
 
 	updateLERX();
 	
-	//printf("lift vector (w): LDVec = %lf, %lf, %lf\n", m_LDwindAxes.x, m_LDwindAxes.y, m_LDwindAxes.z);
-	if (m_type == HORIZONTAL || m_type == AILERON || m_type == ELEVATOR)
+	
+	if (m_type == HORIZONTAL || m_type == AILERON || m_type == ELEVATOR || m_type == HORIZONTAL_STAB )
 	{
-		m_RForceElement = windAxisToBody(m_LDwindAxes, m_aoa, m_beta);
+		m_RForceElement = windAxisToBody( m_LDwindAxes, m_aoa, m_beta );
+		//printf( "alpha: %lf, beta: %lf, lift vector (w): LDVec = %lf, %lf, %lf, Body: %lf, %lf, %lf\n", m_aoa, m_beta, m_LDwindAxes.x, m_LDwindAxes.y, m_LDwindAxes.z, m_RForceElement.x, m_RForceElement.y, m_RForceElement.z );	
 	}
 	else if (m_type == VERTICAL || m_type == RUDDER)
 	{
 		m_RForceElement = windAxisToBody(m_LDwindAxes, m_beta, m_aoa);
+		//printf( "alpha: %lf, beta: %lf, lift vector (w): LDVec = %lf, %lf, %lf, Body: %lf, %lf, %lf\n", m_aoa, m_beta, m_LDwindAxes.x, m_LDwindAxes.y, m_LDwindAxes.z, m_RForceElement.x, m_RForceElement.y, m_RForceElement.z );
+		//printf( "CD(aoa): %lf\n", m_CDalpha( m_aoa ) );
 	}
 	else
 	{
 		printf("ERROR: could not calculate resultant force");
 	}
 
-	Vec3 deltaCentreOfPressure = m_cp - Vec3(0.0, 0.0, m_state.getCOM().z);
-	m_moment = cross(deltaCentreOfPressure, m_RForceElement);
+	Vec3 deltaCentreOfPressure = m_cp - m_state.getCOM(); //-Vec3(0.0, 0.0, m_state.getCOM().z); 
+	//Vec3 deltaCentreOfPressure = m_cp - Vec3(0.0, 0.0, m_state.getCOM().z); 
+	m_moment = cross( deltaCentreOfPressure, m_RForceElement);
 }
 
 double Scooter::AeroControlElement::controlInput()
 {
 	switch (m_type) // might be cleaner to call a function in each case
 	{
+	case HORIZONTAL_STAB:
+	{
+		double hStabIncidence = -m_airframe.getStabilizer();
+		return hStabIncidence;
+	}
 	case ELEVATOR:
 	{
-		double elevator = -m_airframe.getElevator() * toRad(30) * (*m_compressElev)(m_state.getMach());
+		double elevator = m_airframe.elevatorAngle();//* ( *m_compressElev )( m_state.getMach() );
 		double hStabIncidence = -m_airframe.getStabilizer();
-		return (elevator + hStabIncidence);
+		return hStabIncidence + elevator;
 	}
 	case RUDDER:
 		return -m_airframe.getRudder() * toRad(17);

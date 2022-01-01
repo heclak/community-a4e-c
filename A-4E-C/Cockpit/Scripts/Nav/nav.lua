@@ -7,7 +7,8 @@ dofile(LockOn_Options.script_path.."Nav/NAV_util.lua")
 dofile(LockOn_Options.script_path.."Nav/ils_utils.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 dofile(LockOn_Options.script_path.."Systems/air_data_computer_api.lua")
-dofile(LockOn_Options.script_path.."Systems/tacan_efm_api.lua")
+
+avionics = require_avionics()
 
 startup_print("nav: load")
 
@@ -313,6 +314,11 @@ function get_declination()
     return dec
 end
 
+function get_calculated_true_heading()
+    result = sensor_data.getMagneticHeading() + math.rad(asn41_magvar_offset)
+    return result 
+end
+
 -- measures the deviation between grid north (delta x, fixed z) and "true" north in lat/long at that point
 function get_true_deviation_from_grid(x,z)
     return true_bearing_viall_from_xz(x-1000, z, x+1000, z)
@@ -350,6 +356,8 @@ local tacan_audio_active = false
 
 
 function post_initialize()
+    asn41_magvar_offset = round(get_declination(),1)
+
     startup_print("nav: postinit")
     sndhost = create_sound_host("COCKPIT_TACAN","HEADPHONES",0,0,0)
     morse_dot_snd = sndhost:create_sound("Aircrafts/A-4E-C/MorzeDot") -- refers to sdef file, and sdef file content refers to sound file, see DCSWorld/Sounds/sdef/_example.sdef
@@ -856,8 +864,10 @@ function getGroundSpeedFromDoppler(precision)
     local v_ground_x, v_ground_y, v_ground_z = sensor_data.getSelfVelocity()
 
 
-    v_ground_x = round(v_ground_x, precision)
-    v_ground_z = round(v_ground_z, precision)
+    v_ground_x = roundBase(v_ground_x, 0, 5)
+    v_ground_z = roundBase(v_ground_z, 0, 5)
+
+    --print_message_to_user(tostring(v_ground_x).." "..tostring(v_ground_z))
 
     return v_ground_x, v_ground_z
 end
@@ -879,12 +889,12 @@ end
 
 function getAirDataComputerVariables(precision)
 
-    precision = math.max(precision or 4, 1)
+    precision = precision or 4
 
     local tas = round(Air_Data_Computer:getTAS(), precision - 1)
-    local roll = round(sensor_data.getRoll() + roll_err, precision)
-    local pitch = round(sensor_data.getPitch() + pitch_err, precision)
-    local heading = round(-sensor_data.getHeading() + heading_err, precision)
+    local roll = round(sensor_data.getRoll(), precision)
+    local pitch = round(sensor_data.getPitch(),precision)
+    local heading = round(get_calculated_true_heading(),precision)
     local aoa = round(sensor_data.getAngleOfAttack(), precision)
 
     return tas, pitch, roll, heading, aoa
@@ -894,19 +904,19 @@ function getVelocityFromAirDataComputer()
 
     local tas, pitch, roll, heading, aoa = getAirDataComputerVariables()
 
-    local sinRoll = math.sin(roll)
-    local cosRoll = math.cos(roll)
+    --print_message_to_user(tas*1.94384)
 
-    local horizontalAirspeed = tas * math.cos(pitch - aoa * cosRoll)
-    heading = heading - aoa * sinRoll
+    local aoaPitch = aoa * math.cos(roll)
+    local aoaYaw = aoa * math.sin(roll)
 
-    --local ax, ay, az = efm_data_bus.fm_getWorldAcceleration()
+    local vx,vy,vz = directionVector(pitch - aoaPitch, heading - aoaYaw)
 
-    local vx = horizontalAirspeed * math.cos(heading)-- + update_time_step * ax
-    local vz = horizontalAirspeed * math.sin(heading)-- + update_time_step * az
+    vx = vx * tas
+    vz = vz * tas
+
+    --print_message_to_user("Speed Diff "..math.abs(math.sqrt(vx^2 + vz^2) - math.sqrt(vxa^2 + vza^2)))
 
     --print_message_to_user( "Heading " .. tostring(heading).." errvx: " .. tostring(errvx) .. " errvz: "..tostring(errvz) )
-    --print_message_to_user(tostring(errvx) .. " vx_actual : "..tostring(vax).." vx_calc : "..tostring(vx))
 
 
     return vx, vz
@@ -937,11 +947,11 @@ function updateIntegratedLatLong()
 
     local halfdtSqr = 0.5 * (update_time_step ^ 2)
 
+    -- The rounding here represents the systematic error (the actual scientific definition)
     asn41_integrate_x = asn41_integrate_x + (vx - asn41_wind_x) * update_time_step 
     asn41_integrate_z = asn41_integrate_z + (vz - asn41_wind_z) * update_time_step
 
-    local drift = calculate_drift()
-
+    --local drift = calculate_drift()
     --print_message_to_user("Drift: "..tostring(drift/1000.0))
 
     local geopos = lo_to_geo_coords(asn41_integrate_x, asn41_integrate_z)
@@ -1144,12 +1154,12 @@ function asn41_update_range_and_bearing(dest)
     end
 
 
-    local declination = get_declination()
+    --local declination = get_declination()
 
     --------------------------------------------------------
     -- second, calculate bearing
     bearing = forward_azimuth_bearing(lat1,lon1,lat2,lon2)
-    asn41_bearing:set( bearing - declination )
+    asn41_bearing:set( bearing - asn41_magvar_offset )
 
     --------------------------------------------------------
     -- third, calculate track based on wind influence
@@ -1170,12 +1180,14 @@ function update_asn41()
         else
             draw_ppos(-1, 1)
             draw_dest(0,0)
-            asn41_draw_windspeed(223.6)
-            asn41_draw_winddir(091)
+            if not is_egg() then
+                asn41_draw_windspeed(223.6)
+                asn41_draw_winddir(091)
+            end
             asn41_valid:set(1)
             asn41_range:set(0)
-            asn41_bearing:set( 120 )
-            asn41_track:set( 30 )
+            asn41_bearing:set( 30 ) -- thick needle 2
+            asn41_track:set( 120 ) -- thin needle 1
         end
     elseif asn41_state == "asn41-off" then
         if asn41_input ~= "OFF" then
@@ -1446,7 +1458,11 @@ end
 function apn153_calculate_wind_vector(ground_track_x, ground_track_z)
     local vx, vz = getVelocityFromAirDataComputer()
     local vgx, vgz = getGroundSpeedFromDoppler()
-    return (vx - vgx), (vz - vgz)
+
+    local wx = vx - vgx
+    local wz = vz - vgz
+
+    return wx,wz
 end
 
 -- This function is executed by the AN/APN-153 for purposes of preventing large impluses in
@@ -1462,6 +1478,9 @@ end
 
 local apn153_mode_error = 0
 local apn153_mode_error_change = 0
+
+local apn153_altitude_error = 1
+local apn153_altitude_error_change = 0
 
 -- execute the AN/APN-153 speed & drift calculation from last position
 -- speed is the hypotenus distance per unit time between old and new coordinates
@@ -1493,6 +1512,20 @@ function apn153_speed_and_drift(land)
     elseif drift > 180 then
         drift = drift - 360 -- handle the opposite (flying north, strong easterly wind)
     end
+
+    if apn153_altitude_error_change <= 0 then
+        apn153_altitude_error = 1.0 + randomf(0.03,0.06) * (sensor_data.getRadarAltitude() / 10000.0)
+        apn153_altitude_error_change = math.random(100,200)
+
+        --print_message_to_user("Drift: "..tostring(calculate_drift()/1000.0))
+        --print_message_to_user("Altitude Error: "..apn153_altitude_error)
+    end
+    
+    apn153_wind_x = apn153_wind_x * apn153_altitude_error
+    apn153_wind_z = apn153_wind_z * apn153_altitude_error   
+    apn153_altitude_error_change = apn153_altitude_error_change - 1
+    drift = drift * apn153_mode_error
+    speed = speed * apn153_mode_error
 
     -- add a random 3-5% error to both speed and drift if your land/sea mode is configured improperly.
     -- 'land' mode over sea will return 3-5% slower
@@ -2083,6 +2116,8 @@ function update()
     if tacan_volume_moving ~= 0 then
         dev:performClickableAction(device_commands.tacan_volume, clamp(tacan_volume + 0.01 * tacan_volume_moving, 0.2, 0.8), false)
     end
+
+    update_egg()
 end
 
 function fetch_object_beacon_data(channel, air_to_air)
@@ -2102,24 +2137,13 @@ function fetch_object_beacon_data(channel, air_to_air)
             position = { x = 0.0, y = 0.0, z = 0.0 },
             callsign = object.callsign,
             objectID = object.id,
+            objectName = object.name,
             ntype = NAV_TYPE_TCN,
             frequency = 0.0,
             channel = channel,
             air_to_air = object.air_to_air,
             mobile = true,
         }
-
-        if object.id then
-            tacan_efm_api:setObjectID(object.id)
-        else
-            tacan_efm_api:setObjectID(0)
-        end
-
-        if object.name then
-            tacan_efm_api:setObjectName(object.name)
-        else
-            tacan_efm_api:setObjectName("")
-        end
 
         return cur_beacon
     end
@@ -2132,11 +2156,13 @@ function update_object_beacon(cur_beacon)
     if cur_beacon == nil or not cur_beacon.mobile then
         return false
     end
-    cur_beacon.position.x, cur_beacon.position.y, cur_beacon.position.z = tacan_efm_api:getPosition()
+    --cur_beacon.position.x, cur_beacon.position.y, cur_beacon.position.z = tacan_efm_api:getPosition()
+    cur_beacon.position = avionics.MissionObjects.getObjectPosition(cur_beacon.objectID, cur_beacon.objectName)
 
     --print_message_to_user(tostring(cur_beacon.position.x).." "..tostring(cur_beacon.position.y).." "..tostring(cur_beacon.position.z))
 
-    if not efm_data_bus.fm_tacanValid() then
+    if cur_beacon.position == nil then
+        cur_beacon.position = {x = 0.0, y = 0.0, z = 0.0}
         return false
     end
 
@@ -2257,6 +2283,26 @@ function get_base_sensor_data()
 
 							fuel_weight			= 	Sensor_Data_Raw.getTotalFuelWeight(),
 						}	
+
+end
+
+local egg = get_param_handle("EGG")
+local egg_score = get_param_handle("EGG_SCORE")
+local egg_high_score = get_param_handle("EGG_HIGH_SCORE")
+
+function is_egg()
+    return math.abs(asn41_magvar_offset - 0.4) < 0.005 and asn41_state == "asn41-test"
+end
+
+function update_egg()
+
+    if is_egg() then  
+        egg:set(1.0)
+        asn41_draw_windspeed(egg_score:get())
+        asn41_draw_winddir(egg_high_score:get())
+    else
+        egg:set(0.0)
+    end
 
 end
 

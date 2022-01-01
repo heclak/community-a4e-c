@@ -1,4 +1,4 @@
-name = "Israel IDF Knights"
+name = "Israel IAF Knights of the North Squadron, 1973"
 countries = {"USA", "ISR"}
 
 livery = {

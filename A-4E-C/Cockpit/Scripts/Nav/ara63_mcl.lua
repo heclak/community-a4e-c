@@ -1,4 +1,3 @@
-dofile(LockOn_Options.script_path.."Systems/mcl_efm_api.lua")
 dofile(LockOn_Options.script_path.."Nav/ils_utils.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
@@ -7,6 +6,8 @@ dofile(LockOn_Options.script_path.."Systems/mission.lua")
 dofile(LockOn_Options.script_path.."Systems/mission_utils.lua")
 dofile(LockOn_Options.script_path.."Systems/adi_needles_api.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
+
+avionics = require_avionics()
 
 local dev = GetSelf()
 
@@ -40,6 +41,16 @@ MCL_PWR_BIT = 2
 local ils_data, marker_data = get_ils_data_in_format()
 local tacan_to_object_id = {}
 local icls_to_object_id = {}
+
+-- Beacon offset in format [x offset (forward-backward), z offset(left-right), deck angle]
+--
+-- deck angle of Melbourne found at https://www.navy.gov.au/history/angled-flight-deck
+
+local beacon_offsets = {
+    ["Stennis"] = {18.0, 13.0, 9.0},
+    ["hmas_melbourne_wip"] = {60.0, 0.0, 5.5},
+    ["hmas_melbourne"] = {60.0, 0.0, 5.5},
+}
 
 -------------------------------------------
 --           FILE VARIABLES
@@ -277,13 +288,15 @@ function fetch_current_ils()
 
         local object_data = objects[1]
 
-        mcl_efm_api:setObjectID(object_data.id)
-        mcl_efm_api:setObjectName(object_data.name)
+        local position = avionics.MissionObjects.getObjectPosition(object_data.id, object_data.name)
 
-        if mcl_efm_api:isValid() then
+        if position then
 
-            local x, y, z = mcl_efm_api:getPosition()
-            local heading = mcl_efm_api:getHeading()
+            local x = position.x
+            local y = position.y
+            local z = position.z
+
+            local heading = avionics.MissionObjects.getObjectBearing(object_data.id, object_data.name)
 
             local z_dir = bearing_to_vec2d(heading - 90)
             local x_dir = bearing_to_vec2d(heading)
@@ -294,11 +307,27 @@ function fetch_current_ils()
             --This is really lazy, I just couldn't
             --be bothered to create another 2d rotation
             --function.
-            x_dir.x = -x_dir.x * 18.0
-            x_dir.z = -x_dir.z * 18.0
+            local x_offset = 18.0
+            local z_offset = 13.0
 
-            z_dir.x = z_dir.x * 13.0
-            z_dir.z = z_dir.z * 13.0
+            -- Nimitz class deck angle = 9.0 deg
+            -- Majestic class deck angle = 5.5 deg
+            local deck_angle = 9.0
+			
+            local ship_os = beacon_offsets[object_data.type]
+            -- override the default values if ship type found
+            if ship_os then
+                --print_message_to_user("x= "..tostring(ship_os[1]).." z= "..tostring(ship_os[2]).." angle= "..tostring(ship_os[3]))
+                x_offset = ship_os[1]
+                z_offset = ship_os[2]
+                deck_angle = ship_os[3]
+            end
+			
+            x_dir.x = -x_dir.x * x_offset
+            x_dir.z = -x_dir.z * x_offset
+
+            z_dir.x = z_dir.x * z_offset
+            z_dir.z = z_dir.z * z_offset
 
             x = x + x_dir.x + z_dir.x
             z = z + x_dir.z + z_dir.z
@@ -319,7 +348,7 @@ function fetch_current_ils()
                         y = y,
                         z = z, 
                     },
-                    direction = heading - 9,
+                    direction = heading - deck_angle,
                     frequency = 0,
                 },
 
@@ -330,7 +359,7 @@ function fetch_current_ils()
                         z = z,
                         
                     },
-                    direction = heading - 9,
+                    direction = heading - deck_angle,
                     frequency = 0,
                 },
             }

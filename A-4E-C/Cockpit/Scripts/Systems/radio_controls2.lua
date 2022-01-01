@@ -4,7 +4,12 @@ dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 
+
+avionics = require_avionics()
+
 local dev 	    = GetSelf()
+
+local extended_dev = avionics.ExtendedRadio(devices.ELECTRIC_SYSTEM, devices.INTERCOM, devices.UHF_RADIO)
 local update_time_step = 0.05 --update will be called 20/second
 make_default_activity(update_time_step)
 
@@ -35,6 +40,8 @@ dev:listen_command(Keys.UHFVolumeDec)
 dev:listen_command(Keys.UHFVolumeStartUp)
 dev:listen_command(Keys.UHFVolumeStartDown)
 dev:listen_command(Keys.UHFVolumeStop)
+dev:listen_command(Keys.radio_ptt)
+dev:listen_command(Keys.radio_ptt_voip)
 
 efm_data_bus = get_efm_data_bus()
 
@@ -94,6 +101,8 @@ function post_initialize()
     uhf_radio_device = GetDevice(devices.UHF_RADIO)
 	arc51_set_knobs_to_frequency(arc51_radio_presets[1])
 
+    extended_dev:init()
+
 	dev:performClickableAction(device_commands.arc51_volume, 0.7, false)
     local birth = LockOn_Options.init_conditions.birth_place
 
@@ -123,7 +132,6 @@ function fnc_arc51_volume(value)
         dev:performClickableAction(device_commands.arc51_volume, 0.2, false)
     elseif value > 0.8 then
         dev:performClickableAction(device_commands.arc51_volume, 0.8, false)
-
     else
         arc51_volume = value
     end
@@ -166,6 +174,7 @@ local command_table = {
 }
 
 function SetCommand(command,value)
+
     if command_table[command] ~= nil then
         command_table[command](value)
     -- mode switch
@@ -211,6 +220,10 @@ function SetCommand(command,value)
         arc51_volume_moving = -1
     elseif command == Keys.UHFVolumeStop then
         arc51_volume_moving = 0
+    elseif command == Keys.radio_ptt then
+        extended_dev:pushToTalk()
+    elseif command == Keys.radio_ptt_voip then
+        extended_dev:pushToTalkVOIP(value == 1)
     end
 end
 
@@ -218,14 +231,14 @@ function arc51_get_current_state()
     if arc51_mode == ARC51_OFF or not get_elec_primary_dc_ok() then
         return ARC51_STATE_OFF
     elseif arc51_mode == ARC51_ADF then
-        return ARC51_ADF --do something about adf later.
+        return ARC51_STATE_ADF --do something about adf later.
     else --must be in TR or TR+G
         if arc51_xmit_mode == ARC51_PRESET then
             return ARC51_STATE_ON_PRESET
         elseif arc51_xmit_mode == ARC51_MAN then
             return ARC51_STATE_ON_MANUAL
         else --no other options
-            return ARC_STATE_ON_GUARD
+            return ARC51_STATE_ON_GUARD
         end
     end
 end
@@ -265,7 +278,9 @@ function arc51_transition_state()
     elseif arc51_state == ARC51_STATE_ON_MANUAL then
         uhf_radio_device:set_frequency(arc51_frequency)
     elseif arc51_state == ARC51_STATE_ON_GUARD then
-        uhf_radio_device:set_frequency(253E6) --standard guard frequency
+        uhf_radio_device:set_frequency(243E6) --standard guard frequency
+    elseif arc51_state == ARC51_STATE_ADF then
+        uhf_radio_device:set_frequency(0)
     end
 end
 
@@ -285,11 +300,11 @@ function arc51_update()
     end
 
     if arc51_state == ARC51_STATE_ON_PRESET or arc51_state == ARC51_STATE_ON_MANUAL or arc51_state == ARC51_STATE_ON_GUARD then
-        efm_data_bus.fm_setRadioPower(1.0)
+        extended_dev:setPower(true)
         --print_message_to_user("Power ON "..tostring(uhf_radio_device:is_on()))
         
     else
-        efm_data_bus.fm_setRadioPower(0.0)
+        extended_dev:setPower(false)
     end
 
 end

@@ -1,11 +1,11 @@
-name = "Australian Navy"
+name = "Australian Navy, 1972"
 countries = {"USA", "AUS"}
 
 livery = {
   {"Top", DIFFUSE, "a4e_intl_aus_top", true};
-  {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet", true};
+  {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet_lo", true};
   {"Bottom", DIFFUSE, "a4e_intl_aus_bot", true};
-  {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet", true};
+  {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet_lo", true};
   {"Gear and metal", DIFFUSE, "a4e_intl_aus_bot", true};
   {"Cockpit", DIFFUSE, "a4e_intl_aus_bot", true};
   --{"Front",	0, "a4e_ext_front", true};
@@ -14,9 +14,9 @@ livery = {
   {"Pilot",	DIFFUSE, "a4e_intl_aus_pilot", true};
 
   -- flaps, used on most liveries
-  {"flaps_001", DIFFUSE, "a4e_bort_white_smooth", true};
-  {"flaps_010", DIFFUSE, "a4e_bort_white_smooth", true};
-  {"flaps_100", DIFFUSE, "a4e_bort_white_smooth", true};
+  {"flaps_001", DIFFUSE, "empty", true};
+  {"flaps_010", DIFFUSE, "empty", true};
+  {"flaps_100", DIFFUSE, "empty", true};
 
   -- three digit, smaller nose numbers, used on most liveries
   {"nose_001", DIFFUSE, "a4e_bort_black_smooth", true};
@@ -28,8 +28,8 @@ livery = {
   {"tail_aggressor_010", DIFFUSE, "empty", true};
 
   -- three digit top-of-rudder, used on most USN liveries
-  {"rudder_001", DIFFUSE, "a4e_bort_black_smooth", true};
-  {"rudder_010", DIFFUSE, "a4e_bort_black_smooth", true};
+  {"rudder_001", DIFFUSE, "empty", true};
+  {"rudder_010", DIFFUSE, "empty", true};
   {"rudder_100", DIFFUSE, "empty", true};
 
   -- wing bort used on most USN liveries

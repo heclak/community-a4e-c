@@ -259,3 +259,9 @@ for i,v in pairs(splines_both) do
 
     table.insert(splines, new_spline)
 end
+
+--wing_tank_offset = -0.66-- CG (with full fuse) -> 0.026
+--fuselage_tank_offset = 1.55 --CG -> 0.194
+--external_tank_offset = 0.45
+
+--logger_file = "C:/tmp/T2_CG_-0.1_CP_-0.15_BOTH_FUEL_0.38.csv"

@@ -1,4 +1,5 @@
 local optionsData_cockpitShake = get_plugin_option_value("A-4E-C", "cockpitShake", "local")
+local optionsData_wheelBrakeAssist = get_plugin_option_value("A-4E-C", "wheelBrakeAssist", "local")
 
 local fm_gear_nose = get_param_handle("FM_GEAR_NOSE")
 local fm_gear_left = get_param_handle("FM_GEAR_LEFT")
@@ -87,11 +88,36 @@ local fm_acceleration_z = get_param_handle("FM_ACCELERATION_Z")
 
 local fm_cas = get_param_handle("FM_CAS")
 
+local fm_radar_disabled = get_param_handle("FM_RADAR_DISABLED")
+local fm_wheel_brake_assist = get_param_handle("FM_WHEEL_BRAKE_ASSIST")
+
+local fm_cat_auto_mode = get_param_handle("FM_CAT_AUTO_MODE")
+
 local tanks = {
     [1] = fm_l_tank_capacity,
     [2] = fm_c_tank_capacity,
     [3] = fm_r_tank_capacity,
 }
+
+function fm_setCatMode(value)
+    fm_cat_auto_mode:set(value and 1.0 or 0.0)
+end
+
+function fm_toggleCatMode(value)
+    local cur = fm_cat_auto_mode:get()
+    if cur == 1.0 then
+        cur = 0.0
+        print_message_to_user("Catapult Power Mode - DEFAULT (Forrestal, Stennis, SuperCarrier)")
+    else
+        cur = 1.0
+        print_message_to_user("Catapult Power Mode - AUTO (carrier mods)")
+    end
+    fm_cat_auto_mode:set(cur)
+end
+
+function fm_setRadarDisabled(value)
+    fm_radar_disabled:set(value)
+end
 
 --Mask for tank states
 function fm_setTankState(idx, value)
@@ -215,6 +241,10 @@ function fm_setCP741Power(value)
     fm_cp741_power:set(value)
 end
 
+function fm_setWheelBrakeAssist(value)
+    fm_wheel_brake_assist:set(value and 1.0 or 0.0)
+end
+
 function fm_getFuelFlow()
     return fm_fuel_flow:get()
 end
@@ -324,6 +354,7 @@ function fm_getCalibratedAirSpeed()
 end
 
 fm_setCockpitShake(2.0 * optionsData_cockpitShake/100.0)
+fm_setWheelBrakeAssist(optionsData_wheelBrakeAssist)
 
 function get_efm_data_bus()
     local efm_data_bus = {}
@@ -358,6 +389,9 @@ function get_efm_data_bus()
     efm_data_bus.fm_setGForce = fm_setGForce
     efm_data_bus.fm_setTacanID = fm_setTacanID
     efm_data_bus.fm_setTacanName = fm_setTacanName
+    efm_data_bus.fm_setRadarDisabled = fm_setRadarDisabled
+    efm_data_bus.fm_toggleCatMode = fm_toggleCatMode
+    efm_data_bus.fm_setCatMode = fm_setCatMode
 
 
     efm_data_bus.fm_getGunsightAngle = fm_getGunsightAngle
@@ -380,6 +414,7 @@ function get_efm_data_bus()
     efm_data_bus.fm_tacanValid = fm_tacanValid
     efm_data_bus.fm_getICLSHeading = fm_getICLSHeading
     efm_data_bus.fm_getWorldAcceleration = fm_getWorldAcceleration
+    
 
     return efm_data_bus
    

@@ -4,7 +4,7 @@ SetScale(FOV)
 -- WEAPON / CBU INFO
 
 -- add background image for kneeboard
-add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_1_ale29.png")
+add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_14.png")
 
 local gettext = require("i_18n")
 _ = gettext.translate
@@ -15,7 +15,8 @@ function AddElement(object)
 end
 
 -- fonts
-FontSizeX1	= 0.0075
+--FontSizeX1	= 0.0075
+FontSizeX1	= 0.0065
 FontSizeY1	= FontSizeX1
 
 predefined_font_title	= {FontSizeY1,			FontSizeX1,			0.0,		0.0}
@@ -24,7 +25,7 @@ predefined_font_item	= {FontSizeY1 * 0.75,	FontSizeX1 * 0.75,	-0.0009,	0.0}
 
 
 -- lines
-local FirstLineY	= 1.3
+local FirstLineY	= 1.25
 local LineSizeY		= 0.095
 
 local function getLineY(line)
@@ -44,14 +45,14 @@ local CMSHintsPosX = 0.8
 --                         WEAPONS CONFIG
 -----------------------------------------------------------------
 
-txt_BoardTitle				= CreateElement "ceStringPoly"
-txt_BoardTitle.name			= "txt_BoardTitle"
-txt_BoardTitle.material		= "font_kneeboard_white"
-txt_BoardTitle.init_pos		= {0.0, getLineY(0), 0}
-txt_BoardTitle.value		= "ALE-29 PROGRAMMING"
-txt_BoardTitle.alignment	= "CenterBottom"
-txt_BoardTitle.stringdefs	= predefined_font_title
-AddElement(txt_BoardTitle)
+--txt_BoardTitle				= CreateElement "ceStringPoly"
+--txt_BoardTitle.name			= "txt_BoardTitle"
+--txt_BoardTitle.material		= "font_kneeboard_white"
+--txt_BoardTitle.init_pos		= {0.0, getLineY(0), 0}
+--txt_BoardTitle.value		= "AN/ALE-29A PROGRAMMER"
+--txt_BoardTitle.alignment	= "CenterBottom"
+--txt_BoardTitle.stringdefs	= predefined_font_title
+--AddElement(txt_BoardTitle)
 
 -----------------------------------------------------------------
 --                         WEAPONS CONFIG
@@ -151,7 +152,7 @@ Hints_CBU2A				    = CreateElement "ceStringPoly"
 Hints_CBU2A.name			= "Hints_CBU2A"
 Hints_CBU2A.material		= "font_kneeboard_hint"
 Hints_CBU2A.init_pos		= {HintsPosX,  CBU2A_LineY, 0}
-Hints_CBU2A.value			= _("RS+RA+[2]")
+Hints_CBU2A.value			= _("RSHIFT+RALT+2")
 Hints_CBU2A.alignment		= "RightBottom"
 Hints_CBU2A.stringdefs		= predefined_font_item
 AddElement(Hints_CBU2A)
@@ -197,7 +198,7 @@ Hints_CBU2BA				= CreateElement "ceStringPoly"
 Hints_CBU2BA.name			= "Hints_CBU2BA"
 Hints_CBU2BA.material		= "font_kneeboard_hint"
 Hints_CBU2BA.init_pos		= {HintsPosX,  CBU2BA_LineY, 0}
-Hints_CBU2BA.value			= _("RS+RA+[3]")
+Hints_CBU2BA.value			= _("RSHIFT+RALT+3")
 Hints_CBU2BA.alignment		= "RightBottom"
 Hints_CBU2BA.stringdefs		= predefined_font_item
 AddElement(Hints_CBU2BA)
@@ -255,7 +256,7 @@ Hints_BURSTS				= CreateElement "ceStringPoly"
 Hints_BURSTS.name			= "Hints_BURSTS"
 Hints_BURSTS.material		= "font_kneeboard_hint"
 Hints_BURSTS.init_pos		= {CMSHintsPosX,  BURSTS_LineY, 0}
-Hints_BURSTS.value			= _("RS+RA+[4]")
+Hints_BURSTS.value			= _("RSHIFT+RALT+4")
 Hints_BURSTS.alignment		= "RightBottom"
 Hints_BURSTS.stringdefs		= predefined_font_item
 AddElement(Hints_BURSTS)
@@ -300,7 +301,7 @@ Hints_BURST_INTERVAL				= CreateElement "ceStringPoly"
 Hints_BURST_INTERVAL.name			= "Hints_BURST_INTERVAL"
 Hints_BURST_INTERVAL.material		= "font_kneeboard_hint"
 Hints_BURST_INTERVAL.init_pos		= {CMSHintsPosX,  BURST_INTERVAL_LineY, 0}
-Hints_BURST_INTERVAL.value			= _("RS+RA+[5]")
+Hints_BURST_INTERVAL.value			= _("RSHIFT+RALT+5")
 Hints_BURST_INTERVAL.alignment		= "RightBottom"
 Hints_BURST_INTERVAL.stringdefs		= predefined_font_item
 AddElement(Hints_BURST_INTERVAL)
@@ -345,7 +346,7 @@ Hints_SALVOS				= CreateElement "ceStringPoly"
 Hints_SALVOS.name			= "Hints_SALVOS"
 Hints_SALVOS.material		= "font_kneeboard_hint"
 Hints_SALVOS.init_pos		= {CMSHintsPosX,  SALVOS_LineY, 0}
-Hints_SALVOS.value			= _("RS+RA+[6]")
+Hints_SALVOS.value			= _("RSHIFT+RALT+6")
 Hints_SALVOS.alignment		= "RightBottom"
 Hints_SALVOS.stringdefs		= predefined_font_item
 AddElement(Hints_SALVOS)
@@ -391,7 +392,7 @@ Hints_SALVO_INTERVAL				= CreateElement "ceStringPoly"
 Hints_SALVO_INTERVAL.name			= "Hints_SALVO_INTERVAL"
 Hints_SALVO_INTERVAL.material		= "font_kneeboard_hint"
 Hints_SALVO_INTERVAL.init_pos		= {CMSHintsPosX,  SALVO_INTERVAL_LineY, 0}
-Hints_SALVO_INTERVAL.value			= _("RS+RA+[7]")
+Hints_SALVO_INTERVAL.value			= _("RSHIFT+RALT+7")
 Hints_SALVO_INTERVAL.alignment		= "RightBottom"
 Hints_SALVO_INTERVAL.stringdefs		= predefined_font_item
 AddElement(Hints_SALVO_INTERVAL)

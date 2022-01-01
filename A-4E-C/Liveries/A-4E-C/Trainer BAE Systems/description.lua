@@ -1,11 +1,11 @@
-name = "BAE Systems"
+name = "BAE Systems, 2013"
 countries = {"USA", "UK", "GER"}
 
 livery = {
   {"Top", DIFFUSE, "a4e_trn_bae_top", true};
-  {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet_hi", true};
+  {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet_as", true};
   --{"Bottom", DIFFUSE, "a4e_ext_bottom", true};
-  {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet_hi", true};
+  {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet_as", true};
   --{"Gear and metal", DIFFUSE, "a4e_ext_bottom", true};
   --{"Cockpit", DIFFUSE, "a4e_ext_bottom", true};
   --{"Front",	0, "a4e_ext_front", true};

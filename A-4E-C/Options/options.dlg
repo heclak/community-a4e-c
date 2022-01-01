@@ -290,6 +290,107 @@ dialog = {
 					["type"] = "Static",
 				},
 				
+				--------------------------------------------
+				-- Catapult Check Option
+				--------------------------------------------
+
+				["wheelBrakeAssistLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 200,
+							["x"] = LeftColumnX + 25,
+							["y"] = 290,
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_WHEEL_BRAKE_ASSIST_CHECK_LABEL",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsCaptionSkin",
+						},
+					},
+					["type"] = "Static",
+				},
+				["wheelBrakeAssistCheckbox"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 50,
+							["x"] = LeftColumnX,
+							["y"] = 292,
+						},
+						["enabled"] = true,
+						["state"] = true,
+						["tabOrder"] = 0,
+						["text"] = "",
+						["tooltip"] = "$A4E_WHEEL_BRAKE_ASSIST_CHECK_TOOLTIP",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = CheckBoxSkin,
+					["type"] = "CheckBox",
+				},
+				["wheelBrakeAssistHelp"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 40,
+							["w"] = 800,
+							["x"] = LeftColumnX,
+							["y"] = 290 + 20,
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_WHEEL_BRAKE_ASSIST_CHECK_HELP",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = HelpSkin,
+					["type"] = "Static",
+				},
+				["oldRadarLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 200,
+							["x"] = LeftColumnX + 25,
+							["y"] = 350,
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_OLD_RADAR_CHECK_LABEL",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsCaptionSkin",
+						},
+					},
+					["type"] = "Static",
+				},
+				["oldRadarCheckbox"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 50,
+							["x"] = LeftColumnX,
+							["y"] = 352,
+						},
+						["enabled"] = true,
+						["state"] = true,
+						["tabOrder"] = 0,
+						["text"] = "",
+						["tooltip"] = "$A4E_OLD_RADAR_CHECK_TOOLTIP",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = CheckBoxSkin,
+					["type"] = "CheckBox",
+				},
 				--------------------------------
 			},
 			["params"] = {

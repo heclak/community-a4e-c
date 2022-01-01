@@ -57,3 +57,8 @@ static inline double random()
 {
 	return (double)(rand() % 100) / 100.0;
 }
+
+static inline double randomCentred()
+{
+	return 2.0 * random() - 1.0;
+}

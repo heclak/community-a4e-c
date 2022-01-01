@@ -374,6 +374,16 @@ public:
 	inline double getElevatorZeroForceDeflection() const;
 	inline bool getSlatsLocked() const;
 
+	inline void breakWing()
+	{
+		setDamageDelta( Airframe::Damage::WING_L_IN, random() );
+		setDamageDelta( Airframe::Damage::WING_L_CENTER, 1.0 );
+		setDamageDelta( Airframe::Damage::WING_L_PART_CENTER, 1.0 );
+		setDamageDelta( Airframe::Damage::FLAP_L, 1.0 );
+		setDamageDelta( Airframe::Damage::WING_L_OUT, 1.0 );
+		setDamageDelta( Airframe::Damage::AILERON_L, 1.0 );
+	}
+
 private:
 
 	//Airframe Constants

@@ -21,7 +21,11 @@ local function coltMK12(tbl)
     tbl.supply      =
     {
         shells = {"20x110mm HE-I", "20x110mm AP-I", "20x110mm AP-T"},
-        mixes  = {{1,2,1,2,1,3}},   -- 50% HE-i, 25% AP-I, 25% AP-T
+        mixes  = {
+            {1,2,1,3},
+            {1,1,1,1,1,3},
+            {3},
+        },   -- 50% HE-i, 25% AP-I, 25% AP-T
         count  = 100,
     }
     if tbl.mixes then
@@ -207,6 +211,7 @@ local function get_inboard_weapons( side )
         { CLSID = "{AN-M57_TER_2_"..side.."}" },              -- AN-M57A1 x2 250 lb GP HE (129 lb TNT)
         { CLSID = "{AN-M81_MER_5_"..side.."}" },              -- AN-M81 x5 260 lb Fragmentation (34.1 lb Comp B)
         { CLSID = "{AN-M88_MER_5_"..side.."}" },              -- AN-M88 x5 216 lb Fragmentation (47 lb Comp B)
+        { CLSID = "{BDU-33_MER_5_"..side.."}" },              -- BDU-33 x5
 
         -- GUN PODS --
         {CLSID = "{Mk4 HIPEG}", connector = rocketConnector, arg_value = 0.2 },  -- Mk 4 Mod 0 HIPEG gun pod
@@ -268,7 +273,6 @@ local function get_centerline_weapons( side )
         { CLSID = "{LAU-68 FFAR Mk1 HE_TER_3_"..side.."}",   connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 FFAR Mk1 HE
         { CLSID = "{LAU-68 FFAR Mk5 HEAT_TER_3_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 FFAR Mk5 HEAT
 
-
         --BOMBS--
         { CLSID = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}" },   -- Mk-20 Rockeye cluster bomb
         { CLSID = "{90321C8E-7ED1-47D4-A160-E074D5ABD902}" },   -- MK-81
@@ -306,6 +310,8 @@ local function get_centerline_weapons( side )
         { CLSID = "{AN-M57_TER_3_"..side.."}" },                -- AN-M57A1 x3 250 lb GP HE (129 lb TNT)
         { CLSID = "{AN-M81_MER_6_"..side.."}" },                -- AN-M81 x6 260 lb Fragmentation (34.1 lb Comp B)
         { CLSID = "{AN-M88_MER_6_"..side.."}" },                -- AN-M88 x6 216 lb Fragmentation (47 lb Comp B)
+        { CLSID = "{BDU-33_MER_6_"..side.."}" },              -- BDU-33 x5
+
 
         -- GUN PODS --
         { CLSID = "{Mk4 HIPEG}", connector = rocketConnector, arg_value = 0.2 },  -- Mk 4 Mod 0 HIPEG gun pod
@@ -478,7 +484,7 @@ A_4E_C =  {
 	-----------------------------------------------------------------------
 	----------------- SUSPENSION CODE BEGINS
 	-----------------------------------------------------------------------
-    tand_gear_max = math.rad(90.0), --turns out we actually need this for the animation to line up
+    tand_gear_max = math.rad(180.0), --turns out we actually need this for the animation to line up
 	--[[
     nose_gear_pos                            = {2.72, -2.78, 0}, -- {2.72, -2.37, 0},    --      2.72,       -2.28,    0
     main_gear_pos                            = {-0.79, -2.86, 1.18}, -- {-0.79, -2.42, 1.18},    --  0.79,   -2.35,    1.18
@@ -741,6 +747,13 @@ A_4E_C =  {
 			defValue = false,
 			weightWhenOn = -80
 		},
+        {
+			id = "Auto_Catapult_Power",
+			control = "checkbox",
+			label = _("Automatic Catapult Power Mode (for modded aircraft carriers)"),
+			defValue = false,
+			weightWhenOn = -80
+		},
         { id = "CBU2ATPP",			control = 'comboList', label = _('CBU-2/A Tubes Per Pulse'),
             values = {
                 {id =  0, dispName = _("1 tube")},
@@ -833,11 +846,12 @@ A_4E_C =  {
                 }),
     },
 
-    -- ammo_type = {
-        -- _("CM Combat Mix"),
-        -- _("HEI High Explosive Incendiary"),
-        -- _("TP Target Practice"),
-    -- },
+    ammo_type_default = 1,
+    ammo_type = {
+        _("CM Combat Mix"),
+        _("HEI High Explosive Incendiary"),
+        _("AP-T")
+    },
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
     Pylons =     {

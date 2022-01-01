@@ -2,61 +2,61 @@ dofile(LockOn_Options.common_script_path.."KNEEBOARD/indicator/definitions.lua")
 SetScale(FOV)
 
 -- add background image for kneeboard
-add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_0_welcome.png")
+add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_01.png")
 
 --[[
 
--- Insert new pages as needed.
--- Catalogue numeration and contents here.
--- Assign pages an integer filename 10-99.
+Insert new pages as needed.
+Catalogue enumeration and contents here.
+Assign pages an integer filename 10-99.
+For example, page "23" is "23.lua".
 
-================================
-0x - INTRODUCTION
-================================
-1 - Cover / Credits (this file)
-2-9 - *AVOID USING THIS RANGE*
+0 Welcome
+  01 Table of Contents
 
-================================
-1x - MISSION INFORMATION
-================================
-10 - 
-11 - Navigation Log
-12 - ARC-51A UHF Radio Presets
-13 - MCL (ILS/ICLS) Data
-14 - CBU and Countermeasures Configuration
+1 Mission
+  11 Navigation
+  12 Radio & TACAN
+  13 ILS Data
+  14 Countermeasures
 
-================================
-2x - WEAPONS
-================================
-20 -
-21 - Weapons, Bombs
-22 - AWRS and CP-741/A
-23 - Guns and Gunpods
-24 - Snakeyes and Rockets
-25 - Missiles: AGM-45A Shrike and AIM-9 Sidewinder, AN/APR-23 Radar Homing and Warning System
+2 Radar
+  21 AN/APN-141 Radar Altimiter
+  22 AN/APG-53A Radar (Display Indicator)
+  23 Ground Radar (Search)
+  24 Ground Radar (Terrain Clearance)
+  25 Ground Radar (Scope Distortion)
+  26 Ground Radar (Air-to-Ground)
 
-================================
-3x - FLIGHT INSTRUCTION
-================================
-30 -
-31 - Case III Recovery
-32 - Automatic Flight Control System (AFCS)
-33 - Weight and Accelleration Limits
-34 - Airspeed Limits
+3 Weapons
+  31 Master Arm & Bombs
+  32 Weapon Delivery
+  33 Guns
+  34 Rockets
+  35 Missiles & ECM
 
-================================
-4x - QUICK-START
-================================
-40 -
-41 - Quick-Start 1. Start Up
-42 - Quick-Start 2. Taxi
-43 - Quick-Start 3. Takeoff
-44 - Quick-Start 4. Emergency Procedures
+4 Flight
+  41 Autopilot
+  42 Case I Recovery & APC
+  43 Case III Recovery
+  44 Fuel & Air Refueling
+  45 Structural Limits
+  46 Airspeed Limits
 
-================================
-9x - Additional Guidance
-================================
-90 -
-91 - Controls Indicator Diagram
+5 Checklists
+  51 Start-Up
+  52 Pre-Taxi
+  53 Pre-Takeoff
+  54 Takeoff
+  55 Landing
+  56 Emergency (Engine Flame Out, Air Start, Low Precautionary Approach)
+  57 Emergency (High Precautionary Flameout Approach)
+
+6 Orientation
+  61 Throttle & Stick
+  62 Instrument Panel
+  63 Console Left
+  64 Console Right
+  65 Controls
 
 ]]

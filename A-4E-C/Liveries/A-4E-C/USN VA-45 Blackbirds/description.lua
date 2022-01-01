@@ -1,4 +1,4 @@
-name = "USN VA-45 Blackbirds"
+name = "USN VA-45 Blackbirds, 1972"
 countries = {"USA"}
 
 livery = {

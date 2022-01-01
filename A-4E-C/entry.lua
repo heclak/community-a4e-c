@@ -21,7 +21,7 @@ displayName  = _("A-4E-C"),
 
 fileMenuName = _("A-4E-C"),
 update_id        = "A-4E-C",
-version		 = "2.0.0-beta-5.1",	-- increment this number on the release branch. Use semantic versioning https://semver.org
+version		 = "2.0.0",	-- increment this number on the release branch. Use semantic versioning https://semver.org
 state		 = "installed",
 info		 = _("A-4E-C aka \"Community A-4E\"\n\nThe A-4 is a lightweight, subsonic, single-engine attack aircraft. Entering service in 1956, it was designed to deliver conventional and nuclear weapons in daytime visual flight conditions.  However, using the APG-53(A) radar first installed on the A-4C, the A-4 is capable of all-weather navigation at low altitudes, as well as limited computer-assisted weapon delivery."),
 encyclopedia_path = current_mod_path..'/Encyclopedia',
@@ -98,8 +98,9 @@ if AFMenabled == true then
 	{
 		[1] = self_ID,
 		[2] = 'A-4E-C',
-		center_of_mass = {0.0, 0.0, 0.0}, --x=0.183, y=0.261
-		moment_of_inertia = {10968, 39500, 35116, -763}, --xy = -5518 --xy = -1763
+		center_of_mass = {-0.1, 0.0, 0.0}, --x=0.183, y=0.261
+		moment_of_inertia = {10968, 39500, 35116, -1763.0}, --763 --xy = -5518 --xy = -1763
+		--moment_of_inertia = {10968, 35116, 39500, -1763.0}, --763 --xy = -5518 --xy = -1763
 		suspension = suspension
 	}
 	make_flyable('A-4E-C'	, current_mod_path..'/Cockpit/Scripts/', FM, current_mod_path..'/comm.lua')

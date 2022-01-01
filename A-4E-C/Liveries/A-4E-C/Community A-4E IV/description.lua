@@ -1,4 +1,4 @@
-name = "Community A-4E IV: Sea Otter"
+name = "Community A-4E IV: Sea Otter, 2021 (Fictional)"
 countries = {
     "ABH",  --Abkhazia
     "ARG",  --Argentina
@@ -56,7 +56,7 @@ livery =
   {"Top", DIFFUSE, "a4e_community4_top", true};
   {"Top", ROUGHNESS_METALLIC, "a4e_community4_top_RoughMet", true};
   {"Bottom", DIFFUSE, "a4e_community_bot", true};
-  {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet_ul", true};
+  {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet_as", true};
   {"Gear and metal", DIFFUSE, "a4e_community_bot", true};
   {"Cockpit", DIFFUSE, "a4e_community_bot", true};
   --{"Front",	0, "a4e_ext_front", true};

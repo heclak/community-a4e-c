@@ -1,4 +1,4 @@
-name = "Blue Angels no. 5"
+name = "Blue Angels no. 5, 1986"
 countries = {"USA"}
 
 livery = {
