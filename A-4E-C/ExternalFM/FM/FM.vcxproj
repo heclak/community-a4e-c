@@ -172,6 +172,7 @@
     <ClInclude Include="AircraftState.h" />
     <ClInclude Include="AirDataComputer.h" />
     <ClInclude Include="Airframe.h" />
+    <ClInclude Include="Asteroids.h" />
     <ClInclude Include="AtmosphereState.h" />
     <ClInclude Include="Avionics.h" />
     <ClInclude Include="Axis.h" />
