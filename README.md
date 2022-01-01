@@ -25,17 +25,17 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 - Realistic external flight model and engine simulation
 - Clickable cockpit
 - Carrier landing and takeoff
-- Air-to-air refueling
-- Automatic Flight Control System (AFCS)
-- AN/ALE-29A Chaff Dispensing System
-- AN/APG-53A Radar
-- AN/APN-141 Radar Altimeter
+- Air refueling
 - AN/APN-153 Doppler Navigation Radar
-- AN/APR-23 Radar Homing and Warning System (ECM)
-- AN/ARA-63 MCL (ICLS)
+- AN/ASN-41 Navigation Computer
 - AN/ARC-51 UHF Radio
 - AN/ARN-52 TACAN
-- AN/ASN-41 Navigation Computer
+- AN/ARA-63 MCL (ICLS)
+- AN/APN-141 Radar Altimeter
+- AN/APG-53A Radar
+- AN/APR-23 Radar Homing and Warning System (ECM)
+- AN/ALE-29A Chaff Dispensing System
+- Automatic Flight Control System (AFCS)
 - Approach Power Compensator (APC)
 - AWE-1 Aircraft Weapons Release System (AWRS)
 - CP-741/A Bombing computer (CCRP)
