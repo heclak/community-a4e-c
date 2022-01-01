@@ -269,14 +269,14 @@ bool Radar::rangeToDisplayIndex( double range, size_t& index )
 
 void Radar::transitionState( State from, State to )
 {
+	resetDraw();
+
 	switch ( from )
 	{
 	case STATE_AG:
-		resetDraw();
 		clearScan();
 		break;
 	case STATE_TC_PROFILE:
-		resetDraw();
 		m_scope.setProfileScribe( RadarScope::OFF );
 		clearScan();
 		break;

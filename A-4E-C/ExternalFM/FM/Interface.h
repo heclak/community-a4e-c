@@ -165,6 +165,9 @@ public:
 		m_wheelBrakeAssist = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_WHEEL_BRAKE_ASSIST" );
 
 		m_autoCatMode = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_CAT_AUTO_MODE" );
+		m_egg = m_api.pfn_ed_cockpit_get_parameter_handle( "EGG" );
+		m_eggScore = m_api.pfn_ed_cockpit_get_parameter_handle( "EGG_SCORE" );
+		m_eggHighScore = m_api.pfn_ed_cockpit_get_parameter_handle( "EGG_HIGH_SCORE" );
 
 	}
 
@@ -186,6 +189,21 @@ public:
 	inline void airbornInit()
 	{
 
+	}
+
+	inline bool egg()
+	{
+		return getParamNumber( m_egg ) > 0.5;
+	}
+
+	inline void eggScore( int score )
+	{
+		setParamNumber( m_eggScore, score );
+	}
+
+	inline void eggHighScore( int score )
+	{
+		setParamNumber( m_eggHighScore, score );
 	}
 
 	inline void testFnc()
@@ -776,6 +794,10 @@ private:
 	void* m_wheelBrakeAssist = NULL;
 
 	void* m_autoCatMode = NULL;
+
+	void* m_egg = NULL;
+	void* m_eggScore = NULL;
+	void* m_eggHighScore = NULL;
 };
 
 

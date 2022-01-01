@@ -31,6 +31,7 @@
 #include "Radar.h"
 #include "Globals.h"
 #include "Logger.h"
+#include "Asteroids.h"
 
 //============================= Statics ===================================//
 static Scooter::AircraftState* s_state = NULL;
@@ -43,6 +44,7 @@ static Scooter::Avionics* s_avionics = NULL;
 static Scooter::FuelSystem2* s_fuelSystem = NULL;
 static LuaVM* s_luaVM = NULL;
 static Scooter::ILS* s_ils = NULL;
+static Asteroids* s_asteroids = NULL;
 
 static std::vector<LERX> s_splines;
 
@@ -208,6 +210,7 @@ void init(const char* config)
 	s_ils = new Scooter::ILS(*s_interface);
 	s_fuelSystem = new Scooter::FuelSystem2( *s_engine, *s_state );
 	s_radar = new Scooter::Radar( *s_interface, *s_state );
+	s_asteroids = new Asteroids( s_interface );
 	//s_logger = new Logger( s_luaVM->getGlobalString("logger_file") );
 
 	//s_fuelSystem->setTankPos( Scooter::FuelSystem2::TANK_FUSELAGE, Vec3( s_fuseTankOffset, 0.0, 0.0 ) );
@@ -231,6 +234,7 @@ void cleanup()
 	delete s_ils;
 	delete s_fuelSystem;
 	delete s_radar;
+	delete s_asteroids;
 	//delete s_logger;
 
 	s_luaVM = NULL;
@@ -244,6 +248,7 @@ void cleanup()
 	s_ils = NULL;
 	s_fuelSystem = NULL;
 	s_radar = NULL;
+	s_asteroids = NULL;
 	//s_logger = NULL;
 
 	s_splines.clear();
@@ -358,6 +363,11 @@ void ed_fm_simulate(double dt)
 	s_fm->calculateAero(dt);
 	s_radar->update( dt );
 
+	if ( s_interface->egg() )
+	{
+		egg( dt, s_asteroids, *s_input );
+	}
+
 	/*s_logger->time( dt );
 	s_logger->entry( s_state->getAOA() );
 	s_logger->entry( s_state->getOmega().z );
@@ -390,7 +400,6 @@ void ed_fm_simulate(double dt)
 	//Vec3 newPos = new_dir * 1000.0 + pos;
 	//printf( "Spot pos: %lf,%lf,%lf Missile Pos: %lf,%lf,%lf\n", newPos.x, newPos.y, newPos.z, pos.x,pos.y,pos.z );
 	//set_laser_spot_pos( s_spot, newPos );
-	
 
 	//s_scope->setBlob( 1, 0.5, 0.5, 1.0 );
 	
@@ -461,7 +470,7 @@ void ed_fm_set_current_mass_state
 	
 	s_airframe->setMass(mass);
 	Vec3 com = Vec3( center_of_mass_x, center_of_mass_y, center_of_mass_z );
-	printf( "COM: %lf, %lf, %lf\n", com.x,com.y,com.z );
+	//printf( "COM: %lf, %lf, %lf\n", com.x,com.y,com.z );
 	s_state->setCOM( com );
 	s_fm->setCOM(com);
 }
@@ -696,6 +705,12 @@ void ed_fm_set_command
 		//Weight on wheels plus lower than 50 kts.
 		if ( s_airframe->getNoseCompression() > 0.01 && magnitude(s_state->getLocalSpeed()) < 25.0 )
 			s_airframe->toggleSlatsLocked();
+		break;
+	case KEYS_PLANEFIREON:
+		s_asteroids->fire( true );
+		break;
+	case KEYS_PLANEFIREOFF:
+		s_asteroids->fire( false );
 		break;
 
 	default:

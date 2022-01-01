@@ -123,7 +123,7 @@ end
 
 max_blobs= 35 * 50--2500
 
-for i=1,max_blobs do
+for i=0,(max_blobs-1) do
     radar_blob 					= create_textured_box(-blob_scale/2,-blob_scale/2,blob_scale/2,blob_scale/2)
     radar_blob.material       	= "BLOB_TEXTURE"
     radar_blob.name 			= create_guid_string()

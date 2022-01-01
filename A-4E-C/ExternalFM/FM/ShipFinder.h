@@ -23,6 +23,8 @@
 #endif
 #include "Ship.h"
 #include <vector>
+
+// TODO: PLEASE FIX THIS CIRCULAR DEPENDANCY
 inline const std::vector<Ship>* getShips()
 {
 #ifdef USE_SHIP_FINDER

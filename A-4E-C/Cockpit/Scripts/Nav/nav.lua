@@ -1180,8 +1180,10 @@ function update_asn41()
         else
             draw_ppos(-1, 1)
             draw_dest(0,0)
-            asn41_draw_windspeed(223.6)
-            asn41_draw_winddir(091)
+            if not is_egg() then
+                asn41_draw_windspeed(223.6)
+                asn41_draw_winddir(091)
+            end
             asn41_valid:set(1)
             asn41_range:set(0)
             asn41_bearing:set( 30 ) -- thick needle 2
@@ -2114,6 +2116,8 @@ function update()
     if tacan_volume_moving ~= 0 then
         dev:performClickableAction(device_commands.tacan_volume, clamp(tacan_volume + 0.01 * tacan_volume_moving, 0.2, 0.8), false)
     end
+
+    update_egg()
 end
 
 function fetch_object_beacon_data(channel, air_to_air)
@@ -2279,6 +2283,26 @@ function get_base_sensor_data()
 
 							fuel_weight			= 	Sensor_Data_Raw.getTotalFuelWeight(),
 						}	
+
+end
+
+local egg = get_param_handle("EGG")
+local egg_score = get_param_handle("EGG_SCORE")
+local egg_high_score = get_param_handle("EGG_HIGH_SCORE")
+
+function is_egg()
+    return math.abs(asn41_magvar_offset - 0.4) < 0.005 and asn41_state == "asn41-test"
+end
+
+function update_egg()
+
+    if is_egg() then  
+        egg:set(1.0)
+        asn41_draw_windspeed(egg_score:get())
+        asn41_draw_winddir(egg_high_score:get())
+    else
+        egg:set(0.0)
+    end
 
 end
 
