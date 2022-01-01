@@ -158,6 +158,7 @@ Please list the changes you've made in this file. We should try to follow the gu
   - Engine damage has now more dynamic effect.
   - Improved ground handling and break handling.
   - Slow release for brakes when using keyboard rather than instantly going to zero. This allows the brakes to be feathered below the point where the wheels lock.
+  - Overhaul centre of gravity modelling.
 
 - Systems:
   - AFCS will not engage with rudder uncentred.
