@@ -4,9 +4,11 @@
 
 The A-4 was a cold war workhorse which proved to be a capable, reliable light attack aircraft to dozens of nations around the world. From the jungles of southeast Asia, to the desert of Sinai, to the coasts of South America, the scooter was a common sight above battlefields around the world for decades.
 
-The Community A-4E-C represents more than five years of work on behalf of the development team. We're proud to present our most comprehensive DCS World module to date, featuring a realistic flight model, improved systems, increased functionality across all DCS World's available maps, including full carrier compatibility, radios, air-to-air refueling, unique sounds, improved controls and inputs and more.
+The A-4E-C represents more than five years of work on behalf of the development team. We're thrilled to share our most comprehensive DCS World module to date in this 2.0 *"Forever Free"* update, featuring a realistic flight model, improved systems simulations, increased functionality across all DCS World's available maps, full carrier compatibility, radios, air refueling, and improvements to the ground radar, sound feedback, textures, controls and inputs. This update also adds a user manual in PDF format as well as in the DCS kneeboard, packed with useful checklists and procedures that cover everything from start-up to weapons deployment.
 
-We thank the DCS World community for their support and contributions over the years, and dedicate the module to our friend, mentor and lead coder, Eric "Gospadin" Mudama. His passion and brilliance left a mark on us all. This labor of love which would not have been possible without him.
+If you haven't flown the A-4E-C since version 1.4, this is a great time to see it again for the first time. If you're new to DCS World, we hope you will find the A-4E-C a good option to learn to fly, and instructive in helping you decide what other modules you might want to pursue next.
+
+We'd like to thank the dozens of people in the DCS World community who have made contributions in bug reports, liveries, expertise, research, videos, community flight instruction, server hosting and for their camaraderie over the years. We dedicate the module to the memory of Eric "Gospadin" Mudama. This labor of love would not have been possible without his initial coding and project coordination.
 
 ***DO NOT redistribute this mod without permission!***
 
@@ -16,7 +18,7 @@ Gospadin, Heclak, Joshua Nelson, plusnine, Farlander, gyrovague, kryb/Archimaede
 
 ### Community Contributors
 
-SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohlinkzei, Coragem, Sidekick65, SPINEG, Shadowfrost, Sport, rudel-chw, Luciano, Malamem, HellesBelles, Bungo, Corsair016, FlyingHueman, JacobBadShot, JP Gabobo, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
+SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohlinkzei, Coragem, Sidekick65, SPINEG, Shadowfrost, Sport, Historiker, rudel-chw, Luciano, Malamem, HellesBelles, Bungo, Corsair016, FlyingHueman, JacobBadShot, JP Gabobo, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
 
 ## Features
 
@@ -44,7 +46,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Mk-77 napalm canister
   - SUU-7 bomblet dispenser
 - Unique sounds inside and outside the aircraft
-- In-cockpit kneeboard user manual
+- User manual (PDF and Kneeboard)
 
 ### Version 2.0 Changelog: Featured Items
 
@@ -54,27 +56,27 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Added SuperCarrier compatibility.
   - Added carrier mod support (HMAS Melbourne, HMS Hermes).
   - Added air-to-air refueling.
-  - Added original exterior engine sound set.
+  - Added exterior engine sounds.
   - Added many interior sounds.
   - Improved interior sound localization and feedback.
 - **Systems:**
   - Added AFCS stability augmentation.
-  - Added AN/ARA-63 MCL (ICLS).
   - Added AN/ARC-51A UHF Radio with VOIP. *(thanks Harald)*
   - Added AN/ARN-52 TACAN.
-  - Added AN/ASN-41 Nav Computer drift on long flights and heavy maneuvers.
+  - Added AN/ARA-63 MCL (ICLS).
+  - Added AN/ASN-41 Navigation Computer drift on long flights and heavy maneuvers.
   - Added CP-741/A bombing computer.
   - Added fuel flow system.
   - Added oxygen system.
-  - Improved Approach Power Compensator. (APC) behavior
+  - Improved Approach Power Compensator (APC) behavior.
   - Fixed spoiler behavior to deploy/stow properly (weight on wheels, engine RPM under 70%). *(thanks pohlinkzei)*
 - **Weapons and Loadouts:**
   - Added BDU-33 training bombs.
   - Added SUU-25 parachute illumination pod.
   - Added empty fuel tanks.
-  - Added unique AIM-9 missile sounds (fixes missing sound bug).
-  - Improved AIM-9 missile loadouts, they are available to mount on stations 4 and 5.
-  - Removed non-functional loadout options to reduce confusion: AGM-12C Bullpup, AGM-62 Walleye, D-704 Refueling Pod *(see FAQ)*.
+  - Added AIM-9 growl and lock tones (fixes missing sound bug).
+  - Improved AIM-9 missile loadouts, sidewinters are now available to mount on stations 4 and 5.
+  - Removed non-functional loadout options to reduce confusion about module functionality: AGM-12C Bullpup, AGM-62 Walleye, D-704 Refueling Pod *(see FAQ)*.
 - **Missions:**
   - Added new instant action missions across all maps *(thanks Sidekick65, Cubeboy, Shadowfrost, SPINEG)*.
   - Added runway strike and anti-ship strike roles.
@@ -101,18 +103,18 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Added RNZAF Golden T-Bird No.2, Squadron Ohakea, 1986. *(thanks Corsair016)*
   - Improved inaccuracies and naming across liveries.
 - **Quality of Life:**
-  - Added kneeboard manual. *(thanks Rob, Sidekick65)*
-  - Added AN/ARC-51 UHF Radio frequency presets printout to right console panel
-  - Added slats lock for aerobatic performance teams.
-  - Added dozens of inputs and variant input options, and new inputs categories.
+  - Added PDF and kneeboard manual (press RSHIFT+K) in the cockpit. *(thanks Rob, Sidekick65)*
   - Added cockpit controls indicator (press RCTRL+ENTER in the cockpit).
+  - Added AN/ARC-51 UHF Radio frequency presets printout to right console panel.
+  - Added new input categories.
+  - Added dozens of inputs and variant input options.
   - Added special menu options for Trim Speed, Cockpit Shake, CSS mode FFB Deflection, Simple Braking (Rudder Assist).
-  - Added Argentina and Chile as available countries.
+  - Added a command to request the ground crew to lock the slats (useful for aerobatic formation flying).
   - Improved labeling alignment across tooltips, inputs, user manual and NATOPS manual for easy searching.
   - Improved trim reset for smoother performance.
-  - Improved keyboard axis input centering.
+  - Improved keyboard axis input behavior and recentering.
   - Improved smokewinder pod operation (weapon function select independent).
-  - Improved main menu logos and iconography.
+  - Improved main menu logos and iconography. *(thanks Sport)*
   - Fixed FFB stick support.
   - Fixed lots, and lots, and we mean LOTS of bugs. *(thanks to the many A-4E-C users who helped identify, replicate and solve these!)*
 
