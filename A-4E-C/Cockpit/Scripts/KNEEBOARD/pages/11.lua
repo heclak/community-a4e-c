@@ -16,8 +16,7 @@ function AddElement(object)
 end
 
 -- fonts
---FontSizeX1	= 0.0075
-FontSizeX1	= 0.007
+FontSizeX1	= 0.0065 -- set base font size
 FontSizeY1	= FontSizeX1
 
 predefined_font_title	= {FontSizeY1,			FontSizeX1,			0.0,		0.0}
@@ -38,9 +37,9 @@ local function parse_waypoint_data(waypoint)
 
     -- format lat to string
     if lat[0] == true then
-        parsed_waypoint_data.lat = "S"
+        parsed_waypoint_data.lat = "S "
     else
-        parsed_waypoint_data.lat = "N"
+        parsed_waypoint_data.lat = "N "
     end
 
     for i = #lat, 2, -1 do
@@ -49,26 +48,30 @@ local function parse_waypoint_data(waypoint)
 
     -- format lat to string
     if lon[0] == true then
-        parsed_waypoint_data.lon = "W"
+        parsed_waypoint_data.lon = "W "
     else
-        parsed_waypoint_data.lon = "E"
+        parsed_waypoint_data.lon = "E "
     end
 
     for i = #lon, 2, -1 do
         parsed_waypoint_data.lon = parsed_waypoint_data.lon..math.floor(lon[i])
     end
+	
+	parsed_waypoint_data.name = waypoint.name
 
     return parsed_waypoint_data
 end
 
 local kneeboard_data = {}
+
+local POS_LAT_X = 0.1
+local POS_LON_X = 0.5
+local POS_WAYPOINT_X = -0.8
+
 local FIRST_LINE_Y = 1.0
-local LINEHEIGHT = 0.15
-local POS_LAT_X = 0.15
-local POS_LON_X = 0.6
-local POS_HEADERS_Y = FIRST_LINE_Y + 0.1
-local POS_WAYPOINT_X = -0.7
+local LINEHEIGHT = 0.125
 local POS_TITLE_Y = 1.3
+local POS_HEADERS_Y = FIRST_LINE_Y + 0.1
 
 local function getLineY(line)
     return FIRST_LINE_Y - ((line - 1) * LINEHEIGHT)
@@ -86,14 +89,16 @@ local function addSimpleTextStringCommon(element, name, x, y, value, alignment, 
     return element
 end
 
-local function waypoint_name(waypoint_index)
-
+local function waypoint_name(waypoint_index, waypoint_data)
+  if waypoint_data.name == nil then
     if waypoint_index == 1 then
         return "RAMP"
     else
         return "WAYPOINT "..(waypoint_index - 1)
     end
-
+  else
+	return string.upper(tostring(waypoint_data.name))
+  end  
 end
 
 -- BOARD TITLE
@@ -102,6 +107,11 @@ end
 --AddElement(txt_BoardTitle)
 
 -- HEADERS
+
+local name_label = {}
+name_label = addSimpleTextStringCommon(name_label, "Name Label", POS_WAYPOINT_X, POS_HEADERS_Y, "NAME")
+AddElement(name_label)
+
 local lat_label = {}
 lat_label = addSimpleTextStringCommon(lat_label, "Lat Label", POS_LAT_X, POS_HEADERS_Y, "LAT")
 AddElement(lat_label)
@@ -115,17 +125,17 @@ local function add_waypoint(waypoint_index, waypoint_data)
 
     kneeboard_data[waypoint_index] = {}
 
-    -- create label
+    -- create waypoint name label
     kneeboard_data[waypoint_index].key  = addSimpleTextStringCommon(kneeboard_data[waypoint_index].key,
                                             "key_waypoint_"..waypoint_index,
                                             POS_WAYPOINT_X,
                                             getLineY(waypoint_index),
-                                            waypoint_name(waypoint_index),
+                                            waypoint_name(waypoint_index, waypoint_data),
                                             "LeftBottom"
                                         )
     AddElement(kneeboard_data[waypoint_index].key)
 
-    -- create waypoint info
+    -- create waypoint coordinate info
     kneeboard_data[waypoint_index].lat  = addSimpleTextStringCommon(kneeboard_data[waypoint_index].lat,
                                             "lat_waypoint_"..waypoint_index,
                                             POS_LAT_X,
