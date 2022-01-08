@@ -66,11 +66,11 @@ local kneeboard_data = {}
 
 local POS_LAT_X = 0.1
 local POS_LON_X = 0.5
-local POS_WAYPOINT_X = -0.8
+local POS_WAYPOINT_X = -0.9
 
-local FIRST_LINE_Y = 1.0
-local LINEHEIGHT = 0.125
-local POS_TITLE_Y = 1.3
+local FIRST_LINE_Y = 1.00
+local LINEHEIGHT = 0.115
+local POS_TITLE_Y = 1.4
 local POS_HEADERS_Y = FIRST_LINE_Y + 0.1
 
 local function getLineY(line)
@@ -81,7 +81,7 @@ local function addSimpleTextStringCommon(element, name, x, y, value, alignment, 
     element = CreateElement "ceStringPoly"
     element.name = name
     element.isdraw = true
-    element.alignment = alignment or "CenterBottom"
+    element.alignment = alignment or "LeftBottom"
     element.value = value
     element.material = material or "font_kneeboard"
     element.init_pos = {x, y, 0}
@@ -92,13 +92,13 @@ end
 local function waypoint_name(waypoint_index, waypoint_data)
   if waypoint_data.name == nil then
     if waypoint_index == 1 then
-        return "RAMP"
+        return (waypoint_index - 1) ..". RAMP"
     else
-        return "WAYPOINT "..(waypoint_index - 1)
+        return (waypoint_index - 1) .. ". WAYPOINT "..(waypoint_index - 1)
     end
   else
-	return string.upper(tostring(waypoint_data.name))
-  end  
+	return (waypoint_index - 1) .. ". " .. string.upper(tostring(waypoint_data.name))
+  end
 end
 
 -- BOARD TITLE
@@ -113,11 +113,11 @@ name_label = addSimpleTextStringCommon(name_label, "Name Label", POS_WAYPOINT_X,
 AddElement(name_label)
 
 local lat_label = {}
-lat_label = addSimpleTextStringCommon(lat_label, "Lat Label", POS_LAT_X, POS_HEADERS_Y, "LAT")
+lat_label = addSimpleTextStringCommon(lat_label, "Lat Label", POS_LAT_X, POS_HEADERS_Y, "LATITUDE")
 AddElement(lat_label)
 
 local lon_label = {}
-lon_label = addSimpleTextStringCommon(lon_label, "Lon Label", POS_LON_X, POS_HEADERS_Y, "LON")
+lon_label = addSimpleTextStringCommon(lon_label, "Lon Label", POS_LON_X, POS_HEADERS_Y, "LONGITUDE")
 AddElement(lon_label)
 
 -- NAVIGATION POINTS
@@ -126,6 +126,7 @@ local function add_waypoint(waypoint_index, waypoint_data)
     kneeboard_data[waypoint_index] = {}
 
     -- create waypoint name label
+
     kneeboard_data[waypoint_index].key  = addSimpleTextStringCommon(kneeboard_data[waypoint_index].key,
                                             "key_waypoint_"..waypoint_index,
                                             POS_WAYPOINT_X,
