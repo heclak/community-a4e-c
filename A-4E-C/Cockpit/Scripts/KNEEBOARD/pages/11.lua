@@ -43,7 +43,7 @@ local function parse_waypoint_data(waypoint)
     end
 
     for i = #lat, 2, -1 do
-        parsed_waypoint_data.lat = parsed_waypoint_data.lat..math.floor(lat[i])
+        parsed_waypoint_data.lat = parsed_waypoint_data.lat .. math.floor(lat[i])
     end
 
     -- format lat to string
@@ -54,9 +54,10 @@ local function parse_waypoint_data(waypoint)
     end
 
     for i = #lon, 2, -1 do
-        parsed_waypoint_data.lon = parsed_waypoint_data.lon..math.floor(lon[i])
+        parsed_waypoint_data.lon = parsed_waypoint_data.lon .. math.floor(lon[i])
     end
 	
+    -- waypoint name from mission editor
 	parsed_waypoint_data.name = waypoint.name
 
     return parsed_waypoint_data
@@ -90,15 +91,17 @@ local function addSimpleTextStringCommon(element, name, x, y, value, alignment, 
 end
 
 local function waypoint_name(waypoint_index, waypoint_data)
-  if waypoint_data.name == nil then
     if waypoint_index == 1 then
-        return (waypoint_index - 1) ..". RAMP"
+        if waypoint_data.name == "" then
+            return (waypoint_index - 1) .. ". START"
+        else
+            return (waypoint_index - 1) .. ". " .. string.upper(tostring(waypoint_data.name))
+        end
+    elseif waypoint_data.name == "" then
+        return (waypoint_index - 1) .. ". WAYPOINT " .. (waypoint_index - 1)
     else
-        return (waypoint_index - 1) .. ". WAYPOINT "..(waypoint_index - 1)
+	    return (waypoint_index - 1) .. ". " .. string.upper(tostring(waypoint_data.name))
     end
-  else
-	return (waypoint_index - 1) .. ". " .. string.upper(tostring(waypoint_data.name))
-  end
 end
 
 -- BOARD TITLE
