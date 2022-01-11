@@ -23,44 +23,60 @@ predefined_font_title	= {FontSizeY1,			FontSizeX1,			0.0,		0.0}
 predefined_font_header	= {FontSizeY1 * 0.9,	FontSizeX1 * 0.9,	0.0,	    0.0}
 predefined_font_item	= {FontSizeY1 * 0.75,	FontSizeX1 * 0.75,	-0.0009,	0.0}
 
-local missionroute = get_mission_route()
+--[[
+-- local theatre      = get_terrain_related_data("name") 
+    This method is no good.
+    As of 2.7.9.1080
+    Items that differrentiate by theatre should be revisited 
+    using the coords and expressed as a function
+    (especially MAGVAR on the nav system).
+    'Caucauses', 'Nevada', 'Normandy' and 'Persian Gulf' have names.
+    Syria and Marianas appear to be blank.
+    Instead, starting coordinates are used, which should accomodate future maps.
+]]
 
+local missionroute = get_mission_route()
 local waypointdata = {}
 
 local function parse_waypoint_data(waypoint)
 
     local coord = lo_to_geo_coords(waypoint.x, waypoint.y)
     local parsed_waypoint_data = {}
-    
+
     local lat = get_digits_LL122(coord.lat)
     local lon = get_digits_LL123(coord.lon)
 
     -- format lat to string
-    if lat[0] == true then
-        parsed_waypoint_data.lat = "S "
-    else
-        parsed_waypoint_data.lat = "N "
-    end
-
+    parsed_waypoint_data.lat = ""
     for i = #lat, 2, -1 do
         parsed_waypoint_data.lat = parsed_waypoint_data.lat .. math.floor(lat[i])
     end
-
-    -- format lat to string
-    if lon[0] == true then
-        parsed_waypoint_data.lon = "W "
+    if coord.lat == 0 then
+        parsed_waypoint_data.lat = parsed_waypoint_data.lat .. " -"
+    elseif coord.lat < 0 then
+        parsed_waypoint_data.lat = parsed_waypoint_data.lat .. " S"
     else
-        parsed_waypoint_data.lon = "E "
+        parsed_waypoint_data.lat = parsed_waypoint_data.lat .. " N"
     end
 
+    -- format lon to string
+    parsed_waypoint_data.lon = ""
     for i = #lon, 2, -1 do
         parsed_waypoint_data.lon = parsed_waypoint_data.lon .. math.floor(lon[i])
     end
-	
+    if coord.lon == 0 then
+        parsed_waypoint_data.lat = parsed_waypoint_data.lat .. " -"
+    elseif coord.lon < 0 then
+        parsed_waypoint_data.lon = parsed_waypoint_data.lon .. " W"
+    else
+        parsed_waypoint_data.lon = parsed_waypoint_data.lon .. " E"
+    end
+
     -- waypoint name from mission editor
 	parsed_waypoint_data.name = waypoint.name
 
     return parsed_waypoint_data
+
 end
 
 local kneeboard_data = {}
@@ -92,12 +108,12 @@ end
 
 local function waypoint_name(waypoint_index, waypoint_data)
     if waypoint_index == 1 then
-        if waypoint_data.name == "" then
+        if waypoint_data.name == "" or waypoint_data.name == nil then
             return (waypoint_index - 1) .. ". START"
         else
             return (waypoint_index - 1) .. ". " .. string.upper(tostring(waypoint_data.name))
         end
-    elseif waypoint_data.name == "" then
+    elseif waypoint_data.name == "" or waypoint_data.name == nil then
         return (waypoint_index - 1) .. ". WAYPOINT " .. (waypoint_index - 1)
     else
 	    return (waypoint_index - 1) .. ". " .. string.upper(tostring(waypoint_data.name))
