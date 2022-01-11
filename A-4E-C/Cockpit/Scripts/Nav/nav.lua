@@ -209,6 +209,7 @@ tacan_modelist = {"OFF", "REC", "T/R", "A/A"}
 local tacan_mode = "OFF"
 local tacan_volume = 0
 local tacan_volume_moving = 0
+local tacan_volume_playback = 0
 local tacan_ch_major = 0
 local tacan_ch_minor = 1
 local tacan_channel = 1
@@ -636,12 +637,12 @@ function SetCommand(command,value)
     elseif command == device_commands.tacan_volume then
         tacan_volume = value
         if tacan_volume < -0.5 then
-            dev:performClickableAction(device_commands.tacan_volume, 1, false)  -- bound check to fix wrap
+            dev:performClickableAction(device_commands.tacan_volume, 0.8, false)  -- bound check to fix wrap
         elseif tacan_volume < 0 and tacan_volume > -0.5 then
             dev:performClickableAction(device_commands.tacan_volume, 0, false)  -- bounds check to fix wrap
         else
-            morse_dot_snd:update(nil,tacan_volume,nil)
-            morse_dash_snd:update(nil,tacan_volume,nil)
+            morse_dot_snd:update(nil,tacan_volume_playback,nil)
+            morse_dash_snd:update(nil,tacan_volume_playback,nil)
         end
     --plusnine added mode switch (could probably be more efficient, but it works)
     elseif command == Keys.TacanModeInc then
@@ -2018,8 +2019,8 @@ function update_morse_playback_2()
             morse_dot_snd:update(nil,0,nil)
             morse_dash_snd:update(nil,0,nil)
         else
-            morse_dot_snd:update(nil,tacan_volume,nil)
-            morse_dash_snd:update(nil,tacan_volume,nil)
+            morse_dot_snd:update(nil,tacan_volume_playback,nil)
+            morse_dash_snd:update(nil,tacan_volume_playback,nil)
         end
 
         local c = current_morse_string:sub(current_morse_char+1, current_morse_char+1)
@@ -2058,8 +2059,8 @@ function update_morse_playback()
             morse_dot_snd:update(nil,0,nil)
             morse_dash_snd:update(nil,0,nil)
         else
-            morse_dot_snd:update(nil,tacan_volume,nil)
-            morse_dash_snd:update(nil,tacan_volume,nil)
+            morse_dot_snd:update(nil,tacan_volume_playback,nil)
+            morse_dash_snd:update(nil,tacan_volume_playback,nil)
         end
 
         local c = current_morse_string:sub(1,1)
@@ -2118,6 +2119,9 @@ function update()
     end
 
     update_egg()
+
+    tacan_volume_playback = clamp(tacan_volume - 0.21, 0, 0.6)
+    --print_message_to_user(tacan_volume_playback)
 end
 
 function fetch_object_beacon_data(channel, air_to_air)
