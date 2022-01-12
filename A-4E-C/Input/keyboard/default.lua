@@ -44,7 +44,7 @@ join(res.keyCommands,{
     ---------------------------------------------
     {combos = {{key = 'E', reformers = {'LCtrl'}}}, down = iCommandPlaneEject,                                              name = _('Alternate Ejection Handle (3 times)'),    category = {_('Systems'), _('Emergency')}},
     {combos = {{key = 'W'}}, down = Keys.BrakesOn, up = Keys.BrakesOff,                                                     name = _('Wheel Brake - ON else OFF'),              category = {_('Systems')}},
-	{combos = {{key = 'W', reformers = {'LShift'}}}, down = Keys.BrakesOnLeft, up = Keys.BrakesOffLeft,						name = _('Wheel Brake Left - ON else OFF'), 	    category = {_('Systems')}},
+	{combos = {{key = 'W', reformers = {'LCtrl'}}}, down = Keys.BrakesOnLeft, up = Keys.BrakesOffLeft,						name = _('Wheel Brake Left - ON else OFF'), 	    category = {_('Systems')}},
 	{combos = {{key = 'W', reformers = {'LAlt'}}}, down = Keys.BrakesOnRight, up = Keys.BrakesOffRight,						name = _('Wheel Brake Right - ON else OFF'),        category = {_('Systems')}},
 
     ---------------------------------------------
@@ -312,7 +312,7 @@ join(res.keyCommands,{
     {down = Keys.AWRS_Drop_Interval_Dec,                                                                                                                            name = _('AWRS Drop Interval Knob - CCW/Decrease'),         category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
 
     -- T-Handles
-    {combos = {{key = 'W', reformers = {'LCtrl'}}}, down = device_commands.emer_bomb_release, up = device_commands.emer_bomb_release, cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 1.0, value_up = 0.0,  name = _('Emergency Stores Release Handle'),    category = {_('Instrument Panel'), _('Emergency')}},
+    {combos = {{key = 'J', reformers = {'LCtrl'}}}, down = device_commands.emer_bomb_release, up = device_commands.emer_bomb_release, cockpit_device_id = devices.WEAPON_SYSTEM, value_down = 1.0, value_up = 0.0,  name = _('Emergency Stores Release Handle'),    category = {_('Instrument Panel'), _('Emergency')}},
     {down = device_commands.emer_gear_release, up = device_commands.emer_gear_release, cockpit_device_id = devices.GEAR, value_down = 1.0, value_up = 0.0,                                                          name = _('Emergency Landing Gear Release Handle'),    category = {_('Instrument Panel'), _('Emergency')}},
     {down = device_commands.man_flt_control_override, up = device_commands.man_flt_control_override, cockpit_device_id = devices.HYDRAULIC_SYSTEM, value_down = 1.0, value_up = 0.0,                                name = _('Manual Flight Control Handle'), category = {_('Instrument Panel'), _('Emergency')}},
     {down = device_commands.emer_gen_deploy, cockpit_device_id = devices.ELECTRIC_SYSTEM, value_down = 1.0,                                                                                                         name = _('Emergency Generator Release Handle'),     category = {_('Instrument Panel'), _('Emergency')}},
