@@ -132,23 +132,23 @@ SnapViews = {
 	},
 
 	[11] = {--look at left  mirror
-		viewAngle = 56.032040,--FOV
-		hAngle    = 14.803060,
-		vAngle    = 3.332499,
-		x_trans   = 0.264295,
-		y_trans   = -0.064373,
-		z_trans   = 0.000000,
-		rollAngle = 0.000000,
+		viewAngle = 85.0,--FOV
+		hAngle    = 18.0,
+		vAngle    = 3.3,
+		x_trans   = 0.2,
+		y_trans   = 0.1,
+		z_trans   = 0.0,
+		rollAngle = 0.0,
 	},
 
 	[12] = {--look at right mirror
-		viewAngle = 56.032040,--FOV
-		hAngle    = -14.414484,
-		vAngle    = 3.332499,
-		x_trans   = 0.264295,
-		y_trans   = -0.064373,
-		z_trans   = 0.000000,
-		rollAngle = 0.000000,
+		viewAngle = 85.0,--FOV
+		hAngle    = -18.0,
+		vAngle    = 3.3,
+		x_trans   = 0.2,
+		y_trans   = 0.1,
+		z_trans   = 0.0,
+		rollAngle = 0.0,
 	},
 
 	[13] = { -- default view
