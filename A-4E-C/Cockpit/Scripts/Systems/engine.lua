@@ -62,6 +62,8 @@ local igniter_max = 400 -- set timer maximum in seconds * 20
 local fuel_transfer_bypass_state = 0
 local fuel_transfer_bypass_valve = 0
 
+local drop_tank_press_switch = 0
+
 ------------------------------------------------
 ----------------  CONSTANTS  -------------------
 ------------------------------------------------
@@ -77,6 +79,7 @@ Engine:listen_command(device_commands.ENGINE_manual_fuel_shutoff)
 --Engine:listen_command(device_commands.throttle_axis)
 Engine:listen_command(Keys.Fuel_Transfer_Bypass_Toggle)
 Engine:listen_command(Keys.FuelControl)
+Engine:listen_command(Keys.drop_tank_press_cycle)
 
 function post_initialize()
 
@@ -266,15 +269,21 @@ function SetCommand(command,value)
         end
     elseif command == device_commands.ENGINE_drop_tanks_sw then
         --print_message_to_user("Drop Tanks Switch: "..value)
+        drop_tank_press_switch = value
         if value == 1 then
             -- position: off
-            -- TODO implement logic
         elseif value == 0 then
             -- position: press
-            -- TODO implement logic
         elseif value == -1 then
             -- position: flight refuel
-            -- TODO implement logic
+        end
+    elseif command == Keys.drop_tank_press_cycle then
+        if drop_tank_press_switch == 0 then
+            dev:performClickableAction(device_commands.ENGINE_drop_tanks_sw, -1, false)
+        elseif drop_tank_press_switch == 1.0 then
+            dev:performClickableAction(device_commands.ENGINE_drop_tanks_sw, 0, false)
+        else
+            dev:performClickableAction(device_commands.ENGINE_drop_tanks_sw, 1, false)
         end
     elseif command == Keys.Fuel_Transfer_Bypass_Toggle then
         fuel_transfer_bypass_valve = fuel_transfer_bypass_state
