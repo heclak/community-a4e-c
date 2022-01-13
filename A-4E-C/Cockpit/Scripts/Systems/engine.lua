@@ -63,6 +63,7 @@ local fuel_transfer_bypass_state = 0
 local fuel_transfer_bypass_valve = 0
 
 local drop_tank_press_switch = 0
+local fuel_dump_switch = 0
 
 ------------------------------------------------
 ----------------  CONSTANTS  -------------------
@@ -80,6 +81,7 @@ Engine:listen_command(device_commands.ENGINE_manual_fuel_shutoff)
 Engine:listen_command(Keys.Fuel_Transfer_Bypass_Toggle)
 Engine:listen_command(Keys.FuelControl)
 Engine:listen_command(Keys.drop_tank_press_cycle)
+Engine:listen_command(Keys.fuel_dump_cycle)
 
 function post_initialize()
 
@@ -244,7 +246,8 @@ function SetCommand(command,value)
             manual_fuel_shutoff_clickable_ref:hide(true)
         end
     elseif command == device_commands.ENGINE_wing_fuel_sw then
-        -- print_message_to_user("Fuel Dump "..value)
+        --print_message_to_user("Fuel Dump Switch: "..value)
+        fuel_dump_switch = value
         if value == 1 then
             -- activate fuel dump
             efm_data_bus.fm_setDumpingFuel(1.0)
@@ -260,12 +263,11 @@ function SetCommand(command,value)
         end
     elseif command == device_commands.ENGINE_fuel_control_sw then
         --print_message_to_user("Fuel Control Switch: "..value)
+        manual_fuel_control_mode_sw = value
         if value == 1 then
             -- position: manual
-            manual_fuel_control_mode_sw = 1
         elseif value == 0 then
             -- position: primary
-            manual_fuel_control_mode_sw = 0
         end
     elseif command == device_commands.ENGINE_drop_tanks_sw then
         --print_message_to_user("Drop Tanks Switch: "..value)
@@ -276,6 +278,14 @@ function SetCommand(command,value)
             -- position: press
         elseif value == -1 then
             -- position: flight refuel
+        end
+    elseif command == Keys.fuel_dump_cycle then
+        if fuel_dump_switch == 0 then
+            dev:performClickableAction(device_commands.ENGINE_wing_fuel_sw, 1, false)
+        elseif fuel_dump_switch == 1.0 then
+            dev:performClickableAction(device_commands.ENGINE_wing_fuel_sw, -1, false)
+        else
+            dev:performClickableAction(device_commands.ENGINE_wing_fuel_sw, 0, false)
         end
     elseif command == Keys.drop_tank_press_cycle then
         if drop_tank_press_switch == 0 then

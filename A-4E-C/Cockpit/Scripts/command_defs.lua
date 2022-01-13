@@ -402,6 +402,7 @@ Keys =
     radio_ptt_voip                 = __custom_counter(),
 
     drop_tank_press_cycle          = __custom_counter(),
+    fuel_dump_cycle                = __custom_counter(),
 
 }
 
