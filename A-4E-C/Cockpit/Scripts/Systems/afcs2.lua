@@ -1006,15 +1006,12 @@ function update()
 
     -- continuous heading select
     if afcs_hdg_set_moving ~= 0 then 
-        print_message_to_user(afcs_hdg_set_knob_delay)
-
         if afcs_hdg_set_knob_delay > 0 then
             afcs_hdg_set_knob_delay = afcs_hdg_set_knob_delay - 1
         else
             afcs_hdg_set(afcs_hdg_set_moving)
-            afcs_hdg_set_knob_delay = 6 -- set rate
+            afcs_hdg_set_knob_delay = 6 -- sets the rate at which this input will move to the next value
         end
-
     end
 
 end
