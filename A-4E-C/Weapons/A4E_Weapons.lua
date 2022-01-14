@@ -1179,7 +1179,12 @@ declare_loadout({
 })
 -- end of AN-M88
 
-local cbu_mult = 5  -- multiply effect and divide count by X, for performance
+local cbu_mult = 20  -- multiply effect and divide count by X, for performance
+local cbu_tube_number = 19
+local tube_size_1A = math.ceil(509 / cbu_tube_number)
+local tube_size_2A = math.ceil(360 / cbu_tube_number)
+local tube_size_2AB = math.ceil(409 / cbu_tube_number)
+local blu_drag_factor = 10
 
 -- BLU-3B   -- 1.75lb "pineapple" cluster munition used in CBU-2/A
 -- ~1.3lb warhead of 250 steel pellets with 0.35lb RDX explosive
@@ -1258,7 +1263,7 @@ BLU_4B = {
     scheme          = "bomb-parashute",
     class_name      = "wAmmunitionBallute",
     type            = 0,
-    mass            = 1.2 * POUNDS_TO_KG * cbu_mult,
+    mass            = 1.2 * POUNDS_TO_KG * tube_size_1A,
     hMin            = 500.0,
     hMax            = 12000.0,
     Cx              = 0.0, --this is the drag taken off the pod (must be zero since these bomblets are not in the airflow (mostly)).
@@ -1310,13 +1315,189 @@ declare_weapon(BLU_4B)
 
 -- CBU-1/A: 509x BLU-4/B submunitions in a SUU-7A launcher
 
+function make_cluster_group(bomblets)
+    local name = bomblets.name.."_GROUP"
+    local model_name = bomblets.scheme.cluster.model_name
+    local display_name = bomblets.display_name.." x "..bomblets.scheme.cluster.count
+    local mass = bomblets.scheme.cluster.mass
+    local fm = bomblets.scheme.cluster
+    local descriptor = bomblets.descriptor
+
+
+    local group = {
+        category		= CAT_BOMBS,
+        wsTypeOfWeapon	= {wsType_Weapon, wsType_Bomb, wsType_Bomb_Cluster, WSTYPE_PLACEHOLDER},
+        VyHold			= -100.0,
+        Ag				= -1.23,
+        type			= 5,
+        mass			= mass,
+        hMin			= 30,
+        hMax			= 1000.0,
+        Cx				= 0.0,--0.000413,
+
+        name			= name,
+        model			= model_name,
+        user_name		= display_name,
+        scheme			= "bomb-cassette",
+        class_name		= "wAmmunition",
+
+        fm = fm,
+
+        control = {
+            open_delay = 0,
+        },
+
+        launcher = {
+            blocks	= {"cluster"},
+            cluster	= descriptor,
+        },
+
+        targeting_data = {
+            v0 = 200,
+            char_time = 26,
+            bomblet_char_time = 26,
+        },
+
+        puff = {
+            show_puff = 0
+        },
+
+        shape_table_data = {{
+            name		= model_name,
+            file		= model_name,
+            username	= display_name,
+            index		= WSTYPE_PLACEHOLDER,
+        }}
+    }
+
+    return group
+end
+
+function make_cluster_group_loadout(group)
+    local loadout = {   
+        category			= CAT_BOMBS,
+        CLSID				= "{"..group.name.."}",
+        displayName			= group.user_name,
+        wsTypeOfWeapon		= group.wsTypeOfWeapon,
+        attribute			= {4,	5,	32,	WSTYPE_PLACEHOLDER},
+        Cx_pil				= 0,
+        Weight				= group.fm.mass,
+        Count				= 1,
+        kind_of_shipping	= 2,
+        Elements			= {
+            { ShapeName = group.model }, --, IsAdapter = true
+            --{ ShapeName = group.model, connector_name = "AttachPoint" },
+        },
+	}
+
+    declare_loadout(loadout)
+
+    return loadout.CLSID
+end
+
+BLU_3B_NEW = {
+	category = CAT_CLUSTER_DESC,
+	char_time = 0,
+	scheme = {
+		cluster = {
+            mass        = 1.75 * POUNDS_TO_KG * cbu_mult,    -- Empty weight with warhead, W/O fuel, kg
+            caliber     = 0.07,  -- Calibre, meters (7cm / 2.75")
+            cx_coeff    = {1.000000*blu_drag_factor, 0.290000*blu_drag_factor, 0.710000*blu_drag_factor, 0.140000*blu_drag_factor, 1.280000*blu_drag_factor},  -- Cx
+            L           = 0.095,   -- Length, meters (95mm / 3.75")
+            I           = 0.004,   -- kgm2 - moment of inertia - I = 1/12 ML2
+            Ma          = 1.5,  -- dependence moment coefficient of  by  AoA angular acceleration  T / I   (??? can't solve for torque w/o knowing rotation)
+            Mw          = 1.0, --  rad/s  - 57.3°/s - dependence moment coefficient by angular velocity (|V|*sin(?))/|r| -  Mw  =  Ma * t   (???)
+            wind_sigma  = 80, -- dispersion coefficient  mk81=80, mk82=80, mk83=150, mk84=220 ... heavier = harder to push with wind?
+			count = tube_size_2A,
+			effect_count = tube_size_2A,
+			impulse_sigma = 2,
+			model_name = "A4E_BLU-3B",
+			moment_sigma = 0.0001,
+			--spawn_args_change		= {{1,6,1}, {2,6,0}, {3,6,1},{4,6,0}}
+		},
+		warhead         = {
+            mass        = 1.3 * POUNDS_TO_KG * cbu_mult; -- estimated
+            expl_mass   = 0.35 * POUNDS_TO_KG * cbu_mult;
+            other_factors = {1.0, 1.0, 1.0};
+            obj_factors = {1, 1};
+            concrete_factors = {1.0, 1.0, 1.0};
+            cumulative_factor = 1;
+            concrete_obj_factor = 1.0;
+            cumulative_thickness = 1.0;
+            piercing_mass = 0.95 * POUNDS_TO_KG * cbu_mult;
+            caliber     = 0.07;   -- 7 cm
+        },
+	},
+	display_name = "BLU-3B",
+	mass = 0,
+	model = "",
+	name = "BLU_3B_NEW",
+	cluster_scheme = "cluster",
+	type_name = "cluster",
+	wsTypeOfWeapon	= {wsType_Weapon, wsType_Bomb, wsType_Bomb_Cluster, WSTYPE_PLACEHOLDER},
+}
+
+BLU_4B_NEW = {
+	category = CAT_CLUSTER_DESC,
+	char_time = 0,
+	scheme = {
+		cluster = {
+			mass        = 1.2 * POUNDS_TO_KG,    -- Empty weight with warhead, W/O fuel, kg
+			caliber     = 0.07,  -- Calibre, meters (7cm / 2.75")
+			cx_coeff    = {1.000000*blu_drag_factor, 0.290000*blu_drag_factor, 0.710000*blu_drag_factor, 0.140000*blu_drag_factor, 1.280000*blu_drag_factor},  -- Cx
+			L           = 0.125,   -- Length, meters (125mm / 4.92")
+			I           = 0.003,   -- kgm2 - moment of inertia - I = 1/12 ML2
+			Ma          = 1.5,  -- dependence moment coefficient of  by  AoA angular acceleration  T / I   (??? can't solve for torque w/o knowing rotation)
+			Mw          = 1.0, --  rad/s  - 57.3°/s - dependence moment coefficient by angular velocity (|V|*sin(?))/|r| -  Mw  =  Ma * t   (???)
+			wind_sigma  = 80, -- dispersion coefficient  mk81=80, mk82=80, mk83=150, mk84=220 ... heavier = harder to push with wind?
+			count = tube_size_1A,
+			effect_count = tube_size_1A,
+			impulse_sigma = 2,
+			model_name = "A4E_BLU-4B",
+			moment_sigma = 0.0001,
+			--spawn_args_change		= {{1,6,1}, {2,6,0}, {3,6,1},{4,6,0}}
+		},
+		warhead         = {
+        mass        = 1.3 * POUNDS_TO_KG; -- estimated
+        expl_mass   = 0.35 * POUNDS_TO_KG;
+        other_factors = {1.0, 1.0, 1.0};
+        obj_factors = {1, 1};
+        concrete_factors = {1.0, 1.0, 1.0};
+        cumulative_factor = 1;
+        concrete_obj_factor = 1.0;
+        cumulative_thickness = 1.0;
+        piercing_mass = 0.95 * POUNDS_TO_KG;
+        caliber     = 0.07;   -- 7 cm
+		},
+	},
+	display_name = "BLU-4B",
+	mass = 0,
+	model = "",
+	name = "BLU_4B_NEW",
+	cluster_scheme = "cluster",
+	type_name = "cluster",
+	wsTypeOfWeapon	= {wsType_Weapon, wsType_Bomb, wsType_Bomb_Cluster, WSTYPE_PLACEHOLDER},
+}
+
+declare_weapon(BLU_4B_NEW)
+declare_weapon(BLU_3B_NEW)
+
+BLU_4B_NEW_GROUP = make_cluster_group(BLU_4B_NEW)
+BLU_3B_NEW_GROUP = make_cluster_group(BLU_3B_NEW)
+
+declare_weapon(BLU_4B_NEW_GROUP)
+declare_weapon(BLU_3B_NEW_GROUP)
+
+BLU_4B_NEW_GROUP.clsid = make_cluster_group_loadout(BLU_4B_NEW_GROUP)
+BLU_3B_NEW_GROUP.clsid = make_cluster_group_loadout(BLU_3B_NEW_GROUP)
+
 
 
 local bomblet_data =
 {
     --use shapename,        mass,               wstype,                                                drag,
-    ["BLU-3B"]          = { mass = BLU_3B.mass, wstype = BLU_3B.wsTypeOfWeapon, model = BLU_3B.model, cx = 0.0001, len = 0.095+0.05 },
-    ["BLU-4B"]          = { mass = BLU_3B.mass, wstype = BLU_4B.wsTypeOfWeapon, model = BLU_4B.model, cx = 0.0001, len = 0.095+0.05 },
+    ["BLU-3B"]          = { mass = BLU_3B_NEW_GROUP.mass * tube_size_2A, wstype = BLU_3B_NEW_GROUP.wsTypeOfWeapon, model = BLU_3B_NEW_GROUP.model, cx = 0.0001, len = 0.095+0.05, clsid = BLU_3B_NEW_GROUP.clsid },
+    ["BLU-4B"]          = { mass = BLU_4B_NEW_GROUP.mass * tube_size_1A, wstype = BLU_4B_NEW_GROUP.wsTypeOfWeapon, model = BLU_4B_NEW_GROUP.model, cx = 0.0001, len = 0.095+0.05, clsid = BLU_4B_NEW_GROUP.clsid },
 }
 
 function make_cbu_a4e(dispenser,element,count) -- assemble a cluster dispenser
@@ -1368,21 +1549,38 @@ function make_cbu_a4e(dispenser,element,count) -- assemble a cluster dispenser
         { -0.9, -0.28, -0.12},
     }
 
-    for i = 0,count do
+
+    for i = 0,(count-1) do
         data.Elements[#data.Elements + 1] = {
             DrawArgs	=	{{1,1},{2,1}},
             Position	=	pos_bomblets[(i%19)+1],
             ShapeName	=	bomblet.model,
-            Rotation	=   {0,0,0}
+            Rotation	=   {0,0,0},
+            payload_CLSID = bomblet.clsid,
         }
     end
 
     return data
 end
 
-declare_loadout(make_cbu_a4e("CBU-1/A", "BLU-4B", math.floor(509/cbu_mult))) -- {CBU-1/A}
-declare_loadout(make_cbu_a4e("CBU-2/A", "BLU-3B", math.floor(360/cbu_mult))) -- {CBU-2/A}
-declare_loadout(make_cbu_a4e("CBU-2B/A", "BLU-3B", math.floor(409/cbu_mult))) -- {CBU-2B/A}
+
+CBU_1A = make_cbu_a4e("CBU-1/A", "BLU-4B", cbu_tube_number) -- {CBU-1/A}
+CBU_2A = make_cbu_a4e("CBU-2/A", "BLU-3B", cbu_tube_number) -- {CBU-2/A}
+CBU_2BA = make_cbu_a4e("CBU-2B/A", "BLU-3B", cbu_tube_number) -- {CBU-2B/A}
+declare_loadout(CBU_1A)
+declare_loadout(CBU_2A)
+declare_loadout(CBU_2BA)
+
+
+CBU_1A_2 = make_cbu_a4e("CBU-1/A*2", "BLU-4B", cbu_tube_number*2) -- {CBU-1/A} -> doubled variant for workaround
+CBU_2A_2 = make_cbu_a4e("CBU-2/A*2", "BLU-3B", cbu_tube_number*2) -- {CBU-2/A} -> doubled variant for workaround
+CBU_2AB_2 = make_cbu_a4e("CBU-2B/A*2", "BLU-3B", cbu_tube_number*2) -- {CBU-2B/A} -> doubled variant for workaround
+declare_loadout(CBU_1A_2)
+declare_loadout(CBU_2A_2)
+declare_loadout(CBU_2AB_2)
+
+CBU_DUMMY = make_cbu_a4e("CBU_DUMMY", "BLU-4B", 0) -- dummy dispenser
+declare_loadout(CBU_DUMMY)
 
 
 ----------------------------------------------------
@@ -1634,9 +1832,9 @@ end
 local dispenser_data =
 {
     --use shapename,         bomblet,          bomblet_count
-    ["CBU-1/A"]          = { bomblet = BLU_4B, bomblet_count = math.floor(509/cbu_mult) },
-    ["CBU-2/A"]          = { bomblet = BLU_3B, bomblet_count = math.floor(360/cbu_mult) },
-    ["CBU-2B/A"]         = { bomblet = BLU_3B, bomblet_count = math.floor(409/cbu_mult) },
+    ["CBU-1/A"]          = { bomblet = BLU_4B, bomblet_count = 19 },
+    ["CBU-2/A"]          = { bomblet = BLU_3B, bomblet_count = 19 },
+    ["CBU-2B/A"]         = { bomblet = BLU_3B, bomblet_count = 19 },
 }
 
 -- CLUSTER DISPENSER RACKING FUNCTION
@@ -1691,13 +1889,21 @@ function make_cbu_a4e_multi(dispenser,count,side) -- assemble a rack of cluster 
     -- now mount the dispensers
     for i = 1,count do
         local j = order[i+offset]
+
+        local dispenser_clsid
+        if i == 1 then
+            dispenser_clsid = "{"..dispenser.."*"..count.."}"
+        else
+            dispenser_clsid = "{CBU_DUMMY}"
+        end
+
         data.Elements[#data.Elements + 1] = {
-                                                DrawArgs       = {{1,1},{2,1}},
-                                                connector_name = connectors[j],
-                                                payload_CLSID  = "{"..dispenser.."}",
-                                                ShapeName      = "A4E_SUU-7",
-                                                IsAdapter      = true
-                                            }
+            DrawArgs       = {{1,1},{2,1}},
+            connector_name = connectors[j],
+            payload_CLSID  = dispenser_clsid,
+            ShapeName      = "A4E_SUU-7",
+            IsAdapter      = true
+        } 
     end
 
     return data
