@@ -98,7 +98,7 @@ if AFMenabled == true then
 	{
 		[1] = self_ID,
 		[2] = 'A-4E-C',
-		center_of_mass = {-0.1, 0.0, 0.0}, --x=0.183, y=0.261
+		center_of_mass = {0.0, 0.0, 0.0}, --x=0.183, y=0.261
 		moment_of_inertia = {10968, 39500, 35116, -1763.0}, --763 --xy = -5518 --xy = -1763
 		--moment_of_inertia = {10968, 35116, 39500, -1763.0}, --763 --xy = -5518 --xy = -1763
 		suspension = suspension

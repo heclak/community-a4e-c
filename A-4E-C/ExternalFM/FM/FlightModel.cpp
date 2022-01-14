@@ -71,7 +71,7 @@ Scooter::FlightModel::FlightModel
 	m_elementLSpoiler(m_state, AeroElement::HORIZONTAL, dCLspoiler, dCDspoiler, Vec3( c_cpX, 0, -3.0), m_wingSurfaceNormalL, m_totalWingArea / 2),
 	m_elementRSpoiler(m_state, AeroElement::HORIZONTAL, dCLspoiler, dCDspoiler, Vec3( c_cpX, 0, 3.0), m_wingSurfaceNormalR, m_totalWingArea / 2),
 	m_elementHorizontalStab(m_state, m_airframe, AeroElement::HORIZONTAL_STAB, CLhstab, CDhstab, &comp_e, Vec3(-5.1, 1.65, 0.0), m_hStabSurfaceNormal, 4.0),
-	m_elementVerticalStab(m_state, m_airframe, AeroElement::RUDDER, CLvstab, CDvstab, Vec3(-4.8, 2.2, 0.0), m_vStabSurfaceNormal, 5.3),
+	m_elementVerticalStab(m_state, m_airframe, AeroElement::RUDDER, CLvstab, CDvstab, Vec3(-4.8, 2.7, 0.0), m_vStabSurfaceNormal, 5.3),
 	//m_elementLAil(m_state, dCLflap, CDflap, Vec3(0, 0, -3.2), m_wingSurfaceNormalL, m_totalWingArea/5),
 	//m_elementRAil(m_state, dCLflap, CDflap, Vec3(0, 0, 3.2), m_wingSurfaceNormalR,  m_totalWingArea/5),
 
