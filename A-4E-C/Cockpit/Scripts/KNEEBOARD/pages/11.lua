@@ -16,59 +16,79 @@ function AddElement(object)
 end
 
 -- fonts
---FontSizeX1	= 0.0075
-FontSizeX1	= 0.007
+FontSizeX1	= 0.0065 -- set base font size
 FontSizeY1	= FontSizeX1
 
 predefined_font_title	= {FontSizeY1,			FontSizeX1,			0.0,		0.0}
 predefined_font_header	= {FontSizeY1 * 0.9,	FontSizeX1 * 0.9,	0.0,	    0.0}
 predefined_font_item	= {FontSizeY1 * 0.75,	FontSizeX1 * 0.75,	-0.0009,	0.0}
 
-local missionroute = get_mission_route()
+--[[
+-- local theatre      = get_terrain_related_data("name") 
+    This method is no good.
+    As of 2.7.9.1080
+    Items that differrentiate by theatre should be revisited 
+    using the coords and expressed as a function
+    (especially MAGVAR on the nav system).
+    'Caucauses', 'Nevada', 'Normandy' and 'Persian Gulf' have names.
+    Syria and Marianas appear to be blank.
+    Instead, starting coordinates are used, which should accomodate future maps.
+]]
 
+local missionroute = get_mission_route()
 local waypointdata = {}
 
 local function parse_waypoint_data(waypoint)
 
     local coord = lo_to_geo_coords(waypoint.x, waypoint.y)
     local parsed_waypoint_data = {}
-    
+
     local lat = get_digits_LL122(coord.lat)
     local lon = get_digits_LL123(coord.lon)
 
     -- format lat to string
-    if lat[0] == true then
-        parsed_waypoint_data.lat = "S"
-    else
-        parsed_waypoint_data.lat = "N"
-    end
-
+    parsed_waypoint_data.lat = ""
     for i = #lat, 2, -1 do
-        parsed_waypoint_data.lat = parsed_waypoint_data.lat..math.floor(lat[i])
+        parsed_waypoint_data.lat = parsed_waypoint_data.lat .. math.floor(lat[i])
     end
-
-    -- format lat to string
-    if lon[0] == true then
-        parsed_waypoint_data.lon = "W"
+    if coord.lat == 0 then
+        parsed_waypoint_data.lat = parsed_waypoint_data.lat .. " -"
+    elseif coord.lat < 0 then
+        parsed_waypoint_data.lat = parsed_waypoint_data.lat .. " S"
     else
-        parsed_waypoint_data.lon = "E"
+        parsed_waypoint_data.lat = parsed_waypoint_data.lat .. " N"
     end
 
+    -- format lon to string
+    parsed_waypoint_data.lon = ""
     for i = #lon, 2, -1 do
-        parsed_waypoint_data.lon = parsed_waypoint_data.lon..math.floor(lon[i])
+        parsed_waypoint_data.lon = parsed_waypoint_data.lon .. math.floor(lon[i])
     end
+    if coord.lon == 0 then
+        parsed_waypoint_data.lat = parsed_waypoint_data.lat .. " -"
+    elseif coord.lon < 0 then
+        parsed_waypoint_data.lon = parsed_waypoint_data.lon .. " W"
+    else
+        parsed_waypoint_data.lon = parsed_waypoint_data.lon .. " E"
+    end
+
+    -- waypoint name from mission editor
+	parsed_waypoint_data.name = waypoint.name
 
     return parsed_waypoint_data
+
 end
 
 local kneeboard_data = {}
-local FIRST_LINE_Y = 1.0
-local LINEHEIGHT = 0.15
-local POS_LAT_X = 0.15
-local POS_LON_X = 0.6
+
+local POS_LAT_X = 0.1
+local POS_LON_X = 0.5
+local POS_WAYPOINT_X = -0.9
+
+local FIRST_LINE_Y = 1.00
+local LINEHEIGHT = 0.115
+local POS_TITLE_Y = 1.4
 local POS_HEADERS_Y = FIRST_LINE_Y + 0.1
-local POS_WAYPOINT_X = -0.7
-local POS_TITLE_Y = 1.3
 
 local function getLineY(line)
     return FIRST_LINE_Y - ((line - 1) * LINEHEIGHT)
@@ -78,7 +98,7 @@ local function addSimpleTextStringCommon(element, name, x, y, value, alignment, 
     element = CreateElement "ceStringPoly"
     element.name = name
     element.isdraw = true
-    element.alignment = alignment or "CenterBottom"
+    element.alignment = alignment or "LeftBottom"
     element.value = value
     element.material = material or "font_kneeboard"
     element.init_pos = {x, y, 0}
@@ -86,14 +106,18 @@ local function addSimpleTextStringCommon(element, name, x, y, value, alignment, 
     return element
 end
 
-local function waypoint_name(waypoint_index)
-
+local function waypoint_name(waypoint_index, waypoint_data)
     if waypoint_index == 1 then
-        return "RAMP"
+        if waypoint_data.name == "" or waypoint_data.name == nil then
+            return (waypoint_index - 1) .. ". START"
+        else
+            return (waypoint_index - 1) .. ". " .. string.upper(tostring(waypoint_data.name))
+        end
+    elseif waypoint_data.name == "" or waypoint_data.name == nil then
+        return (waypoint_index - 1) .. ". WAYPOINT " .. (waypoint_index - 1)
     else
-        return "WAYPOINT "..(waypoint_index - 1)
+	    return (waypoint_index - 1) .. ". " .. string.upper(tostring(waypoint_data.name))
     end
-
 end
 
 -- BOARD TITLE
@@ -102,12 +126,17 @@ end
 --AddElement(txt_BoardTitle)
 
 -- HEADERS
+
+local name_label = {}
+name_label = addSimpleTextStringCommon(name_label, "Name Label", POS_WAYPOINT_X, POS_HEADERS_Y, "NAME")
+AddElement(name_label)
+
 local lat_label = {}
-lat_label = addSimpleTextStringCommon(lat_label, "Lat Label", POS_LAT_X, POS_HEADERS_Y, "LAT")
+lat_label = addSimpleTextStringCommon(lat_label, "Lat Label", POS_LAT_X, POS_HEADERS_Y, "LATITUDE")
 AddElement(lat_label)
 
 local lon_label = {}
-lon_label = addSimpleTextStringCommon(lon_label, "Lon Label", POS_LON_X, POS_HEADERS_Y, "LON")
+lon_label = addSimpleTextStringCommon(lon_label, "Lon Label", POS_LON_X, POS_HEADERS_Y, "LONGITUDE")
 AddElement(lon_label)
 
 -- NAVIGATION POINTS
@@ -115,17 +144,18 @@ local function add_waypoint(waypoint_index, waypoint_data)
 
     kneeboard_data[waypoint_index] = {}
 
-    -- create label
+    -- create waypoint name label
+
     kneeboard_data[waypoint_index].key  = addSimpleTextStringCommon(kneeboard_data[waypoint_index].key,
                                             "key_waypoint_"..waypoint_index,
                                             POS_WAYPOINT_X,
                                             getLineY(waypoint_index),
-                                            waypoint_name(waypoint_index),
+                                            waypoint_name(waypoint_index, waypoint_data),
                                             "LeftBottom"
                                         )
     AddElement(kneeboard_data[waypoint_index].key)
 
-    -- create waypoint info
+    -- create waypoint coordinate info
     kneeboard_data[waypoint_index].lat  = addSimpleTextStringCommon(kneeboard_data[waypoint_index].lat,
                                             "lat_waypoint_"..waypoint_index,
                                             POS_LAT_X,

@@ -48,75 +48,19 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 - Unique sounds inside and outside the aircraft
 - User manual (PDF and Kneeboard)
 
-### Version 2.0 Changelog: Featured Items
+### Version 2.1 Changelog: Featured Items
 
 - **Features:**
-  - Added External Flight Model (EFM) with flight dynamics, suspension, slat simulation, differential braking, cockpit shake, wing vapour and more.
-  - Added Pratt & Whitney J52-P-8A engine simulation.
-  - Added SuperCarrier compatibility.
-  - Added carrier mod support (HMAS Melbourne, HMS Hermes).
-  - Added air-to-air refueling.
-  - Added exterior engine sounds.
-  - Added many interior sounds.
-  - Improved interior sound localization and feedback.
 - **Systems:**
-  - Added AFCS stability augmentation.
-  - Added AN/ARC-51A UHF Radio with VOIP. *(thanks Harald)*
-  - Added AN/ARN-52 TACAN.
-  - Added AN/ARA-63 MCL (ICLS).
-  - Added AN/ASN-41 Navigation Computer drift on long flights and heavy maneuvers.
-  - Added CP-741/A bombing computer.
-  - Added fuel flow system.
-  - Added oxygen system.
-  - Improved Approach Power Compensator (APC) behavior.
-  - Fixed spoiler behavior to deploy/stow properly (weight on wheels, engine RPM under 70%). *(thanks pohlinkzei)*
 - **Weapons and Loadouts:**
-  - Added BDU-33 training bombs.
-  - Added SUU-25 parachute illumination pod.
-  - Added empty fuel tanks.
-  - Added AIM-9 growl and lock tones (fixes missing sound bug).
-  - Improved AIM-9 missile loadouts, sidewinters are now available to mount on stations 4 and 5.
-  - Removed non-functional loadout options to reduce confusion about module functionality: AGM-12C Bullpup, AGM-62 Walleye, D-704 Refueling Pod *(see FAQ)*.
 - **Missions:**
-  - Added new instant action missions across all maps *(thanks Sidekick65, Cubeboy, Shadowfrost, SPINEG)*.
-  - Added runway strike and anti-ship strike roles.
-  - Improved instant action missions.
-  - Added Argentina and Chile to available countries.
+  - Added many waypoint names on various missions. *(See Quality of Life, below)*
 - **Textures:**
-  - Added unique helmets, pilot uniforms and patches.
-  - Added preliminary damage textures.
-  - Improved exterior and interior textures. *(thanks HellesBelle, Sport, JP Gabobo)*
-  - Fixed exterior and cockpit model material names to avoid conflicts.
 - **Liveries:**
-  - Added Community III: Forever Free, 2021 (Fictional).
-  - Added Community IV: Sea Otter, 2021 (Fictional).
-  - Added Argentina FAA Falklands Brigada IV and V, 1982. *(thanks GVad)*
-  - Added Australian Navy Squadron 805, 1972. *(thanks HellesBelle)*
-  - Added Brazil Marinha do Brasil VF-1 LoViz, 2018.
-  - Added Brazil Marinha do Brasil VF-1 15 AÑOS, 2013. *(thanks Bungo)*
-  - Added Finland FiAF, 1984 (Fictional). *(thanks FinCenturion)*
-  - Added Malaysia TUDM M32-29 No.9 Squadron, 2004. *(thanks JacobBadshot)*
-  - Added USN VA-46 Clansmen, 1967.
-  - Added USN VA-83 Black Lancers, 1966.
-  - Added USN VA-106 Gladiators, 1967.
-  - Added RAF Empire Pilots Test School Raspberry Ripple (Fictional). *(thanks FlyingHueman)*
-  - Added RNZAF Golden T-Bird No.2, Squadron Ohakea, 1986. *(thanks Corsair016)*
-  - Improved inaccuracies and naming across liveries.
 - **Quality of Life:**
-  - Added PDF and kneeboard manual (press RSHIFT+K) in the cockpit. *(thanks Rob, Sidekick65)*
-  - Added cockpit controls indicator (press RCTRL+ENTER in the cockpit).
-  - Added AN/ARC-51 UHF Radio frequency presets printout to right console panel.
-  - Added new input categories.
-  - Added dozens of inputs and variant input options.
-  - Added special menu options for Trim Speed, Cockpit Shake, CSS mode FFB Deflection, Simple Braking (Rudder Assist).
-  - Added a command to request the ground crew to lock the slats (useful for aerobatic formation flying).
-  - Improved labeling alignment across tooltips, inputs, user manual and NATOPS manual for easy searching.
-  - Improved trim reset for smoother performance.
-  - Improved keyboard axis input behavior and recentering.
-  - Improved smokewinder pod operation (weapon function select independent).
-  - Improved main menu logos and iconography. *(thanks Sport)*
-  - Fixed FFB stick support.
-  - Fixed lots, and lots, and we mean LOTS of bugs. *(thanks to the many A-4E-C users who helped identify, replicate and solve these!)*
+  - Added single input (momentary) switch inputs for several switches that are not spring-loaded.
+  - Waypoints are now listed on the kneeboard by name as defined in the Mission Editor.
+  - Additional fixes. *(thanks to the many A-4E-C users who helped identify, replicate and solve these!)*
 
 [See full changelog](https://github.com/heclak/community-a4e-c/blob/master/CHANGELOG.md)
 
@@ -136,15 +80,15 @@ Failure to perform these steps will result in DCS World not recognizing the modu
 
 - If you are upgrading from an older version of the A-4E-C, completely uninstall your old version. If this is a brand new installation, skip this and move on to Step 2.
 
-- First, uninstall the module's files from `C:\Users\username\Saved Games\DCS\Mods\aircraft\A-4E-C`
+- First, uninstall the module's files from `%HOMEPATH%\\Saved Games\DCS\Mods\aircraft\A-4E-C`
 
-- Next reset your A-4E-C input bindings by deleting the contents of `C:\Users\username\Saved Games\DCS\Config\Input\A-4E-C`
+- Next reset your A-4E-C input bindings by deleting the contents of `%HOMEPATH%\\Saved Games\DCS\Config\Input\A-4E-C`
 
 ### STEP 2: Installing the module files
 
 - Download [the latest official A-4E-C release package](https://github.com/heclak/community-a4e-c/releases/). Do not download directly from the Github repository.
 
-- Place the `Mods\aircraft\A-4E-C` folder in into your Windows user folder's Saved Games folder for DCS, e.g. `C:\Users\username\Saved Games\DCS`
+- Place the `Mods\aircraft\A-4E-C` folder in into your Windows user folder's Saved Games folder for DCS, e.g. `%HOMEPATH%\Saved Games\Saved Games\DCS`
 
 - If you have installed other DCS World mods, you might already have the `Mods` and `aircraft` folders indicated in the file path. If so, merge the new A-4E-C folder into the existing folders.
 
@@ -162,13 +106,13 @@ Your correctly installed files should look something like the following image, s
 
 ![Image of A-4E-C installation](https://cdn.discordapp.com/attachments/518815335013679104/886633761670828112/unknown.png)
 
-- If you have multiple DCS-related folders in your `C:\Users\username\Saved Games`, for example, `DCS`, or `DCS.openbeta`. If you are unsure which folder your DCS World installation is using, locate the `dcs_variant.txt` file in the game files. If this file is present, its contents determines the folder structure your DCS World installation is using. Alternately, load DCS world and use the mission editor to create and save a mission. Search this mission file using Windows explorer to locate the proper folder structure.
+- If you have multiple DCS-related folders in your `%HOMEPATH%\\Saved Games`, for example, `DCS`, or `DCS.openbeta`, and are unsure which folder your DCS World installation is using, locate the `dcs_variant.txt` file in the game files. If this file is present, its contents determines the folder structure your DCS World installation is using. Alternately, load DCS world and use the mission editor to create and save a mission. Search this mission file using Windows explorer to locate the proper folder structure.
 
 - If you are receiving an authorization error at launch, **you have installed the module incorrectly**. Revisit the installation instructions above. Be sure to remove any and all improperly installed files before correctly installing the module.
 
 - If the A-4E-C icon in the DCS main menu shows a default DCS logo, is missing the theme background and music (or you experience crashes when loading a mission), you have incorrectly downloaded the module. [Download the latest official A-4E-C release package](https://github.com/heclak/community-a4e-c/releases/).
 
-- If you can load a mission, but can't take control of the A-4E-C, ensure you have installed [Microsoft's Visual Studio 2015, 2017 and 2019 Redistributable libraries](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0). Restart your computer after installation of the appropriate libraries. For most users, this is `vc_redist.x64.exe`
+- If you can load a mission, but can't take control of the A-4E-C, ensure you have installed [Microsoft's Visual Studio 2015, 2017 and 2019 Redistributable libraries](https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0). Restart your computer after installation of the appropriate libraries. For most users, this is `vc_redist.x64.exe`. Alternately, ensure your DCS version is at least 2.7.9.1080.
 
 - If you can't find the A-4E-C in the Mission Editor, ensure the historical mode filter is disabled by toggling the clock icon at the bottom of the screen, as shown in the following screenshot:
 
@@ -193,7 +137,7 @@ Your correctly installed files should look something like the following image, s
 
 - Once you have completed the edit, save the `mission` file, and re-create a new `.zip` (carefully maintaining proper folder structure, *of course*). Rename your modified mission `.zip` back to a DCS `.miz` file extension instead.
 
-- Finally, test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS will display any A4-E-C units as default-livery Su-27s, and players without the module cannot take control of unit, just as if they did not own any other DCS module in a multiplayer mission.
+- Finally, test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS will display any A4-E-C units as an untextured Su-27. Players without the module cannot take control of unit, just as if they did not own any other DCS module in a multiplayer mission.
 
 ## Frequently Asked Questions
 
@@ -217,7 +161,7 @@ Your correctly installed files should look something like the following image, s
 
 **Yes**! Locating the NATOPS manual for an A-4E/F is the gold standard for understanding this aircraft, but there is a lot of helpful guidance included in the user manual. To access the manual:
 - Once inside the cockpit, open the kneeboard by pressing RSHIFT+K
-- Read the PDF manual in `C:\Users\username\Saved Games\DCS\Mods\aircraft\A-4E-C\Docs` or [read it online](https://drive.google.com/drive/folders/1_DPA00CWoRfIsqgh7HYabvpFrOdtBxPi)
+- Read the PDF manual in `%HOMEPATH%\\Saved Games\DCS\Mods\aircraft\A-4E-C\Docs` or [read it online](https://drive.google.com/drive/folders/1_DPA00CWoRfIsqgh7HYabvpFrOdtBxPi)
 
 Past that, [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt_8Jw9ByL10ar6b8rQg) features high-quality video tutorials on many systems.
 
@@ -225,9 +169,9 @@ Past that, [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt
 
 **Yes**! This [A-4E-C Paintkit](https://drive.google.com/open?id=19w_bD8xHJiZpAi1JbA2xyPDJpl9dje-4) includes the aircraft's top, bottom and fuel tanks. See the included liveries for helpful examples setting up your *description.lua* files.
 
-- Liveries created for versions of the A-4E-C prior to 2.0 must update the material names in their *description.lua*
+- Liveries created for versions of the A-4E-C prior to 2.0 must update the material names in their *description.lua*. You can use the included `description.lua` files to update
 
-- Install original or downloaded liveries just as you would for any other module, in `C:\Users\username\Saved Games\DCS\Liveries\A-4E-C`
+- Install original or downloaded liveries just as you would for any other module, in `%HOMEPATH%\\Saved Games\DCS\Liveries\A-4E-C`
 
 - ***Never put your hard work at risk by installing liveries to the module's files!***
 

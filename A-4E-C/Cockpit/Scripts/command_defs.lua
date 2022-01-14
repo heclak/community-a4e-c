@@ -399,7 +399,10 @@ Keys =
     Radar_Ret_Cont_Up              = __custom_counter(),
     Radar_Ret_Cont_Down            = __custom_counter(),
     Radar_Ret_Cont_Stop            = __custom_counter(),
-    radio_ptt_voip                = __custom_counter(),
+    radio_ptt_voip                 = __custom_counter(),
+
+    drop_tank_press_cycle          = __custom_counter(),
+    fuel_dump_cycle                = __custom_counter(),
 
     modifier_left_down = __custom_counter(),
     modifier_left_up = __custom_counter(),
@@ -620,16 +623,16 @@ device_commands =
     mcl_power_switch                = __counter(),
 
     afcs_test_guard                 = __counter(),
-    afcs_test               = __counter(),
+    afcs_test                       = __counter(),
 
     --Most of these are dummy/placeholder.
-    tacan_antenna           = __counter(),
-    rain_removal            = __counter(),
-    nav_dead_recon          = __counter(),
-    seat_adjustment         = __counter(),
+    tacan_antenna                   = __counter(),
+    rain_removal                    = __counter(),
+    nav_dead_recon                  = __counter(),
+    seat_adjustment                 = __counter(),
 
     fuel_transfer_bypass    = __counter(),
-
+    fuel_transfer_bypass            = __counter(),
     mouse_x = __counter(),
     mouse_y = __counter(),
 }
