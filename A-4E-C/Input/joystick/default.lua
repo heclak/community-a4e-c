@@ -564,6 +564,10 @@ join(res.keyCommands,{
     {down = Keys.UHFVolumeStartUp, up = Keys.UHFVolumeStop,                                     name = _('Radio Volume - Continuous Increase'),     category = {_('AN/ARC-51A UHF Radio')}},
     {down = Keys.UHFVolumeStartDown, up = Keys.UHFVolumeStop,                                   name = _('Radio Volume - Continuous Decrease'),     category = {_('AN/ARC-51A UHF Radio')}},
 
+
+    {down = Keys.modifier_left_down, up = Keys.modifier_left_up,                                name = _('LCtrl/Mouse Left'),     category = {_('UI Override')}},
+    {down = Keys.modifier_right_down, up = Keys.modifier_right_up,                                name = _('LShift/Mouse Right'),     category = {_('UI Override')}},
+
     -- PID tuning
     --[[
     {down = Keys.Tune1, value_down = 0.1,                                                                name = _('Tune1: +0.1'),                  category = {_('Debug')}},
@@ -661,6 +665,10 @@ join(res.axisCommands,{
     -- Gunsight Panel
     {action = device_commands.GunsightBrightness,              cockpit_device_id = devices.GUNSIGHT,    name = _('Gunsight Light Control'),         category = {_('Instrument Panel'), _('Gunsight Panel')}},
     {action = device_commands.GunsightElevationControl_AXIS,   cockpit_device_id = devices.GUNSIGHT,    name = _('Gunsight Elevation Control'),     category = {_('Instrument Panel'), _('Gunsight Panel')}},
+
+    {action = device_commands.mouse_x,    name = _('Mouse X Relative'),     category = {_('UI Override')}},
+    {action = device_commands.mouse_y,    name = _('Mouse Y Relative'),     category = {_('UI Override')}},
+
     
 })
 return res
