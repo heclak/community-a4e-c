@@ -404,11 +404,15 @@ Keys =
     drop_tank_press_cycle          = __custom_counter(),
     fuel_dump_cycle                = __custom_counter(),
 
-    modifier_left_down = __custom_counter(),
-    modifier_left_up = __custom_counter(),
+    modifier_left_down             = __custom_counter(),
+    modifier_left_up               = __custom_counter(),
     
-    modifier_right_down = __custom_counter(),
-    modifier_right_up = __custom_counter(),
+    modifier_right_down            = __custom_counter(),
+    modifier_right_up              = __custom_counter(),
+
+    afcs_hdg_set_start_up          = __custom_counter(),
+    afcs_hdg_set_start_down        = __custom_counter(),
+    afcs_hdg_set_stop              = __custom_counter(),
 
 }
 

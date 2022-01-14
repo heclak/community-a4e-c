@@ -67,6 +67,11 @@ local AFCS_HDG_100s_param = get_param_handle("AFCS_HDG_100s")
 local AFCS_HDG_10s_param = get_param_handle("AFCS_HDG_10s")
 local AFCS_HDG_1s_param = get_param_handle("AFCS_HDG_1s")
 
+--heading select continuous
+local afcs_hdg_set_knob = 0
+local afcs_hdg_set_moving = 0
+local afcs_hdg_set_knob_delay = 0
+
 --AFCS Test windows
 local AFCS_test_roll_param = get_param_handle("AFCS_TEST_ROLL")
 local AFCS_test_yaw_param = get_param_handle("AFCS_TEST_YAW")
@@ -96,6 +101,12 @@ dev:listen_command(Keys.AFCSAltitudeToggle)
 dev:listen_command(Keys.AFCSHeadingToggle)
 dev:listen_command(Keys.AFCSHeadingInc)
 dev:listen_command(Keys.AFCSHeadingDec)
+
+--heading select continuous
+dev:listen_command(Keys.afcs_hdg_set_start_up)
+dev:listen_command(Keys.afcs_hdg_set_start_down)
+dev:listen_command(Keys.afcs_hdg_set_stop)
+
 --These appear to be shortcuts for certain combinations
 dev:listen_command(Keys.AFCSHotasMode)      -- for warthog
 dev:listen_command(Keys.AFCSHotasPath)      -- for warthog
@@ -247,6 +258,9 @@ function afcs_standby(value)
 end
 
 function afcs_hdg_set(value)
+
+    afcs_hdg_set_knob = value
+
     if value > 0 then
         afcs_heading_hold = afcs_heading_hold + 1
     elseif value < 0 then
@@ -260,6 +274,21 @@ function afcs_hdg_set(value)
     if afcs_heading_hold < 0 then
         afcs_heading_hold = afcs_heading_hold + 360
     end
+
+end
+
+-- heading select continuous
+function afcs_hdg_set_start_up(value)
+    afcs_hdg_set_moving = 1
+end
+
+function afcs_hdg_set_start_down(value)
+    afcs_hdg_set_moving = -1
+end
+
+function afcs_hdg_set_stop(value)
+    afcs_hdg_set_moving = 0
+    afcs_hdg_set_knob_delay = 0 -- reset delay time for quick-tap responsiveness
 end
 
 function afcs_engage(value)
@@ -414,6 +443,11 @@ local command_table = {
     [Keys.AFCSEngageToggle] = afcs_engage_toggle,
     [Keys.AFCSAltitudeToggle] = afcs_altitude_toggle,
     [Keys.AFCSHeadingToggle] = afcs_heading_toggle,
+
+    [Keys.afcs_hdg_set_start_up] = afcs_hdg_set_start_up,
+    [Keys.afcs_hdg_set_start_down] = afcs_hdg_set_start_down,
+    [Keys.afcs_hdg_set_stop] = afcs_hdg_set_stop,
+
     --Special Hotas Keys
     [Keys.AFCSHotasPath] = afcs_hotas_path,
     [Keys.AFCSHotasAltHdg] = afcs_hotas_alt_hdg,
@@ -928,7 +962,6 @@ function update_afcs()
         afcs_auto_trim_pitch()
     end
 
-
     --see if we should enter into css mode
     afcs_check_for_css()
 
@@ -970,6 +1003,19 @@ function update()
     update_afcs()
     update_apc()
     update_throttle_buttons()
+
+    -- continuous heading select
+    if afcs_hdg_set_moving ~= 0 then 
+        print_message_to_user(afcs_hdg_set_knob_delay)
+
+        if afcs_hdg_set_knob_delay > 0 then
+            afcs_hdg_set_knob_delay = afcs_hdg_set_knob_delay - 1
+        else
+            afcs_hdg_set(afcs_hdg_set_moving)
+            afcs_hdg_set_knob_delay = 6 -- set rate
+        end
+
+    end
 
 end
 
