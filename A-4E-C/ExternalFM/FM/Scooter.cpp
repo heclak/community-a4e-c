@@ -32,6 +32,8 @@
 #include "Globals.h"
 #include "Logger.h"
 #include "Asteroids.h"
+#include "MouseControl.h"
+#include "ModifierEmitter.h"
 
 //============================= Statics ===================================//
 static Scooter::AircraftState* s_state = NULL;
@@ -49,6 +51,11 @@ static Asteroids* s_asteroids = NULL;
 static std::vector<LERX> s_splines;
 
 static Scooter::Radar* s_radar = NULL;
+static MouseControl* s_mouseControl = NULL;
+
+static HWND s_window = NULL;
+static bool s_focus = false;
+
 static unsigned char* s_testBuffer = NULL;
 
 //static Logger* s_logger;
@@ -211,6 +218,13 @@ void init(const char* config)
 	s_fuelSystem = new Scooter::FuelSystem2( *s_engine, *s_state );
 	s_radar = new Scooter::Radar( *s_interface, *s_state );
 	s_asteroids = new Asteroids( s_interface );
+	s_mouseControl = new MouseControl;
+
+
+	s_window = GetActiveWindow();
+	printf( "Have window: %p\n", s_window );
+	
+
 	//s_logger = new Logger( s_luaVM->getGlobalString("logger_file") );
 
 	//s_fuelSystem->setTankPos( Scooter::FuelSystem2::TANK_FUSELAGE, Vec3( s_fuseTankOffset, 0.0, 0.0 ) );
@@ -235,6 +249,7 @@ void cleanup()
 	delete s_fuelSystem;
 	delete s_radar;
 	delete s_asteroids;
+	delete s_mouseControl;
 	//delete s_logger;
 
 	s_luaVM = NULL;
@@ -249,8 +264,10 @@ void cleanup()
 	s_fuelSystem = NULL;
 	s_radar = NULL;
 	s_asteroids = NULL;
+	s_mouseControl = NULL;
 	//s_logger = NULL;
 
+	s_window = NULL;
 	s_splines.clear();
 }
 
@@ -350,9 +367,16 @@ void ed_fm_simulate(double dt)
 		s_radar->setDisable( s_interface->getRadarDisabled() );
 	}
 
+	HWND focus = GetFocus();
+	bool oldFocus = s_focus;
+	s_focus = focus == s_window;
+	if ( oldFocus && ! s_focus )
+		releaseAllEmulatedKeys();
 
-	//checkCorruption( __FUNCTION__ );
-	//dumpMem( (unsigned char*)s_fuelSystem, sizeof( Scooter::FuelSystem2 ) );
+	if ( s_focus )
+	{
+		s_mouseControl->update( s_input->mouseXAxis().getValue(), s_input->mouseYAxis().getValue() );
+	}
 
 	//Update
 	s_input->update(s_interface->getWheelBrakeAssist());
@@ -712,7 +736,28 @@ void ed_fm_set_command
 	case KEYS_PLANEFIREOFF:
 		s_asteroids->fire( false );
 		break;
-
+	case DEVICE_COMMANDS_MOUSE_X:
+		s_input->mouseXAxis().updateAxis( value );
+		break;
+	case DEVICE_COMMANDS_MOUSE_Y:
+		s_input->mouseYAxis().updateAxis( value );
+		break;
+	case KEYS_MODIFIER_LEFT_DOWN:
+		keyCONTROL( true );
+		leftMouse( true );
+		break;
+	case KEYS_MODIFIER_LEFT_UP:
+		keyCONTROL( false );
+		leftMouse( false );
+		break;
+	case KEYS_MODIFIER_RIGHT_DOWN:
+		keySHIFT( true );
+		rightMouse( true );
+		break;
+	case KEYS_MODIFIER_RIGHT_UP:
+		keySHIFT( false );
+		rightMouse( false );
+		break;
 	default:
 		;// printf( "number %d: %lf\n", command, value );
 	}

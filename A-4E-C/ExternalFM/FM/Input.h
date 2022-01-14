@@ -326,6 +326,16 @@ public:
 		return m_rightBrakeAxis;
 	}
 
+	inline Axis& mouseXAxis()
+	{
+		return m_mouseX;
+	}
+
+	inline Axis& mouseYAxis()
+	{
+		return m_mouseY;
+	}
+
 private:
 
 	Axis m_pitchAxis;
@@ -334,6 +344,8 @@ private:
 	Axis m_throttleAxis;
 	Axis m_leftBrakeAxis;
 	Axis m_rightBrakeAxis;
+	Axis m_mouseX;
+	Axis m_mouseY;
 
 	double m_pitch = 0.0;
 	double m_roll = 0.0;
