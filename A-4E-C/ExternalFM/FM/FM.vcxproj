@@ -193,6 +193,8 @@
     <ClInclude Include="Logger.h" />
     <ClInclude Include="LuaVM.h" />
     <ClInclude Include="Maths.h" />
+    <ClInclude Include="ModifierEmitter.h" />
+    <ClInclude Include="MouseControl.h" />
     <ClInclude Include="MovingAverage.h" />
     <ClInclude Include="Radar.h" />
     <ClInclude Include="RadarScope.h" />

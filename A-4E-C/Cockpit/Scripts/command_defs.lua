@@ -401,6 +401,12 @@ Keys =
     Radar_Ret_Cont_Stop            = __custom_counter(),
     radio_ptt_voip                = __custom_counter(),
 
+    modifier_left_down = __custom_counter(),
+    modifier_left_up = __custom_counter(),
+    
+    modifier_right_down = __custom_counter(),
+    modifier_right_up = __custom_counter(),
+
 }
 
 start_command   = 3000
@@ -623,4 +629,7 @@ device_commands =
     seat_adjustment         = __counter(),
 
     fuel_transfer_bypass    = __counter(),
+
+    mouse_x = __counter(),
+    mouse_y = __counter(),
 }

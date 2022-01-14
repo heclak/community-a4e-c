@@ -30,3 +30,8 @@ inline long double operator"" _feet( long double x )
 {
 	return x * 0.3048;
 }
+
+inline long double operator"" _mil( long double x )
+{
+	return x * 0.00098175;
+}

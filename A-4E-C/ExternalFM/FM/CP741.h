@@ -43,6 +43,7 @@ public:
 
 	double calculateHorizontalDistance();
 	double calculateImpactDistance( double angle ) const;
+	double calculateImpactDistanceDragless( double angle ) const;
 	bool inRange();
 
 private:

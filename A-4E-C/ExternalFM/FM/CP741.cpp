@@ -16,10 +16,11 @@
 #include <stdio.h>
 #include <math.h>
 #include "Maths.h"
+#include "Units.h"
 //=========================================================================//
 
 //             angle from weapons dataum + fudge factor
-#define c_weaponDatum (0.05235987756 + 0.01)
+#define c_weaponDatum (3.0_deg +  10.0_mil) //(0.05235987756)// + 0.01)
 #define PULL_UP_ANGLE 0.785398
 
 Scooter::CP741::CP741( AircraftState& state ):
@@ -70,7 +71,15 @@ void Scooter::CP741::updateSolution()
 	if ( m_target.y > m_state.getWorldPosition().y )
 		return;
 
-	double error = fabs( calculateHorizontalDistance() - calculateImpactDistance( 0.0 ));
+	double horizontalDistance = calculateHorizontalDistance();
+	double impactDistance = calculateImpactDistance( 0.0 );
+	//double impactDistanceDragless = calculateImpactDistanceDragless( 0.0 );
+
+	//printf( "Drag Error: %lf\n", impactDistanceDragless - impactDistance);
+
+	double error = fabs( horizontalDistance - impactDistance );
+
+	//printf( "Distance: %lf, Bomb Flight Distance: %lf\n", horizontalDistance, impactDistance );
 
 	if ( error < 5.0 )
 	{
@@ -102,7 +111,7 @@ void Scooter::CP741::setTarget( bool set, double slant )
 	}
 
 	//Pitch - weapon datum
-	double weaponAngle = m_state.getAngle().z - c_weaponDatum - m_gunsightAngle;
+	double weaponAngle = m_state.getAngle().z - c_weaponDatum;// - m_gunsightAngle;
 
 	//If there is no radar data and we are not going to create a singularity
 	//then use the radar altimiter.
@@ -136,8 +145,10 @@ void Scooter::CP741::setTarget( bool set, double slant )
 		//tracked by the radar, this is to give a valid inrange light.
 		m_targetSet = set;
 		
+		//printf( "Angle: %lf, Range: %lf\n", weaponAngle, slant );
 		Vec3 direction = directionVector( weaponAngle, m_state.getAngle().y );
 		m_target = direction * slant + m_state.getWorldPosition();
+		//printf( "Target: %lf,%lf,%lf\n", m_target.x, m_target.y, m_target.z );
 	}
 	else
 	{
@@ -145,7 +156,7 @@ void Scooter::CP741::setTarget( bool set, double slant )
 	}
 }
 
-double Scooter::CP741::calculateImpactDistance( double angle ) const
+double Scooter::CP741::calculateImpactDistanceDragless( double angle ) const
 {
 	Vec3 velocity = rotateVectorIntoXYPlane(m_state.getWorldVelocity());
 
@@ -159,10 +170,52 @@ double Scooter::CP741::calculateImpactDistance( double angle ) const
 	double h = m_target.y - m_state.getWorldPosition().y;
 	double t = -ua + sqrt( ua * ua + (2.0*h) / (-9.81) );
 
-
 	//Get horizontal component distance.
 	double distHoriz = velocity.x * t;
 	return distHoriz;
+}
+
+constexpr double c_CD = 0.26;
+constexpr double c_mass = 228;
+constexpr double c_caliber = 0.273;
+constexpr double c_area = PI * (c_caliber/2.0)*( c_caliber / 2.0 );
+
+constexpr double c_coeff = c_CD * c_area * 0.5 / c_mass;
+constexpr double c_ejectionSpeed = 1.0;
+
+double Scooter::CP741::calculateImpactDistance( double angle ) const
+{
+	Vec3 velocity = rotateVectorIntoXYPlane( m_state.getWorldVelocity() );
+
+	if ( angle != 0.0 )
+	{
+		velocity = rotate( velocity, angle, 0.0 );
+	}
+
+	Vec3 normal( 0.0, 0.0, 1.0 );
+	Vec3 ejectionVelocity = c_ejectionSpeed * cross( normalize( velocity ), normal  );
+	//printf( "Ejection Velocity: %lf, %lf\n", ejectionVelocity.x, ejectionVelocity.y );
+
+	velocity += ejectionVelocity;
+
+	double dt = 0.05;
+	Vec3 position = Vec3(0.0, m_state.getWorldPosition().y, 0.0);
+	Vec3 acceleration;
+	Vec3 direction;
+
+	int steps = 0;
+	while ( position.y > m_target.y )
+	{
+		direction = normalize( velocity );
+		acceleration = -Vec3( 0.0, 9.81, 0.0 ) - c_coeff * m_state.getAirDensity() * magnitudeSquared( velocity ) * direction;
+		velocity += acceleration * dt;
+		position += velocity * dt;
+		steps++;
+	}
+	
+	//printf( "Calculated in %d steps\n", steps );
+
+	return position.x;
 }
 
 
@@ -173,7 +226,7 @@ bool Scooter::CP741::inRange()
 	if ( ! m_targetFound || ! m_power )
 		return false;
 
-	double impactAt45 = calculateImpactDistance( PULL_UP_ANGLE );
+	double impactAt45 = calculateImpactDistanceDragless( PULL_UP_ANGLE );
 	double distance = calculateHorizontalDistance();
 	//printf("%lf, %lf\n", impactAt45, distance );
 	return impactAt45 >= distance;

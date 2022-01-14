@@ -134,6 +134,7 @@ bool Scooter::Radar::handleInput( int command, float value )
 		detail( value );
 		return true;
 	case DEVICE_COMMANDS_RADAR_GAIN:
+		printf( "Gain Knob: %lf\n", value/10.0 );
 		gain( value );
 		return true;
 	case DEVICE_COMMANDS_RADAR_BRILLIANCE:
@@ -388,7 +389,7 @@ void Scooter::Radar::update( double dt )
 
 	case STATE_AG:
 		m_scale = 20000.0_yard / 20.0_nauticalMile;
-		scanAG( dt );
+		scanAG2( dt );
 		drawScanAG();
 		break;
 	}
@@ -483,7 +484,7 @@ void Scooter::Radar::scanOneLine3( bool detail )
 
 		if ( ! detail || abs( pitchAngle ) <= m_detail )
 		{
-			if ( scanOneRay( pitchAngle, xRay + yawAngle, range ) )
+			if ( scanOneRay( false, pitchAngle, xRay + yawAngle, range ) )
 			{
 				//If there is a possible obstacle then record this info.
 				setObstacle( range );
@@ -514,7 +515,7 @@ void Scooter::Radar::scanOneLine2( bool detail )
 		//double pitchAngle = 2.5_deg * y;
 		if ( ! detail || abs( pitchAngle ) <= m_detail )
 		{
-			if ( scanOneRay( pitchAngle, xRay + yawAngle, range ) )
+			if ( scanOneRay( false, pitchAngle, xRay + yawAngle, range ) )
 			{
 				//If there is a possible obstacle then record this info.
 				setObstacle( range );
@@ -538,7 +539,7 @@ void Scooter::Radar::scanOneLine(bool detail)
 
 		if ( ! detail || abs( pitchAngle ) <= m_detail )
 		{
-			if ( scanOneRay( pitchAngle, yawAngle, range ) )
+			if ( scanOneRay( false, pitchAngle, yawAngle, range ) )
 			{
 				//If there is a possible obstacle then record this info.
 				setObstacle( range );
@@ -579,14 +580,17 @@ void Scooter::Radar::findShips( double yawAngle, bool detail )
 	}
 }
 
-bool Scooter::Radar::scanOneRay( double pitchAngle, double yawAngle, double& range )
+bool Scooter::Radar::scanOneRay( bool boresight, double pitchAngle, double yawAngle, double& range, double& reflectivityOut )
 {
 	Vec3 pos = m_aircraftState.getWorldPosition();
 
 	bool obstacle = false;
 	
 	double relativePitch;
-	if ( m_aoaCompSwitch )
+
+	if ( boresight )
+		relativePitch = pitchAngle;
+	else if ( m_aoaCompSwitch )
 		relativePitch = pitchAngle - m_sweepAngle - m_aircraftState.getAOA() * cos( m_aircraftState.getAngle().x );
 	else
 		relativePitch = pitchAngle - m_sweepAngle;
@@ -605,7 +609,7 @@ bool Scooter::Radar::scanOneRay( double pitchAngle, double yawAngle, double& ran
 		Vec3 normal = getNormal( ground.x, ground.z );
 
 		double reflectivity = getReflection( dir, normal, (TerrainType)type ) * getWarmupFactor();
-
+		reflectivityOut = reflectivity;
 		
 		reflectivity *= 2.0e-4 / m_gain;//rangeKM * rangeKM / (1e5 * m_gain);
 
@@ -683,6 +687,73 @@ void Scooter::Radar::drawScan()
 	}
 }
 
+void Scooter::Radar::scanAG2( double dt )
+{
+	m_y -= 2.0 * dt;
+
+	//Gone off the bottom reset to the top.
+	if ( m_y < -1.0 )
+		m_y = 1.0;
+
+	m_locked = false;
+	m_range = 0.0;
+
+
+	double range = 0.0;
+	double rangeAverage = 0.0;
+	size_t count = 0;
+	/*for ( size_t i = 0; i < c_samplesPerFrame; i++ )
+	{
+		double theta = m_normal( m_generator );
+		double phi = m_uniform( m_generator );
+
+		double xRay = theta * cos( phi );
+		double pitchAngle = theta * sin( phi );
+		double reflectivity;
+		if ( scanOneRay( pitchAngle, xRay, range, reflectivity ) && range > 0 );
+		{
+			double rangeKm = range / 1000.0;
+			double returnStrength = reflectivity / pow( rangeKm, 2.0 );
+
+			if ( returnStrength > (m_gainKnob/10.0) )
+			{
+				
+				rangeAverage += range;
+				count++;
+			}
+		}
+	}*/
+
+	/*rangeAverage /= (double)count;*/
+
+	//if ( count > ( 2 * c_samplesPerFrame ) / 3 )
+
+
+	if ( scanOneRay( true, -3.0_deg - 10.0_mil, 0.0, range ) )
+	{
+		m_locked = true;
+		m_range = range;
+	}
+	else
+	{
+		m_locked = false;
+	}
+
+	if ( m_locked )
+	{
+		double displayY = rangeToDisplay( m_range );
+
+		if ( m_converged || abs( displayY - m_y ) < 0.1 )
+		{
+			m_y = displayY;
+			m_converged = true;
+		}
+	}
+	else
+		m_converged = false;
+}
+
+
 void Scooter::Radar::scanAG(double dt)
 {
 	m_y -= 2.0 * dt;
@@ -697,7 +768,7 @@ void Scooter::Radar::scanAG(double dt)
 	//This is similar to the old AG radar cast.
 	//The minimum range is taken, this means the CP-741/A must have a fudge factor.
 	//This is because the minimum range will most likely be 0.25 degrees below the weapons datum.
-	for ( size_t i = 0; i < c_raysAG; i++ )
+	for ( size_t i = 0; i < 1; i++ )
 	{
 		float y = -1.0 + 2.0 * (float)i / (float)c_raysAG;
 
@@ -705,7 +776,7 @@ void Scooter::Radar::scanAG(double dt)
 		double cosRoll = cos( m_aircraftState.getAngle().x );
 		double sinRoll = sin( m_aircraftState.getAngle().x );
 
-		Vec3 dir = directionVector( y * 0.25_deg + m_aircraftState.getAngle().z - 3.0_deg * cosRoll, m_aircraftState.getAngle().y - 3.0_deg * sinRoll );
+		Vec3 dir = directionVector( /*y * 0.25_deg +*/ m_aircraftState.getAngle().z - 3.0_deg * cosRoll, m_aircraftState.getAngle().y - 3.0_deg * sinRoll );
 		Vec3 pos = m_aircraftState.getWorldPosition();
 		Vec3 ground;
 

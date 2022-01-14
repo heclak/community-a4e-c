@@ -118,11 +118,17 @@ private:
 	void scanOneLine(bool detail);
 	void scanOneLine2( bool detail );
 	void scanOneLine3( bool detail );
-	bool scanOneRay( double pitchAngle, double yawAngle,  double& range );
+	bool scanOneRay(bool boresight, double pitchAngle, double yawAngle, double& range) 
+	{
+		double reflection;
+		return scanOneRay(boresight, pitchAngle, yawAngle, range, reflection );
+	}
+	bool scanOneRay( bool boresight, double pitchAngle, double yawAngle,  double& range, double& reflection );
 	void findShips( double yawAngle, bool detail );
 
 	void drawScan();
 	void scanAG(double dt);
+	void scanAG2( double dt );
 	void scanProfile( double dt );
 	void drawScanAG();
 	void drawScanProfile();
