@@ -18,13 +18,13 @@
 // me at joshnel123@gmail.com and I would be more than willing to share the code.
 #if __has_include("Avionics/ShipFinder.h")
 #define USE_SHIP_FINDER
-#pragma comment(lib, "ScooterAvionics.lib")
+#pragma comment(lib, "AvionicsUtils.lib")
 #include "Avionics/ShipFinder.h"
 #endif
 #include "Ship.h"
 #include <vector>
 
-// TODO: PLEASE FIX THIS CIRCULAR DEPENDANCY
+
 inline const std::vector<Ship>* getShips()
 {
 #ifdef USE_SHIP_FINDER
