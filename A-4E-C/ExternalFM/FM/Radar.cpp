@@ -2,6 +2,7 @@
 #include "Maths.h"
 #include <math.h>
 #include "ShipFinder.h"
+#include "AirframeConstants.h"
 
 //TODO Rewrite this pile of shit.
 
@@ -134,7 +135,6 @@ bool Scooter::Radar::handleInput( int command, float value )
 		detail( value );
 		return true;
 	case DEVICE_COMMANDS_RADAR_GAIN:
-		printf( "Gain Knob: %lf\n", value/10.0 );
 		gain( value );
 		return true;
 	case DEVICE_COMMANDS_RADAR_BRILLIANCE:
@@ -687,8 +687,16 @@ void Scooter::Radar::drawScan()
 	}
 }
 
+struct Range
+{
+	double r;
+	double I;
+};
+
 void Scooter::Radar::scanAG2( double dt )
 {
+	static Range s_rangeData[c_samplesPerFrame];
+
 	m_y -= 2.0 * dt;
 
 	//Gone off the bottom reset to the top.
@@ -699,10 +707,11 @@ void Scooter::Radar::scanAG2( double dt )
 	m_range = 0.0;
 
 
-	double range = 0.0;
+	
 	double rangeAverage = 0.0;
+
 	size_t count = 0;
-	/*for ( size_t i = 0; i < c_samplesPerFrame; i++ )
+	for ( size_t i = 0; i < c_samplesPerFrame; i++ )
 	{
 		double theta = m_normal( m_generator );
 		double phi = m_uniform( m_generator );
@@ -710,34 +719,31 @@ void Scooter::Radar::scanAG2( double dt )
 		double xRay = theta * cos( phi );
 		double pitchAngle = theta * sin( phi );
 		double reflectivity;
-		if ( scanOneRay( pitchAngle, xRay, range, reflectivity ) && range > 0 );
+		double range = 0.0;
+		scanOneRay( true, pitchAngle + c_weaponsDatum, xRay, range, reflectivity );
+		if ( range > 0.0 )
 		{
 			double rangeKm = range / 1000.0;
 			double returnStrength = reflectivity / pow( rangeKm, 2.0 );
-
-			if ( returnStrength > (m_gainKnob/10.0) )
-			{
-				
-				rangeAverage += range;
-				count++;
-			}
+			s_rangeData[count].I = returnStrength;
+			s_rangeData[count].r = range;
+			count++;
 		}
-	}*/
-
-	/*rangeAverage /= (double)count;*/
-
-	//if ( count > ( 2 * c_samplesPerFrame ) / 3 )
-
-
-	if ( scanOneRay( true, -3.0_deg - 10.0_mil, 0.0, range ) )
-	{
-		m_locked = true;
-		m_range = range;
 	}
-	else
+
+	double intensity = 0.0;
+	for ( size_t i = 0; i < count; i++ )
 	{
-		m_locked = false;
+		intensity += s_rangeData[i].I;
 	}
+
+	for ( size_t i = 0; i < count; i++ )
+	{
+		rangeAverage += s_rangeData[i].r * s_rangeData[i].I / intensity;
+	}
+
+	m_locked = intensity > 0.5;
+	m_range = m_locked ? rangeAverage : 0.0;
 
 	if ( m_locked )
 	{

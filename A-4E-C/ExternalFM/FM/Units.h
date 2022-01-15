@@ -11,12 +11,12 @@
 //
 //================================ Includes ===============================//
 
-inline long double operator"" _deg( long double x )
+constexpr inline long double operator"" _deg( long double x )
 {
 	return x * 0.01745329252;
 }
 
-inline long double operator"" _nauticalMile( long double x )
+constexpr inline long double operator"" _nauticalMile( long double x )
 {
 	return x * 1852.0;
 }
@@ -26,12 +26,12 @@ inline long double operator"" _yard( long double x )
 	return x * 0.9144;
 }
 
-inline long double operator"" _feet( long double x )
+constexpr inline long double operator"" _feet( long double x )
 {
 	return x * 0.3048;
 }
 
-inline long double operator"" _mil( long double x )
+constexpr inline long double operator"" _mil( long double x )
 {
 	return x * 0.00098175;
 }

@@ -17,10 +17,11 @@
 #include <math.h>
 #include "Maths.h"
 #include "Units.h"
+#include "AirframeConstants.h"
 //=========================================================================//
 
 //             angle from weapons dataum + fudge factor
-#define c_weaponDatum (3.0_deg +  10.0_mil) //(0.05235987756)// + 0.01)
+//#define c_weaponDatum (3.0_deg +  10.0_mil) //(0.05235987756)// + 0.01)
 #define PULL_UP_ANGLE 0.785398
 
 Scooter::CP741::CP741( AircraftState& state ):
@@ -72,7 +73,7 @@ void Scooter::CP741::updateSolution()
 		return;
 
 	double horizontalDistance = calculateHorizontalDistance();
-	double impactDistance = calculateImpactDistance( 0.0 );
+	double impactDistance = calculateImpactDistanceDragless( 0.0 );//calculateImpactDistance( 0.0 );
 	//double impactDistanceDragless = calculateImpactDistanceDragless( 0.0 );
 
 	//printf( "Drag Error: %lf\n", impactDistanceDragless - impactDistance);
@@ -111,7 +112,7 @@ void Scooter::CP741::setTarget( bool set, double slant )
 	}
 
 	//Pitch - weapon datum
-	double weaponAngle = m_state.getAngle().z - c_weaponDatum;// - m_gunsightAngle;
+	double weaponAngle = m_state.getAngle().z + c_weaponsDatum;// - m_gunsightAngle;
 
 	//If there is no radar data and we are not going to create a singularity
 	//then use the radar altimiter.
@@ -156,6 +157,7 @@ void Scooter::CP741::setTarget( bool set, double slant )
 	}
 }
 
+constexpr double c_ejectionSpeed = 3.0;
 double Scooter::CP741::calculateImpactDistanceDragless( double angle ) const
 {
 	Vec3 velocity = rotateVectorIntoXYPlane(m_state.getWorldVelocity());
@@ -164,6 +166,12 @@ double Scooter::CP741::calculateImpactDistanceDragless( double angle ) const
 	{
 		velocity = rotate( velocity, angle, 0.0 );
 	}
+
+	Vec3 normal( 0.0, 0.0, 1.0 );
+	Vec3 ejectionVelocity = c_ejectionSpeed * cross( normalize( velocity ), normal );
+	//printf( "Ejection Velocity: %lf, %lf\n", ejectionVelocity.x, ejectionVelocity.y );
+
+	velocity += ejectionVelocity;
 
 	//Calculate time until impact.
 	double ua = velocity.y / (-9.81);
@@ -175,13 +183,13 @@ double Scooter::CP741::calculateImpactDistanceDragless( double angle ) const
 	return distHoriz;
 }
 
-constexpr double c_CD = 0.26;
+constexpr double c_CD = 0.0; // 0.15;//0.26;
 constexpr double c_mass = 228;
 constexpr double c_caliber = 0.273;
 constexpr double c_area = PI * (c_caliber/2.0)*( c_caliber / 2.0 );
 
 constexpr double c_coeff = c_CD * c_area * 0.5 / c_mass;
-constexpr double c_ejectionSpeed = 1.0;
+
 
 double Scooter::CP741::calculateImpactDistance( double angle ) const
 {
