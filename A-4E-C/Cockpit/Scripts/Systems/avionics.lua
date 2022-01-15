@@ -6,7 +6,10 @@ dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
+dofile(LockOn_Options.script_path.."Systems/air_data_computer.lua")
 dofile(LockOn_Options.script_path.."sound_params.lua") 
+dofile(LockOn_Options.script_path.."Systems/mission.lua")
+dofile(LockOn_Options.script_path.."Systems/mission_utils.lua")
 
 local update_time_step = 0.05
 make_default_activity(update_time_step)--update will be called 20 times per second
@@ -34,6 +37,8 @@ end
 --local degrees_per_radian = 57.2957795
 --local feet_per_meter_per_minute = 196.8
 local meters_to_feet = 3.2808399
+local mgH_to_pa = 3386.39
+local MM_TO_INCHES = 0.0393701
 local GALLON_TO_KG = 3.785 * 0.8
 local KG_TO_POUNDS = 2.20462
 local MPS_TO_KNOTS = 1.94384
@@ -297,6 +302,9 @@ function enumerate_fueltanks()
 end
 
 function post_initialize()
+
+    load_tempmission_file()
+    alt_setting = get_qnh() * MM_TO_INCHES
 
     auto_catapult_power = get_aircraft_property("Auto_Catapult_Power")
     --efm_data_bus.fm_setCatMode(auto_catapult_power)
@@ -755,9 +763,11 @@ function update_attitude_gyros()
     attgyro_stby_roll:set(roll)      -- -180 to 180 degrees
 end
 
+
 function update_altimeter()
     -- altimeter
-    local alt = sensor_data.getBarometricAltitude()*meters_to_feet
+    Air_Data_Computer:setAltSetting(alt_setting*mgH_to_pa)
+    local alt = Air_Data_Computer:getBaroAlt()*meters_to_feet --sensor_data.getBarometricAltitude()*meters_to_feet
 
     local altNNxx = math.floor(alt_setting)         -- for now just make it discrete
     local altxxNx = math.floor(alt_setting*10) % 10
@@ -770,11 +780,11 @@ function update_altimeter()
 
     -- based on setting, adjust displayed altitude
     local alt_adj = (alt_setting - ALT_PRESSURE_STD)*1000   -- 1000 feet per inHg / 10 feet per .01 inHg -- if we set higher pressure than actual => altimeter reads higher
-
-    alt_10k:set((alt+alt_adj) % 100000)
-    alt_1k:set((alt+alt_adj) % 10000)
-    alt_100s:set((alt+alt_adj) % 1000)
-    alt_needle:set((alt+alt_adj) % 1000)
+    
+    alt_10k:set(alt % 100000)
+    alt_1k:set(alt % 10000)
+    alt_100s:set(alt % 1000)
+    alt_needle:set(alt % 1000)
 
     --continuous knob motion
     if alt_pressure_moving ~= 0 then
