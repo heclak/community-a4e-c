@@ -201,6 +201,9 @@ void init(const char* config)
 	sprintf_s( configFile, 200, "%s/Config/config.lua", config );
 	s_luaVM->dofile( configFile );
 	s_luaVM->getSplines( "splines", s_splines );
+
+	
+
 	//s_luaVM->getGlobalNumber( "external_tank_offset", s_extTankOffset);
 	//s_luaVM->getGlobalNumber( "fuselage_tank_offset", s_fuseTankOffset );
 	//s_luaVM->getGlobalNumber( "wing_tank_offset", s_wingTankOffset );
@@ -224,6 +227,10 @@ void init(const char* config)
 	s_window = GetActiveWindow();
 	printf( "Have window: %p\n", s_window );
 	
+	double ejectionVelocity = 0.0;
+	s_luaVM->getGlobalNumber( "ejection_velocity", ejectionVelocity );
+	s_avionics->getComputer().setEjectionVelocity( ejectionVelocity );
+	printf( "Ejection Velocity: %lf\n", ejectionVelocity );
 
 	//s_logger = new Logger( s_luaVM->getGlobalString("logger_file") );
 

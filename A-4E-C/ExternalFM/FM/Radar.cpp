@@ -724,7 +724,7 @@ void Scooter::Radar::scanAG2( double dt )
 		if ( range > 0.0 )
 		{
 			double rangeKm = range / 1000.0;
-			double returnStrength = reflectivity / pow( rangeKm, 2.0 );
+			double returnStrength = clamp(reflectivity / pow( rangeKm, 2.0 ), 0.0, 1.0); //maybe clamp?
 			s_rangeData[count].I = returnStrength;
 			s_rangeData[count].r = range;
 			count++;
