@@ -395,6 +395,10 @@ local ir_missile_el_param = get_param_handle("WS_IR_MISSILE_TARGET_ELEVATION")
 local ir_missile_des_az_param = get_param_handle("WS_IR_MISSILE_SEEKER_DESIRED_AZIMUTH")
 local ir_missile_des_el_param = get_param_handle("WS_IR_MISSILE_SEEKER_DESIRED_ELEVATION")
 
+--Not useful for A-4 but used for gyro sight, combined with WeaponSystem:set_target_range(number)
+--local gun_el = get_param_handle("WS_GUN_PIPER_ELEVATION")
+--local gun_az = get_param_handle("WS_GUN_PIPER_AZIMUTH")
+
 -- call function at the end of a ripple sequence
 function ripple_sequence_end()
     debug_print("Ripple Sequence Ended")
@@ -473,6 +477,10 @@ function updateComputerSolution(weapons_released)
 end
 
 function update()
+
+	--WeaponSystem:set_target_range(1000.0)
+	--print_message_to_user("Az: "..gun_az:get().." El: "..gun_el:get())
+
 	--ECM_status = WeaponSystem:get_ECM_status()
 	
 	
