@@ -155,6 +155,8 @@ public:
 
 		m_ADC_TAS = m_api.pfn_ed_cockpit_get_parameter_handle( "ADC_TAS" );
 		m_ADC_CAS = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_CAS" );
+		m_ADC_ALT = m_api.pfn_ed_cockpit_get_parameter_handle( "ADC_ALT" );
+		m_ADC_altSetting = m_api.pfn_ed_cockpit_get_parameter_handle( "ADC_ALT_SETTING" );
 
 		m_chocks = m_api.pfn_ed_cockpit_get_parameter_handle( "WHEEL_CHOCKS_STATE" );
 
@@ -168,7 +170,6 @@ public:
 		m_egg = m_api.pfn_ed_cockpit_get_parameter_handle( "EGG" );
 		m_eggScore = m_api.pfn_ed_cockpit_get_parameter_handle( "EGG_SCORE" );
 		m_eggHighScore = m_api.pfn_ed_cockpit_get_parameter_handle( "EGG_HIGH_SCORE" );
-
 	}
 
 	cockpit_param_api& api()
@@ -314,6 +315,11 @@ public:
 	inline void ADC_setCAS( double value )
 	{
 		setParamNumber( m_ADC_CAS, value );
+	}
+
+	inline void ADC_setAlt( double value )
+	{
+		setParamNumber( m_ADC_ALT, value );
 	}
 
 	inline void setWorldAcceleration( const Vec3& a )
@@ -639,6 +645,11 @@ public:
 	{
 		return getParamNumber( m_wheelBrakeAssist ) > 0.5;
 	}
+
+	inline double getAltSetting()
+	{
+		return getParamNumber( m_ADC_altSetting );
+	}
 		 
 	void* m_test = NULL;
 
@@ -781,6 +792,8 @@ private:
 	void* m_ADC_TAS = NULL;
 	void* m_ADC_TASX = NULL;
 	void* m_ADC_TASZ = NULL;
+	void* m_ADC_ALT = NULL;
+	void* m_ADC_altSetting = NULL;
 
 	void* m_chocks = NULL;
 
@@ -798,6 +811,7 @@ private:
 	void* m_egg = NULL;
 	void* m_eggScore = NULL;
 	void* m_eggHighScore = NULL;
+
 };
 
 
