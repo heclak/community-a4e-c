@@ -638,7 +638,7 @@ function update()
                                 debug_print(tostring(dispenser))
                                 -- calculate number of bomblets in a tube to release. 
                                 -- this does not factor into the number of tubes as that will be handled by the release code.
-                                local bomblets_to_add = math.ceil( dispenser.bomblet_count / dispenser.number_of_tubes )
+                                local bomblets_to_add = 1-- math.ceil( dispenser.bomblet_count / dispenser.number_of_tubes )
                                 -- add bomblets to release array
                                 cbu_bomblets_to_release[i] = bomblets_to_add + cbu_bomblets_to_release[i]
                                 -- increment weapon release count after weapon pulse fired

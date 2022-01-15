@@ -3,7 +3,7 @@
 #include <Windows.h>
 #include <limits.h>
 
-constexpr double c_inputScale = 10.0;
+constexpr double c_inputScale = 20.0;
 
 class MouseAxis
 {
