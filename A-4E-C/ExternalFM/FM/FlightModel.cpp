@@ -18,6 +18,7 @@
 #include "Maths.h"
 #include "Globals.h"
 #include "Units.h"
+#include "Logger.h"
 //=========================================================================//
 
 typedef Scooter::Airframe::Damage D;
@@ -400,6 +401,12 @@ void Scooter::FlightModel::calculateElements()
 	//m_elementLAil.calculateElementPhysics();
 	//m_elementRAil.calculateElementPhysics();
 	m_elementHorizontalStab.calculateElementPhysics();
+
+	Logger::entry( m_elementHorizontalStab.getAOA() );
+	Logger::entry( CLhstab( m_elementHorizontalStab.getAOA() ) );
+	Logger::entry( m_airframe.getElevator() );
+
+
 	m_elementVerticalStab.calculateElementPhysics();
 
 	//printf("aoa hstab: %lf\n", toDegrees(m_elementHorizontalStab.m_aoa));

@@ -389,7 +389,7 @@ void FlightModel::M_stab()
 	double horizDamage = m_airframe.getHoriStabDamage();
 	//double wingDamage = (m_airframe.getLWingDamage() + m_airframe.getRWingDamage())/2.0;
 
-	double elev = 0.65 * comp_e( m_state.getMach() ) * Cmde_a( std::abs( m_elementHorizontalStab.getAOA() ) ) * (-elevator() + m_airframe.getStabilizer()) * m_airframe.getElevatorDamage();
+	double elev = 0.0;//0.0 * 0.65 * comp_e( m_state.getMach() ) * Cmde_a( std::abs( m_elementHorizontalStab.getAOA() ) ) * (-elevator() + m_airframe.getStabilizer()) * m_airframe.getElevatorDamage();
 
 	m_moment.z += m_k * m_chord * ( elev + CmM( m_state.getMach() ) * 0.15 + 0.008 * m_airframe.getSpeedBrakePosition()) + 
 		0.25 * m_scalarV * m_totalWingArea * m_chord * m_chord * horizDamage * (Cmadot( m_state.getMach() ) * m_aoaDot * 6.5 + Cmq( m_state.getMach() ) * m_state.getOmega().z );

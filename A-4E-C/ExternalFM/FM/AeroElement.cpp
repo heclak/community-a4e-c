@@ -162,7 +162,6 @@ void Scooter::AeroElement::calculateElementPhysics()
 		m_aoa += controlInput();
 	}
 
-
 	elementLift();
 	elementDrag();
 
@@ -196,7 +195,7 @@ double Scooter::AeroControlElement::controlInput()
 	{
 	case HORIZONTAL_STAB:
 	{
-		double hStabIncidence = -m_airframe.getStabilizer();
+		double hStabIncidence = -m_airframe.getStabilizer() + m_airframe.elevatorAngle() * 3.0 * ( *m_compressElev )( m_state.getMach() );
 		return hStabIncidence;
 	}
 	case ELEVATOR:

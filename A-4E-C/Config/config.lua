@@ -265,4 +265,4 @@ ejection_velocity = 2.0
 --fuselage_tank_offset = 1.55 --CG -> 0.194
 --external_tank_offset = 0.45
 
---logger_file = "C:/tmp/T2_CG_-0.1_CP_-0.15_BOTH_FUEL_0.38.csv"
+logger_file = "C:/tmp/EL_AOA_1.csv"

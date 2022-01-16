@@ -58,7 +58,7 @@ static bool s_focus = false;
 
 static unsigned char* s_testBuffer = NULL;
 
-//static Logger* s_logger;
+static Logger* s_logger;
 
 //========================== Static Functions =============================//
 static void init( const char* config );
@@ -232,7 +232,7 @@ void init(const char* config)
 	s_avionics->getComputer().setEjectionVelocity( ejectionVelocity );
 	printf( "Ejection Velocity: %lf\n", ejectionVelocity );
 
-	//s_logger = new Logger( s_luaVM->getGlobalString("logger_file") );
+	s_logger = new Logger( s_luaVM->getGlobalString("logger_file") );
 
 	//s_fuelSystem->setTankPos( Scooter::FuelSystem2::TANK_FUSELAGE, Vec3( s_fuseTankOffset, 0.0, 0.0 ) );
 	//s_fuelSystem->setTankPos( Scooter::FuelSystem2::TANK_WING, Vec3( s_wingTankOffset, 0.0, 0.0 ) );
@@ -257,7 +257,7 @@ void cleanup()
 	delete s_radar;
 	delete s_asteroids;
 	delete s_mouseControl;
-	//delete s_logger;
+	delete s_logger;
 
 	s_luaVM = NULL;
 	s_state = NULL;
@@ -272,7 +272,7 @@ void cleanup()
 	s_radar = NULL;
 	s_asteroids = NULL;
 	s_mouseControl = NULL;
-	//s_logger = NULL;
+	s_logger = NULL;
 
 	s_window = NULL;
 	s_splines.clear();
@@ -329,6 +329,8 @@ void ed_fm_simulate(double dt)
 {
 	if ( ! g_safeToRun )
 		return;
+
+	Logger::time( dt );
 
 	//Pre update
 	if ( s_interface->getAvionicsAlive() )
@@ -399,12 +401,6 @@ void ed_fm_simulate(double dt)
 		egg( dt, s_asteroids, *s_input );
 	}
 
-	/*s_logger->time( dt );
-	s_logger->entry( s_state->getAOA() );
-	s_logger->entry( s_state->getOmega().z );
-	s_logger->entry( s_state->getOmegaDot().z );
-	s_logger->entry( s_input->pitchAxis().getValue(), true );*/
-
 
 	//yaw += dyaw;
 	//pitch += dpitch;
@@ -468,6 +464,8 @@ void ed_fm_simulate(double dt)
 	//Ultimately we should move this into the avionics class.
 	s_interface->setFuelTransferCaution( s_interface->getElecPrimaryAC() && (s_interface->getMasterTest() || s_fuelSystem->getFuelTransferCaution()) );
 	s_interface->setFuelBoostCaution( s_interface->getElecPrimaryAC() && (s_interface->getMasterTest() || s_fuelSystem->getFuelBoostCaution()) );
+
+	Logger::end();
 }
 
 void ed_fm_set_atmosphere(
