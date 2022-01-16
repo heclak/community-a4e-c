@@ -239,7 +239,41 @@ local cbu2a_quantity_array_pos = 0
 local cbu2ba_quantity_array_pos = 0
 local this_weapon_ptr = get_param_handle("THIS_WEAPON_PTR")
 
+--weapons station name to pass to kneeboard
+loadout_by_station = {
+    get_param_handle("loadout_station1"),
+    get_param_handle("loadout_station2"),
+    get_param_handle("loadout_station3"),
+    get_param_handle("loadout_station4"),
+    get_param_handle("loadout_station5"),
+}
+
+loadout_quantity_by_station = {
+    get_param_handle("loadout_quantity1"),
+    get_param_handle("loadout_quantity2"),
+    get_param_handle("loadout_quantity3"),
+    get_param_handle("loadout_quantity4"),
+    get_param_handle("loadout_quantity5"),
+}
+
 function post_initialize()
+    
+    -- loadout name by station for kneeboard
+    for i=1,5 do
+        local station = WeaponSystem:get_station_info(i-1)
+        local name = "UNKNOWN"
+        local quantity = "-"
+        if loadout_names[station.CLSID] ~= nil then
+            name = loadout_names[station.CLSID]
+        end
+        if station.count ~= nil then
+            quantity = station.count
+        end
+        loadout_by_station[i]:set(name)
+        loadout_quantity_by_station[i]:set(quantity)
+        print_message_to_user("Station " .. tostring(i) .. ": ".. tostring(station.CLSID) .." | " ..station.count)
+    end
+
     --print_message_to_user(find_lua_device_ptr(WeaponSystem))
 	this_weapon_ptr:set(find_lua_device_ptr(WeaponSystem))
     startup_print("weapon_system: postinit start")
