@@ -17,6 +17,7 @@ private:
 	void calculateEAS();
 	void calculateCAS();
 	void calculateTASXZComponents();
+	void calculateBaroAlt();
 
 	Interface& m_interface;
 	AircraftState& m_state;
@@ -27,6 +28,8 @@ private:
 
 	double m_tasX = 0.0;
 	double m_tasZ = 0.0;
+
+	double m_baroAlt = 0.0;
 };
 
 } //end namespace Scooter

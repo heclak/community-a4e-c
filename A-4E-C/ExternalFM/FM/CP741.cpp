@@ -37,6 +37,7 @@ void Scooter::CP741::zeroInit()
 	m_targetSet = false;
 	m_target = Vec3();
 	m_gunsightAngle = 0.0;
+	m_slant.setAll( 1000.0 );
 }
 
 void Scooter::CP741::coldInit()
@@ -138,6 +139,8 @@ void Scooter::CP741::setTarget( bool set, double slant )
 	}
 	else if ( slant > 10.0)
 	{
+		m_slant.add( slant );
+
 		//Reset solution.
 		m_solution = false;
 		m_targetFound = true;
@@ -145,10 +148,11 @@ void Scooter::CP741::setTarget( bool set, double slant )
 		//Set target to what was passed. We need to continually update the position
 		//tracked by the radar, this is to give a valid inrange light.
 		m_targetSet = set;
+		//printf( "CP741 Slant: %lf\n", m_slant.value() );
 		
 		//printf( "Angle: %lf, Range: %lf\n", weaponAngle, slant );
 		Vec3 direction = directionVector( weaponAngle, m_state.getAngle().y );
-		m_target = direction * slant + m_state.getWorldPosition();
+		m_target = direction * m_slant.value() + m_state.getWorldPosition();
 		//printf( "Target: %lf,%lf,%lf\n", m_target.x, m_target.y, m_target.z );
 	}
 	else
@@ -157,7 +161,6 @@ void Scooter::CP741::setTarget( bool set, double slant )
 	}
 }
 
-constexpr double c_ejectionSpeed = 3.0;
 double Scooter::CP741::calculateImpactDistanceDragless( double angle ) const
 {
 	Vec3 velocity = rotateVectorIntoXYPlane(m_state.getWorldVelocity());
@@ -168,7 +171,7 @@ double Scooter::CP741::calculateImpactDistanceDragless( double angle ) const
 	}
 
 	Vec3 normal( 0.0, 0.0, 1.0 );
-	Vec3 ejectionVelocity = c_ejectionSpeed * cross( normalize( velocity ), normal );
+	Vec3 ejectionVelocity = m_ejectionVelocity * cross( normalize( velocity ), normal );
 	//printf( "Ejection Velocity: %lf, %lf\n", ejectionVelocity.x, ejectionVelocity.y );
 
 	velocity += ejectionVelocity;
@@ -201,7 +204,7 @@ double Scooter::CP741::calculateImpactDistance( double angle ) const
 	}
 
 	Vec3 normal( 0.0, 0.0, 1.0 );
-	Vec3 ejectionVelocity = c_ejectionSpeed * cross( normalize( velocity ), normal  );
+	Vec3 ejectionVelocity = m_ejectionVelocity * cross( normalize( velocity ), normal  );
 	//printf( "Ejection Velocity: %lf, %lf\n", ejectionVelocity.x, ejectionVelocity.y );
 
 	velocity += ejectionVelocity;

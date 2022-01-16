@@ -17,6 +17,7 @@
 //================================ Includes ===============================//
 #include "BaseComponent.h"
 #include "AircraftState.h"
+#include "MovingAverage.h"
 #include "Vec3.h"
 //=========================================================================//
 
@@ -34,6 +35,8 @@ public:
 	virtual void airborneInit();
 
 	inline void setPower( bool power );
+	inline void setEjectionVelocity( double ejectionVelocity ) { m_ejectionVelocity = ejectionVelocity; }
+
 	void updateSolution();
 	void setTarget( bool set, double slant );
 	inline void setGunsightAngle( double angle );
@@ -54,8 +57,9 @@ private:
 	bool m_targetSet = false;
 	bool m_targetFound = false;
 	double m_gunsightAngle = 0.0;
-
+	double m_ejectionVelocity = 3.0;
 	Vec3 m_target;
+	MovingAverage<double, 30> m_slant;
 };
 
 void CP741::setPower( bool power )

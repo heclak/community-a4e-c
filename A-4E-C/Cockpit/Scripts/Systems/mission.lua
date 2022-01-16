@@ -5,6 +5,8 @@ local mdir      = lfs.tempdir()
 local cfile     = lfs.writedir()..'Data\\tempMission.lua'
 local userPath  = lfs.writedir()..'Data\\'
 
+local temp_mission_created = get_param_handle("TEMP_MISSION_CREATED")
+
 function scandir(directory)
 	local i, t = 0, {}
 	for file in lfs.dir(directory) do
@@ -55,9 +57,12 @@ end
 
 function load_tempmission_file()
 
-	local fList = scandir(mdir)
-	local rf 	= findMissionFile(fList)
-	copyFile(rf, cfile)
+	if temp_mission_created:get() < 0.5 then
+		local fList = scandir(mdir)
+		local rf 	= findMissionFile(fList)
+		copyFile(rf, cfile)
+		temp_mission_created:set(1.0)
+	end
 
 	dofile(userPath..'tempMission.lua')
 

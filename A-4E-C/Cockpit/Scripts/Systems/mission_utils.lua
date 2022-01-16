@@ -2,6 +2,10 @@
 dofile(LockOn_Options.common_script_path.."tools.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 
+function get_qnh()
+    return mission["weather"]["qnh"]
+end
+
 function find_mobile_tacan_and_icls()
     local tacan_to_id = {}
     local icls_to_id = {}
