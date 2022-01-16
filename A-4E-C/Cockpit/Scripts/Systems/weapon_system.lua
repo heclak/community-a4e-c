@@ -224,6 +224,9 @@ WeaponSystem:listen_command(Keys.JATOFiringButton)
 WeaponSystem:listen_command(Keys.ArmsEmerSelCW)
 WeaponSystem:listen_command(Keys.ArmsEmerSelCCW)
 
+WeaponSystem:listen_event("WeaponRearmComplete")
+WeaponSystem:listen_event("UnlimitedWeaponStationRestore")
+
 local shrike_sidewinder_volume = get_param_handle("SHRIKE_SIDEWINDER_VOLUME")
 local missile_volume_pos = 0
 local missile_volume_moving = 0
@@ -258,21 +261,7 @@ loadout_quantity_by_station = {
 
 function post_initialize()
     
-    -- loadout name by station for kneeboard
-    for i=1,5 do
-        local station = WeaponSystem:get_station_info(i-1)
-        local name = "UNKNOWN"
-        local quantity = "-"
-        if loadout_names[station.CLSID] ~= nil then
-            name = loadout_names[station.CLSID]
-        end
-        if station.count ~= nil then
-            quantity = station.count
-        end
-        loadout_by_station[i]:set(name)
-        loadout_quantity_by_station[i]:set(quantity)
-        print_message_to_user("Station " .. tostring(i) .. ": ".. tostring(station.CLSID) .." | " ..station.count)
-    end
+    update_kneeboard_loadout()
 
     --print_message_to_user(find_lua_device_ptr(WeaponSystem))
 	this_weapon_ptr:set(find_lua_device_ptr(WeaponSystem))
@@ -946,6 +935,24 @@ function check_shrike(_master_arm)
     end
 end
 
+function update_kneeboard_loadout()
+    for i=1,5 do
+        local station = WeaponSystem:get_station_info(i-1)
+        local name = "UNKNOWN"
+        local quantity = "-"
+        if loadout_names[station.CLSID] ~= nil then
+            name = loadout_names[station.CLSID]
+        end
+        if station.count ~= nil then
+            quantity = station.count
+        end
+        loadout_by_station[i]:set(name)
+        loadout_quantity_by_station[i]:set(quantity)
+        --discover CLSID by station
+        --print_message_to_user("Station " .. tostring(i) .. ": ".. tostring(station.CLSID) .." | " ..station.count)
+    end
+end
+
 function SetCommand(command,value)
     local _master_arm = get_elec_mon_arms_dc_ok()
     local nosegear=get_aircraft_draw_argument_value(0) -- nose gear
@@ -1379,6 +1386,13 @@ function SetCommand(command,value)
         WeaponSystem:performClickableAction(device_commands.arm_emer_sel, clamp(emer_sel_switch / 10 + 0.1, 0, 0.6), false)
     elseif command == Keys.ArmsEmerSelCCW then
         WeaponSystem:performClickableAction(device_commands.arm_emer_sel, clamp(emer_sel_switch / 10 - 0.1, 0, 0.6), false)
+    end
+end
+
+-- refresh kneeboard loadout page if rearming occurs
+function CockpitEvent(event, val)
+    if event == "WeaponRearmComplete" or event == "UnlimitedWeaponStationRestore" then
+        update_kneeboard_loadout()
     end
 end
 
