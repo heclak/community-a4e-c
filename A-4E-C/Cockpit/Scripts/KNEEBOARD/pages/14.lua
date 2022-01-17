@@ -44,8 +44,8 @@ local offset_line_cms           = offset_line_cbus + 4.5
 
 --define columned placements
 local offset_indent_line        = margin_xl + 0.025
-local offset_fuel_quantity      = offset_indent_line + 0.25
-local offset_fuel_lbs           = offset_fuel_quantity + 0.035
+local offset_fuel_quantity      = offset_indent_line + 0.275
+local offset_fuel_lbs           = offset_fuel_quantity + 0.04
 local offset_loadout_name       = offset_indent_line + 0.075
 local offset_cbu_quantity       = offset_indent_line + 0.55
 local offset_cbu_method         = offset_cbu_quantity + 0.1
@@ -56,6 +56,7 @@ local offset_cms_method         = offset_cbu_method
 --  FUEL  --
 ------------
 --fuel title
+--[[
 txt_HeaderFuel = CreateElement "ceStringPoly"
 txt_HeaderFuel.name = "txt_HeaderFuel"
 txt_HeaderFuel.material = "font_kneeboard"
@@ -64,6 +65,7 @@ txt_HeaderFuel.value = _("FUEL STORES")
 txt_HeaderFuel.alignment = "LeftBottom"
 txt_HeaderFuel.stringdefs = predefined_font_title
 AddElement(txt_HeaderFuel)
+]]
 
 --internal fuel
 txt_FuelLabelInternal                   = CreateElement "ceStringPoly"
@@ -75,25 +77,25 @@ txt_FuelLabelInternal.alignment         = "LeftBottom"
 txt_FuelLabelInternal.stringdefs        = predefined_font_item
 AddElement(txt_FuelLabelInternal)
 
-txt_FuelLabelExternal				    = CreateElement "ceStringPoly"
-txt_FuelLabelExternal.name			    = "txt_FuelLabelExternal"
-txt_FuelLabelExternal.material		    = "font_kneeboard"
-txt_FuelLabelExternal.init_pos		    = {offset_fuel_quantity,  getLineY(offset_line_fuel + 1), 0}
-txt_FuelLabelExternal.formats		    = {"%.0f"}
-txt_FuelLabelExternal.element_params    = {"kneeboard_fuel_int"}
-txt_FuelLabelExternal.controllers       = {{"text_using_parameter",0,0}} --first index is for element_params (starting with 0) , second for formats ( starting with 0)
-txt_FuelLabelExternal.alignment		    = "RightBottom"
-txt_FuelLabelExternal.stringdefs		= predefined_font_item
-AddElement(txt_FuelLabelExternal)
+txt_FuelWeightInternal				    = CreateElement "ceStringPoly"
+txt_FuelWeightInternal.name			    = "txt_FuelWeightInternal"
+txt_FuelWeightInternal.material		    = "font_kneeboard"
+txt_FuelWeightInternal.init_pos		    = {offset_fuel_quantity,  getLineY(offset_line_fuel + 1), 0}
+txt_FuelWeightInternal.formats		    = {"%.0f"}
+txt_FuelWeightInternal.element_params   = {"kneeboard_fuel_int"}
+txt_FuelWeightInternal.controllers      = {{"text_using_parameter",0,0}} --first index is for element_params (starting with 0) , second for formats ( starting with 0)
+txt_FuelWeightInternal.alignment		= "RightBottom"
+txt_FuelWeightInternal.stringdefs		= predefined_font_header
+AddElement(txt_FuelWeightInternal)
 
-txt_Fuel_Lbs_Internal                   = CreateElement "ceStringPoly"
-txt_Fuel_Lbs_Internal.name              = "txt_Fuel_Lbs_Internal"
-txt_Fuel_Lbs_Internal.material          = "font_kneeboard"
-txt_Fuel_Lbs_Internal.init_pos          = {offset_fuel_lbs, getLineY(offset_line_fuel + 1), 0}
-txt_Fuel_Lbs_Internal.value             = _("LBS.")
-txt_Fuel_Lbs_Internal.alignment         = "LeftBottom"
-txt_Fuel_Lbs_Internal.stringdefs        = predefined_font_item
-AddElement(txt_Fuel_Lbs_Internal)
+txt_FuelLbsInternal                   = CreateElement "ceStringPoly"
+txt_FuelLbsInternal.name              = "txt_FuelLbsInternal"
+txt_FuelLbsInternal.material          = "font_kneeboard"
+txt_FuelLbsInternal.init_pos          = {offset_fuel_lbs, getLineY(offset_line_fuel + 1), 0}
+txt_FuelLbsInternal.value             = _("LBS.")
+txt_FuelLbsInternal.alignment         = "LeftBottom"
+txt_FuelLbsInternal.stringdefs        = predefined_font_item
+AddElement(txt_FuelLbsInternal)
 
 --external fuel
 txt_FuelLabelExternal                   = CreateElement "ceStringPoly"
@@ -113,7 +115,7 @@ txt_FuelWeightExternal.formats		    = {"%.0f"}
 txt_FuelWeightExternal.element_params   = {"kneeboard_fuel_ext"}
 txt_FuelWeightExternal.controllers      = {{"text_using_parameter",0,0}} --first index is for element_params (starting with 0) , second for formats ( starting with 0)
 txt_FuelWeightExternal.alignment		= "RightBottom"
-txt_FuelWeightExternal.stringdefs		= predefined_font_item
+txt_FuelWeightExternal.stringdefs		= predefined_font_header
 AddElement(txt_FuelWeightExternal)
 
 txt_FuelLbsExternal                     = CreateElement "ceStringPoly"
@@ -129,6 +131,7 @@ AddElement(txt_FuelLbsExternal)
 --  STATION LOADOUTS  --
 ------------------------
 --station loadout title
+--[[
 txt_HeaderLoadout                          = CreateElement "ceStringPoly"
 txt_HeaderLoadout.name                     = "txt_HeaderLoadout"
 txt_HeaderLoadout.material                 = "font_kneeboard"
@@ -137,6 +140,7 @@ txt_HeaderLoadout.value                    = _("STATION LOADOUTS")
 txt_HeaderLoadout.alignment                = "LeftBottom"
 txt_HeaderLoadout.stringdefs               = predefined_font_title
 AddElement(txt_HeaderLoadout)
+]]
 
 txt_HeaderLoadout_Quantity = CreateElement "ceStringPoly"
 txt_HeaderLoadout_Quantity.name = "txt_HeaderLoadout_Quantity"
@@ -156,7 +160,7 @@ for station = 1,5 do
     EnumeratedStation.material          = "font_kneeboard_hint"
     EnumeratedStation.init_pos          = {offset_indent_line, item_pos_y, 0}
     EnumeratedStation.alignment         = "LeftBottom"
-    EnumeratedStation.stringdefs        = predefined_font_item
+    EnumeratedStation.stringdefs        = predefined_font_header
     EnumeratedStation.value             = tostring(station).."."
     AddElement(EnumeratedStation)
 
@@ -186,6 +190,8 @@ end
 --------------------------
 -- AN/ALE-29A PROGRAMMER 
 --------------------------
+--title
+--[[
 txt_BoardTitle				= CreateElement "ceStringPoly"
 txt_BoardTitle.name			= "txt_BoardTitle"
 txt_BoardTitle.material		= "font_kneeboard"
@@ -194,6 +200,7 @@ txt_BoardTitle.value		= "AN/ALE-29A PROGRAMMER"
 txt_BoardTitle.alignment	= "LeftBottom"
 txt_BoardTitle.stringdefs	= predefined_font_title
 AddElement(txt_BoardTitle)
+]]
 
 ----------------------
 -- CBU CONFIGURATION
@@ -227,7 +234,7 @@ Key_CBU1A.formats		    = {"%.0f","%s"}
 Key_CBU1A.element_params    = {"CBU1A_QTY"}
 Key_CBU1A.controllers       = {{"text_using_parameter",0,0}} --first index is for element_params (starting with 0) , second for formats ( starting with 0)
 Key_CBU1A.alignment		    = "RightBottom"
-Key_CBU1A.stringdefs		= predefined_font_item
+Key_CBU1A.stringdefs		= predefined_font_header
 AddElement(Key_CBU1A)
 
 
@@ -270,7 +277,7 @@ Key_CBU2A.formats			= {"%.0f","%s"}
 Key_CBU2A.element_params    = {"CBU2A_QTY"}
 Key_CBU2A.controllers       = {{"text_using_parameter",0,0}} --first index is for element_params (starting with 0) , second for formats ( starting with 0)
 Key_CBU2A.alignment		    = "RightBottom"
-Key_CBU2A.stringdefs		= predefined_font_item
+Key_CBU2A.stringdefs		= predefined_font_header
 AddElement(Key_CBU2A)
 
 Units_CBU2A                 = CreateElement "ceStringPoly"
@@ -311,7 +318,7 @@ Key_CBU2BA.formats			= {"%.0f","%s"}
 Key_CBU2BA.element_params   = {"CBU2BA_QTY"}
 Key_CBU2BA.controllers      = {{"text_using_parameter",0,0}} --first index is for element_params (starting with 0) , second for formats ( starting with 0)
 Key_CBU2BA.alignment		= "RightBottom"
-Key_CBU2BA.stringdefs		= predefined_font_item
+Key_CBU2BA.stringdefs		= predefined_font_header
 AddElement(Key_CBU2BA)
 
 Units_CBU2BA                 = CreateElement "ceStringPoly"
@@ -364,7 +371,7 @@ Key_BURSTS.formats			= {"%.0f","%s"}
 Key_BURSTS.element_params   = {"CMS_BURSTS_PARAM"}
 Key_BURSTS.controllers      = {{"text_using_parameter",0,0}} --first index is for element_params (starting with 0) , second for formats ( starting with 0)
 Key_BURSTS.alignment		= "CenterBottom"
-Key_BURSTS.stringdefs		= predefined_font_item
+Key_BURSTS.stringdefs		= predefined_font_header
 AddElement(Key_BURSTS)
 
 Units_BURSTS                 = CreateElement "ceStringPoly"
@@ -405,7 +412,7 @@ Key_BURST_INTERVAL.formats			= {"%.1f","%s"}
 Key_BURST_INTERVAL.element_params   = {"CMS_BURST_INTERVAL_PARAM"}
 Key_BURST_INTERVAL.controllers      = {{"text_using_parameter",0,0}} --first index is for element_params (starting with 0) , second for formats ( starting with 0)
 Key_BURST_INTERVAL.alignment		= "CenterBottom"
-Key_BURST_INTERVAL.stringdefs		= predefined_font_item
+Key_BURST_INTERVAL.stringdefs		= predefined_font_header
 AddElement(Key_BURST_INTERVAL)
 
 Units_BURST_INTERVAL                 = CreateElement "ceStringPoly"
@@ -446,7 +453,7 @@ Key_SALVOS.formats			= {"%.0f","%s"}
 Key_SALVOS.element_params   = {"CMS_SALVOS_PARAM"}
 Key_SALVOS.controllers      = {{"text_using_parameter",0,0}} --first index is for element_params (starting with 0) , second for formats ( starting with 0)
 Key_SALVOS.alignment		= "CenterBottom"
-Key_SALVOS.stringdefs		= predefined_font_item
+Key_SALVOS.stringdefs		= predefined_font_header
 AddElement(Key_SALVOS)
 
 Units_SALVOS                 = CreateElement "ceStringPoly"
@@ -487,7 +494,7 @@ Key_SALVO_INTERVAL.formats			= {"%.0f","%s"}
 Key_SALVO_INTERVAL.element_params   = {"CMS_SALVO_INTERVAL_PARAM"}
 Key_SALVO_INTERVAL.controllers      = {{"text_using_parameter",0,0}} --first index is for element_params (starting with 0) , second for formats ( starting with 0)
 Key_SALVO_INTERVAL.alignment		= "CenterBottom"
-Key_SALVO_INTERVAL.stringdefs		= predefined_font_item
+Key_SALVO_INTERVAL.stringdefs		= predefined_font_header
 AddElement(Key_SALVO_INTERVAL)
 
 Units_SALVO_INTERVAL                 = CreateElement "ceStringPoly"
