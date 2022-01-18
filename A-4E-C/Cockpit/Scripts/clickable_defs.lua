@@ -92,6 +92,36 @@ function default_3_position_tumb(hint_, device_, command_, arg_, cycled_, invers
     }
 end
 
+function inverted_3_position_tumb(hint_, device_, command_, arg_, cycled_, inversed_, sound_, animation_speed_)
+    local animation_speed_ = animation_speed_ or anim_speed_default
+    local cycled = false
+
+    local val = 1
+    if inversed_ then
+        val = -1
+    end
+
+    if cycled_ ~= nil then
+        cycled = cycled_
+    end
+
+    return {
+        class           = {class_type.TUMB, class_type.TUMB},
+        hint            = hint_,
+        device          = device_,
+        action          = {command_, command_},
+        arg             = {arg_, arg_},
+        arg_value       = {-val, val},
+        arg_lim         = {{-1, 1}, {-1, 1}},
+        updatable       = true,
+        use_OBB         = true,
+        cycle           = cycled,
+        animated        = {true, true},
+        animation_speed = {animation_speed_, animation_speed_},
+        sound           = sound_ and {{sound_, sound_}} or nil
+    }
+end
+
 function springloaded_forward_only_3_pos_tumb(hint_, device_, command_, arg_, inversed_, sound_, animation_speed_)
     local animation_speed_ = animation_speed_ or anim_speed_default
     local val = 1
@@ -104,9 +134,9 @@ function springloaded_forward_only_3_pos_tumb(hint_, device_, command_, arg_, in
         hint                = hint_,
         device              = device_,
         action              = {command_, command_},
-        stop_action         = {command_, nil},
+        stop_action         = {nil, command_},
         arg                 = {arg_, arg_},
-        arg_value           = {val, -val},
+        arg_value           = {-val, val},
         arg_lim             = {{-1, 1}, {-1, 1}},
         updatable           = true,
         use_OBB             = true,
@@ -283,6 +313,37 @@ function multiposition_switch_limited(hint_, device_, command_, arg_, count_, de
         action          = {command_, command_},
         arg             = {arg_, arg_},
         arg_value       = {-delta_ * inversed, delta_ * inversed},
+        arg_lim         = {
+                            {min_, min_ + delta_ * (count_ - 1)},
+                            {min_, min_ + delta_ * (count_ - 1)}
+                        },
+        updatable       = true,
+        use_OBB         = true,
+        cycle           = false,
+        animated        = {true, true},
+        animation_speed = {animation_speed_, animation_speed_},
+        sound           = sound_ and {{sound_, sound_}} or nil
+    }
+end
+
+function multiposition_switch_limited_inverted(hint_, device_, command_, arg_, count_, delta_, inversed_, min_, sound_, animation_speed_)
+    local animation_speed_ = animation_speed_ or anim_speed_default
+
+    local min_ = min_ or 0
+    local delta_ = delta_ or 0.5
+
+    local inversed = 1
+    if inversed_ then
+        inversed = -1
+    end
+
+    return {
+        class           = {class_type.TUMB, class_type.TUMB},
+        hint            = hint_,
+        device          = device_,
+        action          = {command_, command_},
+        arg             = {arg_, arg_},
+        arg_value       = {delta_ * inversed, -delta_ * inversed},
         arg_lim         = {
                             {min_, min_ + delta_ * (count_ - 1)},
                             {min_, min_ + delta_ * (count_ - 1)}
