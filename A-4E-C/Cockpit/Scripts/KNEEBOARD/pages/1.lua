@@ -18,10 +18,10 @@ For example, page "23" is "23.lua".
   11 Navigation
   12 Radio & TACAN
   13 ILS Data
-  14 Countermeasures
+  14 Mission Loadout
 
 2 Radar
-  21 AN/APN-141 Radar Altimiter
+  21 AN/APN-141 Radar Altimiter & LAWS
   22 AN/APG-53A Radar (Display Indicator)
   23 Ground Radar (Search)
   24 Ground Radar (Terrain Clearance)
@@ -33,7 +33,8 @@ For example, page "23" is "23.lua".
   32 Weapon Delivery
   33 Guns
   34 Rockets
-  35 Missiles & ECM
+  35 Missiles
+  36 Countermeasures & ECM
 
 4 Flight
   41 Autopilot
@@ -57,6 +58,8 @@ For example, page "23" is "23.lua".
   62 Instrument Panel
   63 Console Left
   64 Console Right
-  65 Controls
+  65 Controls Indicator
+  66 Gamepad
+  67 Gamepad (continued)
 
 ]]

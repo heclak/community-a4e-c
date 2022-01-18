@@ -269,9 +269,32 @@ dev:listen_command(Keys.AltPressureStartDown)
 dev:listen_command(Keys.AltPressureStop)
 dev:listen_command(Keys.cat_power_toggle)
 
+dev:listen_event("WeaponRearmComplete")
+dev:listen_event("UnlimitedWeaponStationRestore")
+
 function dump_table(t)
     for key,value in pairs(t) do
         print(key,value)
+    end
+end
+
+--fuel weight to pass to kneeboard
+kneeboard_fuel_int = get_param_handle("kneeboard_fuel_int")
+kneeboard_fuel_ext = get_param_handle("kneeboard_fuel_ext")
+
+-- update loadout page
+function update_kneeboard_fuel()
+    --print_message_to_user("Updating Kneeboard Fuel Notation")
+    --print_message_to_user("INTERNAL: " .. initINT .. " LBS.")
+    --print_message_to_user("EXTERNAL: " .. initEXT .. " LBS.")
+    kneeboard_fuel_int:set(initINT)
+    kneeboard_fuel_ext:set(initEXT)
+end
+
+-- refresh kneeboard loadout page if rearming occurs
+function CockpitEvent(event, val)
+    if event == "WeaponRearmComplete" or event == "UnlimitedWeaponStationRestore" then
+        enumerate_fueltanks()
     end
 end
 
@@ -299,6 +322,7 @@ function enumerate_fueltanks()
     fuelLastQtyExternal = initEXT
     lastFuel = total -- initializes detection of refueling in update()
     gauge_fuel_flow:set_current_val(sensor_data.getEngineLeftFuelConsumption())
+    update_kneeboard_fuel()
 end
 
 function post_initialize()
@@ -334,7 +358,6 @@ function post_initialize()
     startup_print("avionics: postinit end")
 
 end
-
 
 function SetCommand(command,value)
     -- "primary" control is the clickable device, key commands trigger the clickable actions...
@@ -619,7 +642,7 @@ function update_fuel_5s()
     --fuel intake dropoff, release fuel sloshing
     if slowFuel >= lastFuel then
         sound_params.snd_cont_fuel_intake:set(0.0)
-    end    
+    end  
     slowFuel = totalFuel
 end
 
