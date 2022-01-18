@@ -85,7 +85,7 @@ private:
 	bool m_fuelSet[NUMBER_OF_TANKS] = { false, false, false, false, false }; //Has the fuel been loaded on. This is to check for empty tanks.
 	//										fuselage wing     l    c   r
 	double m_fuelCapacity[NUMBER_OF_TANKS] = { 731.0, 1737.0, 0.0, 0.0, 0.0 }; //changed it to 1737 to match the values from the entry.
-	Vec3 m_fuelPos[NUMBER_OF_TANKS] = { Vec3(1.55, 0.0, 0.0), Vec3(-0.66, 0.0, 0.0), Vec3(), Vec3(), Vec3() };
+	Vec3 m_fuelPos[NUMBER_OF_TANKS] = { Vec3(2.20, 0.0, 0.0), Vec3(-0.82, 0.0, 0.0), Vec3(), Vec3(), Vec3() };
 
 	const bool m_enginePump = true;
 	bool m_boostPump = true;

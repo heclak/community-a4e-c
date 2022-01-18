@@ -204,9 +204,9 @@ void init(const char* config)
 
 	
 
-	//s_luaVM->getGlobalNumber( "external_tank_offset", s_extTankOffset);
-	//s_luaVM->getGlobalNumber( "fuselage_tank_offset", s_fuseTankOffset );
-	//s_luaVM->getGlobalNumber( "wing_tank_offset", s_wingTankOffset );
+	s_luaVM->getGlobalNumber( "external_tank_offset", s_extTankOffset);
+	s_luaVM->getGlobalNumber( "fuselage_tank_offset", s_fuseTankOffset );
+	s_luaVM->getGlobalNumber( "wing_tank_offset", s_wingTankOffset );
 
 	//printf( "EXT: %lf, WNG: %lf, FUS: %lf\n", s_extTankOffset, s_wingTankOffset, s_fuseTankOffset );
 
@@ -877,7 +877,7 @@ void  ed_fm_set_external_fuel (int	 station,
 								double y,
 								double z)
 {
-	constexpr double tankOffset = 0.45;
+	constexpr double tankOffset = 0.89;
 
 	//printf( "Station: %d, Fuel: %lf, Z: %lf, COM %lf\n", station, fuel, z, s_state->getCOM().z );
 	s_fuelSystem->setFuelQty( (Scooter::FuelSystem2::Tank)(station + 1), Vec3( x - tankOffset, y, z ), fuel );//0.25

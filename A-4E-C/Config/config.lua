@@ -261,8 +261,8 @@ for i,v in pairs(splines_both) do
 end
 
 ejection_velocity = 2.0
---wing_tank_offset = -0.66-- CG (with full fuse) -> 0.026
---fuselage_tank_offset = 1.55 --CG -> 0.194
---external_tank_offset = 0.45
+--wing_tank_offset = -0.82-- CG (with full fuse) -> 0.026
+--fuselage_tank_offset = 2.20 --CG -> 0.194
+--external_tank_offset = 0.89
 
 logger_file = "C:/tmp/EL_AOA_1.csv"

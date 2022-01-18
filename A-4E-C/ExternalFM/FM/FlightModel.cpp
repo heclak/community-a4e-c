@@ -29,7 +29,7 @@ static int vapourMapC[10] = {};
 static D wingElementToDamage[] = {D::WING_L_CENTER, D::WING_L_CENTER, D::WING_L_IN, D::WING_L_IN, D::WING_R_IN, D::WING_R_IN, D::WING_R_CENTER, D::WING_R_CENTER};
 static D wingElementToDamageC[] = {D::AILERON_L, D::WING_L_OUT, D::WING_L_OUT, D::WING_L_OUT, D::WING_L_CENTER, D::WING_R_CENTER, D::WING_R_OUT, D::WING_R_OUT, D::WING_R_OUT, D::AILERON_L };
 
-constexpr double c_cpX = -0.25;//0.1;
+constexpr double c_cpX = -0.05;//0.1;
 
 #undef min
 
@@ -71,7 +71,7 @@ Scooter::FlightModel::FlightModel
 	m_elementRFlap(m_state, AeroElement::HORIZONTAL, dCLflap, CDflap, Vec3( c_cpX, 0, 3.0), m_wingSurfaceNormalR, m_totalWingArea / 2),
 	m_elementLSpoiler(m_state, AeroElement::HORIZONTAL, dCLspoiler, dCDspoiler, Vec3( c_cpX, 0, -3.0), m_wingSurfaceNormalL, m_totalWingArea / 2),
 	m_elementRSpoiler(m_state, AeroElement::HORIZONTAL, dCLspoiler, dCDspoiler, Vec3( c_cpX, 0, 3.0), m_wingSurfaceNormalR, m_totalWingArea / 2),
-	m_elementHorizontalStab(m_state, m_airframe, AeroElement::HORIZONTAL_STAB, CLhstab, CDhstab, &comp_e, Vec3(-5.1, 1.65, 0.0), m_hStabSurfaceNormal, 4.0),
+	m_elementHorizontalStab(m_state, m_airframe, AeroElement::HORIZONTAL_STAB, CLhstab, CDhstab, &comp_e, Vec3(-5.1, 1.65, 0.0), m_hStabSurfaceNormal, 4.4),
 	m_elementVerticalStab(m_state, m_airframe, AeroElement::RUDDER, CLvstab, CDvstab, Vec3(-4.8, 2.7, 0.0), m_vStabSurfaceNormal, 5.3),
 	//m_elementLAil(m_state, dCLflap, CDflap, Vec3(0, 0, -3.2), m_wingSurfaceNormalL, m_totalWingArea/5),
 	//m_elementRAil(m_state, dCLflap, CDflap, Vec3(0, 0, 3.2), m_wingSurfaceNormalR,  m_totalWingArea/5),
@@ -385,7 +385,7 @@ void Scooter::FlightModel::calculateElements()
 	//m_elementHorizontalStab.setLDFactor( 0.25 * m_airframe.getHoriStabDamage(), 0.85 * m_airframe.getHoriStabDamage());
 	//m_elementVerticalStab.setLDFactor( 0.35 * m_airframe.getVertStabDamage(), 0.85 * m_airframe.getVertStabDamage());
 
-	m_elementHorizontalStab.setLDFactor( 0.25 * m_airframe.getHoriStabDamage(), 0.85 * m_airframe.getHoriStabDamage() );
+	m_elementHorizontalStab.setLDFactor( 3.0 * m_airframe.getHoriStabDamage(), 8.0 * m_airframe.getHoriStabDamage() );
 	m_elementVerticalStab.setLDFactor( 0.35 * m_airframe.getVertStabDamage(), 0.85 * m_airframe.getVertStabDamage() );
 	//printf("beta: %lf, aoa: %lf\n", toDegrees(m_elementVerticalStab.getAOA()));
 
