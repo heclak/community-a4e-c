@@ -17,18 +17,16 @@ function AddElement(object)
 end
 
 -- fonts
---FontSizeX1	= 0.0075
 FontSizeX1	= 0.0065
 FontSizeY1	= FontSizeX1
 
-predefined_font_title	= {FontSizeY1,			FontSizeX1,			0.0,		0.0}
-predefined_font_header	= {FontSizeY1 * 0.85,	FontSizeX1 * 0.85,	0.0,	    0.0}
-predefined_font_item	= {FontSizeY1 * 0.75,	FontSizeX1 * 0.75,	-0.0009,	0.0}
-
+predefined_font_title	= {FontSizeY1 * 0.85,	FontSizeX1 * 0.85,	-0.0009,	0.0}
+predefined_font_header	= {FontSizeY1 * 0.75,	FontSizeX1 * 0.75,	-0.0009,	0.0}
+predefined_font_item	= {FontSizeY1 * 0.675,	FontSizeX1 * 0.675,	-0.0009,	0.0}
 
 -- lines
-local FirstLineY	= 1.25
-local LineSizeY		= 0.095
+local FirstLineY	= 1.3
+local LineSizeY		= 0.0975
 
 local function getLineY(line)
 	return FirstLineY - LineSizeY * (line)
@@ -91,14 +89,18 @@ function get_bearing(channel)
     return bearing
 end
 
-data_x_positions = {
-    [1] = -0.7,
-    [2] = -0.4,
-    [3] = 0.0,
-    [4] = 0.4,
-    [5] = 0.7,
+---------------
+-- AIRFIELDS --
+---------------
 
+data_x_positions = {
+    [1] = -0.85,
+    [2] = -0.6125,
+    [3] = -0.4375,
+    [4] = 0.45,
+    [5] = 0.7,
 }
+
 function add_channel(line, channel)
     
     local data = ils_data[channel]
@@ -115,26 +117,49 @@ function add_channel(line, channel)
         [5] = get_bearing(data),
     }
 
-
-    local txt_chn = {}
-    for i = 1, 5 do
-        txt_chn[i] = CreateElement "ceStringPoly"
-        txt_chn[i].name = "txt_chn["..tostring(i).."]"
-        txt_chn[i].material = "font_kneeboard"
-        txt_chn[i].init_pos = {data_x_positions[i], getLineY(line), 0}
-        txt_chn[i].value = _(line_data[i])
-        txt_chn[i].alignment = "CenterBottom"
-        txt_chn[i].stringdefs = predefined_font_item
-    AddElement(txt_chn[i])
+    local txt_chn_code = {}
+    for i = 1, 2 do
+        txt_chn_code[i] = CreateElement "ceStringPoly"
+        txt_chn_code[i].name = "txt_chn_code["..tostring(i).."]"
+        txt_chn_code[i].material = "font_kneeboard"
+        txt_chn_code[i].init_pos = {data_x_positions[i], getLineY(line), 0}
+        txt_chn_code[i].value = _(line_data[i])
+        txt_chn_code[i].alignment = "CenterBottom"
+        txt_chn_code[i].stringdefs = predefined_font_item
+    AddElement(txt_chn_code[i])
     end
-    
+
+    local txt_airfield_name = {}
+    for i = 3, 3 do
+        txt_airfield_name[i] = CreateElement "ceStringPoly"
+        txt_airfield_name[i].name = "txt_airfield_name["..tostring(i).."]"
+        txt_airfield_name[i].material = "font_kneeboard"
+        txt_airfield_name[i].init_pos = {data_x_positions[i], getLineY(line), 0}
+        txt_airfield_name[i].value = _(line_data[i])
+        txt_airfield_name[i].alignment = "LeftBottom"
+        txt_airfield_name[i].stringdefs = predefined_font_item
+    AddElement(txt_airfield_name[i])
+    end
+
+    local txt_freq_brg = {}
+    for i = 4, 5 do
+        txt_freq_brg[i] = CreateElement "ceStringPoly"
+        txt_freq_brg[i].name = "txt_freq_brg["..tostring(i).."]"
+        txt_freq_brg[i].material = "font_kneeboard"
+        txt_freq_brg[i].init_pos = {data_x_positions[i], getLineY(line), 0}
+        txt_freq_brg[i].value = _(line_data[i])
+        txt_freq_brg[i].alignment = "CenterBottom"
+        txt_freq_brg[i].stringdefs = predefined_font_item
+    AddElement(txt_freq_brg[i])
+    end
+
     return txt_chn
 
 end
 
------------------------------------------------------------------
---                         ICLS DATA CONFIG
------------------------------------------------------------------
+-----------
+-- TITLE --
+-----------
 
 --txt_BoardTitle				= CreateElement "ceStringPoly"
 --txt_BoardTitle.name			= "txt_BoardTitle"
@@ -145,16 +170,20 @@ end
 --txt_BoardTitle.stringdefs	= predefined_font_title
 --AddElement(txt_BoardTitle)
 
+--------------
+-- HEADINGS --
+--------------
 
 headings = {"CHN", "CODE", "NAME", "FREQ", "BRG"}
-heading_x_position = {
-    [1] = -0.6,
-    [2] = -0.25,
-    [3] = 0.125,
-    [4] = 0.525,
-    [5] = 0.8,
 
+heading_x_position = {
+    [1] = -0.85,
+    [2] = -0.6125,
+    [3] = -0.375,
+    [4] = 0.45,
+    [5] = 0.7,
 }
+
 txt_heading = {}
 for i = 1, 5 do
     txt_heading[i] = CreateElement "ceStringPoly"
@@ -162,7 +191,7 @@ for i = 1, 5 do
     txt_heading[i].material = "font_kneeboard"
     txt_heading[i].init_pos = {heading_x_position[i], getLineY(2), 0}
     txt_heading[i].value = _(headings[i])
-    txt_heading[i].alignment = "RightBottom"
+    txt_heading[i].alignment = "CenterBottom"
     txt_heading[i].stringdefs = predefined_font_title
     AddElement(txt_heading[i])
 end
@@ -170,42 +199,3 @@ end
 for i = 1, #ils_data do
     txt_chn = add_channel(i+2, i)
 end
-
---[[
------------------------------------------------------------------
---                         CBU-1/A
------------------------------------------------------------------
-
-CBU1A_LineY = getLineY(2)
-
-Name_CBU1A				    = CreateElement "ceStringPoly"
-Name_CBU1A.name			    = "Name_CBU1A"
-Name_CBU1A.material		    = "font_kneeboard"
-Name_CBU1A.init_pos		    = {NamePosX,  CBU1A_LineY, 0}
-Name_CBU1A.value		    = _("CBU-1/A1")
-Name_CBU1A.alignment	    = "RightBottom"
-Name_CBU1A.stringdefs	    = predefined_font_item
-AddElement(Name_CBU1A)
-
-Key_CBU1A				    = CreateElement "ceStringPoly"
-Key_CBU1A.name			    = "Key_CBU1A"
-Key_CBU1A.material		    = "font_kneeboard"
-Key_CBU1A.init_pos		    = {ValuePosX,  CBU1A_LineY, 0}
-Key_CBU1A.formats		    = {"%.0f","%s"}
-Key_CBU1A.element_params    = {"CBU1A_QTY"}
-Key_CBU1A.controllers       = {{"text_using_parameter",0,0}} --first index is for element_params (starting with 0) , second for formats ( starting with 0)
-Key_CBU1A.alignment		    = "RightBottom"
-Key_CBU1A.stringdefs		= predefined_font_item
-AddElement(Key_CBU1A)
-
-
-Units_CBU1A                 = CreateElement "ceStringPoly"
-Units_CBU1A.name			= "Units_CBU1A"
-Units_CBU1A.material		= "font_kneeboard"
-Units_CBU1A.init_pos		= {UnitsPosX,  CBU1A_LineY, 0}
-Units_CBU1A.value		    = _("TUBES PER PULSE")
-Units_CBU1A.alignment	    = "LeftBottom"
-Units_CBU1A.stringdefs	    = predefined_font_item
-AddElement(Units_CBU1A)
-
-]]--

@@ -17,18 +17,16 @@ function AddElement(object)
 end
 
 -- fonts
---FontSizeX1	= 0.0075
 FontSizeX1	= 0.0065
 FontSizeY1	= FontSizeX1
 
-predefined_font_title	= {FontSizeY1,			FontSizeX1,			0.0,		0.0}
-predefined_font_header	= {FontSizeY1 * 0.9,	FontSizeX1 * 0.9,	0.0,	    0.0}
-predefined_font_item	= {FontSizeY1 * 0.75,	FontSizeX1 * 0.75,	-0.0009,	0.0}
-
+predefined_font_title	= {FontSizeY1 * 0.85,	FontSizeX1 * 0.85,	-0.0009,	0.0}
+predefined_font_header	= {FontSizeY1 * 0.75,	FontSizeX1 * 0.75,	-0.0009,	0.0}
+predefined_font_item	= {FontSizeY1 * 0.675,	FontSizeX1 * 0.675,	-0.0009,	0.0}
 
 -- lines
-local FirstLineY	= 1.28
-local LineSizeY		= 0.095
+local FirstLineY	= 1.3
+local LineSizeY		= 0.09375
 
 local function getLineY(line)
 	return FirstLineY - LineSizeY * (line)
@@ -45,6 +43,7 @@ local CMSHintsPosX = 0.8
 
 
 local arc51_radio_presets
+
 if get_aircraft_mission_data ~= nil then
     arc51_radio_presets = get_aircraft_mission_data("Radio")[1].channels
 end
@@ -98,10 +97,10 @@ function get_bearing(channel)
 end
 
 data_x_positions = {
-    [1] = -0.8,
-    [2] = -0.4,
-
+    [1] = -0.85,
+    [2] = -0.55,
 }
+
 function add_channel(channel)
     
     line = channel + 2
@@ -118,8 +117,8 @@ function add_channel(channel)
         [2] = string.upper(frequency),
     }
 
-
     local txt_chn = {}
+
     for i = 1, 2 do
         txt_chn[i] = CreateElement "ceStringPoly"
         txt_chn[i].name = "txt_chn["..tostring(i).."]"
@@ -135,9 +134,9 @@ function add_channel(channel)
 
 end
 
------------------------------------------------------------------
---                         WEAPONS CONFIG
------------------------------------------------------------------
+-----------
+-- TITLE --
+-----------
 
 --txt_BoardTitle				= CreateElement "ceStringPoly"
 --txt_BoardTitle.name			= "txt_BoardTitle"
@@ -148,6 +147,9 @@ end
 --txt_BoardTitle.stringdefs	= predefined_font_title
 --AddElement(txt_BoardTitle)
 
+--------------
+-- HEADINGS --
+--------------
 
 headings = {"CHN", "FREQ"}
 txt_heading = {}

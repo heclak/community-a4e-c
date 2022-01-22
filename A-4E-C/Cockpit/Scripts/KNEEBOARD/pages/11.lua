@@ -16,17 +16,17 @@ function AddElement(object)
 end
 
 -- fonts
-FontSizeX1	= 0.0065 -- set base font size
+FontSizeX1	= 0.0065
 FontSizeY1	= FontSizeX1
 
-predefined_font_title	= {FontSizeY1,			FontSizeX1,			0.0,		0.0}
-predefined_font_header	= {FontSizeY1 * 0.9,	FontSizeX1 * 0.9,	0.0,	    0.0}
-predefined_font_item	= {FontSizeY1 * 0.75,	FontSizeX1 * 0.75,	-0.0009,	0.0}
+predefined_font_title	= {FontSizeY1 * 0.85,	FontSizeX1 * 0.85,	-0.0009,	0.0}
+predefined_font_header	= {FontSizeY1 * 0.75,	FontSizeX1 * 0.75,	-0.0009,	0.0}
+predefined_font_item	= {FontSizeY1 * 0.675,	FontSizeX1 * 0.675,	-0.0009,	0.0}
 
 --[[
 -- local theatre      = get_terrain_related_data("name") 
     This method is no good.
-    As of 2.7.9.1080
+    As of 2.7.9.108080
     Items that differrentiate by theatre should be revisited 
     using the coords and expressed as a function
     (especially MAGVAR on the nav system).
@@ -120,23 +120,28 @@ local function waypoint_name(waypoint_index, waypoint_data)
     end
 end
 
--- BOARD TITLE
+-----------
+-- TITLE --
+-----------
+
 --local txt_BoardTitle = {}
 --txt_BoardTitle = addSimpleTextStringCommon(txt_BoardTitle, "txt_BoardTitle", 0.0, POS_TITLE_Y, "NAVIGATION LOG", nil, predefined_font_title, "font_kneeboard_white")
 --AddElement(txt_BoardTitle)
 
--- HEADERS
+-------------
+-- HEADERS --
+-------------
 
 local name_label = {}
-name_label = addSimpleTextStringCommon(name_label, "Name Label", POS_WAYPOINT_X, POS_HEADERS_Y, "NAME")
+name_label = addSimpleTextStringCommon(name_label, "Name Label", POS_WAYPOINT_X, POS_HEADERS_Y, "NAME", nil, predefined_font_header)
 AddElement(name_label)
 
 local lat_label = {}
-lat_label = addSimpleTextStringCommon(lat_label, "Lat Label", POS_LAT_X, POS_HEADERS_Y, "LATITUDE")
+lat_label = addSimpleTextStringCommon(lat_label, "Lat Label", POS_LAT_X, POS_HEADERS_Y, "LATITUDE", nil, predefined_font_header)
 AddElement(lat_label)
 
 local lon_label = {}
-lon_label = addSimpleTextStringCommon(lon_label, "Lon Label", POS_LON_X, POS_HEADERS_Y, "LONGITUDE")
+lon_label = addSimpleTextStringCommon(lon_label, "Lon Label", POS_LON_X, POS_HEADERS_Y, "LONGITUDE", nil, predefined_font_header)
 AddElement(lon_label)
 
 -- NAVIGATION POINTS
