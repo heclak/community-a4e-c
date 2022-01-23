@@ -4,6 +4,7 @@ dofile(LockOn_Options.script_path.."Systems/stores_config.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
+dofile(LockOn_Options.script_path.."sound_params.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 
 local update_rate = 0.006
@@ -1155,6 +1156,13 @@ function SetCommand(command,value)
         debug_print("Guns: "..(gun_ready and "READY" or "SAFE"))
         if not gun_ready and gun_firing then
             dispatch_action(nil,iCommandPlaneFireOff)
+        end
+        if gun_ready then
+            sound_params.snd_inst_guns_charge:set(1.0)
+            sound_params.snd_inst_guns_safe:set(0.0)
+        elseif not gun_ready then
+            sound_params.snd_inst_guns_safe:set(1.0)
+            sound_params.snd_inst_guns_charge:set(0.0)
         end
 
     elseif command == device_commands.arm_func_selector then

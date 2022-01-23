@@ -281,6 +281,9 @@ function post_initialize()
         --gear
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearMove", "SND_CONT_GEAR_MOV", SOUND_CONTINUOUS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsGearStop", "SND_INST_GEAR_STOP", SOUND_ONCE),
+        --guns
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_GunsCharge", "SND_INST_GUNS_CHARGE", SOUND_ONCE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_GunsSafe", "SND_INST_GUNS_SAFE", SOUND_ONCE),
         --supplemental
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitEmerSpeedbrakeIn", "SND_INST_EMER_SPEEDBRAKE_IN", SOUND_ONCE),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitEmerSpeedbrakeOut", "SND_INST_EMER_SPEEDBRAKE_OUT", SOUND_ONCE),
