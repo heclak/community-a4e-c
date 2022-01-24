@@ -109,6 +109,7 @@ local smoke_state = false
 local smoke_equipped = false
 local pickle_engaged = false
 local gun_ready = false
+local gun_charged = false
 local gun_firing = false
 local trigger_engaged = false
 local station_states = { STATION_OFF, STATION_OFF, STATION_OFF, STATION_OFF, STATION_OFF}
@@ -144,6 +145,10 @@ local jato_armed_and_full_param = get_param_handle("JATO_ARMED_AND_FULL")
 local main_rpm = get_param_handle("RPM")
 
 local bombing_computer_target_set = false
+
+local gun_nitrogen_max = 1
+local gun_nitrogen_charges = 0
+local geardown = true
 
 ------------------------------------------------
 -----------  AIRCRAFT DEFINITION  --------------
@@ -312,15 +317,21 @@ function post_initialize()
     cbu2ba_quantity_array_pos = get_aircraft_property("CBU2BATPP")
     cbu2ba_quantity:set(cbu2ba_quantity_array[ cbu2ba_quantity_array_pos + 1 ])
 
-    if birth == "GROUND_HOT" or birth == "AIR_HOT" then --"GROUND_COLD","GROUND_HOT","AIR_HOT"
-        -- set gun_ready when starting hot
+    -- amount of nitrogen pressure for gun READY/SAFE (complete cycles)
+    gun_nitrogen_max = 1
+
+    if birth == "GROUND_HOT" or birth == "AIR_HOT" then
         dev:performClickableAction(device_commands.arm_gun,0,true) -- arg 701
         gun_ready = false
+        gun_charged = false
+        gun_nitrogen_charges = gun_nitrogen_max * 2
         dev:performClickableAction(device_commands.AWRS_quantity,0.05,true) -- arg 740, quantity = 2 to power on the AWE-1
         AWRS_quantity = 2
     elseif birth == "GROUND_COLD" then
         dev:performClickableAction(device_commands.arm_gun,0,true) -- arg 701
         gun_ready = false
+        gun_charged = false
+        gun_nitrogen_charges = gun_nitrogen_max * 2
     end
 
     print("weapon_system: postinit end")
@@ -357,7 +368,6 @@ local fuel_tank_capacity = {
     ["{DFT-150gal_EMPTY}"] = -GALLON_TO_KG * 150,
 }
 
-
 function prepare_weapon_release()
     weapon_release_count = 0
     smoke_enable_count = 0
@@ -377,13 +387,11 @@ function prepare_weapon_release()
     elseif AWRS_mode == AWRS_mode_ripple_pairs or AWRS_mode == AWRS_mode_step_pairs then
         max_weapon_release_count = 2
     end
-
 end
 
 function check_smoke_for_enable()
     smoke_enable_count = 0
     max_smoke_enable_count = 0
-
     for i = 1, num_stations do
 
         local station_info = WeaponSystem:get_station_info(i-1)
@@ -392,25 +400,19 @@ function check_smoke_for_enable()
             max_smoke_enable_count = max_smoke_enable_count + 1
         end
     end
-
 end
 
 function enable_smoke()
-
-
     for i = 1, num_stations do
         if smoke_enable_count >= max_smoke_enable_count then
             return
         end
-
         local station_info = WeaponSystem:get_station_info(i-1)
-
         if station_info.weapon.level2 == wsType_GContainer and station_info.weapon.level3 == wsType_Smoke_Cont and station_states[i] == STATION_READY and station_info.count > 0 then
             smoke_enable_count = smoke_enable_count + 1
             WeaponSystem:launch_station(i-1)
         end
     end
-
 end
 
 local ir_missile_lock_param = get_param_handle("WS_IR_MISSILE_LOCK")
@@ -444,7 +446,6 @@ function update_labs_annunciator()
 end
 
 function update_fuel_tanks()
-
     for i=1,3, 1 do
         local tank = WeaponSystem:get_station_info(i)
         if tank ~= nil and tank.weapon.level3 == wsType_FuelTank then
@@ -455,7 +456,6 @@ function update_fuel_tanks()
         end
     end
 end
-
 
 function check_priority_pair_station(station_id) -- station id is 1 - 5
     -- get priority pair id number
@@ -471,7 +471,6 @@ end -- check_priority_pair_station
 
 function check_all_stations_for_pairs_mode()
     local equal_priority_found = false
-
     -- cycle through stations to find a readied pair of stations with equal priority
     for i = 1, 2 do
         if station_states[i] == STATION_READY then
@@ -482,7 +481,6 @@ function check_all_stations_for_pairs_mode()
             end
         end
     end
-
     return equal_priority_found
 end
 
@@ -496,8 +494,56 @@ function updateComputerSolution(weapons_released)
     else
         efm_data_bus.fm_setCP741Power(0.0)
     end
-	
 	return valid_solution
+end
+
+--gear position is used to determine circuit interruption across weapon systems
+function update_gear()
+    local nosegear = get_aircraft_draw_argument_value(0)
+    geardown = (nosegear ~= 0) and true or false
+end
+
+--update for guns, determines if they should arm or safe, including fire interruption.
+function update_guns()
+    if gun_charged then
+        if not gun_ready then
+            guns_set_safe()
+        elseif geardown then
+            debug_print("Deploying landing gear has broken the guns charging circuit.")
+            guns_set_safe()
+        elseif get_elec_aft_mon_ac_ok() == false then
+            debug_print("A loss of AC power has broken the guns charging circuit.")
+            guns_set_safe()
+        end
+    else
+        if get_elec_aft_mon_ac_ok() and gun_ready and gun_nitrogen_charges >= 2 and not geardown then
+            guns_set_charge()
+            if trigger_engaged then
+                dispatch_action(nil,iCommandPlaneFire)
+            end
+        end
+    end
+end
+
+function guns_set_charge()
+    gun_nitrogen_charges = gun_nitrogen_charges - 1
+    debug_print("Guns are CHARGED. "..gun_nitrogen_charges.." nitrogen charges remaining.")
+    gun_charged = true
+    sound_params.snd_inst_guns_charge:set(1.0)
+    sound_params.snd_inst_guns_safe:set(0.0)
+end
+
+function guns_set_safe()
+    dispatch_action(nil,iCommandPlaneFireOff)
+    gun_nitrogen_charges = gun_nitrogen_charges - 1
+    debug_print("Guns are SAFED. "..gun_nitrogen_charges.." nitrogen charges remaining.")
+    gun_charged = false
+    sound_params.snd_inst_guns_safe:set(1.0)
+    sound_params.snd_inst_guns_charge:set(0.0)
+end
+
+function check_guns()
+    return gun_charged
 end
 
 function update()
@@ -525,6 +571,8 @@ function update()
 	end	--]]
     
     update_fuel_tanks()
+    update_gear()
+    update_guns()
 
     time_ticker = time_ticker + update_rate
     local _master_arm = get_elec_mon_arms_dc_ok() -- check master arm status
@@ -956,9 +1004,7 @@ end
 
 function SetCommand(command,value)
     local _master_arm = get_elec_mon_arms_dc_ok()
-    local nosegear=get_aircraft_draw_argument_value(0) -- nose gear
-    local geardown = ((nosegear~=0) and true or false)
-    if (geardown) then
+    if geardown then
         _master_arm = false
     end
 	if command == iCommandPlaneWingtipSmokeOnOff then
@@ -1073,54 +1119,51 @@ function SetCommand(command,value)
         end
         
 	elseif command == Keys.PickleOn then
-		 efm_data_bus.fm_setSetTarget(1.0)
-		 bombing_computer_target_set = true
-		
+		efm_data_bus.fm_setSetTarget(1.0)
+		bombing_computer_target_set = true
         weapon_release_ticker = weapon_interval -- fire first batch immediately
         --prepare_weapon_release()
         if AWRS_mode >= AWRS_mode_ripple_single then -- AWRS is in ripple mode
             next_pylon=1
         end
-
         pickle_engaged = true
-        
         -- if AWRS is setup for bombs or rockets
         if ( function_selector == FUNC_BOMBS_GM_ARM or function_selector == FUNC_GM_UNARM or function_selector == FUNC_CMPTR ) and _master_arm then
-
             -- PAIRS mode conditional logic checks
             if (AWRS_mode == AWRS_mode_ripple_pairs or AWRS_mode == AWRS_mode_step_pairs) then
                 
                 -- In PAIRS mode, an equal priority pair must exist for LABS tone and light to turn on
                 if check_all_stations_for_pairs_mode() then
-					  labs_tone:play_continue()
+					labs_tone:play_continue()
                     glare_labs_annun_state = true -- turn on labs light    
                 end
-
             -- All other AWRS modes
             else
-				  labs_tone:play_continue()
+				labs_tone:play_continue()
                 glare_labs_annun_state = true -- turn on labs light
             end
         end
 
     elseif command == Keys.PickleOff then
-		 efm_data_bus.fm_setSetTarget(0.0)
+		efm_data_bus.fm_setSetTarget(0.0)
         pickle_engaged = false
         labs_tone:stop() -- TODO also stop after last auto-release interval bomb is dropped
         glare_labs_annun_state = false -- turn on labs light
         ripple_sequence_position = 0 -- reset ripple sequence
-		 bombing_computer_target_set = false
+		bombing_computer_target_set = false
 
     elseif command == Keys.PlaneFireOn then
-        if gun_ready and not geardown then
-            if get_elec_aft_mon_ac_ok() then
+        if gun_ready and _master_arm then
+            if check_guns() then
                 dispatch_action(nil,iCommandPlaneFire)
             end
             gun_firing = true
         end
+
         if AWRS_mode >= AWRS_mode_ripple_single then -- AWRS is in ripple mode
             next_pylon = 1
         end
+
         trigger_engaged = true
         weapon_release_ticker = weapon_interval -- fire first batch immediately
 
@@ -1153,16 +1196,10 @@ function SetCommand(command,value)
 
     elseif command == device_commands.arm_gun then
         gun_ready=(value==1) and true or false
-        debug_print("Guns: "..(gun_ready and "READY" or "SAFE"))
+        debug_print("Guns Switch: "..(gun_ready and "READY" or "SAFE"))
+
         if not gun_ready and gun_firing then
             dispatch_action(nil,iCommandPlaneFireOff)
-        end
-        if gun_ready then
-            sound_params.snd_inst_guns_charge:set(1.0)
-            sound_params.snd_inst_guns_safe:set(0.0)
-        elseif not gun_ready then
-            sound_params.snd_inst_guns_safe:set(1.0)
-            sound_params.snd_inst_guns_charge:set(0.0)
         end
 
     elseif command == device_commands.arm_func_selector then
@@ -1397,10 +1434,19 @@ function SetCommand(command,value)
     end
 end
 
--- refresh kneeboard loadout page if rearming occurs
+-- if rearming occurs
 function CockpitEvent(event, val)
+    -- supply the kneeboard with the new loadout information.
     if event == "WeaponRearmComplete" or event == "UnlimitedWeaponStationRestore" then
         update_kneeboard_loadout()
+        debug_print("Kneeboard loadout page updated.")
+    end
+
+    -- if the guns have been charged, reset them and replenish the nitogren charges.
+    if gun_nitrogen_charges < gun_nitrogen_max  * 2 then
+        guns_set_safe()
+        gun_nitrogen_charges = gun_nitrogen_max * 2
+        debug_print("Nitogren charged replenished.")
     end
 end
 
