@@ -529,8 +529,10 @@ function guns_set_charge()
     gun_nitrogen_charges = gun_nitrogen_charges - 1
     debug_print("Guns are CHARGED. "..gun_nitrogen_charges.." nitrogen charges remaining.")
     gun_charged = true
-    sound_params.snd_inst_guns_charge:set(1.0)
-    sound_params.snd_inst_guns_safe:set(0.0)
+    sound_params.snd_inst_guns_charge_l:set(1.0)
+    sound_params.snd_inst_guns_charge_r:set(1.0)
+    sound_params.snd_inst_guns_safe_l:set(0.0)
+    sound_params.snd_inst_guns_safe_r:set(0.0)
 end
 
 function guns_set_safe()
@@ -538,8 +540,10 @@ function guns_set_safe()
     gun_nitrogen_charges = gun_nitrogen_charges - 1
     debug_print("Guns are SAFED. "..gun_nitrogen_charges.." nitrogen charges remaining.")
     gun_charged = false
-    sound_params.snd_inst_guns_safe:set(1.0)
-    sound_params.snd_inst_guns_charge:set(0.0)
+    sound_params.snd_inst_guns_safe_l:set(1.0)
+    sound_params.snd_inst_guns_safe_r:set(1.0)
+    sound_params.snd_inst_guns_charge_l:set(0.0)
+    sound_params.snd_inst_guns_charge_r:set(0.0)
 end
 
 function check_guns()

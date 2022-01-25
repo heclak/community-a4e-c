@@ -60,8 +60,10 @@ sound_params = {
     snd_cont_gear_mov = get_param_handle("SND_CONT_GEAR_MOV"),
     snd_inst_gear_stop = get_param_handle("SND_INST_GEAR_STOP"),
     --guns
-    snd_inst_guns_charge = get_param_handle("SND_INST_GUNS_CHARGE"),
-    snd_inst_guns_safe = get_param_handle("SND_INST_GUNS_SAFE"),
+    snd_inst_guns_charge_l = get_param_handle("SND_INST_GUNS_CHARGE_L"),
+    snd_inst_guns_charge_r = get_param_handle("SND_INST_GUNS_CHARGE_R"),
+    snd_inst_guns_safe_l = get_param_handle("SND_INST_GUNS_SAFE_L"),
+    snd_inst_guns_safe_r = get_param_handle("SND_INST_GUNS_SAFE_R"),
     --supplemental (speedbrake or tailhook)
     snd_inst_emer_speedbrake_in = get_param_handle("SND_INST_EMER_SPEEDBRAKE_IN"),
     snd_inst_emer_speedbrake_out = get_param_handle("SND_INST_EMER_SPEEDBRAKE_OUT"),

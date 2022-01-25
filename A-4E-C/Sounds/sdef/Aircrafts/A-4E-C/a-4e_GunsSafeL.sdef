@@ -1,0 +1,17 @@
+wave = {
+"Effects/Aircrafts/A-4E-C/a-4e_GunsChargeL1.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_GunsChargeL2.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_GunsChargeL3.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_GunsChargeL4.ogg"
+}
+inner_radius = 20
+outer_radius = 150
+gain = 8.0
+detached = true
+position = {1.25, -1.5, -2.0}
+pitch_random = 0.05
+gain_random = 0.05
+
+-- play: guns return to safe
+-- once
+-- lowpass = 24000.0

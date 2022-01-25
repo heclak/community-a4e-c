@@ -1,0 +1,17 @@
+wave = {
+"Effects/Aircrafts/A-4E-C/a-4e_GunsChargeR1.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_GunsChargeR2.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_GunsChargeR3.ogg",
+"Effects/Aircrafts/A-4E-C/a-4e_GunsChargeR4.ogg"
+}
+inner_radius = 20
+outer_radius = 150
+gain = 8.0
+detached = true
+position = {1.5, -1.5, 2.0}
+pitch_random = 0.05
+gain_random = 0.05
+
+-- play: guns are charged
+-- once
+-- lowpass = 24000.0
