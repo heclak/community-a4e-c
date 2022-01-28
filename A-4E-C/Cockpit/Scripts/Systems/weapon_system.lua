@@ -127,6 +127,7 @@ local weapon_interval = AWRS_multiplier*AWRS_interval
 
 local gunpod_state = { GUNPOD_NULL, GUNPOD_OFF, GUNPOD_OFF, GUNPOD_OFF, GUNPOD_NULL }
 local gunpod_charge_state = 0
+local gunpod_arming = { -1, 0, 0, 0, -1 }
 
 local emer_bomb_release_countdown = 0
 
@@ -505,6 +506,7 @@ end
 
 --update for guns, determines if they should arm or safe, including fire interruption.
 function update_guns()
+    --update mk12 cannons
     if gun_charged then
         if not gun_ready then
             guns_set_safe()
@@ -521,6 +523,17 @@ function update_guns()
             if trigger_engaged then
                 dispatch_action(nil,iCommandPlaneFire)
             end
+        end
+    end
+    --update mk4 hipeg gun pods
+    for i = 1, num_stations do
+        local station = WeaponSystem:get_station_info(i-1)
+        if station.weapon.level2 == wsType_Shell and get_elec_aft_mon_ac_ok() and gunpod_arming[i] >= 0 and gunpod_charge_state == -1 then
+            debug_print("Gun pod on station "..i.." has been CLEARED.")
+            gunpod_arming[i] = -1
+        elseif station.weapon.level2 == wsType_Shell and get_elec_aft_mon_ac_ok() and gunpod_arming[i] == 0 and gunpod_state[i] == GUNPOD_ARMED and gunpod_charge_state == 1 then
+            debug_print("Gun pod on station "..i.." is CHARGED.")
+            gunpod_arming[i] = 1
         end
     end
 end
@@ -593,7 +606,7 @@ function update()
     end
 
     local gear = get_aircraft_draw_argument_value(0) -- nose gear
-    -- master arm is disable is gear is down.
+    -- master arm is disabled is gear is down.
     if (gear > 0) then
         _master_arm = false
     end
@@ -678,7 +691,8 @@ function update()
             local station = WeaponSystem:get_station_info(i-1)
             
             -- HIPEG/gunpod launcher
-            if gunpod_state[i] == GUNPOD_ARMED and station.count > 0 and station.weapon.level2 == wsType_Shell and trigger_engaged and (gunpod_charge_state == 1 and get_elec_aft_mon_ac_ok()) then
+            if station.count > 0 and station.weapon.level2 == wsType_Shell and gunpod_state[i] == GUNPOD_ARMED and gunpod_charge_state == 1 and gunpod_arming[i] == 1 and get_elec_aft_mon_ac_ok() and trigger_engaged then
+                debug_print("Gun pod firing on station "..i..".")
                 WeaponSystem:launch_station(i-1)
                 last_pylon_release[i] = time_ticker
             end
@@ -1445,12 +1459,18 @@ function CockpitEvent(event, val)
         update_kneeboard_loadout()
         debug_print("Kneeboard loadout page updated.")
     end
-
     -- if the guns have been charged, reset them and replenish the nitogren charges.
     if gun_nitrogen_charges < gun_nitrogen_max  * 2 then
         guns_set_safe()
         gun_nitrogen_charges = gun_nitrogen_max * 2
         debug_print("Nitogren charged replenished.")
+    end
+    -- reset gun pod charging and clearance
+     for i = 1, num_stations do
+        if i > 1 and i < 5 then
+            gunpod_arming[i] = 0
+        end
+        debug_print("Gun pod charging reset.")
     end
 end
 
