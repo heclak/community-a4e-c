@@ -855,7 +855,6 @@ void ed_fm_set_internal_fuel(double fuel)
 
 void ed_fm_refueling_add_fuel( double fuel )
 {
-	//printf( "Add fuel: %lf\n", fuel);
 	bool airborne = ! (s_airframe->getNoseCompression() > 0.0) ;
 	s_fuelSystem->addFuel( fuel, airborne );
 }

@@ -189,6 +189,7 @@ private:
 	//Vec3 m_angle;
 
 	Vec3 m_moment; //total moment of aircraft
+	Vec3 m_momentStability; //total stability moments in stability frame
 	Vec3 m_force; //total force on the aircraft
 
 	//Aircraft Settings
@@ -375,6 +376,8 @@ void FlightModel::addForce( const Vec3& force )
 
 void FlightModel::L_stab()
 {
+	//NOTE m_moment.x is no longer correct, it's m_momentStability.x
+	
 	//m_moment.x += m_q * (Cldr( 0.0 ) * rudder() * m_airframe.getRudderDamage());
 
 
@@ -402,7 +405,7 @@ void FlightModel::M_stab()
 void FlightModel::N_stab()
 {
 	double vertDamage = m_airframe.getVertStabDamage();
-	m_moment.y += m_p * (Cmadot(m_state.getMach()) * m_betaDot * 0.3);
+	m_momentStability.y += m_p * (Cmadot(m_state.getMach()) * m_betaDot * 0.3);
 	//printf("betad: %lf\n", m_betaDot);
 	
 	//DO NOT DELETE!!!

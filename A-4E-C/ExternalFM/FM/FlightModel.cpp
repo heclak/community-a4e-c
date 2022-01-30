@@ -254,6 +254,12 @@ void Scooter::FlightModel::calculateAero(double dt)
 	M_stab();
 	N_stab();
 
+	//Convert from stability axes to body.
+	double cosa = cos( m_state.getAOA() );
+	double sina = sin( m_state.getAOA() );
+	m_moment.x += m_momentStability.x * cosa - m_momentStability.y * sina;
+	m_moment.y += m_momentStability.y * cosa - m_momentStability.x * sina;
+
 	checkForOverstress( dt );
 
 	//printf("roll rate: %lf\n", m_state.getOmega().x);
@@ -265,6 +271,7 @@ void Scooter::FlightModel::calculateLocalPhysicsParams(double dt)
 {
 	m_force = Vec3();
 	m_moment = Vec3();
+	m_momentStability = Vec3();
 
 	double dAOA = m_state.getAOA() - m_aoaPrevious;
 	//printf( "%lf - %lf = %lf\n", m_state.getAOA(), m_aoaPrevious, dAOA );
@@ -385,7 +392,7 @@ void Scooter::FlightModel::calculateElements()
 	//m_elementHorizontalStab.setLDFactor( 0.25 * m_airframe.getHoriStabDamage(), 0.85 * m_airframe.getHoriStabDamage());
 	//m_elementVerticalStab.setLDFactor( 0.35 * m_airframe.getVertStabDamage(), 0.85 * m_airframe.getVertStabDamage());
 
-	m_elementHorizontalStab.setLDFactor( 3.0 * m_airframe.getHoriStabDamage(), 8.0 * m_airframe.getHoriStabDamage() );
+	m_elementHorizontalStab.setLDFactor( 1.0 * m_airframe.getHoriStabDamage(), 1.0 * m_airframe.getHoriStabDamage() );
 	m_elementVerticalStab.setLDFactor( 0.35 * m_airframe.getVertStabDamage(), 0.85 * m_airframe.getVertStabDamage() );
 	//printf("beta: %lf, aoa: %lf\n", toDegrees(m_elementVerticalStab.getAOA()));
 
