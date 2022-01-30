@@ -1188,9 +1188,9 @@ local blu_drag_factor = 10
 
 -- BLU-3B   -- 1.75lb "pineapple" cluster munition used in CBU-2/A
 -- ~1.3lb warhead of 250 steel pellets with 0.35lb RDX explosive
-BLU_3B = {
+BLU_3B_OLD = {
     category        = CAT_BOMBS,
-    name            = "BLU-3B",
+    name            = "BLU-3B_OLD",
     user_name       = _("BLU-3B"),
     model           = "A4E_BLU-3B",
     wsTypeOfWeapon  = {wsType_Weapon, wsType_Bomb, wsType_Bomb_Cluster, WSTYPE_PLACEHOLDER},
@@ -1232,7 +1232,7 @@ BLU_3B = {
     },
     shape_table_data = {
         {
-            name    = "BLU-3B";
+            name    = "BLU-3B_OLD";
             file    = "A4E_BLU-3B";
             life    = 1;
             fire    = {0, 1};
@@ -1245,7 +1245,7 @@ BLU_3B = {
     },
 }
 
-declare_weapon(BLU_3B)
+declare_weapon(BLU_3B_OLD)
 
 -- CBU-2/A:  360x BLU-3/B submunitions in a SUU-7A launcher
 -- CBU-2B/A: 409x BLU-3/B submunitions in a SUU-7A launcher
@@ -1254,9 +1254,9 @@ declare_weapon(BLU_3B)
 
 -- BLU-4/B   -- 1.2lb anti-personnel cluster munition used in CBU-1/A
 -- ~0.8lb warhead with 0.18lb RDX explosive
-BLU_4B = {
+BLU_4B_OLD = {
     category        = CAT_BOMBS,
-    name            = "BLU-4B",
+    name            = "BLU-4B_OLD",
     user_name       = _("BLU-4B"),
     model           = "A4E_BLU-4B",
     wsTypeOfWeapon  = {wsType_Weapon, wsType_Bomb, wsType_Bomb_Cluster, WSTYPE_PLACEHOLDER},
@@ -1298,7 +1298,7 @@ BLU_4B = {
     },
     shape_table_data = {
         {
-            name    = "BLU-4B";
+            name    = "BLU-4B_OLD";
             file    = "A4E_BLU-4B";
             life    = 1;
             fire    = {0, 1};
@@ -1311,7 +1311,7 @@ BLU_4B = {
     },
 }
 
-declare_weapon(BLU_4B)
+declare_weapon(BLU_4B_OLD)
 
 -- CBU-1/A: 509x BLU-4/B submunitions in a SUU-7A launcher
 
@@ -1431,7 +1431,7 @@ BLU_3B_NEW = {
 	display_name = "BLU-3B",
 	mass = 0,
 	model = "",
-	name = "BLU_3B_NEW",
+	name = "BLU_3B",
 	cluster_scheme = "cluster",
 	type_name = "cluster",
 	wsTypeOfWeapon	= {wsType_Weapon, wsType_Bomb, wsType_Bomb_Cluster, WSTYPE_PLACEHOLDER},
@@ -1473,7 +1473,7 @@ BLU_4B_NEW = {
 	display_name = "BLU-4B",
 	mass = 0,
 	model = "",
-	name = "BLU_4B_NEW",
+	name = "BLU_4B",
 	cluster_scheme = "cluster",
 	type_name = "cluster",
 	wsTypeOfWeapon	= {wsType_Weapon, wsType_Bomb, wsType_Bomb_Cluster, WSTYPE_PLACEHOLDER},
@@ -1832,9 +1832,9 @@ end
 local dispenser_data =
 {
     --use shapename,         bomblet,          bomblet_count
-    ["CBU-1/A"]          = { bomblet = BLU_4B, bomblet_count = 19 },
-    ["CBU-2/A"]          = { bomblet = BLU_3B, bomblet_count = 19 },
-    ["CBU-2B/A"]         = { bomblet = BLU_3B, bomblet_count = 19 },
+    ["CBU-1/A"]          = { bomblet = BLU_4B_NEW_GROUP, bomblet_count = 19 },
+    ["CBU-2/A"]          = { bomblet = BLU_3B_NEW_GROUP, bomblet_count = 19 },
+    ["CBU-2B/A"]         = { bomblet = BLU_3B_NEW_GROUP, bomblet_count = 19 },
 }
 
 -- CLUSTER DISPENSER RACKING FUNCTION
