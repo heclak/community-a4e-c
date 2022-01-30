@@ -44,17 +44,17 @@ local main_damper_coeff                         = 100.0
 
 local main_wheel_moment_of_inertia              = 2.65
 
-local wheel_static_friction_factor_COMMON       = 0.80
+local wheel_static_friction_factor_COMMON       = 1.00
 local wheel_side_friction_factor_COMMON         = 0.43
 local wheel_roll_friction_factor_COMMON         = 0.04
-local wheel_glide_friction_factor_COMMON        = 0.15 --this needs to be low to go from standstill to moving smoothly
+local wheel_glide_friction_factor_COMMON        = 0.20 --this needs to be low to go from standstill to moving smoothly
 
 local wheel_static_friction_factor_NOSE         = 0.65
 local wheel_side_friction_factor_NOSE           = 0.55 --0.45
 local wheel_roll_friction_factor_NOSE           = 0.05
-local wheel_glide_friction_factor_NOSE          = 0.45 --this needs to be low to go from standstill to moving smoothly
+local wheel_glide_friction_factor_NOSE          = 0.60 --this needs to be low to go from standstill to moving smoothly
 
-local brake_moment_main                         = 5500.0
+local brake_moment_main                         = 7500.0
 
 local wheel_radius_factor                       = 1.0
 
