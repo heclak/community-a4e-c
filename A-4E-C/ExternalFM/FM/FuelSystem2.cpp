@@ -55,6 +55,7 @@ bool FuelSystem2::handleInput( int command, float value )
 		return true;
 	case DEVICE_COMMANDS_ENGINE_DROP_TANKS_SW:
 		m_externalTankPressure = true;
+		m_externalTankFlightRefuel = false;
 
 		if ( value == 1.0 )
 			m_externalTankPressure = false;
@@ -79,12 +80,13 @@ bool FuelSystem2::handleInput( int command, float value )
 
 void FuelSystem2::addFuel( double dm, bool wingFirst )
 {
-	//printf( "Add Fuel: %lf, Wing First? %d\n", dm, wingFirst );
+	printf( "Add Fuel: %lf, Wing First? %d\n", dm, wingFirst );
 
 	//If adding fuel add it before wing tanks.
 	if ( dm > 0.0 && ! wingFirst )
 		dm = addFuelToTank( TANK_FUSELAGE, dm );
 
+	printf( "dm after fuse: %lf\n", dm );
 	//If the wing tank bypass switch is enabled we
 	//refuel the external tanks instead.
 	if ( m_externalTankFlightRefuel )
@@ -97,23 +99,33 @@ void FuelSystem2::addFuel( double dm, bool wingFirst )
 
 		double fracDM = dm / (double)externalTanks;
 
-		dm = 0.0;
 
-		for ( int i = TANK_EXTERNAL_LEFT; i < NUMBER_OF_TANKS; i++ )
+		if ( externalTanks > 0 )
 		{
-			if ( m_fuelCapacity[i] > 15.0 )
-				dm += addFuelToTank( (Tank)i, fracDM );
+			dm = 0.0;
+
+			for ( int i = TANK_EXTERNAL_LEFT; i < NUMBER_OF_TANKS; i++ )
+			{
+				if ( m_fuelCapacity[i] > 15.0 )
+					dm += addFuelToTank( (Tank)i, fracDM );
+			}
 		}
 	}
+
+	printf( "dm after ext: %lf\n", dm );
 	
 	if ( ! m_wingTankBypass ) //Bypass is not enabled so refuel the wing tank.
 	{
 		dm = addFuelToTank( TANK_WING, dm );
 	}
 
+	printf( "dm after wing: %lf\n", dm );
+
 	//If removing fuel remove it from the wing tanks first.
 	if ( dm < 0.0 || wingFirst )
 		dm = addFuelToTank( TANK_FUSELAGE, dm );
+
+	printf( "dm after fuse/all: %lf\n", dm );
 }
 
 void FuelSystem2::update( double dt )

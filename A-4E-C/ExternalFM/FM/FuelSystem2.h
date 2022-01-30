@@ -59,6 +59,7 @@ public:
 	inline void setWingTankPressure( bool pressure );
 	inline void setWingTankBypass( bool bypass );
 	inline void setBoostPumpPower( bool power );
+	inline void setExternalTankFlightRefuel( bool value ) { m_externalTankFlightRefuel = value;  }
 
 	inline double getFuelQty( Tank tank ) const;
 	inline double getFuelQtyExternal() const;

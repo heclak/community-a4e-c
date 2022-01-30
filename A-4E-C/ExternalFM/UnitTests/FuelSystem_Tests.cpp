@@ -72,8 +72,8 @@ namespace UnitTests
 			//Set 1000 kg tank on centreline.
 			system.setFuelCapacity( 0.0, 1000.0, 0.0 );
 
-			//Wing tank bypass must be enabled.
-			system.setWingTankBypass( true );
+			//Flight refuel must be enabled.
+			system.setExternalTankFlightRefuel( true );
 
 			system.addFuel( 500.0, true );
 
@@ -93,8 +93,8 @@ namespace UnitTests
 			//Set 500 kg tank on wing tanks.
 			system.setFuelCapacity( 500.0, 0.0, 500.0 );
 
-			//Wing tank bypass must be enabled.
-			system.setWingTankBypass( true );
+			//Flight refuel must be enabled.
+			system.setExternalTankFlightRefuel( true );
 
 			system.addFuel( 500.0, true );
 
@@ -202,7 +202,7 @@ namespace UnitTests
 			system.setInternal( 500 );
 			system.setFuelCapacity( 0.0, 1000.0, 0.0 );
 			system.setFuelQty( Scooter::FuelSystem2::TANK_EXTERNAL_CENTRE, Vec3(), 200 );
-			system.setWingTankBypass( true );
+			system.setExternalTankFlightRefuel( true );
 
 			system.addFuel( -300.0 );
 
@@ -228,7 +228,7 @@ namespace UnitTests
 			system.setFuelCapacity( 500.0, 0.0, 500.0 );
 			system.setFuelQty( Scooter::FuelSystem2::TANK_EXTERNAL_LEFT, Vec3(), 100 );
 			system.setFuelQty( Scooter::FuelSystem2::TANK_EXTERNAL_RIGHT, Vec3(), 100 );
-			system.setWingTankBypass( true );
+			system.setExternalTankFlightRefuel( true );
 
 			system.addFuel( -300.0 );
 
