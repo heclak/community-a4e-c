@@ -52,12 +52,4 @@ livery = {
   -- custom fuel tank: 300 gallon left/right
   {"fuel_300lr_a4e", DIFFUSE, "a4e_ft_150_300_orange", true};
 
-  -- custom grey naval bomb set
-  {"MK_81", DIFFUSE, "a4e_mk81_grey", true};           -- mk-81
-  {"01 - Default", DIFFUSE, "a4e_mk81se_grey", true};  -- mk-81 snakeye
-  {"MK_82", DIFFUSE, "a4e_mk82_grey", true};           -- mk-82
-  {"MK_82_Snakeye", DIFFUSE, "a4e_mk82se_grey", true}; -- mk-82 snakeye
-  {"mk_83", DIFFUSE, "a4e_mk83_grey", true};           -- mk-83
-  {"mk_84", DIFFUSE, "a4e_mk84_grey", true};           -- mk-84
-
 }
