@@ -54,4 +54,5 @@ livery = {
 
   -- custom fuel tank: 300 gallon center
   --{"fuel_300c_a4e", DIFFUSE, "uvmapsfueltank_dft150_dft300", true};
+
 }
