@@ -172,6 +172,7 @@
     <ClInclude Include="AircraftState.h" />
     <ClInclude Include="AirDataComputer.h" />
     <ClInclude Include="Airframe.h" />
+    <ClInclude Include="AirframeConstants.h" />
     <ClInclude Include="Asteroids.h" />
     <ClInclude Include="AtmosphereState.h" />
     <ClInclude Include="Avionics.h" />
@@ -241,6 +242,7 @@
     <ClCompile Include="FuelSystem2.cpp" />
     <ClCompile Include="ILS.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="LuaVM.cpp" />
     <ClCompile Include="Maths.cpp" />
     <ClCompile Include="Radar.cpp" />
