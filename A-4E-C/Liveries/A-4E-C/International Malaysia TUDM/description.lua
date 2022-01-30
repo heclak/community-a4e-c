@@ -1,6 +1,6 @@
 -- this community livery by JacobBadShot
 name = "Malaysia TUDM M32-29 No.9 Squadron, 2004"
-countries = {"USA", "AUS"}
+countries = {"USA", "MYS"}
 
 livery = {
   {"Top", DIFFUSE, "a4e_intl_tudm_top", true};

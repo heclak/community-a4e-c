@@ -1,7 +1,7 @@
 A-4E-C
-Plane/A-4E-C.png
-A-4E-C
 
+A-4E-C
+A-4E-C
 
 Name: A-4E
 Type: Attack
