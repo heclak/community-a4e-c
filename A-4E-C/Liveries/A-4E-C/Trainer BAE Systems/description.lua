@@ -44,4 +44,5 @@ livery = {
   {"tail_001", DIFFUSE, "empty", true};
   {"tail_010", DIFFUSE, "empty", true};
   {"tail_100", DIFFUSE, "empty", true};
+
 }

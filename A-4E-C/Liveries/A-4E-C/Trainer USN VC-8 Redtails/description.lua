@@ -54,4 +54,5 @@ livery = {
 
   -- custom fuel tank: 300 gallon center
   {"fuel_300c_a4e", DIFFUSE, "a4e_trn_usn_vc8_redtails_ft.dds", true};
+
 }

@@ -1,27 +1,27 @@
-name = "Australian Navy, 1972"
-countries = {"USA", "AUS"}
+name = "USN VC-10 Challengers, 1988"
+countries = {"USA"}
 
 livery = {
-  {"Top", DIFFUSE, "a4e_intl_aus_top", true};
+  {"Top", DIFFUSE, "a4e_trn_usn_vc10_challengers_top", true};
   {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet_lo", true};
-  {"Bottom", DIFFUSE, "a4e_intl_aus_bot", true};
+  {"Bottom", DIFFUSE, "a4e_trn_usn_vc10_challengers_bot", true};
   {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet_lo", true};
-  {"Gear and metal", DIFFUSE, "a4e_intl_aus_bot", true};
-  {"Cockpit", DIFFUSE, "a4e_intl_aus_bot", true};
+  {"Gear and metal", DIFFUSE, "a4e_trn_usn_vc10_challengers_bot", true};
+  {"Cockpit", DIFFUSE, "a4e_trn_usn_vc10_challengers_bot", true};
   --{"Front",	0, "a4e_ext_front", true};
   --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
-  {"Pilot",	DIFFUSE, "a4e_intl_aus_pilot", true};
+  {"Pilot",	DIFFUSE, "a4e_pilot_usn", true};
 
   -- flaps, used on most liveries
-  {"flaps_001", DIFFUSE, "empty", true};
+  {"flaps_001", DIFFUSE, "a4e_bort_white", true};
   {"flaps_010", DIFFUSE, "empty", true};
   {"flaps_100", DIFFUSE, "empty", true};
 
   -- three digit, smaller nose numbers, used on most liveries
-  {"nose_001", DIFFUSE, "a4e_bort_black_smooth", true};
-  {"nose_010", DIFFUSE, "a4e_bort_black_smooth", true};
-  {"nose_100", DIFFUSE, "a4e_bort_black_smooth", true};
+  {"nose_001", DIFFUSE, "empty", true};
+  {"nose_010", DIFFUSE, "empty", true};
+  {"nose_100", DIFFUSE, "empty", true};
 
   -- two digit top-of-tail, used on most USMC liveries
   {"tail_aggressor_001", DIFFUSE, "empty", true};
@@ -38,7 +38,7 @@ livery = {
   {"wing_100", DIFFUSE, "empty", true};
 
   -- 2-digit large nose numbers, used on USN/USMC aggressors
-  {"nose_aggressor_001", DIFFUSE, "empty", true};
+  {"nose_aggressor_001", DIFFUSE, "a4e_bort_white", true};
   {"nose_aggressor_010", DIFFUSE, "empty", true};
 
   -- 3-digit large tail numbers, used on some USN/USMC aggressors
@@ -47,12 +47,12 @@ livery = {
   {"tail_100", DIFFUSE, "empty", true};
 
   -- custom fuel tanks: 150 gallon
-  {"fuel_150_a4e", DIFFUSE, "a4e_ft_150_300_gray", true};
+  {"fuel_150_a4e", DIFFUSE, "a4e_trn_usn_vc10_challengers_ft.dds", true};
 
   -- custom fuel tank: 300 gallon left/right
-  {"fuel_300lr_a4e", DIFFUSE, "a4e_ft_150_300_gray", true};
+  {"fuel_300lr_a4e", DIFFUSE, "a4e_trn_usn_vc10_challengers_ft.dds", true};
 
   -- custom fuel tank: 300 gallon center
-  {"fuel_300c_a4e", DIFFUSE, "a4e_ft_150_300_gray", true};
+  {"fuel_300c_a4e", DIFFUSE, "a4e_trn_usn_vc10_challengers_ft.dds", true};
 
 }

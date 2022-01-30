@@ -51,4 +51,5 @@ livery = {
 
   -- custom fuel tank: 300 gallon left/right
   {"fuel_300lr_a4e", DIFFUSE, "a4e_ft_150_300_green", true};
+
 }

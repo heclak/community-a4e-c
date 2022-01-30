@@ -277,7 +277,7 @@ elements["PNT_250"] = multiposition_switch_limited("MCL Channel Selector Switch"
 elements["PNT_251"] = springloaded_3_pos_tumb("Seat Adjustment Switch (unimplemented)", devices.AVIONICS, device_commands.seat_adjustment, 251, false, KNOBCLICK_RIGHT_MID)
 elements["PNT_252"] = default_2_position_tumb("Emergency Generator Switch", devices.ELECTRIC_SYSTEM, device_commands.emer_gen_bypass, 252, TOGGLECLICK_RIGHT_AFT)
 elements["PNT_253"] = springloaded_forward_only_3_pos_tumb("AN/ARA-63 MCL Power Switch", devices.MCL, device_commands.mcl_power_switch, 253, false, TOGGLECLICK_RIGHT_AFT)
-elements["PNT_254"] = default_3_position_tumb("TACAN Antenna Control Switch (unimplemented)", devices.NAV, device_commands.tacan_antenna, 254, nil, false, TOGGLECLICK_RIGHT_AFT)
+elements["PNT_254"] = inverted_3_position_tumb("TACAN Antenna Control Switch (unimplemented)", devices.NAV, device_commands.tacan_antenna, 254, nil, false, TOGGLECLICK_RIGHT_AFT)
 elements["PNT_255"] = default_2_position_tumb("Navigation Dead Reckoning/Doppler Switch (unimplemented)", devices.NAV, device_commands.nav_dead_recon, 255, TOGGLECLICK_RIGHT_AFT)
 elements["PNT_256"] = default_2_position_tumb("Fuel Transfer Switch", devices.ENGINE, device_commands.fuel_transfer_bypass, 256, TOGGLECLICK_RIGHT_AFT)
 elements["PNT_257"] = default_2_position_tumb("Rain Removal Switch (unimplemented)", devices.AVIONICS, device_commands.rain_removal, 257, TOGGLECLICK_RIGHT_AFT)
@@ -285,7 +285,7 @@ elements["PNT_257"] = default_2_position_tumb("Rain Removal Switch (unimplemente
 -- INTERIOR LIGHTING PANEL #54
 elements["PNT_106"] = default_axis_limited( "Instrument Lights Control", devices.AVIONICS, device_commands.intlight_instruments, 106, 0.0, 0.3, false, false, {0,1} )
 elements["PNT_107"] = default_axis_limited( "Console Lights Control", devices.AVIONICS, device_commands.intlight_console, 107, 0.0, 0.3, false, false, {0,1} )
-elements["PNT_108"] = multiposition_switch_limited("Instrument Lights Brightness", devices.AVIONICS, device_commands.intlight_brightness, 108, 3, 1, true, -1.0, TOGGLECLICK_RIGHT_AFT)
+elements["PNT_108"] = multiposition_switch_limited_inverted("Instrument Lights Brightness", devices.AVIONICS, device_commands.intlight_brightness, 108, 3, 1, true, -1.0, TOGGLECLICK_RIGHT_AFT)
 elements["PNT_110"] = default_axis_limited( "White Floodlights Control", devices.AVIONICS, device_commands.intlight_whiteflood, 110, 0.0, 0.3, false, false, {0,1} )
 -- TODO: trigger at or leave 0 ?
 elements["PNT_405"].sound = {{COCKPIT_ILLUM_POT, COCKPIT_ILLUM_POT}}

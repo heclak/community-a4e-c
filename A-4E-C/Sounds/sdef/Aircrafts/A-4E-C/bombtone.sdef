@@ -1,2 +1,3 @@
 wave = "Effects/Aircrafts/A-4E-C/bombtone.wav"
 detached = false
+gain = 0.75
