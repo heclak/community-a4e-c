@@ -1262,3 +1262,8 @@ void ed_fm_set_immortal( bool value )
 	if ( value )
 		printf( "Nice try!\n" );
 }
+
+void ed_fm_unlimited_fuel( bool value )
+{
+	s_fuelSystem->setUnlimitedFuel(value);
+}
