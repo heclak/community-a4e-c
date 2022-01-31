@@ -470,7 +470,9 @@ public:
 
 	inline void setInRange( bool inRange )
 	{
-		setParamNumber( m_inRange, (double)inRange );
+		if (getMasterTest() == false) {
+            setParamNumber(m_inRange, (double)inRange);
+        }	
 	}
 
 	inline void setFuelTransferCaution( bool caution )
