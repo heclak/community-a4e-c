@@ -47,6 +47,8 @@ public:
 	void update( double dt );
 	bool handleInput( int command, float value );
 
+	inline void setUnlimitedFuel( bool state );
+
 	inline bool hasFuel() const;
 	inline void updateMechPumpPressure();
 	inline double transferFuel( Tank from, Tank to, double dm );
@@ -79,6 +81,7 @@ public:
 	inline void setTankPos( Tank tank, const Vec3& pos ) { m_fuelPos[tank] = pos; }
 
 private:
+	bool m_unlimited_fuel = false;
 
 	double m_fuel[NUMBER_OF_TANKS] = { 0.0, 0.0, 0.0, 0.0, 0.0 };
 	double m_fuelPrevious[NUMBER_OF_TANKS] = { 0.0, 0.0, 0.0, 0.0, 0.0 };
@@ -109,6 +112,11 @@ private:
 	Scooter::Engine2& m_engine;
 	Scooter::AircraftState& m_state;
 };
+
+void FuelSystem2::setUnlimitedFuel( bool state )
+{
+	m_unlimited_fuel = state;
+}
 
 void FuelSystem2::setBoostPumpPower( bool power )
 {

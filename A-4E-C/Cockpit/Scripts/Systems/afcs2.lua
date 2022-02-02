@@ -1162,7 +1162,7 @@ function update_apc()
     elseif apc_state == APC_STATE_STBY then
         apc_light:set(1.0)
     elseif apc_state == APC_STATE_ENGAGE then
-        apc_light:set(1.0)
+        apc_light:set(0.0)
         apc_hold_aoa()
     end
 

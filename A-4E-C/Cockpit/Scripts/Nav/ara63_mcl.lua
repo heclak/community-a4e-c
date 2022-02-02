@@ -44,12 +44,13 @@ local icls_to_object_id = {}
 
 -- Beacon offset in format [x offset (forward-backward), z offset(left-right), deck angle]
 --
--- deck angle of Melbourne found at https://www.navy.gov.au/history/angled-flight-deck
+-- deck angle of Melbourne and Hermes found in lua scripts for resp. ship mod
 
 local beacon_offsets = {
     ["Stennis"] = {18.0, 13.0, 9.0},
-    ["hmas_melbourne_wip"] = {60.0, 0.0, 5.5},
-    ["hmas_melbourne"] = {60.0, 0.0, 5.5},
+    ["hmas_melbourne_wip"] = {60.0, 0.0, 6.0},
+    ["hmas_melbourne"] = {60.0, 0.0, 6.0},
+    ["HERMES69"] = {45.0, 0.0, 9.0},
 }
 
 -------------------------------------------
