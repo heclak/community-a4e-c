@@ -497,25 +497,34 @@ function updateComputerSolution(weapons_released)
 	return valid_solution
 end
 
---gear position is used to determine circuit interruption across weapon systems
+--gear position is used to determine circuit interruption of master armamanet circuit and other weapon functions
 function update_gear()
     local nosegear = get_aircraft_draw_argument_value(0)
     geardown = (nosegear ~= 0) and true or false
 end
 
---update for guns, determines if they should arm or safe, including fire interruption.
+--update for internal mk12 cannons (guns)
 function update_guns()
-    --update mk12 cannons
     if gun_charged then
+        --safe the guns
         if not gun_ready then
             guns_set_safe()
+        --interrupt or begin firing due to circuit breakage or restoration
+        elseif trigger_engaged then
+            if geardown and gun_firing then
+                debug_print("Deploying gear has disabled guns firing.")
+                dispatch_action(nil,iCommandPlaneFireOff)
+                gun_firing = false
+            elseif gun_ready and get_elec_mon_arms_dc_ok() and not geardown and not gun_firing then
+                debug_print("Guns firing circuit is restored while trigger is depressed. Firing guns.")
+                dispatch_action(nil,iCommandPlaneFire)
+                gun_firing = true
+            end
         end
     else
+        --arm the guns
         if get_elec_aft_mon_ac_ok() and gun_ready and gun_reliability_charges >= 2 then
             guns_set_charge()
-            if trigger_engaged then
-                dispatch_action(nil,iCommandPlaneFire)
-            end
         end
     end
     --update mk4 hipeg gun pods
@@ -537,7 +546,7 @@ function guns_reset()
     -- The number is generated at birth, and when the plane being rearmed.
     math.randomseed(os.clock()*1000000)
     gun_reliability_rating = math.random(1,5)*2
-    print_message_to_user("Guns are RESET with a reliability rating of "..gun_reliability_rating..".")
+    debug_print("Guns are RESET with a reliability rating of "..gun_reliability_rating..".")
 end
 
 function guns_set_charge()
@@ -555,6 +564,7 @@ function guns_set_safe()
     gun_reliability_charges = gun_reliability_charges - 1
     debug_print("Guns are SAFED. "..gun_reliability_charges.."  reliability remains.")
     gun_charged = false
+    gun_firing = false
     sound_params.snd_inst_guns_safe_l:set(1.0)
     sound_params.snd_inst_guns_safe_r:set(1.0)
     sound_params.snd_inst_guns_charge_l:set(0.0)
@@ -1173,10 +1183,9 @@ function SetCommand(command,value)
 		bombing_computer_target_set = false
 
     elseif command == Keys.PlaneFireOn then
-        if gun_ready and _master_arm then
-            if check_guns() then
-                dispatch_action(nil,iCommandPlaneFire)
-            end
+        if gun_ready and _master_arm and check_guns() then
+            debug_print("Firing guns.")
+            dispatch_action(nil,iCommandPlaneFire)
             gun_firing = true
         end
 
