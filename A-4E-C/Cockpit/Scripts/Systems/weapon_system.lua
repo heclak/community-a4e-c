@@ -147,8 +147,8 @@ local main_rpm = get_param_handle("RPM")
 
 local bombing_computer_target_set = false
 
-local gun_reliability_rating = 2
-local gun_reliability_charges = 2
+local gun_reliability_rating = 6
+local gun_reliability_charges = 6
 local geardown = true
 
 ------------------------------------------------
@@ -544,8 +544,9 @@ function guns_reset()
     -- This random "countdown" number represents available nitrogen pressure for gun READY/SAFE cycles,
     -- as well as the gun jams if safed and readied again.
     -- The number is generated at birth, and when the plane being rearmed.
-    math.randomseed(os.clock()*1000000)
-    gun_reliability_rating = math.random(1,5)*2
+    -- math.randomseed(os.clock()*1000000)
+    -- gun_reliability_rating = math.random(1,5)*2
+    gun_reliability_rating = 3*2 -- number of arm/safe cycles
     debug_print("Guns are RESET with a reliability rating of "..gun_reliability_rating..".")
 end
 
