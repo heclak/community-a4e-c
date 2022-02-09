@@ -1,7 +1,7 @@
-A-4E-C
+A-4E
+Plane/A-4E-C.png
+a-4e-c
 
-A-4E-C
-A-4E-C
 
 Name: A-4E
 Type: Attack
@@ -10,29 +10,29 @@ Length: 41'3" (12.57 m)
 Wing span: 27'6" (8.38 m)
 Height: 15' (4.57 m)
 Wing area: 259ft^2 (24.15 m^2)
-Weight Empty: 10,450 lb (4750 kg)
-Max Takeoff Weight: 24,500 lb (11,136 kg)
-Max Landing Weight: 14,500 lb (6577 kg)
-Internal Fuel: 5372 lb (2437 kg)
-Max Mach at altitude: 0.95
 Max Mach at S/L: 0.85
-Service ceiling: 42,250' (12,875 m)
-Maximum range: 1700 nmi (3220 km)
-G limit: 8.0 g
+Max Mach at altitude: 0.95
+Weight empty: 10,450 lb (4750 kg)
+Max takeoff weight: 24,500 lb (11,136 kg)
+Max landing weight: 14,500 lb (6577 kg)
 Normal G: +7.5/-3.0 g
+G limit: 8.0 g
+Max range: 1700 nmi (3220 km)
+Internal Fuel: 5372 lb (2437 kg)
+Service ceiling: 42,250' (12,875 m)
 Thrust Rating (ISA sea level): 9300 lbf (4218 kgf)
 
-
 Armament: 
- - 200x 20mm Mk12 Cannon
- - Mk-80 series bombs
- - AN-series legacy bombs
- - CBU-1/A,CBU-2/A cluster munitions
- - AGM-45 Shrike
- - AGM-12b Bullpup
- - AGM-62 Walleye
- - LAU-10 rocket pods
- - AIM-9b Sidewinder
+- 200x 20mm Mk12 cannons
+- Mk4 HIPEG gun pods
+- AN-series legacy bombs
+- Mk-80 series bombs
+- Mk-20 Rockeye bombs
+- CBU-1/A, CBU-2/A cluster munitions
+- LAU-3 rocket pods
+- LAU-10 rocket pods
+- LAU-68 rocket pods
+- AIM-9b Sidewinder
+- AGM-45 Shrike
 
-The A-4 is a single seat carrier-capable attack aircraft, developed for the United States Navy and United States Marine Corps by the Douglas Aircraft Company.  It was originally designated A4D under the U.S. Navy's pre-1962 designation system.  Almost 3000 were built between 1954 and 1979.
-
+The A-4 is a lightweight, subsonic, single-engine attack aircraft developed for the United States Navy and United States Marine Corps by the Douglas Aircraft Company. originally designated A4D under the U.S. Navy's pre-1962 designation system, and entering service in 1956, it was designed to deliver conventional and nuclear weapons in daytime visual flight conditions. However, using the APG-53A radar first installed on the A-4C, the A-4 is capable of all-weather navigation at low altitudes, as well as limited computer-assisted weapon delivery. Almost 3000 were built between 1954 and 1979.

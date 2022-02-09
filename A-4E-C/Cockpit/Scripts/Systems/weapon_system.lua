@@ -147,8 +147,8 @@ local main_rpm = get_param_handle("RPM")
 
 local bombing_computer_target_set = false
 
-local gun_nitrogen_max = 1
-local gun_nitrogen_charges = 0
+local gun_reliability_rating = 6
+local gun_reliability_charges = 6
 local geardown = true
 
 ------------------------------------------------
@@ -318,21 +318,20 @@ function post_initialize()
     cbu2ba_quantity_array_pos = get_aircraft_property("CBU2BATPP")
     cbu2ba_quantity:set(cbu2ba_quantity_array[ cbu2ba_quantity_array_pos + 1 ])
 
-    -- amount of nitrogen pressure for gun READY/SAFE (complete cycles)
-    gun_nitrogen_max = 1
+    guns_reset()
 
     if birth == "GROUND_HOT" or birth == "AIR_HOT" then
         dev:performClickableAction(device_commands.arm_gun,0,true) -- arg 701
         gun_ready = false
         gun_charged = false
-        gun_nitrogen_charges = gun_nitrogen_max * 2
+        gun_reliability_charges = gun_reliability_rating
         dev:performClickableAction(device_commands.AWRS_quantity,0.05,true) -- arg 740, quantity = 2 to power on the AWE-1
         AWRS_quantity = 2
     elseif birth == "GROUND_COLD" then
         dev:performClickableAction(device_commands.arm_gun,0,true) -- arg 701
         gun_ready = false
         gun_charged = false
-        gun_nitrogen_charges = gun_nitrogen_max * 2
+        gun_reliability_charges = gun_reliability_rating
     end
 
     print("weapon_system: postinit end")
@@ -498,31 +497,34 @@ function updateComputerSolution(weapons_released)
 	return valid_solution
 end
 
---gear position is used to determine circuit interruption across weapon systems
+--gear position is used to determine circuit interruption of master armamanet circuit and other weapon functions
 function update_gear()
     local nosegear = get_aircraft_draw_argument_value(0)
     geardown = (nosegear ~= 0) and true or false
 end
 
---update for guns, determines if they should arm or safe, including fire interruption.
+--update for internal mk12 cannons (guns)
 function update_guns()
-    --update mk12 cannons
     if gun_charged then
+        --safe the guns
         if not gun_ready then
             guns_set_safe()
-        elseif geardown then
-            debug_print("Deploying landing gear has broken the guns charging circuit.")
-            guns_set_safe()
-        elseif get_elec_aft_mon_ac_ok() == false then
-            debug_print("A loss of AC power has broken the guns charging circuit.")
-            guns_set_safe()
+        --interrupt or begin firing due to circuit breakage or restoration
+        elseif trigger_engaged then
+            if geardown and gun_firing then
+                debug_print("Deploying gear has disabled guns firing.")
+                dispatch_action(nil,iCommandPlaneFireOff)
+                gun_firing = false
+            elseif gun_ready and get_elec_mon_arms_dc_ok() and not geardown and not gun_firing then
+                debug_print("Guns firing circuit is restored while trigger is depressed. Firing guns.")
+                dispatch_action(nil,iCommandPlaneFire)
+                gun_firing = true
+            end
         end
     else
-        if get_elec_aft_mon_ac_ok() and gun_ready and gun_nitrogen_charges >= 2 and not geardown then
+        --arm the guns
+        if get_elec_aft_mon_ac_ok() and gun_ready and gun_reliability_charges >= 2 then
             guns_set_charge()
-            if trigger_engaged then
-                dispatch_action(nil,iCommandPlaneFire)
-            end
         end
     end
     --update mk4 hipeg gun pods
@@ -538,9 +540,19 @@ function update_guns()
     end
 end
 
+function guns_reset()
+    -- This random "countdown" number represents available nitrogen pressure for gun READY/SAFE cycles,
+    -- as well as the gun jams if safed and readied again.
+    -- The number is generated at birth, and when the plane being rearmed.
+    -- math.randomseed(os.clock()*1000000)
+    -- gun_reliability_rating = math.random(1,5)*2
+    gun_reliability_rating = 3*2 -- number of arm/safe cycles
+    debug_print("Guns are RESET with a reliability rating of "..gun_reliability_rating..".")
+end
+
 function guns_set_charge()
-    gun_nitrogen_charges = gun_nitrogen_charges - 1
-    debug_print("Guns are CHARGED. "..gun_nitrogen_charges.." nitrogen charges remaining.")
+    gun_reliability_charges = gun_reliability_charges - 1
+    debug_print("Guns are CHARGED. "..gun_reliability_charges.." reliability remains.")
     gun_charged = true
     sound_params.snd_inst_guns_charge_l:set(1.0)
     sound_params.snd_inst_guns_charge_r:set(1.0)
@@ -550,9 +562,10 @@ end
 
 function guns_set_safe()
     dispatch_action(nil,iCommandPlaneFireOff)
-    gun_nitrogen_charges = gun_nitrogen_charges - 1
-    debug_print("Guns are SAFED. "..gun_nitrogen_charges.." nitrogen charges remaining.")
+    gun_reliability_charges = gun_reliability_charges - 1
+    debug_print("Guns are SAFED. "..gun_reliability_charges.."  reliability remains.")
     gun_charged = false
+    gun_firing = false
     sound_params.snd_inst_guns_safe_l:set(1.0)
     sound_params.snd_inst_guns_safe_r:set(1.0)
     sound_params.snd_inst_guns_charge_l:set(0.0)
@@ -1171,10 +1184,9 @@ function SetCommand(command,value)
 		bombing_computer_target_set = false
 
     elseif command == Keys.PlaneFireOn then
-        if gun_ready and _master_arm then
-            if check_guns() then
-                dispatch_action(nil,iCommandPlaneFire)
-            end
+        if gun_ready and _master_arm and check_guns() then
+            debug_print("Firing guns.")
+            dispatch_action(nil,iCommandPlaneFire)
             gun_firing = true
         end
 
@@ -1458,16 +1470,15 @@ function CockpitEvent(event, val)
         -- supply the kneeboard with new loadout information.
         update_kneeboard_loadout()
         debug_print("Kneeboard loadout page updated.")
-        -- if the guns have been charged, reset them and replenish the nitogren charges.
-        if gun_nitrogen_charges < gun_nitrogen_max  * 2 then
+        -- if the guns have been charged, reset them and reset gun reliability.
+        if gun_reliability_charges < gun_reliability_rating then
             guns_set_safe()
-            gun_nitrogen_charges = gun_nitrogen_max * 2
-            debug_print("Gun arming nitogren charges replenished.")
+            guns_reset()
         end
         -- reset any gun pod charging or clearance
         for i = 1,3, num_stations do
             gunpod_arming[i] = 0
-            debug_print("Any equipped gun pods are ready to armed.")
+            debug_print("Any equipped gun pods are safed and ready to arm.")
         end
     end
 end
