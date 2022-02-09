@@ -89,6 +89,19 @@ dev:listen_command(device_commands.emer_gear_release)
 dev:listen_command(NWS_Engage)
 dev:listen_command(NWS_Disengage)
 
+-- Skiding detection window
+local no_anim_L_array = {}
+local no_anim_R_array = {}
+local no_anim_N_array = {}
+
+for i=1, 10 do
+    no_anim_L_array[i] = -1
+    no_anim_R_array[i] = -1
+    no_anim_N_array[i] = -1
+end
+local skid_L_param = get_param_handle("SKID_L_DETECTOR")
+local skid_R_param = get_param_handle("SKID_R_DETECTOR")
+local skid_N_param = get_param_handle("SKID_N_DETECTOR")
 
 
 function SetCommand(command,value)
@@ -504,10 +517,60 @@ function update_hook()
     --tail_hook_param:set(hook_controller:get_position())
 end
 
+function update_skid()
+    -- Update arrays
+    table.remove(no_anim_L_array,1)
+    table.insert(no_anim_L_array, get_aircraft_draw_argument_value(103))
+    table.remove(no_anim_R_array,1)
+    table.insert(no_anim_R_array, get_aircraft_draw_argument_value(102))
+    table.remove(no_anim_N_array,1)
+    table.insert(no_anim_N_array, get_aircraft_draw_argument_value(101))
+
+    -- Detect when no animation
+    local no_anim_L = 1.0
+    for _, v in ipairs(no_anim_L_array) do
+        if v ~= no_anim_L_array[1] then 
+            no_anim_L = 0.0
+            break 
+        end
+    end
+
+    local no_anim_R = 1.0
+    for _, v in ipairs(no_anim_R_array) do
+        if v ~= no_anim_R_array[1] then 
+            no_anim_R = 0.0
+            break 
+        end
+    end
+
+    local no_anim_N = 1.0
+    for _, v in ipairs(no_anim_N_array) do
+        if v ~= no_anim_N_array[1] then 
+            no_anim_N = 0.0
+            break 
+        end
+    end
+    
+    -- WoW
+    local left_WoW = sensor_data.getWOW_LeftMainLandingGear()
+    local right_WoW = sensor_data.getWOW_RightMainLandingGear()
+
+    -- Plane speed
+
+    local speed = sensor_data.getTrueAirSpeed()*1.9438444924574
+    
+    -- Update state
+    local bool_to_number={ [true]=1.0, [false]=0.0 }
+
+    skid_L_param:set(bool_to_number[speed > 5 and left_WoW > 0.5 and no_anim_L > 0.5])
+    skid_R_param:set(bool_to_number[speed > 5 and right_WoW > 0.5 and no_anim_R > 0.5])
+
+end
 
 function update()
     update_gear()
     update_hook()
+    update_skid()
 end
 
 need_to_be_closed = false -- close lua state after initialization
