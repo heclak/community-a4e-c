@@ -1473,7 +1473,7 @@ function CockpitEvent(event, val)
         WeaponSystem:performClickableAction(device_commands.gunpod_l, 0, false)
         WeaponSystem:performClickableAction(device_commands.gunpod_c, 0, false)
         WeaponSystem:performClickableAction(device_commands.gunpod_r, 0, false)
-        print_message_to_user("Guns Charging Switch and Gunpod Panel switches are safed for rearming.")
+        debug_print("Guns Charging Switch and Gunpod Panel switches are safed for rearming.")
         -- if the guns have been charged, reset them and reset gun reliability.
         if gun_reliability_charges < gun_reliability_rating then
             guns_set_safe()
