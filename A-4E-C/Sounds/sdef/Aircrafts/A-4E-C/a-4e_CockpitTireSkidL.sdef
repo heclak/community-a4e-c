@@ -1,0 +1,12 @@
+wave = { "Effects/Aircrafts/A-4E-C/TireSkidL.ogg" }
+inner_radius = 20
+outer_radius = 150
+gain = 30.0
+listmode = RANDOM
+position = {-2.5, -2.5, -1.75}
+pitch_random = 0.1
+gain_random = 0.1
+
+-- play: left tire skidding
+-- looped
+-- lowpass = 24000.0
