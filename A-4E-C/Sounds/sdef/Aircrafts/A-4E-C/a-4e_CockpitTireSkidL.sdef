@@ -1,4 +1,4 @@
-wave = { "Effects/Aircrafts/A-4E-C/TireSkidL.ogg" }
+wave = { "Effects/Aircrafts/A-4E-C/a-4e_CockpitTireSkidL.ogg" }
 inner_radius = 20
 outer_radius = 150
 gain = 30.0
