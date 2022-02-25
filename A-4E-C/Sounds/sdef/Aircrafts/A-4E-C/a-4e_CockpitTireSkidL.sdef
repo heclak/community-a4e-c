@@ -1,0 +1,17 @@
+wave = { 
+    "Effects/Aircrafts/A-4E-C/a-4e_CockpitTireSkidL1.ogg",  
+    "Effects/Aircrafts/A-4E-C/a-4e_CockpitTireSkidL2.ogg" 
+}
+inner_radius = 20
+outer_radius = 150
+gain = 10.0
+attack = 0.1
+release = 0.2
+listmode = RANDOM
+position = {-2.5, -2.5, -1.75}
+pitch_random = 0.1
+gain_random = 0.1
+
+-- play: left tire skidding
+-- once
+-- lowpass = 24000.0

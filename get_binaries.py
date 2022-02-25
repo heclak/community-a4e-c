@@ -1,6 +1,7 @@
 import sys
 import os
 import gdown
+from google_drive_downloader import GoogleDriveDownloader as gdd
 import shutil
 from zipfile import ZipFile
 import threading
@@ -63,7 +64,7 @@ def old_download_method():
 
 
 def create_download_link(id):
-    return "https://drive.google.com/uc?id=" + id
+    return id #"https://drive.google.com/uc?id=" + 
 
 
 
@@ -96,7 +97,7 @@ class FileDownloader:
             #self.threads.append(threading.Thread(target=self.download_files, args=(dir,)))
             #self.threads[-1].start()
 
-        for i in range(8):
+        for i in range(16):
             self.threads.append(threading.Thread(target=self.downloader_loop))
             self.threads[-1].start()
 
@@ -158,16 +159,16 @@ class FileDownloader:
 
             if not os.path.exists(file["path"]):
                 try:
-                    gdown.download(file["url"], file["path"], quiet=True)
+                    gdd.download_file_from_google_drive(file_id=file["url"], dest_path=file["path"], showsize=True)
+                    #gdown.download(file["url"], file["path"], quiet=True)
                 except Exception as e:
-                    #print(e)
-                    print("\nError: requeuing file {}...".format(file["path"]))
+                    print("\nError ({}): requeuing file {}...".format(type(e).__name__, file["path"]))
                     self.file_queue.append(file)
                     return
 
-                self.size_downloaded += os.path.getsize(file["path"])
+                self.size_downloaded += float(os.path.getsize(file["path"]))
                 self.files_downloaded += 1
-                sys.stdout.write("\r{}/{} files downloaded totaling {} MB".format(self.files_downloaded, self.total_files, int(self.size_downloaded / 1e6)))
+                sys.stdout.write("{}/{} files downloaded totaling {} MB\n".format(self.files_downloaded, self.total_files, int(self.size_downloaded / 1.0e3)))
                 
             else:
                 print("Skipping {}".format(file["path"]))
