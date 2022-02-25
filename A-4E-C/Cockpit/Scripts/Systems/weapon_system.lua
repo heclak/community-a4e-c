@@ -1467,9 +1467,13 @@ end
 -- if rearming occurs, perform the following:
 function CockpitEvent(event, val)
     if event == "WeaponRearmComplete" or event == "UnlimitedWeaponStationRestore" then
-        -- supply the kneeboard with new loadout information.
-        update_kneeboard_loadout()
-        debug_print("Kneeboard loadout page updated.")
+        -- safe guns and gunpods switches
+        WeaponSystem:performClickableAction(device_commands.arm_gun, 0, false)
+        WeaponSystem:performClickableAction(device_commands.gunpod_chargeclear, 0, false)
+        WeaponSystem:performClickableAction(device_commands.gunpod_l, 0, false)
+        WeaponSystem:performClickableAction(device_commands.gunpod_c, 0, false)
+        WeaponSystem:performClickableAction(device_commands.gunpod_r, 0, false)
+        print_message_to_user("Guns Charging Switch and Gunpod Panel switches are safed for rearming.")
         -- if the guns have been charged, reset them and reset gun reliability.
         if gun_reliability_charges < gun_reliability_rating then
             guns_set_safe()
@@ -1480,6 +1484,9 @@ function CockpitEvent(event, val)
             gunpod_arming[i] = 0
             debug_print("Any equipped gun pods are safed and ready to arm.")
         end
+        -- supply the kneeboard with new loadout information.
+        update_kneeboard_loadout()
+        debug_print("Kneeboard loadout page updated.")
     end
 end
 
