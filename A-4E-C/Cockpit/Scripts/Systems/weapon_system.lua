@@ -125,7 +125,7 @@ local AWRS_multiplier = 1
 local weapon_interval = AWRS_multiplier*AWRS_interval
  -- fairly arbitrary value (seconds between rockets) (see also http://www.gettyimages.com/detail/video/news-footage/861-51 )
 
-local gunpod_state = { GUNPOD_NULL, GUNPOD_OFF, GUNPOD_OFF, GUNPOD_OFF, GUNPOD_NULL }
+local gunpod_state = { GUNPOD_OFF, GUNPOD_OFF, GUNPOD_OFF }
 local gunpod_charge_state = 0
 local gunpod_arming = { 0, 0, 0 }
 
@@ -503,6 +503,22 @@ function update_gear()
     geardown = (nosegear ~= 0) and true or false
 end
 
+function charge_guns(value)
+
+    if value == 0 then
+        return
+    end
+
+
+    for i=1,3 do
+        if gunpod_state[i] == GUNPOD_ARMED then
+            if gunpod_arming[i] >= 0 then
+                gunpod_arming[i] = value
+            end
+        end
+    end
+end
+
 --update for internal mk12 cannons (guns)
 function update_guns()
     if gun_charged then
@@ -525,17 +541,6 @@ function update_guns()
         --arm the guns
         if get_elec_aft_mon_ac_ok() and gun_ready and gun_reliability_charges >= 2 then
             guns_set_charge()
-        end
-    end
-    --update mk4 hipeg gun pods
-    for i = 1, 3 do
-        local station = WeaponSystem:get_station_info(i-1)
-        if station.weapon.level2 == wsType_Shell and get_elec_aft_mon_ac_ok() and gunpod_arming[i] >= 0 and gunpod_charge_state == -1 then
-            debug_print("Gun pod on station "..i.." has been CLEARED.")
-            gunpod_arming[i] = -1
-        elseif station.weapon.level2 == wsType_Shell and get_elec_aft_mon_ac_ok() and gunpod_arming[i] == 0 and gunpod_state[i] == GUNPOD_ARMED and gunpod_charge_state == 1 then
-            debug_print("Gun pod on station "..i.." is CHARGED.")
-            gunpod_arming[i] = 1
         end
     end
 end
@@ -704,10 +709,14 @@ function update()
             local station = WeaponSystem:get_station_info(i-1)
             
             -- HIPEG/gunpod launcher
-            if station.count > 0 and station.weapon.level2 == wsType_Shell and gunpod_state[i] == GUNPOD_ARMED and gunpod_arming[i] == 1 and get_elec_aft_mon_ac_ok() and trigger_engaged then
-                debug_print("Gun pod firing on station "..i..".")
-                WeaponSystem:launch_station(i-1)
-                last_pylon_release[i] = time_ticker
+            if station.count > 0 and station.weapon.level2 == wsType_Shell  and get_elec_aft_mon_ac_ok() and trigger_engaged then
+                if i >= 2 and i <= 4 then
+                    if gunpod_state[i-1] == GUNPOD_ARMED and gunpod_arming[i-1] == 1 then
+                        debug_print("Gun pod firing on station "..i..".")
+                        WeaponSystem:launch_station(i-1)
+                        last_pylon_release[i] = time_ticker
+                    end
+                end
             end
             
             -- conditional checks for RIPPLE PAIRS and STEP PAIRS
@@ -1259,6 +1268,7 @@ function SetCommand(command,value)
         next_pylon=1
 
     elseif command == device_commands.gunpod_chargeclear then
+        charge_guns(value)
         gunpod_charge_state = value
         debug_print("charge/off/clear = "..value)
 
@@ -1272,23 +1282,23 @@ function SetCommand(command,value)
     elseif command == device_commands.gunpod_l then
         local gunpod_ready=(value==1) and true or false
         debug_print("GunPod L: "..(gunpod_ready and "READY" or "SAFE"))
-        gunpod_state[2] = value
+        gunpod_state[1] = value
 
     elseif command == device_commands.gunpod_c then
         local gunpod_ready=(value==1) and true or false
         debug_print("GunPod C: "..(gunpod_ready and "READY" or "SAFE"))
-        gunpod_state[3] = value
+        gunpod_state[2] = value
 
     elseif command == device_commands.gunpod_r then
         local gunpod_ready=(value==1) and true or false
         debug_print("GunPod R: "..(gunpod_ready and "READY" or "SAFE"))
-        gunpod_state[4] = value
+        gunpod_state[3] = value
     elseif command == Keys.GunpodLeft then
-        WeaponSystem:performClickableAction(device_commands.gunpod_l, 1 - gunpod_state[2], false)
+        WeaponSystem:performClickableAction(device_commands.gunpod_l, 1 - gunpod_state[1], false)
     elseif command == Keys.GunpodCenter then
-        WeaponSystem:performClickableAction(device_commands.gunpod_c, 1 - gunpod_state[3], false)
+        WeaponSystem:performClickableAction(device_commands.gunpod_c, 1 - gunpod_state[2], false)
     elseif command == Keys.GunpodRight then
-        WeaponSystem:performClickableAction(device_commands.gunpod_r, 1 - gunpod_state[4], false)
+        WeaponSystem:performClickableAction(device_commands.gunpod_r, 1 - gunpod_state[3], false)
     elseif command == Keys.GunsReadyToggle then
         gun_ready = not gun_ready
         WeaponSystem:performClickableAction(device_commands.arm_gun, gun_ready and 1 or 0, false)
