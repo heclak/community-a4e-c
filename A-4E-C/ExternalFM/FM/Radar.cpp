@@ -154,6 +154,9 @@ bool Scooter::Radar::handleInput( int command, float value )
 	case DEVICE_COMMANDS_RADAR_RETICLE:
 		m_reticleKnob = value;
 		return true;
+	case DEVICE_COMMANDS_RADAR_ANGLE_AXIS:
+		m_radarAngleAxis = value;
+		return true;
 	case DEVICE_COMMANDS_RADAR_ANGLE_AXIS_ABS:
 		m_angleKnob = value;
 		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_ANGLE, angleAxisToCommand(value));
@@ -335,6 +338,8 @@ void Scooter::Radar::update( double dt )
 	moveKnob( DEVICE_COMMANDS_RADAR_GAIN,			m_gainKnob,			dt * c_knobSpeed, m_gainMoving );
 	moveKnob( DEVICE_COMMANDS_RADAR_STORAGE,		m_storageKnob,		dt * c_knobSpeed, m_storageMoving );
 	moveKnob( DEVICE_COMMANDS_RADAR_RETICLE,		m_reticleKnob,		dt * c_knobSpeed, m_reticleMoving );
+
+	moveKnob( DEVICE_COMMANDS_RADAR_ANGLE, m_angleKnob, dt * c_knobSpeed, m_radarAngleAxis );
 
 
 	if ( m_interface.getElecMonitoredAC() )
