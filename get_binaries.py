@@ -107,14 +107,19 @@ def old_download_method():
     else:
         download_from_ftp(url, out)
 
-    with ZipFile("binaries/bin.zip", 'r') as zipObj:
+    with ZipFile("binaries/bin.zip") as zipObj:
         print("Extracting...")
-        zipObj.extractall("binaries")
+        #zipObj.extractall("binaries")
         print("Merging...")
-        setuptools.distutils.dir_util.copy_tree("binaries/Community A-4E Binaries", "A-4E-C")
-        print("Removing Extracted Directories...")
-        shutil.rmtree("binaries/Community A-4E Binaries")
-        print("Done.")
+        print(os.listdir('binaries'))
+        if os.path.exists("binaries/Community A-4E Binaries"):
+
+            setuptools.distutils.dir_util.copy_tree("binaries/Community A-4E Binaries", "A-4E-C")
+            print("Removing Extracted Directories...")
+            shutil.rmtree("binaries/Community A-4E Binaries")
+            print("Done.")
+        else:
+            print("Directory not found")
 
 
 def create_download_link(id):
