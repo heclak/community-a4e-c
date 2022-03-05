@@ -6,8 +6,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 ## Version 2.0.1 - 5 Mar 2022
 
 ### Added
-- Systems:
-  - AN/ARA-63 LSO signals for HMS Hermes carrier mod.
+
 - Missions:
   - Option to disable the use of Night Vision Goggles equipment (NVG) in the mission editor.
 - Liveries:
@@ -20,19 +19,18 @@ Please list the changes you've made in this file. We should try to follow the gu
 
 ### Fixed
 - Features:
-  - Ground handling improved for greater control using differential braking.
-  - Updated pitch stability and center of gravity calculations provide additional realism.
+  - Ground handling improved for greater control using differential braking (cleaned the oil out of the brake drums).
+  - Improved pitch stability and more correct low speed/high aoa handling.
 - Systems:
   - Altimeter updated to use more realistic realistic barometric calculations.
   - AN/APG-53A Radar AoA Compensation Switch now properly affects returns from ships. A/G mode uses the same monte carlo sampling for beam shape, taking a weighted average of intensities to determine the range.
-  - AN/ARA-63 MCL signals for HMAS Melbourne carrier provide a more accurate response.
-  - APC light now turns off once the system engages.
+  - APC light now turns off once the system engages *(thanks pohlinkzei)*.
   - Fuel system getting no longer gets stuck in flight refuel mode.
-  - Fixed IN RANGE lamp no longer flickers when MASTER TEST pressed.
+  - Fixed IN RANGE lamp no longer flickers when MASTER TEST pressed *(thanks nima3333)*.
 - Weapons and Loadouts:
   - CBU-1/A, CBU-2/A and CBU-2B/A Cluster Dispensers now dispense an accurate number of bomblets with a minim amount of performance impact.
 - Missions:
-  - Unlimited fuel support in the mission editor works.
+  - Unlimited fuel support in the mission editor works *(thanks nima3333)*
 - Quality of Life:
   - Up/down mouse click behavior for 3-position switches that were inverted so that all such switches behave identically.
   - Hemisphere information on waypoint coordinates on the kneeboard now display properly on Nevada and Normandy maps.
@@ -41,10 +39,10 @@ Please list the changes you've made in this file. We should try to follow the gu
 ### Changed
 - Systems:
   - AN/ARN-52 TACAN volume provides a better response across available knob position range.
-  - CP-741/A updated to calculate drag and features improved boresighting. A steady gunsight position must be established to receive accurate raging information. The computer now assumes a 3m/s ejection velocity.
+  - CP-741/A steady gunsight position must be established to receive accurate raging information. The computer now accounts for ejection velocity improving accuracy in some regimes. 
 - Weapons and Loadouts:
-  - More realistic MK12 guns charging and clearance: Guns can be armed and safed a total of 3 times before available charging nitrogen is depleted. The gun arming and safing when these charges are dispensed is audible. The ground crew performing a rearm will replenish nitrogen charges.
-  - More realistic MK4 HIPEG Gun Pods charging: Gunpods will now respond to charges only when their station is readied before engaging the gunpod switch to the CHARGE position. Setting this switch to CLEAR clears all gunpods on the aircraft.
+  - More realistic MK12 guns charging and clearance: **Guns can be armed and safed a total of 3 times before available charging nitrogen is depleted.** The gun arming and safing when these charges are dispensed is audible. The ground crew performing a rearm will replenish nitrogen charges.
+  - More realistic MK4 HIPEG Gun Pods charging: Gunpods will now respond to charges only when their station is readied before engaging the gunpod switch to the CHARGE position. **Setting this switch to CLEAR clears all gunpods on the aircraft, until the ground crew rearms the aircraft.**
   - Fixed wheel brake default keybinds to a more comfortable `LCTRL+W` and `LALT+W`, to make differential braking easier for keyboard users and to be in accordance with more DCS modules. As a result, the Emergency Stores Release Handle (Jettison) has been reassigned to `LCTRL+J`.
 - Quality of Life:
   - 3-position fuel system switches default keybinds now cycle between available positions.
