@@ -669,23 +669,14 @@ mk4hipeg = {
 declare_loadout(mk4hipeg)
 
 ---------BOMBS----------------
-mk77mod0 =
+
+
+NAPALM_MOD0 =
 {
-	category  		= CAT_BOMBS,
-	name      		= "MK77mod0-WPN",
-	model     		= "A4E_Mk77mod0",
-	user_name 		= _("Mk-77 mod 0"),
-	wsTypeOfWeapon  = {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, WSTYPE_PLACEHOLDER},
-	scheme    		= "bomb-parashute",
-	class_name		= "wAmmunitionBallute",
-	type      		= 0,
-	mass      		= 340,
-	hMin      		= 10,
-	hMax      		= 12000.0,
-	Cx        		= 0.0030,
-	VyHold    		= -100.0,
-	Ag        		= -1.23,
-	fm = {
+	category = CAT_CLUSTER_DESC,
+	char_time = 0,
+	scheme = {
+		cluster = {
             mass            = 340,
             caliber         = 0.2730000,
             cx_coeff        = {1.000000, 0.320000, 0.710000, 0.150000, 1.280000},
@@ -694,14 +685,138 @@ mk77mod0 =
             I               = 33.282267,
             Ma              = -0.1,--2.746331,
             Mw              = 0.1,--2.146083,
+            wind_sigma      = 200.000000,
+			count = 68,
+			effect_count = 68,
+			impulse_sigma = 2000,
+			model_name = "A4E_VOID",
+			moment_sigma = 1.0,
+			--spawn_args_change		= {{1,6,1}, {2,6,0}, {3,6,1},{4,6,0}}
+		},
+		warhead = {
+            caliber = 69.85,
+            concrete_factors = { 1, 1, 0.1 },
+            concrete_obj_factor = 0,
+            cumulative_factor = 0,
+            cumulative_thickness = 0,
+            expl_mass = 5.0,
+            mass = 5.0,
+            obj_factors = { 0.25, 1 },
+            other_factors = { 1, 1, 1 },
+            piercing_mass = 0.58967
+        }
+	},
+	display_name = "NAPALM_MOD0",
+	mass = 0,
+	model = "",
+	name = "NAPALM_MOD0",
+	cluster_scheme = "cluster",
+	type_name = "cluster",
+	wsTypeOfWeapon	= {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, 1000},
+}
+
+declare_weapon(NAPALM_MOD0)
+
+NAPALM_MOD1 =
+{
+	category = CAT_CLUSTER_DESC,
+	char_time = 0,
+	scheme = {
+		cluster = {
+            mass            = 340,
+            caliber         = 0.2730000,
+            cx_coeff        = {1.000000, 0.320000, 0.710000, 0.150000, 1.280000},
+			cx_factor   	= 1,
+            L               = 1.05,
+            I               = 33.282267,
+            Ma              = -0.1,--2.746331,
+            Mw              = 0.1,--2.146083,
+            wind_sigma      = 200.000000,
+			count = 46,
+			effect_count = 46,
+			impulse_sigma = 2000,
+			model_name = "A4E_VOID",
+			moment_sigma = 1.0,
+			--spawn_args_change		= {{1,6,1}, {2,6,0}, {3,6,1},{4,6,0}}
+		},
+		warhead = {
+            caliber = 69.85,
+            concrete_factors = { 1, 1, 0.1 },
+            concrete_obj_factor = 0,
+            cumulative_factor = 0,
+            cumulative_thickness = 0,
+            expl_mass = 5.0,
+            mass = 5.0,
+            obj_factors = { 0.25, 1 },
+            other_factors = { 1, 1, 1 },
+            piercing_mass = 0.58967
+        }
+	},
+	display_name = "NAPALM_MOD1",
+	mass = 0,
+	model = "",
+	name = "NAPALM_MOD1",
+	cluster_scheme = "cluster",
+	type_name = "cluster",
+	wsTypeOfWeapon	= {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, 1001},
+}
+
+declare_weapon(NAPALM_MOD1)
+
+
+--test = {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, WSTYPE_PLACEHOLDER}
+
+mk77mod0 =
+{
+	category  		= CAT_BOMBS,
+	name      		= "MK77mod0-WPN",
+	model     		= "A4E_Mk77mod0",
+	user_name 		= _("Mk-77 mod 0"),
+	wsTypeOfWeapon  = {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, WSTYPE_PLACEHOLDER},
+	--scheme    		= "bomb-parashute",
+	--class_name		= "wAmmunitionBallute",
+    scheme    		= "bomb-cassette-2",
+	class_name		= "wAmmunition",
+	type      		= 0,
+	mass      		= 340,
+	hMin      		= 10,
+	hMax      		= 12000.0,
+	Cx        		= 0.0030,
+	VyHold    		= -100.0,
+	Ag        		= -1.23,
+
+    puff = {
+        show_puff = false,
+    },
+
+	fm = {
+            mass            = 340,
+            caliber         = 0.2730000,
+            cx_coeff        = {1.000000, 0.320000, 0.710000, 0.150000, 1.280000},
+			cx_factor   	= 3,
+            L               = 1.05,
+            I               = 33.282267,
+            Ma              = -0.1,--2.746331,
+            Mw              = 0.01,--2.146083,
             wind_time       = 1000.000000,
             wind_sigma      = 80.000000,
 	},
 	control =
     {
-        open_delay = 0.2,
+        check_obj_delay = 0.0,
+        default_delay		= 0.0,
+		default_open_height = 33,
     },
 	warhead 		 = simple_warhead(300),-- 300 kg of explosive, based on 110 US gallons
+
+
+    launcher = 
+    {
+        blocks  = {"cluster"},
+        cluster = NAPALM_MOD0.descriptor
+    },
+
+
 	shape_table_data =
 	{
 		{
@@ -755,6 +870,7 @@ mk77mod0 =
 		}
 	},
 }
+
 declare_weapon(mk77mod0)
 
 declare_loadout({
@@ -784,8 +900,8 @@ mk77mod1 =
     model     		= "A4E_Mk77mod1",
     user_name 		= _("Mk-77 mod 1"),
     wsTypeOfWeapon  = {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, WSTYPE_PLACEHOLDER},
-    scheme    		= "bomb-parashute",
-    class_name		= "wAmmunitionBallute",
+    scheme    		= "bomb-cassette-2",
+	class_name		= "wAmmunition",
     type      		= 0,
     mass      		= 230,
     hMin      		= 10,
@@ -793,11 +909,16 @@ mk77mod1 =
     Cx        		= 0.0030,
     VyHold    		= -100.0,
     Ag        		= -1.23,
+
+    puff = {
+        show_puff = false,
+    },
+
     fm = {
             mass            = 230,
             caliber         = 0.2730000,
             cx_coeff        = {1.000000, 0.320000, 0.710000, 0.150000, 1.280000},
-            cx_factor   	= 1,
+            cx_factor   	= 3,
             L               = 1.05,
             I               = 33.282267,
             Ma              = -0.1,--2.746331,
@@ -805,11 +926,22 @@ mk77mod1 =
             wind_time       = 1000.000000,
             wind_sigma      = 80.000000,
     },
+
     control =
     {
-        open_delay = 0.2,
+        check_obj_delay = 0.0,
+        default_delay		= 0.0,
+		default_open_height = 33,
     },
+
     warhead 		 = simple_warhead(220),-- 220 kg of fuel
+
+    launcher = 
+    {
+        blocks  = {"cluster"},
+        cluster = NAPALM_MOD1.descriptor
+    },
+
     shape_table_data =
     {
         {
@@ -1496,8 +1628,8 @@ BLU_3B_NEW_GROUP.clsid = make_cluster_group_loadout(BLU_3B_NEW_GROUP)
 local bomblet_data =
 {
     --use shapename,        mass,               wstype,                                                drag,
-    ["BLU-3B"]          = { mass = BLU_3B_NEW_GROUP.mass * tube_size_2A, wstype = BLU_3B_NEW_GROUP.wsTypeOfWeapon, model = BLU_3B_NEW_GROUP.model, cx = 0.0001, len = 0.095+0.05, clsid = BLU_3B_NEW_GROUP.clsid },
-    ["BLU-4B"]          = { mass = BLU_4B_NEW_GROUP.mass * tube_size_1A, wstype = BLU_4B_NEW_GROUP.wsTypeOfWeapon, model = BLU_4B_NEW_GROUP.model, cx = 0.0001, len = 0.095+0.05, clsid = BLU_4B_NEW_GROUP.clsid },
+    ["BLU-3B"]          = { mass = BLU_3B_NEW_GROUP.mass * tube_size_2A, wstype = BLU_3B_OLD.wsTypeOfWeapon, model = BLU_3B_NEW_GROUP.model, cx = 0.0001, len = 0.095+0.05, clsid = BLU_3B_NEW_GROUP.clsid },
+    ["BLU-4B"]          = { mass = BLU_4B_NEW_GROUP.mass * tube_size_1A, wstype = BLU_4B_OLD.wsTypeOfWeapon, model = BLU_4B_NEW_GROUP.model, cx = 0.0001, len = 0.095+0.05, clsid = BLU_4B_NEW_GROUP.clsid },
 }
 
 function make_cbu_a4e(dispenser,element,count) -- assemble a cluster dispenser
