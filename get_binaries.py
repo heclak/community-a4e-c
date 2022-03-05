@@ -109,7 +109,7 @@ def old_download_method():
 
     with ZipFile("binaries/bin.zip") as zipObj:
         print("Extracting...")
-        #zipObj.extractall("binaries")
+        zipObj.extractall("binaries")
         print("Merging...")
         print(os.listdir('binaries'))
         if os.path.exists("binaries/Community A-4E Binaries"):
