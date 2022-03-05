@@ -80,6 +80,7 @@ void Scooter::Radar::zeroInit()
 	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_BRILLIANCE, 1.0 );
 	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_DETAIL, 1.0 );
 	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_STORAGE, 0.94 );
+	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_ANGLE, 0.4 );
 }
 
 void Scooter::Radar::coldInit()
@@ -154,6 +155,7 @@ bool Scooter::Radar::handleInput( int command, float value )
 		m_reticleKnob = value;
 		return true;
 	case DEVICE_COMMANDS_RADAR_ANGLE_AXIS_ABS:
+		m_angleKnob = value;
 		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_ANGLE, angleAxisToCommand(value));
 		return true;
 	case KEYS_RADARMODE:
