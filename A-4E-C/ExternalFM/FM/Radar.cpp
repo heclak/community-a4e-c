@@ -557,7 +557,13 @@ void Scooter::Radar::findShips( double yawAngle, bool detail )
 
 	const std::vector<Ship>& ships = *shipsPtr;
 
-	Vec3 beamDirection = directionVector( m_aircraftState.getAngle().z - m_sweepAngle, m_aircraftState.getAngle().y + yawAngle );
+	double relativePitch;
+	if ( m_aoaCompSwitch )
+		relativePitch = m_aircraftState.getAngle().z - m_sweepAngle - m_aircraftState.getAOA() * cos( m_aircraftState.getAngle().x );
+	else
+		relativePitch = m_aircraftState.getAngle().z - m_sweepAngle;
+
+	Vec3 beamDirection = directionVector( relativePitch, m_aircraftState.getAngle().y + yawAngle );
 	
 	for ( size_t i = 0; i < ships.size(); i++ )
 	{
