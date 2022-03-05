@@ -490,7 +490,7 @@ A_4E_C =  {
 
     },
 	-------------------------
-    mapclasskey = "P0091000024",
+    mapclasskey = "P0091000025",
     attribute   = {wsType_Air, wsType_Airplane, wsType_Fighter, WSTYPE_PLACEHOLDER, "Multirole fighters", "Refuelable" },
     Categories  = {"{78EFB7A2-FD52-4b57-A6A6-3BF0E1D6555F}", "Interceptor",},
     -------------------------
