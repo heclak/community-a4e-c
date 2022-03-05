@@ -9,8 +9,7 @@ import threading
 import math
 
 #Needs both of these for some weird reason.
-import distutils
-from distutils import dir_util
+import setuptools
 
 import requests
 import json
@@ -56,7 +55,8 @@ def fetch_id_json():
 class DownloadProgress:
     def __init__(self, name, max_size):
         self.size = 0.0
-        self.max_size = float(max_size)
+        self.size_mb = 0
+        self.max_size = int(float(max_size)/1.0e6)
 
         self.file = open(name, "wb")
 
@@ -69,8 +69,11 @@ class DownloadProgress:
     def write(self, data):
         self.file.write(data)
         self.size += float(len(data))
-        sys.stdout.write("\rDownloaded: {:.0f} MB / {:.0f} MB               ".format(self.size/1.0e6, self.max_size/1.0e6))
-
+        newsize = int(self.size / 1.0e6)
+        
+        if newsize != self.size_mb:
+            sys.stdout.write("\rDownloaded: {} MB / {} MB               ".format(newsize,self.max_size))
+            self.size_mb = newsize
 
 def download_from_ftp(url, out):
     ftp = FTP(url)
@@ -108,7 +111,7 @@ def old_download_method():
         print("Extracting...")
         zipObj.extractall("binaries")
         print("Merging...")
-        distutils.dir_util.copy_tree("binaries/Community A-4E Binaries", "A-4E-C")
+        setuptools.distutils.dir_util.copy_tree("binaries/Community A-4E Binaries", "A-4E-C")
         print("Removing Extracted Directories...")
         shutil.rmtree("binaries/Community A-4E Binaries")
         print("Done.")
