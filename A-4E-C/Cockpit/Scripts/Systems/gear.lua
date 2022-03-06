@@ -557,13 +557,15 @@ function update_skid()
 
     -- Plane speed
 
-    local speed = sensor_data.getTrueAirSpeed()*1.9438444924574
-    
+    ---local speed = sensor_data.getTrueAirSpeed()*1.9438444924574
+    local speed_x, speed_y, speed_z = sensor_data.getSelfVelocity()
+    local speed = speed_x*speed_x + speed_y*speed_y
+
     -- Update state
     local bool_to_number={ [true]=1.0, [false]=0.0 }
 
-    skid_L_param:set(bool_to_number[speed > 5 and left_WoW > 0.5 and no_anim_L > 0.5])
-    skid_R_param:set(bool_to_number[speed > 5 and right_WoW > 0.5 and no_anim_R > 0.5])
+    skid_L_param:set(bool_to_number[math.abs(speed) > 1 and left_WoW > 0.5 and no_anim_L > 0.5])
+    skid_R_param:set(bool_to_number[math.abs(speed) > 1 and right_WoW > 0.5 and no_anim_R > 0.5])
 
 end
 
