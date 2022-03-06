@@ -80,6 +80,7 @@ void Scooter::Radar::zeroInit()
 	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_BRILLIANCE, 1.0 );
 	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_DETAIL, 1.0 );
 	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_STORAGE, 0.94 );
+	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_ANGLE, 0.4 );
 }
 
 void Scooter::Radar::coldInit()
@@ -153,7 +154,11 @@ bool Scooter::Radar::handleInput( int command, float value )
 	case DEVICE_COMMANDS_RADAR_RETICLE:
 		m_reticleKnob = value;
 		return true;
+	case DEVICE_COMMANDS_RADAR_ANGLE_AXIS:
+		m_radarAngleAxis = value;
+		return true;
 	case DEVICE_COMMANDS_RADAR_ANGLE_AXIS_ABS:
+		m_angleKnob = value;
 		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_ANGLE, angleAxisToCommand(value));
 		return true;
 	case KEYS_RADARMODE:
@@ -333,6 +338,8 @@ void Scooter::Radar::update( double dt )
 	moveKnob( DEVICE_COMMANDS_RADAR_GAIN,			m_gainKnob,			dt * c_knobSpeed, m_gainMoving );
 	moveKnob( DEVICE_COMMANDS_RADAR_STORAGE,		m_storageKnob,		dt * c_knobSpeed, m_storageMoving );
 	moveKnob( DEVICE_COMMANDS_RADAR_RETICLE,		m_reticleKnob,		dt * c_knobSpeed, m_reticleMoving );
+
+	moveKnob( DEVICE_COMMANDS_RADAR_ANGLE, m_angleKnob, dt * c_knobSpeed, m_radarAngleAxis );
 
 
 	if ( m_interface.getElecMonitoredAC() )
@@ -557,7 +564,13 @@ void Scooter::Radar::findShips( double yawAngle, bool detail )
 
 	const std::vector<Ship>& ships = *shipsPtr;
 
-	Vec3 beamDirection = directionVector( m_aircraftState.getAngle().z - m_sweepAngle, m_aircraftState.getAngle().y + yawAngle );
+	double relativePitch;
+	if ( m_aoaCompSwitch )
+		relativePitch = m_aircraftState.getAngle().z - m_sweepAngle - m_aircraftState.getAOA() * cos( m_aircraftState.getAngle().x );
+	else
+		relativePitch = m_aircraftState.getAngle().z - m_sweepAngle;
+
+	Vec3 beamDirection = directionVector( relativePitch, m_aircraftState.getAngle().y + yawAngle );
 	
 	for ( size_t i = 0; i < ships.size(); i++ )
 	{

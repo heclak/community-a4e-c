@@ -163,6 +163,8 @@ private:
 	int m_detailMoving = 0;
 	int m_reticleMoving = 0;
 
+	double m_radarAngleAxis = 0.0;
+
 
 	//Intensity of return and Pitch Angle against range index.
 	double m_scanIntensity[SIDE_HEIGHT];
@@ -233,11 +235,11 @@ private:
 		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, command, clamp( value, min, max ) );
 	}
 
-	inline void moveKnob( Command command, double current, double change, int direction, double min = 0.0, double max = 1.0 )
+	inline void moveKnob( Command command, double current, double change, double direction, double min = 0.0, double max = 1.0 )
 	{
-		if ( ! direction )
+		if ( direction == 0.0 )
 			return;
-		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, command, clamp( current + change * (double)direction, min, max ) );
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, command, clamp( current + change * direction, min, max ) );
 	}
 
 	// Monte Carlo Stuff

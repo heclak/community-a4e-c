@@ -28,7 +28,7 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- Sensors ----------------------------------
     --------------------------------------------- 
-    {down = iCommandViewNightVisionGogglesOn,       name = _('NVG Night Vision Goggle - Toggle'),           category = {_('Sensors')}},
+    {down = Keys.nvg_toggle,       name = _('NVG Night Vision Goggle - Toggle'),           category = {_('Sensors')}},
     {down = iCommandPlane_Helmet_Brightess_Up,      name = _('NVG Night Vision Goggle Gain - Increase'),    category = {_('Sensors')}},
     {down = iCommandPlane_Helmet_Brightess_Down,    name = _('NVG Night Vision Goggle Gain - Decrease'),    category = {_('Sensors')}},
   

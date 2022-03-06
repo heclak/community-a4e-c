@@ -2,6 +2,54 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
+
+## Version 2.0.1 - 5 Mar 2022
+
+### Added
+
+- Missions:
+  - Option to disable the use of Night Vision Goggles equipment (NVG) in the mission editor.
+- Liveries:
+  - USN VC-10 Challengers, 1988.
+- Quality of Life:
+  - The A-4E-C can now be operated by many new countries. Liveries have been edited to match, Malasia to the TUDM livery, for example.
+  - Several new single input (momentary) bindings, and continuous inputs for AFCS Heading Select Pull-to-Set Knob.
+  - Waypoint names specified in the Mission Editor are displayed on the kneeboard. Included missions have been updated to make use of this.
+  - Fuel and aircarft loadout information are displayed in the kneeboard. This page automatically updates if the aircraft is rearmed or refueled.
+
+### Fixed
+- Features:
+  - Ground handling improved for greater control using differential braking (cleaned the oil out of the brake drums).
+  - Improved pitch stability and more correct low speed/high aoa handling.
+- Systems:
+  - Altimeter updated to use more realistic realistic barometric calculations.
+  - AN/APG-53A Radar AoA Compensation Switch now properly affects returns from ships. A/G mode uses the same monte carlo sampling for beam shape, taking a weighted average of intensities to determine the range.
+  - APC light now turns off once the system engages *(thanks pohlinkzei)*.
+  - Fuel system getting no longer gets stuck in flight refuel mode. 3-position fuel system switches default keybinds now cycle between available positions.
+  - Fixed IN RANGE lamp no longer flickers when MASTER TEST pressed *(thanks nima3333)*.
+- Weapons and Loadouts:
+  - CBU-1/A, CBU-2/A and CBU-2B/A Cluster Dispensers now dispense an accurate number of bomblets with a minim amount of performance impact.
+- Missions:
+  - A-4E-C now properly represented by an `A` aircraft icon representative of the aircraft's role.
+  - Unlimited fuel support in the mission editor works *(thanks nima3333)*
+- Quality of Life:
+  - Up/down mouse click behavior for 3-position switches that were inverted so that all such switches behave identically.
+  - Hemisphere information on waypoint coordinates on the kneeboard now display properly on Nevada and Normandy maps.
+  - Corrected documentation URL files.
+
+### Changed
+- Systems:
+  - AN/ARN-52 TACAN volume provides a better response across available knob position range.
+  - CP-741/A steady gunsight position must be established to receive accurate raging information. The computer now accounts for ejection velocity improving accuracy in some regimes. 
+- Weapons and Loadouts:
+  - More realistic MK12 guns charging and clearance: **Guns can be armed and safed a total of 3 times before available charging nitrogen is depleted.** The gun arming and safing when these charges are dispensed is audible. The ground crew performing a rearm will replenish nitrogen charges.
+  - More realistic MK4 HIPEG Gun Pods charging: Gunpods will now respond to charges only when their station is readied before engaging the gunpod switch to the CHARGE position. **Setting this switch to CLEAR clears all gunpods on the aircraft, until the ground crew rearms the aircraft.**
+  - Fixed wheel brake default keybinds to a more comfortable `LCTRL+W` and `LALT+W`, to make differential braking easier for keyboard users and to be in accordance with more DCS modules. As a result, the Emergency Stores Release Handle (Jettison) has been reassigned to `LCTRL+J`.
+- Quality of Life:
+  - 4k- and VR-friendly asset. *(thanks Tuuvas)*
+  - New mission briefing screen.
+  - Kneeboard manual updated. Unified kneeboard font sizing across in-game dynamically generated kneeboard pages.
+
 ## Version 2.0.0 - 1 Jan 2022
 
 ### Added

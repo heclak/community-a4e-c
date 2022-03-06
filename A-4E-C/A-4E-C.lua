@@ -490,7 +490,7 @@ A_4E_C =  {
 
     },
 	-------------------------
-    mapclasskey = "P0091000024",
+    mapclasskey = "P0091000025",
     attribute   = {wsType_Air, wsType_Airplane, wsType_Fighter, WSTYPE_PLACEHOLDER, "Multirole fighters", "Refuelable" },
     Categories  = {"{78EFB7A2-FD52-4b57-A6A6-3BF0E1D6555F}", "Interceptor",},
     -------------------------
@@ -823,6 +823,13 @@ A_4E_C =  {
 			id = "Auto_Catapult_Power",
 			control = "checkbox",
 			label = _("Automatic Catapult Power Mode (for modded aircraft carriers)"),
+			defValue = false,
+			weightWhenOn = -80
+		},
+        {
+			id = "Night_Vision",
+			control = "checkbox",
+			label = _("Enable Nightvision"),
 			defValue = false,
 			weightWhenOn = -80
 		},
