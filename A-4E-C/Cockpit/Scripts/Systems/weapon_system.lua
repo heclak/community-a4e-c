@@ -125,7 +125,7 @@ local AWRS_multiplier = 1
 local weapon_interval = AWRS_multiplier*AWRS_interval
  -- fairly arbitrary value (seconds between rockets) (see also http://www.gettyimages.com/detail/video/news-footage/861-51 )
 
-local gunpod_state = { GUNPOD_NULL, GUNPOD_OFF, GUNPOD_OFF, GUNPOD_OFF, GUNPOD_NULL }
+local gunpod_state = { GUNPOD_OFF, GUNPOD_OFF, GUNPOD_OFF }
 local gunpod_charge_state = 0
 local gunpod_arming = { 0, 0, 0 }
 
@@ -147,8 +147,8 @@ local main_rpm = get_param_handle("RPM")
 
 local bombing_computer_target_set = false
 
-local gun_reliability_rating = 6
-local gun_reliability_charges = 6
+local max_gun_charges = 6
+local gun_charges = 6
 local geardown = true
 
 ------------------------------------------------
@@ -321,17 +321,10 @@ function post_initialize()
     guns_reset()
 
     if birth == "GROUND_HOT" or birth == "AIR_HOT" then
-        dev:performClickableAction(device_commands.arm_gun,0,true) -- arg 701
-        gun_ready = false
-        gun_charged = false
-        gun_reliability_charges = gun_reliability_rating
         dev:performClickableAction(device_commands.AWRS_quantity,0.05,true) -- arg 740, quantity = 2 to power on the AWE-1
         AWRS_quantity = 2
     elseif birth == "GROUND_COLD" then
-        dev:performClickableAction(device_commands.arm_gun,0,true) -- arg 701
-        gun_ready = false
-        gun_charged = false
-        gun_reliability_charges = gun_reliability_rating
+
     end
 
     print("weapon_system: postinit end")
@@ -503,73 +496,114 @@ function update_gear()
     geardown = (nosegear ~= 0) and true or false
 end
 
---update for internal mk12 cannons (guns)
-function update_guns()
-    if gun_charged then
-        --safe the guns
-        if not gun_ready then
-            guns_set_safe()
-        --interrupt or begin firing due to circuit breakage or restoration
-        elseif trigger_engaged then
-            if geardown and gun_firing then
-                debug_print("Deploying gear has disabled guns firing.")
-                dispatch_action(nil,iCommandPlaneFireOff)
-                gun_firing = false
-            elseif gun_ready and get_elec_mon_arms_dc_ok() and not geardown and not gun_firing then
-                debug_print("Guns firing circuit is restored while trigger is depressed. Firing guns.")
-                dispatch_action(nil,iCommandPlaneFire)
-                gun_firing = true
+function arm_gunpod(gun, value)
+
+    if gunpod_arming[gun] < 0 then
+        return
+    end
+    
+    gunpod_arming[gun] = value
+
+end
+
+function charge_guns(value)
+
+    gunpod_charge_state = value
+
+
+    if value < 0 then
+        for i=1,3 do
+            if gunpod_arming[i] >= 0 then
+                gunpod_arming[i] = value
             end
         end
-    else
-        --arm the guns
-        if get_elec_aft_mon_ac_ok() and gun_ready and gun_reliability_charges >= 2 then
-            guns_set_charge()
-        end
     end
-    --update mk4 hipeg gun pods
-    for i = 1, 3 do
-        local station = WeaponSystem:get_station_info(i-1)
-        if station.weapon.level2 == wsType_Shell and get_elec_aft_mon_ac_ok() and gunpod_arming[i] >= 0 and gunpod_charge_state == -1 then
-            debug_print("Gun pod on station "..i.." has been CLEARED.")
-            gunpod_arming[i] = -1
-        elseif station.weapon.level2 == wsType_Shell and get_elec_aft_mon_ac_ok() and gunpod_arming[i] == 0 and gunpod_state[i] == GUNPOD_ARMED and gunpod_charge_state == 1 then
-            debug_print("Gun pod on station "..i.." is CHARGED.")
-            gunpod_arming[i] = 1
+
+end
+
+function gun_can_fire()
+
+    if not gun_ready then
+        return false
+    end
+
+    if not get_elec_mon_arms_dc_ok() then
+        return false
+    end
+
+    if not gun_charged then
+        return false
+    end
+
+    if geardown then
+        return false
+    end
+
+    if not get_elec_mon_arms_dc_ok() then
+        return false
+    end
+
+    return true
+end
+
+function set_gun_firing(value)
+    if value == true then
+        dispatch_action(nil,iCommandPlaneFire)
+        gun_firing = true
+    else
+        dispatch_action(nil,iCommandPlaneFireOff)
+        gun_firing = false
+    end
+end
+
+--update for internal mk12 cannons (guns)
+function update_guns()
+    if gun_can_fire() then
+        if trigger_engaged and not gun_firing then
+            set_gun_firing(true)
         end
+    elseif gun_firing then
+        set_gun_firing(false)
     end
 end
 
 function guns_reset()
-    -- This random "countdown" number represents available nitrogen pressure for gun READY/SAFE cycles,
-    -- as well as the gun jams if safed and readied again.
-    -- The number is generated at birth, and when the plane being rearmed.
-    -- math.randomseed(os.clock()*1000000)
-    -- gun_reliability_rating = math.random(1,5)*2
-    gun_reliability_rating = 3*2 -- number of arm/safe cycles
-    debug_print("Guns are RESET with a reliability rating of "..gun_reliability_rating..".")
+    gun_charges = max_gun_charges
 end
 
 function guns_set_charge()
-    gun_reliability_charges = gun_reliability_charges - 1
-    debug_print("Guns are CHARGED. "..gun_reliability_charges.." reliability remains.")
-    gun_charged = true
-    sound_params.snd_inst_guns_charge_l:set(1.0)
-    sound_params.snd_inst_guns_charge_r:set(1.0)
-    sound_params.snd_inst_guns_safe_l:set(0.0)
-    sound_params.snd_inst_guns_safe_r:set(0.0)
+
+    gun_ready = true
+
+    if gun_charges > 0 then
+        gun_charges = gun_charges - 1
+        gun_charged = true
+        sound_params.snd_inst_guns_charge_l:set(1.0)
+        sound_params.snd_inst_guns_charge_r:set(1.0)
+        sound_params.snd_inst_guns_safe_l:set(0.0)
+        sound_params.snd_inst_guns_safe_r:set(0.0)
+    end
+
+
+   
 end
 
 function guns_set_safe()
-    dispatch_action(nil,iCommandPlaneFireOff)
-    gun_reliability_charges = gun_reliability_charges - 1
-    debug_print("Guns are SAFED. "..gun_reliability_charges.."  reliability remains.")
-    gun_charged = false
-    gun_firing = false
-    sound_params.snd_inst_guns_safe_l:set(1.0)
-    sound_params.snd_inst_guns_safe_r:set(1.0)
-    sound_params.snd_inst_guns_charge_l:set(0.0)
-    sound_params.snd_inst_guns_charge_r:set(0.0)
+
+    gun_ready = false
+
+    if gun_charges > 0 then
+        set_gun_firing(false)
+        gun_charges = gun_charges - 1
+        gun_charged = false
+        sound_params.snd_inst_guns_safe_l:set(1.0)
+        sound_params.snd_inst_guns_safe_r:set(1.0)
+        sound_params.snd_inst_guns_charge_l:set(0.0)
+        sound_params.snd_inst_guns_charge_r:set(0.0)
+    end
+
+
+    
 end
 
 function check_guns()
@@ -704,10 +738,14 @@ function update()
             local station = WeaponSystem:get_station_info(i-1)
             
             -- HIPEG/gunpod launcher
-            if station.count > 0 and station.weapon.level2 == wsType_Shell and gunpod_state[i] == GUNPOD_ARMED and gunpod_arming[i] == 1 and get_elec_aft_mon_ac_ok() and trigger_engaged then
-                debug_print("Gun pod firing on station "..i..".")
-                WeaponSystem:launch_station(i-1)
-                last_pylon_release[i] = time_ticker
+            if gunpod_charge_state > 0 and station.count > 0 and station.weapon.level2 == wsType_Shell  and get_elec_aft_mon_ac_ok() and trigger_engaged then
+                if i >= 2 and i <= 4 then
+                    if gunpod_state[i-1] == GUNPOD_ARMED and gunpod_arming[i-1] == 1 then
+                        debug_print("Gun pod firing on station "..i..".")
+                        WeaponSystem:launch_station(i-1)
+                        last_pylon_release[i] = time_ticker
+                    end
+                end
             end
             
             -- conditional checks for RIPPLE PAIRS and STEP PAIRS
@@ -1184,10 +1222,8 @@ function SetCommand(command,value)
 		bombing_computer_target_set = false
 
     elseif command == Keys.PlaneFireOn then
-        if gun_ready and _master_arm and check_guns() then
-            debug_print("Firing guns.")
-            dispatch_action(nil,iCommandPlaneFire)
-            gun_firing = true
+        if gun_can_fire() then
+            set_gun_firing(true)
         end
 
         if AWRS_mode >= AWRS_mode_ripple_single then -- AWRS is in ripple mode
@@ -1217,19 +1253,21 @@ function SetCommand(command,value)
         end
 
     elseif command == Keys.PlaneFireOff then
-        dispatch_action(nil,iCommandPlaneFireOff)
-        gun_firing = false
+
+
+        set_gun_firing(false)
         trigger_engaged = false
         labs_tone:stop()
         glare_labs_annun_state = false -- turn on labs light
         ripple_sequence_position = 0 -- reset ripple sequence
 
     elseif command == device_commands.arm_gun then
-        gun_ready=(value==1) and true or false
-        debug_print("Guns Switch: "..(gun_ready and "READY" or "SAFE"))
+        --gun_ready=(value==1)
 
-        if not gun_ready and gun_firing then
-            dispatch_action(nil,iCommandPlaneFireOff)
+        if value == 1 then
+            guns_set_charge()
+        else
+            guns_set_safe()
         end
 
     elseif command == device_commands.arm_func_selector then
@@ -1259,6 +1297,7 @@ function SetCommand(command,value)
         next_pylon=1
 
     elseif command == device_commands.gunpod_chargeclear then
+        charge_guns(value)
         gunpod_charge_state = value
         debug_print("charge/off/clear = "..value)
 
@@ -1272,23 +1311,27 @@ function SetCommand(command,value)
     elseif command == device_commands.gunpod_l then
         local gunpod_ready=(value==1) and true or false
         debug_print("GunPod L: "..(gunpod_ready and "READY" or "SAFE"))
-        gunpod_state[2] = value
+        gunpod_state[1] = value
+        arm_gunpod(1, value)
 
     elseif command == device_commands.gunpod_c then
         local gunpod_ready=(value==1) and true or false
         debug_print("GunPod C: "..(gunpod_ready and "READY" or "SAFE"))
-        gunpod_state[3] = value
+        gunpod_state[2] = value
+        arm_gunpod(2, value)
 
     elseif command == device_commands.gunpod_r then
         local gunpod_ready=(value==1) and true or false
         debug_print("GunPod R: "..(gunpod_ready and "READY" or "SAFE"))
-        gunpod_state[4] = value
+        gunpod_state[3] = value
+        arm_gunpod(3, value)
+
     elseif command == Keys.GunpodLeft then
-        WeaponSystem:performClickableAction(device_commands.gunpod_l, 1 - gunpod_state[2], false)
+        WeaponSystem:performClickableAction(device_commands.gunpod_l, 1 - gunpod_state[1], false)
     elseif command == Keys.GunpodCenter then
-        WeaponSystem:performClickableAction(device_commands.gunpod_c, 1 - gunpod_state[3], false)
+        WeaponSystem:performClickableAction(device_commands.gunpod_c, 1 - gunpod_state[2], false)
     elseif command == Keys.GunpodRight then
-        WeaponSystem:performClickableAction(device_commands.gunpod_r, 1 - gunpod_state[4], false)
+        WeaponSystem:performClickableAction(device_commands.gunpod_r, 1 - gunpod_state[3], false)
     elseif command == Keys.GunsReadyToggle then
         gun_ready = not gun_ready
         WeaponSystem:performClickableAction(device_commands.arm_gun, gun_ready and 1 or 0, false)
@@ -1468,19 +1511,17 @@ end
 function CockpitEvent(event, val)
     if event == "WeaponRearmComplete" or event == "UnlimitedWeaponStationRestore" then
         -- safe guns and gunpods switches
-        WeaponSystem:performClickableAction(device_commands.arm_gun, 0, false)
+        WeaponSystem:performClickableAction(device_commands.arm_gun, 0, true)
         WeaponSystem:performClickableAction(device_commands.gunpod_chargeclear, 0, false)
         WeaponSystem:performClickableAction(device_commands.gunpod_l, 0, false)
         WeaponSystem:performClickableAction(device_commands.gunpod_c, 0, false)
         WeaponSystem:performClickableAction(device_commands.gunpod_r, 0, false)
         debug_print("Guns Charging Switch and Gunpod Panel switches are safed for rearming.")
         -- if the guns have been charged, reset them and reset gun reliability.
-        if gun_reliability_charges < gun_reliability_rating then
-            guns_set_safe()
-            guns_reset()
-        end
+        guns_set_safe()
+        guns_reset()
         -- reset any gun pod charging or clearance
-        for i = 1,3, num_stations do
+        for i = 1,3 do
             gunpod_arming[i] = 0
             debug_print("Any equipped gun pods are safed and ready to arm.")
         end

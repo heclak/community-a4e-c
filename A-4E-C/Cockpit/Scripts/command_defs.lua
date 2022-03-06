@@ -414,6 +414,7 @@ Keys =
     afcs_hdg_set_start_down        = __custom_counter(),
     afcs_hdg_set_stop              = __custom_counter(),
 
+    nvg_toggle                     = __custom_counter(),
 }
 
 start_command   = 3000

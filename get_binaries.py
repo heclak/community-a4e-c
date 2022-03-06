@@ -1,15 +1,15 @@
 import sys
 import os
-import gdown
-from google_drive_downloader import GoogleDriveDownloader as gdd
+import requests
+from ftplib import FTP
+
 import shutil
 from zipfile import ZipFile
 import threading
 import math
 
 #Needs both of these for some weird reason.
-import distutils
-from distutils import dir_util
+import setuptools
 
 import requests
 import json
@@ -20,11 +20,28 @@ yes_dict = {
         "yea": True
     }
 
+def download(url, filename, silent=True):
+    get_response = requests.get(url,stream=True)
+
+    if get_response.status_code >= 400:
+        raise Exception("Status code: {}".format(get_response.status_code))
+
+    downloaded = 0.0
+
+    with open(filename, 'wb') as f:
+        for chunk in get_response.iter_content(chunk_size=1024):
+            if chunk: # filter out keep-alive new chunks
+                f.write(chunk)
+
+                if not silent:
+                    downloaded += 1024.0
+                    print("\rDownloaded {} MB               ".format(downloaded/1.0e6))
+
 def fetch_id_json():
     json_generator_data = {
         'id' : '1i4xYe-Y3xNvkP4R1vBDZLz7o5wcDs6bT'
     }
-    json_generator_url = "https://script.google.com/macros/s/AKfycbwFmdcnk7G2rGCkmBY_nI3X4dgZaZIdT7ZNG6hgr_Q1LLqKUOkuaL4m_4W6yFy1VgjwKQ/exec"
+    json_generator_url = "https://script.google.com/macros/s/AKfycbwQVkMXJMgExfgR94tIgsYEHV5l6PaD4cLrO_Y3jHS1hxGAU1j6UnmTHhKWWUVRvCbl6A/exec"
 
     result = requests.get(json_generator_url, allow_redirects=True, params=json_generator_data)
     
@@ -35,8 +52,46 @@ def fetch_id_json():
     #id_json = json.loads(result.text)
     #return id_json
 
+class DownloadProgress:
+    def __init__(self, name, max_size):
+        self.size = 0.0
+        self.size_mb = 0
+        self.max_size = int(float(max_size)/1.0e6)
+
+        self.file = open(name, "wb")
+
+        if self.file == None:
+            raise FileNotFoundError
+
+    def __del__(self):
+        self.file.close()
+
+    def write(self, data):
+        self.file.write(data)
+        self.size += float(len(data))
+        newsize = int(self.size / 1.0e6)
+        
+        if newsize != self.size_mb:
+            sys.stdout.write("\rDownloaded: {} MB / {} MB               ".format(newsize,self.max_size))
+            self.size_mb = newsize
+
+def download_from_ftp(url, out):
+    ftp = FTP(url)
+    ftp.login()
+
+
+    path = "A4EBinaries.zip"
+
+    size = ftp.size(path)
+
+    current_download = DownloadProgress(out, size)
+
+    with open(out, 'wb') as f:
+        ftp.retrbinary('RETR {}'.format(path), current_download.write)
+        f.close()
+
 def old_download_method():
-    url = "https://drive.google.com/uc?id=1r2cYJ4Dhlv4LUHG_6lazFy89kIf-JiBt"
+    url = 'vps620008.ovh.net'
     out = "binaries/bin.zip"
     
     
@@ -48,23 +103,27 @@ def old_download_method():
         answer = input("Binaries already exist redownload?\n")
         if answer.lower() in yes_dict:
             os.remove("binaries/bin.zip")
-            gdown.download(url, out, quiet=False)
+            download_from_ftp(url,out)
     else:
-        pass
-        #gdown.download(url, out, quiet=False)
+        download_from_ftp(url, out)
 
-    with ZipFile("binaries/bin.zip", 'r') as zipObj:
-        print("Extracting...")
-        zipObj.extractall("binaries")
-        print("Merging...")
-        distutils.dir_util.copy_tree("binaries/Community A-4E Binaries", "A-4E-C")
+    
+    print("Extracting...")
+    shutil.unpack_archive("binaries/bin.zip", "binaries")
+    print("Merging...")
+    print(os.listdir('binaries'))
+    if os.path.exists("binaries/Community A-4E Binaries"):
+
+        setuptools.distutils.dir_util.copy_tree("binaries/Community A-4E Binaries", "A-4E-C")
         print("Removing Extracted Directories...")
         shutil.rmtree("binaries/Community A-4E Binaries")
         print("Done.")
+    else:
+        print("Directory not found")
 
 
 def create_download_link(id):
-    return id #"https://drive.google.com/uc?id=" + 
+    return "https://drive.google.com/uc?id=" + id
 
 
 
@@ -81,6 +140,7 @@ class FileDownloader:
         self.files_existing = 0
         self.total_files = 0
         self.file_queue = []
+        self.download_size = 0
 
     def begin_download(self):
 
@@ -97,7 +157,7 @@ class FileDownloader:
             #self.threads.append(threading.Thread(target=self.download_files, args=(dir,)))
             #self.threads[-1].start()
 
-        for i in range(16):
+        for i in range(4):
             self.threads.append(threading.Thread(target=self.downloader_loop))
             self.threads[-1].start()
 
@@ -112,8 +172,6 @@ class FileDownloader:
         return total == self.total_files
 
 
-
-
     def count_files(self):
         folder_stack = [self.root]
         self.total_files = 0
@@ -121,6 +179,9 @@ class FileDownloader:
             dir = folder_stack.pop()
 
             self.total_files += len(dir["files"])
+
+            for file in dir["files"]:
+                self.download_size += file["size"]
 
             for folder in dir["folders"]:
                 folder_stack.append(folder)
@@ -140,12 +201,17 @@ class FileDownloader:
                 self.file_queue.append({
                     "url" : create_download_link(file["fileID"]),
                     "path" : file_path,
+                    "size" : file["size"]
                 })
                 #pass #print(file["fileID"])
+
+            
 
             for folder in dir["folders"]:
                 folder["path"] = path + "/" + folder["foldername"]
                 folder_stack.append(folder)
+
+        self.file_queue = sorted(self.file_queue, key=lambda item : item["size"])
 
     def downloader_loop(self):
         while self.file_queue:
@@ -158,17 +224,26 @@ class FileDownloader:
 
 
             if not os.path.exists(file["path"]):
-                try:
-                    gdd.download_file_from_google_drive(file_id=file["url"], dest_path=file["path"], showsize=True)
-                    #gdown.download(file["url"], file["path"], quiet=True)
-                except Exception as e:
-                    print("\nError ({}): requeuing file {}...".format(type(e).__name__, file["path"]))
-                    self.file_queue.append(file)
-                    return
+                #try:
+                    #gdd.download_file_from_google_drive(file_id=file["url"], dest_path=file["path"], showsize=True)
+                download(file["url"], file["path"])
+                #except Exception as e:
+                    #print("\nError ({}): requeuing file {}...".format(type(e).__name__, file["path"]))
+                    #self.file_queue.append(file)
+                    #return
 
-                self.size_downloaded += float(os.path.getsize(file["path"]))
+                self.size_downloaded += os.path.getsize(file["path"])
                 self.files_downloaded += 1
-                sys.stdout.write("{}/{} files downloaded totaling {} MB\n".format(self.files_downloaded, self.total_files, int(self.size_downloaded / 1.0e3)))
+
+                percent = float(self.size_downloaded) / float(self.download_size)
+
+                n = 20.0
+                nbar = int(percent * n)
+                nspace = int((1.0 - percent) * n)
+
+                bar = "\r{} files downloaded. {:.2f}% ".format(self.files_downloaded, percent*100) + "[" + nbar*"█" + nspace*" " + "]                 "
+                sys.stdout.write(bar)
+                #sys.stdout.write("\r{}/{} files downloaded totaling {}/{} MB      ".format(self.files_downloaded, self.total_files, int(self.size_downloaded / 1e6), int(self.download_size / 1e6)))
                 
             else:
                 print("Skipping {}".format(file["path"]))
@@ -184,7 +259,6 @@ def copy_and_merge_files():
 
 
 def main():
-
     if not os.path.exists("binaries"):
         os.mkdir("binaries")
 
@@ -224,4 +298,10 @@ def main():
     
 
 if __name__ == "__main__":
-    main()
+
+    use_old_method = True
+
+    if use_old_method:
+        old_download_method()
+    else:
+        main()
