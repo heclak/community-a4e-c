@@ -55,4 +55,8 @@ livery = {
   -- custom fuel tank: 300 gallon center
   --{"fuel_300c_a4e", DIFFUSE, "uvmapsfueltank_dft150_dft300", true};
 
+  -- custom lau-10 rocket launcher
+  {"LAU_10", DIFFUSE, "a4e_lau10_1967", true};
+	{"LAU_10", ROUGHNESS_METALLIC, "a4e_lau10_1967_RoughMet", true};
+
 }
