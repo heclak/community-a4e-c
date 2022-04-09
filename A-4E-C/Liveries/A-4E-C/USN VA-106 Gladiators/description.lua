@@ -46,4 +46,8 @@ livery = {
   {"tail_010", DIFFUSE, "empty", true};
   {"tail_100", DIFFUSE, "empty", true};
 
+  -- custom lau-10 rocket launcher
+  {"LAU_10", DIFFUSE, "a4e_lau10_1967", true};
+	{"LAU_10", ROUGHNESS_METALLIC, "a4e_lau10_1967_RoughMet", true};
+
 }

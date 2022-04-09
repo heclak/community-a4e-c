@@ -72,11 +72,12 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - AN/APG-53A Radar AoA Compensation Switch now properly affects returns from ships. A/G mode uses the same monte carlo sampling for beam shape, taking a weighted average of intensities to determine the range.
   - AN/ARA-63 MCL signals for HMAS Melbourne carrier provide a more accurate response.
   - APC light now turns off once the system engages.
-  - Fuel system getting no longer gets stuck in flight refuel mode.
+  - Fuel system getting no longer gets stuck in flight refuel mode. 3-position fuel system switches default keybinds now cycle between available positions.
   - Fixed IN RANGE lamp no longer flickers when MASTER TEST pressed.
 - **Weapons and Loadouts:**
   - CBU-1/A, CBU-2/A and CBU-2B/A Cluster Dispensers now dispense an accurate number of bomblets with a minim amount of performance impact.
 - **Missions:**
+  - A-4E-C now properly represented by an `A` aircraft icon representative of the aircraft's role.
   - Unlimited fuel support in the mission editor works.
 - **Quality of Life:**
   - Up/down mouse click behavior for 3-position switches that were inverted so that all such switches behave identically.
@@ -92,7 +93,8 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - More realistic MK4 HIPEG Gun Pods charging: Gunpods will now respond to charges only when their station is readied before engaging the gunpod switch to the CHARGE position. Setting this switch to CLEAR clears all gunpods on the aircraft.
   - Fixed wheel brake default keybinds to a more comfortable `LCTRL+W` and `LALT+W`, to make differential braking easier for keyboard users and to be in accordance with more DCS modules. As a result, the Emergency Stores Release Handle (Jettison) has been reassigned to `LCTRL+J`.
 - **Quality of Life:**
-  - 3-position fuel system switches default keybinds now cycle between available positions.
+  - 4k- and VR-friendly asset. *(thanks Tuuvas)*
+  - New mission briefing screen.
   - Kneeboard manual updated. Unified kneeboard font sizing across in-game dynamically generated kneeboard pages.
 
 [See full changelog](https://github.com/heclak/community-a4e-c/blob/master/CHANGELOG.md)

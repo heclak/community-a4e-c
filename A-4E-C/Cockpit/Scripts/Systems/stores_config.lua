@@ -28,7 +28,9 @@ loadout_names = {
     --FUEL TANKS--
     ["{DFT-400gal}"]                            = "FUEL TANK - 400 GAL.",
     ["{DFT-400gal_EMPTY}"]                      = "FUEL TANK - 400 GAL. - EMPTY",
+    ["{DFT-300gal}"]                            = "FUEL TANK - 300 GAL.",
     ["{DFT-300gal_LR}"]                         = "FUEL TANK - 300 GAL.",
+    ["{DFT-300gal_EMPTY}"]                      = "FUEL TANK - 300 GAL. - EMPTY",
     ["{DFT-300gal_LR_EMPTY}"]                   = "FUEL TANK - 300 GAL. - EMPTY",
     ["{DFT-150gal}"]                            = "FUEL TANK - 150 GAL.",
     ["{DFT-150gal_EMPTY}"]                      = "FUEL TANK - 150 GAL. - EMPTY",
