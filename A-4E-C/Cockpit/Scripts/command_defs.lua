@@ -640,7 +640,4 @@ device_commands =
     fuel_transfer_bypass            = __counter(),
     mouse_x = __counter(),
     mouse_y = __counter(),
-    new_apr25_power = __counter(),
-    new_apr25_sound_on = __counter(),
-    new_apr25_volume = __counter(),
 }
