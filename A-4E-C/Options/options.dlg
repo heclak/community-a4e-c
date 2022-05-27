@@ -71,10 +71,10 @@ dialog = {
 				},
 				
 				--------------------------------------------
-				-- Trimspeed Option
+				-- Trimspeed Options
 				--------------------------------------------
 
-				["trimSpeedLabel"] = {
+				["trimSpeedPitchLabel"] = {
 					["params"] = {
 						["bounds"] = {
 							["h"] = 24,
@@ -83,7 +83,7 @@ dialog = {
 							["y"] = 100
 						},
 						["enabled"] = true,
-						["text"] = "$TRIMSPEEDL",
+						["text"] = "$TRIMSPEED_PITCH",
 						["tooltip"] = "",
 						["visible"] = true,
 						["zindex"] = 0
@@ -95,13 +95,99 @@ dialog = {
 					},
 					["type"] = "Static"
 				},
-				["trimSpeedComboList"] = {
+				["trimSpeedPitchComboList"] = {
 					["params"] = {
 						["bounds"] = {
 							["h"] = 24,
 							["w"] = 180,
 							["x"] = LeftColumnComboListX,
 							["y"] = 100
+						},
+						["enabled"] = true,
+						["tabOrder"] = 0,
+						["text"] = "Item1",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "comboListSkin_options"
+						}
+					},
+					["type"] = "ComboList"
+				},
+				["trimSpeedRollLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 260,
+							["x"] = LeftColumnX,
+							["y"] = 159
+						},
+						["enabled"] = true,
+						["text"] = "$TRIMSPEED_ROLL",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsCaptionSkin"
+						}
+					},
+					["type"] = "Static"
+				},
+				["trimSpeedRollComboList"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 180,
+							["x"] = LeftColumnComboListX,
+							["y"] = 159
+						},
+						["enabled"] = true,
+						["tabOrder"] = 0,
+						["text"] = "Item1",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "comboListSkin_options"
+						}
+					},
+					["type"] = "ComboList"
+				},
+				["trimSpeedRudderLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 260,
+							["x"] = LeftColumnX,
+							["y"] = 218
+						},
+						["enabled"] = true,
+						["text"] = "$TRIMSPEED_RUDDER",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsCaptionSkin"
+						}
+					},
+					["type"] = "Static"
+				},
+				["trimSpeedRudderComboList"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 180,
+							["x"] = LeftColumnComboListX,
+							["y"] = 218
 						},
 						["enabled"] = true,
 						["tabOrder"] = 0,
@@ -127,7 +213,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 100,
 							["x"] = LeftColumnX,
-							["y"] = 150,
+							["y"] = 268,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_COCKPIT_SHAKE_SLIDER_TEXT",
@@ -148,7 +234,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 300,
 							["x"] = LeftColumnX + 150,
-							["y"] = 150,
+							["y"] = 268,
 						},
 						["enabled"] = true,
 						["step"] = 1,
@@ -171,7 +257,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX + 450,
-							["y"] = 150,
+							["y"] = 268,
 						},
 						["enabled"] = true,
 						["text"] = "0",
@@ -192,7 +278,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 500,
 							["x"] = LeftColumnX,
-							["y"] = 150 + 20,
+							["y"] = 268 + 20,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_COCKPIT_SHAKE_SLIDER_HELP",
@@ -213,7 +299,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 200,
 							["x"] = LeftColumnX,
-							["y"] = 220,
+							["y"] = 338,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_COCKPIT_CSS_TEXT",
@@ -234,7 +320,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 300,
 							["x"] = LeftColumnX + 150,
-							["y"] = 220,
+							["y"] = 338,
 						},
 						["enabled"] = true,
 						["step"] = 1,
@@ -257,7 +343,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX + 450,
-							["y"] = 220,
+							["y"] = 338,
 						},
 						["enabled"] = true,
 						["text"] = "0",
@@ -278,7 +364,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 500,
 							["x"] = LeftColumnX,
-							["y"] = 220 + 20,
+							["y"] = 338 + 20,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_COCKPIT_CSS_HELP",
@@ -300,7 +386,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 200,
 							["x"] = LeftColumnX + 25,
-							["y"] = 290,
+							["y"] = 408,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_WHEEL_BRAKE_ASSIST_CHECK_LABEL",
@@ -321,7 +407,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX,
-							["y"] = 292,
+							["y"] = 410,
 						},
 						["enabled"] = true,
 						["state"] = true,
@@ -340,7 +426,7 @@ dialog = {
 							["h"] = 40,
 							["w"] = 800,
 							["x"] = LeftColumnX,
-							["y"] = 290 + 20,
+							["y"] = 408 + 20,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_WHEEL_BRAKE_ASSIST_CHECK_HELP",
@@ -357,7 +443,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 200,
 							["x"] = LeftColumnX + 25,
-							["y"] = 350,
+							["y"] = 468,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_OLD_RADAR_CHECK_LABEL",
@@ -378,7 +464,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX,
-							["y"] = 352,
+							["y"] = 470,
 						},
 						["enabled"] = true,
 						["state"] = true,

@@ -1,7 +1,9 @@
 cdata =
 {
 	A4E_AIRCRAFTNAME                  = _('A-4E-C'),
-	TRIMSPEEDL                        = _('Trim Speed'),
+	TRIMSPEED_PITCH                   = _('Pitch Trim Speed'),
+	TRIMSPEED_ROLL                    = _('Roll Trim Speed'),
+	TRIMSPEED_RUDDER                  = _('Rudder Trim Speed'),
 	A4E_CATLAUNCHMODE_LABEL           = _('Catapult Launch Mode'),
 	A4E_CATLAUNCHMODE_HELP            = _('Launch the catapult when throttle at MIL POWER.'),
 	A4E_CATLAUNCHMODE_HELP2           = _('Launch the catapult with the Pilot Salute command'),

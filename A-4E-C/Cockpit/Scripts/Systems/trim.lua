@@ -61,28 +61,62 @@ dev:listen_command(iCommandPlane_ShowControls)
 
 local iCommandPlane_ShowControls = 851
 
-local optionsData_trimspeed =  get_plugin_option_value("A-4E-C","trimSpeed","local")
-local trimspeedfactor 
+local optionsData_trimspeedPitch =  get_plugin_option_value("A-4E-C","trimSpeedPitch","local")
+local optionsData_trimspeedRoll =  get_plugin_option_value("A-4E-C","trimSpeedRoll","local")
+local optionsData_trimspeedRudder =  get_plugin_option_value("A-4E-C","trimSpeedRudder","local")
+local trimspeedPitchfactor
+local trimspeedRollfactor
+local trimspeedRudderfactor
 
 local SHOW_CONTROLS  = get_param_handle("SHOW_CONTROLS")
 
-
-if optionsData_trimspeed == 0 then
-	trimspeedfactor = 1
-elseif optionsData_trimspeed == 1 then
-	trimspeedfactor = 0.75
-elseif optionsData_trimspeed == 2 then
-	trimspeedfactor = 0.66
-elseif optionsData_trimspeed == 3 then
-	trimspeedfactor = 0.5
-elseif optionsData_trimspeed == 4 then
-	trimspeedfactor = 0.33
-elseif optionsData_trimspeed == 5 then
-	trimspeedfactor = 0.25
+if optionsData_trimspeedPitch == 0 then
+	trimspeedPitchfactor = 1
+elseif optionsData_trimspeedPitch == 1 then
+	trimspeedPitchfactor = 0.75
+elseif optionsData_trimspeedPitch == 2 then
+	trimspeedPitchfactor = 0.66
+elseif optionsData_trimspeedPitch == 3 then
+	trimspeedPitchfactor = 0.5
+elseif optionsData_trimspeedPitch == 4 then
+	trimspeedPitchfactor = 0.33
+elseif optionsData_trimspeedPitch == 5 then
+	trimspeedPitchfactor = 0.25
 else
-	trimspeedfactor = 1
+	trimspeedPitchfactor = 1
 end
 
+if optionsData_trimspeedRoll == 0 then
+	trimspeedRollfactor = 1
+elseif optionsData_trimspeedRoll == 1 then
+	trimspeedRollfactor = 0.75
+elseif optionsData_trimspeedRoll == 2 then
+	trimspeedRollfactor = 0.66
+elseif optionsData_trimspeedRoll == 3 then
+	trimspeedRollfactor = 0.5
+elseif optionsData_trimspeedRoll == 4 then
+	trimspeedRollfactor = 0.33
+elseif optionsData_trimspeedRoll == 5 then
+	trimspeedRollfactor = 0.25
+else
+	trimspeedRollfactor = 1
+end
+
+if optionsData_trimspeedRudder == 0 then
+	trimspeedRudderfactor = 1
+elseif optionsData_trimspeedRudder == 1 then
+	trimspeedRudderfactor = 0.75
+elseif optionsData_trimspeedRudder == 2 then
+	trimspeedRudderfactor = 0.66
+elseif optionsData_trimspeedRudder == 3 then
+	trimspeedRudderfactor = 0.5
+elseif optionsData_trimspeedRudder == 4 then
+	trimspeedRudderfactor = 0.33
+elseif optionsData_trimspeedRudder == 5 then
+	trimspeedRudderfactor = 0.25
+else
+	trimspeedRudderfactor = 1
+end
 
 function post_initialize()
     startup_print("trim: postinit")
@@ -210,7 +244,7 @@ function update()
     end
 
     if trimming_updown ~= 0 then
-        pitch_trim = pitch_trim + trimming_updown * trim_pitch_update * trimspeedfactor
+        pitch_trim = pitch_trim + trimming_updown * trim_pitch_update * trimspeedPitchfactor
         if pitch_trim>1 then
             pitch_trim=1
         elseif pitch_trim<-1 then
@@ -228,7 +262,7 @@ function update()
         --]]
     end
     if trimming_leftright ~= 0 then
-        roll_trim = roll_trim + trimming_leftright * trim_update * trimspeedfactor
+        roll_trim = roll_trim + trimming_leftright * trim_update * trimspeedRollfactor
         if roll_trim>1 then
             roll_trim=1
         elseif roll_trim<-1 then
@@ -238,7 +272,7 @@ function update()
         dispatch_action(nil, iCommandPlaneTrimRoll, trimming_leftright * roll_trim_scale * 0.05)
     end
     if trimming_rudder_leftright ~= 0 then
-        rudder_trim = rudder_trim + trimming_rudder_leftright * trim_update * trimspeedfactor
+        rudder_trim = rudder_trim + trimming_rudder_leftright * trim_update * trimspeedRudderfactor
         if rudder_trim>1 then
             rudder_trim=1
         elseif rudder_trim<-1 then
@@ -264,8 +298,9 @@ function update_trim_reset()
         local pitch_trim=pitch_trim_handle:get()
         local roll_trim=roll_trim_handle:get()
         local rudder_trim=rudder_trim_handle:get()
-        local trim_pitch_delta = trim_pitch_update * trimspeedfactor
-        local trim_delta = trim_update * trimspeedfactor
+        local trim_pitch_delta = trim_pitch_update * trimspeedPitchfactor
+        local trim_roll_delta = trim_pitch_update * trimspeedRollfactor
+        local trim_rudder_delta = trim_pitch_update * trimspeedRudderfactor
         -- print_message_to_user('trim reseting... ' ..pitch_trim)
         -- center nose trim 
         if math.abs(rudder_trim) + pitch_trim_default < trim_pitch_delta then
@@ -277,21 +312,21 @@ function update_trim_reset()
         end
         pitch_trim_handle:set(pitch_trim)
         -- center aeileron trim
-        if math.abs(roll_trim) < trim_delta then
+        if math.abs(roll_trim) < trim_roll_delta then
             roll_trim = 0
         elseif roll_trim < 0 then
-            roll_trim = roll_trim + trim_delta
+            roll_trim = roll_trim + trim_roll_delta
         elseif roll_trim > 0 then
-            roll_trim = roll_trim - trim_delta
+            roll_trim = roll_trim - trim_roll_delta
         end
         roll_trim_handle:set(roll_trim)
         -- center rudder trim
-        if math.abs(rudder_trim) < trim_delta then
+        if math.abs(rudder_trim) < trim_rudder_delta then
             rudder_trim = 0
         elseif rudder_trim < 0 then
-            rudder_trim = rudder_trim + trim_delta
+            rudder_trim = rudder_trim + trim_rudder_delta
         elseif rudder_trim > 0 then
-            rudder_trim = rudder_trim - trim_delta
+            rudder_trim = rudder_trim - trim_rudder_delta
         end
         rudder_trim_handle:set(rudder_trim)
     end
