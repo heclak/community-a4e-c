@@ -61,28 +61,10 @@ dev:listen_command(iCommandPlane_ShowControls)
 
 local iCommandPlane_ShowControls = 851
 
-local optionsData_trimspeed =  get_plugin_option_value("A-4E-C","trimSpeed","local")
-local trimspeedfactor 
-
+local optionsData_trimSpeedPitch =  get_plugin_option_value("A-4E-C","trimSpeedPitch","local")/100
+local optionsData_trimSpeedRoll =  get_plugin_option_value("A-4E-C","trimSpeedRoll","local")/100
+local optionsData_trimSpeedRudder =  get_plugin_option_value("A-4E-C","trimSpeedRudder","local")/100
 local SHOW_CONTROLS  = get_param_handle("SHOW_CONTROLS")
-
-
-if optionsData_trimspeed == 0 then
-	trimspeedfactor = 1
-elseif optionsData_trimspeed == 1 then
-	trimspeedfactor = 0.75
-elseif optionsData_trimspeed == 2 then
-	trimspeedfactor = 0.66
-elseif optionsData_trimspeed == 3 then
-	trimspeedfactor = 0.5
-elseif optionsData_trimspeed == 4 then
-	trimspeedfactor = 0.33
-elseif optionsData_trimspeed == 5 then
-	trimspeedfactor = 0.25
-else
-	trimspeedfactor = 1
-end
-
 
 function post_initialize()
     startup_print("trim: postinit")
@@ -210,7 +192,7 @@ function update()
     end
 
     if trimming_updown ~= 0 then
-        pitch_trim = pitch_trim + trimming_updown * trim_pitch_update * trimspeedfactor
+        pitch_trim = pitch_trim + trimming_updown * trim_pitch_update * optionsData_trimSpeedPitch
         if pitch_trim>1 then
             pitch_trim=1
         elseif pitch_trim<-1 then
@@ -228,7 +210,7 @@ function update()
         --]]
     end
     if trimming_leftright ~= 0 then
-        roll_trim = roll_trim + trimming_leftright * trim_update * trimspeedfactor
+        roll_trim = roll_trim + trimming_leftright * trim_update * optionsData_trimSpeedRoll
         if roll_trim>1 then
             roll_trim=1
         elseif roll_trim<-1 then
@@ -238,7 +220,7 @@ function update()
         dispatch_action(nil, iCommandPlaneTrimRoll, trimming_leftright * roll_trim_scale * 0.05)
     end
     if trimming_rudder_leftright ~= 0 then
-        rudder_trim = rudder_trim + trimming_rudder_leftright * trim_update * trimspeedfactor
+        rudder_trim = rudder_trim + trimming_rudder_leftright * trim_update * optionsData_trimSpeedRudder
         if rudder_trim>1 then
             rudder_trim=1
         elseif rudder_trim<-1 then

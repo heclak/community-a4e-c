@@ -51,10 +51,10 @@ dialog = {
 				["nameLabel"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 18,
-							["w"] = 454,
-							["x"] = 25,
-							["y"] = 41
+							["h"] = 24,
+							["w"] = 260,
+							["x"] = -25,
+							["y"] = 25
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_AIRCRAFTNAME",
@@ -71,19 +71,19 @@ dialog = {
 				},
 				
 				--------------------------------------------
-				-- Trimspeed Option
+				-- Pitch Trim Speed Option
 				--------------------------------------------
 
-				["trimSpeedLabel"] = {
+				["trimSpeedPitchLabel"] = {
 					["params"] = {
 						["bounds"] = {
 							["h"] = 24,
 							["w"] = 260,
 							["x"] = LeftColumnX,
-							["y"] = 100
+							["y"] = 50
 						},
 						["enabled"] = true,
-						["text"] = "$TRIMSPEEDL",
+						["text"] = "$A4E_TRIMSPEED_PITCH",
 						["tooltip"] = "",
 						["visible"] = true,
 						["zindex"] = 0
@@ -95,27 +95,206 @@ dialog = {
 					},
 					["type"] = "Static"
 				},
-				["trimSpeedComboList"] = {
+				["trimSpeedPitchSlider"] = {
 					["params"] = {
 						["bounds"] = {
 							["h"] = 24,
-							["w"] = 180,
-							["x"] = LeftColumnComboListX,
-							["y"] = 100
+							["w"] = 300,
+							["x"] = LeftColumnX + 150,
+							["y"] = 50,
 						},
 						["enabled"] = true,
+						["step"] = 1,
+						["range"] = {
+							["max"] = 100,
+							["min"] = 1,
+						},
 						["tabOrder"] = 0,
-						["text"] = "Item1",
+						["text"] = "",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = SliderSkin,
+					["type"] = "HorzSlider",
+				},
+				["trimSpeedPitchWidget"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 50,
+							["x"] = LeftColumnX + 450,
+							["y"] = 50,
+						},
+						["enabled"] = true,
+						["text"] = "0",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsSliderValueSkin",
+						},
+					},
+					["type"] = "Static",
+				},
+
+				--------------------------------------------
+				-- Roll Trim Speed Option
+				--------------------------------------------
+
+				["trimSpeedRollLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 260,
+							["x"] = LeftColumnX,
+							["y"] = 90
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_TRIMSPEED_ROLL",
 						["tooltip"] = "",
 						["visible"] = true,
 						["zindex"] = 0
 					},
 					["skin"] = {
 						["params"] = {
-							["name"] = "comboListSkin_options"
+							["name"] = "staticOptionsCaptionSkin"
 						}
 					},
-					["type"] = "ComboList"
+					["type"] = "Static"
+				},
+				["trimSpeedRollSlider"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 300,
+							["x"] = LeftColumnX + 150,
+							["y"] = 90,
+						},
+						["enabled"] = true,
+						["step"] = 1,
+						["range"] = {
+							["max"] = 100,
+							["min"] = 1,
+						},
+						["tabOrder"] = 0,
+						["text"] = "",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = SliderSkin,
+					["type"] = "HorzSlider",
+				},
+				["trimSpeedRollWidget"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 50,
+							["x"] = LeftColumnX + 450,
+							["y"] = 90,
+						},
+						["enabled"] = true,
+						["text"] = "0",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsSliderValueSkin",
+						},
+					},
+					["type"] = "Static",
+				},
+
+				--------------------------------------------
+				-- Rudder Trim Speed Option
+				--------------------------------------------
+
+				["trimSpeedRudderLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 260,
+							["x"] = LeftColumnX,
+							["y"] = 130
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_TRIMSPEED_RUDDER",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsCaptionSkin"
+						}
+					},
+					["type"] = "Static"
+				},
+				["trimSpeedRudderSlider"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 300,
+							["x"] = LeftColumnX + 150,
+							["y"] = 130,
+						},
+						["enabled"] = true,
+						["step"] = 1,
+						["range"] = {
+							["max"] = 100,
+							["min"] = 1,
+						},
+						["tabOrder"] = 0,
+						["text"] = "",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = SliderSkin,
+					["type"] = "HorzSlider",
+				},
+				["trimSpeedRudderWidget"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 50,
+							["x"] = LeftColumnX + 450,
+							["y"] = 130,
+						},
+						["enabled"] = true,
+						["text"] = "0",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsSliderValueSkin",
+						},
+					},
+					["type"] = "Static",
+				},
+				["trimSpeedHelpLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 500,
+							["x"] = LeftColumnX,
+							["y"] = 130 + 25,
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_TRIM_SPEED_SLIDER_HELP",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = HelpSkin,
+					["type"] = "Static",
 				},
 
 				--------------------------------------------
@@ -127,7 +306,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 100,
 							["x"] = LeftColumnX,
-							["y"] = 150,
+							["y"] = 200,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_COCKPIT_SHAKE_SLIDER_TEXT",
@@ -148,7 +327,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 300,
 							["x"] = LeftColumnX + 150,
-							["y"] = 150,
+							["y"] = 200,
 						},
 						["enabled"] = true,
 						["step"] = 1,
@@ -171,7 +350,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX + 450,
-							["y"] = 150,
+							["y"] = 200,
 						},
 						["enabled"] = true,
 						["text"] = "0",
@@ -192,7 +371,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 500,
 							["x"] = LeftColumnX,
-							["y"] = 150 + 20,
+							["y"] = 200 + 25,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_COCKPIT_SHAKE_SLIDER_HELP",
@@ -213,7 +392,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 200,
 							["x"] = LeftColumnX,
-							["y"] = 220,
+							["y"] = 275,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_COCKPIT_CSS_TEXT",
@@ -234,7 +413,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 300,
 							["x"] = LeftColumnX + 150,
-							["y"] = 220,
+							["y"] = 275,
 						},
 						["enabled"] = true,
 						["step"] = 1,
@@ -257,7 +436,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX + 450,
-							["y"] = 220,
+							["y"] = 275,
 						},
 						["enabled"] = true,
 						["text"] = "0",
@@ -278,7 +457,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 500,
 							["x"] = LeftColumnX,
-							["y"] = 220 + 20,
+							["y"] = 275 + 25,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_COCKPIT_CSS_HELP",
@@ -291,7 +470,7 @@ dialog = {
 				},
 				
 				--------------------------------------------
-				-- Catapult Check Option
+				-- Wheelbrake Assist Option
 				--------------------------------------------
 
 				["wheelBrakeAssistLabel"] = {
@@ -300,7 +479,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 200,
 							["x"] = LeftColumnX + 25,
-							["y"] = 290,
+							["y"] = 350,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_WHEEL_BRAKE_ASSIST_CHECK_LABEL",
@@ -321,7 +500,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX,
-							["y"] = 292,
+							["y"] = 350 + 5,
 						},
 						["enabled"] = true,
 						["state"] = true,
@@ -340,7 +519,7 @@ dialog = {
 							["h"] = 40,
 							["w"] = 800,
 							["x"] = LeftColumnX,
-							["y"] = 290 + 20,
+							["y"] = 350 + 25,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_WHEEL_BRAKE_ASSIST_CHECK_HELP",
@@ -357,7 +536,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 200,
 							["x"] = LeftColumnX + 25,
-							["y"] = 350,
+							["y"] = 425,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_OLD_RADAR_CHECK_LABEL",
@@ -378,7 +557,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX,
-							["y"] = 352,
+							["y"] = 425 + 5,
 						},
 						["enabled"] = true,
 						["state"] = true,
@@ -390,6 +569,23 @@ dialog = {
 					},
 					["skin"] = CheckBoxSkin,
 					["type"] = "CheckBox",
+				},
+				["oldRadarHelp"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 40,
+							["w"] = 800,
+							["x"] = LeftColumnX,
+							["y"] = 425 + 25,
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_OLD_RADAR_CHECK_HELP",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = HelpSkin,
+					["type"] = "Static",
 				},
 				--------------------------------
 			},
