@@ -609,9 +609,7 @@ void ed_fm_set_current_state_body_axis
 
 void ed_fm_on_damage( int element, double element_integrity_factor )
 {
-	if (s_airframe->getNoDamage() == false){
-		s_airframe->setIntegrityElement((Scooter::Airframe::Damage)element, (float)element_integrity_factor);
-	}
+	s_airframe->setIntegrityElement((Scooter::Airframe::Damage)element, (float)element_integrity_factor);
 }
 
 void ed_fm_set_surface
@@ -1261,7 +1259,8 @@ bool ed_fm_LERX_vortex_update( unsigned idx, LERX_vortex& out )
 
 void ed_fm_set_immortal( bool value )
 {
-	s_airframe->setNoDamage(value);
+	if ( value )
+		printf( "Nice try!\n" );
 }
 
 void ed_fm_unlimited_fuel( bool value )

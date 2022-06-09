@@ -54,24 +54,18 @@ bool FuelSystem2::handleInput( int command, float value )
 
 		return true;
 	case DEVICE_COMMANDS_ENGINE_DROP_TANKS_SW:
+		m_externalTankPressure = true;
+		m_externalTankFlightRefuel = false;
 
-		if ( value == 1.0 ) // Off
-		{
+		if ( value == 1.0 )
 			m_externalTankPressure = false;
-			m_externalTankFlightRefuel = false;
-		}
-		else if ( value == -1.0 ) // Flight refuel
+		else if ( value == -1.0 )
 		{
-			m_externalTankPressure = false;
 			m_externalTankFlightRefuel = true;
+			m_externalTankPressure = false;
 		}
-		else // Press
-		{
-			m_externalTankPressure = true;
-			m_externalTankFlightRefuel = false;
-		}
+
 		return true;
-		
 	case DEVICE_COMMANDS_FUEL_TRANSFER_BYPASS:
 		if ( value == 1.0 )
 			m_wingTankBypass = true;
@@ -92,8 +86,7 @@ void FuelSystem2::addFuel( double dm, bool wingFirst )
 	if ( dm > 0.0 && ! wingFirst )
 		dm = addFuelToTank( TANK_FUSELAGE, dm );
 
-	//printf( "dm after fuse: %lf\n", dm );
-	
+	printf( "dm after fuse: %lf\n", dm );
 	//If the wing tank bypass switch is enabled we
 	//refuel the external tanks instead.
 	if ( m_externalTankFlightRefuel )
@@ -104,9 +97,11 @@ void FuelSystem2::addFuel( double dm, bool wingFirst )
 			externalTanks += m_fuelCapacity[i] > 15.0;
 		}
 
+		double fracDM = dm / (double)externalTanks;
+
+
 		if ( externalTanks > 0 )
 		{
-			double fracDM = dm / (double)externalTanks;
 			dm = 0.0;
 
 			for ( int i = TANK_EXTERNAL_LEFT; i < NUMBER_OF_TANKS; i++ )
@@ -117,25 +112,25 @@ void FuelSystem2::addFuel( double dm, bool wingFirst )
 		}
 	}
 
-	//printf( "dm after ext: %lf\n", dm );
+	printf( "dm after ext: %lf\n", dm );
 	
 	if ( ! m_wingTankBypass ) //Bypass is not enabled so refuel the wing tank.
 	{
 		dm = addFuelToTank( TANK_WING, dm );
 	}
 
-	//printf( "dm after wing: %lf\n", dm );
+	printf( "dm after wing: %lf\n", dm );
 
 	//If removing fuel remove it from the wing tanks first.
 	if ( dm < 0.0 || wingFirst )
 		dm = addFuelToTank( TANK_FUSELAGE, dm );
 
-	//printf( "dm after fuse/all: %lf\n", dm );
+	printf( "dm after fuse/all: %lf\n", dm );
 }
 
 void FuelSystem2::update( double dt )
 {
-	if(m_unlimitedFuel)
+	if(m_unlimited_fuel)
 	{
 		m_boostPumpPressure = true; //Cut the Fuel Boost light
 		return;

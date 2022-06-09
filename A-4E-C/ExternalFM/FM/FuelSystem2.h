@@ -81,7 +81,7 @@ public:
 	inline void setTankPos( Tank tank, const Vec3& pos ) { m_fuelPos[tank] = pos; }
 
 private:
-	bool m_unlimitedFuel = false;
+	bool m_unlimited_fuel = false;
 
 	double m_fuel[NUMBER_OF_TANKS] = { 0.0, 0.0, 0.0, 0.0, 0.0 };
 	double m_fuelPrevious[NUMBER_OF_TANKS] = { 0.0, 0.0, 0.0, 0.0, 0.0 };
@@ -115,7 +115,7 @@ private:
 
 void FuelSystem2::setUnlimitedFuel( bool state )
 {
-	m_unlimitedFuel = state;
+	m_unlimited_fuel = state;
 }
 
 void FuelSystem2::setBoostPumpPower( bool power )
