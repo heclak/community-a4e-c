@@ -383,19 +383,8 @@ public:
 		setDamageDelta( Airframe::Damage::WING_L_OUT, 1.0 );
 		setDamageDelta( Airframe::Damage::AILERON_L, 1.0 );
 	}
-	inline void setNoDamage(bool state)
-	{
-		m_noDamage = state;
-	}
-	inline bool getNoDamage()
-	{
-		return m_noDamage;
-	}
 
 private:
-
-	//No damage mode
-	bool m_noDamage = false;
 
 	//Airframe Constants
 	const double m_hookExtendTime = 1.5;
