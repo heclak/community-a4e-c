@@ -18,7 +18,7 @@ Gospadin, Heclak, Joshua Nelson, plusnine, Farlander, gyrovague, kryb/Archimaede
 
 ### Community Contributors
 
-SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohlinkzei, Coragem, nima3333, Sidekick65, SPINEG, Shadowfrost, Sport, Historiker, rudel-chw, Luciano, Malamem, HellesBelles, Bungo, Corsair016, FlyingHueman, JacobBadShot, JP Gabobo, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
+SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohlinkzei, Coragem, nima3333, Sidekick65, SPINEG, Shadowfrost, Sport, Historiker, rudel-chw, Luciano, Malamem, HellesBelles, Bungo, Corsair016, FlyingHueman, JacobBadShot, JP Gabobo, Drofseh, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
 
 ## Features
 
@@ -143,6 +143,8 @@ Your correctly installed files should look something like the following image, s
 
 - If you have multiple DCS-related folders in your `%HOMEPATH%\\Saved Games`, for example, `DCS`, or `DCS.openbeta`, and are unsure which folder your DCS World installation is using, locate the `dcs_variant.txt` file in the game files. If this file is present, its contents determines the folder structure your DCS World installation is using. Alternately, load DCS world and use the mission editor to create and save a mission. Search this mission file using Windows explorer to locate the proper folder structure.
 
+- If you have installed the module correctly but it still isn't showing up, ensure it's enabled in the DCS Module Manager. Note that the A-4E-C is not alphabetically arranged along with the official modules in this list, and will be enumerated near the end of the list.
+
 - If you are receiving an authorization error at launch, **you have installed the module incorrectly**. Revisit the installation instructions above. Be sure to remove any and all improperly installed files before correctly installing the module.
 
 - If the A-4E-C icon in the DCS main menu shows a default DCS logo, is missing the theme background and music (or you experience crashes when loading a mission), you have incorrectly downloaded the module. [Download the latest official A-4E-C release package](https://github.com/heclak/community-a4e-c/releases/).
@@ -172,7 +174,9 @@ Your correctly installed files should look something like the following image, s
 
 - Once you have completed the edit, save the `mission` file, and re-create a new `.zip` (carefully maintaining proper folder structure, *of course*). Rename your modified mission `.zip` back to a DCS `.miz` file extension instead.
 
-- Finally, test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS will display any A4-E-C units as an untextured Su-27. Players without the module cannot take control of unit, just as if they did not own any other DCS module in a multiplayer mission.
+- Finally, test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS will display any A4-E-C units as an untextured Su-27. Players without the module cannot take control of unit, just as if they did not own any other DCS module in a multiplayer mission. 
+
+- RobCallSign created [MizEdit](https://github.com/robscallsign/mizedit), a helpful utility that automates this process.
 
 ## Frequently Asked Questions
 
@@ -195,7 +199,7 @@ Your correctly installed files should look something like the following image, s
 ### Q: Is there a manual or tutorials?
 
 **Yes**! Locating the NATOPS manual for an A-4E/F is the gold standard for understanding this aircraft, but there is a lot of helpful guidance included in the user manual. To access the manual:
-- Once inside the cockpit, open the kneeboard by pressing RSHIFT+K
+- Once inside the cockpit, open the kneeboard by pressing `RSHIFT+K`
 - Read the PDF manual in `%HOMEPATH%\\Saved Games\DCS\Mods\aircraft\A-4E-C\Docs` or [read it online](https://drive.google.com/drive/folders/1_DPA00CWoRfIsqgh7HYabvpFrOdtBxPi)
 
 Past that, [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt_8Jw9ByL10ar6b8rQg) features high-quality video tutorials on many systems.
@@ -219,6 +223,7 @@ Past that, [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt
 The AGM-12C Bullpup is a possibility with more work, but no promises just yet! Our A-4E-C cockpit model lacks the TV monitor used for the Walleye display.
 
 ### Q: Why doesn't the A-4E-C have a nosewheel steering button?
+
 There is insufficient evidence to suggest that the A-4E had NWS. According to our research the the revisions and reworks relating to the NWS were applied to only the -F models. If you find evidence that E's did in fact have NWS, please share it!
 
 ### Q: Are there any plans to simulate other variants or later models of the A-4?
