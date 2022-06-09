@@ -42,7 +42,7 @@ function post_initialize()
 end
 
 function SetCommand(command,value)
-    print_message_to_user("Test value: "..value)
+    -- print_message_to_user("Test value: "..value)
     if command == device_commands.seat_adjustment then
         seat_input = value
     end
