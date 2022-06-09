@@ -274,7 +274,7 @@ elements["PNT_223"] = multiposition_switch_limited("Tail Light Switch", devices.
 
 -- MISC SWITCHES PANEL #53
 elements["PNT_250"] = multiposition_switch_limited("MCL Channel Selector Switch", devices.MCL, device_commands.mcl_channel_selector, 250, 20, 0.05, false, nil, KNOBCLICK_RIGHT_AFT, 2)
-elements["PNT_251"] = springloaded_3_pos_tumb("Seat Adjustment Switch (unimplemented)", devices.AVIONICS, device_commands.seat_adjustment, 251, false, KNOBCLICK_RIGHT_MID)
+elements["PNT_251"] = springloaded_3_pos_tumb("Seat Adjustment Switch", devices.SEAT, device_commands.seat_adjustment, 251, false, KNOBCLICK_RIGHT_MID)
 elements["PNT_252"] = default_2_position_tumb("Emergency Generator Switch", devices.ELECTRIC_SYSTEM, device_commands.emer_gen_bypass, 252, TOGGLECLICK_RIGHT_AFT)
 elements["PNT_253"] = springloaded_forward_only_3_pos_tumb("AN/ARA-63 MCL Power Switch", devices.MCL, device_commands.mcl_power_switch, 253, false, TOGGLECLICK_RIGHT_AFT)
 elements["PNT_254"] = inverted_3_position_tumb("TACAN Antenna Control Switch (unimplemented)", devices.NAV, device_commands.tacan_antenna, 254, nil, false, TOGGLECLICK_RIGHT_AFT)

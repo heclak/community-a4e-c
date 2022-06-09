@@ -89,6 +89,7 @@ creators[devices.EFM_DATA_BUS]		= {"avLuaDevice", LockOn_Options.script_path.."E
 creators[devices.MCL]             = {"avLuaDevice", LockOn_Options.script_path.."Nav/ara63_mcl.lua"}
 creators[devices.ADI_AJB3A]       = {"avLuaDevice", LockOn_Options.script_path.."Systems/adi_ajb3a.lua"}
 creators[devices.NVG_CONTROLS]       = {"avLuaDevice", LockOn_Options.script_path.."HELMET/NVG_Controls.lua"}
+creators[devices.SEAT]            = {"avLuaDevice"           ,LockOn_Options.script_path.."Systems/seat.lua"}
 
 -- creators[devices.TEST]        = {"avLuaDevice"                        ,LockOn_Options.script_path.."test_device.lua"}
 -- creators[devices.ADI]         = {"avBaseIKP"                          ,LockOn_Options.script_path.."adi.lua"}
