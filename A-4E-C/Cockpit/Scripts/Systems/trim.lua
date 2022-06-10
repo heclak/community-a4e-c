@@ -246,11 +246,12 @@ function update_trim_reset()
         local pitch_trim=pitch_trim_handle:get()
         local roll_trim=roll_trim_handle:get()
         local rudder_trim=rudder_trim_handle:get()
-        local trim_pitch_delta = trim_pitch_update * trimspeedfactor
-        local trim_delta = trim_update * trimspeedfactor
+        local trim_pitch_delta = trim_pitch_update * optionsData_trimSpeedPitch
+        local trim_roll_delta = trim_pitch_update * optionsData_trimSpeedRoll
+        local trim_rudder_delta = trim_pitch_update * optionsData_trimSpeedRudder
         -- print_message_to_user('trim reseting... ' ..pitch_trim)
         -- center nose trim 
-        if math.abs(rudder_trim) + pitch_trim_default < trim_pitch_delta then
+        if math.abs(pitch_trim) + pitch_trim_default < trim_pitch_delta then
            pitch_trim = pitch_trim_default
         elseif pitch_trim < -pitch_trim_default then
             pitch_trim = pitch_trim + trim_pitch_delta
@@ -259,21 +260,21 @@ function update_trim_reset()
         end
         pitch_trim_handle:set(pitch_trim)
         -- center aeileron trim
-        if math.abs(roll_trim) < trim_delta then
+        if math.abs(roll_trim) < trim_roll_delta then
             roll_trim = 0
         elseif roll_trim < 0 then
-            roll_trim = roll_trim + trim_delta
+            roll_trim = roll_trim + trim_roll_delta
         elseif roll_trim > 0 then
-            roll_trim = roll_trim - trim_delta
+            roll_trim = roll_trim - trim_roll_delta
         end
         roll_trim_handle:set(roll_trim)
         -- center rudder trim
-        if math.abs(rudder_trim) < trim_delta then
+        if math.abs(rudder_trim) < trim_rudder_delta then
             rudder_trim = 0
         elseif rudder_trim < 0 then
-            rudder_trim = rudder_trim + trim_delta
+            rudder_trim = rudder_trim + trim_rudder_delta
         elseif rudder_trim > 0 then
-            rudder_trim = rudder_trim - trim_delta
+            rudder_trim = rudder_trim - trim_rudder_delta
         end
         rudder_trim_handle:set(rudder_trim)
     end
