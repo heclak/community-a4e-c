@@ -1,9 +1,9 @@
 wave = "Effects/Aircrafts/A-4E-C/a-4e_HydraulicsSeatMove.ogg"
 inner_radius = 10
 outer_radius = 100
-gain = 3.0
+gain = 0.3
 release = 0.1
-position = {-0.25, -0.75, 0}
+position = {-1.0, -1.0, 0}
 
 -- play: seat adjustment position in motion
 -- continuous
