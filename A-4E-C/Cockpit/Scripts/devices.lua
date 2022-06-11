@@ -55,3 +55,5 @@ devices["TEMP2"]            = counter()
 devices["TEMP3"]            = counter()
 devices["TEMP4"]            = counter()
 devices["TEMP5"]            = counter()
+
+devices["SEAT"] = counter()
