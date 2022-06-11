@@ -7,7 +7,7 @@ dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 dofile(LockOn_Options.script_path.."Systems/air_data_computer.lua")
-dofile(LockOn_Options.script_path.."sound_params.lua") 
+dofile(LockOn_Options.script_path.."sound_params.lua")
 dofile(LockOn_Options.script_path.."Systems/mission.lua")
 dofile(LockOn_Options.script_path.."Systems/mission_utils.lua")
 
@@ -52,13 +52,17 @@ function update_seat_adjustment()
     if elec_fwd_mon_ac_ok:get() == 1 then
         if seat_input == 1 then
             dispatch_action(nil, iCommandViewPitCameraMoveUp)
+            sound_params.snd_cont_seat_mov:set(1.0)
         elseif seat_input == -1 then
             dispatch_action(nil, iCommandViewPitCameraMoveDown)
+            sound_params.snd_cont_seat_mov:set(1.0)
         elseif seat_input == 0 then
             dispatch_action(nil, iCommandViewPitCameraMoveStop)
+            sound_params.snd_cont_seat_mov:set(0.0)
         end
     else
         dispatch_action(nil, iCommandViewPitCameraMoveStop)
+        sound_params.snd_cont_seat_mov:set(0.0)
     end
 end
 

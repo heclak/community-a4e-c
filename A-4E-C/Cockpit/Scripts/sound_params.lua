@@ -53,6 +53,8 @@ sound_params = {
     snd_inst_canopy_mov_seal_close = get_param_handle("SND_INST_CANOPY_MOV_SEAL_CLOSE"),
     snd_inst_canopy_close_stop = get_param_handle("SND_INST_CANOPY_CLOSE_STOP"),
     snd_inst_canopy_open_stop = get_param_handle("SND_INST_CANOPY_OPEN_STOP"),
+    --seat
+    snd_cont_seat_mov = get_param_handle("SND_CONT_SEAT_MOVE"),
     --flaps
     snd_cont_flaps_mov = get_param_handle("SND_CONT_FLAPS_MOVE"),
     snd_inst_flaps_stop = get_param_handle("SND_INST_FLAPS_STOP"),
