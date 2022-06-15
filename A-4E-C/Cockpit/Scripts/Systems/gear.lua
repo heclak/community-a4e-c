@@ -5,7 +5,6 @@ dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.script_path.."sound_params.lua")
 dofile(LockOn_Options.script_path.."ControlsIndicator/ControlsIndicator_api.lua")
-
 -- This file includes both gear and tailhook behavior/systems
 --
 
@@ -19,6 +18,7 @@ dofile(LockOn_Options.script_path.."ControlsIndicator/ControlsIndicator_api.lua"
 --     both gear start simultaneously
 --     main gear takes 6 seconds, nose gear takes 10 seconds
 --
+Terrain   	= require('terrain')
 
 local dev = GetSelf()
 
@@ -89,7 +89,92 @@ dev:listen_command(device_commands.emer_gear_release)
 dev:listen_command(NWS_Engage)
 dev:listen_command(NWS_Disengage)
 
+-- Skiding detection window
+local no_anim_L_array = {}
+local no_anim_R_array = {}
+local no_anim_N_array = {}
 
+for i=1, 10 do
+    no_anim_L_array[i] = -1
+    no_anim_R_array[i] = -1
+    no_anim_N_array[i] = -1
+end
+local skid_L_param = get_param_handle("SKID_L_DETECTOR")
+local skid_R_param = get_param_handle("SKID_R_DETECTOR")
+local skid_N_param = get_param_handle("SKID_N_DETECTOR")
+
+function get_base_sensor_data()
+
+	Sensor_Data_Raw = get_base_data()
+	
+	local self_loc_x , own_alt, self_loc_y = Sensor_Data_Raw.getSelfCoordinates()
+	local self_vel_l,	self_vel_v,self_vel_h = Sensor_Data_Raw.getSelfAirspeed()
+	Sensor_Data_Mod = 	{
+							throttle_pos_l  = Sensor_Data_Raw.getThrottleLeftPosition(),
+							throttle_pos_r  = Sensor_Data_Raw.getThrottleRightPosition(),
+							mach			= Sensor_Data_Raw.getMachNumber(),
+							nose_wow		= Sensor_Data_Raw.getWOW_NoseLandingGear(),
+							
+							AoS 			= math.deg(Sensor_Data_Raw.getAngleOfSlide()),		--is in rad
+							AoA 			= math.deg(Sensor_Data_Raw.getAngleOfAttack()),		--is in rad?
+							
+							self_m_x 		= self_loc_x,
+							self_m_z 		= self_loc_y,
+							self_m_y 		= own_alt,
+							self_alt 		= own_alt,
+							
+							self_vl			= self_vel_l,
+							self_vv			= self_vel_v,
+							self_vh			= self_vel_h,
+							self_gs			= math.sqrt(self_vel_h^2 + self_vel_l^2),	--grondspeed meters/s
+							
+							
+							self_balt		= Sensor_Data_Raw.getBarometricAltitude(),
+							self_ralt		= Sensor_Data_Raw.getRadarAltitude(),
+							
+							self_pitch		= math.deg(Sensor_Data_Raw.getPitch()),
+							self_bank		= math.deg(Sensor_Data_Raw.getRoll()),
+							
+							self_head			= math.rad(360)-Sensor_Data_Raw.getHeading(),
+							self_head_raw		= Sensor_Data_Raw.getHeading(),
+							self_head_rad		= math.rad(360)-Sensor_Data_Raw.getHeading(),
+							self_head_deg		= -((math.deg(Sensor_Data_Raw.getHeading()))-360),
+							
+							self_head_wpt_rad	= math.rad((360-(math.deg(Sensor_Data_Raw.getHeading()))) + 0),
+							
+							self_ias 			=  Sensor_Data_Raw.getIndicatedAirSpeed(),
+							true_speed			= Sensor_Data_Raw.getTrueAirSpeed()		,
+							--true_speed			= (3600 * (Sensor_Data_Raw.getTrueAirSpeed()))		/ 1000,
+							
+							eng_l_fuel_usage	=	Sensor_Data_Raw.getEngineLeftFuelConsumption(),
+							eng_l_rpm_text		=	Sensor_Data_Raw.getEngineLeftRPM(),
+							eng_l_temp_text		=	Sensor_Data_Raw.getEngineLeftTemperatureBeforeTurbine(),
+							eng_l_rpm_rot		=	math.rad(180) * (Sensor_Data_Raw.getEngineLeftRPM()),
+							eng_l_temp_rot		=	(Sensor_Data_Raw.getEngineLeftTemperatureBeforeTurbine()),
+													
+							eng_r_fuel_usage	=	Sensor_Data_Raw.getEngineRightFuelConsumption(),
+							eng_r_rpm_text		=	Sensor_Data_Raw.getEngineRightRPM(),
+							eng_r_temp_text		=	Sensor_Data_Raw.getEngineRightTemperatureBeforeTurbine(),
+							eng_r_rpm_rot		=	math.rad(180) * (Sensor_Data_Raw.getEngineRightRPM()),
+							eng_r_temp_rot		=	(Sensor_Data_Raw.getEngineRightTemperatureBeforeTurbine()),
+
+							fuel_weight			= 	Sensor_Data_Raw.getTotalFuelWeight(),
+						}	
+
+end
+
+
+function on_carrier_skid()
+    -- Skidding can occurs on the carrier because we use the horizontal speed to detect movement
+    -- This function, taken from carrier.lua, is the same except we dont check the nose wow as it triggers the skidding sound when the plane is "dropped" on the carrier and the left/right wheels touch first.
+    get_base_sensor_data()
+	if Sensor_Data_Mod.self_alt > 16 and Sensor_Data_Mod.self_alt < 23 and 
+		Terrain.GetSurfaceType(Sensor_Data_Mod.self_m_x,Sensor_Data_Mod.self_m_z) == "sea" then	
+		return true
+	else
+		return false
+	end
+end
 
 function SetCommand(command,value)
 	if command == Hook then
@@ -504,10 +589,60 @@ function update_hook()
     --tail_hook_param:set(hook_controller:get_position())
 end
 
+function update_skid()
+    -- Update arrays
+    table.remove(no_anim_L_array,1)
+    table.insert(no_anim_L_array, get_aircraft_draw_argument_value(103))
+    table.remove(no_anim_R_array,1)
+    table.insert(no_anim_R_array, get_aircraft_draw_argument_value(102))
+    table.remove(no_anim_N_array,1)
+    table.insert(no_anim_N_array, get_aircraft_draw_argument_value(101))
+
+    -- Detect when no animation
+    local no_anim_L = 1.0
+    for _, v in ipairs(no_anim_L_array) do
+        if v ~= no_anim_L_array[1] then 
+            no_anim_L = 0.0
+            break 
+        end
+    end
+
+    local no_anim_R = 1.0
+    for _, v in ipairs(no_anim_R_array) do
+        if v ~= no_anim_R_array[1] then 
+            no_anim_R = 0.0
+            break 
+        end
+    end
+
+    local no_anim_N = 1.0
+    for _, v in ipairs(no_anim_N_array) do
+        if v ~= no_anim_N_array[1] then 
+            no_anim_N = 0.0
+            break 
+        end
+    end
+
+    -- WoW
+    local left_WoW = sensor_data.getWOW_LeftMainLandingGear()
+    local right_WoW = sensor_data.getWOW_RightMainLandingGear()
+
+    -- Plane speed
+    local speed_x, speed_y, speed_z = sensor_data.getSelfVelocity()
+    local speed = speed_x*speed_x + speed_y*speed_y
+
+    -- Update state
+    local bool_to_number={ [true]=1.0, [false]=0.0 }
+
+    skid_L_param:set(bool_to_number[not on_carrier_skid() and math.abs(speed) > 1 and left_WoW > 0.5 and no_anim_L > 0.5])
+    skid_R_param:set(bool_to_number[not on_carrier_skid() and math.abs(speed) > 1 and right_WoW > 0.5 and no_anim_R > 0.5])
+
+end
 
 function update()
     update_gear()
     update_hook()
+    update_skid()
 end
 
 need_to_be_closed = false -- close lua state after initialization
