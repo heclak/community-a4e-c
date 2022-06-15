@@ -217,7 +217,9 @@ function post_initialize()
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowGear_C", "FM_GEAR_NOSE", SOUND_ALWAYS, 20.5, 62.0),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowGear_L", "FM_GEAR_LEFT", SOUND_ALWAYS, 20.5, 62.0),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowGear_R", "FM_GEAR_RIGHT", SOUND_ALWAYS, 20.5, 62.0),
-
+        --skid
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitTireSkidL", "SKID_L_DETECTOR", SOUND_ONCE_STOPABLE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitTireSkidR", "SKID_R_DETECTOR", SOUND_ONCE_STOPABLE),
         --ENVIRONMENTAL
         --damage
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_DamageGearOverspeed", "SND_INST_DAMAGE_GEAR_OVERSPEED", SOUND_ONCE),
@@ -294,7 +296,8 @@ function post_initialize()
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsSpeedbrakeMove", "SND_CONT_HYD_MOV", SOUND_CONTINUOUS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsSpeedbrakeStop", "SND_INST_HYD_STOP", SOUND_ONCE),
 
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/obsttone", "D_GLARE_OBST", SOUND_CONTINUOUS, nil, nil, nil, nil, "APG53_OBST_VOLUME")
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/obsttone", "D_GLARE_OBST", SOUND_CONTINUOUS, nil, nil, nil, nil, "APG53_OBST_VOLUME"),
+
 
     }
 

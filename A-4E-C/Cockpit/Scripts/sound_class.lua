@@ -14,6 +14,7 @@ SOUND_CONTINUOUS = 1
 SOUND_ONCE = 2
 SOUND_ALWAYS = 3
 SOUND_ALWAYS_CONTROLLED = 4
+SOUND_ONCE_STOPABLE = 5
 
 function Sound_Player.new(sndhost, sound_file, param, type, min_speed, max_speed, factor, fade, volume_param)
     local self = setmetatable({}, Sound_Player)
@@ -38,6 +39,8 @@ function Sound_Player.new(sndhost, sound_file, param, type, min_speed, max_speed
         self.update = self.updateOnce
     elseif self.type == SOUND_ALWAYS then
         self.update = self.updateAlways
+    elseif self.type == SOUND_ONCE_STOPABLE then
+        self.update = self.updateOnceStopable
     end
 
     return self
@@ -70,6 +73,30 @@ function Sound_Player:updateOnce()
             self.played = false
         end
     end
+
+    if self.volume_param ~= nil then
+        self.sound:update(nil, self.volume_param:get(), nil)
+    end
+
+end
+
+function Sound_Player:updateOnceStopable()
+    --print_message_to_user(self.param:get())
+    if not self.sound:is_playing() then
+        if self.param:get() >= 1.0 then
+            if not self.played then
+                self.sound:play_once()
+                --print_message_to_user("Playing Sound "..self.param_string.." once.")
+                self.played = true
+            end
+        elseif self.param:get() <= 0.0 and self.played then
+            self.played = false
+        end
+    elseif self.param:get() <= 0.0 then
+        self.sound:stop()
+        self.played = false
+    end
+
 
     if self.volume_param ~= nil then
         self.sound:update(nil, self.volume_param:get(), nil)
