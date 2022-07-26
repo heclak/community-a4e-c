@@ -86,7 +86,7 @@ local POS_LON_X = 0.5
 local POS_WAYPOINT_X = -0.9
 
 local FIRST_LINE_Y = 1.00
-local LINEHEIGHT = 0.115
+local LINEHEIGHT = 0.105
 local POS_TITLE_Y = 1.4
 local POS_HEADERS_Y = FIRST_LINE_Y + 0.1
 
@@ -107,7 +107,7 @@ local function addSimpleTextStringCommon(element, name, x, y, value, alignment, 
 end
 
 local function waypoint_name(waypoint_index, waypoint_data)
-    if waypoint_index == 1 then
+    if waypoint_index == 1 and waypoint_index < 11 then
         if waypoint_data.name == "" or waypoint_data.name == nil then
             return (waypoint_index - 1) .. ". START"
         else
