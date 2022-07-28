@@ -194,6 +194,58 @@ local dev_gear_right = get_param_handle("GEAR_RIGHT")
 local GEAR_POD_CLOSE = 0.1
 local GEAR_POD_OPEN = 0.9
 
+--Convert_Range_Linear({0, 0.0625}, {0, 0.125}, 0.05))
+function Convert_Range_Linear(inputRange, outputRange, value)
+    -- Check for table inputs.
+    if type(inputRange) ~= "table" or type(outputRange) ~= "table" then
+        return 0
+    end
+    -- Check for table array length of 1 to 2.
+    if #inputRange ~= 2 or #outputRange ~= 2 then
+        return 0
+    end
+    -- Ensure value is non-nil.
+    value = value or 0
+
+    local inputMin = inputRange[1]
+    local inputMax = inputRange[2]
+    local outputMin = outputRange[1]
+    local outputMax = outputRange[2]
+
+    -- Calculate the differences in both the old and new ranges.
+    local result = ((value - inputMin) / (inputMax - inputMin)) * (outputMax - outputMin) + outputMin
+
+    return result
+end
+
+-- Convert_NoseWheel_toLog(0.1)
+function Convert_NoseWheel_toLog(value)
+    -- treat very low angle as 0 to prevent juddering and to exit early when aircraft is parked at mission start
+    if value <= 0.0002 and value >= -0.0002 then
+        return 0
+    end
+
+    local result = 0
+
+    if value > 0 then
+        if value < 0.125 then
+            result = Convert_Range_Linear({0.0002, 0.125},  {0.0002, 0.25},   value)
+        elseif value < 0.25 then
+            result = Convert_Range_Linear({0.125, 0.25},    {0.25, 0.375},    value)
+        else
+            result = Convert_Range_Linear({0.25, 0.5},      {0.375, 0.5},     value)
+        end
+    elseif value < 0 then
+        if value > -0.125 then
+            result = Convert_Range_Linear({0.0002, -0.125}, {-0.0002, -0.25}, value)
+        elseif value > -0.25 then
+            result = Convert_Range_Linear({-0.125, -0.25},  {-0.25, -0.375},  value)
+        else
+            result = Convert_Range_Linear({-0.25, -0.5},    {-0.375, -0.5},   value)
+        end
+    end
+    return result
+end
 function update_gear()
     local gear_handle_pos = get_cockpit_draw_argument_value(8)  -- 1==down, 0==up
     local retraction_release_solenoid = get_elec_primary_ac_ok()    -- according to NATOPS, if system is on emer gen power, the safety solenoid opens, allowing the gear handle to be moved up and gear retracted.  However, see gyrovague's notes at end of this file.
@@ -481,7 +533,7 @@ function update_gear()
         print_message_to_user("Ground crew reset landing gear")
     end
 
-    ControlsIndicator_api.nosewheel_pos_param:set(clamp(get_aircraft_draw_argument_value(2), -0.5, 0.5))
+    ControlsIndicator_api.nosewheel_pos_param:set(Convert_NoseWheel_toLog(clamp(get_aircraft_draw_argument_value(2), -0.5, 0.5)))
 end
 
 local tail_hook_param = get_param_handle("D_TAIL_HOOK")
