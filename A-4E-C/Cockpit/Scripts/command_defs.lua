@@ -82,7 +82,6 @@ Keys =
 	--END EFM SPECIFIC BINDS
 
 
-
     PlaneFlapsStop                  = __custom_counter(),
     PlaneFlapsUpHotas               = __custom_counter(),
     PlaneFlapsDownHotas             = __custom_counter(),
@@ -415,6 +414,9 @@ Keys =
     afcs_hdg_set_stop              = __custom_counter(),
 
     nvg_toggle                     = __custom_counter(),
+	
+	canopy_open                    = __custom_counter(),
+	canopy_close                   = __custom_counter(),
 }
 
 start_command   = 3000

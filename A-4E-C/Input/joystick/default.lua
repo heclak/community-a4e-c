@@ -6,10 +6,6 @@ local res = external_profile("Config/Input/Aircrafts/common_joystick_binding.lua
 
 join(res.keyCommands,{
 
-    ---------------------------------------------
-    -- General ----------------------------------
-    ---------------------------------------------
-    -- {combos = {{key = 'P', reformers = {'RShift'}}}, down = iCommandCockpitShowPilotOnOff, name = _('Show Pilot Body'), category = _('General')},
 
     ---------------------------------------------
     -- Communications ---------------------------
@@ -348,7 +344,7 @@ join(res.keyCommands,{
     {down = Keys.APCHotStdCold, value_down = 1, up = Keys.APCHotStdCold, value_up = 0,        name = _('APC Temperature Switch - HOT else STD'),    category = {_('Console Left'), _('APC Control Panel')}},
     
     -- JATO Control Panel
-    {combos = {{key = 'S'}}, down = Keys.SpoilersArmToggle,                                   name = _('Spoiler Arm Switch - ARM/OFF'),             category = {_('Console Left'), _('JATO Control Panel'), _('Systems')}},
+    {down = Keys.SpoilersArmToggle,                                                           name = _('Spoiler Arm Switch - ARM/OFF'),             category = {_('Console Left'), _('JATO Control Panel'), _('Systems')}},
     {down = Keys.SpoilersArmOn,                                                               name = _('Spoiler Arm Switch - ARM'),                 category = {_('Console Left'), _('JATO Control Panel'), _('Systems')}},
     {down = Keys.SpoilersArmOff,                                                              name = _('Spoiler Arm Switch - OFF'),                 category = {_('Console Left'), _('JATO Control Panel'), _('Systems')}},
     {down = Keys.SpoilersArmOn, up = Keys.SpoilersArmOff,                                     name = _('Spoiler Arm Switch - ARM else OFF'),        category = {_('Console Left'), _('JATO Control Panel'), _('Systems')}},
@@ -432,7 +428,10 @@ join(res.keyCommands,{
     {down = Keys.OxygenToggle,                                                                                                                      name = _('Oxygen Switch - ON/OFF'),         category = {_('Console Left'), _('Systems')}},
 
     -- Canopy Control
-    {down = iCommandPlaneFonar,                             name = _('Canopy Lever - CLOSE/OPEN'),                                             category = {_('Console Left')}},
+    {down = Keys.Canopy,                                                        name = _('Canopy Lever - OPEN/CLOSE'),      category = {_('Console Left')}},
+    {down = Keys.canopy_open,                                                   name = _('Canopy Lever - OPEN'),            category = {_('Console Left')}},
+    {down = Keys.canopy_close,                                                  name = _('Canopy Lever - CLOSE'),           category = {_('Console Left')}},
+    {down = Keys.canopy_close, up = Keys.canopy_open,                           name = _('Canopy Lever - CLOSE else OPEN'), category = {_('Console Left')}},
 
     ---------------------------------------------
     -- Right Console ----------------------------
@@ -609,47 +608,6 @@ join(res.keyCommands,{
 
     {down = Keys.modifier_left_down, up = Keys.modifier_left_up,                                name = _('LCtrl/Mouse Left'),     category = {_('UI Override')}},
     {down = Keys.modifier_right_down, up = Keys.modifier_right_up,                                name = _('LShift/Mouse Right'),     category = {_('UI Override')}},
-
-    -- PID tuning
-    --[[
-    {down = Keys.Tune1, value_down = 0.1,                                                                name = _('Tune1: +0.1'),                  category = {_('Debug')}},
-    {down = Keys.Tune1, value_down = -0.1,                                                               name = _('Tune1: -0.1'),                  category = {_('Debug')}},
-    {down = Keys.Tune2, value_down = 0.1,                                                                name = _('Tune2: +0.1'),                  category = {_('Debug')}},
-    {down = Keys.Tune2, value_down = -0.1,                                                               name = _('Tune2: -0.1'),                  category = {_('Debug')}},
-    {down = Keys.Tune3, value_down = 0.1,                                                                name = _('Tune3: +0.1'),                  category = {_('Debug')}},
-    {down = Keys.Tune3, value_down = -0.1,                                                               name = _('Tune3: -0.1'),                  category = {_('Debug')}},
-
-    -- FC3 Commands [Implemented] (TODO: What should be implmented here?)
-    {combos = {{key = 'W', reformers = {'LCtrl'}}}, down = Keys.JettisonFC3,up = Keys.JettisonWeaponsUp, name = _('Jettison Stores (3 times)'), category = {_('Systems')}},
-    {combos = {{key = '5', reformers = {'LShift'}}}, down = Keys.RadarHoldToggle,                        name = _('Radar Hold: Toggle'),          category = _('Modes')},
-    {combos = {{key = '6', reformers = {'LShift'}}}, down = Keys.RadarHoldDec,                           name = _('Radar Hold: Dec'),             category = _('Modes')},
-    {combos = {{key = '7', reformers = {'LShift'}}}, down = Keys.RadarHoldInc,                           name = _('Radar Hold: Inc'),             category = _('Modes')},
-    {combos = {{key = '8', reformers = {'LShift'}}}, down = Keys.SpeedHoldToggle,                        name = _('Speed Hold: Toggle'),          category = _('Modes')},
-    {combos = {{key = '9', reformers = {'LShift'}}}, down = Keys.SpeedHoldDec,                           name = _('Speed Hold: Dec'),             category = _('Modes')},
-    {combos = {{key = '0', reformers = {'LShift'}}}, down = Keys.SpeedHoldInc,                           name = _('Speed Hold: Inc'),             category = _('Modes')},
-
-    -- FC3 Commands [Not Implemented]
-    {combos = {{key = 'L', reformers = {'RShift'}}}, down = iCommandPowerOnOff,              name = _('Electric Power Switch'),                          category = {_('Systems')}},
-    {combos = {{key = 'L'}}, down = iCommandPlaneCockpitIllumination,                        name = _('Illumination Cockpit'),                           category = {_('Systems')}},
-    {combos = {{key = 'L', reformers = {'RCtrl'}}}, down = Keys.PlaneLightsOnOff,            name = _('Navigation Lights Bright/Dim/Off'),               category = {_('Systems')}},
-    {combos = {{key = 'L', reformers = {'RAlt'}}}, down = Keys.PlaneHeadlightOnOff,          name = _('Taxi Light On/Off'),                              category = {_('Systems')}},
-    {combos = {{key = 'N', reformers = {'RShift'}}}, down = iCommandPlaneResetMasterWarning, name = _('Audible Warning Reset'),                          category = {_('Systems')}},
-    {combos = {{key = 'C', reformers = {'RShift'}}}, down = iCommandFlightClockReset,        name = _('Flight Clock Start/Stop/Reset'),                  category = {_('Systems')}},
-    {down = iCommandClockElapsedTimeReset,                                                   name = _('Elapsed Time Clock Start/Stop/Reset'),            category = {_('Systems')}},
-    {combos = {{key = 'Q', reformers = {'LShift'}}}, down = iCommandPlaneDropSnar,           name = _('Countermeasures Continuously Dispense'),          category = _('Countermeasures')},
-    {combos = {{key = 'Delete'}}, down = iCommandPlaneDropFlareOnce,                         name = _('Countermeasures Flares Dispense'),                category = _('Countermeasures')},
-    {combos = {{key = 'Insert'}}, down = iCommandPlaneDropChaffOnce,                         name = _('Countermeasures Chaff Dispense'),                 category = _('Countermeasures')},
-    {combos = {{key = 'A'}}, down = iCommandPlaneAutopilot,                                  name = _('Autopilot'),                                      category = _('Autopilot')},
-    {combos = {{key = 'J'}}, down = iCommandPlaneAUTOnOff,                                   name = _('Autothrust'),                                     category = _('Autopilot')},
-    {combos = {{key = 'H'}}, down = iCommandPlaneSAUHBarometric,                             name = _('Autopilot - Barometric Altitude Hold \'H\''),     category = _('Autopilot')},
-    {combos = {{key = '1', reformers = {'LAlt'}}}, down = iCommandPlaneStabTangBank,         name = _('Autopilot - Attitude Hold'),                      category = _('Autopilot')},
-    {combos = {{key = '2', reformers = {'LAlt'}}}, down = iCommandPlaneStabHbarBank,         name = _('Autopilot - Altitude And Roll Hold'),             category = _('Autopilot')},
-    {combos = {{key = '3', reformers = {'LAlt'}}}, down = iCommandPlaneStabHorizon,          name = _('Autopilot - Transition To Level Flight Control'), category = _('Autopilot')},
-    {combos = {{key = '4', reformers = {'LAlt'}}}, down = iCommandPlaneStabHbar,             name = _('Autopilot - Barometric Altitude Hold'),           category = _('Autopilot')},
-    {combos = {{key = '5', reformers = {'LAlt'}}}, down = iCommandPlaneStabHrad,             name = _('Autopilot - Radar Altitude Hold'),                category = _('Autopilot')},
-    {combos = {{key = '6', reformers = {'LAlt'}}}, down = iCommandPlaneRouteAutopilot,       name = _('Autopilot - \'Route following\''),                category = _('Autopilot')},
-    {combos = {{key = '7', reformers = {'LAlt'}}}, down = iCommandPlaneStabCancel,           name = _('Autopilot Disengage'),                            category = _('Autopilot')},
-    ]]
 
     ---------------------------------------------
     -- Special for Joysticks and Warthog Throttle

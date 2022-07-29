@@ -7,11 +7,6 @@ local res = external_profile("Config/Input/Aircrafts/common_keyboard_binding.lua
 join(res.keyCommands,{
 
     ---------------------------------------------
-    -- General ----------------------------------
-    ---------------------------------------------
-    -- {combos = {{key = 'P', reformers = {'RShift'}}}, down = iCommandCockpitShowPilotOnOff, name = _('Show Pilot Body'), category = _('General')},
-
-    ---------------------------------------------
     -- Communications ---------------------------
     --------------------------------------------- 
     {down = iCommandPilotGestureSalute,                                                                             name = _('Pilot Salute'),                                category = {_('Communications')}},
@@ -432,7 +427,10 @@ join(res.keyCommands,{
     {combos = {{key = 'O'}}, down = Keys.OxygenToggle,                                                                                              name = _('Oxygen Switch - ON/OFF'),         category = {_('Console Left'), _('Systems')}},
 
     -- Canopy Control
-    {combos = {{key = 'C', reformers = {'LCtrl'}}}, down = iCommandPlaneFonar,                  name = _('Canopy Lever - CLOSE/OPEN'),                                 category = {_('Console Left')}},
+    {combos = {{key = 'C', reformers = {'LCtrl'}}}, down = Keys.Canopy,         name = _('Canopy Lever - OPEN/CLOSE'),      category = {_('Console Left')}},
+    {combos = {{key = 'C', reformers = {'LAlt'}}}, down = Keys.canopy_open,     name = _('Canopy Lever - OPEN'),            category = {_('Console Left')}},
+    {combos = {{key = 'C', reformers = {'LShift'}}}, down = Keys.canopy_close,  name = _('Canopy Lever - CLOSE'),           category = {_('Console Left')}},
+    {down = Keys.canopy_close, up = Keys.canopy_open,                           name = _('Canopy Lever - CLOSE else OPEN'), category = {_('Console Left')}},
 
     ---------------------------------------------
     -- Right Console ----------------------------
@@ -605,7 +603,10 @@ join(res.keyCommands,{
     {down = Keys.UHFVolumeDec,                                                                  name = _('Radio Volume - Rotary Decrement'),        category = {_('AN/ARC-51A UHF Radio')}},
     {down = Keys.UHFVolumeStartUp, up = Keys.UHFVolumeStop,                                     name = _('Radio Volume - Continuous Increase'),     category = {_('AN/ARC-51A UHF Radio')}},
     {down = Keys.UHFVolumeStartDown, up = Keys.UHFVolumeStop,                                   name = _('Radio Volume - Continuous Decrease'),     category = {_('AN/ARC-51A UHF Radio')}},
-  
+
+    -- General
+    -- {combos = {{key = 'P', reformers = {'RShift'}}}, down = iCommandCockpitShowPilotOnOff, name = _('Show Pilot Body'), category = _('General')},
+
     -- PID tuning
     --[[
     {down = Keys.Tune1, value_down = 0.1,                                                                name = _('Tune1: +0.1'),                  category = {_('Debug')}},
@@ -646,5 +647,7 @@ join(res.keyCommands,{
     {combos = {{key = '6', reformers = {'LAlt'}}}, down = iCommandPlaneRouteAutopilot,       name = _('Autopilot - \'Route following\''),                category = _('Autopilot')},
     {combos = {{key = '7', reformers = {'LAlt'}}}, down = iCommandPlaneStabCancel,           name = _('Autopilot Disengage'),                            category = _('Autopilot')},
     ]]
+
+
 })
 return res

@@ -1,18 +1,10 @@
-local kneeboard_id = 100
-if devices and devices.KNEEBOARD then
-	kneeboard_id = devices.KNEEBOARD
-end
+local cscripts = folder.."../../Cockpit/Scripts/"
+dofile(cscripts.."devices.lua")
+dofile(cscripts.."command_defs.lua")
 
 return {
 
 keyCommands = {
-
-    ---------------------------------------------
-    -- Mouse Special ----------------------------
-    ---------------------------------------------
-	{combos = {{key = 'MOUSE_BTN2'}}, down = iCommand_ExplorationStart, name = _('Enable visual recon mode'), category = _('View Cockpit')},
-	{combos = {{key = 'MOUSE_BTN3'}}, down = iCommandViewTransposeModeOn, up = iCommandViewTransposeModeOff, name = _('Camera transpose mode (press and hold)'), category = _('View Cockpit')},
-	{down = iCommandCockpitClickModeOnOff,			name = _('Clickable mouse cockpit mode On/Off'), category = _('General')},
 
     ---------------------------------------------
     -- Communications ---------------------------
@@ -68,8 +60,8 @@ keyCommands = {
     {pressed = Keys.TrimLeft, up = Keys.TrimStop,                                       name = _('Trim Switch - LEFT WING DOWN'),   category = {_('Control Stick'), _('Flight Control')}},
     {pressed = Keys.TrimRight, up = Keys.TrimStop,                                      name = _('Trim Switch - RIGHT WING DOWN'),  category = {_('Control Stick'), _('Flight Control')}},
     {pressed = Keys.TrimCancel, up = Keys.TrimStop,                                     name = _('Trim Reset (Hold)'),              category = {_('Control Stick'), _('Flight Control')}},
-    {combos = {{key = 'JOY_BTN1'}}, down = Keys.PlaneFireOn, up = Keys.PlaneFireOff,    name = _('Gun-Rocket Trigger'),                category = {_('Control Stick'), _('Weapons')}},
-    {combos = {{key = 'JOY_BTN2'}}, down = Keys.PickleOn, up = Keys.PickleOff,          name = _('Bomb Release Button'),               category = {_('Control Stick'), _('Weapons')}},
+    {down = Keys.PlaneFireOn, up = Keys.PlaneFireOff,                                   name = _('Gun-Rocket Trigger'),                category = {_('Control Stick'), _('Weapons')}},
+    {down = Keys.PickleOn, up = Keys.PickleOff,                                         name = _('Bomb Release Button'),               category = {_('Control Stick'), _('Weapons')}},
     {down = Keys.AFCSOverride,                                                          name = _('Autopilot Override (AFCS Emergency Disconnect)'),              category = {_('Control Stick'), _('AFCS Control Panel')}},
     {down = Keys.ToggleStick,                                                           name = _('Control Stick - HIDE/SHOW'),         category = {_('Control Stick'), _('View'), _('View Cockpit')}},
     -- {down = Keys.nws_engage, up = Keys.nws_disengage,                                   name = _('Nose Wheel Steering - ON else OFF'), category = {_('Control Stick'), _('Systems')}},
@@ -351,7 +343,7 @@ keyCommands = {
     {down = Keys.APCHotStdCold, value_down = 1, up = Keys.APCHotStdCold, value_up = 0,        name = _('APC Temperature Switch - HOT else STD'),    category = {_('Console Left'), _('APC Control Panel')}},
     
     -- JATO Control Panel
-    {combos = {{key = 'S'}}, down = Keys.SpoilersArmToggle,                                   name = _('Spoiler Arm Switch - ARM/OFF'),             category = {_('Console Left'), _('JATO Control Panel'), _('Systems')}},
+    {down = Keys.SpoilersArmToggle,                                                           name = _('Spoiler Arm Switch - ARM/OFF'),             category = {_('Console Left'), _('JATO Control Panel'), _('Systems')}},
     {down = Keys.SpoilersArmOn,                                                               name = _('Spoiler Arm Switch - ARM'),                 category = {_('Console Left'), _('JATO Control Panel'), _('Systems')}},
     {down = Keys.SpoilersArmOff,                                                              name = _('Spoiler Arm Switch - OFF'),                 category = {_('Console Left'), _('JATO Control Panel'), _('Systems')}},
     {down = Keys.SpoilersArmOn, up = Keys.SpoilersArmOff,                                     name = _('Spoiler Arm Switch - ARM else OFF'),        category = {_('Console Left'), _('JATO Control Panel'), _('Systems')}},
@@ -435,7 +427,10 @@ keyCommands = {
     {down = Keys.OxygenToggle,                                                                                                                      name = _('Oxygen Switch - ON/OFF'),         category = {_('Console Left'), _('Systems')}},
 
     -- Canopy Control
-    {down = iCommandPlaneFonar,                             name = _('Canopy Lever - CLOSE/OPEN'),                                             category = {_('Console Left')}},
+    {down = Keys.Canopy,                                                        name = _('Canopy Lever - OPEN/CLOSE'),      category = {_('Console Left')}},
+    {down = Keys.canopy_open,                                                   name = _('Canopy Lever - OPEN'),            category = {_('Console Left')}},
+    {down = Keys.canopy_close,                                                  name = _('Canopy Lever - CLOSE'),           category = {_('Console Left')}},
+    {down = Keys.canopy_close, up = Keys.canopy_open,                           name = _('Canopy Lever - CLOSE else OPEN'), category = {_('Console Left')}},
 
     ---------------------------------------------
     -- Right Console ----------------------------
@@ -609,6 +604,13 @@ keyCommands = {
     {down = Keys.UHFVolumeStartUp, up = Keys.UHFVolumeStop,                                     name = _('Radio Volume - Continuous Increase'),     category = {_('AN/ARC-51A UHF Radio')}},
     {down = Keys.UHFVolumeStartDown, up = Keys.UHFVolumeStop,                                   name = _('Radio Volume - Continuous Decrease'),     category = {_('AN/ARC-51A UHF Radio')}},
 
+    ---------------------------------------------
+    -- Mouse Special ----------------------------
+    ---------------------------------------------
+	{combos = {{key = 'MOUSE_BTN2'}}, down = iCommand_ExplorationStart,                                         name = _('Enable visual recon mode'),               category = _('View Cockpit')},
+	{combos = {{key = 'MOUSE_BTN3'}}, down = iCommandViewTransposeModeOn, up = iCommandViewTransposeModeOff,    name = _('Camera transpose mode (press and hold)'), category = _('View Cockpit')},
+	{down = iCommandCockpitClickModeOnOff,			                                                            name = _('Clickable mouse cockpit mode On/Off'),    category = _('General')},
+
 },
 
 ---------------------------------------------
@@ -618,6 +620,6 @@ axisCommands = {
 {combos = {{key = 'MOUSE_X'}}, action = iCommandPlaneViewHorizontal, name = _('Camera Horizontal View')},
 {combos = {{key = 'MOUSE_Y'}}, action = iCommandPlaneViewVertical, name = _('Camera Vertical View')},
 {combos = {{key = 'MOUSE_Z'}}, action = iCommandPlaneZoomView, name = _('Camera Zoom View')},
-
 },
+
 }
