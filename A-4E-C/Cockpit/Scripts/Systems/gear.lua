@@ -231,19 +231,19 @@ function Convert_NoseWheel_toLog(value)
 
     if value > 0 then
         if value < 0.125 then
-            result = Convert_Range_Linear({0.0002, 0.125},      {0.0002, 0.335},   value)
+            result = Convert_Range_Linear({0.0002, 0.125},  {0.0002, 0.335},   value)
         elseif value < 0.25 then
-            result = Convert_Range_Linear({0.125, 0.25},        {0.335, 0.5025},   value)
+            result = Convert_Range_Linear({0.125, 0.25},    {0.335, 0.5025},   value)
         else
-            result = Convert_Range_Linear({0.25, 0.5},          {0.5025, 0.67},    value) --0.67 is the maximum as that is the value that will put the yellow circle into the corners of the grid in the Control Indicator
-        end                                                                               --values higher than 0.67 will make the yellow circle leave the bounds of the grid
+            result = Convert_Range_Linear({0.25, 0.5},      {0.5025, 0.67},    value) --0.67 is the maximum as that is the value that will put the yellow circle into the corners of the grid in the Control Indicator
+        end                                                                           --values higher than 0.67 will make the yellow circle leave the bounds of the grid
     elseif value < 0 then
         if value > -0.125 then
-            result = Convert_Range_Linear({0.0002, -0.125},     {-0.0002, -0.335}, value)
+            result = Convert_Range_Linear({0.0002, -0.125}, {-0.0002, -0.335}, value)
         elseif value > -0.25 then
-            result = Convert_Range_Linear({-0.125, -0.25},      {-0.335, -0.5025}, value)
+            result = Convert_Range_Linear({-0.125, -0.25},  {-0.335, -0.5025}, value)
         else
-            result = Convert_Range_Linear({-0.25, -0.5},        {-0.5025, -0.67},  value)
+            result = Convert_Range_Linear({-0.25, -0.5},    {-0.5025, -0.67},  value)
         end
     end
 
