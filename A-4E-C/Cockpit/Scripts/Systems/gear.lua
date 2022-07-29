@@ -220,6 +220,8 @@ end
 
 -- Convert_NoseWheel_toLog(0.1)
 function Convert_NoseWheel_toLog(value)
+    --print_message_to_user("Convert_NoseWheel_toLog input: "..tostring(value))
+
     -- treat very low angle as 0 to prevent juddering and to exit early when aircraft is parked at mission start
     if value <= 0.0002 and value >= -0.0002 then
         return 0
@@ -229,23 +231,26 @@ function Convert_NoseWheel_toLog(value)
 
     if value > 0 then
         if value < 0.125 then
-            result = Convert_Range_Linear({0.0002, 0.125},  {0.0002, 0.25},   value)
+            result = Convert_Range_Linear({0.0002, 0.125},      {0.0002, 0.335},   value)
         elseif value < 0.25 then
-            result = Convert_Range_Linear({0.125, 0.25},    {0.25, 0.375},    value)
+            result = Convert_Range_Linear({0.125, 0.25},        {0.335, 0.5025},   value)
         else
-            result = Convert_Range_Linear({0.25, 0.5},      {0.375, 0.5},     value)
-        end
+            result = Convert_Range_Linear({0.25, 0.5},          {0.5025, 0.67},    value) --0.67 is the maximum as that is the value that will put the yellow circle into the corners of the grid in the Control Indicator
+        end                                                                               --values higher than 0.67 will make the yellow circle leave the bounds of the grid
     elseif value < 0 then
         if value > -0.125 then
-            result = Convert_Range_Linear({0.0002, -0.125}, {-0.0002, -0.25}, value)
+            result = Convert_Range_Linear({0.0002, -0.125},     {-0.0002, -0.335}, value)
         elseif value > -0.25 then
-            result = Convert_Range_Linear({-0.125, -0.25},  {-0.25, -0.375},  value)
+            result = Convert_Range_Linear({-0.125, -0.25},      {-0.335, -0.5025}, value)
         else
-            result = Convert_Range_Linear({-0.25, -0.5},    {-0.375, -0.5},   value)
+            result = Convert_Range_Linear({-0.25, -0.5},        {-0.5025, -0.67},  value)
         end
     end
+
+    --print_message_to_user("Convert_NoseWheel_toLog output: "..tostring(result))
     return result
 end
+
 function update_gear()
     local gear_handle_pos = get_cockpit_draw_argument_value(8)  -- 1==down, 0==up
     local retraction_release_solenoid = get_elec_primary_ac_ok()    -- according to NATOPS, if system is on emer gen power, the safety solenoid opens, allowing the gear handle to be moved up and gear retracted.  However, see gyrovague's notes at end of this file.
@@ -533,6 +538,7 @@ function update_gear()
         print_message_to_user("Ground crew reset landing gear")
     end
 
+    --print_message_to_user("ControlsIndicator_api.nosewheel_pos_param: "..tostring(get_aircraft_draw_argument_value(2)))
     ControlsIndicator_api.nosewheel_pos_param:set(Convert_NoseWheel_toLog(clamp(get_aircraft_draw_argument_value(2), -0.5, 0.5)))
 end
 
