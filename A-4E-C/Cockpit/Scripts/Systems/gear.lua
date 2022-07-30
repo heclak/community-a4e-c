@@ -106,60 +106,7 @@ local skid_N_param = get_param_handle("SKID_N_DETECTOR")
 function get_base_sensor_data()
 
 	Sensor_Data_Raw = get_base_data()
-	
-	local self_loc_x , own_alt, self_loc_y = Sensor_Data_Raw.getSelfCoordinates()
-	local self_vel_l,	self_vel_v,self_vel_h = Sensor_Data_Raw.getSelfAirspeed()
-	Sensor_Data_Mod = 	{
-							throttle_pos_l  = Sensor_Data_Raw.getThrottleLeftPosition(),
-							throttle_pos_r  = Sensor_Data_Raw.getThrottleRightPosition(),
-							mach			= Sensor_Data_Raw.getMachNumber(),
-							nose_wow		= Sensor_Data_Raw.getWOW_NoseLandingGear(),
-							
-							AoS 			= math.deg(Sensor_Data_Raw.getAngleOfSlide()),		--is in rad
-							AoA 			= math.deg(Sensor_Data_Raw.getAngleOfAttack()),		--is in rad?
-							
-							self_m_x 		= self_loc_x,
-							self_m_z 		= self_loc_y,
-							self_m_y 		= own_alt,
-							self_alt 		= own_alt,
-							
-							self_vl			= self_vel_l,
-							self_vv			= self_vel_v,
-							self_vh			= self_vel_h,
-							self_gs			= math.sqrt(self_vel_h^2 + self_vel_l^2),	--grondspeed meters/s
-							
-							
-							self_balt		= Sensor_Data_Raw.getBarometricAltitude(),
-							self_ralt		= Sensor_Data_Raw.getRadarAltitude(),
-							
-							self_pitch		= math.deg(Sensor_Data_Raw.getPitch()),
-							self_bank		= math.deg(Sensor_Data_Raw.getRoll()),
-							
-							self_head			= math.rad(360)-Sensor_Data_Raw.getHeading(),
-							self_head_raw		= Sensor_Data_Raw.getHeading(),
-							self_head_rad		= math.rad(360)-Sensor_Data_Raw.getHeading(),
-							self_head_deg		= -((math.deg(Sensor_Data_Raw.getHeading()))-360),
-							
-							self_head_wpt_rad	= math.rad((360-(math.deg(Sensor_Data_Raw.getHeading()))) + 0),
-							
-							self_ias 			=  Sensor_Data_Raw.getIndicatedAirSpeed(),
-							true_speed			= Sensor_Data_Raw.getTrueAirSpeed()		,
-							--true_speed			= (3600 * (Sensor_Data_Raw.getTrueAirSpeed()))		/ 1000,
-							
-							eng_l_fuel_usage	=	Sensor_Data_Raw.getEngineLeftFuelConsumption(),
-							eng_l_rpm_text		=	Sensor_Data_Raw.getEngineLeftRPM(),
-							eng_l_temp_text		=	Sensor_Data_Raw.getEngineLeftTemperatureBeforeTurbine(),
-							eng_l_rpm_rot		=	math.rad(180) * (Sensor_Data_Raw.getEngineLeftRPM()),
-							eng_l_temp_rot		=	(Sensor_Data_Raw.getEngineLeftTemperatureBeforeTurbine()),
-													
-							eng_r_fuel_usage	=	Sensor_Data_Raw.getEngineRightFuelConsumption(),
-							eng_r_rpm_text		=	Sensor_Data_Raw.getEngineRightRPM(),
-							eng_r_temp_text		=	Sensor_Data_Raw.getEngineRightTemperatureBeforeTurbine(),
-							eng_r_rpm_rot		=	math.rad(180) * (Sensor_Data_Raw.getEngineRightRPM()),
-							eng_r_temp_rot		=	(Sensor_Data_Raw.getEngineRightTemperatureBeforeTurbine()),
-
-							fuel_weight			= 	Sensor_Data_Raw.getTotalFuelWeight(),
-						}	
+	Self_m_x , Self_alt, Self_m_z = Sensor_Data_Raw.getSelfCoordinates()
 
 end
 
@@ -168,8 +115,8 @@ function on_carrier_skid()
     -- Skidding can occurs on the carrier because we use the horizontal speed to detect movement
     -- This function, taken from carrier.lua, is the same except we dont check the nose wow as it triggers the skidding sound when the plane is "dropped" on the carrier and the left/right wheels touch first.
     get_base_sensor_data()
-	if Sensor_Data_Mod.self_alt > 16 and Sensor_Data_Mod.self_alt < 23 and 
-		Terrain.GetSurfaceType(Sensor_Data_Mod.self_m_x,Sensor_Data_Mod.self_m_z) == "sea" then	
+	if Self_alt > 16 and Self_alt < 23 and 
+		Terrain.GetSurfaceType(Self_m_x, Self_m_z) == "sea" then	
 		return true
 	else
 		return false
