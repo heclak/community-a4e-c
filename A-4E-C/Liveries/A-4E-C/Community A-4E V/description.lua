@@ -55,17 +55,17 @@ livery =
 {
   {"Top", DIFFUSE, "a4e_community5_top", true};
   {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet_as", true};
-  {"Bottom", DIFFUSE, "a4e_community_bot", true};
+  {"Bottom", DIFFUSE, "a4e_community5_bot", true};
   {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet_as", true};
-  {"Gear and metal", DIFFUSE, "a4e_community_bot", true};
-  {"Cockpit", DIFFUSE, "a4e_community_bot", true};
+  {"Gear and metal", DIFFUSE, "a4e_community5_bot", true};
+  {"Cockpit", DIFFUSE, "a4e_community5_bot", true};
   --{"Front",	0, "a4e_ext_front", true};
   --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
 
   -- flaps, used on most liveries
-  {"flaps_001", DIFFUSE, "a4e_bort_white_smooth", true};
-  {"flaps_010", DIFFUSE, "a4e_bort_white_smooth", true};
+  {"flaps_001", DIFFUSE, "a4e_bort_black_smooth", true};
+  {"flaps_010", DIFFUSE, "a4e_bort_black_smooth", true};
   {"flaps_100", DIFFUSE, "empty", true};
 
   -- three digit, smaller nose numbers, used on most liveries
@@ -74,8 +74,8 @@ livery =
   {"nose_100", DIFFUSE, "empty", true};
 
   -- two digit top-of-tail, used on most USMC liveries
-  {"tail_aggressor_001", DIFFUSE, "a4e_bort_white_smooth", true};
-  {"tail_aggressor_010", DIFFUSE, "a4e_bort_white_smooth", true};
+  {"tail_aggressor_001", DIFFUSE, "empty", true};
+  {"tail_aggressor_010", DIFFUSE, "empty", true};
 
   -- three digit top-of-rudder, used on most USN liveries
   {"rudder_001", DIFFUSE, "empty", true};
