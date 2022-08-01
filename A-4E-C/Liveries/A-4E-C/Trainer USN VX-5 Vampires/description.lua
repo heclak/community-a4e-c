@@ -3,16 +3,16 @@ countries = {"USA"}
 
 livery =
 {
-  {"Top", DIFFUSE, "a4e_trn_usn_vx5_top", true};
+  {"Top", DIFFUSE, "a4e_trn_usn_vx5_vampires_top", true};
   {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet", true};
-  {"Bottom", DIFFUSE, "a4e_trn_usn_vx5_bot", true};
+  {"Bottom", DIFFUSE, "a4e_trn_usn_vx5_vampires_bot", true};
   {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet", true};
-  {"Gear and metal", DIFFUSE, "a4e_trn_usn_vx5_bot", true};
-  {"Cockpit", DIFFUSE, "a4e_trn_usn_vx5_bot", true};
+  {"Gear and metal", DIFFUSE, "a4e_trn_usn_vx5_vampires_bot", true};
+  {"Cockpit", DIFFUSE, "a4e_trn_usn_vx5_vampires_bot", true};
   --{"Front",	0, "a4e_ext_front", true};
   --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
-  {"Pilot",	DIFFUSE, "a4e_pilot_usn", true};
+  {"Pilot",	DIFFUSE, "a4e_trn_usn_vx5_vampires_pilot", true};
 
   -- flaps, used on most liveries
   {"flaps_001", DIFFUSE, "a4e_bort_grey", true};
@@ -25,12 +25,12 @@ livery =
   {"nose_100", DIFFUSE, "empty", true};
 
   -- two digit top-of-tail, used on most USMC liveries
-  {"tail_aggressor_001", DIFFUSE, "a4e_bort_grey", true};
-  {"tail_aggressor_010", DIFFUSE, "a4e_bort_grey", true};
+  {"tail_aggressor_001", DIFFUSE, "empty", true};
+  {"tail_aggressor_010", DIFFUSE, "empty", true};
 
   -- three digit top-of-rudder, used on most USN liveries
-  {"rudder_001", DIFFUSE, "empty", true};
-  {"rudder_010", DIFFUSE, "empty", true};
+  {"rudder_001", DIFFUSE, "a4e_bort_grey", true};
+  {"rudder_010", DIFFUSE, "a4e_bort_grey", true};
   {"rudder_100", DIFFUSE, "empty", true};
 
   -- wing bort used on most USN liveries
@@ -46,4 +46,13 @@ livery =
   {"tail_001", DIFFUSE, "empty", true};
   {"tail_010", DIFFUSE, "empty", true};
   {"tail_100", DIFFUSE, "empty", true};
+
+  -- custom fuel tanks: 150 gallon
+  {"fuel_150_a4e", DIFFUSE, "a4e_ft_community_ft", true};
+
+  -- custom fuel tank: 300 gallon left/right
+  {"fuel_300lr_a4e", DIFFUSE, "a4e_ft_community_ft", true};
+
+  -- custom fuel tank: 300 gallon center
+  {"fuel_300c_a4e", DIFFUSE, "a4e_ft_community_ft", true};
 }
