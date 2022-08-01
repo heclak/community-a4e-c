@@ -1,4 +1,4 @@
-name = "Community A-4E IV: Sea Otter, 2021 (Fictional)"
+name = "Community A-4E V: Canyon Racer Blue, 2022 (Fictional)"
 countries = {
   "ABH",   --Abkhazia
   "DZA",   --Algeria
@@ -80,19 +80,19 @@ countries = {
 
 livery =
 {
-  {"Top", DIFFUSE, "a4e_community4_top", true};
-  {"Top", ROUGHNESS_METALLIC, "a4e_community4_top_RoughMet", true};
-  {"Bottom", DIFFUSE, "a4e_community_bot", true};
+  {"Top", DIFFUSE, "a4e_community51_top", true};
+  {"Top", ROUGHNESS_METALLIC, "a4e_ext_top_RoughMet_as", true};
+  {"Bottom", DIFFUSE, "a4e_community51_bot", true};
   {"Bottom", ROUGHNESS_METALLIC, "a4e_ext_bottom_RoughMet_as", true};
-  {"Gear and metal", DIFFUSE, "a4e_community_bot", true};
-  {"Cockpit", DIFFUSE, "a4e_community_bot", true};
+  {"Gear and metal", DIFFUSE, "a4e_community51_bot", true};
+  {"Cockpit", DIFFUSE, "a4e_community51_bot", true};
   --{"Front",	0, "a4e_ext_front", true};
   --{"cockpitWheelHardpoints", DIFFUSE, "a4e_ext_wheels_bays", true};
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
 
   -- flaps, used on most liveries
-  {"flaps_001", DIFFUSE, "a4e_bort_white_smooth", true};
-  {"flaps_010", DIFFUSE, "a4e_bort_white_smooth", true};
+  {"flaps_001", DIFFUSE, "a4e_bort_black_smooth", true};
+  {"flaps_010", DIFFUSE, "a4e_bort_black_smooth", true};
   {"flaps_100", DIFFUSE, "empty", true};
 
   -- three digit, smaller nose numbers, used on most liveries
@@ -101,8 +101,8 @@ livery =
   {"nose_100", DIFFUSE, "empty", true};
 
   -- two digit top-of-tail, used on most USMC liveries
-  {"tail_aggressor_001", DIFFUSE, "a4e_bort_white_smooth", true};
-  {"tail_aggressor_010", DIFFUSE, "a4e_bort_white_smooth", true};
+  {"tail_aggressor_001", DIFFUSE, "empty", true};
+  {"tail_aggressor_010", DIFFUSE, "empty", true};
 
   -- three digit top-of-rudder, used on most USN liveries
   {"rudder_001", DIFFUSE, "empty", true};
@@ -119,8 +119,8 @@ livery =
   {"nose_aggressor_010", DIFFUSE, "a4e_bort_white_smooth_small_10s", true};
 
   -- 3-digit large tail numbers, used on some USN/USMC aggressors
-  {"tail_001", DIFFUSE, "empty", true};
-  {"tail_010", DIFFUSE, "empty", true};
+  {"tail_001", DIFFUSE, "a4e_bort_white_smooth", true};
+  {"tail_010", DIFFUSE, "a4e_bort_white_smooth", true};
   {"tail_100", DIFFUSE, "empty", true};
 
   -- custom fuel tanks: 150 gallon
