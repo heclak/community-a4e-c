@@ -1,14 +1,10 @@
-![Community A-4E-C for DCS World, v2.0](https://cdn.discordapp.com/attachments/518815335013679104/884550978131619870/unknown.png)
+![Community A-4E-C for DCS World, v2.1.0](DISCORD IMAGE URL FOR UPDATE)
 
 ## About the A-4E-C Project
 
 The A-4 was a cold war workhorse which proved to be a capable, reliable light attack aircraft to dozens of nations around the world. From the jungles of southeast Asia, to the desert of Sinai, to the coasts of South America, the scooter was a common sight above battlefields around the world for decades.
 
-The A-4E-C represents more than five years of work on behalf of the development team. We're thrilled to share our most comprehensive DCS World module to date in this 2.0 *"Forever Free"* update, featuring a realistic flight model, improved systems simulations, increased functionality across all DCS World's available maps, full carrier compatibility, radios, air refueling, and improvements to the ground radar, sound feedback, textures, controls and inputs. This update also adds a user manual in PDF format as well as in the DCS kneeboard, packed with useful checklists and procedures that cover everything from start-up to weapons deployment.
-
-If you haven't flown the A-4E-C since version 1.4, this is a great time to see it again for the first time. If you're new to DCS World, we hope you will find the A-4E-C a good option to learn to fly, and instructive in helping you decide what other modules you might want to pursue next.
-
-We'd like to thank the dozens of people in the DCS World community who have made contributions in bug reports, liveries, expertise, research, videos, community flight instruction, server hosting and for their camaraderie over the years. We dedicate the module to the memory of Eric "Gospadin" Mudama. This labor of love would not have been possible without his initial coding and project coordination.
+2.1.0 UPDATE SUMMARY HERE.
 
 ***DO NOT redistribute this mod without permission!***
 
@@ -18,7 +14,7 @@ Gospadin, Heclak, Joshua Nelson, plusnine, Farlander, gyrovague, kryb/Archimaede
 
 ### Community Contributors
 
-SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohlinkzei, Coragem, nima3333, Sidekick65, SPINEG, Shadowfrost, Sport, Historiker, rudel-chw, Luciano, Malamem, HellesBelles, Bungo, Corsair016, FlyingHueman, JacobBadShot, JP Gabobo, Drofseh, Rob, ataribaby, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
+SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohlinkzei, Coragem, nima3333, Sidekick65, SPINEG, Shadowfrost, Sport, Historiker, rudel-chw, Luciano, Malamem, HellesBelles, Bungo, Corsair016, FlyingHueman, JacobBadShot, JP Gabobo, Drofseh, Rob, ataribaby, Tanuki44, The Original HoggitDev Team, [Eric Haugen](http://erichaugen.bandcamp.com)
 
 ## Features
 
@@ -47,6 +43,43 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - SUU-7 bomblet dispenser
 - Unique sounds inside and outside the aircraft
 - User manual (PDF and Kneeboard)
+
+### Version 2.1.0 Changelog: Featured Items
+
+#### Added
+- **Flight Model:**
+- **Systems:**
+  - Specific System Name
+- **Missions:**
+- **Liveries:**
+- **Weapons and Loadouts:**
+  - Inputs, controls indicator, kneeboard, etc.
+- **Quality of Life:**
+- **Sounds:**
+
+#### Fixed
+- **Flight Model:**
+- **Systems:**
+  - Specific System Name
+- **Missions:**
+- **Liveries:**
+- **Weapons and Loadouts:**
+  - Inputs, controls indicator, kneeboard, etc.
+- **Quality of Life:**
+- **Sounds:**
+
+#### Changed
+- **Flight Model:**
+- **Systems:**
+  - Specific System Name
+- **Missions:**
+- **Liveries:**
+- **Weapons and Loadouts:**
+  - Inputs, controls indicator, kneeboard, etc.
+- **Quality of Life:**
+- **Sounds:**
+
+[See full changelog](https://github.com/heclak/community-a4e-c/blob/master/CHANGELOG.md)
 
 ### Version 2.0.1 Changelog: Featured Items
 
@@ -174,7 +207,7 @@ Your correctly installed files should look something like the following image, s
 
 - Once you have completed the edit, save the `mission` file, and re-create a new `.zip` (carefully maintaining proper folder structure, *of course*). Rename your modified mission `.zip` back to a DCS `.miz` file extension instead.
 
-- Finally, test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS will display any A4-E-C units as an untextured Su-27. Players without the module cannot take control of unit, just as if they did not own any other DCS module in a multiplayer mission. 
+- Finally, test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS will display any A4-E-C units as an untextured Su-27. Players without the module cannot take control of unit, just as if they did not own any other DCS module in a multiplayer mission.
 
 - RobCallSign created [MizEdit](https://github.com/robscallsign/mizedit), a helpful utility that automates this process.
 
