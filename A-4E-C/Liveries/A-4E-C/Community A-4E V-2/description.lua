@@ -1,4 +1,4 @@
-name = "Community A-4E V: Canyon Racer Red, 2022 (Fictional)"
+name = "Community A-4E V: Red Team, 2022 (Fictional)"
 countries = {
   "ABH",   --Abkhazia
   "DZA",   --Algeria
@@ -91,8 +91,8 @@ livery =
   --{"Gear Bay", DIFFUSE, "a4e_ext_wheels_bays", true};
 
   -- flaps, used on most liveries
-  {"flaps_001", DIFFUSE, "a4e_bort_white_smooth", true};
-  {"flaps_010", DIFFUSE, "a4e_bort_white_smooth", true};
+  {"flaps_001", DIFFUSE, "a4e_bort_gold_smooth", true};
+  {"flaps_010", DIFFUSE, "a4e_bort_gold_smooth", true};
   {"flaps_100", DIFFUSE, "empty", true};
 
   -- three digit, smaller nose numbers, used on most liveries
@@ -115,12 +115,12 @@ livery =
   {"wing_100", DIFFUSE, "empty", true};
 
   -- 2-digit large nose numbers, used on USN/USMC aggressors
-  {"nose_aggressor_001", DIFFUSE, "a4e_bort_white_smooth_small_1s", true};
-  {"nose_aggressor_010", DIFFUSE, "a4e_bort_white_smooth_small_10s", true};
+  {"nose_aggressor_001", DIFFUSE, "a4e_bort_gold_smooth_small_1s", true};
+  {"nose_aggressor_010", DIFFUSE, "a4e_bort_gold_smooth_small_10s", true};
 
   -- 3-digit large tail numbers, used on some USN/USMC aggressors
-  {"tail_001", DIFFUSE, "a4e_bort_white_smooth", true};
-  {"tail_010", DIFFUSE, "a4e_bort_white_smooth", true};
+  {"tail_001", DIFFUSE, "a4e_bort_gold_smooth", true};
+  {"tail_010", DIFFUSE, "a4e_bort_gold_smooth", true};
   {"tail_100", DIFFUSE, "empty", true};
 
   -- custom fuel tanks: 150 gallon

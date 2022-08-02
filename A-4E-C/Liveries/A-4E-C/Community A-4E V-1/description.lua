@@ -1,4 +1,4 @@
-name = "Community A-4E V: Canyon Racer Blue, 2022 (Fictional)"
+name = "Community A-4E V: Blue Team, 2022 (Fictional)"
 countries = {
   "ABH",   --Abkhazia
   "DZA",   --Algeria
