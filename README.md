@@ -48,30 +48,32 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 
 #### Added
 - **Flight Model:**
-  - You can now hear your rear tires skid when you brake at speed.
 - **Systems:**
-  - AN/APR-25 Radar Homing Warning Reciever
 - **Missions:**
 - **Liveries:**
   - Community A-4E V: Blue Team, 2022 (Fictional)
   - Community A-4E V: Red Team, 2022 (Fictional)
   - USN VX-5 Vampires, 1986 (Fictional)
   - USMC Naval Weapons Evaluation Facility, 1974
-  - Operational-era USN and USMC liveries now have a customized, well-used LAU-10 launcher.
+  - Operational-era USN and USMC liveries now have a customized, well-worn LAU-10 launcher.
 - **Weapons and Loadouts:**
 - **Quality of Life:**
   - Added input options from across the module for mouse buttons.
-  - Single inputs for the Canopy Lever and AN/ARN-52 TACAN Mode.
-  - When the aircraft has power, you can use the Seat Adjustment Switch to move the baseline pilot head position up and down in the cockpit.
+  - Single inputs for the Canopy Lever. *(thanks Tanuki44)*
+  - Single and else inputs for AN/ARN-52 TACAN Mode switch.
+  - When the aircraft has power, the Seat Adjustment Switch to move the baseline pilot head position up and down in the cockpit. *(thanks nima3333)*
 - **Sounds:**
-  - Electric seat switch.
-  - Tires skidding.
-  - Many new sounds added for the AN/APR-25 implementation.
+  - Seat adjustment hydraulic motor.
+  - Tire skid sound set.
+  - AN/APR-25:
+    - Aircraft: New sounds are produced in response to aircraft search and tracking radars.
+    - EWRs and Ships: Unique sound sets are produced in response to ground and ship EWRs. A new sound is also produced in response to ship tracking radars.
+    - SAMs: New sounds are produced in response to P19 "Flat Face" and S-200 ST-68U "Tin Shield" and SA-2 S-75 "Fan Song" units. A percentage of Fan Song units will sound different, simulating the different radar bands used in the field. New sounds are also produced in response to SA-3 S-125 "Low Blow", SA-5 S-200 "Square Pair", and SA-6 Kub "Straight Flush" units. When the APR-25 Audio switch is in the ON position, a new alert sound is produced in response to missile launches from these units. Search and tracking radars for SA-8, SA-9, SA-10, SA-11, SA-13, SA-15 and SA-19 units are not detected by the system.
+    - SPAAA Vehicles: New sounds are produced in response to the Gepard, Vulcan M163, and ZSU-23-4 Shilka "Gun Dish" units.
 
 #### Fixed
 - **Flight Model:**
 - **Systems:**
-  - Specific System Name
 - **Missions:**
 - **Liveries:**
   - Community A-4E III: Forever Free liver displays two digits on the flaps.
@@ -79,20 +81,19 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - CBU-2B/A weight is now calculated. Weapon release and spread has also been altered to cause fewer self-destructs when the weapon is released.
 - **Quality of Life:**
   - Kneeboard:
-    - 300 gallon tanks on the center pylon now enumerate properly on the kneeboard loadout page.
+    - 300 gallon tanks on the center pylon enumerate properly on the kneeboard loadout page.
     - Fixed several typos and erroneous procedures for air refueling and ground radar.
-    - Waypoints on the navigation page now enumerate to 11 and don't overrun the instructions on the page.
+    - Waypoints on the navigation page enumerate to 11, and can't overrun the instructions on the page.
   - VR hand positions: Users are encouraged to enable *Use Hand Controllers*, *Hand controllers use Cockpit Stick*, and *Hand Controllers use Cockpit Throttle*, and *Hand Interaction Only When Palm Grip is Obtained*. Be aware that it is easy to accidently power down the engine if you touch it with your virtual index finger while holding the grip button. Always approach the throttle with your finger above it.
 - **Sounds:**
 
 #### Changed
 - **Flight Model:**
 - **Systems:**
-  - Specific System Name
 - **Missions:**
   - Changed a few liveries in the mission set to better reflect available livery sets.
 - **Liveries:**
-  - Unmarked and Community A-4E liveries are now available to many additional countries.
+  - Unmarked and Community A-4E liveries are now available to a wider selection of countries.
   - Updated USN VC-1 Challengers.
 - **Weapons and Loadouts:**
 - **Quality of Life:**
