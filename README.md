@@ -48,14 +48,25 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 
 #### Added
 - **Flight Model:**
+  - You can now hear your rear tires skid when you brake at speed.
 - **Systems:**
-  - Specific System Name
+  - AN/APR-25 Radar Homing Warning Reciever
 - **Missions:**
 - **Liveries:**
+  - Community A-4E V: Blue Team, 2022 (Fictional)
+  - Community A-4E V: Red Team, 2022 (Fictional)
+  - USN VX-5 Vampires, 1986 (Fictional)
+  - USMC Naval Weapons Evaluation Facility, 1974
+  - Operational-era USN and USMC liveries now have a customized, well-used LAU-10 launcher.
 - **Weapons and Loadouts:**
-  - Inputs, controls indicator, kneeboard, etc.
 - **Quality of Life:**
+  - Added input options from across the module for mouse buttons.
+  - Single inputs for the Canopy Lever and AN/ARN-52 TACAN Mode.
+  - When the aircraft has power, you can use the Seat Adjustment Switch to move the baseline pilot head position up and down in the cockpit.
 - **Sounds:**
+  - Electric seat switch.
+  - Tires skidding.
+  - Many new sounds added for the AN/APR-25 implementation.
 
 #### Fixed
 - **Flight Model:**
@@ -63,9 +74,15 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Specific System Name
 - **Missions:**
 - **Liveries:**
+  - Community A-4E III: Forever Free liver displays two digits on the flaps.
 - **Weapons and Loadouts:**
-  - Inputs, controls indicator, kneeboard, etc.
+  - CBU-2B/A weight is now calculated. Weapon release and spread has also been altered to cause fewer self-destructs when the weapon is released.
 - **Quality of Life:**
+  - Kneeboard:
+    - 300 gallon tanks on the center pylon now enumerate properly on the kneeboard loadout page.
+    - Fixed several typos and erroneous procedures for air refueling and ground radar.
+    - Waypoints on the navigation page now enumerate to 11 and don't overrun the instructions on the page.
+  - VR hand positions: Users are encouraged to enable *Use Hand Controllers*, *Hand controllers use Cockpit Stick*, and *Hand Controllers use Cockpit Throttle*, and *Hand Interaction Only When Palm Grip is Obtained*. Be aware that it is easy to accidently power down the engine if you touch it with your virtual index finger while holding the grip button. Always approach the throttle with your finger above it.
 - **Sounds:**
 
 #### Changed
@@ -73,10 +90,16 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 - **Systems:**
   - Specific System Name
 - **Missions:**
+  - Changed a few liveries in the mission set to better reflect available livery sets.
 - **Liveries:**
+  - Unmarked and Community A-4E liveries are now available to many additional countries.
+  - Updated USN VC-1 Challengers.
 - **Weapons and Loadouts:**
-  - Inputs, controls indicator, kneeboard, etc.
 - **Quality of Life:**
+  - Emergency Stores Release Handle default input changed to LCTRL+J *(think J for jettison!)*
+  - Differential wheelbrake inputs default inputs are changed to LCTRL+W (left) and LALT+W (right).
+  - The controls indicator's nosewheel caster indicator now displays logarithmically, making it easier to see those early castering changes and reflect nosewheel sensetivity to turn rate more naturalistically. *(thanks, Drofseh)*
+  - Trim speed settings in the special menu are now adjustable by individually for pitch, roll and yaw, with percentage sliders for each instead of presets from a drop-down. *(thanks Drofseh)* 
 - **Sounds:**
 
 [See full changelog](https://github.com/heclak/community-a4e-c/blob/master/CHANGELOG.md)
