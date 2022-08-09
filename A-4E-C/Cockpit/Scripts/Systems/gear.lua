@@ -103,20 +103,12 @@ local skid_L_param = get_param_handle("SKID_L_DETECTOR")
 local skid_R_param = get_param_handle("SKID_R_DETECTOR")
 local skid_N_param = get_param_handle("SKID_N_DETECTOR")
 
-function get_base_sensor_data()
-
-	Sensor_Data_Raw = get_base_data()
-	Self_m_x , Self_alt, Self_m_z = Sensor_Data_Raw.getSelfCoordinates()
-
-end
-
-
 function on_carrier_skid()
     -- Skidding can occurs on the carrier because we use the horizontal speed to detect movement
     -- This function, taken from carrier.lua, is the same except we dont check the nose wow as it triggers the skidding sound when the plane is "dropped" on the carrier and the left/right wheels touch first.
-    get_base_sensor_data()
-	if Self_alt > 16 and Self_alt < 23 and 
-		Terrain.GetSurfaceType(Self_m_x, Self_m_z) == "sea" then	
+    local px,py,pz = sensor_data.getSelfCoordinates()
+	if py > 16 and py < 23 and 
+		Terrain.GetSurfaceType(px, pz) == "sea" then	
 		return true
 	else
 		return false
