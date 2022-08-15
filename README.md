@@ -134,6 +134,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 - **Weapons and Loadouts:**
   - CBU-1/A, CBU-2/A and CBU-2B/A Cluster Dispensers now dispense an accurate number of bomblets with a minim amount of performance impact.
 - **Missions:**
+  - Fixed training mission entry for TACAN and MCSL (ILCS).
   - A-4E-C now properly represented by an `A` aircraft icon representative of the aircraft's role.
   - Unlimited fuel support in the mission editor works.
 - **Quality of Life:**
@@ -212,6 +213,16 @@ Your correctly installed files should look something like the following image, s
 
 ![Image of the Mission Editor pointing out the location of the Historical Filter](https://cdn.discordapp.com/attachments/518814186739073024/759230033960763422/unknown.png)
 
+### In-Cockpit Troubleshooting
+
+- When setting up your controls, press `LCTRL+Enter` to enable the controls indicator. Control binding information and tips for setting up your devices are provided in the kneeboard.
+
+- Always keep the canopy open when communicating with the ground crew.
+
+- If you find can't move the throttle, you need to adjust the throttle step position. In order to do this, the throttle axis must be at ZERO. Even if you are a keyboard user, the keyboard controls are adjusting a virtual throttle axis that must be returned to zero before the throttle step position can be adjusted.
+
+- Ground steering is accomplished by differential braking. There is no nosewheel steering. The nosewheel caster position is visible on the controls indicator. If you don't have rudder peddals or are struggling with your keybinds, try the Simple Braking (Rudder Assisted) option in the DCS Special Menu for the A-4E-C.
+
 ### Multiplayer Troubleshooting
 
 - A DCS standalone server hosting missions with the A-4E-C must have the A-4E-C module installed.
@@ -229,7 +240,7 @@ Your correctly installed files should look something like the following image, s
 }
 ```
 
-- Once you have completed the edit, save the `mission` file, and re-create a new `.zip` (carefully maintaining proper folder structure, *of course*). Rename your modified mission `.zip` back to a DCS `.miz` file extension instead.
+Once you have completed the edit, save the `mission` file, and re-create a new `.zip` (carefully maintaining proper folder structure, *of course*). Rename your modified mission `.zip` back to a DCS `.miz` file extension instead.
 
 - Finally, test your altered mission by yourself or with a friend to ensure it loads properly, and that clients are able to load into the mission or server without the A4-E-C installed. In this instance, DCS will display any A4-E-C units as an untextured Su-27. Players without the module cannot take control of unit, just as if they did not own any other DCS module in a multiplayer mission.
 
@@ -253,13 +264,13 @@ Your correctly installed files should look something like the following image, s
 
 **Yes**! First, join the [Community A-4E-C Discord server](https://discord.gg/tQZbkTQ) and introduce yourself! We can always use a hand from game artists, programmers or reliable testers as we continue to move the project forward. If you think you have something to contribute, don't hesitate to reach out in the chat.
 
-### Q: Is there a manual or tutorials?
+### Q: Are there manuals or tutorials?
 
 **Yes**! Locating the NATOPS manual for an A-4E/F is the gold standard for understanding this aircraft, but there is a lot of helpful guidance included in the user manual. To access the manual:
 - Once inside the cockpit, open the kneeboard by pressing `RSHIFT+K`
 - Read the PDF manual in `%HOMEPATH%\\Saved Games\DCS\Mods\aircraft\A-4E-C\Docs` or [read it online](https://drive.google.com/drive/folders/1_DPA00CWoRfIsqgh7HYabvpFrOdtBxPi)
 
-Past that, [Sidekick65's YouTube Channel](https://www.youtube.com/channel/UC4kJt_8Jw9ByL10ar6b8rQg) features high-quality video tutorials on many systems.
+The [Community A-4E-C Discord server](https://discord.gg/tQZbkTQ) contains a video hall of fame for high-quality, up-to-date tutorials for all major systems by some of the Community's finest members.
 
 ### Q: Is there a paint kit I can use to create my own A-4E-C liveries?
 
