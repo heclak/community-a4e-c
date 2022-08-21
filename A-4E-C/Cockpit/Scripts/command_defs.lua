@@ -417,6 +417,10 @@ Keys =
 	
 	canopy_open                    = __custom_counter(),
 	canopy_close                   = __custom_counter(),
+
+    throttle_position_off          = __custom_counter(),
+    throttle_position_ign          = __custom_counter(),
+    throttle_position_run          = __custom_counter(),
 }
 
 start_command   = 3000

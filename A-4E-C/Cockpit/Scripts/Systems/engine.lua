@@ -83,6 +83,10 @@ Engine:listen_command(Keys.FuelControl)
 Engine:listen_command(Keys.drop_tank_press_cycle)
 Engine:listen_command(Keys.fuel_dump_cycle)
 
+Engine:listen_command(Keys.throttle_position_off)
+Engine:listen_command(Keys.throttle_position_ign)
+Engine:listen_command(Keys.throttle_position_run)
+
 function post_initialize()
 
     dev:performClickableAction(device_commands.push_starter_switch,0,false)
@@ -127,8 +131,6 @@ pilot controlled ground start sequence:
 5. When RPM at 15%, move throttle to idle (otherwise if by say 22% without idle position, dispatch iCommandEnginesStop [or to be fancy, try to control RPM to to pre-ignition level by dispatching repeated start/stop])
 6. When RPM gets to 55%, request ground power OFF
 --]]
-
-
 
 local start_button_popup_timer = 0
 function SetCommand(command,value)
@@ -197,7 +199,6 @@ function SetCommand(command,value)
            throttle_state = THROTTLE_ADJUST
 			efm_data_bus.fm_setIgnition(1.0)
         end
-		 
     elseif command == device_commands.throttle_click_ITER then
         -- validate that throttle is not in adjust range else cancel action
         if sensor_data.getThrottleLeftPosition() > 0.3 then
@@ -205,24 +206,27 @@ function SetCommand(command,value)
         end
         -- value should be +1 or -1
         if value == -1 or value == 1 then
-
             -- get current throttle state to iterate over
             local current_throttle_click_position = 0
             if throttle_state == THROTTLE_OFF then current_throttle_click_position = -1
-            elseif throttle_state == THROTTLE_IGN then current_throttle_click_position = 0
-            elseif throttle_state == THROTTLE_ADJUST then current_throttle_click_position = 1 end
-
+                elseif throttle_state == THROTTLE_IGN then current_throttle_click_position = 0
+                elseif throttle_state == THROTTLE_ADJUST then current_throttle_click_position = 1 
+                end
             -- iterate value of click position
             local new_throttle_click_value = current_throttle_click_position + value
             -- print_message_to_user("new.."..new_throttle_click_value)
-
             -- validate throttle click value is within range
             if new_throttle_click_value > 1 then new_throttle_click_value = 1
-            elseif new_throttle_click_value < -1 then new_throttle_click_value = -1
+                elseif new_throttle_click_value < -1 then new_throttle_click_value = -1
             end
-            
             dev:performClickableAction(device_commands.throttle_click, new_throttle_click_value, false)
         end
+    elseif command == Keys.throttle_position_off then
+        dev:performClickableAction(device_commands.throttle_click, -1, false)
+    elseif command == Keys.throttle_position_ign then
+        dev:performClickableAction(device_commands.throttle_click, 0, false)
+    elseif command == Keys.throttle_position_run then
+        dev:performClickableAction(device_commands.throttle_click, 1, false)
     elseif command==device_commands.ENGINE_manual_fuel_shutoff then
         local manual_fuel_shutoff_catch_clickable_ref = get_clickable_element_reference("PNT_131")
         -- if fuel is cut off, shutdown engines and prevent engines from restarting until lever is reset.
