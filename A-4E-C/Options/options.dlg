@@ -55,7 +55,7 @@ dialog = {
 						["bounds"] = {
 							["h"] = 24,
 							["w"] = 260,
-							["x"] = -25,
+							["x"] = LeftColumnX,
 							["y"] = lineheight*1,
 						},
 						["enabled"] = true,
@@ -71,7 +71,34 @@ dialog = {
 					},
 					["type"] = "Static"
 				},
+
+				--------------------------------------------
+				-- Project Page URL
+				--------------------------------------------
+
+				["projectPageLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 300,
+							["x"] = LeftColumnX,
+							["y"] = lineheight*2,
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_PROJECTPAGE",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsTitleSkin"
+						}
+					},
+					["type"] = "Static"
+				},
 				
+
 				--------------------------------------------
 				-- Pitch Trim Speed Option
 				--------------------------------------------
@@ -82,7 +109,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 260,
 							["x"] = LeftColumnX,
-							["y"] = lineheight*2,
+							["y"] = lineheight*4,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_TRIMSPEED_PITCH_LABEL",
@@ -103,7 +130,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 300,
 							["x"] = LeftColumnX + 150,
-							["y"] = lineheight*2,
+							["y"] = lineheight*4,
 						},
 						["enabled"] = true,
 						["step"] = 1,
@@ -126,7 +153,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX + 450,
-							["y"] = lineheight*2,
+							["y"] = lineheight*4,
 						},
 						["enabled"] = true,
 						["text"] = "0",
@@ -152,7 +179,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 260,
 							["x"] = LeftColumnX,
-							["y"] = lineheight*3,
+							["y"] = lineheight*5,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_TRIMSPEED_ROLL_LABEL",
@@ -173,7 +200,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 300,
 							["x"] = LeftColumnX + 150,
-							["y"] = lineheight*3,
+							["y"] = lineheight*5,
 						},
 						["enabled"] = true,
 						["step"] = 1,
@@ -196,7 +223,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX + 450,
-							["y"] = lineheight*3,
+							["y"] = lineheight*5,
 						},
 						["enabled"] = true,
 						["text"] = "0",
@@ -222,7 +249,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 260,
 							["x"] = LeftColumnX,
-							["y"] = lineheight*4
+							["y"] = lineheight*6
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_TRIMSPEED_RUDDER_LABEL",
@@ -243,7 +270,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 300,
 							["x"] = LeftColumnX + 150,
-							["y"] = lineheight*4,
+							["y"] = lineheight*6,
 						},
 						["enabled"] = true,
 						["step"] = 1,
@@ -266,7 +293,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX + 450,
-							["y"] = lineheight*4,
+							["y"] = lineheight*6,
 						},
 						["enabled"] = true,
 						["text"] = "0",
@@ -287,7 +314,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 500,
 							["x"] = LeftColumnX,
-							["y"] = lineheight*5,
+							["y"] = lineheight*7,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_TRIM_SPEED_SLIDER_HELP",
@@ -308,7 +335,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 100,
 							["x"] = LeftColumnX,
-							["y"] = lineheight*7,
+							["y"] = lineheight*9,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_THROTTLE_RATE_LABEL",
@@ -329,7 +356,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 300,
 							["x"] = LeftColumnX + 150,
-							["y"] = lineheight*7,
+							["y"] = lineheight*9,
 						},
 						["enabled"] = true,
 						["step"] = 0.1,
@@ -352,7 +379,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX + 450,
-							["y"] = lineheight*7,
+							["y"] = lineheight*9,
 						},
 						["enabled"] = true,
 						["text"] = "0",
@@ -373,7 +400,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 500,
 							["x"] = LeftColumnX,
-							["y"] = lineheight*8,
+							["y"] = lineheight*10,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_THROTTLE_RATE_HELP",
@@ -394,7 +421,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 100,
 							["x"] = LeftColumnX,
-							["y"] = lineheight*10,
+							["y"] = lineheight*12,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_COCKPIT_SHAKE_SLIDER_LABEL",
@@ -415,7 +442,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 300,
 							["x"] = LeftColumnX + 150,
-							["y"] = lineheight*10,
+							["y"] = lineheight*12,
 						},
 						["enabled"] = true,
 						["step"] = 1,
@@ -438,7 +465,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX + 450,
-							["y"] = lineheight*10,
+							["y"] = lineheight*12,
 						},
 						["enabled"] = true,
 						["text"] = "0",
@@ -459,7 +486,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 500,
 							["x"] = LeftColumnX,
-							["y"] = lineheight*11,
+							["y"] = lineheight*13,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_COCKPIT_SHAKE_SLIDER_HELP",
@@ -480,7 +507,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 225,
 							["x"] = LeftColumnX,
-							["y"] = lineheight*13,
+							["y"] = lineheight*15,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_COCKPIT_CSS_LABEL",
@@ -501,7 +528,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 300,
 							["x"] = LeftColumnX + 150,
-							["y"] = lineheight*13,
+							["y"] = lineheight*15,
 						},
 						["enabled"] = true,
 						["step"] = 1,
@@ -524,7 +551,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX + 450,
-							["y"] = lineheight*13,
+							["y"] = lineheight*15,
 						},
 						["enabled"] = true,
 						["text"] = "0",
@@ -545,7 +572,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 500,
 							["x"] = LeftColumnX,
-							["y"] = lineheight*14,
+							["y"] = lineheight*16,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_COCKPIT_CSS_HELP",
@@ -567,7 +594,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 225,
 							["x"] = LeftColumnX + 25,
-							["y"] = lineheight*16,
+							["y"] = lineheight*18,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_WHEEL_BRAKE_ASSIST_CHECK_LABEL",
@@ -588,7 +615,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX,
-							["y"] = lineheight*16,
+							["y"] = lineheight*18 + 5,
 						},
 						["enabled"] = true,
 						["state"] = true,
@@ -607,7 +634,7 @@ dialog = {
 							["h"] = 40,
 							["w"] = 800,
 							["x"] = LeftColumnX,
-							["y"] = lineheight*17,
+							["y"] = lineheight*19,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_WHEEL_BRAKE_ASSIST_CHECK_HELP",
@@ -618,13 +645,18 @@ dialog = {
 					["skin"] = HelpSkin,
 					["type"] = "Static",
 				},
+
+				--------------------------------------------
+				-- AN/APG-53A Radar Legacy Mode
+				--------------------------------------------
+
 				["oldRadarLabel"] = {
 					["params"] = {
 						["bounds"] = {
 							["h"] = 24,
 							["w"] = 225,
 							["x"] = LeftColumnX + 25,
-							["y"] = lineheight*19,
+							["y"] = lineheight*21,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_OLD_RADAR_CHECK_LABEL",
@@ -645,7 +677,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX,
-							["y"] = lineheight*19,
+							["y"] = lineheight*21 + 5,
 						},
 						["enabled"] = true,
 						["state"] = true,
@@ -664,7 +696,7 @@ dialog = {
 							["h"] = 40,
 							["w"] = 800,
 							["x"] = LeftColumnX,
-							["y"] = lineheight*20,
+							["y"] = lineheight*22,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_OLD_RADAR_CHECK_HELP",
