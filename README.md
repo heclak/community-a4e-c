@@ -62,6 +62,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Single and else inputs for AN/ARN-52 TACAN Mode switch.
   - Single and else inputs for Throttle Position Lock.
   - Single inputs for the Canopy Lever. *(thanks Tanuki44)*
+  - Single inputs for the AWRS Quantity Selector Switch, AWRS Drop Interval Knob, and AWRS Mode Selector Switch.
   - When the aircraft has power, the Seat Adjustment Switch to move the baseline pilot head position up and down in the cockpit. *(thanks nima3333)*
 - **Sounds:**
   - Seat adjustment hydraulic motor.
