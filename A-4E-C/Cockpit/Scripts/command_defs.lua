@@ -421,6 +421,10 @@ Keys =
     throttle_position_off          = __custom_counter(),
     throttle_position_ign          = __custom_counter(),
     throttle_position_run          = __custom_counter(),
+
+    throttle_inc                   = __custom_counter(),
+    throttle_dec                   = __custom_counter(),
+
 }
 
 start_command   = 3000

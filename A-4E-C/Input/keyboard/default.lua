@@ -69,13 +69,13 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- Throttle Panel ------------------------
     ---------------------------------------------
-    {combos = {{key = 'PageUp'}}, down = iCommandPlaneAUTIncreaseRegime,                                name = _('Throttle Position - Increment'),                  category = {_('Throttle Panel'), _('Flight Control')}},
-    {combos = {{key = 'PageDown'}}, down = iCommandPlaneAUTDecreaseRegime,                              name = _('Throttle Position - Decrement'),                  category = {_('Throttle Panel'), _('Flight Control')}},
+    {combos = {{key = 'PageUp'}}, down = Keys.throttle_inc,                                             name = _('Throttle Position - Increment'),                  category = {_('Throttle Panel'), _('Flight Control')}},
+    {combos = {{key = 'PageDown'}}, down = Keys.throttle_dec,                                           name = _('Throttle Position - Decrement'),                  category = {_('Throttle Panel'), _('Flight Control')}},
     {combos = {{key = 'Num+'}}, pressed = iCommandThrottleIncrease, up = iCommandThrottleStop,          name = _('Throttle Position Continuous - Increase'),        category = {_('Throttle Panel'), _('Flight Control')}},
     {combos = {{key = 'Num-'}}, pressed = iCommandThrottleDecrease, up = iCommandThrottleStop,          name = _('Throttle Position Continuous - Decrease'),        category = {_('Throttle Panel'), _('Flight Control')}},
 
-    {down = device_commands.throttle_click_ITER, value_down = 1, cockpit_device_id = devices.ENGINE,    name = _('Throttle Position Lock - Step Up (OFF/IGN/IDLE)'),                category = {_('Throttle Panel'), _('Engine Control Panel')}},
-    {down = device_commands.throttle_click_ITER, value_down = -1, cockpit_device_id = devices.ENGINE,   name = _('Throttle Position Lock - Step Down (OFF/IGN/IDLE)'),              category = {_('Throttle Panel'), _('Engine Control Panel')}},
+    {combos = {{key = 'Home', reformers = {'RCtrl'}}},down = device_commands.throttle_click_ITER, value_down = 1, cockpit_device_id = devices.ENGINE, name = _('Throttle Position Lock - Step Up (OFF/IGN/IDLE)'),                category = {_('Throttle Panel'), _('Engine Control Panel')}},
+    {combos = {{key = 'End', reformers = {'RCtrl'}}},down = device_commands.throttle_click_ITER, value_down = -1, cockpit_device_id = devices.ENGINE, name = _('Throttle Position Lock - Step Down (OFF/IGN/IDLE)'),              category = {_('Throttle Panel'), _('Engine Control Panel')}},
     {down = Keys.throttle_position_off,                                                                 name = _('Throttle Position Lock - OFF'),                                   category = {_('Throttle Panel'), _('Engine Control Panel')}},
     {down = Keys.throttle_position_off, up = Keys.throttle_position_ign,                                name = _('Throttle Position Lock - OFF else IGN'),                          category = {_('Throttle Panel'), _('Engine Control Panel')}},
     {down = Keys.throttle_position_ign,                                                                 name = _('Throttle Position Lock - IGN'),                                   category = {_('Throttle Panel'), _('Engine Control Panel')}},

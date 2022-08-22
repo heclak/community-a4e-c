@@ -3,8 +3,10 @@
 local MarginLeft = 56
 local LeftColumnX = MarginLeft
 local LeftColumnWidth = 500
-local LeftColumnLabelWidth = 200
+local LeftColumnLabelWidth = 225
 local LeftColumnComboListX = LeftColumnX + LeftColumnLabelWidth
+
+local lineheight = 25
 
 -- Styles
 
@@ -54,7 +56,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 260,
 							["x"] = -25,
-							["y"] = 25
+							["y"] = lineheight*1,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_AIRCRAFTNAME",
@@ -80,10 +82,10 @@ dialog = {
 							["h"] = 24,
 							["w"] = 260,
 							["x"] = LeftColumnX,
-							["y"] = 50
+							["y"] = lineheight*2,
 						},
 						["enabled"] = true,
-						["text"] = "$A4E_TRIMSPEED_PITCH",
+						["text"] = "$A4E_TRIMSPEED_PITCH_LABEL",
 						["tooltip"] = "",
 						["visible"] = true,
 						["zindex"] = 0
@@ -101,7 +103,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 300,
 							["x"] = LeftColumnX + 150,
-							["y"] = 50,
+							["y"] = lineheight*2,
 						},
 						["enabled"] = true,
 						["step"] = 1,
@@ -124,7 +126,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX + 450,
-							["y"] = 50,
+							["y"] = lineheight*2,
 						},
 						["enabled"] = true,
 						["text"] = "0",
@@ -150,10 +152,10 @@ dialog = {
 							["h"] = 24,
 							["w"] = 260,
 							["x"] = LeftColumnX,
-							["y"] = 90
+							["y"] = lineheight*3,
 						},
 						["enabled"] = true,
-						["text"] = "$A4E_TRIMSPEED_ROLL",
+						["text"] = "$A4E_TRIMSPEED_ROLL_LABEL",
 						["tooltip"] = "",
 						["visible"] = true,
 						["zindex"] = 0
@@ -171,7 +173,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 300,
 							["x"] = LeftColumnX + 150,
-							["y"] = 90,
+							["y"] = lineheight*3,
 						},
 						["enabled"] = true,
 						["step"] = 1,
@@ -194,7 +196,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX + 450,
-							["y"] = 90,
+							["y"] = lineheight*3,
 						},
 						["enabled"] = true,
 						["text"] = "0",
@@ -220,10 +222,10 @@ dialog = {
 							["h"] = 24,
 							["w"] = 260,
 							["x"] = LeftColumnX,
-							["y"] = 130
+							["y"] = lineheight*4
 						},
 						["enabled"] = true,
-						["text"] = "$A4E_TRIMSPEED_RUDDER",
+						["text"] = "$A4E_TRIMSPEED_RUDDER_LABEL",
 						["tooltip"] = "",
 						["visible"] = true,
 						["zindex"] = 0
@@ -241,7 +243,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 300,
 							["x"] = LeftColumnX + 150,
-							["y"] = 130,
+							["y"] = lineheight*4,
 						},
 						["enabled"] = true,
 						["step"] = 1,
@@ -264,7 +266,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX + 450,
-							["y"] = 130,
+							["y"] = lineheight*4,
 						},
 						["enabled"] = true,
 						["text"] = "0",
@@ -285,7 +287,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 500,
 							["x"] = LeftColumnX,
-							["y"] = 130 + 25,
+							["y"] = lineheight*5,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_TRIM_SPEED_SLIDER_HELP",
@@ -298,7 +300,93 @@ dialog = {
 				},
 
 				--------------------------------------------
-				-- Cockpit Shake Slider
+				-- Throttle Rate
+				--------------------------------------------
+				["throttleRateLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 100,
+							["x"] = LeftColumnX,
+							["y"] = lineheight*7,
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_THROTTLE_RATE_LABEL",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsCaptionSkin",
+						},
+					},
+					["type"] = "Static",
+				},
+				["throttleRateSlider"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 300,
+							["x"] = LeftColumnX + 150,
+							["y"] = lineheight*7,
+						},
+						["enabled"] = true,
+						["step"] = 0.1,
+						["range"] = {
+							["max"] = 5,
+							["min"] = 1,
+						},
+						["tabOrder"] = 0,
+						["text"] = "",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = SliderSkin,
+					["type"] = "HorzSlider",
+				},
+				["throttleRateWidget"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 50,
+							["x"] = LeftColumnX + 450,
+							["y"] = lineheight*7,
+						},
+						["enabled"] = true,
+						["text"] = "0",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsSliderValueSkin",
+						},
+					},
+					["type"] = "Static",
+				},
+				["throttleRateHelpLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 500,
+							["x"] = LeftColumnX,
+							["y"] = lineheight*8,
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_THROTTLE_RATE_HELP",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = HelpSkin,
+					["type"] = "Static",
+				},
+
+				--------------------------------------------
+				-- Cockpit Shake
 				--------------------------------------------
 				["cockpitShakeLabel"] = {
 					["params"] = {
@@ -306,10 +394,10 @@ dialog = {
 							["h"] = 24,
 							["w"] = 100,
 							["x"] = LeftColumnX,
-							["y"] = 200,
+							["y"] = lineheight*10,
 						},
 						["enabled"] = true,
-						["text"] = "$A4E_COCKPIT_SHAKE_SLIDER_TEXT",
+						["text"] = "$A4E_COCKPIT_SHAKE_SLIDER_LABEL",
 						["tooltip"] = "",
 						["visible"] = true,
 						["zindex"] = 0,
@@ -327,12 +415,12 @@ dialog = {
 							["h"] = 24,
 							["w"] = 300,
 							["x"] = LeftColumnX + 150,
-							["y"] = 200,
+							["y"] = lineheight*10,
 						},
 						["enabled"] = true,
 						["step"] = 1,
 						["range"] = {
-							["max"] = 200,
+							["max"] = 225,
 							["min"] = 0,
 						},
 						["tabOrder"] = 0,
@@ -350,7 +438,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX + 450,
-							["y"] = 200,
+							["y"] = lineheight*10,
 						},
 						["enabled"] = true,
 						["text"] = "0",
@@ -371,7 +459,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 500,
 							["x"] = LeftColumnX,
-							["y"] = 200 + 25,
+							["y"] = lineheight*11,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_COCKPIT_SHAKE_SLIDER_HELP",
@@ -384,18 +472,18 @@ dialog = {
 				},
 
 				--------------------------------------------
-				-- FFB Required Deflection for CSS
+				-- FFB CSS Mode Deflection
 				--------------------------------------------
 				["cssActivateLabel"] = {
 					["params"] = {
 						["bounds"] = {
 							["h"] = 24,
-							["w"] = 200,
+							["w"] = 225,
 							["x"] = LeftColumnX,
-							["y"] = 275,
+							["y"] = lineheight*13,
 						},
 						["enabled"] = true,
-						["text"] = "$A4E_COCKPIT_CSS_TEXT",
+						["text"] = "$A4E_COCKPIT_CSS_LABEL",
 						["tooltip"] = "",
 						["visible"] = true,
 						["zindex"] = 0,
@@ -413,12 +501,12 @@ dialog = {
 							["h"] = 24,
 							["w"] = 300,
 							["x"] = LeftColumnX + 150,
-							["y"] = 275,
+							["y"] = lineheight*13,
 						},
 						["enabled"] = true,
 						["step"] = 1,
 						["range"] = {
-							["max"] = 200,
+							["max"] = 225,
 							["min"] = 0,
 						},
 						["tabOrder"] = 0,
@@ -436,7 +524,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX + 450,
-							["y"] = 275,
+							["y"] = lineheight*13,
 						},
 						["enabled"] = true,
 						["text"] = "0",
@@ -457,7 +545,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 500,
 							["x"] = LeftColumnX,
-							["y"] = 275 + 25,
+							["y"] = lineheight*14,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_COCKPIT_CSS_HELP",
@@ -470,16 +558,16 @@ dialog = {
 				},
 				
 				--------------------------------------------
-				-- Wheelbrake Assist Option
+				-- Simple Braking (Rudder-Assisted)
 				--------------------------------------------
 
 				["wheelBrakeAssistLabel"] = {
 					["params"] = {
 						["bounds"] = {
 							["h"] = 24,
-							["w"] = 200,
+							["w"] = 225,
 							["x"] = LeftColumnX + 25,
-							["y"] = 350,
+							["y"] = lineheight*16,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_WHEEL_BRAKE_ASSIST_CHECK_LABEL",
@@ -500,7 +588,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX,
-							["y"] = 350 + 5,
+							["y"] = lineheight*16,
 						},
 						["enabled"] = true,
 						["state"] = true,
@@ -519,7 +607,7 @@ dialog = {
 							["h"] = 40,
 							["w"] = 800,
 							["x"] = LeftColumnX,
-							["y"] = 350 + 25,
+							["y"] = lineheight*17,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_WHEEL_BRAKE_ASSIST_CHECK_HELP",
@@ -534,9 +622,9 @@ dialog = {
 					["params"] = {
 						["bounds"] = {
 							["h"] = 24,
-							["w"] = 200,
+							["w"] = 225,
 							["x"] = LeftColumnX + 25,
-							["y"] = 425,
+							["y"] = lineheight*19,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_OLD_RADAR_CHECK_LABEL",
@@ -557,7 +645,7 @@ dialog = {
 							["h"] = 24,
 							["w"] = 50,
 							["x"] = LeftColumnX,
-							["y"] = 425 + 5,
+							["y"] = lineheight*19,
 						},
 						["enabled"] = true,
 						["state"] = true,
@@ -576,7 +664,7 @@ dialog = {
 							["h"] = 40,
 							["w"] = 800,
 							["x"] = LeftColumnX,
-							["y"] = 425 + 25,
+							["y"] = lineheight*20,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_OLD_RADAR_CHECK_HELP",

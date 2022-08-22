@@ -58,10 +58,10 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Operational-era USN and USMC liveries now have a customized, well-worn LAU-10 launcher.
 - **Weapons and Loadouts:**
 - **Quality of Life:**
-  - Input options from across the module for mouse buttons.
+  - Input options across the module can now be bound to mouse buttons.
   - Single and else inputs for AN/ARN-52 TACAN Mode switch.
-  - Single inputs for the Canopy Lever. *(thanks Tanuki44)*
   - Single and else inputs for Throttle Position Lock.
+  - Single inputs for the Canopy Lever. *(thanks Tanuki44)*
   - When the aircraft has power, the Seat Adjustment Switch to move the baseline pilot head position up and down in the cockpit. *(thanks nima3333)*
 - **Sounds:**
   - Seat adjustment hydraulic motor.
@@ -81,6 +81,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 - **Weapons and Loadouts:**
   - CBU-2B/A weight is now calculated. Weapon release and spread has also been altered to cause fewer self-destructs when the weapon is released.
 - **Quality of Life:**
+  - Throttle Increment and Throttle Decrement inputs function properly. A new slider in the special menu is available to adjust throttle rate for these inputs from 1 to 5%.
   - Kneeboard:
     - 300 gallon tanks on the center pylon enumerate properly on the kneeboard loadout page.
     - Fixed several typos and erroneous procedures for air refueling and ground radar.
@@ -98,9 +99,10 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Updated USN VC-1 Challengers.
 - **Weapons and Loadouts:**
 - **Quality of Life:**
-  - Emergency Stores Release Handle default input changed to LCTRL+J *(think J for jettison!)*
+  - Default inputs for Throttle Position Lock are set to RCTRL+HOME (Step Up) and RCTRL+END (Step Down).
+  - Emergency Stores Release Handle default input changed to LCTRL+J. *(think J for jettison!)*
   - Differential wheelbrake inputs default inputs are changed to LCTRL+W (left) and LALT+W (right).
-  - The controls indicator's nosewheel caster indicator now displays logarithmically, making it easier to see those early castering changes and reflect nosewheel sensetivity to turn rate more naturalistically. *(thanks, Drofseh)*
+  - The controls indicator's nosewheel caster indicator now displays logarithmically, making it easier to see those early castering changes and reflect nosewheel sensetivity to turn rate more naturalistically. *(thanks, Drofseh)*.
   - Trim speed settings in the special menu are now adjustable by individually for pitch, roll and yaw, with percentage sliders for each instead of presets from a drop-down. *(thanks Drofseh)*
 - **Sounds:**
 

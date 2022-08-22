@@ -70,8 +70,8 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- Throttle Panel ------------------------
     ---------------------------------------------
-    {down = iCommandPlaneAUTIncreaseRegime,                                 name = _('Throttle Position - Increment'),                  category = {_('Throttle Panel'), _('Flight Control')}},
-    {down = iCommandPlaneAUTDecreaseRegime,                                 name = _('Throttle Position - Decrement'),                  category = {_('Throttle Panel'), _('Flight Control')}},
+    {down = Keys.throttle_inc,                                              name = _('Throttle Position - Increment'),                  category = {_('Throttle Panel'), _('Flight Control')}},
+    {down = Keys.throttle_dec,                                              name = _('Throttle Position - Decrement'),                  category = {_('Throttle Panel'), _('Flight Control')}},
     {pressed = iCommandThrottleIncrease, up = iCommandThrottleStop,         name = _('Throttle Position Continuous - Increase'),        category = {_('Throttle Panel'), _('Flight Control')}},
     {pressed = iCommandThrottleDecrease, up = iCommandThrottleStop,         name = _('Throttle Position Continuous - Decrease'),        category = {_('Throttle Panel'), _('Flight Control')}},
 
