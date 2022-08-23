@@ -297,12 +297,13 @@ function post_initialize()
         --APR-25 RWR SOUNDS
         -- system sounds
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-rwr-hum-loop", "RWR_HUM", SOUND_ALWAYS),
-        -- generics sounds
+        -- generic sounds
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_ewr", "RWR_EWR", SOUND_ALWAYS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_ship_default_lo", "RWR_SHIP_DEFAULT_LO", SOUND_ALWAYS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_ship_default_hi", "RWR_SHIP_DEFAULT_HI", SOUND_ALWAYS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_ai_default", "RWR_AI_GENERAL", SOUND_ALWAYS),
         -- specific radar sounds
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_aaa_fire_can_son9", "RWR_AAA_FIRECAN_SON9", SOUND_ALWAYS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa2_flatface", "RWR_SA2_SEARCH", SOUND_ALWAYS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa2_fansong_e_lo", "RWR_SA2_E_LO", SOUND_ALWAYS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa2_fansong_e_hi", "RWR_SA2_E_HI", SOUND_ALWAYS),

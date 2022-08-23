@@ -163,6 +163,8 @@ add_emitter("RLS_19J6", E_BAND_RADAR, nil, "RWR_SA5_SEARCH")
 --==========================================================================================
 --TRACKING RADARS                           --EMITTER ID                    --BAND (NATO)
 --==========================================================================================
+--AAA Fire Can SON-9                        --need emitter ID               --E
+--add_emitter("???", E_BAND_RADAR, 1.0, {LIGHT_REC,LIGHT_REC}, {"RWR_AAA_FIRECAN_SON9"})
 --SAM Avenger (Stinger)                     --M1097 Avenger                 --H/I
 --SAM Chaparral M48                         --M48 Chaparral                 --D
 --SAM Hawk TR (AN/MPQ-46)                   --Hawk tr                       --J (HPIR)
