@@ -224,26 +224,26 @@ join(res.keyCommands,{
     {down = Keys.FuelGaugeExt, up = Keys.FuelGaugeInt,                  name = _('Internal-External Fuel Switch - EXT else INT'),               category = {_('Instrument Panel'), _('Miscellaneous Switches Panel')}},
 
     -- Radar Indicator
-    {down = Keys.Radar_Bril_Step_Inc,                                   name = _('Radar Indicator Brilliance Knob - Increment'),            category = {_('AN/APG-53A Radar Indicator')}},
-    {down = Keys.Radar_Bril_Step_Dec,                                   name = _('Radar Indicator Brilliance Knob - Decrement'),            category = {_('AN/APG-53A Radar Indicator')}},
-    {down = Keys.Radar_Bril_Cont_Up, up = Keys.Radar_Bril_Cont_Stop,    name = _('Radar Indicator Brilliance Knob - Continuous Increase'),  category = {_('AN/APG-53A Radar Indicator')}},
-    {down = Keys.Radar_Bril_Cont_Down, up = Keys.Radar_Bril_Cont_Stop,  name = _('Radar Indicator Brilliance Knob - Continuous Decrease'),  category = {_('AN/APG-53A Radar Indicator')}},
-    {down = Keys.Radar_Stor_Step_Inc,                                   name = _('Radar Indicator Storage Knob - Increment'),               category = {_('AN/APG-53A Radar Indicator')}},
-    {down = Keys.Radar_Stor_Step_Dec,                                   name = _('Radar Indicator Storage Knob - Decrement'),               category = {_('AN/APG-53A Radar Indicator')}},
-    {down = Keys.Radar_Stor_Cont_Up, up = Keys.Radar_Stor_Cont_Stop,    name = _('Radar Indicator Storage Knob - Continuous Increase'),     category = {_('AN/APG-53A Radar Indicator')}},
-    {down = Keys.Radar_Stor_Cont_Down, up = Keys.Radar_Stor_Cont_Stop,  name = _('Radar Indicator Storage Knob - Continuous Decrease'),     category = {_('AN/APG-53A Radar Indicator')}},
-    {down = Keys.Radar_Gain_Step_Inc,                                   name = _('Radar Indicator Gain Knob - Increment'),                  category = {_('AN/APG-53A Radar Indicator')}},
-    {down = Keys.Radar_Gain_Step_Dec,                                   name = _('Radar Indicator Gain Knob - Decrement'),                  category = {_('AN/APG-53A Radar Indicator')}},
-    {down = Keys.Radar_Gain_Cont_Up, up = Keys.Radar_Gain_Cont_Stop,    name = _('Radar Indicator Gain Knob - Continuous Increase'),        category = {_('AN/APG-53A Radar Indicator')}},
-    {down = Keys.Radar_Gain_Cont_Down, up = Keys.Radar_Gain_Cont_Stop,  name = _('Radar Indicator Gain Knob - Continuous Decrease'),        category = {_('AN/APG-53A Radar Indicator')}},
-    {down = Keys.Radar_Det_Step_Inc,                                    name = _('Radar Indicator Detail Knob - Increment'),                category = {_('AN/APG-53A Radar Indicator')}},
-    {down = Keys.Radar_Det_Step_Dec,                                    name = _('Radar Indicator Detail Knob - Decrement'),                category = {_('AN/APG-53A Radar Indicator')}},
-    {down = Keys.Radar_Det_Cont_Up, up = Keys.Radar_Det_Cont_Stop,      name = _('Radar Indicator Detail Knob - Continuous Increase'),      category = {_('AN/APG-53A Radar Indicator')}},
-    {down = Keys.Radar_Det_Cont_Down, up = Keys.Radar_Det_Cont_Stop,    name = _('Radar Indicator Detail Knob - Continuous Decrease'),      category = {_('AN/APG-53A Radar Indicator')}},
-    {down = Keys.Radar_Ret_Step_Inc,                                    name = _('Radar Indicator Reticle Knob - Increment'),               category = {_('AN/APG-53A Radar Indicator')}},
-    {down = Keys.Radar_Ret_Step_Dec,                                    name = _('Radar Indicator Reticle Knob - Decrement'),               category = {_('AN/APG-53A Radar Indicator')}},
-    {down = Keys.Radar_Ret_Cont_Up, up = Keys.Radar_Ret_Cont_Stop,      name = _('Radar Indicator Reticle Knob - Continuous Increase'),     category = {_('AN/APG-53A Radar Indicator')}},
-    {down = Keys.Radar_Ret_Cont_Down, up = Keys.Radar_Ret_Cont_Stop,    name = _('Radar Indicator Reticle Knob - Continuous Decrease'),     category = {_('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Bril_Step_Inc,                                   name = _('Radar Indicator Brilliance Knob - Increment'),            category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Bril_Step_Dec,                                   name = _('Radar Indicator Brilliance Knob - Decrement'),            category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Bril_Cont_Up, up = Keys.Radar_Bril_Cont_Stop,    name = _('Radar Indicator Brilliance Knob - Continuous Increase'),  category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Bril_Cont_Down, up = Keys.Radar_Bril_Cont_Stop,  name = _('Radar Indicator Brilliance Knob - Continuous Decrease'),  category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Stor_Step_Inc,                                   name = _('Radar Indicator Storage Knob - Increment'),               category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Stor_Step_Dec,                                   name = _('Radar Indicator Storage Knob - Decrement'),               category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Stor_Cont_Up, up = Keys.Radar_Stor_Cont_Stop,    name = _('Radar Indicator Storage Knob - Continuous Increase'),     category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Stor_Cont_Down, up = Keys.Radar_Stor_Cont_Stop,  name = _('Radar Indicator Storage Knob - Continuous Decrease'),     category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Gain_Step_Inc,                                   name = _('Radar Indicator Gain Knob - Increment'),                  category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Gain_Step_Dec,                                   name = _('Radar Indicator Gain Knob - Decrement'),                  category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Gain_Cont_Up, up = Keys.Radar_Gain_Cont_Stop,    name = _('Radar Indicator Gain Knob - Continuous Increase'),        category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Gain_Cont_Down, up = Keys.Radar_Gain_Cont_Stop,  name = _('Radar Indicator Gain Knob - Continuous Decrease'),        category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Det_Step_Inc,                                    name = _('Radar Indicator Detail Knob - Increment'),                category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Det_Step_Dec,                                    name = _('Radar Indicator Detail Knob - Decrement'),                category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Det_Cont_Up, up = Keys.Radar_Det_Cont_Stop,      name = _('Radar Indicator Detail Knob - Continuous Increase'),      category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Det_Cont_Down, up = Keys.Radar_Det_Cont_Stop,    name = _('Radar Indicator Detail Knob - Continuous Decrease'),      category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Ret_Step_Inc,                                    name = _('Radar Indicator Reticle Knob - Increment'),               category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Ret_Step_Dec,                                    name = _('Radar Indicator Reticle Knob - Decrement'),               category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Ret_Cont_Up, up = Keys.Radar_Ret_Cont_Stop,      name = _('Radar Indicator Reticle Knob - Continuous Increase'),     category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {down = Keys.Radar_Ret_Cont_Down, up = Keys.Radar_Ret_Cont_Stop,    name = _('Radar Indicator Reticle Knob - Continuous Decrease'),     category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
 
     -- Armament Panel 
     {down = device_commands.arm_bomb, value_down = 1, cockpit_device_id = devices.WEAPON_SYSTEM,                                                    name = _('Bomb Arm Switch - NOSE & TAIL'),              category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
@@ -689,30 +689,41 @@ join(res.axisCommands,{
     ---------------------------------------------
     -- ECM Control Panel / AN/APR-23 Radar Homing and Warning System
     --------------------------------------------- 
-    {action = device_commands.ecm_msl_alert_axis_inner, cockpit_device_id = devices.RWR,                name = _('AN/APR-23 PRF Volume'),                     category = {_('AN/APR-23 RHWS (ECM)')}}, 
-    {action = device_commands.ecm_msl_alert_axis_outer, cockpit_device_id = devices.RWR,                name = _('AN/APR-23 Missile Alert Volume'),           category = {_('AN/APR-23 RHWS (ECM)')}}, 
+    {action = device_commands.ecm_msl_alert_axis_inner, cockpit_device_id = devices.RWR,                name = _('AN/APR-23 PRF Volume'),                       category = {_('AN/APR-23 RHWS (ECM)')}}, 
+    {action = device_commands.ecm_msl_alert_axis_outer, cockpit_device_id = devices.RWR,                name = _('AN/APR-23 Missile Alert Volume'),             category = {_('AN/APR-23 RHWS (ECM)')}}, 
     
     -- Miscellaneous Switches Panel
-    {action = device_commands.shrike_sidewinder_volume, cockpit_device_id = devices.WEAPON_SYSTEM,      name = _('Shrike/Sidewinder Volume Knob'),  category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
+    {action = device_commands.shrike_sidewinder_volume, cockpit_device_id = devices.WEAPON_SYSTEM,      name = _('Shrike/Sidewinder Volume Knob'),              category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
+
+    -- Radar Indicator
+    --{action = device_commands.radar_storage_axis, cockpit_device_id = devices.RADAR,                    name = _('Radar Indicator Storage Knob'),               category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    --{action = device_commands.radar_brilliance_axis, cockpit_device_id = devices.RADAR,                 name = _('Radar Indicator Brilliance Knob'),            category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    --{action = device_commands.radar_detail_axis, cockpit_device_id = devices.RADAR,                     name = _('Radar Indicator Detail Knob'),                category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    --{action = device_commands.radar_gain_axis, cockpit_device_id = devices.RADAR,                       name = _('Radar Indicator Gain Knob'),                  category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    --{action = device_commands.radar_reticle_axis, cockpit_device_id = devices.RADAR,                    name = _('Radar Indicator Reticle Knob'),               category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
 
     -- Radar Control Panel
-    {action = device_commands.radar_angle_axis, cockpit_device_id = devices.RADAR,                      name = _('AN/APG-53A Radar Antenna Tilt - Slew'),      category = {_('Console Left'), _('AN/APG-53A Radar')}},
-    {action = device_commands.radar_angle_axis_abs, cockpit_device_id = devices.RADAR,                  name = _('AN/APG-53A Radar Antenna Tilt - Absolute'),  category = {_('Console Left'), _('Radar Control Panel', _('AN/APG-53A Radar'))}},
+    {action = device_commands.radar_angle_axis, cockpit_device_id = devices.RADAR,                      name = _('AN/APG-53A Radar Antenna Tilt - Slew'),       category = {_('Console Left'), _('Radar Control Panel'), _('AN/APG-53A Radar')}},
+    {action = device_commands.radar_angle_axis_abs, cockpit_device_id = devices.RADAR,                  name = _('AN/APG-53A Radar Antenna Tilt - Absolute'),   category = {_('Console Left'), _('Radar Control Panel'), _('AN/APG-53A Radar')}},
+
+    -- AN/ARN-52 TACAN Control Panel
+    {action = device_commands.tacan_volume_axis, cockpit_device_id = devices.NAV,                       name = _('TACAN Volume'),                               category = {_('Console Right'), _('AN/ARN-52 TACAN')}},
 
     -- Interior Lights Panel
-    {action = device_commands.intlight_instruments_AXIS, cockpit_device_id = devices.AVIONICS,          name = _('Lights Instrument Lights Control'), category = {_('Console Right'), _('Interior Lights Panel')}},
-    {action = device_commands.intlight_console_AXIS, cockpit_device_id = devices.AVIONICS,              name = _('Lights Console Lights Control'),    category = {_('Console Right'), _('Interior Lights Panel')}},
-    {action = device_commands.intlight_whiteflood_AXIS, cockpit_device_id = devices.AVIONICS,           name = _('Lights White Floodlights Control'),      category = {_('Console Right'), _('Interior Lights Panel')}},
+    {action = device_commands.intlight_instruments_AXIS, cockpit_device_id = devices.AVIONICS,          name = _('Lights Instrument Lights Control'),           category = {_('Console Right'), _('Interior Lights Panel')}},
+    {action = device_commands.intlight_console_AXIS, cockpit_device_id = devices.AVIONICS,              name = _('Lights Console Lights Control'),              category = {_('Console Right'), _('Interior Lights Panel')}},
+    {action = device_commands.intlight_whiteflood_AXIS, cockpit_device_id = devices.AVIONICS,           name = _('Lights White Floodlights Control'),           category = {_('Console Right'), _('Interior Lights Panel')}},
 
     -- Aircraft Weapons Release System Panel
-    {action = device_commands.AWRS_drop_interval_AXIS, cockpit_device_id = devices.WEAPON_SYSTEM,       name = _('AWRS Drop Interval Knob'),        category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
+    {action = device_commands.AWRS_drop_interval_AXIS, cockpit_device_id = devices.WEAPON_SYSTEM,       name = _('AWRS Drop Interval Knob'),                    category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
     
     -- Gunsight Panel
-    {action = device_commands.GunsightBrightness,              cockpit_device_id = devices.GUNSIGHT,    name = _('Gunsight Light Control'),         category = {_('Instrument Panel'), _('Gunsight Panel')}},
-    {action = device_commands.GunsightElevationControl_AXIS,   cockpit_device_id = devices.GUNSIGHT,    name = _('Gunsight Elevation Control'),     category = {_('Instrument Panel'), _('Gunsight Panel')}},
+    {action = device_commands.GunsightBrightness,              cockpit_device_id = devices.GUNSIGHT,    name = _('Gunsight Light Control'),                     category = {_('Instrument Panel'), _('Gunsight Panel')}},
+    {action = device_commands.GunsightElevationControl_AXIS,   cockpit_device_id = devices.GUNSIGHT,    name = _('Gunsight Elevation Control'),                 category = {_('Instrument Panel'), _('Gunsight Panel')}},
 
-    {action = device_commands.mouse_x,    name = _('Mouse X Relative'),     category = {_('UI Override')}},
-    {action = device_commands.mouse_y,    name = _('Mouse Y Relative'),     category = {_('UI Override')}},
+    --UI Override
+    {action = device_commands.mouse_x,                                                                  name = _('Mouse X Relative'),                           category = {_('UI Override')}},
+    {action = device_commands.mouse_y,                                                                  name = _('Mouse Y Relative'),                           category = {_('UI Override')}},
 
     
 })

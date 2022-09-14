@@ -287,6 +287,7 @@ dev:listen_command(device_commands.asn41_magvar)
 dev:listen_command(device_commands.tacan_ch_major)
 dev:listen_command(device_commands.tacan_ch_minor)
 dev:listen_command(device_commands.tacan_volume)
+dev:listen_command(device_commands.tacan_volume_axis)
 dev:listen_command(device_commands.tacan_mode)
 
 
@@ -644,6 +645,10 @@ function SetCommand(command,value)
             morse_dot_snd:update(nil,tacan_volume_playback,nil)
             morse_dash_snd:update(nil,tacan_volume_playback,nil)
         end
+    elseif command == device_commands.tacan_volume_axis then
+        -- normalize and constrain tacan axis input to bounds set above (0.2 through 0.8)
+        local set_tacan_volume_from_axis = (((value+1)*0.5)*0.6) + 0.2
+        dev:performClickableAction(device_commands.tacan_volume, set_tacan_volume_from_axis, false)
     --plusnine added mode switch (could probably be more efficient, but it works)
     elseif command == Keys.TacanModeInc then
         if tacan_mode == "OFF" then

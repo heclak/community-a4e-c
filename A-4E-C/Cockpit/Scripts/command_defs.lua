@@ -513,6 +513,7 @@ device_commands =
     tacan_ch_major                  = __counter(),
     tacan_ch_minor                  = __counter(),
     tacan_volume                    = __counter(),
+    tacan_volume_axis               = __counter(),
     extlight_master                 = __counter(),
     extlight_probe                  = __counter(),
     extlight_taxi                   = __counter(),
@@ -605,7 +606,7 @@ device_commands =
     ENGINE_wing_fuel_sw             = __counter(),
     ENGINE_drop_tanks_sw            = __counter(),
     ENGINE_fuel_control_sw          = __counter(),
-    ENGINE_manual_fuel_shutoff        = __counter(),
+    ENGINE_manual_fuel_shutoff      = __counter(),
     ENGINE_manual_fuel_shutoff_catch  = __counter(),
 
     CPT_shoulder_harness            = __counter(),
@@ -646,8 +647,9 @@ device_commands =
     nav_dead_recon                  = __counter(),
     seat_adjustment                 = __counter(),
 
-    fuel_transfer_bypass    = __counter(),
+    fuel_transfer_bypass            = __counter(),
     fuel_transfer_bypass            = __counter(),
     mouse_x = __counter(),
     mouse_y = __counter(),
+
 }
