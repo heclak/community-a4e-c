@@ -135,15 +135,27 @@ bool Scooter::Radar::handleInput( int command, float value )
 	case DEVICE_COMMANDS_RADAR_DETAIL:
 		detail( value );
 		return true;
+	//case DEVICE_COMMANDS_RADAR_DETAIL_AXIS:
+	//	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_DETAIL, angleAxisToCommand(value));
+	//	return true;
 	case DEVICE_COMMANDS_RADAR_GAIN:
 		gain( value );
 		return true;
+	//case DEVICE_COMMANDS_RADAR_GAIN_AXIS:
+	//	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_GAIN, angleAxisToCommand(value));
+	//	return true;
 	case DEVICE_COMMANDS_RADAR_BRILLIANCE:
 		m_brilliance = value;
 		return true;
+	//case DEVICE_COMMANDS_RADAR_BRILLIANCE_AXIS:
+	//	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_BRILLIANCE, angleAxisToCommand(value));
+	//	return true;
 	case DEVICE_COMMANDS_RADAR_STORAGE:
 		storage( value );
 		return true;
+	//case DEVICE_COMMANDS_RADAR_STORAGE_AXIS:
+	//	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_STORAGE, angleAxisToCommand(value));
+	//	return true;
 	case DEVICE_COMMANDS_RADAR_PLANPROFILE:
 		//This should perhaps be a state change.
 		m_planSwitch = ! (bool)value;
@@ -154,6 +166,9 @@ bool Scooter::Radar::handleInput( int command, float value )
 	case DEVICE_COMMANDS_RADAR_RETICLE:
 		m_reticleKnob = value;
 		return true;
+	//case DEVICE_COMMANDS_RADAR_RETICLE_AXIS:
+	//	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_RETICLE, angleAxisToCommand(value));
+	//	return true;
 	case DEVICE_COMMANDS_RADAR_ANGLE_AXIS:
 		m_radarAngleAxis = value;
 		return true;

@@ -498,16 +498,11 @@ device_commands =
     radar_planprofile               = __counter(),
     radar_range                     = __counter(),
     radar_storage                   = __counter(),
-    radar_storage_axis              = __counter(),
     radar_brilliance                = __counter(),
-    radar_brilliance_axis           = __counter(),
     radar_detail                    = __counter(),
-    radar_detail_axis               = __counter(),
     radar_gain                      = __counter(),
-    radar_gain_axis                 = __counter(),
     radar_filter                    = __counter(),
     radar_reticle                   = __counter(),
-    radar_reticle_axis              = __counter(),
     radar_mode                      = __counter(),
     radar_aoacomp                   = __counter(),
     radar_angle                     = __counter(),
@@ -656,5 +651,11 @@ device_commands =
     fuel_transfer_bypass            = __counter(),
     mouse_x = __counter(),
     mouse_y = __counter(),
+
+    --radar_storage_axis              = __counter(),
+    --radar_brilliance_axis           = __counter(),
+    --radar_detail_axis               = __counter(),
+    --radar_gain_axis                 = __counter(),
+    --radar_reticle_axis              = __counter(),
 
 }
