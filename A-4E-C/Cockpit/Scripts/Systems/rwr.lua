@@ -10,6 +10,7 @@ dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.common_script_path.."devices_defs.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
+dofile(LockOn_Options.script_path.."APR-25_RWR/rwr_apr-25_api.lua")
 
 device_timer_dt     = 0.02  	--0.2  	
 --local update_rate 	= 0.2
@@ -146,6 +147,401 @@ dev:listen_command(Keys.ecm_OuterKnobStartUp)
 dev:listen_command(Keys.ecm_OuterKnobStartDown)
 dev:listen_command(Keys.ecm_OuterKnobStop)
 
+NO_BAND = 0
+I_BAND_RADAR = 1
+G_BAND_RADAR = 2
+E_BAND_RADAR = 3
+
+local apr25_power = false
+
+local apr25_band_enabled = {
+    [NO_BAND] = false,
+    [I_BAND_RADAR] = true,
+    [G_BAND_RADAR] = true,
+    [E_BAND_RADAR] = true,
+}
+
+local apr25_aaa_defeat = false
+local apr25_audio = false
+local apr25_volume = 0.1
+
+local apr25_sam_light = false
+local apr25_launch_light = false
+
+--Signal
+SIGNAL_SEARCH = 1
+SIGNAL_LOCK = 2
+SIGNAL_LAUNCH = 3
+
+--General Type
+GENERAL_TYPE_EWR = 0
+GENERAL_TYPE_AIRCRAFT = 1
+GENERAL_TYPE_SURFACE = 2
+GENERAL_TYPE_SHIP = 3
+
+--Lights
+LIGHT_SAM = 1
+LIGHT_REC = 2
+
+apr25_lights_params = {
+    [LIGHT_SAM] = get_param_handle("ECM_SAM"),
+    [LIGHT_REC] = get_param_handle("ECM_REC"),
+}
+
+apr25_lights = {
+    [LIGHT_SAM] = false,
+    [LIGHT_REC] = false,
+}
+
+--source returns the unique unit id.
+--power is between 0 and 1
+--priority some abstract priority number on the order of hundreds
+--time is time since the last recieved signal.
+
+emitter_info = {}
+
+emitter_default_sounds = {
+    [GENERAL_TYPE_EWR] = {
+        [SIGNAL_SEARCH] = get_param_handle("RWR_EWR"), -- 7.5-second low growl pulse
+    },
+    [GENERAL_TYPE_AIRCRAFT] = {
+        [SIGNAL_SEARCH] = get_param_handle("RWR_AI_SEARCH"),
+        [SIGNAL_LOCK] = get_param_handle("RWR_AI_GENERAL"), -- Solid tone (I-band)
+    },
+    [GENERAL_TYPE_SURFACE] = {
+        --No default, creates too many false positives
+    },
+    [GENERAL_TYPE_SHIP] = {
+        --Might be good to produce a few ship variants,
+        --since any sound can only be playing once?
+        [SIGNAL_SEARCH] = get_param_handle("RWR_SHIP_DEFAULT_LO"), --6.5-second EWR pulse
+        [SIGNAL_LOCK] = get_param_handle("RWR_SHIP_DEFAULT_HI"), --Solid tone (E-band)
+    },
+}
+
+function add_emitter(name, band, gain, lights, sounds)
+    emitter_info[name] = {
+        band = band,
+        gain = gain,
+        audio = {
+            [SIGNAL_SEARCH] = get_param_handle(sounds[1]),
+            [SIGNAL_LOCK] = get_param_handle(sounds[2]),
+            [SIGNAL_LAUNCH] = get_param_handle(sounds[3]),
+        },
+        lights = lights,
+    }
+end
+
+--==========================================================================================
+--GROUND UNIT LIST: https://github.com/pydcs/dcs/blob/master/dcs/vehicles.py
+--AIRCRAFT LIST: https://github.com/pydcs/dcs/blob/master/dcs/planes.py
+--RADAR BANDS: https://en.wikipedia.org/wiki/Radio_spectrum#EU,_NATO,_US_ECM_frequency_designations
+
+--[[
+    Now, only one unit using the default can be heard, even if several are in range.
+    Perhaps for EWRs and Search radars, it might be more efficient to assign a rotation speed:
+    Once the rotation speed is reached, if the radar still has contact, play a sample (bank) once.
+    This would allow for more cluttered and complex radar environments and sample banks
+    of chirps could be easily re-pitched to to suit a new individual unit's entry.
+    I'm also noticing a longer initialization period, which I think is related to having 
+    too many continuous sounds playing. It might be wise to set these to continuous instead, 
+    and only play them when called for by a signal.
+--]]
+
+--==========================================================================================
+--EARLY WARNING RADARS                      --EMITTER ID                    --BAND (NATO)
+--==========================================================================================
+--EWR 55G6                                  --55G6 EWR
+--EWR IL13                                  --IL13 EWR
+
+--These items are surface radars, but operate more like EWRs:
+--SAM Roland EWR                            --Roland Radar
+--SAM Hawk CWAR AN/MPQ-55                   --Hawk cwar
+
+--==========================================================================================
+--SEARCH RADARS                             --EMITTER ID                    --BAND (NATO)
+--==========================================================================================
+--MCC-SR Sborka "Dog Ear" SR                --Dog Ear radar                 --F/G
+--SAM Hawk SR (AN/MPQ-50)                   --Hawk sr                       --H/I/J
+--SAM SA-2/3/5 P19 "Flat Face" SR           --p-19 s-125 sr                 --E/F, 12s rotation
+add_emitter("p-19 s-125 sr", E_BAND_RADAR, 1.0, nil, {"RWR_SA2_SEARCH"})
+--SAM SA-5 S-200 ST-68U "Tin Shield" SR     --RLS_19J6                      --E/F, 6/12s rotation
+add_emitter("RLS_19J6", E_BAND_RADAR, 1.0, nil, {"RWR_SA5_SEARCH"})
+--SAM SA-10 S-300 "Grumble" Clam Shell SR   --S-300PS 40B6MD sr             --E/F
+--SAM SA-10 S-300 "Grumble" Big Bird SR     --S-300PS 64H6E s               --E/F
+--SAM SA-11 Buk "Gadfly" Snow Drift SR      --SA-11 Buk SR 9S18M1           --E
+--SAM NASAMS SR MPQ64F1                     --NASAMS_Radar_MPQ64F1          --H/I
+
+--==========================================================================================
+--TRACKING RADARS                           --EMITTER ID                    --BAND (NATO)
+--==========================================================================================
+--SAM Avenger (Stinger)                     --M1097 Avenger                 --H/I
+--SAM Chaparral M48                         --M48 Chaparral                 --D
+--SAM Hawk TR (AN/MPQ-46)                   --Hawk tr                       --J (HPIR)
+--SAM Linebacker - Bradley M6               --M6 Linebacker                 --H/I
+--SAM Rapier Blindfire TR                   --rapier_fsa_blindfire_radar    --F
+--SAM SA-2 S-75 "Fan Song" TR               --SNR_75V                       --E/G variants assigned below
+add_emitter("SNR_75VE", E_BAND_RADAR, 1.0, {LIGHT_REC,LIGHT_REC,LIGHT_SAM}, {"RWR_SA2_E_LO", "RWR_SA2_E_HI"})
+add_emitter("SNR_75VG", G_BAND_RADAR, 1.0, {LIGHT_REC,LIGHT_REC,LIGHT_SAM}, {"RWR_SA2_G_LO", "RWR_SA2_G_LO", "RWR_SA2_G_LAUNCH"})
+--SAM SA-3 S-125 "Low Blow" TR              --snr s-125 tr                  --E
+add_emitter("snr s-125 tr", E_BAND_RADAR, {LIGHT_REC,LIGHT_REC}, 1.0, {"RWR_SA3_LO"})
+--SAM SA-5 S-200 "Square Pair" TR           --RPC_5N62V                     --I
+add_emitter("RPC_5N62V", I_BAND_RADAR, 1.0, {LIGHT_REC,LIGHT_REC}, {"RWR_SA5_LO", "RWR_SA5_HI"})
+--SAM SA-6 Kub "Straight Flush" STR         --Kub 1S91 str                  --I
+add_emitter("Kub 1S91 str", I_BAND_RADAR, 1.0, {LIGHT_REC,LIGHT_REC}, {"RWR_SA6_LO", "RWR_SA6_HI"})
+--SAM SA-8 Osa "Gecko" TEL                  --Osa 9A33 ln                   --I
+--SAM SA-9 Strela 1 "Gaskin" TEL            --Strela-1 9P31                 --E/F
+--SAM SA-10 S-300 "Grumble" Flap Lid TR     --S-300PS 40B6M tr              --H/I/J
+--SAM SA-11 Buk "Gadfly" Fire Dome TEL      --SA-11 Buk LN 9A310M1          --H/I
+--SAM SA-13 Strela 10M3 "Gopher" TEL        --Strela-10M3                   --F/G
+--SAM SA-15 Tor "Gauntlet"                  --Tor 9A331                     --K
+--SAM SA-19 Tunguska "Grison"               --2S6 Tunguska                  --H/I
+
+--==========================================================================================
+--VEHICLES                                  --EMITTER ID                    --BAND (NATO)
+--==========================================================================================
+--SPAAA Gepard                              --Gepard                        --E
+add_emitter("Gepard", E_BAND_RADAR, 0.7, {LIGHT_REC,LIGHT_REC}, {"RWR_VEHICLE_GEPARD"})
+--SPAAA Vulcan M163                         --Vulcan                        --E
+add_emitter("Vulcan", E_BAND_RADAR, 0.7, {LIGHT_REC,LIGHT_REC}, {"RWR_VEHICLE_VULCAN"})
+--SPAAA ZSU-23-4 Shilka "Gun Dish"          --ZSU-23-4 Shilka               --E
+add_emitter("ZSU-23-4 Shilka", E_BAND_RADAR, 0.7, {LIGHT_REC,LIGHT_REC}, {"RWR_VEHICLE_SHILKA"})
+
+--==========================================================================================
+--SHIPS                                     --EMITTER ID                    --BAND (NATO)
+--==========================================================================================
+--Battlecruiser 1144.2 Pyotr Velikiy        --PIOTR
+--CG Ticonderoga                            --TICONDEROG
+--Corvette 1124.4 Grisha                    --ALBATROS
+--Corvette 1241.1 Molniya                   --MOLNIYA
+--Cruiser 1164 Moskva                       --MOSCOW
+--CV 1143.5 Admiral Kuznetsov               --KUZNECOW
+--CV 1143.5 Admiral Kuznetsov(2017)         --CV_1143_5
+--CVN-70 Carl Vinson                        --VINSON
+--CVN-71 Theodore Roosevelt                 --CVN_71
+--CVN-72 Abraham Lincoln                    --CVN_72
+--CVN-74 John C. Stennis                    --Stennis
+--CVN-73 George Washington                  --CVN_73
+--CVN-75 Harry S. Truman                    --CVN_75
+--DDG Arleigh Burke IIa                     --USS_Arleigh_Burke_IIa
+--FAC La Combattante IIa                    --La_Combattante_II
+--FFG Oliver Hazard Perry                   --PERRY
+--Frigate 1135M Rezky                       --REZKY
+--Frigate 11540 Neustrashimy                --NEUSTRASH
+--LHA-1 Tarawa                              --LHA_Tarawa
+--Type 052B Destroyer                       --Type_052B
+--Type 054A Frigate                         --Type_054A
+--Type 052C Destroyer                       --Type_052C
+
+--==========================================================================================
+--AIRCRAFT                                  --EMITTER ID                    --BAND (NATO)
+--==========================================================================================
+--A-50                                      --A-50
+add_emitter("A-50", E_BAND_RADAR, 1.0, nil, {"RWR_EWR"})
+--AJS37                                     --AJS37
+--AV-8B N/A                                 --AV8BNA
+--C-101CC                                   --C-101CC
+--C-101EB                                   --C-101EB
+--E-2D                                      --E-2C                          --Yes, not a typo!
+add_emitter("E-2C", E_BAND_RADAR, 1.0, nil, {"RWR_EWR"})
+--E-3A                                      --E-3A
+add_emitter("E-3A", E_BAND_RADAR, 1.0, nil, {"RWR_EWR"})
+--F-4E                                      --F-4E
+--F-5E                                      --F-5E
+--F-5E-3                                    --F-5E-3
+--F-14A-135GR                               --F-14A
+--F-14B                                     --F-14B
+--F-15C                                     --F-15C
+--F-15E                                     --F-15E
+--F-16A                                     --F-16A
+--F-16A MLU                                 --F-16A MLU
+--F-16C bl.50                               --F-16C bl.50
+--F-16C bl.52d                              --F-16C bl.52d
+--F-16CM bl.50                              --F-16C_50
+--F/A-18A                                   --F/A-18A
+--F/A-18C                                   --F/A-18C
+--F/A-18C Lot 20                            --FA-18C_hornet
+--F-117A                                    --F-117A
+--J-11A                                     --J-11A
+--JF-17                                     --JF-17
+--KJ-2000                                   --KJ-2000
+--L-39C                                     --L-39C
+--L-39ZA                                    --L-39ZA
+--M-2000C                                   --M-2000C
+--MiG-15bis                                 --MiG-15bis
+--MiG-19P                                   --MiG-19P
+--MiG-21Bis                                 --MiG-21Bis
+--MiG-23MLD                                 --MiG-23MLD
+--MiG-24RBT                                 --MiG-25RBT
+--MiG-25PD                                  --MiG-25PD
+--MiG-27K                                   --MiG-27K
+--MiG-29A                                   --MiG-29A
+--MiG-29S                                   --MiG-29S
+--MiG-31                                    --MiG-31
+--Mirage 2000-5                             --Mirage 2000-5
+--Su-17M4                                   --Su-17M4
+--Su-24M                                    --Su-24M
+--Su-24MR                                   --Su-24MR
+--Su-25                                     --Su-25
+--Su-25T                                    --Su-25T
+--Su-25TM                                   --Su-25TM
+--Su-27                                     --Su-27
+--Su-30                                     --Su-30
+--Su-33                                     --Su-33
+--Su-34                                     --Su34
+--Tornado GR4                               --Tornado GR4
+--Tornado IDS                               --Tornado IDS
+
+--==========================================================================================
+
+band_map = {
+    [I_BAND_RADAR] = DASHED,
+    [G_BAND_RADAR] = DOTTED,
+    [E_BAND_RADAR] = SOLID,
+}
+
+fan_song_variant = {}
+
+function get_fan_song_variant(unit_id)
+    if fan_song_variant[unit_id] == nil then
+        local number = math.mod(math.floor(unit_id / 256.0), 10)
+        
+        fan_song_variant[unit_id] = number > 3 and "E" or "G"
+    end
+    return fan_song_variant[unit_id]
+end
+
+function get_unit_type(unit_type, unit_id)
+    if unit_type == "SNR_75V" then
+        unit_type = unit_type .. get_fan_song_variant(unit_id)
+    end
+    return unit_type
+end
+
+-- Takes table with signal types and their audio params
+function get_closest_priority_sound(audio_table, signal)
+
+    while signal >= SIGNAL_SEARCH and audio_table[signal] == nil do
+        signal = signal - 1
+    end
+
+    return audio_table[signal]
+end
+
+function reset_audio()
+    for i1,v1 in pairs(emitter_default_sounds) do
+        
+        if v1 ~= nil then
+            for i2,v2 in ipairs(v1) do
+
+                if v2 ~= nil then
+                    v2:set(0.0)
+                end
+            end
+        end
+    end
+
+    for i1,v1 in pairs(emitter_info) do
+        for i2,v2 in ipairs(v1.audio) do
+			if v2 ~= nil then
+            	v2:set(0.0)
+			end
+        end
+    end
+
+end
+
+function trigger_light(lights, signal)
+    if lights == nil then
+        return
+    end
+
+    for i,light in pairs(lights) do
+        if light ~= nil and signal >= i then
+			local light_on = true
+			if light == LIGHT_SAM then
+				light_on = light_on and (rwr_apr27_status == 1)
+			end
+            apr25_lights[light] = (apr25_lights[light]) or light_on
+        end
+    end
+end
+
+function update_for_contact(general_type, type, signal, power)
+
+    power = calculate_volume(power * volume_prf_pos)
+
+    local info = emitter_info[type]
+
+    if info then
+        audio_param = get_closest_priority_sound(info.audio, signal)
+        if audio_param ~= nil then
+            audio_param:set(power)
+        end
+
+        trigger_light(info.lights, signal)
+    else
+        if emitter_default_sounds[general_type] ~= nil then
+            local audio_param = get_closest_priority_sound(emitter_default_sounds[general_type], signal)
+            if audio_param ~= nil then
+                audio_param:set(power)
+            end
+
+			if general_type ~= GENERAL_TYPE_EWR then
+				trigger_light({nil,LIGHT_REC}, signal)
+			end
+        end
+    end
+end
+
+function reset_lights()
+    for i,v in pairs(apr25_lights) do
+        apr25_lights[i] = false
+    end
+end
+
+function set_lights()
+    for i,v in pairs(apr25_lights) do
+        apr25_lights_params[i]:set(v and 1 or 0)
+    end
+end
+
+function update_new()
+    --debug_print_delay()
+
+    reset_audio()
+    reset_lights()
+    
+    if not get_elec_aft_mon_ac_ok() or not rwr_apr25_power == 1 or ALQ_MODE <= 1 or not ALQ_READY then
+        return
+    end
+
+
+	if BIT_TEST_STATE then
+		if BIT_TEST_REC_LIGHT_STATE then
+			update_for_contact(GENERAL_TYPE_SURFACE, "ZSU-23-4 Shilka", SIGNAL_LOCK, 1.0)
+		end
+	else
+
+		for i=1, num_contacts do
+
+			local power = rwr_api:get(i, "power")
+			if power > 0.0 and rwr_api:get(i, "time") < 3.0 then
+
+				local general_type = rwr_api:get(i, "general_type")
+				local raw_unit_type = rwr_api:get(i, "unit_type")
+				local unit_id = rwr_api:get(i,"source")
+				local type = get_unit_type(raw_unit_type, unit_id)
+				local signal = rwr_api:get(i, "signal")
+				local azimuth = rwr_api:get(i, "azimuth")
+				update_for_contact(general_type, type, signal, power)
+			end
+		end
+
+	end
+    set_lights()
+end
+
 
 local ECM_vis_param = get_param_handle("ECM_VIS")
 
@@ -160,29 +556,13 @@ local function hideECMPanel(hideECM)
     end
 end
 
+function calculate_volume(value)
+	return LinearTodB(((round(value/0.8,2))+1)*0.5)
+end
+
 function post_initialize()
 
 	HIDE_ECM = get_aircraft_property("HideECMPanel")
-	
-	--GetDevice(devices.RWR):set_power(true)			
---	print_message_to_user("Init - RWR")
-	
-	sndhost = create_sound_host("COCKPIT_RADAR_WARN","HEADPHONES",0,0,0)
-    --rwrLock = sndhost:create_sound("Aircrafts/A-4E-C/obsttone") 
-	--rwrLaunch = sndhost:create_sound("Aircrafts/A-4E-C/radarwarn") 
-	
-	
-	-- rwrLock 	= sndhost:create_sound("Aircrafts/A-4E-C/a4e-rwr-aaa-lo-loop") 
-	rwrLaunch 	= sndhost:create_sound("Aircrafts/A-4E-C/a4e-rwr-aaa-hi-loop") 
-	rwrHum		= sndhost:create_sound("Aircrafts/A-4E-C/a4e-rwr-hum-loop") 
-	
-	
-	rwrEsamSearch	= sndhost:create_sound("Aircrafts/A-4E-C/a4e-rwr-e-sam-hi-loop") 	--yes they are switched
-	rwrEsamLock		= sndhost:create_sound("Aircrafts/A-4E-C/a4e-rwr-e-sam-lo-loop") 	--yes they are switched
-	
-	rwrAAASearch	= sndhost:create_sound("Aircrafts/A-4E-C/a4e-rwr-ai-loop")							--("a4e-rwr-aaa-lo-loop") 
-	rwrAAALock		= sndhost:create_sound("Aircrafts/A-4E-C/a4e-rwr-aaa-lo-loop") 
-
 
 	-------------------------------------
 	-- BIRTH INITIALIZATION CODE
@@ -208,7 +588,7 @@ function post_initialize()
 end
 ---------------------------------
 function SetCommand(command,value)
-	--	print_message_to_user(command .. " / " ..value)
+		--print_message_to_user(command .. " / " ..value)
 	
 	-----------------
 	-- keys
@@ -352,135 +732,9 @@ function update()
 	else
 		GetDevice(devices.RWR):set_power(false)			
 	end
-
-	-- check PRF audio state
-	if (rwr_apr25_power == 1 and rwr_apr25_alq_audio == 0) or
-	(ALQ_MODE > 1 and ALQ_READY and rwr_apr25_alq_audio == 1) then
-		prf_audio_state = 1
-	else
-		prf_audio_state = 0
-	end
 	
 	
-	if get_elec_aft_mon_ac_ok() == true and ((rwr_apr25_power == 1) or (ALQ_MODE > 1)) then
-		local tmp_rwr_signal 	= 0
-		local tmp_rwr_type		= 0
-		local tmp_rwr_power		= 0
-		
-		local esam_search			= false
-		local aaa_search			= false
-		
-		--print_message_to_user("--------------------------")
-		for i = 1,maxcontacts do	
-			local tmp_sig  = rwr[i].signal_h:get()
-			local gen_tmp_type = rwr[i].general_type_h:get()
-			
-		--	print_message_to_user(i .. " / Signal: "..tmp_sig .. " / Type: "..rwr[i].general_type_h:get())
-			
-			if tmp_sig == 3 then			--We are launched on
-				tmp_rwr_signal = 3		
-				tmp_rwr_type = gen_tmp_type
-			elseif tmp_sig == 2 then
-				if tmp_rwr_signal < 2 then	--We are locked
-					tmp_rwr_signal = 2
-				end
-				tmp_rwr_type = gen_tmp_type
-			elseif tmp_sig == 1 then		--there is a radar energie source reaching our plane, but no STT
-				if tmp_rwr_signal < 1 then
-					tmp_rwr_signal = 1
-				end
-				if gen_tmp_type == 2 then
-					esam_search = true
-				elseif gen_tmp_type == 1 then
-					aaa_search = true
-				end
-				
-			end
-		end	
-		
-		-- print_message_to_user("tmp_rwr_signal "..tmp_rwr_signal)	--Just print 1/2/3 on the screen for debugging
-		-- print_message_to_user(rwr[1].general_type_h:get())
-		
-		if tmp_rwr_signal == 2 then
-			rwr_status_light_param:set(1)
-			if rwrLaunch:is_playing() then
-				rwrLaunch:stop()
-			end
-		elseif tmp_rwr_signal == 3 then
-			if rwr_status_light_param:get()==0 then
-				rwr_status_light_param:set(1)
-			else
-				rwr_status_light_param:set(0)
-			end
-				if not rwrLaunch:is_playing()  then
-					rwrLaunch:play_continue()
-					rwrLaunch:update(nil, volume_msl * rwr_apr27_status * 1, nil)
-				else
-					rwrLaunch:update(nil, volume_msl * rwr_apr27_status * 1, nil)
-				end
-			
-		elseif tmp_rwr_signal < 2 then
-			rwr_status_light_param:set(0)
-			
-			if rwrLaunch:is_playing() then
-				rwrLaunch:stop()
-			end
-			
-		end
-		
-		rwr_status_signal_param:set(tmp_rwr_signal)
-
-
-		-------------------------------
-		-- AUDIO UPDATES
-		-------------------------------
-		if not BIT_TEST_STATE then
-			check_search_played(esam_search,rwrEsamSearch,tmp_rwr_signal)	
-			check_search_played(aaa_search,rwrAAASearch,tmp_rwr_signal)
-			check_lock_played(tmp_rwr_signal,tmp_rwr_type)
-		else
-			-- audio tone for BIT test plays with REC light
-			if BIT_TEST_REC_LIGHT_STATE then
-				if not rwrAAALock:is_playing() then
-					rwrAAALock:play_continue()
-				end
-			else
-				rwrAAALock:stop()
-			end
-		end
-		
-		-- update volume for all sounds based on knob positions
-		if not rwrHum:is_playing() then
-			rwrHum:play_continue()
-			rwrHum:update(nil,volume_prf * prf_audio_state * 0.5,nil)
-		else
-			rwrHum:update(nil,volume_prf * prf_audio_state * 0.5,nil)
-		end
-			
-		if rwrEsamSearch:is_playing() then
-			rwrEsamSearch:update(nil,volume_prf * prf_audio_state * 1,nil)
-		end
-		if rwrEsamLock:is_playing() then
-			rwrEsamLock:update(nil,volume_prf * prf_audio_state * 1,nil)
-		end
-		if rwrAAASearch:is_playing() then
-			rwrAAASearch:update(nil,volume_prf * prf_audio_state * 1,nil)
-		end
-		if rwrAAALock:is_playing() then
-			rwrAAALock:update(nil,volume_prf * prf_audio_state * 1,nil)
-		end
-
-	else
-		rwrEsamSearch:stop()
-		rwrEsamLock:stop()
-		
-		rwrAAASearch:stop()
-		rwrAAALock:stop()
-		rwrHum:stop()
-		
-		rwrLaunch:stop()
-	
-	end	
+	update_new()
 	
     if rwr_inner_knob_moving ~= 0 then
 		dev:performClickableAction(device_commands.ecm_msl_alert_axis_inner, clamp(volume_prf_pos + rwr_inner_knob_moving * 0.01, -0.8, 0.8))
@@ -492,58 +746,6 @@ function update()
 
 	update_ALQ()
 	alq_bit_test()
-end
-
-
-
-
-function check_search_played(rwrtyp,snd,rwr_signal)
-
-	if rwrtyp then
-		if rwr_signal == 1 and not snd:is_playing() then
-			snd:play_continue()
-		end	
-	else
-		snd:stop()
-	end
-
-end
-
-function check_lock_played(tmp_rwr_signal,tmp_rwr_type)--(rwrtyp,snd,rwr_signal)
-
-	if tmp_rwr_type == 2 and (tmp_rwr_signal == 2 or tmp_rwr_signal == 3 ) then 	
-		if not rwrEsamLock:is_playing() then
-			rwrEsamLock:play_continue()
-		end
-		if rwrEsamSearch:is_playing() then
-			rwrEsamSearch:stop()
-		end
-		if rwrAAALock:is_playing() then
-			rwrAAALock:stop()
-		end
-		
-	end
-	if tmp_rwr_type == 1 and (tmp_rwr_signal == 2 or tmp_rwr_signal == 3 ) then 	
-		if not rwrAAALock:is_playing() then
-			rwrAAALock:play_continue()
-		end
-		if rwrAAASearch:is_playing() then
-			rwrAAASearch:stop()
-		end
-		if rwrEsamLock:is_playing() then
-			rwrEsamLock:stop()
-		end
-	end
-	
-	if tmp_rwr_signal < 2 then
-		if rwrEsamLock:is_playing() then
-			rwrEsamLock:stop()
-		end
-		if rwrAAALock:is_playing() then
-			rwrAAALock:stop()
-		end
-	
-	end
 end
 
 function update_ALQ()
@@ -608,20 +810,6 @@ function update_ALQ()
 				Light.ECM_NO_GO:set(0)
 
 			elseif not BIT_TEST_STATE then
-				-- turn on REC light if radar lock detected
-				if (rwr_status_signal_param:get() == 2 or rwr_status_signal_param:get() == 3) then
-					Light.ECM_REC:set(1)
-				else
-					Light.ECM_REC:set(0)
-				end
-
-				-- turn on SAM light if launched upon and APR-27 is ON
-				if rwr_status_signal_param:get() == 3 and rwr_apr27_status == 1 then
-					Light.ECM_SAM:set(1)
-				else
-					Light.ECM_SAM:set(0)
-				end
-
 				Light.ECM_STBY:set(0)
 				Light.ECM_RPT:set(0)
 				Light.ECM_TEST:set(0)
@@ -673,19 +861,10 @@ function update_ALQ()
 				
 			elseif not BIT_TEST_STATE then
 			-- turn on REC and RPT light if radar lock detected
-				if (rwr_status_signal_param:get() == 2 or rwr_status_signal_param:get() == 3) then
-					Light.ECM_REC:set(1)
+				if apr25_lights[LIGHT_REC] then
 					Light.ECM_RPT:set(1)
 				else
-					Light.ECM_REC:set(0)
 					Light.ECM_RPT:set(0)
-				end
-
-				-- turn on SAM light if launched upon and APR-27 is ON
-				if rwr_status_signal_param:get() == 3 and rwr_apr27_status == 1 then
-					Light.ECM_SAM:set(1)
-				else
-					Light.ECM_SAM:set(0)
 				end
 
 				Light.ECM_STBY:set(0)

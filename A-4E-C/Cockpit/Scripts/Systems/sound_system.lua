@@ -294,7 +294,34 @@ function post_initialize()
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsSpeedbrakeMove", "SND_CONT_HYD_MOV", SOUND_CONTINUOUS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_HydraulicsSpeedbrakeStop", "SND_INST_HYD_STOP", SOUND_ONCE),
 
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/obsttone", "D_GLARE_OBST", SOUND_CONTINUOUS, nil, nil, nil, nil, "APG53_OBST_VOLUME")
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/obsttone", "D_GLARE_OBST", SOUND_CONTINUOUS, nil, nil, nil, nil, "APG53_OBST_VOLUME"),
+
+        --APR-25 RWR SOUNDS
+        -- system sounds
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-rwr-hum-loop", "RWR_HUM", SOUND_ALWAYS),
+        -- generic sounds
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_ewr", "RWR_EWR", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_ship_default_lo", "RWR_SHIP_DEFAULT_LO", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_ship_default_hi", "RWR_SHIP_DEFAULT_HI", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_ai_default", "RWR_AI_GENERAL", SOUND_ALWAYS),
+        -- specific radar sounds
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_aaa_fire_can_son9", "RWR_AAA_FIRECAN_SON9", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa2_flatface", "RWR_SA2_SEARCH", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa2_fansong_e_lo", "RWR_SA2_E_LO", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa2_fansong_e_hi", "RWR_SA2_E_HI", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa2_fansong_g_lo", "RWR_SA2_G_LO", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa2_fansong_g_hi", "RWR_SA2_G_HI", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-rwr-aaa-hi-loop", "RWR_SA2_G_LAUNCH", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-rwr-i-sam-lo-loop", "RWR_SA3_LO", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa5_tinshield", "RWR_SA5_SEARCH", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa5_squarepair_lo", "RWR_SA5_LO", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa5_squarepair_hi", "RWR_SA5_HI", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa6_straightflush_lo", "RWR_SA6_LO", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa6_straightflush_hi", "RWR_SA6_HI", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_vehicle_gepard", "RWR_VEHICLE_GEPARD", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_vehicle_shilka", "RWR_VEHICLE_SHILKA", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_vehicle_vulcan", "RWR_VEHICLE_VULCAN", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_aircraft_search", "RWR_AI_SEARCH", SOUND_ALWAYS),
 
     }
 
