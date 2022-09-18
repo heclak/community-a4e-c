@@ -10,8 +10,8 @@ cdata =
 	A4E_TRIMSPEED_RUDDER_LABEL         		= _('Rudder Trim Speed'),
 	A4E_TRIM_SPEED_SLIDER_HELP        		= _('Trim speeds for pitch, roll, and rudder (Default: 100%)'),
 
-	A4E_THROTTLE_RATE_LABEL	        		= _('Throttle Rate'),
-	A4E_THROTTLE_RATE_HELP	        		= _('Percentage rate of change for Throttle Position Increment/Decrement (Default: 2.5%)'),
+	A4E_THROTTLE_RATE_LABEL	        		= _('Throttle Increment'),
+	A4E_THROTTLE_RATE_HELP	        		= _('Amount of change applied by Throttle Position - Increment/Decrement inputs (Default: 2.5%)'),
 
 --	A4E_CATLAUNCHMODE_LABEL           		= _('Catapult Launch Mode'),
 --	A4E_CATLAUNCHMODE_HELP            		= _('Launch the catapult when throttle at MIL POWER.'),
@@ -24,14 +24,14 @@ cdata =
 --	A4E_EXPERIMENTAL_EFM_CHECK_HELP   		= _('Should the A-4E-C use the experimental external flight model or the simple flight model.'),
 
 	A4E_COCKPIT_SHAKE_SLIDER_LABEL 	  		= _('Cockpit Shake'),
-	A4E_COCKPIT_SHAKE_SLIDER_HELP	  		= _('Cockpit and head position shake (Default: 100%)'),
+	A4E_COCKPIT_SHAKE_SLIDER_HELP	  		= _('Amount of cockpit and head position shake effect experienced (Default: 100%)'),
 
 	A4E_COCKPIT_CSS_LABEL			  		= _('FFB CSS Mode Deflection'),
-	A4E_COCKPIT_CSS_HELP			  		= _('Stick deflection percentage at which AFCS switches to Control Stick Steering (FFB sticks only)'),
+	A4E_COCKPIT_CSS_HELP			  		= _('Force Feedback Stick deflection point at which AFCS switches to Control Stick Steering (Default: 15%)'),
 
 	A4E_WHEEL_BRAKE_ASSIST_CHECK_LABEL 		= _('Simple Braking (Rudder-Assisted)'),
 	A4E_WHEEL_BRAKE_ASSIST_CHECK_TOOLTIP 	= _('Simple Braking Enabled'),
-	A4E_WHEEL_BRAKE_ASSIST_CHECK_HELP  		= _('When enabled, Wheel Brake applies Left and Right Wheelbrakes in proportion to rudder input'),
+	A4E_WHEEL_BRAKE_ASSIST_CHECK_HELP  		= _('When enabled, Wheel Brake input applies Left and Right Wheelbrakes in proportion to rudder input'),
 
 	A4E_OLD_RADAR_CHECK_LABEL 				= _('AN/APG-53A Radar Legacy Mode'),
 	A4E_OLD_RADAR_CHECK_TOOLTIP 			= _('AN/APG-53A Radar Legacy Mode Enabled'),
