@@ -696,11 +696,11 @@ join(res.axisCommands,{
     {action = device_commands.shrike_sidewinder_volume, cockpit_device_id = devices.WEAPON_SYSTEM,      name = _('Shrike/Sidewinder Volume Knob'),              category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
 
     -- Radar Indicator
-    --{action = device_commands.radar_storage_axis, cockpit_device_id = devices.RADAR,                    name = _('Radar Indicator Storage Knob'),               category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
-    --{action = device_commands.radar_brilliance_axis, cockpit_device_id = devices.RADAR,                 name = _('Radar Indicator Brilliance Knob'),            category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
-    --{action = device_commands.radar_detail_axis, cockpit_device_id = devices.RADAR,                     name = _('Radar Indicator Detail Knob'),                category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
-    --{action = device_commands.radar_gain_axis, cockpit_device_id = devices.RADAR,                       name = _('Radar Indicator Gain Knob'),                  category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
-    --{action = device_commands.radar_reticle_axis, cockpit_device_id = devices.RADAR,                    name = _('Radar Indicator Reticle Knob'),               category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {action = device_commands.radar_storage_axis, cockpit_device_id = devices.RADAR,                    name = _('Radar Indicator Storage Knob'),               category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {action = device_commands.radar_brilliance_axis, cockpit_device_id = devices.RADAR,                 name = _('Radar Indicator Brilliance Knob'),            category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {action = device_commands.radar_detail_axis, cockpit_device_id = devices.RADAR,                     name = _('Radar Indicator Detail Knob'),                category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {action = device_commands.radar_gain_axis, cockpit_device_id = devices.RADAR,                       name = _('Radar Indicator Gain Knob'),                  category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    {action = device_commands.radar_reticle_axis, cockpit_device_id = devices.RADAR,                    name = _('Radar Indicator Reticle Knob'),               category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
 
     -- Radar Control Panel
     {action = device_commands.radar_angle_axis, cockpit_device_id = devices.RADAR,                      name = _('AN/APG-53A Radar Antenna Tilt - Slew'),       category = {_('Console Left'), _('Radar Control Panel'), _('AN/APG-53A Radar')}},
