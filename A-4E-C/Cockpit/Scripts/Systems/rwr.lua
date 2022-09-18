@@ -205,7 +205,8 @@ emitter_default_sounds = {
         [SIGNAL_SEARCH] = get_param_handle("RWR_EWR"), -- 7.5-second low growl pulse
     },
     [GENERAL_TYPE_AIRCRAFT] = {
-        [SIGNAL_SEARCH] = get_param_handle("RWR_AI_GENERAL"), -- Solid tone (I-band)
+        [SIGNAL_SEARCH] = get_param_handle("RWR_AI_SEARCH"),
+        [SIGNAL_LOCK] = get_param_handle("RWR_AI_GENERAL"), -- Solid tone (I-band)
     },
     [GENERAL_TYPE_SURFACE] = {
         --No default, creates too many false positives
@@ -336,12 +337,15 @@ add_emitter("ZSU-23-4 Shilka", E_BAND_RADAR, 0.7, {LIGHT_REC,LIGHT_REC}, {"RWR_V
 --AIRCRAFT                                  --EMITTER ID                    --BAND (NATO)
 --==========================================================================================
 --A-50                                      --A-50
+add_emitter("A-50", E_BAND_RADAR, 1.0, nil, {"RWR_EWR"})
 --AJS37                                     --AJS37
 --AV-8B N/A                                 --AV8BNA
 --C-101CC                                   --C-101CC
 --C-101EB                                   --C-101EB
 --E-2D                                      --E-2C                          --Yes, not a typo!
+add_emitter("E-2C", E_BAND_RADAR, 1.0, nil, {"RWR_EWR"})
 --E-3A                                      --E-3A
+add_emitter("E-3A", E_BAND_RADAR, 1.0, nil, {"RWR_EWR"})
 --F-4E                                      --F-4E
 --F-5E                                      --F-5E
 --F-5E-3                                    --F-5E-3
@@ -427,8 +431,8 @@ end
 function reset_audio()
     for i1,v1 in pairs(emitter_default_sounds) do
         
-        if v ~= nil then
-            for i2,v2 in ipairs(v) do
+        if v1 ~= nil then
+            for i2,v2 in ipairs(v1) do
 
                 if v2 ~= nil then
                     v2:set(0.0)
@@ -439,7 +443,9 @@ function reset_audio()
 
     for i1,v1 in pairs(emitter_info) do
         for i2,v2 in ipairs(v1.audio) do
-            v2:set(0.0)
+			if v2 ~= nil then
+            	v2:set(0.0)
+			end
         end
     end
 
@@ -463,7 +469,7 @@ end
 
 function update_for_contact(general_type, type, signal, power)
 
-    power = power * volume_prf
+    power = calculate_volume(power * volume_prf_pos)
 
     local info = emitter_info[type]
 
@@ -480,6 +486,10 @@ function update_for_contact(general_type, type, signal, power)
             if audio_param ~= nil then
                 audio_param:set(power)
             end
+
+			if general_type ~= GENERAL_TYPE_EWR then
+				trigger_light({nil,LIGHT_REC}, signal)
+			end
         end
     end
 end
@@ -544,6 +554,10 @@ local function hideECMPanel(hideECM)
             clickable_ref:hide(0)
         end
     end
+end
+
+function calculate_volume(value)
+	return LinearTodB(((round(value/0.8,2))+1)*0.5)
 end
 
 function post_initialize()

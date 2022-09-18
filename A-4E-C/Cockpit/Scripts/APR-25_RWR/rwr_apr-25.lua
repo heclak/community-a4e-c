@@ -48,7 +48,6 @@ GENERAL_TYPE_AIRCRAFT = 1
 GENERAL_TYPE_SURFACE = 2
 GENERAL_TYPE_SHIP = 3
 
-<<<<<<< HEAD
 --Lights
 LIGHT_SAM = 1
 LIGHT_REC = 2
@@ -63,8 +62,6 @@ apr25_lights = {
     [LIGHT_REC] = false,
 }
 
-=======
->>>>>>> c1451e20245f117b2f401c7649925d52b0f063c9
 --source returns the unique unit id.
 --power is between 0 and 1
 --priority some abstract priority number on the order of hundreds
@@ -90,27 +87,20 @@ emitter_default_sounds = {
     },
 }
 
-<<<<<<< HEAD
 function add_emitter(name, band, gain, lights, sounds)
-=======
-function add_emitter(name, band, gain, search, lock, launch)
->>>>>>> c1451e20245f117b2f401c7649925d52b0f063c9
     emitter_info[name] = {
         band = band,
         gain = gain,
         audio = {
-<<<<<<< HEAD
             [SIGNAL_SEARCH] = get_param_handle(sounds[1]),
             [SIGNAL_LOCK] = get_param_handle(sounds[2]),
             [SIGNAL_LAUNCH] = get_param_handle(sounds[3]),
         },
         lights = lights,
-=======
             [SIGNAL_SEARCH] = get_param_handle(search),
             [SIGNAL_LOCK] = get_param_handle(lock),
             [SIGNAL_LAUNCH] = get_param_handle(launch),
         }
->>>>>>> c1451e20245f117b2f401c7649925d52b0f063c9
     }
 end
 
@@ -146,15 +136,9 @@ end
 --MCC-SR Sborka "Dog Ear" SR                --Dog Ear radar                 --F/G
 --SAM Hawk SR (AN/MPQ-50)                   --Hawk sr                       --H/I/J
 --SAM SA-2/3/5 P19 "Flat Face" SR           --p-19 s-125 sr                 --E/F, 12s rotation
-<<<<<<< HEAD
 add_emitter("p-19 s-125 sr", E_BAND_RADAR, 1.0, nil, {"RWR_SA2_SEARCH"})
 --SAM SA-5 S-200 ST-68U "Tin Shield" SR     --RLS_19J6                      --E/F, 6/12s rotation
 add_emitter("RLS_19J6", E_BAND_RADAR, 1.0, nil, {"RWR_SA5_SEARCH"})
-=======
-add_emitter("p-19 s-125 sr", E_BAND_RADAR, nil, "RWR_SA2_SEARCH")
---SAM SA-5 S-200 ST-68U "Tin Shield" SR     --RLS_19J6                      --E/F, 6/12s rotation
-add_emitter("RLS_19J6", E_BAND_RADAR, nil, "RWR_SA5_SEARCH")
->>>>>>> c1451e20245f117b2f401c7649925d52b0f063c9
 --SAM SA-10 S-300 "Grumble" Clam Shell SR   --S-300PS 40B6MD sr             --E/F
 --SAM SA-10 S-300 "Grumble" Big Bird SR     --S-300PS 64H6E s               --E/F
 --SAM SA-11 Buk "Gadfly" Snow Drift SR      --SA-11 Buk SR 9S18M1           --E
@@ -169,7 +153,6 @@ add_emitter("RLS_19J6", E_BAND_RADAR, nil, "RWR_SA5_SEARCH")
 --SAM Linebacker - Bradley M6               --M6 Linebacker                 --H/I
 --SAM Rapier Blindfire TR                   --rapier_fsa_blindfire_radar    --F
 --SAM SA-2 S-75 "Fan Song" TR               --SNR_75V                       --E/G variants assigned below
-<<<<<<< HEAD
 add_emitter("SNR_75VE", E_BAND_RADAR, 1.0, {LIGHT_REC,LIGHT_REC,LIGHT_SAM}, {"RWR_SA2_E_LO", "RWR_SA2_E_HI"})
 add_emitter("SNR_75VG", G_BAND_RADAR, 1.0, {LIGHT_REC,LIGHT_REC,LIGHT_SAM}, {"RWR_SA2_G_LO", "RWR_SA2_G_LO", "RWR_SA2_G_LAUNCH"})
 --SAM SA-3 S-125 "Low Blow" TR              --snr s-125 tr                  --E
@@ -178,16 +161,6 @@ add_emitter("snr s-125 tr", E_BAND_RADAR, {LIGHT_REC,LIGHT_REC}, 1.0, {"RWR_SA3_
 add_emitter("RPC_5N62V", I_BAND_RADAR, 1.0, {LIGHT_REC,LIGHT_REC}, {"RWR_SA5_LO", "RWR_SA5_HI"})
 --SAM SA-6 Kub "Straight Flush" STR         --Kub 1S91 str                  --I
 add_emitter("Kub 1S91 str", I_BAND_RADAR, 1.0, {LIGHT_REC,LIGHT_REC}, {"RWR_SA6_LO", "RWR_SA6_HI"})
-=======
-add_emitter("SNR_75VE", E_BAND_RADAR, 1.0, "RWR_SA2_E_LO", "RWR_SA2_E_HI")
-add_emitter("SNR_75VG", G_BAND_RADAR, 1.0, "RWR_SA2_G_LO", "RWR_SA2_G_LO", "RWR_SA2_G_LAUNCH")
---SAM SA-3 S-125 "Low Blow" TR              --snr s-125 tr                  --E
-add_emitter("snr s-125 tr", E_BAND_RADAR, 1.0, "RWR_SA3_LO")
---SAM SA-5 S-200 "Square Pair" TR           --RPC_5N62V                     --I
-add_emitter("RPC_5N62V", I_BAND_RADAR, 1.0, "RWR_SA5_LO", "RWR_SA5_HI")
---SAM SA-6 Kub "Straight Flush" STR         --Kub 1S91 str                  --I
-add_emitter("Kub 1S91 str", I_BAND_RADAR, 1.0, "RWR_SA6_LO", "RWR_SA6_HI")
->>>>>>> c1451e20245f117b2f401c7649925d52b0f063c9
 --SAM SA-8 Osa "Gecko" TEL                  --Osa 9A33 ln                   --I
 --SAM SA-9 Strela 1 "Gaskin" TEL            --Strela-1 9P31                 --E/F
 --SAM SA-10 S-300 "Grumble" Flap Lid TR     --S-300PS 40B6M tr              --H/I/J
@@ -200,19 +173,11 @@ add_emitter("Kub 1S91 str", I_BAND_RADAR, 1.0, "RWR_SA6_LO", "RWR_SA6_HI")
 --VEHICLES                                  --EMITTER ID                    --BAND (NATO)
 --==========================================================================================
 --SPAAA Gepard                              --Gepard                        --E
-<<<<<<< HEAD
 add_emitter("Gepard", E_BAND_RADAR, 0.7, {LIGHT_REC,LIGHT_REC}, {"RWR_VEHICLE_GEPARD"})
 --SPAAA Vulcan M163                         --Vulcan                        --E
 add_emitter("Vulcan", E_BAND_RADAR, 0.7, {LIGHT_REC,LIGHT_REC}, {"RWR_VEHICLE_VULCAN"})
 --SPAAA ZSU-23-4 Shilka "Gun Dish"          --ZSU-23-4 Shilka               --E
 add_emitter("ZSU-23-4 Shilka", E_BAND_RADAR, 0.7, {LIGHT_REC,LIGHT_REC}, {"RWR_VEHICLE_SHILKA"})
-=======
-add_emitter("Gepard", E_BAND_RADAR, 0.7, "RWR_VEHICLE_GEPARD")
---SPAAA Vulcan M163                         --Vulcan                        --E
-add_emitter("Vulcan", E_BAND_RADAR, 0.7, "RWR_VEHICLE_VULCAN")
---SPAAA ZSU-23-4 Shilka "Gun Dish"          --ZSU-23-4 Shilka               --E
-add_emitter("ZSU-23-4 Shilka", E_BAND_RADAR, 0.7, "RWR_VEHICLE_SHILKA")
->>>>>>> c1451e20245f117b2f401c7649925d52b0f063c9
 
 --==========================================================================================
 --SHIPS                                     --EMITTER ID                    --BAND (NATO)
@@ -427,7 +392,6 @@ function reset_audio()
 
 end
 
-<<<<<<< HEAD
 function trigger_light(lights, signal)
     if lights == nil then
         return
@@ -441,13 +405,6 @@ function trigger_light(lights, signal)
 end
 
 function update_for_contact(general_type, type, signal, power)
-=======
-function update_audio(general_type, type, signal, power)
-
-    if not apr25_audio then
-        return
-    end
->>>>>>> c1451e20245f117b2f401c7649925d52b0f063c9
 
     power = power * apr25_volume
 
@@ -458,11 +415,8 @@ function update_audio(general_type, type, signal, power)
         if audio_param ~= nil then
             audio_param:set(power)
         end
-<<<<<<< HEAD
 
         trigger_light(info.lights, signal)
-=======
->>>>>>> c1451e20245f117b2f401c7649925d52b0f063c9
     else
         if emitter_default_sounds[general_type] ~= nil then
             local audio_param = get_closest_priority_sound(emitter_default_sounds[general_type], signal)
@@ -556,7 +510,6 @@ function debug_print_delay()
     debug_print()
 end
 
-<<<<<<< HEAD
 function reset_lights()
     for i,v in pairs(apr25_lights) do
         apr25_lights[i] = false
@@ -580,13 +533,6 @@ function update_new()
 
     reset_audio()
     reset_lights()
-=======
-function update()
-    --debug_print_delay()
-
-    rwr_api:reset()
-    reset_audio()
->>>>>>> c1451e20245f117b2f401c7649925d52b0f063c9
     
     if not get_elec_aft_mon_ac_ok() or not apr25_power then
         return
@@ -606,7 +552,6 @@ function update()
             local signal = rwr_api:get(i, "signal")
             local azimuth = rwr_api:get(i, "azimuth")
             
-<<<<<<< HEAD
             update_for_contact(general_type, type, signal, power)
 
             if draw_enabled then
@@ -629,25 +574,6 @@ function update()
     end
 
     set_lights()
-=======
-            update_emitter_position(i, power, azimuth, unit_id)  
-            update_audio(general_type, type, signal, power)
-
-            local band, radar_gain = get_radar_band(general_type, type)
-            local line_type = band_map[band]
-
-            if line_type ~= nil then
-
-                power = (emitter_pos[i].r + get_power_variation()) * radar_gain
-                if should_draw(signal, raw_unit_type, band) then
-                    rwr_api:set(emitter_pos[i].a + get_azimuth_variation(), power, line_type)
-                end
-            end
-        else
-            reset_emitter_position(i)
-        end
-    end
->>>>>>> c1451e20245f117b2f401c7649925d52b0f063c9
 end
 
 function bit(band)
@@ -669,8 +595,4 @@ function bit_e_band()
     bit(SOLID)
 end
 
-<<<<<<< HEAD
-need_to_be_closed = true -- close lua state after initialization
-=======
 need_to_be_closed = false -- close lua state after initialization
->>>>>>> c1451e20245f117b2f401c7649925d52b0f063c9

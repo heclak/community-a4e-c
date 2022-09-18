@@ -88,12 +88,8 @@ creators[devices.NVG]             = {"avNightVisionGoggles"  ,LockOn_Options.scr
 creators[devices.EFM_DATA_BUS]		= {"avLuaDevice", LockOn_Options.script_path.."EFM_Data_Bus.lua"}
 creators[devices.MCL]             = {"avLuaDevice", LockOn_Options.script_path.."Nav/ara63_mcl.lua"}
 creators[devices.ADI_AJB3A]       = {"avLuaDevice", LockOn_Options.script_path.."Systems/adi_ajb3a.lua"}
-<<<<<<< HEAD
 creators[devices.NVG_CONTROLS]       = {"avLuaDevice", LockOn_Options.script_path.."HELMET/NVG_Controls.lua"}
 --creators[devices.RWR_APR25]       = {"avLuaDevice"           ,LockOn_Options.script_path.."APR-25_RWR/rwr_apr-25.lua"}
-=======
-creators[devices.RWR_APR25]       = {"avLuaDevice"           ,LockOn_Options.script_path.."APR-25_RWR/rwr_apr-25.lua"}
->>>>>>> c1451e20245f117b2f401c7649925d52b0f063c9
 
 -- creators[devices.TEST]        = {"avLuaDevice"                        ,LockOn_Options.script_path.."test_device.lua"}
 -- creators[devices.ADI]         = {"avBaseIKP"                          ,LockOn_Options.script_path.."adi.lua"}

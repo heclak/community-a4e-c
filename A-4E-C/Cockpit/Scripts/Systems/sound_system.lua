@@ -318,6 +318,7 @@ function post_initialize()
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_vehicle_gepard", "RWR_VEHICLE_GEPARD", SOUND_ALWAYS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_vehicle_shilka", "RWR_VEHICLE_SHILKA", SOUND_ALWAYS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_vehicle_vulcan", "RWR_VEHICLE_VULCAN", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_aircraft_search", "RWR_AI_SEARCH", SOUND_ALWAYS),
 
     }
 
