@@ -58,20 +58,23 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Operational-era USN and USMC liveries now have a customized, well-worn LAU-10 launcher.
 - **Weapons and Loadouts:**
 - **Quality of Life:**
-  - Input options across the module can now be bound to mouse buttons.
-  - Single and else inputs for AN/ARN-52 TACAN Mode switch.
+  - Axis input for AN/ARN-52 TACAN Volume Knob.
+  - Single inputs for AN/ARN-52 TACAN Mode switch.
+  - Axis inputs for AN/APG-53A Radar Indicator Storage, Brilliance, Detail, Gain, and Reticle Knobs.
   - Single and else inputs for Throttle Position Lock.
   - Single inputs for the Canopy Lever. *(thanks Tanuki44)*
   - Single inputs for the AWRS Quantity Selector Switch, AWRS Drop Interval Knob, and AWRS Mode Selector Switch.
-  - When the aircraft has power, the Seat Adjustment Switch to move the baseline pilot head position up and down in the cockpit. *(thanks nima3333)*
+  - Input options across the module can now be bound to mouse buttons.
+  - When the aircraft has power, the Seat Adjustment Switch can be used to move the baseline pilot head position up and down in the cockpit. *(thanks nima3333)*
 - **Sounds:**
-  - Seat adjustment hydraulic motor.
-  - Tire skid sound set.
-  - AN/APR-25:
+  - AN/APR-25 Radar Homing Warning System:
+    - AAA: New sounds are produced in response to Fire Can SON-9 fire director radar.
     - Aircraft: New sounds are produced in response to aircraft search and tracking radars.
     - EWRs and Ships: Unique sound sets are produced in response to ground and ship EWRs. A new sound is also produced in response to ship tracking radars.
-    - SAMs: New sounds are produced in response to P19 "Flat Face" and S-200 ST-68U "Tin Shield" and SA-2 S-75 "Fan Song" units. A percentage of Fan Song units will sound different, simulating the different radar bands used in the field. New sounds are also produced in response to SA-3 S-125 "Low Blow", SA-5 S-200 "Square Pair", and SA-6 Kub "Straight Flush" units. When the APR-25 Audio switch is in the ON position, a new alert sound is produced in response to missile launches from these units. Search and tracking radars for SA-8, SA-9, SA-10, SA-11, SA-13, SA-15 and SA-19 units are not detected by the system.
-    - SPAAA Vehicles: New sounds are produced in response to the Gepard, Vulcan M163, and ZSU-23-4 Shilka "Gun Dish" units.
+    - SAMs: New sounds are produced in response to P19 "Flat Face" and S-200 ST-68U "Tin Shield" and SA-2 S-75 "Fan Song" sarch and tracking radars. Some Fan Song units will sound different, simulating the sound of different radar bands used in the field. New sounds are also produced in response to SA-3 S-125 "Low Blow", SA-5 S-200 "Square Pair", and SA-6 Kub "Straight Flush" units. Search and tracking radars for SA-8, SA-9, SA-10, SA-11, SA-13, SA-15 and SA-19 units are not detected by the system. When the APR-25 Audio switch is in the ON position, a new alert sound is produced in response to detected missile launches. 
+    - SPAAA Vehicles: New sounds are produced in response to the Gepard, Vulcan M163, and ZSU-23-4 Shilka "Gun Dish" radars.
+  - Tire skid sound set.
+  - Seat adjustment hydraulic motor.
 
 #### Fixed
 - **Flight Model:**
@@ -84,9 +87,9 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 - **Quality of Life:**
   - Throttle Increment and Throttle Decrement inputs function properly. A new slider in the special menu is available to adjust throttle rate for these inputs from 1 to 5%.
   - Kneeboard:
-    - 300 gallon tanks on the center pylon enumerate properly on the kneeboard loadout page.
-    - Fixed several typos and erroneous procedures for air refueling and ground radar.
-    - Waypoints on the navigation page enumerate to 11, and can't overrun the instructions on the page.
+    - 300 gallon tanks on the center pylon enumeration on the kneeboard loadout page.
+    - Waypoints on the navigation page enumerate 11 waypoints, and can't overrun the instructions on the page.
+    - Corrected erroneous procedures for air refueling and ground radar.
   - VR hand positions: Users are encouraged to enable *Use Hand Controllers*, *Hand controllers use Cockpit Stick*, and *Hand Controllers use Cockpit Throttle*, and *Hand Interaction Only When Palm Grip is Obtained*. Be aware that it is easy to accidently power down the engine if you touch it with your virtual index finger while holding the grip button. Always approach the throttle with your finger above it.
 - **Sounds:**
 
@@ -94,7 +97,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 - **Flight Model:**
 - **Systems:**
 - **Missions:**
-  - Changed a few liveries in the mission set to better reflect available livery sets.
+  - Changed a few liveries in the included mission sets to better reflect available livery sets.
 - **Liveries:**
   - Unmarked and Community A-4E liveries are now available to a wider selection of countries.
   - Updated USN VC-1 Challengers.
