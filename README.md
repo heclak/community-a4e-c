@@ -50,9 +50,9 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 - **Flight Model:**
 - **Systems:**
   - AN/APR-23 RHWS (ECM)
-    - When the system is set to REC and the APR-25 Switch is in the ON position, the PRF Volume Knob will adjust a baseline hum and audio from contacts with various radars.
-    - When the APR-27 switch is in the ON position, detected missile launches will play an oscillating alert tone. You can adjust the volume using the Missile Volume Knob.
-    - The system's bit test is available to perform. With the system set to REC, press the APR-27 Test button.
+    - When the system is set to REC and the APR-25 Switch is in the ON position, a baseline hum and response audio from a wide variety of radar-equipped units at a volume determined by the the (inner) AN/APR-23 PRF Volume knob.
+    - When the APR-27 Switch is in the ON position, detected missile launches will plays an oscillating alert tone at a volume determined by the (outer) AN/APR-23 Missile Alert Volume knob.
+    - The system's bit test is available to perform. With the system set to REC, press the APR-27 Test button to initiate the bit test.
 - **Missions:**
 - **Liveries:**
   - Community A-4E V: Blue Team, 2022 (Fictional)
@@ -68,6 +68,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Single and else inputs for Throttle Position Lock.
   - Single inputs for the Canopy Lever. *(thanks Tanuki44)*
   - Single inputs for the AWRS Quantity Selector Switch, AWRS Drop Interval Knob, and AWRS Mode Selector Switch.
+  - Inputs for APR-27 Test and APR-27 Light buttons.
   - Input options across the module can now be bound to mouse buttons.
   - When the aircraft has power, the Seat Adjustment Switch can be used to move the baseline pilot head position up and down in the cockpit. *(thanks nima3333)*
 - **Sounds:**
@@ -112,7 +113,9 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Differential wheelbrake inputs default inputs are changed to LCTRL+W (left) and LALT+W (right).
   - The controls indicator's nosewheel caster indicator now displays logarithmically, making it easier to see those early castering changes and reflect nosewheel sensetivity to turn rate more naturalistically. *(thanks, Drofseh)*.
   - Trim speed settings in the special menu are now adjustable by individually for pitch, roll and yaw, with percentage sliders for each instead of presets from a drop-down. *(thanks Drofseh)*
+  - Refactored the special menu for easier editing in the future.
 - **Sounds:**
+  - Improved input response and dynamic range of AN/APR-23 PRF Volume, AN/APR-23 Missile Alert Volume, PRF Volume, Shrike/Sidewinder Volume, and TACAN Volume knobs.
 
 [See full changelog](https://github.com/heclak/community-a4e-c/blob/master/CHANGELOG.md)
 
