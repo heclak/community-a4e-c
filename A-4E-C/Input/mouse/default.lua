@@ -152,6 +152,8 @@ keyCommands = {
     {down = Keys.ecm_InnerKnobDec,                                                                                                                      name = _('PRF Volume - Rotary Decrement'),              category = {_('AN/APR-23 RHWS (ECM)')}},
     {down = Keys.ecm_InnerKnobStartUp, up = Keys.ecm_InnerKnobStop,                                                                                     name = _('PRF Volume - Continuous Increase'),           category = {_('AN/APR-23 RHWS (ECM)')}},
     {down = Keys.ecm_InnerKnobStartDown, up = Keys.ecm_InnerKnobStop,                                                                                   name = _('PRF Volume - Continuous Decrease'),           category = {_('AN/APR-23 RHWS (ECM)')}}, 
+    {down = device_commands.ecm_systest_upper, up = device_commands.ecm_systest_upper, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.RWR,   name = _('APR-27 Test'),                            category = {_('AN/APR-23 RHWS (ECM)')}}, 
+    {down = device_commands.ecm_systest_lower, up = device_commands.ecm_systest_lower, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.RWR,   name = _('APR-27 Light'),                           category = {_('AN/APR-23 RHWS (ECM)')}}, 
 
     ---------------------------------------------
     -- Instrument Panel -------------------------

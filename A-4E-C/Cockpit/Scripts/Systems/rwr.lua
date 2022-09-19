@@ -11,6 +11,7 @@ dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.common_script_path.."devices_defs.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."APR-25_RWR/rwr_apr-25_api.lua")
+dofile(LockOn_Options.script_path.."sound_params.lua")
 
 device_timer_dt     = 0.02  	--0.2  	
 --local update_rate 	= 0.2
@@ -275,6 +276,8 @@ add_emitter("RLS_19J6", E_BAND_RADAR, 1.0, nil, {"RWR_SA5_SEARCH"})
 --==========================================================================================
 --TRACKING RADARS                           --EMITTER ID                    --BAND (NATO)
 --==========================================================================================
+--AAA SON Fire Can							--SON_9							--E
+add_emitter("SON_9", E_BAND_RADAR, 0.7, {LIGHT_REC,LIGHT_REC}, {"RWR_AAA_FIRECAN_SON9"})
 --SAM Avenger (Stinger)                     --M1097 Avenger                 --H/I
 --SAM Chaparral M48                         --M48 Chaparral                 --D
 --SAM Hawk TR (AN/MPQ-46)                   --Hawk tr                       --J (HPIR)
@@ -469,9 +472,11 @@ end
 
 function update_for_contact(general_type, type, signal, power)
 
-    power = calculate_volume(power * volume_prf_pos)
+    power = calculate_volume(power * volume_prf)
 
     local info = emitter_info[type]
+
+	--print_message_to_user(type)
 
     if info then
         audio_param = get_closest_priority_sound(info.audio, signal)
@@ -511,17 +516,26 @@ function update_new()
 
     reset_audio()
     reset_lights()
-    
-    if not get_elec_aft_mon_ac_ok() or not rwr_apr25_power == 1 or ALQ_MODE <= 1 or not ALQ_READY then
+
+	sound_params.snd_alws_rwr_hum:set(0)
+	sound_params.snd_cont_rwr_msl_volume:set(volume_msl)
+	
+    if not get_elec_aft_mon_ac_ok() or rwr_apr25_power ~= 1 or ALQ_MODE <= 1 or not ALQ_READY then
         return
     end
 
+	if ALQ_MODE >= 2 then
+		sound_params.snd_alws_rwr_hum:set(volume_prf)
+	end
 
 	if BIT_TEST_STATE then
 		if BIT_TEST_REC_LIGHT_STATE then
 			update_for_contact(GENERAL_TYPE_SURFACE, "ZSU-23-4 Shilka", SIGNAL_LOCK, 1.0)
-		end
+	end
 	else
+
+		--temporary test launch signal
+		--update_for_contact(GENERAL_TYPE_SURFACE, "SNR_75VG", SIGNAL_LAUNCH, volume_msl)
 
 		for i=1, num_contacts do
 
@@ -557,7 +571,7 @@ local function hideECMPanel(hideECM)
 end
 
 function calculate_volume(value)
-	return LinearTodB(((round(value/0.8,2))+1)*0.5)
+	return LinearTodB(((round(value,2))+1)*0.5)
 end
 
 function post_initialize()
@@ -580,8 +594,8 @@ function post_initialize()
     elseif birth=="GROUND_COLD" then
 		-- Initialise position of knobs
 		dev:performClickableAction(device_commands.ecm_selector_knob, 0.0) -- ALQ-51A in OFF MODE
-		dev:performClickableAction(device_commands.ecm_msl_alert_axis_inner, -0.8) -- volume off
-		dev:performClickableAction(device_commands.ecm_msl_alert_axis_outer, -0.8) -- volume off
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_inner, -1) -- volume off
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_outer, -1) -- volume off
     end
 	
 
@@ -616,22 +630,19 @@ function SetCommand(command,value)
 		end
 	-- plusnine volume keybinds
 	elseif command == Keys.ecm_InnerKnobInc then
-		dev:performClickableAction(device_commands.ecm_msl_alert_axis_inner, clamp(volume_prf_pos + 0.05, -0.8, 0.8))
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_inner, clamp(volume_prf_pos + 0.05, -1, 1))
 	elseif command == Keys.ecm_InnerKnobDec then
-		dev:performClickableAction(device_commands.ecm_msl_alert_axis_inner, clamp(volume_prf_pos - 0.05, -0.8, 0.8))
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_inner, clamp(volume_prf_pos - 0.05, -1, 1))
 	elseif command == Keys.ecm_InnerKnobStartUp then
 		rwr_inner_knob_moving = 1
-		print_message_to_user('inner up' ..volume_prf_pos)
 	elseif command == Keys.ecm_InnerKnobStartDown then
 		rwr_inner_knob_moving = -1
-		print_message_to_user('inner down' ..volume_prf_pos)
 	elseif command == Keys.ecm_InnerKnobStop then
 		rwr_inner_knob_moving = 0
-		print_message_to_user('inner stop' ..volume_prf_pos)
 	elseif command == Keys.ecm_OuterKnobInc then
-		dev:performClickableAction(device_commands.ecm_msl_alert_axis_outer, clamp(volume_msl_pos + 0.10, -0.8, 0.8))
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_outer, clamp(volume_msl_pos + 0.10, -1, 1))
 	elseif command == Keys.ecm_OuterKnobDec then
-		dev:performClickableAction(device_commands.ecm_msl_alert_axis_outer, clamp(volume_msl_pos - 0.10, -0.8, 0.8))
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_outer, clamp(volume_msl_pos - 0.10, -1, 1))
 	elseif command == Keys.ecm_OuterKnobStartUp then
 		rwr_outer_knob_moving = 1
 	elseif command == Keys.ecm_OuterKnobStartDown then
@@ -663,13 +674,14 @@ function SetCommand(command,value)
 
 	-- PRF Volume Knob
 	elseif command == device_commands.ecm_msl_alert_axis_inner then
-		volume_prf = LinearTodB(((round(value/0.8,2))+1	)*0.5)
+		volume_prf = clamp((value+1)*0.4+0.2, 0.2, 1)
 		volume_prf_pos = value
 	
 	-- MSL Volume Knob			
 	elseif command == device_commands.ecm_msl_alert_axis_outer then
-		volume_msl = LinearTodB(((round(value/0.8,2))+1	)*0.5)
+		volume_msl = (value+1)*0.125
 		volume_msl_pos = value
+		--print_message_to_user('Input: '..value..'  Output: '..volume_msl)
 	
 	-- ALQ Rotary Control Switch
 	elseif command == device_commands.ecm_selector_knob then
@@ -690,7 +702,7 @@ function SetCommand(command,value)
 		elseif ecm_alq_selector == 0.99 then
 			ALQ_MODE = 3 -- RPT
 		end
-	
+
 	-- Upper button on the ECM Panel
 	elseif command == device_commands.ecm_systest_upper then
 		ecm_upper_button = value
@@ -728,20 +740,19 @@ function update()
 --	if (get_elec_mon_dc_ok()) and rwr_apr25_power == 1 then
 	
 	if get_elec_aft_mon_ac_ok() == true then
-		GetDevice(devices.RWR):set_power(true)			
+		GetDevice(devices.RWR):set_power(true)		
 	else
-		GetDevice(devices.RWR):set_power(false)			
+		GetDevice(devices.RWR):set_power(false)
 	end
-	
 	
 	update_new()
 	
     if rwr_inner_knob_moving ~= 0 then
-		dev:performClickableAction(device_commands.ecm_msl_alert_axis_inner, clamp(volume_prf_pos + rwr_inner_knob_moving * 0.01, -0.8, 0.8))
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_inner, clamp(volume_prf_pos + rwr_inner_knob_moving * 0.01, -1, 1))
     end
 
 	if rwr_outer_knob_moving ~= 0 then
-		dev:performClickableAction(device_commands.ecm_msl_alert_axis_outer, clamp(volume_msl_pos + rwr_outer_knob_moving * 0.01, -0.8, 0.8))
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_outer, clamp(volume_msl_pos + rwr_outer_knob_moving * 0.01, -1, 1))
     end
 
 	update_ALQ()

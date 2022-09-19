@@ -298,7 +298,8 @@ function post_initialize()
 
         --APR-25 RWR SOUNDS
         -- system sounds
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-rwr-hum-loop", "RWR_HUM", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a4e-rwr-hum-loop", "SND_ALWS_RWR_HUM", SOUND_ALWAYS),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_missile_launch", "ECM_SAM", SOUND_CONTINUOUS, nil, nil, nil, nil, "SND_CONT_RWR_MSL_VOLUME"),
         -- generic sounds
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_ewr", "RWR_EWR", SOUND_ALWAYS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_ship_default_lo", "RWR_SHIP_DEFAULT_LO", SOUND_ALWAYS),

@@ -49,6 +49,10 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 #### Added
 - **Flight Model:**
 - **Systems:**
+  - AN/APR-23 RHWS (ECM)
+    - When the system is set to REC and the APR-25 Switch is in the ON position, the PRF Volume Knob will adjust a baseline hum and audio from contacts with various radars.
+    - When the APR-27 switch is in the ON position, detected missile launches will play an oscillating alert tone. You can adjust the volume using the Missile Volume Knob.
+    - The system's bit test is available to perform. With the system set to REC, press the APR-27 Test button.
 - **Missions:**
 - **Liveries:**
   - Community A-4E V: Blue Team, 2022 (Fictional)
@@ -67,13 +71,13 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Input options across the module can now be bound to mouse buttons.
   - When the aircraft has power, the Seat Adjustment Switch can be used to move the baseline pilot head position up and down in the cockpit. *(thanks nima3333)*
 - **Sounds:**
-  - AN/APR-25 Radar Homing Warning System:
+  - AN/APR-23 RHWS (ECM):
     - AAA: New sounds are produced in response to Fire Can SON-9 fire director radar.
     - Aircraft: New sounds are produced in response to aircraft search and tracking radars.
     - EWRs and Ships: Unique sound sets are produced in response to ground and ship EWRs. A new sound is also produced in response to ship tracking radars.
-    - SAMs: New sounds are produced in response to P19 "Flat Face" and S-200 ST-68U "Tin Shield" and SA-2 S-75 "Fan Song" sarch and tracking radars. Some Fan Song units will sound different, simulating the sound of different radar bands used in the field. New sounds are also produced in response to SA-3 S-125 "Low Blow", SA-5 S-200 "Square Pair", and SA-6 Kub "Straight Flush" units. Search and tracking radars for SA-8, SA-9, SA-10, SA-11, SA-13, SA-15 and SA-19 units are not detected by the system. When the APR-25 Audio switch is in the ON position, a new alert sound is produced in response to detected missile launches. 
+    - SAMs: New sounds are produced in response to P19 "Flat Face" and S-200 ST-68U "Tin Shield" and SA-2 S-75 "Fan Song" sarch and tracking radars. Some Fan Song units will sound different, simulating the sound of different radar bands used in the field. New sounds are also produced in response to SA-3 S-125 "Low Blow", SA-5 S-200 "Square Pair", and SA-6 Kub "Straight Flush" units. Search and tracking radars for SA-8, SA-9, SA-10, SA-11, SA-13, SA-15 and SA-19 units are not detected by the system. 
     - SPAAA Vehicles: New sounds are produced in response to the Gepard, Vulcan M163, and ZSU-23-4 Shilka "Gun Dish" radars.
-  - Tire skid sound set.
+  - Tire skidding for the left and right tries is audible.
   - Seat adjustment hydraulic motor.
 
 #### Fixed
@@ -83,11 +87,11 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 - **Liveries:**
   - Community A-4E III: Forever Free livery displays two digits on the flaps.
 - **Weapons and Loadouts:**
-  - CBU-2B/A weight is now calculated. Weapon release and spread has also been altered to cause fewer self-destructs when the weapon is released.
+  - CBU-2B/A weight is calculated correctly. Weapon release and spread cause fewer collision-based self-destructs when the weapon is released.
 - **Quality of Life:**
   - Throttle Increment and Throttle Decrement inputs function properly. A new slider in the special menu is available to adjust throttle rate for these inputs from 1 to 5%.
   - Kneeboard:
-    - 300 gallon tanks on the center pylon enumeration on the kneeboard loadout page.
+    - 300 gallon tanks on the center pylon enumerates properly on the kneeboard loadout page.
     - Waypoints on the navigation page enumerate 11 waypoints, and can't overrun the instructions on the page.
     - Corrected erroneous procedures for air refueling and ground radar.
   - VR hand positions: Users are encouraged to enable *Use Hand Controllers*, *Hand controllers use Cockpit Stick*, and *Hand Controllers use Cockpit Throttle*, and *Hand Interaction Only When Palm Grip is Obtained*. Be aware that it is easy to accidently power down the engine if you touch it with your virtual index finger while holding the grip button. Always approach the throttle with your finger above it.

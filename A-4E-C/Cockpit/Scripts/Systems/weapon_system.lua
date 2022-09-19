@@ -1477,10 +1477,12 @@ function SetCommand(command,value)
             cbu2ba_quantity:set(cbu2ba_quantity_array[cbu2ba_quantity_array_pos+1])
         end
     elseif command == device_commands.shrike_sidewinder_volume then
-        debug_print("shrike_sidewinder_volume: "..value)
         shrike_sidewinder_volume:set(value)
-        aim9seek:update(nil, LinearTodB(shrike_sidewinder_volume:get()), nil)
+        --print_message_to_user("Sidewinder Volume: "..(value+1)*0.5)
+        local normalized_sidewinder_volume = (value+1)*0.12 + 0.01
+        aim9seek:update(nil, normalized_sidewinder_volume, nil)
         missile_volume_pos = value
+        --print_message_to_user("Sidewinder Volume (Normalized): "..normalized_sidewinder_volume)
     elseif command == device_commands.shrike_selector then
         -- print_message_to_user(value)
 	elseif command == Keys.JATOFiringButton then
