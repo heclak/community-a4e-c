@@ -624,7 +624,9 @@ device_commands =
     JATO_arm                        = __counter(),
     JATO_jettison                   = __counter(),
 
-    GunsightElevationControl_AXIS   = __counter(),
+    GunsightElevationControl_axis       = __counter(),
+    GunsightElevationControl_axis_abs   = __counter(),
+    
     pilot_salute                    = __counter(),
 
     left_wheelbrake_AXIS            = __counter(),

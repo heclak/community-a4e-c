@@ -721,7 +721,8 @@ join(res.axisCommands,{
     
     -- Gunsight Panel
     {action = device_commands.GunsightBrightness,              cockpit_device_id = devices.GUNSIGHT,    name = _('Gunsight Light Control'),                     category = {_('Instrument Panel'), _('Gunsight Panel')}},
-    {action = device_commands.GunsightElevationControl_AXIS,   cockpit_device_id = devices.GUNSIGHT,    name = _('Gunsight Elevation Control'),                 category = {_('Instrument Panel'), _('Gunsight Panel')}},
+    {action = device_commands.GunsightElevationControl_axis,   cockpit_device_id = devices.GUNSIGHT,    name = _('Gunsight Elevation Control - Slew'),          category = {_('Instrument Panel'), _('Gunsight Panel')}},
+    {action = device_commands.GunsightElevationControl_axis_abs, cockpit_device_id = devices.GUNSIGHT,  name = _('Gunsight Elevation Control - Absolute'),      category = {_('Instrument Panel'), _('Gunsight Panel')}},
 
     --UI Override
     {action = device_commands.mouse_x,                                                                  name = _('Mouse X Relative'),                           category = {_('UI Override')}},

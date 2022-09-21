@@ -105,7 +105,9 @@ function SetCommand(command,value)
         gunsight_mil_param:set(gunsight_mil)
         reflector_pos=1-value
         gunsight_elevation_pos = value
-    elseif (command == device_commands.GunsightElevationControl_AXIS) then
+    elseif (command == device_commands.GunsightElevationControl_axis) then
+        dev:performClickableAction(device_commands.GunsightKnob, clamp(gunsight_elevation_pos + value/20, 0, 1), false)
+    elseif (command == device_commands.GunsightElevationControl_axis_abs) then
         local normalisedValue = ( ( value + 1 ) / 2 ) * 1.0 -- normalised {-1 to 1} to {0 - 1.0}
         dev:performClickableAction(device_commands.GunsightKnob, normalisedValue, false)
     elseif (command == device_commands.GunsightDayNight) then
