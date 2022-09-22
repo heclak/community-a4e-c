@@ -653,6 +653,9 @@ device_commands =
     mouse_x = __counter(),
     mouse_y = __counter(),
 
+    gunsight_brightness_axis        = __counter(),
+    gunsight_brightness_axis_abs    = __counter(),
+
     --radar_storage_axis              = __counter(),
     --radar_brilliance_axis           = __counter(),
     --radar_detail_axis               = __counter(),
