@@ -720,8 +720,9 @@ join(res.axisCommands,{
     {action = device_commands.AWRS_drop_interval_AXIS, cockpit_device_id = devices.WEAPON_SYSTEM,       name = _('AWRS Drop Interval Knob'),                    category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
     
     -- Gunsight Panel
-    {action = device_commands.GunsightBrightness,              cockpit_device_id = devices.GUNSIGHT,    name = _('Gunsight Light Control'),                     category = {_('Instrument Panel'), _('Gunsight Panel')}},
-    {action = device_commands.GunsightElevationControl_AXIS,   cockpit_device_id = devices.GUNSIGHT,    name = _('Gunsight Elevation Control'),                 category = {_('Instrument Panel'), _('Gunsight Panel')}},
+    {action = device_commands.GunsightBrightness, cockpit_device_id = devices.GUNSIGHT,                 name = _('Gunsight Light Control'),                     category = {_('Instrument Panel'), _('Gunsight Panel')}},
+    {action = device_commands.gunsight_elevation_axis, cockpit_device_id = devices.GUNSIGHT,            name = _('Gunsight Elevation Control - Slew'),          category = {_('Instrument Panel'), _('Gunsight Panel')}},
+    {action = device_commands.gunsight_elevation_axis_abs, cockpit_device_id = devices.GUNSIGHT,        name = _('Gunsight Elevation Control - Absolute'),      category = {_('Instrument Panel'), _('Gunsight Panel')}},
 
     --UI Override
     {action = device_commands.mouse_x,                                                                  name = _('Mouse X Relative'),                           category = {_('UI Override')}},

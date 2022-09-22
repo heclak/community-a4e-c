@@ -105,9 +105,10 @@ function SetCommand(command,value)
         gunsight_mil_param:set(gunsight_mil)
         reflector_pos=1-value
         gunsight_elevation_pos = value
-    elseif (command == device_commands.GunsightElevationControl_AXIS) then
-        local normalisedValue = ( ( value + 1 ) / 2 ) * 1.0 -- normalised {-1 to 1} to {0 - 1.0}
-        dev:performClickableAction(device_commands.GunsightKnob, normalisedValue, false)
+    elseif (command == device_commands.gunsight_elevation_axis) then
+        gunsight_elevation_moving = value*2
+    elseif (command == device_commands.gunsight_elevation_axis_abs) then
+        dev:performClickableAction(device_commands.GunsightKnob, (value + 1)*0.5, false)
     elseif (command == device_commands.GunsightDayNight) then
         daynight = value -- value 0=day, 1=night
         adjusted_brightness = (daynight==1) and (brightness * nightbright) or (brightness)
@@ -191,7 +192,13 @@ function update()
         dev:performClickableAction(device_commands.GunsightBrightness, clamp(gunsight_brightness_pos + 0.08 * gunsight_brightness_moving, 0, 1), false)
     end
 
+    -- gunsight elevation axis slew
+    if device_commands.gunsight_elevation_axis:get() ~= 0 then
+        dev:performClickableAction(device_commands.GunsightKnob, clamp(gunsight_elevation_pos + value/20, 0, 1), false)
+    end
+
 	efm_data_bus.fm_setGunsightAngle(gunsightAngleToRads())
+
 end
 
 need_to_be_closed = false -- close lua state after initialization
