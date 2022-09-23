@@ -62,16 +62,16 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Operational-era USN and USMC liveries now have a customized, well-worn LAU-10 launcher.
 - **Weapons and Loadouts:**
 - **Quality of Life:**
-  - Axis input for AN/ARN-52 TACAN Volume Knob.
+  - Absolute and slew axis inputs for AN/APR-23 Missile Alert Volume, AWRS Drop Interval Knob, Gunsight Elevation Control, Gunsight Light Control, Instrument Lights Control, Shrike/Sidewinder Volume Knob, TACAN Volume Knob, and White Floodlights Control. Some non-axis inputs associated with these have been renamed. Users with extensive control schemes should adjust their controls to resolve any conflicts.
   - Single inputs for AN/ARN-52 TACAN Mode switch.
-  - Axis inputs for AN/APG-53A Radar Indicator Storage, Brilliance, Detail, Gain, and Reticle Knobs.
-  - Axis input for Gunsight Elevation Control - (Slew).
   - Single and else inputs for Throttle Position Lock.
-  - Single inputs for the Canopy Lever. *(thanks Tanuki44)*
+  - Single inputs for the Canopy Lever. You can close the canopy with LSHIFT+C, and open it LSHIFT+LCTRL+C. *(thanks Tanuki44)*
   - Single inputs for the AWRS Quantity Selector Switch, AWRS Drop Interval Knob, and AWRS Mode Selector Switch.
   - Inputs for APR-27 Test and APR-27 Light buttons.
   - Input options across the module can now be bound to mouse buttons.
   - When the aircraft has power, the Seat Adjustment Switch can be used to move the baseline pilot head position up and down in the cockpit. *(thanks nima3333)*
+  - Added additional guidance on AN/APR-23 RHWS to the kneeboard manual.
+
 - **Sounds:**
   - AN/APR-23 RHWS (ECM):
     - AAA: New sounds are produced in response to Fire Can SON-9 fire director radar.
@@ -92,7 +92,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - CBU-2B/A weight is calculated correctly. Weapon release and spread cause fewer collision-based self-destructs when the weapon is released.
 - **Quality of Life:**
   - Throttle Increment and Throttle Decrement inputs function properly. A new slider in the special menu is available to adjust throttle rate for these inputs from 1 to 5%.
-  - Kneeboard:
+  - Kneeboard Manual:
     - 300 gallon tanks on the center pylon enumerates properly on the kneeboard loadout page.
     - Waypoints on the navigation page enumerate 11 waypoints, and can't overrun the instructions on the page.
     - Corrected erroneous procedures for air refueling and ground radar.
@@ -112,11 +112,11 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Default inputs for Throttle Position Lock are set to RCTRL+HOME (Step Up) and RCTRL+END (Step Down).
   - Emergency Stores Release Handle default input changed to LCTRL+J. *(think J for jettison!)*
   - Differential wheelbrake inputs default inputs are changed to LCTRL+W (left) and LALT+W (right).
-  - The controls indicator's nosewheel caster indicator now displays logarithmically, making it easier to see those early castering changes and reflect nosewheel sensetivity to turn rate more naturalistically. *(thanks, Drofseh)*.
+  - The controls indicator's nosewheel caster indicator now displays logarithmically, making it easier to see those early changes in castering and better reflect nosewheel sensetivity to turn rate. *(thanks, Drofseh)*.
   - Trim speed settings in the special menu are now adjustable by individually for pitch, roll and yaw, with percentage sliders for each instead of presets from a drop-down. *(thanks Drofseh)*
   - Refactored the special menu for easier editing in the future.
 - **Sounds:**
-  - Improved input response and dynamic range of AN/APR-23 PRF Volume, AN/APR-23 Missile Alert Volume, PRF Volume, Shrike/Sidewinder Volume, and TACAN Volume knobs.
+  - Improved input response and dynamic range of AN/APR-23 PRF Volume, AN/APR-23 Missile Alert Volume, Shrike/Sidewinder Volume, and TACAN Volume knobs.
 
 [See full changelog](https://github.com/heclak/community-a4e-c/blob/master/CHANGELOG.md)
 
