@@ -425,6 +425,10 @@ Keys =
     throttle_inc                   = __custom_counter(),
     throttle_dec                   = __custom_counter(),
 
+    AWRS_Drop_Interval_StartUp    = __custom_counter(),
+    AWRS_Drop_Interval_StartDown  = __custom_counter(),
+    AWRS_Drop_Interval_Stop       = __custom_counter(),
+
 }
 
 start_command   = 3000
@@ -653,13 +657,21 @@ device_commands =
     mouse_x = __counter(),
     mouse_y = __counter(),
 
-    gunsight_brightness_axis        = __counter(),
     gunsight_brightness_axis_abs    = __counter(),
+    gunsight_brightness_axis_slew   = __counter(),
+    awrs_drop_interval_axis_slew    = __counter(),
+    shrike_sidewinder_volume_abs    = __counter(),
+    shrike_sidewinder_volume_slew   = __counter(),
 
     --radar_storage_axis              = __counter(),
+    --radar_storage_axis_slew         = __counter(),
     --radar_brilliance_axis           = __counter(),
+    --radar_brilliance_axis_slew      = __counter(),
     --radar_detail_axis               = __counter(),
+    --radar_detail_axis_slew          = __counter(),
     --radar_gain_axis                 = __counter(),
+    --radar_gain_axis_slew            = __counter(),
     --radar_reticle_axis              = __counter(),
+    --radar_reticle_axis_slew         = __counter(),
 
 }

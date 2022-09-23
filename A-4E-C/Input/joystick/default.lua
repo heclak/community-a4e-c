@@ -332,8 +332,10 @@ join(res.keyCommands,{
     {down = device_commands.AWRS_stepripple, value_down = 0.3, cockpit_device_id = devices.WEAPON_SYSTEM,                                                           name = _('AWRS Mode Selector Switch - RIPPLE-SINGLE'),      category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
     {down = device_commands.AWRS_stepripple, value_down = 0.4, cockpit_device_id = devices.WEAPON_SYSTEM,                                                           name = _('AWRS Mode Selector Switch - RIPPLE-PAIRS'),       category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
     {down = device_commands.AWRS_stepripple, value_down = 0.5, cockpit_device_id = devices.WEAPON_SYSTEM,                                                           name = _('AWRS Mode Selector Switch - RIPPLE-SALVO'),       category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
-    {down = Keys.AWRS_Drop_Interval_Inc,                                                                                                                            name = _('AWRS Drop Interval Knob - CW/Increase'),          category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
-    {down = Keys.AWRS_Drop_Interval_Dec,                                                                                                                            name = _('AWRS Drop Interval Knob - CCW/Decrease'),         category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
+    {down = Keys.AWRS_Drop_Interval_Inc,                                                                                                                            name = _('AWRS Drop Interval Knob - Rotary Increment'),     category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
+    {down = Keys.AWRS_Drop_Interval_Dec,                                                                                                                            name = _('AWRS Drop Interval Knob - Rotary Decrement'),     category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
+    {down = Keys.AWRS_Drop_Interval_StartUp, up = Keys.AWRS_Drop_Interval_Stop,                                                                                     name = _('AWRS Drop Interval Knob - Continuous Increase'),  category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
+    {down = Keys.AWRS_Drop_Interval_StartDown, up = Keys.AWRS_Drop_Interval_Stop,                                                                                   name = _('AWRS Drop Interval Knob - Continuous Decrease'),  category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
     {down = device_commands.AWRS_drop_interval, value_down = 0.00, cockpit_device_id = devices.WEAPON_SYSTEM,                                                       name = _('AWRS Drop Interval Knob - 020 ms'),               category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
     {down = device_commands.AWRS_drop_interval, value_down = 0.05, cockpit_device_id = devices.WEAPON_SYSTEM,                                                       name = _('AWRS Drop Interval Knob - 030 ms'),               category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
     {down = device_commands.AWRS_drop_interval, value_down = 0.10, cockpit_device_id = devices.WEAPON_SYSTEM,                                                       name = _('AWRS Drop Interval Knob - 040 ms'),               category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
@@ -695,7 +697,8 @@ join(res.axisCommands,{
     {action = device_commands.ecm_msl_alert_axis_outer, cockpit_device_id = devices.RWR,                name = _('AN/APR-23 Missile Alert Volume'),             category = {_('AN/APR-23 RHWS (ECM)')}}, 
     
     -- Miscellaneous Switches Panel
-    {action = device_commands.shrike_sidewinder_volume, cockpit_device_id = devices.WEAPON_SYSTEM,      name = _('Shrike/Sidewinder Volume Knob'),              category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
+    {action = device_commands.shrike_sidewinder_volume_abs, cockpit_device_id = devices.WEAPON_SYSTEM,  name = _('Shrike/Sidewinder Volume Knob - Absolute'),   category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
+    {action = device_commands.shrike_sidewinder_volume_slew, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('Shrike/Sidewinder Volume Knob - Slew'),       category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
 
     -- Radar Indicator
     {action = device_commands.radar_storage_axis, cockpit_device_id = devices.RADAR,                    name = _('Radar Indicator Storage Knob'),               category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
@@ -717,7 +720,8 @@ join(res.axisCommands,{
     {action = device_commands.intlight_whiteflood_AXIS, cockpit_device_id = devices.AVIONICS,           name = _('Lights White Floodlights Control'),           category = {_('Console Right'), _('Interior Lights Panel')}},
 
     -- Aircraft Weapons Release System Panel
-    {action = device_commands.AWRS_drop_interval_AXIS, cockpit_device_id = devices.WEAPON_SYSTEM,       name = _('AWRS Drop Interval Knob'),                    category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
+    {action = device_commands.AWRS_drop_interval_AXIS, cockpit_device_id = devices.WEAPON_SYSTEM,       name = _('AWRS Drop Interval Knob - Absolute'),         category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
+    {action = device_commands.awrs_drop_interval_axis_slew, cockpit_device_id = devices.WEAPON_SYSTEM,  name = _('AWRS Drop Interval Knob - Slew'),             category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
     
     -- Gunsight Panel
     {action = device_commands.gunsight_brightness_axis, cockpit_device_id = devices.GUNSIGHT,           name = _('Gunsight Light Control - Slew'),              category = {_('Instrument Panel'), _('Gunsight Panel')}},
