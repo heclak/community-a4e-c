@@ -287,7 +287,8 @@ dev:listen_command(device_commands.asn41_magvar)
 dev:listen_command(device_commands.tacan_ch_major)
 dev:listen_command(device_commands.tacan_ch_minor)
 dev:listen_command(device_commands.tacan_volume)
-dev:listen_command(device_commands.tacan_volume_axis)
+dev:listen_command(device_commands.tacan_volume_axis_abs)
+dev:listen_command(device_commands.tacan_volume_axis_slew)
 dev:listen_command(device_commands.tacan_mode)
 
 
@@ -645,10 +646,12 @@ function SetCommand(command,value)
             morse_dot_snd:update(nil,tacan_volume_playback,nil)
             morse_dash_snd:update(nil,tacan_volume_playback,nil)
         end
-    elseif command == device_commands.tacan_volume_axis then
-        -- normalize and constrain tacan axis input to bounds set above (0.2 through 0.8)
+    elseif command == device_commands.tacan_volume_axis_abs then
+        -- normalize and constrain tacan axis input to bounds set above (0.2-0.8)
         local set_tacan_volume_from_axis = (((value+1)*0.5)*0.6) + 0.2
         dev:performClickableAction(device_commands.tacan_volume, set_tacan_volume_from_axis, false)
+    elseif command == device_commands.tacan_volume_axis_slew then
+        tacan_volume_moving = value/75
     --plusnine added mode switch (could probably be more efficient, but it works)
     elseif command == Keys.TacanModeInc then
         if tacan_mode == "OFF" then
@@ -679,9 +682,9 @@ function SetCommand(command,value)
     elseif command == Keys.TacanVolumeDec then
         dev:performClickableAction(device_commands.tacan_volume, clamp(tacan_volume - 0.03, 0.2, 0.8), false)
     elseif command == Keys.TacanVolumeStartUp then
-        tacan_volume_moving = 1
+        tacan_volume_moving = 1/100
     elseif command == Keys.TacanVolumeStartDown then
-        tacan_volume_moving = -1
+        tacan_volume_moving = -1/100
     elseif command == Keys.TacanVolumeStop then
         tacan_volume_moving = 0
     end
@@ -2120,7 +2123,7 @@ function update()
     end
 
     if tacan_volume_moving ~= 0 then
-        dev:performClickableAction(device_commands.tacan_volume, clamp(tacan_volume + 0.01 * tacan_volume_moving, 0.2, 0.8), false)
+        dev:performClickableAction(device_commands.tacan_volume, clamp(tacan_volume + tacan_volume_moving, 0.2, 0.8), false)
     end
 
     update_egg()

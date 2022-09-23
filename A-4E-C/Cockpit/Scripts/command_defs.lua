@@ -517,7 +517,6 @@ device_commands =
     tacan_ch_major                  = __counter(),
     tacan_ch_minor                  = __counter(),
     tacan_volume                    = __counter(),
-    tacan_volume_axis               = __counter(),
     extlight_master                 = __counter(),
     extlight_probe                  = __counter(),
     extlight_taxi                   = __counter(),
@@ -657,21 +656,28 @@ device_commands =
     mouse_x = __counter(),
     mouse_y = __counter(),
 
+    --gunsight
     gunsight_brightness_axis_abs    = __counter(),
     gunsight_brightness_axis_slew   = __counter(),
+
+    --weapon system
     awrs_drop_interval_axis_slew    = __counter(),
     shrike_sidewinder_volume_abs    = __counter(),
     shrike_sidewinder_volume_slew   = __counter(),
 
-    --radar_storage_axis              = __counter(),
+    --nav
+    tacan_volume_axis_abs           = __counter(),
+    tacan_volume_axis_slew          = __counter(),
+
+    --radar_storage_axis_abs          = __counter(),
     --radar_storage_axis_slew         = __counter(),
-    --radar_brilliance_axis           = __counter(),
+    --radar_brilliance_axis_abs       = __counter(),
     --radar_brilliance_axis_slew      = __counter(),
-    --radar_detail_axis               = __counter(),
+    --radar_detail_axis_abs           = __counter(),
     --radar_detail_axis_slew          = __counter(),
-    --radar_gain_axis                 = __counter(),
+    --radar_gain_axis_abs             = __counter(),
     --radar_gain_axis_slew            = __counter(),
-    --radar_reticle_axis              = __counter(),
+    --radar_reticle_axis_abs          = __counter(),
     --radar_reticle_axis_slew         = __counter(),
 
 }
