@@ -663,8 +663,8 @@ device_commands =
 
     fuel_transfer_bypass            = __counter(),
     fuel_transfer_bypass            = __counter(),
-    mouse_x = __counter(),
-    mouse_y = __counter(),
+    mouse_x                         = __counter(),
+    mouse_y                         = __counter(),
 
     --avionics
     intlight_instruments_axis_slew  = __counter(),
@@ -683,6 +683,12 @@ device_commands =
     --nav
     tacan_volume_axis_abs           = __counter(),
     tacan_volume_axis_slew          = __counter(),
+
+    --rwr
+    ecm_msl_alert_axis_inner_abs    = __counter(),
+    ecm_msl_alert_axis_inner_slew   = __counter(),
+    ecm_msl_alert_axis_outer_abs    = __counter(),
+    ecm_msl_alert_axis_outer_slew   = __counter(),
 
     --radar_storage_axis_abs          = __counter(),
     --radar_storage_axis_slew         = __counter(),

@@ -129,7 +129,11 @@ dev:listen_command(device_commands.ecm_systest_lower)
 dev:listen_command(device_commands.ecm_selector_knob)
 
 dev:listen_command(device_commands.ecm_msl_alert_axis_inner)
+dev:listen_command(device_commands.ecm_msl_alert_axis_inner_abs)
+dev:listen_command(device_commands.ecm_msl_alert_axis_inner_slew)
 dev:listen_command(device_commands.ecm_msl_alert_axis_outer)
+dev:listen_command(device_commands.ecm_msl_alert_axis_outer_abs)
+dev:listen_command(device_commands.ecm_msl_alert_axis_outer_slew)
 
 dev:listen_command(Keys.ecm_apr25_off)
 dev:listen_command(Keys.ecm_apr27_off)
@@ -628,25 +632,26 @@ function SetCommand(command,value)
 		elseif ALQ_MODE == 1 then
 			dev:performClickableAction(device_commands.ecm_selector_knob, 0.00)
 		end
-	-- plusnine volume keybinds
+	--PRF VOLUME
 	elseif command == Keys.ecm_InnerKnobInc then
-		dev:performClickableAction(device_commands.ecm_msl_alert_axis_inner, clamp(volume_prf_pos + 0.05, -1, 1))
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_inner, clamp(volume_prf_pos + 0.05, -0.9, 0.9))
 	elseif command == Keys.ecm_InnerKnobDec then
-		dev:performClickableAction(device_commands.ecm_msl_alert_axis_inner, clamp(volume_prf_pos - 0.05, -1, 1))
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_inner, clamp(volume_prf_pos - 0.05, -0.9, 0.9))
 	elseif command == Keys.ecm_InnerKnobStartUp then
-		rwr_inner_knob_moving = 1
+		rwr_inner_knob_moving = 1/100
 	elseif command == Keys.ecm_InnerKnobStartDown then
-		rwr_inner_knob_moving = -1
+		rwr_inner_knob_moving = -1/100
 	elseif command == Keys.ecm_InnerKnobStop then
 		rwr_inner_knob_moving = 0
+	--MSL ALERT VOLUME
 	elseif command == Keys.ecm_OuterKnobInc then
-		dev:performClickableAction(device_commands.ecm_msl_alert_axis_outer, clamp(volume_msl_pos + 0.10, -1, 1))
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_outer, clamp(volume_msl_pos + 0.10, -0.9, 0.9))
 	elseif command == Keys.ecm_OuterKnobDec then
-		dev:performClickableAction(device_commands.ecm_msl_alert_axis_outer, clamp(volume_msl_pos - 0.10, -1, 1))
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_outer, clamp(volume_msl_pos - 0.10, -0.9, 0.9))
 	elseif command == Keys.ecm_OuterKnobStartUp then
-		rwr_outer_knob_moving = 1
+		rwr_outer_knob_moving = 1/100
 	elseif command == Keys.ecm_OuterKnobStartDown then
-		rwr_outer_knob_moving = -1
+		rwr_outer_knob_moving = -1/100
 	elseif command == Keys.ecm_OuterKnobStop then
 		rwr_outer_knob_moving = 0
 	end
@@ -674,14 +679,29 @@ function SetCommand(command,value)
 
 	-- PRF Volume Knob
 	elseif command == device_commands.ecm_msl_alert_axis_inner then
-		volume_prf = clamp((value+1)*0.4+0.2, 0.2, 1)
+		volume_prf = clamp((value+0.9)*0.5/0.9,0,1)
 		volume_prf_pos = value
-	
+	elseif command == device_commands.ecm_msl_alert_axis_inner_abs then
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_inner, value*0.9)
+	elseif command == device_commands.ecm_msl_alert_axis_inner_slew then
+		if value < 0.001 and value > -0.001 then
+            rwr_inner_knob_moving = 0
+        else
+            rwr_inner_knob_moving = value/50
+        end
+
 	-- MSL Volume Knob			
 	elseif command == device_commands.ecm_msl_alert_axis_outer then
-		volume_msl = (value+1)*0.125
+		volume_msl = clamp((value+0.9)*0.5/0.9,0,1)
 		volume_msl_pos = value
-		--print_message_to_user('Input: '..value..'  Output: '..volume_msl)
+	elseif command == device_commands.ecm_msl_alert_axis_outer_abs then
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_outer, value*0.9)
+	elseif command == device_commands.ecm_msl_alert_axis_outer_slew then
+		if value < 0.001 and value > -0.001 then
+            rwr_outer_knob_moving = 0
+        else
+            rwr_outer_knob_moving = value/50
+        end
 	
 	-- ALQ Rotary Control Switch
 	elseif command == device_commands.ecm_selector_knob then
@@ -748,11 +768,11 @@ function update()
 	update_new()
 	
     if rwr_inner_knob_moving ~= 0 then
-		dev:performClickableAction(device_commands.ecm_msl_alert_axis_inner, clamp(volume_prf_pos + rwr_inner_knob_moving * 0.01, -1, 1))
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_inner, clamp(volume_prf_pos + rwr_inner_knob_moving,-0.9,0.9))
     end
 
 	if rwr_outer_knob_moving ~= 0 then
-		dev:performClickableAction(device_commands.ecm_msl_alert_axis_outer, clamp(volume_msl_pos + rwr_outer_knob_moving * 0.01, -1, 1))
+		dev:performClickableAction(device_commands.ecm_msl_alert_axis_outer, clamp(volume_msl_pos + rwr_outer_knob_moving,-0.9,0.9))
     end
 
 	update_ALQ()

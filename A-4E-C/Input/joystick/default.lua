@@ -699,8 +699,10 @@ join(res.axisCommands,{
     ---------------------------------------------
     -- ECM Control Panel / AN/APR-23 Radar Homing and Warning System
     --------------------------------------------- 
-    {action = device_commands.ecm_msl_alert_axis_inner, cockpit_device_id = devices.RWR,                name = _('AN/APR-23 PRF Volume'),                       category = {_('AN/APR-23 RHWS (ECM)')}}, 
-    {action = device_commands.ecm_msl_alert_axis_outer, cockpit_device_id = devices.RWR,                name = _('AN/APR-23 Missile Alert Volume'),             category = {_('AN/APR-23 RHWS (ECM)')}}, 
+    {action = device_commands.ecm_msl_alert_axis_inner_abs, cockpit_device_id = devices.RWR,            name = _('AN/APR-23 PRF Volume - Absolute'),             category = {_('AN/APR-23 RHWS (ECM)')}}, 
+    {action = device_commands.ecm_msl_alert_axis_inner_slew, cockpit_device_id = devices.RWR,           name = _('AN/APR-23 PRF Volume - Slew'),                 category = {_('AN/APR-23 RHWS (ECM)')}}, 
+    {action = device_commands.ecm_msl_alert_axis_outer_abs, cockpit_device_id = devices.RWR,            name = _('AN/APR-23 Missile Alert Volume - Absolute'),   category = {_('AN/APR-23 RHWS (ECM)')}}, 
+    {action = device_commands.ecm_msl_alert_axis_outer_slew, cockpit_device_id = devices.RWR,           name = _('AN/APR-23 Missile Alert Volume - Slew'),       category = {_('AN/APR-23 RHWS (ECM)')}}, 
     
     -- Miscellaneous Switches Panel
     {action = device_commands.shrike_sidewinder_volume_abs, cockpit_device_id = devices.WEAPON_SYSTEM,  name = _('Shrike/Sidewinder Volume Knob - Absolute'),   category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
