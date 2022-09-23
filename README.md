@@ -50,9 +50,9 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 - **Flight Model:**
 - **Systems:**
   - AN/APR-23 RHWS (ECM)
-    - When the system is set to REC and the APR-25 Switch is in the ON position, a baseline hum and response audio from a wide variety of radar-equipped units at a volume determined by the the (inner) AN/APR-23 PRF Volume knob.
-    - When the APR-27 Switch is in the ON position, detected missile launches will plays an oscillating alert tone at a volume determined by the (outer) AN/APR-23 Missile Alert Volume knob.
-    - The system's bit test is available to perform. With the system set to REC, press the APR-27 Test button to initiate the bit test.
+    - With the AN/APR Function Selector Switch set to REC and the APR-25 Switch in the ON position, a baseline system hum and response audio from a wide variety of radar-equipped units is produced at a volume determined by the the (inner) AN/APR-23 PRF Volume knob.
+    - When the APR-27 Switch is in the ON position, detected missile launches from SA-2 S-75 "Fan Song" will produce an oscillating alert tone at a volume determined by the (outer) AN/APR-23 Missile Alert Volume knob.
+    - The system's bit test is available to perform. With the AN/APR Function Selector Switch set to REC, press the APR-27 Test button to initiate the bit test.
 - **Missions:**
 - **Liveries:**
   - Community A-4E V: Blue Team, 2022 (Fictional)
@@ -74,10 +74,10 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 
 - **Sounds:**
   - AN/APR-23 RHWS (ECM):
-    - AAA: New sounds are produced in response to Fire Can SON-9 fire director radar.
+    - AAA: New sounds are produced in response to the Fire Can SON-9 fire director radar.
     - Aircraft: New sounds are produced in response to aircraft search and tracking radars.
     - EWRs and Ships: Unique sound sets are produced in response to ground and ship EWRs. A new sound is also produced in response to ship tracking radars.
-    - SAMs: New sounds are produced in response to P19 "Flat Face" and S-200 ST-68U "Tin Shield" and SA-2 S-75 "Fan Song" sarch and tracking radars. Some Fan Song units will sound different, simulating the sound of different radar bands used in the field. New sounds are also produced in response to SA-3 S-125 "Low Blow", SA-5 S-200 "Square Pair", and SA-6 Kub "Straight Flush" units. Search and tracking radars for SA-8, SA-9, SA-10, SA-11, SA-13, SA-15 and SA-19 units are not detected by the system. 
+    - SAMs: New sounds are produced in response to the P19 "Flat Face" and S-200 ST-68U "Tin Shield" and SA-2 S-75 "Fan Song" sarch and tracking radars. Some Fan Song units will sound different, simulating the sound of different radar bands used in the field. New sounds are also produced in response to the SA-3 S-125 "Low Blow", SA-5 S-200 "Square Pair", and SA-6 Kub "Straight Flush" units. The number of different sounds a each radar produces varies by unit, so pilots will need to learn what their ears are telling them about what type SAM is targeting them, and how much launch warning that SAM provides from its PRF audio.
     - SPAAA Vehicles: New sounds are produced in response to the Gepard, Vulcan M163, and ZSU-23-4 Shilka "Gun Dish" radars.
   - Tire skidding for the left and right tries is audible.
   - Seat adjustment hydraulic motor.

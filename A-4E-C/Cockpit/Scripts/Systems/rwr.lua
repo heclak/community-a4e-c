@@ -210,7 +210,7 @@ emitter_default_sounds = {
         [SIGNAL_SEARCH] = get_param_handle("RWR_EWR"), -- 7.5-second low growl pulse
     },
     [GENERAL_TYPE_AIRCRAFT] = {
-        [SIGNAL_SEARCH] = get_param_handle("RWR_AI_SEARCH"),
+        [SIGNAL_SEARCH] = get_param_handle("RWR_AI_SEARCH"), -- 1-second shimmer azimuth sweep
         [SIGNAL_LOCK] = get_param_handle("RWR_AI_GENERAL"), -- Solid tone (I-band)
     },
     [GENERAL_TYPE_SURFACE] = {
@@ -529,7 +529,7 @@ function update_new()
     end
 
 	if ALQ_MODE >= 2 then
-		sound_params.snd_alws_rwr_hum:set(volume_prf)
+		sound_params.snd_alws_rwr_hum:set(volume_prf*0.6)
 	end
 
 	if BIT_TEST_STATE then
