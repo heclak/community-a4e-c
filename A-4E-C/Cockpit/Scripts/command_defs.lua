@@ -429,6 +429,16 @@ Keys =
     AWRS_Drop_Interval_StartDown  = __custom_counter(),
     AWRS_Drop_Interval_Stop       = __custom_counter(),
 
+    intlight_whiteflood_startup   = __custom_counter(),
+    intlight_whiteflood_startdown = __custom_counter(),
+    intlight_whiteflood_stop      = __custom_counter(),
+    intlight_instruments_startup   = __custom_counter(),
+    intlight_instruments_startdown = __custom_counter(),
+    intlight_instruments_stop      = __custom_counter(),
+    intlight_console_startup      = __custom_counter(),
+    intlight_console_startdown    = __custom_counter(),
+    intlight_console_stop         = __custom_counter(),
+    
 }
 
 start_command   = 3000
@@ -655,6 +665,11 @@ device_commands =
     fuel_transfer_bypass            = __counter(),
     mouse_x = __counter(),
     mouse_y = __counter(),
+
+    --avionics
+    intlight_instruments_axis_slew  = __counter(),
+    intlight_console_axis_slew      = __counter(),
+    intlight_whiteflood_axis_slew   = __counter(),
 
     --gunsight
     gunsight_brightness_axis_abs    = __counter(),
