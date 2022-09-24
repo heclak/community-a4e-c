@@ -24,6 +24,8 @@ join(res.keyCommands,{
     {down = Keys.ChangeCmsBurstInterval, value_down = 1,     name = _('Countermeasures Burst Interval'),              category = {_('Communications'), _('Kneeboard'), _('AN/ALE-29A Chaff Dispensing System')}},
     {down = Keys.ChangeCmsSalvos, value_down = 1,            name = _('Countermeasures Salvos'),                      category = {_('Communications'), _('Kneeboard'), _('AN/ALE-29A Chaff Dispensing System')}},
     {down = Keys.ChangeSalvoInterval, value_down = 1,        name = _('Countermeasures Salvo Interval'),              category = {_('Communications'), _('Kneeboard'), _('AN/ALE-29A Chaff Dispensing System')}},
+     -- A/A refueling
+    {down = iCommandPlaneRefuelingReadyPreContact, name = _('A/A refueling - "Ready for precontact" radio call'), category = _('Communications')},
 
     ---------------------------------------------
     -- Sensors ----------------------------------
@@ -614,7 +616,6 @@ join(res.keyCommands,{
     {down = Keys.AFCSHotasPath, up = Keys.AFCSHotasAltHdg,  name = _('AFCS Path Mode else Altitude + Heading (Warthog Throttle)'),      category = {_('Console Left'), _('AFCS Control Panel'), _('Special For Joystick')}},
     {down = Keys.AFCSHotasAlt, up = Keys.AFCSHotasAltHdg,   name = _('AFCS Altitude Mode else Altitude + Heading (Warthog Throttle)'),  category = {_('Console Left'), _('AFCS Control Panel'), _('Special For Joystick')}},
     {down = Keys.AFCSHotasEngage,                           name = _('AFCS Engage (Warthog Throttle)'),                                 category = {_('Console Left'), _('AFCS Control Panel'), _('Special For Joystick')}},
-
 })
 
 -- joystick axes 
