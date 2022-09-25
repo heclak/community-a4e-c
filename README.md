@@ -62,17 +62,16 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Operational-era USN and USMC liveries now have a customized, well-worn LAU-10 launcher.
 - **Weapons and Loadouts:**
 - **Quality of Life:**
+  - Inputs for APR-27 Test, APR-27 Light buttons, A/A refueling - "Ready for precontact" radio call, and Ask AWACS available tanker. *(thanks gcask)*
+  - Input options previously available only on keyboards or joystick devices can now be bound to mouse buttons.
   - Absolute and slew axis inputs for AN/APR-23 Missile Alert Volume, AWRS Drop Interval Knob, Gunsight Elevation Control, Gunsight Light Control, Instrument Lights Control, Shrike/Sidewinder Volume Knob, TACAN Volume Knob, and White Floodlights Control. Some non-axis inputs associated with these have been renamed. Users with extensive control schemes should adjust their controls to resolve any conflicts. *(thanks gcask)*
   - Single inputs for AN/ARN-52 TACAN Mode switch.
   - Single and else inputs for Throttle Position Lock.
   - Single inputs for the Canopy Lever. You can close the canopy with LSHIFT+C, and open it LSHIFT+LCTRL+C. *(thanks Tanuki44)*
   - Single inputs for the AWRS Quantity Selector Switch, AWRS Drop Interval Knob, and AWRS Mode Selector Switch.
-  - Inputs for APR-27 Test and APR-27 Light buttons.
-  - Input options across the module can now be bound to mouse buttons.
   - When the aircraft has power, the Seat Adjustment Switch can be used to move the baseline pilot head position up and down in the cockpit. *(thanks nima3333)*
   - Kneeboard Manual:
-    - Added a chart of weapon stations and their associated loadout options.
-    - Added additional guidance on AN/APR-23 RHWS (ECM) operation.
+    - Added a chart of weapon stations and their associated loadout options (page 3-7) in the kneeboard manual.
 - **Sounds:**
   - AN/APR-23 RHWS (ECM):
     - AAA: New sounds are produced in response to the Fire Can SON-9 fire director radar.
@@ -88,15 +87,15 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 - **Systems:**
 - **Missions:**
 - **Liveries:**
-  - Community A-4E III: Forever Free livery displays two digits on the flaps.
+  - Community A-4E III: Forever Free livery displays two digits on the flaps, matching the nose and tail.
 - **Weapons and Loadouts:**
   - CBU-2B/A weight is calculated correctly. Weapon release and spread cause fewer collision-based self-destructs when the weapon is released.
 - **Quality of Life:**
   - Throttle Increment and Throttle Decrement inputs function properly. A new slider in the special menu is available to adjust throttle rate for these inputs from 1 to 5%.
   - Kneeboard Manual:
     - Waypoints on the navigation page enumerate 11 waypoints, and can't overrun the instructions on the page.
-    - Corrected erroneous procedures for ground radar.
-    - 300 gallon tanks on the center pylon enumerates properly on the kneeboard loadout page.
+    - Placing a 300 gallon tank on the center pylon enumerates properly on the kneeboard loadout page.
+    - Corrected erroneously listed procedures for ground radar.
     - Corrected erroneous procedures for air refueling.
   - VR hand positions: Users are encouraged to enable *Use Hand Controllers*, *Hand controllers use Cockpit Stick*, and *Hand Controllers use Cockpit Throttle*, and *Hand Interaction Only When Palm Grip is Obtained*. Be aware that it is easy to accidently power down the engine if you touch it with your virtual index finger while holding the grip button. Always approach the throttle with your finger above it.
 - **Sounds:**
@@ -118,6 +117,8 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - The controls indicator's nosewheel caster indicator now displays logarithmically, making it easier to see those early changes in castering and better reflect nosewheel sensetivity to turn rate. *(thanks, Drofseh)*.
   - Trim speed settings in the special menu are now adjustable by individually for pitch, roll and yaw, with percentage sliders for each instead of presets from a drop-down. *(thanks Drofseh)*
   - Refactored the special menu for easier editing in the future.
+  - Kneeboard Manual:
+    - Added additional guidance and notes on AN/APR-23 RHWS (ECM) operation.
 - **Sounds:**
   - Improved input response and dynamic range of AN/APR-23 PRF Volume, AN/APR-23 Missile Alert Volume, Shrike/Sidewinder Volume, and TACAN Volume knobs.
   - Reduced the relative volume of the APR-25 operational "hum".

@@ -19,6 +19,8 @@ keyCommands = {
     {down = Keys.ChangeCmsBurstInterval, value_down = 1,     name = _('Countermeasures Burst Interval'),              category = {_('Communications'), _('Kneeboard'), _('AN/ALE-29A Chaff Dispensing System')}},
     {down = Keys.ChangeCmsSalvos, value_down = 1,            name = _('Countermeasures Salvos'),                      category = {_('Communications'), _('Kneeboard'), _('AN/ALE-29A Chaff Dispensing System')}},
     {down = Keys.ChangeSalvoInterval, value_down = 1,        name = _('Countermeasures Salvo Interval'),              category = {_('Communications'), _('Kneeboard'), _('AN/ALE-29A Chaff Dispensing System')}},
+    {down = iCommandPlaneRefuelingReadyPreContact,                                                                  name = _('A/A refueling - "Ready for precontact" radio call'), category = _('Communications')},
+    {down = iCommandAWACSTankerBearing,                                                                             name = _('Ask AWACS available tanker'),                  category = _('Communications')},
 
     ---------------------------------------------
     -- Sensors ----------------------------------
