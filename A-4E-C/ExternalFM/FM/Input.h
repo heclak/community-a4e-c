@@ -212,7 +212,7 @@ public:
 	{
 		return m_throttleAxis.updateAxis(value);
 	}
-	inline const double& brakeLeft() const
+	inline double brakeLeft() const
 	{
 		if ( ! m_brakeAssist )
 			return m_leftBrakeAxis.getValue();
@@ -224,7 +224,7 @@ public:
 	{
 		return m_leftBrakeAxis.updateAxis(normalise(-value));
 	}
-	inline const double& brakeRight() const
+	inline double brakeRight() const
 	{
 		if ( ! m_brakeAssist )
 			return m_rightBrakeAxis.getValue();

@@ -32,7 +32,7 @@ public:
 	inline void reset();
 	inline void slowReset();
 	inline void stop();
-	inline const double getValue() const;
+	inline double getValue() const;
 
 private:
 	double m_value = 0.0;
@@ -90,7 +90,7 @@ void Axis::keyDecrease()
 	m_slowReset = false;
 }
 
-const double Axis::getValue() const
+double Axis::getValue() const
 {
 	return m_value;
 }
