@@ -324,6 +324,9 @@ function post_initialize()
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_vehicle_vulcan", "RWR_VEHICLE_VULCAN", SOUND_ALWAYS),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_apr25_aircraft_search", "RWR_AI_SEARCH", SOUND_ALWAYS),
 
+        --APN-141 RADAR ALTIMETER
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitRadarAltimeterWarn", "SND_INST_RADAR_ALTIMITER_WARNING", SOUND_ONCE),
+
     }
 
     -- initialise sounds

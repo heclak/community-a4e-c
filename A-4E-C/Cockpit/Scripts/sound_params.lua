@@ -75,4 +75,8 @@ sound_params = {
     --rwr hum
     snd_alws_rwr_hum = get_param_handle("SND_ALWS_RWR_HUM"),
     snd_cont_rwr_msl_volume = get_param_handle("SND_CONT_RWR_MSL_VOLUME"),
+
+    --radar altimieter
+    snd_inst_radar_altimeter_warning = get_param_handle("SND_INST_RADAR_ALTIMITER_WARNING"),
+
 }
