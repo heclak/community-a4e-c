@@ -92,6 +92,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - CBU-2B/A weight is calculated correctly. Weapon release and spread cause fewer collision-based self-destructs when the weapon is released.
 - **Quality of Life:**
   - Throttle Increment and Throttle Decrement inputs function properly. A new slider in the special menu is available to adjust throttle rate for these inputs from 1 to 5%.
+  - The trim reset input now properly adjusts the position of the Rudder Trim Switch.
   - Kneeboard Manual:
     - Waypoints on the navigation page enumerate 11 waypoints, and can't overrun the instructions on the page.
     - Placing a 300 gallon tank on the center pylon enumerates properly on the kneeboard loadout page.
@@ -115,7 +116,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Emergency Stores Release Handle default input changed to LCTRL+J. *(think J for jettison!)*
   - Differential wheelbrake inputs default inputs are changed to LCTRL+W (left) and LALT+W (right).
   - The controls indicator's nosewheel caster indicator now displays logarithmically, making it easier to see those early changes in castering and better reflect nosewheel sensetivity to turn rate. *(thanks, Drofseh)*.
-  - Trim speed settings in the special menu are now adjustable by individually for pitch, roll and yaw, with percentage sliders for each instead of presets from a drop-down. *(thanks Drofseh)*
+  - Trim speed settings in the special menu are now adjustable by individually for elevator (pitch), aileron (roll), and rudder (yaw), with 1-100% sliders. These settings also apply to the Trim Reset (Hold) input affects the pitch, roll, or rudder. *(thanks Drofseh)*
   - Refactored the special menu for easier editing in the future.
   - Kneeboard Manual:
     - Added additional guidance and notes on AN/APR-23 RHWS (ECM) operation.

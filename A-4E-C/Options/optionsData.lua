@@ -5,10 +5,10 @@ cdata =
 
 	A4E_PROJECTPAGE          				= _('https://08jne01.github.io/community-a4e-c/'),
 
-	A4E_TRIMSPEED_PITCH_LABEL          		= _('Pitch Trim Speed'),
-	A4E_TRIMSPEED_ROLL_LABEL           		= _('Roll Trim Speed'),
-	A4E_TRIMSPEED_RUDDER_LABEL         		= _('Rudder Trim Speed'),
-	A4E_TRIM_SPEED_SLIDER_HELP        		= _('Trim speeds for pitch, roll, and rudder (Default: 100%)'),
+	A4E_TRIMSPEED_PITCH_LABEL          		= _('Trim Speed: Elevator (Pitch)'),
+	A4E_TRIMSPEED_ROLL_LABEL           		= _('Trim Speed: Aileron (Roll)'),
+	A4E_TRIMSPEED_RUDDER_LABEL         		= _('Trim Speed: Rudder (Yaw)'),
+	A4E_TRIM_SPEED_SLIDER_HELP        		= _('Each individuated trim speeds is also applied to the Trim Reset (Hold) input. (Default: 100%)'),
 
 	A4E_THROTTLE_RATE_LABEL	        		= _('Throttle Increment'),
 	A4E_THROTTLE_RATE_HELP	        		= _('Amount of change applied by Throttle Position - Increment/Decrement inputs (Default: 2.5%)'),
