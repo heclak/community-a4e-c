@@ -438,6 +438,8 @@ Keys =
     intlight_console_startup      = __custom_counter(),
     intlight_console_startdown    = __custom_counter(),
     intlight_console_stop         = __custom_counter(),
+
+    BombArmSwitch                 = __custom_counter(),
     
 }
 

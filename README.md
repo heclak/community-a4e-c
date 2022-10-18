@@ -62,13 +62,15 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Operational-era USN and USMC liveries now have a customized, well-worn LAU-10 launcher.
 - **Weapons and Loadouts:**
 - **Quality of Life:**
-  - Inputs for APR-27 Test, APR-27 Light buttons, A/A refueling - "Ready for precontact" radio call, and Ask AWACS available tanker. *(thanks gcask)*
   - Input options previously available only on keyboards or joystick devices can now be bound to mouse buttons.
-  - Absolute and slew axis inputs for AN/APR-23 Missile Alert Volume, AWRS Drop Interval Knob, Gunsight Elevation Control, Gunsight Light Control, Instrument Lights Control, Shrike/Sidewinder Volume Knob, TACAN Volume Knob, and White Floodlights Control. Some non-axis inputs associated with these have been renamed. Users with extensive control schemes should adjust their controls to resolve any conflicts. *(thanks gcask)*
-  - Single inputs for AN/ARN-52 TACAN Mode switch.
-  - Single and else inputs for Throttle Position Lock.
   - Single inputs for the Canopy Lever. You can close the canopy with LSHIFT+C, and open it LSHIFT+LCTRL+C. *(thanks Tanuki44)*
+  - Single and else inputs for Throttle Position Lock.
+  - Input option for cycling the Bomb Arm Switch between the OFF, NOSE & TAIL and TAIL positions. The keyboard default for this input is 6.
   - Single inputs for the AWRS Quantity Selector Switch, AWRS Drop Interval Knob, and AWRS Mode Selector Switch.
+  - Single inputs for AN/ARN-52 TACAN Mode switch.
+  - Inputs for APR-27 Test, APR-27 Light buttons.
+  - Absolute and slew axis inputs for AN/APR-23 Missile Alert Volume, AWRS Drop Interval Knob, Gunsight Elevation Control, Gunsight Light Control, Instrument Lights Control, Shrike/Sidewinder Volume Knob, TACAN Volume Knob, and White Floodlights Control. Some non-axis inputs associated with these have been renamed. Users with extensive control schemes should adjust their controls to resolve any conflicts. *(thanks gcask)*
+  - Inputs for common communications, including A/A refueling - "Ready for precontact" radio call, and Ask AWACS available tanker. *(thanks gcask)*
   - When the aircraft has power, the Seat Adjustment Switch can be used to move the baseline pilot head position up and down in the cockpit. *(thanks nima3333)*
   - Kneeboard Manual:
     - Added a chart of weapon stations and their associated loadout options (page 3-7) in the kneeboard manual.

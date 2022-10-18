@@ -187,6 +187,7 @@ WeaponSystem:listen_command(Keys.GunpodCharge)
 WeaponSystem:listen_command(Keys.GunpodLeft)
 WeaponSystem:listen_command(Keys.GunpodCenter)
 WeaponSystem:listen_command(Keys.GunpodRight)
+WeaponSystem:listen_command(Keys.BombArmSwitch)
 WeaponSystem:listen_command(Keys.Station1)
 WeaponSystem:listen_command(Keys.Station2)
 WeaponSystem:listen_command(Keys.Station3)
@@ -1300,6 +1301,15 @@ function SetCommand(command,value)
         check_sidewinder(_master_arm)
         check_shrike(_master_arm)
         next_pylon=1
+
+    elseif command == Keys.BombArmSwitch then
+        if bomb_arm_switch == 1 then
+            WeaponSystem:performClickableAction((device_commands.arm_bomb), 1, false) -- OFF to NOSE & TAIL
+        elseif bomb_arm_switch == 2 then
+            WeaponSystem:performClickableAction((device_commands.arm_bomb), -1, false) -- NOSE & TAIL to TAIL
+        elseif bomb_arm_switch == 0 then
+            WeaponSystem:performClickableAction((device_commands.arm_bomb), 0, false) -- TAIL to OFF
+        end
 
     elseif command >= Keys.Station1 and command <= Keys.Station5 then
         local stationOffset = command - Keys.Station1   -- value of 0 to 4
