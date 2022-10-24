@@ -37,7 +37,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 - CP-741/A Bombing Computer (CCRP)
 - AGM-45A Shrike anti-radiation missile (SEAD)
 - New weapons:
-  - AN- series WWII munitions: M66, M81, M88
+  - AN- series WWII munitions: M81, M88
   - MK4 HIPEG 20mm gunpod
   - Mk-77 napalm canister
   - SUU-7 bomblet dispenser
@@ -72,6 +72,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Absolute and slew axis inputs for AN/APR-23 Missile Alert Volume, AWRS Drop Interval Knob, Gunsight Elevation Control, Gunsight Light Control, Instrument Lights Control, Shrike/Sidewinder Volume Knob, TACAN Volume Knob, and White Floodlights Control. Some non-axis inputs associated with these have been renamed. Users with extensive control schemes should adjust their controls to resolve any conflicts. *(thanks gcask)*
   - Inputs for common communications, including A/A refueling - "Ready for precontact" radio call, and Ask AWACS available tanker. *(thanks gcask)*
   - When the aircraft has power, the Seat Adjustment Switch can be used to move the baseline pilot head position up and down in the cockpit. *(thanks nima3333)*
+  - Radar Antenna Tilt Continuous CW and Radar Antenna Tilt Continuous CCW have been assigned a keyboard default (- and =, respectively).
   - Kneeboard Manual:
     - Added a chart of weapon stations and their associated loadout options (page 3-7) in the kneeboard manual.
 - **Sounds:**

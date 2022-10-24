@@ -444,8 +444,8 @@ join(res.keyCommands,{
     {down = Keys.RadarVolumeStartDown, up = Keys.RadarVolumeStop,                       name = _('Radar Obstacle Tone Volume - Continuous Decrease'),      category = {_('Console Left'), _('AN/APG-53A Radar')}},
     {down = Keys.RadarTiltInc,                                                          name = _('Radar Antenna Tilt - Rotary CW'),                        category = {_('Console Left'), _('AN/APG-53A Radar')}},
     {down = Keys.RadarTiltDec,                                                          name = _('Radar Antenna Tilt - Rotary CCW'),                       category = {_('Console Left'), _('AN/APG-53A Radar')}},
-    {down = Keys.RadarTiltStartUp, up = Keys.RadarTiltStop,                             name = _('Radar Antenna Tilt - Continuous CW'),                    category = {_('Console Left'), _('AN/APG-53A Radar')}},
-    {down = Keys.RadarTiltStartDown, up = Keys.RadarTiltStop,                           name = _('Radar Antenna Tilt - Continuous CCW'),                   category = {_('Console Left'), _('AN/APG-53A Radar')}},
+    {combos = {{key = '-'}}, down = Keys.RadarTiltStartUp, up = Keys.RadarTiltStop,     name = _('Radar Antenna Tilt - Continuous CW'),                    category = {_('Console Left'), _('AN/APG-53A Radar')}},
+    {combos = {{key = '='}}, down = Keys.RadarTiltStartDown, up = Keys.RadarTiltStop,   name = _('Radar Antenna Tilt - Continuous CCW'),                   category = {_('Console Left'), _('AN/APG-53A Radar')}},
 
     -- AFCS Panel
     {down = device_commands.afcs_standby, value_down = 1, up = device_commands.afcs_standby, value_up = 0, cockpit_device_id = devices.AFCS,    name = _('AFCS Standby Switch - STANDBY else OFF'),                                 category = {_('Console Left'), _('AFCS Control Panel')}},
