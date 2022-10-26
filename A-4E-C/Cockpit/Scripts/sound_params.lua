@@ -71,4 +71,12 @@ sound_params = {
     snd_inst_emer_speedbrake_out = get_param_handle("SND_INST_EMER_SPEEDBRAKE_OUT"),
     snd_cont_hydraulic_mov = get_param_handle("SND_CONT_HYD_MOV"),
     snd_inst_hydraulic_stop = get_param_handle("SND_INST_HYD_STOP"),
+
+    --rwr hum
+    snd_alws_rwr_hum = get_param_handle("SND_ALWS_RWR_HUM"),
+    snd_cont_rwr_msl_volume = get_param_handle("SND_CONT_RWR_MSL_VOLUME"),
+
+    --radar altimieter
+    snd_inst_radar_altimeter_warning = get_param_handle("SND_INST_RADAR_ALTIMITER_WARNING"),
+
 }

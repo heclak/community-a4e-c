@@ -168,17 +168,20 @@ function update_lock_volume()
 
     if shrike_armed_param:get() == 1 and (get_elec_aft_mon_ac_ok() and get_elec_mon_dc_ok()) then
 
-        snd_shrike_tone:update(nil, LinearTodB(0.2 * shrike_sidewinder_volume:get()), nil)
-
+        --print_message_to_user('Shrike Volume: '..(shrike_sidewinder_volume:get()+1)*0.5)
+        local new_shrike_volume_normalized = (shrike_sidewinder_volume:get()+1)*0.12 + 0.01
+        snd_shrike_tone:update(nil, new_shrike_volume_normalized*0.25, nil)
+        --print_message_to_user('Shrike Volume (Normalized): '..new_shrike_volume_normalized)
+        
         if not snd_shrike_tone:is_playing() then
             snd_shrike_tone:play_continue()
         end
 
         if not shrike_lock then
             snd_shrike_lock:update(nil, 0, nil)
-            snd_shrike_search:update(nil, LinearTodB(1.0 * shrike_sidewinder_volume:get()), nil)
+            snd_shrike_search:update(nil, new_shrike_volume_normalized*0.9, nil)
         else
-            snd_shrike_lock:update(nil, LinearTodB(1.0 * shrike_sidewinder_volume:get()), nil)
+            snd_shrike_lock:update(nil, new_shrike_volume_normalized, nil)
             snd_shrike_search:update(nil, 0, nil)
         end
 

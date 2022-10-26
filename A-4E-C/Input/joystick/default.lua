@@ -19,6 +19,8 @@ join(res.keyCommands,{
     {down = Keys.ChangeCmsBurstInterval, value_down = 1,     name = _('Countermeasures Burst Interval'),              category = {_('Communications'), _('Kneeboard'), _('AN/ALE-29A Chaff Dispensing System')}},
     {down = Keys.ChangeCmsSalvos, value_down = 1,            name = _('Countermeasures Salvos'),                      category = {_('Communications'), _('Kneeboard'), _('AN/ALE-29A Chaff Dispensing System')}},
     {down = Keys.ChangeSalvoInterval, value_down = 1,        name = _('Countermeasures Salvo Interval'),              category = {_('Communications'), _('Kneeboard'), _('AN/ALE-29A Chaff Dispensing System')}},
+    {down = iCommandPlaneRefuelingReadyPreContact,           name = _('A/A refueling - "Ready for precontact" radio call'), category = _('Communications')},
+    {down = iCommandAWACSTankerBearing,                      name = _('Ask AWACS available tanker'),                  category = _('Communications')},
 
     ---------------------------------------------
     -- Sensors ----------------------------------
@@ -152,6 +154,8 @@ join(res.keyCommands,{
     {down = Keys.ecm_InnerKnobDec,                                                                                                                      name = _('PRF Volume - Rotary Decrement'),              category = {_('AN/APR-23 RHWS (ECM)')}},
     {down = Keys.ecm_InnerKnobStartUp, up = Keys.ecm_InnerKnobStop,                                                                                     name = _('PRF Volume - Continuous Increase'),           category = {_('AN/APR-23 RHWS (ECM)')}},
     {down = Keys.ecm_InnerKnobStartDown, up = Keys.ecm_InnerKnobStop,                                                                                   name = _('PRF Volume - Continuous Decrease'),           category = {_('AN/APR-23 RHWS (ECM)')}}, 
+    {down = device_commands.ecm_systest_upper, up = device_commands.ecm_systest_upper, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.RWR,   name = _('APR-27 Test'),                            category = {_('AN/APR-23 RHWS (ECM)')}}, 
+    {down = device_commands.ecm_systest_lower, up = device_commands.ecm_systest_lower, value_down = 1.0, value_up = 0.0, cockpit_device_id = devices.RWR,   name = _('APR-27 Light'),                           category = {_('AN/APR-23 RHWS (ECM)')}}, 
 
     ---------------------------------------------
     -- Instrument Panel -------------------------
@@ -250,8 +254,9 @@ join(res.keyCommands,{
     {down = device_commands.arm_bomb, value_down = 0, cockpit_device_id = devices.WEAPON_SYSTEM,                                                    name = _('Bomb Arm Switch - OFF'),                      category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
     {down = device_commands.arm_bomb, value_down = -1, cockpit_device_id = devices.WEAPON_SYSTEM,                                                   name = _('Bomb Arm Switch - TAIL'),                     category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
     {down = device_commands.arm_bomb, value_down = -1, up = device_commands.arm_bomb, value_up = 0, cockpit_device_id = devices.WEAPON_SYSTEM,      name = _('Bomb Arm Switch - TAIL else OFF'),            category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
-    {down = device_commands.arm_bomb, value_down = 1, up = device_commands.arm_bomb, value_up = 0, cockpit_device_id = devices.WEAPON_SYSTEM,       name = _('Bomb Arm Switch - NOSE & TAIL else OFF'),     category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},    
-    
+    {down = device_commands.arm_bomb, value_down = 1, up = device_commands.arm_bomb, value_up = 0, cockpit_device_id = devices.WEAPON_SYSTEM,       name = _('Bomb Arm Switch - NOSE & TAIL else OFF'),     category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
+    {down = Keys.BombArmSwitch,                                                                                                                     name = _('Bomb Arm Switch - Cycle'),                    category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
+
     {down = Keys.Station1,                                                                                                                          name = _('Station 1 Selector - READY/OFF'),             category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
     {down = Keys.Station2,                                                                                                                          name = _('Station 2 Selector - READY/OFF'),             category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
     {down = Keys.Station3,                                                                                                                          name = _('Station 3 Selector - READY/OFF'),             category = {_('Instrument Panel'), _('Armament Panel'), _('Weapons')}},
@@ -330,8 +335,10 @@ join(res.keyCommands,{
     {down = device_commands.AWRS_stepripple, value_down = 0.3, cockpit_device_id = devices.WEAPON_SYSTEM,                                                           name = _('AWRS Mode Selector Switch - RIPPLE-SINGLE'),      category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
     {down = device_commands.AWRS_stepripple, value_down = 0.4, cockpit_device_id = devices.WEAPON_SYSTEM,                                                           name = _('AWRS Mode Selector Switch - RIPPLE-PAIRS'),       category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
     {down = device_commands.AWRS_stepripple, value_down = 0.5, cockpit_device_id = devices.WEAPON_SYSTEM,                                                           name = _('AWRS Mode Selector Switch - RIPPLE-SALVO'),       category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
-    {down = Keys.AWRS_Drop_Interval_Inc,                                                                                                                            name = _('AWRS Drop Interval Knob - CW/Increase'),          category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
-    {down = Keys.AWRS_Drop_Interval_Dec,                                                                                                                            name = _('AWRS Drop Interval Knob - CCW/Decrease'),         category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
+    {down = Keys.AWRS_Drop_Interval_Inc,                                                                                                                            name = _('AWRS Drop Interval Knob - Rotary Increment'),     category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
+    {down = Keys.AWRS_Drop_Interval_Dec,                                                                                                                            name = _('AWRS Drop Interval Knob - Rotary Decrement'),     category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
+    {down = Keys.AWRS_Drop_Interval_StartUp, up = Keys.AWRS_Drop_Interval_Stop,                                                                                     name = _('AWRS Drop Interval Knob - Continuous Increase'),  category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
+    {down = Keys.AWRS_Drop_Interval_StartDown, up = Keys.AWRS_Drop_Interval_Stop,                                                                                   name = _('AWRS Drop Interval Knob - Continuous Decrease'),  category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
     {down = device_commands.AWRS_drop_interval, value_down = 0.00, cockpit_device_id = devices.WEAPON_SYSTEM,                                                       name = _('AWRS Drop Interval Knob - 020 ms'),               category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
     {down = device_commands.AWRS_drop_interval, value_down = 0.05, cockpit_device_id = devices.WEAPON_SYSTEM,                                                       name = _('AWRS Drop Interval Knob - 030 ms'),               category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
     {down = device_commands.AWRS_drop_interval, value_down = 0.10, cockpit_device_id = devices.WEAPON_SYSTEM,                                                       name = _('AWRS Drop Interval Knob - 040 ms'),               category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
@@ -566,12 +573,18 @@ join(res.keyCommands,{
     {down = Keys.Fuel_Transfer_Bypass_Toggle,                                                                                                                   name = _('Fuel Transfer Switch - BYPASS/NORMAL'),       category = {_('Console Right'), _('Refueling')}},
 
     -- Interior Lights Panel
-    {down = device_commands.intlight_whiteflood_CHANGE,                                     cockpit_device_id = devices.AVIONICS,  value_down = 0.1,                    name = _('White Floodlights Control - CW/Increase'),                    category = {_('Console Right'), _('Interior Lights Panel')}},
-    {down = device_commands.intlight_whiteflood_CHANGE,                                     cockpit_device_id = devices.AVIONICS,  value_down = -0.1,                   name = _('White Floodlights Control - CCW/Decrease'),                   category = {_('Console Right'), _('Interior Lights Panel')}},
-    {down = device_commands.intlight_instruments_CHANGE,                                    cockpit_device_id = devices.AVIONICS,  value_down = 0.1,                    name = _('Instrument Lights Control - CW/Increase'),                    category = {_('Console Right'), _('Interior Lights Panel')}},
-    {down = device_commands.intlight_instruments_CHANGE,                                    cockpit_device_id = devices.AVIONICS,  value_down = -0.1,                   name = _('Instrument Lights Control - CCW/Decrease'),                   category = {_('Console Right'), _('Interior Lights Panel')}},
-    {down = device_commands.intlight_console_CHANGE,                                        cockpit_device_id = devices.AVIONICS,  value_down = 0.1,                    name = _('Console Lights Control - CW/Increase'),                       category = {_('Console Right'), _('Interior Lights Panel')}},
-    {down = device_commands.intlight_console_CHANGE,                                        cockpit_device_id = devices.AVIONICS,  value_down = -0.1,                   name = _('Console Lights Control - CCW/Decrease'),                      category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = device_commands.intlight_whiteflood_CHANGE,                                     cockpit_device_id = devices.AVIONICS,  value_down = 0.1,                    name = _('White Floodlights Control - Rotary Increment'),               category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = device_commands.intlight_whiteflood_CHANGE,                                     cockpit_device_id = devices.AVIONICS,  value_down = -0.1,                   name = _('White Floodlights Control - Rotary Decrement'),               category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = Keys.intlight_whiteflood_startup, up = Keys.intlight_whiteflood_stop,           cockpit_device_id = devices.AVIONICS,                                       name = _('White Floodlights Control - Continuous Increase'),            category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = Keys.intlight_whiteflood_startdown, up = Keys.intlight_whiteflood_stop,         cockpit_device_id = devices.AVIONICS,                                       name = _('White Floodlights Control - Continuous Decrease'),            category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = device_commands.intlight_instruments_CHANGE,                                    cockpit_device_id = devices.AVIONICS,  value_down = 0.1,                    name = _('Instrument Lights Control - Rotary Increment'),               category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = device_commands.intlight_instruments_CHANGE,                                    cockpit_device_id = devices.AVIONICS,  value_down = -0.1,                   name = _('Instrument Lights Control - Rotary Decrement'),               category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = Keys.intlight_instruments_startup, up = Keys.intlight_instruments_stop,         cockpit_device_id = devices.AVIONICS,                                       name = _('Instrument Lights Control - Continuous Increase'),            category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = Keys.intlight_instruments_startdown, up = Keys.intlight_instruments_stop,       cockpit_device_id = devices.AVIONICS,                                       name = _('Instrument Lights Control - Continuous Decrease'),            category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = device_commands.intlight_console_CHANGE,                                        cockpit_device_id = devices.AVIONICS,  value_down = 0.1,                    name = _('Console Lights Control - Rotary Increment'),                  category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = device_commands.intlight_console_CHANGE,                                        cockpit_device_id = devices.AVIONICS,  value_down = -0.1,                   name = _('Console Lights Control - Rotary Decrement'),                  category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = Keys.intlight_console_startup, up = Keys.intlight_console_stop,                 cockpit_device_id = devices.AVIONICS,                                       name = _('Console Lights Control - Continuous Increase'),               category = {_('Console Right'), _('Interior Lights Panel')}},
+    {down = Keys.intlight_console_startdown, up = Keys.intlight_console_stop,               cockpit_device_id = devices.AVIONICS,                                       name = _('Console Lights Control - Continuous Decrease'),               category = {_('Console Right'), _('Interior Lights Panel')}},
     {down = device_commands.intlight_brightness,                                            cockpit_device_id = devices.AVIONICS,  value_down = 1.0,                    name = _('Instrument Lights Brightness Switch - BRIGHT'),               category = {_('Console Right'), _('Interior Lights Panel')}},
     {down = device_commands.intlight_brightness,                                            cockpit_device_id = devices.AVIONICS,  value_down = 0.0,                    name = _('Instrument Lights Brightness Switch - DIM'),                  category = {_('Console Right'), _('Interior Lights Panel')}},
     {down = device_commands.intlight_brightness,                                            cockpit_device_id = devices.AVIONICS,  value_down = -1.0,                   name = _('Instrument Lights Brightness Switch - MEDIUM'),               category = {_('Console Right'), _('Interior Lights Panel')}},
@@ -689,37 +702,52 @@ join(res.axisCommands,{
     ---------------------------------------------
     -- ECM Control Panel / AN/APR-23 Radar Homing and Warning System
     --------------------------------------------- 
-    {action = device_commands.ecm_msl_alert_axis_inner, cockpit_device_id = devices.RWR,                name = _('AN/APR-23 PRF Volume'),                       category = {_('AN/APR-23 RHWS (ECM)')}}, 
-    {action = device_commands.ecm_msl_alert_axis_outer, cockpit_device_id = devices.RWR,                name = _('AN/APR-23 Missile Alert Volume'),             category = {_('AN/APR-23 RHWS (ECM)')}}, 
+    {action = device_commands.ecm_msl_alert_axis_inner_abs, cockpit_device_id = devices.RWR,            name = _('AN/APR-23 PRF Volume - Absolute'),             category = {_('AN/APR-23 RHWS (ECM)')}}, 
+    {action = device_commands.ecm_msl_alert_axis_inner_slew, cockpit_device_id = devices.RWR,           name = _('AN/APR-23 PRF Volume - Slew'),                 category = {_('AN/APR-23 RHWS (ECM)')}}, 
+    {action = device_commands.ecm_msl_alert_axis_outer_abs, cockpit_device_id = devices.RWR,            name = _('AN/APR-23 Missile Alert Volume - Absolute'),   category = {_('AN/APR-23 RHWS (ECM)')}}, 
+    {action = device_commands.ecm_msl_alert_axis_outer_slew, cockpit_device_id = devices.RWR,           name = _('AN/APR-23 Missile Alert Volume - Slew'),       category = {_('AN/APR-23 RHWS (ECM)')}}, 
     
     -- Miscellaneous Switches Panel
-    {action = device_commands.shrike_sidewinder_volume, cockpit_device_id = devices.WEAPON_SYSTEM,      name = _('Shrike/Sidewinder Volume Knob'),              category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
+    {action = device_commands.shrike_sidewinder_volume_abs, cockpit_device_id = devices.WEAPON_SYSTEM,  name = _('Shrike/Sidewinder Volume Knob - Absolute'),   category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
+    {action = device_commands.shrike_sidewinder_volume_slew, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('Shrike/Sidewinder Volume Knob - Slew'),       category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
 
     -- Radar Indicator
-    {action = device_commands.radar_storage_axis, cockpit_device_id = devices.RADAR,                    name = _('Radar Indicator Storage Knob'),               category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
-    {action = device_commands.radar_brilliance_axis, cockpit_device_id = devices.RADAR,                 name = _('Radar Indicator Brilliance Knob'),            category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
-    {action = device_commands.radar_detail_axis, cockpit_device_id = devices.RADAR,                     name = _('Radar Indicator Detail Knob'),                category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
-    {action = device_commands.radar_gain_axis, cockpit_device_id = devices.RADAR,                       name = _('Radar Indicator Gain Knob'),                  category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
-    {action = device_commands.radar_reticle_axis, cockpit_device_id = devices.RADAR,                    name = _('Radar Indicator Reticle Knob'),               category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    --{action = device_commands.radar_storage_axis_abs, cockpit_device_id = devices.RADAR,                name = _('Radar Indicator Storage Knob - Absolute'),    category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    --{action = device_commands.radar_storage_axis_slew, cockpit_device_id = devices.RADAR,               name = _('Radar Indicator Storage Knob - Slew'),        category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    --{action = device_commands.radar_brilliance_axis_abs, cockpit_device_id = devices.RADAR,             name = _('Radar Indicator Brilliance Knob - Absolute'), category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    --{action = device_commands.radar_brilliance_axis_slew, cockpit_device_id = devices.RADAR,            name = _('Radar Indicator Brilliance Knob - Slew'),     category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    --{action = device_commands.radar_detail_axis_abs, cockpit_device_id = devices.RADAR,                 name = _('Radar Indicator Detail Knob - Absolute'),     category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    --{action = device_commands.radar_detail_axis_slew, cockpit_device_id = devices.RADAR,                name = _('Radar Indicator Detail Knob - Slew'),         category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    --{action = device_commands.radar_gain_axis_abs, cockpit_device_id = devices.RADAR,                   name = _('Radar Indicator Gain Knob - Absolute'),       category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    --{action = device_commands.radar_gain_axis_slew, cockpit_device_id = devices.RADAR,                  name = _('Radar Indicator Gain Knob - Slew'),           category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    --{action = device_commands.radar_reticle_axis_abs, cockpit_device_id = devices.RADAR,                name = _('Radar Indicator Reticle Knob - Absolute'),    category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
+    --{action = device_commands.radar_reticle_axis_slew, cockpit_device_id = devices.RADAR,               name = _('Radar Indicator Reticle Knob - Slew'),        category = {_('Instrument Panel'), _('AN/APG-53A Radar Indicator')}},
 
     -- Radar Control Panel
     {action = device_commands.radar_angle_axis, cockpit_device_id = devices.RADAR,                      name = _('AN/APG-53A Radar Antenna Tilt - Slew'),       category = {_('Console Left'), _('Radar Control Panel'), _('AN/APG-53A Radar')}},
     {action = device_commands.radar_angle_axis_abs, cockpit_device_id = devices.RADAR,                  name = _('AN/APG-53A Radar Antenna Tilt - Absolute'),   category = {_('Console Left'), _('Radar Control Panel'), _('AN/APG-53A Radar')}},
 
     -- AN/ARN-52 TACAN Control Panel
-    {action = device_commands.tacan_volume_axis, cockpit_device_id = devices.NAV,                       name = _('TACAN Volume'),                               category = {_('Console Right'), _('AN/ARN-52 TACAN')}},
+    {action = device_commands.tacan_volume_axis_abs, cockpit_device_id = devices.NAV,                   name = _('TACAN Volume - Absolute'),                    category = {_('Console Right'), _('AN/ARN-52 TACAN')}},
+    {action = device_commands.tacan_volume_axis_slew, cockpit_device_id = devices.NAV,                  name = _('TACAN Volume - Slew'),                        category = {_('Console Right'), _('AN/ARN-52 TACAN')}},
 
     -- Interior Lights Panel
-    {action = device_commands.intlight_instruments_AXIS, cockpit_device_id = devices.AVIONICS,          name = _('Lights Instrument Lights Control'),           category = {_('Console Right'), _('Interior Lights Panel')}},
-    {action = device_commands.intlight_console_AXIS, cockpit_device_id = devices.AVIONICS,              name = _('Lights Console Lights Control'),              category = {_('Console Right'), _('Interior Lights Panel')}},
-    {action = device_commands.intlight_whiteflood_AXIS, cockpit_device_id = devices.AVIONICS,           name = _('Lights White Floodlights Control'),           category = {_('Console Right'), _('Interior Lights Panel')}},
+    {action = device_commands.intlight_instruments_AXIS, cockpit_device_id = devices.AVIONICS,          name = _('Instrument Lights Control - Absolute'),       category = {_('Console Right'), _('Interior Lights Panel')}},
+    {action = device_commands.intlight_instruments_axis_slew, cockpit_device_id = devices.AVIONICS,     name = _('Instrument Lights Control - Slew'),           category = {_('Console Right'), _('Interior Lights Panel')}},
+    {action = device_commands.intlight_console_AXIS, cockpit_device_id = devices.AVIONICS,              name = _('Console Lights Control - Absolute'),          category = {_('Console Right'), _('Interior Lights Panel')}},
+    {action = device_commands.intlight_console_axis_slew, cockpit_device_id = devices.AVIONICS,         name = _('Console Lights Control - Slew'),              category = {_('Console Right'), _('Interior Lights Panel')}},
+    {action = device_commands.intlight_whiteflood_AXIS, cockpit_device_id = devices.AVIONICS,           name = _('White Floodlights Control - Absolute'),       category = {_('Console Right'), _('Interior Lights Panel')}},
+    {action = device_commands.intlight_whiteflood_axis_slew, cockpit_device_id = devices.AVIONICS,      name = _('White Floodlights Control - Slew'),           category = {_('Console Right'), _('Interior Lights Panel')}},
 
     -- Aircraft Weapons Release System Panel
-    {action = device_commands.AWRS_drop_interval_AXIS, cockpit_device_id = devices.WEAPON_SYSTEM,       name = _('AWRS Drop Interval Knob'),                    category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
+    {action = device_commands.AWRS_drop_interval_AXIS, cockpit_device_id = devices.WEAPON_SYSTEM,       name = _('AWRS Drop Interval Knob - Absolute'),         category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
+    {action = device_commands.awrs_drop_interval_axis_slew, cockpit_device_id = devices.WEAPON_SYSTEM,  name = _('AWRS Drop Interval Knob - Slew'),             category = {_('Instrument Panel'), _('AWE-1 Aircraft Weapons Release System'), _('Weapons')}},
     
     -- Gunsight Panel
-    {action = device_commands.GunsightBrightness,              cockpit_device_id = devices.GUNSIGHT,    name = _('Gunsight Light Control'),                     category = {_('Instrument Panel'), _('Gunsight Panel')}},
-    {action = device_commands.GunsightElevationControl_AXIS,   cockpit_device_id = devices.GUNSIGHT,    name = _('Gunsight Elevation Control'),                 category = {_('Instrument Panel'), _('Gunsight Panel')}},
+    {action = device_commands.gunsight_brightness_axis, cockpit_device_id = devices.GUNSIGHT,           name = _('Gunsight Light Control - Slew'),              category = {_('Instrument Panel'), _('Gunsight Panel')}},
+    {action = device_commands.gunsight_brightness_axis_abs, cockpit_device_id = devices.GUNSIGHT,       name = _('Gunsight Light Control - Absolute'),          category = {_('Instrument Panel'), _('Gunsight Panel')}},
+    {action = device_commands.gunsight_elevation_axis, cockpit_device_id = devices.GUNSIGHT,            name = _('Gunsight Elevation Control - Slew'),          category = {_('Instrument Panel'), _('Gunsight Panel')}},
+    {action = device_commands.gunsight_elevation_axis_abs, cockpit_device_id = devices.GUNSIGHT,        name = _('Gunsight Elevation Control - Absolute'),      category = {_('Instrument Panel'), _('Gunsight Panel')}},
 
     --UI Override
     {action = device_commands.mouse_x,                                                                  name = _('Mouse X Relative'),                           category = {_('UI Override')}},

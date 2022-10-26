@@ -187,6 +187,7 @@ WeaponSystem:listen_command(Keys.GunpodCharge)
 WeaponSystem:listen_command(Keys.GunpodLeft)
 WeaponSystem:listen_command(Keys.GunpodCenter)
 WeaponSystem:listen_command(Keys.GunpodRight)
+WeaponSystem:listen_command(Keys.BombArmSwitch)
 WeaponSystem:listen_command(Keys.Station1)
 WeaponSystem:listen_command(Keys.Station2)
 WeaponSystem:listen_command(Keys.Station3)
@@ -203,6 +204,8 @@ WeaponSystem:listen_command(Keys.MissileVolumeStartDown)
 WeaponSystem:listen_command(Keys.MissileVolumeStop)
 
 WeaponSystem:listen_command(device_commands.shrike_sidewinder_volume)
+WeaponSystem:listen_command(device_commands.shrike_sidewinder_volume_abs)
+WeaponSystem:listen_command(device_commands.shrike_sidewinder_volume_slew)
 WeaponSystem:listen_command(device_commands.shrike_selector)
 
 WeaponSystem:listen_command(device_commands.shrike_sidewinder_volume)
@@ -218,8 +221,12 @@ WeaponSystem:listen_command(Keys.AWRSQtySelDecrease)
 WeaponSystem:listen_command(Keys.AWRSModeSelCCW)
 WeaponSystem:listen_command(Keys.AWRSModeSelCW)
 WeaponSystem:listen_command(device_commands.AWRS_drop_interval_AXIS)
+WeaponSystem:listen_command(device_commands.awrs_drop_interval_axis_slew)
 WeaponSystem:listen_command(Keys.AWRS_Drop_Interval_Inc)
 WeaponSystem:listen_command(Keys.AWRS_Drop_Interval_Dec)
+WeaponSystem:listen_command(Keys.AWRS_Drop_Interval_StartUp)
+WeaponSystem:listen_command(Keys.AWRS_Drop_Interval_StartDown)
+WeaponSystem:listen_command(Keys.AWRS_Drop_Interval_Stop)
 
 WeaponSystem:listen_command(Keys.ChangeCBU2AQuantity)
 WeaponSystem:listen_command(Keys.ChangeCBU2BAQuantity)
@@ -237,6 +244,7 @@ WeaponSystem:listen_event("UnlimitedWeaponStationRestore")
 local shrike_sidewinder_volume = get_param_handle("SHRIKE_SIDEWINDER_VOLUME")
 local missile_volume_pos = 0
 local missile_volume_moving = 0
+local awrs_drop_interval_moving = 0
 
 local cbu1a_quantity = get_param_handle("CBU1A_QTY")
 local cbu2a_quantity = get_param_handle("CBU2A_QTY")
@@ -891,8 +899,15 @@ function update()
     end
 
     -- coninous volume knob movement
+
+    if awrs_drop_interval_moving ~= 0 then
+        local newposition = clamp(AWRS_interval_position + awrs_drop_interval_moving, 0.0, 0.9)
+        WeaponSystem:performClickableAction(device_commands.AWRS_drop_interval, newposition, false)
+        AWRS_interval_position = newposition
+    end
+
     if missile_volume_moving ~= 0 then
-        WeaponSystem:performClickableAction(device_commands.shrike_sidewinder_volume, clamp(missile_volume_pos + 0.005 * missile_volume_moving, 0, 1), false)
+        WeaponSystem:performClickableAction(device_commands.shrike_sidewinder_volume, clamp(missile_volume_pos + missile_volume_moving, 0, 1), false)
     end
 
     release_cbu_bomblets()
@@ -1287,6 +1302,15 @@ function SetCommand(command,value)
         check_shrike(_master_arm)
         next_pylon=1
 
+    elseif command == Keys.BombArmSwitch then
+        if bomb_arm_switch == 1 then
+            WeaponSystem:performClickableAction((device_commands.arm_bomb), 1, false) -- OFF to NOSE & TAIL
+        elseif bomb_arm_switch == 2 then
+            WeaponSystem:performClickableAction((device_commands.arm_bomb), -1, false) -- NOSE & TAIL to TAIL
+        elseif bomb_arm_switch == 0 then
+            WeaponSystem:performClickableAction((device_commands.arm_bomb), 0, false) -- TAIL to OFF
+        end
+
     elseif command >= Keys.Station1 and command <= Keys.Station5 then
         local stationOffset = command - Keys.Station1   -- value of 0 to 4
         if station_states[1+stationOffset] == 0 then
@@ -1412,16 +1436,25 @@ function SetCommand(command,value)
         debug_print("interval:"..tostring(weapon_interval))
         
     elseif command == device_commands.AWRS_drop_interval_AXIS then
-        local normalisedValue = ( ( value + 1 ) / 2 ) * 0.9 -- normalised {-1 to 1} to {0 - 0.9}
+        local normalisedValue = ((value+1)*0.5)*0.9 -- normalised {-1 to 1} to {0 - 0.9}
         WeaponSystem:performClickableAction(device_commands.AWRS_drop_interval, normalisedValue, false)
+        AWRS_interval_position = normalisedValue
+    elseif command == device_commands.awrs_drop_interval_axis_slew then
+        awrs_drop_interval_moving = value/300
     elseif command == Keys.AWRS_Drop_Interval_Inc then
         local newposition = clamp(AWRS_interval_position + 0.05, 0.0, 0.9)
-        WeaponSystem:performClickableAction(device_commands.AWRS_drop_interval, clamp(newposition, 0.0, 0.9), false)
+        WeaponSystem:performClickableAction(device_commands.AWRS_drop_interval, newposition, false)
         AWRS_interval_position = newposition
     elseif command == Keys.AWRS_Drop_Interval_Dec then
         local newposition = clamp(AWRS_interval_position - 0.05, 0.0, 0.9)
         WeaponSystem:performClickableAction(device_commands.AWRS_drop_interval, newposition, false)
         AWRS_interval_position = newposition
+    elseif command == Keys.AWRS_Drop_Interval_StartUp then
+        awrs_drop_interval_moving = 1/750
+    elseif command == Keys.AWRS_Drop_Interval_StartDown then
+        awrs_drop_interval_moving = -1/750
+    elseif command == Keys.AWRS_Drop_Interval_Stop then
+        awrs_drop_interval_moving = 0
     elseif command == device_commands.AWRS_multiplier then
         if value==1 then
             AWRS_multiplier = 10
@@ -1477,26 +1510,32 @@ function SetCommand(command,value)
             cbu2ba_quantity:set(cbu2ba_quantity_array[cbu2ba_quantity_array_pos+1])
         end
     elseif command == device_commands.shrike_sidewinder_volume then
-        debug_print("shrike_sidewinder_volume: "..value)
         shrike_sidewinder_volume:set(value)
-        aim9seek:update(nil, LinearTodB(shrike_sidewinder_volume:get()), nil)
+        --print_message_to_user("Sidewinder Volume: "..(value+1)*0.5)
+        local normalized_sidewinder_volume = (value+1)*0.12 + 0.01
+        aim9seek:update(nil, normalized_sidewinder_volume, nil)
         missile_volume_pos = value
+        --print_message_to_user("Sidewinder Volume (Normalized): "..normalized_sidewinder_volume)
+    elseif command == device_commands.shrike_sidewinder_volume_abs then
+        WeaponSystem:performClickableAction(device_commands.shrike_sidewinder_volume, (value+1)*0.5, false)
+    elseif command == device_commands.shrike_sidewinder_volume_slew then
+        missile_volume_moving = value/125
     elseif command == device_commands.shrike_selector then
         -- print_message_to_user(value)
 	elseif command == Keys.JATOFiringButton then
-		
+		--save for later
 	elseif command == device_commands.JATO_arm then
 		check_jato_armed_and_full(value)
 	elseif command == device_commands.JATO_jettison then
-
+        --save for later
     elseif command == Keys.MissileVolumeInc then
         WeaponSystem:performClickableAction(device_commands.shrike_sidewinder_volume, clamp(missile_volume_pos + 0.05, 0, 1), false)
     elseif command == Keys.MissileVolumeDec then
         WeaponSystem:performClickableAction(device_commands.shrike_sidewinder_volume, clamp(missile_volume_pos - 0.05, 0, 1), false)
     elseif command == Keys.MissileVolumeStartUp then
-        missile_volume_moving = 1
+        missile_volume_moving = 1/200
     elseif command == Keys.MissileVolumeStartDown then
-        missile_volume_moving = -1
+        missile_volume_moving = -1/200
     elseif command == Keys.MissileVolumeStop then
         missile_volume_moving = 0
 

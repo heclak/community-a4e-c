@@ -35,6 +35,7 @@ For example, page "23" is "23.lua".
   34 Rockets
   35 Missiles
   36 Countermeasures & ECM
+  37 Weapons & Loadouts
 
 4 Flight
   41 Autopilot
