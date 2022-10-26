@@ -503,6 +503,28 @@ Fires Mk 100-series (Mk 101 to Mk 109) ammunition (20x110mm)
 
 3 pod total:
 12,600 rounds/minute, 2250 total rounds of ammunition
+
+NAVWEPS OP 2719 (VOLUME 1), 1-18
+Figure 1-4. Gun Pod on Mk 7 Bomb Trailer
+TABLE 1-1. GUN POD MK 4 MOD 0 CAPABILITIES
+Capabilities
+- Firing Rate
+  - Fast / 4000 ± 200 rounds/minute
+  - Slow / 700 ± 100 rounds/minute
+- Time to rate / Instantaneous
+- Projectile energy:
+  - Rate / 5000 horsepower
+  - 22 hp/lb of Mk 11 gun
+- Muzzle velocity / 3300 ± 50 ft/sec
+- Capacity / 750 rounds
+Limitations
+- Airspeed during firing
+  - Mach 1.2 10,000 ft altitute
+  - Mach 2.2 60,00 ft altitude
+- Load Tolerances
+  - Vertical 10 g
+  - Side 6.5 g
+
 --]]
 
     local tracer_on_time = 0.01
