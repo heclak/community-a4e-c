@@ -114,6 +114,17 @@ void Scooter::Airframe::airborneInit()
 	zeroInit();
 }
 
+static double CalculateWheelArgChange( double arg_now, double arg_prev )
+{
+	double darg_big = ( 1.0 - arg_prev ) + arg_now;
+	double darg_small = ( arg_now - arg_prev );
+
+	if ( abs( darg_big ) < abs( darg_small ) )
+		return darg_big;
+	else
+		return darg_small;
+}
+
 void Scooter::Airframe::airframeUpdate(double dt)
 {
 	//printf( "I %lf, L %lf, C %lf, R %lf\n", m_fuel[0], m_fuel[1], m_fuel[2], m_fuel[3] );
@@ -128,6 +139,19 @@ void Scooter::Airframe::airframeUpdate(double dt)
 		m_hookPosition -= dt / m_hookExtendTime;
 		m_hookPosition = std::max(m_hookPosition, 0.0);
 	}
+
+	static constexpr double wheel_radius = 0.609;
+	static constexpr double wheel_factor = 2.0 * PI * wheel_radius;
+	m_left_wheel_speed = wheel_factor * CalculateWheelArgChange( m_left_wheel_arg, m_left_wheel_arg_prev ) / dt;
+	m_right_wheel_speed = wheel_factor * CalculateWheelArgChange( m_right_wheel_arg, m_right_wheel_arg_prev ) / dt;
+
+	m_left_wheel_arg_prev = m_left_wheel_arg;
+	m_right_wheel_arg_prev = m_right_wheel_arg;
+
+	double slip_l = m_left_wheel_ground_speed - m_left_wheel_speed;
+	double slip_r = m_right_wheel_ground_speed - m_right_wheel_speed;
+	printf( "Left: %lf, Right: %lf, Slip L: %lf, R: %lf\n", m_left_wheel_speed, m_right_wheel_speed, slip_l, slip_r );
+
 
 	//printf("LEFT: %lf, CENTRE: %lf, RIGHT: %lf, INTERNAL: %lf\n", m_fuel[Tank::LEFT_EXT], m_fuel[Tank::CENTRE_EXT], m_fuel[Tank::RIGHT_EXT], m_fuel[Tank::INTERNAL]);
 	//m_engine.setHasFuel(m_fuel[Tank::INTERNAL] > 20.0);

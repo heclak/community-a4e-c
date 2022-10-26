@@ -374,6 +374,12 @@ public:
 	inline double getElevatorZeroForceDeflection() const;
 	inline bool getSlatsLocked() const;
 
+	inline void SetLeftWheelArg( float value ) { m_left_wheel_arg = value; }
+	inline void SetRightWheelArg( float value ) { m_right_wheel_arg = value; }
+
+	inline void SetLeftWheelGroundSpeed( float value ) { m_left_wheel_ground_speed = value; }
+	inline void SetRightWheelGroundSpeed( float value ) { m_right_wheel_ground_speed = value; }
+
 	inline void breakWing()
 	{
 		setDamageDelta( Airframe::Damage::WING_L_IN, random() );
@@ -415,6 +421,17 @@ private:
 
 	double m_elevatorZeroForceDeflection = 0.0;
 
+	double m_left_wheel_arg = 0.0;
+	double m_right_wheel_arg = 0.0;
+
+	double m_left_wheel_arg_prev = 0.0;
+	double m_right_wheel_arg_prev = 0.0;
+
+	double m_left_wheel_speed = 0.0;
+	double m_right_wheel_speed = 0.0;
+
+	double m_left_wheel_ground_speed = 0.0;
+	double m_right_wheel_ground_speed = 0.0;
 
 	//Tank m_selected = Tank::INTERNAL;
 

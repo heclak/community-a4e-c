@@ -649,18 +649,14 @@ void ed_fm_set_command
 	case Scooter::Control::THROTTLE:
 		s_input->throttle( value );
 		break;
-	case Scooter::Control::BRAKE:
-		s_input->brakeLeft( value );
-		s_input->brakeRight( value );
-		break;
-	case Scooter::Control::LEFT_BRAKE:
-		s_input->brakeLeft( value );
-		break;
-	case Scooter::Control::RIGHT_BRAKE:
-		s_input->brakeRight( value );
-		break;
 	case DEVICE_COMMANDS_WHEELBRAKE_AXIS:
 		s_input->brakeLeft( value );
+		s_input->brakeRight( value );
+		break;
+	case DEVICE_COMMANDS_LEFT_WHEELBRAKE_AXIS:
+		s_input->brakeLeft( value );
+		break;
+	case DEVICE_COMMANDS_RIGHT_WHEELBRAKE_AXIS:
 		s_input->brakeRight( value );
 		break;
 	case Scooter::Control::RUDDER_LEFT_START:
@@ -928,6 +924,11 @@ void ed_fm_set_draw_args (EdDrawArgument * drawargs,size_t size)
 	//This is the refueling probe argument.
 	drawargs[22].f = 1.0;
 
+	s_airframe->SetLeftWheelArg( drawargs[103].f );
+	s_airframe->SetRightWheelArg( drawargs[102].f );
+
+
+
 }
 
 double ed_fm_get_param(unsigned index)
@@ -1184,9 +1185,33 @@ bool ed_fm_enable_debug_info()
 
 void ed_fm_suspension_feedback(int idx, const ed_fm_suspension_info* info)
 {
+
+
+
 	if ( idx == 0 )
 	{
 		s_airframe->setNoseCompression( info->struct_compression );
+	}
+
+	if ( idx == 1 )
+	{
+		s_airframe->SetLeftWheelGroundSpeed( info->wheel_speed_X );
+
+		/*printf( "wheel speed: %lf, force: %lf,%lf,%lf, point: %lf, %lf, %lf\n",
+			info->wheel_speed_X,
+			info->acting_force[0],
+			info->acting_force[1],
+			info->acting_force[2],
+			info->acting_force_point[0],
+			info->acting_force_point[1],
+			info->acting_force_point[2] );*/
+
+
+	}
+
+	if ( idx == 2 )
+	{
+		s_airframe->SetRightWheelGroundSpeed( info->wheel_speed_X );
 	}
 
 	if ( idx > 2 )
@@ -1194,6 +1219,8 @@ void ed_fm_suspension_feedback(int idx, const ed_fm_suspension_info* info)
 		printf( "Something Else\n" );
 	}
 		
+
+
 	//
 	//("Force(%lf, %lf, %lf)\n", info->acting_force[0], info->acting_force[1], info->acting_force[2]);
 	//printf("Position(%lf, %lf, %lf)\n", info->acting_force_point[0], info->acting_force_point[1], info->acting_force_point[2]);

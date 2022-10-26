@@ -616,7 +616,7 @@ function Mk11mod0(tbl)
     end
     tbl.gun =
     {
-        max_burst_length    = 25,
+        max_burst_length    = 10,
         rates               = {4200},
         recoil_coeff        = 0.7*1.3,
         barrels_count       = 2,
