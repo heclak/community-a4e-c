@@ -692,15 +692,16 @@ device_commands =
     ecm_msl_alert_axis_outer_abs    = __counter(),
     ecm_msl_alert_axis_outer_slew   = __counter(),
 
-    --radar_storage_axis_abs          = __counter(),
-    --radar_storage_axis_slew         = __counter(),
-    --radar_brilliance_axis_abs       = __counter(),
-    --radar_brilliance_axis_slew      = __counter(),
-    --radar_detail_axis_abs           = __counter(),
-    --radar_detail_axis_slew          = __counter(),
-    --radar_gain_axis_abs             = __counter(),
-    --radar_gain_axis_slew            = __counter(),
-    --radar_reticle_axis_abs          = __counter(),
-    --radar_reticle_axis_slew         = __counter(),
+    --radar display
+    radar_storage_axis_abs          = __counter(),
+    radar_storage_axis_slew         = __counter(),
+    radar_brilliance_axis_abs       = __counter(),
+    radar_brilliance_axis_slew      = __counter(),
+    radar_detail_axis_abs           = __counter(),
+    radar_detail_axis_slew          = __counter(),
+    radar_gain_axis_abs             = __counter(),
+    radar_gain_axis_slew            = __counter(),
+    radar_reticle_axis_abs          = __counter(),
+    radar_reticle_axis_slew         = __counter(),
 
 }
