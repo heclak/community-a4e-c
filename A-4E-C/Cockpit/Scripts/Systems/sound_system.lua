@@ -218,8 +218,8 @@ function post_initialize()
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowGear_L", "FM_GEAR_LEFT", SOUND_ALWAYS, 20.5, 62.0),
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_AirflowGear_R", "FM_GEAR_RIGHT", SOUND_ALWAYS, 20.5, 62.0),
         --skid
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitTireSkidL", "SKID_L_DETECTOR", SOUND_ONCE_STOPABLE),
-        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitTireSkidR", "SKID_R_DETECTOR", SOUND_ONCE_STOPABLE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitTireSkidL", "SKID_L_DETECTOR", SOUND_CONTINUOUS_STOPABLE),
+        Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_CockpitTireSkidR", "SKID_R_DETECTOR", SOUND_CONTINUOUS_STOPABLE),
         --ENVIRONMENTAL
         --damage
         Sound_Player(sndhost_cockpit, "Aircrafts/A-4E-C/a-4e_DamageGearOverspeed", "SND_INST_DAMAGE_GEAR_OVERSPEED", SOUND_ONCE),

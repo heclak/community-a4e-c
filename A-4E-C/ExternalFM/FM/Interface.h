@@ -170,6 +170,9 @@ public:
 		m_egg = m_api.pfn_ed_cockpit_get_parameter_handle( "EGG" );
 		m_eggScore = m_api.pfn_ed_cockpit_get_parameter_handle( "EGG_SCORE" );
 		m_eggHighScore = m_api.pfn_ed_cockpit_get_parameter_handle( "EGG_HIGH_SCORE" );
+
+		m_skid_l_detector = m_api.pfn_ed_cockpit_get_parameter_handle( "SKID_L_DETECTOR" );
+		m_skid_r_detector = m_api.pfn_ed_cockpit_get_parameter_handle( "SKID_R_DETECTOR" );
 	}
 
 	cockpit_param_api& api()
@@ -300,6 +303,16 @@ public:
 	inline bool getCatAutoMode()
 	{
 		return getParamNumber( m_autoCatMode ) > 0.5;
+	}
+
+	inline void SetLSkid( bool skid )
+	{
+		setParamNumber( m_skid_l_detector, (double)skid );
+	}
+
+	inline void SetRSkid( bool skid )
+	{
+		setParamNumber( m_skid_r_detector, (double)skid );
 	}
 
 	inline void setEngineStall( bool stall )
@@ -813,6 +826,9 @@ private:
 	void* m_egg = NULL;
 	void* m_eggScore = NULL;
 	void* m_eggHighScore = NULL;
+
+	void* m_skid_l_detector = NULL;
+	void* m_skid_r_detector = NULL;
 
 };
 

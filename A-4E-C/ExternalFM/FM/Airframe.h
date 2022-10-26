@@ -380,6 +380,24 @@ public:
 	inline void SetLeftWheelGroundSpeed( float value ) { m_left_wheel_ground_speed = value; }
 	inline void SetRightWheelGroundSpeed( float value ) { m_right_wheel_ground_speed = value; }
 
+	inline void SetCompressionLeft( float value ) { m_left_compression = value; }
+	inline void SetCompressionRight( float value ) { m_right_compression = value; }
+
+	inline double GetSlipageLeft() const { return m_left_wheel_ground_speed - m_left_wheel_speed; }
+	inline double GetSlipageRight() const { return m_right_wheel_ground_speed - m_right_wheel_speed; }
+
+	static constexpr double slip_threshold = 0.5;
+	static constexpr double compression_threshold = 0.1;
+	inline bool IsSkiddingLeft() const
+	{ 
+		return ( GetSlipageLeft() > slip_threshold ) && ( m_left_compression > compression_threshold );
+	}
+
+	inline bool IsSkiddingRight() const
+	{
+		return ( GetSlipageRight() > slip_threshold ) && ( m_right_compression > compression_threshold );
+	}
+
 	inline void breakWing()
 	{
 		setDamageDelta( Airframe::Damage::WING_L_IN, random() );
@@ -432,6 +450,9 @@ private:
 
 	double m_left_wheel_ground_speed = 0.0;
 	double m_right_wheel_ground_speed = 0.0;
+
+	double m_left_compression = 0.0;
+	double m_right_compression = 0.0;
 
 	//Tank m_selected = Tank::INTERNAL;
 

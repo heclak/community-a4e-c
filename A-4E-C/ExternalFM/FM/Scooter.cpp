@@ -457,6 +457,8 @@ void ed_fm_simulate(double dt)
 	s_interface->setRightSlat( s_airframe->getSlatRPosition() );
 
 	s_interface->setUsingFFB( s_input->getFFBEnabled() );
+	s_interface->SetLSkid( s_airframe->IsSkiddingLeft() );
+	s_interface->SetRSkid( s_airframe->IsSkiddingRight() );
 
 	//s_interface->setEngineStall( s_engine->stalled() ); Disabled for beta-5 re-enable when ready.
 
@@ -1196,7 +1198,7 @@ void ed_fm_suspension_feedback(int idx, const ed_fm_suspension_info* info)
 	if ( idx == 1 )
 	{
 		s_airframe->SetLeftWheelGroundSpeed( info->wheel_speed_X );
-
+		s_airframe->SetCompressionLeft( info->struct_compression );
 		/*printf( "wheel speed: %lf, force: %lf,%lf,%lf, point: %lf, %lf, %lf\n",
 			info->wheel_speed_X,
 			info->acting_force[0],
@@ -1212,6 +1214,7 @@ void ed_fm_suspension_feedback(int idx, const ed_fm_suspension_info* info)
 	if ( idx == 2 )
 	{
 		s_airframe->SetRightWheelGroundSpeed( info->wheel_speed_X );
+		s_airframe->SetCompressionRight( info->struct_compression );
 	}
 
 	if ( idx > 2 )
