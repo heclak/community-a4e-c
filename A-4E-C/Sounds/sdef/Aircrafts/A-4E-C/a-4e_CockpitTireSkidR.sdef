@@ -4,9 +4,9 @@ wave = {
 }
 inner_radius = 20
 outer_radius = 150
-gain = 10.0
-attack = 0.1
-release = 0.2
+gain = 0.6
+attack = 0.4
+release = 0.6
 listmode = RANDOM
 position = {-2.5, -2.5, 1.75}
 pitch_random = 0.1

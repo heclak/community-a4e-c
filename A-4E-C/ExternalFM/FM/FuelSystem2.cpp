@@ -135,7 +135,6 @@ void FuelSystem2::update( double dt )
 		m_boostPumpPressure = true; //Cut the Fuel Boost light
 		return;
 	}
-
 	//The factor from the engine for transfer since all transfer relies on bleed,
 	//either directly to pressurise the tank or to spin a turbopump.
 	double rateFactor = transferRateFactor();
