@@ -82,7 +82,6 @@ Keys =
 	--END EFM SPECIFIC BINDS
 
 
-
     PlaneFlapsStop                  = __custom_counter(),
     PlaneFlapsUpHotas               = __custom_counter(),
     PlaneFlapsDownHotas             = __custom_counter(),
@@ -415,6 +414,33 @@ Keys =
     afcs_hdg_set_stop              = __custom_counter(),
 
     nvg_toggle                     = __custom_counter(),
+	
+	canopy_open                    = __custom_counter(),
+	canopy_close                   = __custom_counter(),
+
+    throttle_position_off          = __custom_counter(),
+    throttle_position_ign          = __custom_counter(),
+    throttle_position_run          = __custom_counter(),
+
+    throttle_inc                   = __custom_counter(),
+    throttle_dec                   = __custom_counter(),
+
+    AWRS_Drop_Interval_StartUp    = __custom_counter(),
+    AWRS_Drop_Interval_StartDown  = __custom_counter(),
+    AWRS_Drop_Interval_Stop       = __custom_counter(),
+
+    intlight_whiteflood_startup   = __custom_counter(),
+    intlight_whiteflood_startdown = __custom_counter(),
+    intlight_whiteflood_stop      = __custom_counter(),
+    intlight_instruments_startup   = __custom_counter(),
+    intlight_instruments_startdown = __custom_counter(),
+    intlight_instruments_stop      = __custom_counter(),
+    intlight_console_startup      = __custom_counter(),
+    intlight_console_startdown    = __custom_counter(),
+    intlight_console_stop         = __custom_counter(),
+
+    BombArmSwitch                 = __custom_counter(),
+    
 }
 
 start_command   = 3000
@@ -595,7 +621,7 @@ device_commands =
     ENGINE_wing_fuel_sw             = __counter(),
     ENGINE_drop_tanks_sw            = __counter(),
     ENGINE_fuel_control_sw          = __counter(),
-    ENGINE_manual_fuel_shutoff        = __counter(),
+    ENGINE_manual_fuel_shutoff      = __counter(),
     ENGINE_manual_fuel_shutoff_catch  = __counter(),
 
     CPT_shoulder_harness            = __counter(),
@@ -613,7 +639,8 @@ device_commands =
     JATO_arm                        = __counter(),
     JATO_jettison                   = __counter(),
 
-    GunsightElevationControl_AXIS   = __counter(),
+    gunsight_elevation_axis         = __counter(),
+    gunsight_elevation_axis_abs     = __counter(),
     pilot_salute                    = __counter(),
 
     left_wheelbrake_AXIS            = __counter(),
@@ -636,8 +663,44 @@ device_commands =
     nav_dead_recon                  = __counter(),
     seat_adjustment                 = __counter(),
 
-    fuel_transfer_bypass    = __counter(),
     fuel_transfer_bypass            = __counter(),
-    mouse_x = __counter(),
-    mouse_y = __counter(),
+    fuel_transfer_bypass            = __counter(),
+    mouse_x                         = __counter(),
+    mouse_y                         = __counter(),
+
+    --avionics
+    intlight_instruments_axis_slew  = __counter(),
+    intlight_console_axis_slew      = __counter(),
+    intlight_whiteflood_axis_slew   = __counter(),
+
+    --gunsight
+    gunsight_brightness_axis_abs    = __counter(),
+    gunsight_brightness_axis_slew   = __counter(),
+
+    --weapon system
+    awrs_drop_interval_axis_slew    = __counter(),
+    shrike_sidewinder_volume_abs    = __counter(),
+    shrike_sidewinder_volume_slew   = __counter(),
+
+    --nav
+    tacan_volume_axis_abs           = __counter(),
+    tacan_volume_axis_slew          = __counter(),
+
+    --rwr
+    ecm_msl_alert_axis_inner_abs    = __counter(),
+    ecm_msl_alert_axis_inner_slew   = __counter(),
+    ecm_msl_alert_axis_outer_abs    = __counter(),
+    ecm_msl_alert_axis_outer_slew   = __counter(),
+
+    --radar_storage_axis_abs          = __counter(),
+    --radar_storage_axis_slew         = __counter(),
+    --radar_brilliance_axis_abs       = __counter(),
+    --radar_brilliance_axis_slew      = __counter(),
+    --radar_detail_axis_abs           = __counter(),
+    --radar_detail_axis_slew          = __counter(),
+    --radar_gain_axis_abs             = __counter(),
+    --radar_gain_axis_slew            = __counter(),
+    --radar_reticle_axis_abs          = __counter(),
+    --radar_reticle_axis_slew         = __counter(),
+
 }

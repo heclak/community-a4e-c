@@ -65,6 +65,8 @@ local fuel_transfer_bypass_valve = 0
 local drop_tank_press_switch = 0
 local fuel_dump_switch = 0
 
+local throttle_rate = get_plugin_option_value("A-4E-C","throttleRate","local")/50
+
 ------------------------------------------------
 ----------------  CONSTANTS  -------------------
 ------------------------------------------------
@@ -82,6 +84,13 @@ Engine:listen_command(Keys.Fuel_Transfer_Bypass_Toggle)
 Engine:listen_command(Keys.FuelControl)
 Engine:listen_command(Keys.drop_tank_press_cycle)
 Engine:listen_command(Keys.fuel_dump_cycle)
+
+Engine:listen_command(Keys.throttle_position_off)
+Engine:listen_command(Keys.throttle_position_ign)
+Engine:listen_command(Keys.throttle_position_run)
+
+Engine:listen_command(Keys.throttle_inc)
+Engine:listen_command(Keys.throttle_dec)
 
 function post_initialize()
 
@@ -128,8 +137,6 @@ pilot controlled ground start sequence:
 6. When RPM gets to 55%, request ground power OFF
 --]]
 
-
-
 local start_button_popup_timer = 0
 function SetCommand(command,value)
 	local rpm = sensor_data.getEngineLeftRPM()
@@ -164,40 +171,43 @@ function SetCommand(command,value)
         engine_state = ENGINE_OFF
         dispatch_action(nil,iCommandEnginesStop)
         dev:performClickableAction(device_commands.throttle_click,-1,false)
---    elseif command==device_commands.throttle_axis then
---        -- value is -1 for throttle full forwards, 1 for throttle full back
---        --local throt = (2-(value+1))/2.0
---        local throt = value
---        --print_message_to_user("throt"..string.format("%.2f",throt))
---        dispatch_action(nil, iCommandPlaneThrustCommon, throt)
+        --elseif command==device_commands.throttle_axis then
+        ---- value is -1 for throttle full forwards, 1 for throttle full back
+        ----local throt = (2-(value+1))/2.0
+        --local throt = value
+        ----print_message_to_user("throt"..string.format("%.2f",throt))
+        --dispatch_action(nil, iCommandPlaneThrustCommon, throt)
+    elseif command==Keys.throttle_inc then
+        dispatch_action(nil, iCommandPlaneThrustCommon, -2.0*throttle + 1.0 - throttle_rate)
+    elseif command==Keys.throttle_dec then
+        dispatch_action(nil, iCommandPlaneThrustCommon, -2.0*throttle + 1.0 + throttle_rate)
     elseif command==device_commands.throttle_click then
         -- validate that throttle is not in adjust range
         if sensor_data.getThrottleLeftPosition() > 0.3 then 
             return
         end
         if value==0 and throttle_state==THROTTLE_ADJUST and throttle<=0.01 then
-           -- click to IGN from adjust
-           throttle_state = THROTTLE_IGN
+            -- click to IGN from adjust
+            throttle_state = THROTTLE_IGN
 			efm_data_bus.fm_setIgnition(1.0)
-        elseif value==0 and throttle_state==THROTTLE_OFF then
-           -- click to IGN from OFF
-           throttle_state = THROTTLE_IGN
+            elseif value==0 and throttle_state==THROTTLE_OFF then
+            -- click to IGN from OFF
+            throttle_state = THROTTLE_IGN
 			efm_data_bus.fm_setIgnition(1.0)
         elseif value==-1 and throttle_state==THROTTLE_IGN then
-           -- click to OFF from IGN
-           throttle_state = THROTTLE_OFF
+            -- click to OFF from IGN
+            throttle_state = THROTTLE_OFF
 			efm_data_bus.fm_setIgnition(0.0)
-           if rpm>=55 and engine_state == ENGINE_RUNNING then
+            if rpm>=55 and engine_state == ENGINE_RUNNING then
                 debug_print("engine has been turned off")
                 dispatch_action(nil,iCommandEnginesStop)
                 engine_state = ENGINE_OFF
-           end
+            end
         elseif value==1 and throttle_state==THROTTLE_IGN then
-           -- click to ADJUST from IGN
-           throttle_state = THROTTLE_ADJUST
+            -- click to ADJUST from IGN
+            throttle_state = THROTTLE_ADJUST
 			efm_data_bus.fm_setIgnition(1.0)
         end
-		 
     elseif command == device_commands.throttle_click_ITER then
         -- validate that throttle is not in adjust range else cancel action
         if sensor_data.getThrottleLeftPosition() > 0.3 then
@@ -205,24 +215,27 @@ function SetCommand(command,value)
         end
         -- value should be +1 or -1
         if value == -1 or value == 1 then
-
             -- get current throttle state to iterate over
             local current_throttle_click_position = 0
             if throttle_state == THROTTLE_OFF then current_throttle_click_position = -1
-            elseif throttle_state == THROTTLE_IGN then current_throttle_click_position = 0
-            elseif throttle_state == THROTTLE_ADJUST then current_throttle_click_position = 1 end
-
+                elseif throttle_state == THROTTLE_IGN then current_throttle_click_position = 0
+                elseif throttle_state == THROTTLE_ADJUST then current_throttle_click_position = 1 
+                end
             -- iterate value of click position
             local new_throttle_click_value = current_throttle_click_position + value
             -- print_message_to_user("new.."..new_throttle_click_value)
-
             -- validate throttle click value is within range
             if new_throttle_click_value > 1 then new_throttle_click_value = 1
-            elseif new_throttle_click_value < -1 then new_throttle_click_value = -1
+                elseif new_throttle_click_value < -1 then new_throttle_click_value = -1
             end
-            
             dev:performClickableAction(device_commands.throttle_click, new_throttle_click_value, false)
         end
+    elseif command == Keys.throttle_position_off then
+        dev:performClickableAction(device_commands.throttle_click, -1, false)
+    elseif command == Keys.throttle_position_ign then
+        dev:performClickableAction(device_commands.throttle_click, 0, false)
+    elseif command == Keys.throttle_position_run then
+        dev:performClickableAction(device_commands.throttle_click, 1, false)
     elseif command==device_commands.ENGINE_manual_fuel_shutoff then
         local manual_fuel_shutoff_catch_clickable_ref = get_clickable_element_reference("PNT_131")
         -- if fuel is cut off, shutdown engines and prevent engines from restarting until lever is reset.

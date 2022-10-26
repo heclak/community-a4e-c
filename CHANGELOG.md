@@ -2,6 +2,43 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
+## Version 2.1.0 - DD MM 2022
+
+### Added
+- Flight Model:
+- Features:
+- Systems:
+  - Specific System Name
+- Missions:
+- Liveries:
+- Weapons and Loadouts:
+- Quality of Life:
+  - Inputs, controls indicator, kneeboard, etc.
+- Sounds:
+
+### Fixed
+- Flight Model:
+- Features:
+- Systems:
+  - Specific System Name
+- Missions:
+- Liveries:
+- Weapons and Loadouts:
+- Quality of Life:
+  - Inputs, controls indicator, kneeboard, etc.
+- Sounds:
+
+### Changed
+- Flight Model:
+- Features:
+- Systems:
+  - Specific System Name
+- Missions:
+- Liveries:
+- Weapons and Loadouts:
+- Quality of Life:
+  - Inputs, controls indicator, kneeboard, etc.
+- Sounds:
 
 ## Version 2.0.1 - 5 Mar 2022
 
@@ -40,7 +77,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 ### Changed
 - Systems:
   - AN/ARN-52 TACAN volume provides a better response across available knob position range.
-  - CP-741/A steady gunsight position must be established to receive accurate raging information. The computer now accounts for ejection velocity improving accuracy in some regimes. 
+  - CP-741/A steady gunsight position must be established to receive accurate raging information. The computer now accounts for ejection velocity improving accuracy in some regimes.
 - Weapons and Loadouts:
   - Changed MK-77 napalm canisters to have a cluster effect which is much closer to actual napalm.
   - More realistic MK12 guns charging and clearance: **Guns can be armed and safed a total of 3 times before available charging nitrogen is depleted.** The gun arming and safing when these charges are dispensed is audible. The ground crew performing a rearm will replenish nitrogen charges.

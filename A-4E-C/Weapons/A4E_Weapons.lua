@@ -503,6 +503,28 @@ Fires Mk 100-series (Mk 101 to Mk 109) ammunition (20x110mm)
 
 3 pod total:
 12,600 rounds/minute, 2250 total rounds of ammunition
+
+NAVWEPS OP 2719 (VOLUME 1), 1-18
+Figure 1-4. Gun Pod on Mk 7 Bomb Trailer
+TABLE 1-1. GUN POD MK 4 MOD 0 CAPABILITIES
+Capabilities
+- Firing Rate
+  - Fast / 4000 ± 200 rounds/minute
+  - Slow / 700 ± 100 rounds/minute
+- Time to rate / Instantaneous
+- Projectile energy:
+  - Rate / 5000 horsepower
+  - 22 hp/lb of Mk 11 gun
+- Muzzle velocity / 3300 ± 50 ft/sec
+- Capacity / 750 rounds
+Limitations
+- Airspeed during firing
+  - Mach 1.2 10,000 ft altitute
+  - Mach 2.2 60,00 ft altitude
+- Load Tolerances
+  - Vertical 10 g
+  - Side 6.5 g
+
 --]]
 
     local tracer_on_time = 0.01
@@ -1532,7 +1554,7 @@ BLU_3B_NEW = {
 	char_time = 0,
 	scheme = {
 		cluster = {
-            mass        = 1.75 * POUNDS_TO_KG * cbu_mult,    -- Empty weight with warhead, W/O fuel, kg
+            mass        = 1.75 * POUNDS_TO_KG,    -- Empty weight with warhead, W/O fuel, kg
             caliber     = 0.07,  -- Calibre, meters (7cm / 2.75")
             cx_coeff    = {1.000000*blu_drag_factor, 0.290000*blu_drag_factor, 0.710000*blu_drag_factor, 0.140000*blu_drag_factor, 1.280000*blu_drag_factor},  -- Cx
             L           = 0.095,   -- Length, meters (95mm / 3.75")
@@ -1548,15 +1570,15 @@ BLU_3B_NEW = {
 			--spawn_args_change		= {{1,6,1}, {2,6,0}, {3,6,1},{4,6,0}}
 		},
 		warhead         = {
-            mass        = 1.3 * POUNDS_TO_KG * cbu_mult; -- estimated
-            expl_mass   = 0.35 * POUNDS_TO_KG * cbu_mult;
+            mass        = 1.3 * POUNDS_TO_KG; -- estimated
+            expl_mass   = 0.35 * POUNDS_TO_KG;
             other_factors = {1.0, 1.0, 1.0};
             obj_factors = {1, 1};
             concrete_factors = {1.0, 1.0, 1.0};
             cumulative_factor = 1;
             concrete_obj_factor = 1.0;
             cumulative_thickness = 1.0;
-            piercing_mass = 0.95 * POUNDS_TO_KG * cbu_mult;
+            piercing_mass = 0.95 * POUNDS_TO_KG;
             caliber     = 0.07;   -- 7 cm
         },
 	},
@@ -1964,9 +1986,9 @@ end
 local dispenser_data =
 {
     --use shapename,         bomblet,          bomblet_count
-    ["CBU-1/A"]          = { bomblet = BLU_4B_NEW_GROUP, bomblet_count = 19 },
-    ["CBU-2/A"]          = { bomblet = BLU_3B_NEW_GROUP, bomblet_count = 19 },
-    ["CBU-2B/A"]         = { bomblet = BLU_3B_NEW_GROUP, bomblet_count = 19 },
+    ["CBU-1/A"]          = { bomblet = BLU_4B_NEW_GROUP, bomblet_count = 19, tube_size=tube_size_1A },
+    ["CBU-2/A"]          = { bomblet = BLU_3B_NEW_GROUP, bomblet_count = 19, tube_size=tube_size_2A },
+    ["CBU-2B/A"]         = { bomblet = BLU_3B_NEW_GROUP, bomblet_count = 19, tube_size=tube_size_2AB },
 }
 
 -- CLUSTER DISPENSER RACKING FUNCTION
@@ -1987,7 +2009,7 @@ function make_cbu_a4e_multi(dispenser,count,side) -- assemble a rack of cluster 
     data.Count              = dispenser_variant.bomblet_count * count
     data.displayName        = dispenser.." *2"
     data.wsTypeOfWeapon     = bomb_variant.wsTypeOfWeapon
-    data.Weight             = rack_variant.mass + 2 * ((128 * POUNDS_TO_KG) + bomb_variant.mass * dispenser_variant.bomblet_count)
+    data.Weight             = rack_variant.mass + 2 * ((128 * POUNDS_TO_KG) + bomb_variant.mass * dispenser_variant.tube_size * dispenser_variant.bomblet_count)
     data.Cx_pil             = 0.0025
     data.Elements           =
     {

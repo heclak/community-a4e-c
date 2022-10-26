@@ -3,6 +3,7 @@ dofile(LockOn_Options.common_script_path.."devices_defs.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
+dofile(LockOn_Options.script_path.."sound_params.lua")
 
 local update_rate = 0.02
 make_default_activity(update_rate)
@@ -14,9 +15,9 @@ local sensor_data = get_base_data()
 function post_initialize()
     startup_print("radarwarn: postinit")
 
-    sndhost = create_sound_host("COCKPIT_RADAR_WARN","HEADPHONES",0,0,0)
-    radarwarntone = sndhost:create_sound("Aircrafts/A-4E-C/a-4e_CockpitRadarAltimeterWarn") -- Radar Altimeter Warning Tone
-    -- radarlocktone = sndhost:create_sound("Aircrafts/A-4E-C/a-4e_CockpitRadarAltimeterLock") -- Radar Altimeter Lock Status Change Tone
+    --sndhost = create_sound_host("COCKPIT_RADAR_WARN","HEADPHONES",0,0,0)
+    --radarwarntone = sndhost:create_sound("Aircrafts/A-4E-C/a-4e_CockpitRadarAltimeterWarn") -- Radar Altimeter Warning Tone
+    --radarlocktone = sndhost:create_sound("Aircrafts/A-4E-C/a-4e_CockpitRadarAltimeterLock") -- Radar Altimeter Lock Status Change Tone
     local birth = LockOn_Options.init_conditions.birth_place
     if birth=="GROUND_HOT" or birth=="GROUND_COLD" then
         dev:performClickableAction(device_commands.radar_alt_switch, -1, false)  -- disable radar warning on ground starts
@@ -148,7 +149,8 @@ AFC 423: Disable LAWS Unreliability Tone with APR-27 Installed (Wiring Mod.)
             if prev_altitude > warning_altitude and altitude_feet < warning_altitude and radar_enabled then
                 played=true
                 ticker = 0
-                radarwarntone:play_once()
+                --radarwarntone:play_once()
+                sound_params.snd_inst_radar_altimeter_warning:set(1.0)
             end
         end
         prev_altitude = altitude_feet
@@ -157,6 +159,7 @@ AFC 423: Disable LAWS Unreliability Tone with APR-27 Installed (Wiring Mod.)
             RALT_warn_val=1
         else
             RALT_warn_val=0
+            sound_params.snd_inst_radar_altimeter_warning:set(0.0)
         end
     else
         current_RALT_valid:set(0)

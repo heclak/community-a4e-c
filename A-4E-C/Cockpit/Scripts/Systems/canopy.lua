@@ -23,6 +23,8 @@ if (initial_canopy > 0) then
 end
 
 dev:listen_command(Keys.Canopy)
+dev:listen_command(Keys.canopy_open)
+dev:listen_command(Keys.canopy_close)
 dev:listen_command(Keys.ToggleStick)
 
 dev:listen_event("repair")
@@ -50,11 +52,14 @@ end
 -- getCanopyState
 
 function SetCommand(command,value)
-
 	if (command == Keys.Canopy) then
         if CANOPY_COMMAND <= 1 then -- only toggle while not jettisoned
             CANOPY_COMMAND = 1-CANOPY_COMMAND --toggle
         end
+	elseif (command == Keys.canopy_open) then
+        CANOPY_COMMAND = 1
+	elseif (command == Keys.canopy_close) then
+		CANOPY_COMMAND = 0
     elseif command == Keys.ToggleStick then
         stick_vis_state = 1 - stick_vis_state
 	end

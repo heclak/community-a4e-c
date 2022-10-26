@@ -5,7 +5,6 @@ local oms       = require('optionsModsScripts')
 
 local _ = i18n.ptranslate
 
-
 -- find the relative location of optionsDb.lua
 function script_path() 
     -- remember to strip off the starting @ 
@@ -21,11 +20,12 @@ modulelocation = lfs.currentdir().."\\"..relativeloc
 
 local tblCPLocalList = oms.getTblCPLocalList(modulelocation)
 
-
 return {
 	trimSpeedPitch			= DbOption.new():setValue(100):slider(Range(1,100)),
 	trimSpeedRoll			= DbOption.new():setValue(100):slider(Range(1,100)),
 	trimSpeedRudder			= DbOption.new():setValue(100):slider(Range(1,100)),
+
+	throttleRate			= DbOption.new():setValue(2.5):slider(Range(1.00,5.00)),
 
 	--[[catapultLaunchMode		= DbOption.new():setValue(0):combo({DbOption.Item(_('MIL Power')):Value(0),
 																DbOption.Item(_('Manual')):Value(1),
@@ -41,5 +41,5 @@ return {
 
 	wheelBrakeAssist        = DbOption.new():setValue(false):checkbox(),
 
-	oldRadar       = DbOption.new():setValue(false):checkbox(),
+	oldRadar       			= DbOption.new():setValue(false):checkbox(),
 }

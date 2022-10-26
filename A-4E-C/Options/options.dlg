@@ -3,8 +3,29 @@
 local MarginLeft = 56
 local LeftColumnX = MarginLeft
 local LeftColumnWidth = 500
-local LeftColumnLabelWidth = 200
+local LeftColumnLabelWidth = 250
 local LeftColumnComboListX = LeftColumnX + LeftColumnLabelWidth
+local LeftColumnIndent = 170
+local EntryHeight = 24
+local EntryLabelWidth = 160
+local EntryLabelWidthLong = 500
+local EntrySliderWidth = 300
+local EntryWidgetWidth = 50
+local EntryHelpWidth = 800
+local EntryWidgetOffset = 450
+local EntryCheckBoxOffset = 4
+local EntryCheckBoxIndent = 25
+local EntrySliderOffset = 2
+
+-- start lines
+local lineheight = 25
+local OrderOptionsTitle 	= lineheight * 1
+local OrderTrimSpeed 		= lineheight * 4
+local OrderThrottleRate 	= lineheight * 9
+local OrderFFB 				= lineheight * 12 
+local OrderCockpitShake 	= lineheight * 15
+local OrderSimpleBraking 	= lineheight * 18
+local OrderRadarMode		= lineheight * 21
 
 -- Styles
 
@@ -51,10 +72,10 @@ dialog = {
 				["nameLabel"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 260,
-							["x"] = -25,
-							["y"] = 25
+							["h"] = EntryHeight,
+							["w"] = EntryLabelWidthLong,
+							["x"] = LeftColumnX,
+							["y"] = OrderOptionsTitle,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_AIRCRAFTNAME",
@@ -69,7 +90,34 @@ dialog = {
 					},
 					["type"] = "Static"
 				},
+
+				--------------------------------------------
+				-- Project Page URL
+				--------------------------------------------
+
+				["projectPageLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = EntryHeight,
+							["w"] = EntryLabelWidthLong,
+							["x"] = LeftColumnX,
+							["y"] = OrderOptionsTitle + lineheight,
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_PROJECTPAGE",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsTitleSkin"
+						}
+					},
+					["type"] = "Static"
+				},
 				
+
 				--------------------------------------------
 				-- Pitch Trim Speed Option
 				--------------------------------------------
@@ -77,13 +125,13 @@ dialog = {
 				["trimSpeedPitchLabel"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 260,
+							["h"] = EntryHeight,
+							["w"] = EntryLabelWidth,
 							["x"] = LeftColumnX,
-							["y"] = 50
+							["y"] = OrderTrimSpeed,
 						},
 						["enabled"] = true,
-						["text"] = "$A4E_TRIMSPEED_PITCH",
+						["text"] = "$A4E_TRIMSPEED_PITCH_LABEL",
 						["tooltip"] = "",
 						["visible"] = true,
 						["zindex"] = 0
@@ -98,10 +146,10 @@ dialog = {
 				["trimSpeedPitchSlider"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 300,
-							["x"] = LeftColumnX + 150,
-							["y"] = 50,
+							["h"] = EntryHeight,
+							["w"] = EntrySliderWidth,
+							["x"] = LeftColumnX + LeftColumnIndent,
+							["y"] = OrderTrimSpeed - EntrySliderOffset,
 						},
 						["enabled"] = true,
 						["step"] = 1,
@@ -121,10 +169,10 @@ dialog = {
 				["trimSpeedPitchWidget"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 50,
-							["x"] = LeftColumnX + 450,
-							["y"] = 50,
+							["h"] = EntryHeight,
+							["w"] = EntryWidgetWidth,
+							["x"] = LeftColumnX + EntryWidgetOffset,
+							["y"] = OrderTrimSpeed,
 						},
 						["enabled"] = true,
 						["text"] = "0",
@@ -147,13 +195,13 @@ dialog = {
 				["trimSpeedRollLabel"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 260,
+							["h"] = EntryHeight,
+							["w"] = EntryLabelWidth,
 							["x"] = LeftColumnX,
-							["y"] = 90
+							["y"] = OrderTrimSpeed + lineheight,
 						},
 						["enabled"] = true,
-						["text"] = "$A4E_TRIMSPEED_ROLL",
+						["text"] = "$A4E_TRIMSPEED_ROLL_LABEL",
 						["tooltip"] = "",
 						["visible"] = true,
 						["zindex"] = 0
@@ -168,10 +216,10 @@ dialog = {
 				["trimSpeedRollSlider"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 300,
-							["x"] = LeftColumnX + 150,
-							["y"] = 90,
+							["h"] = EntryHeight,
+							["w"] = EntrySliderWidth,
+							["x"] = LeftColumnX + LeftColumnIndent,
+							["y"] = OrderTrimSpeed - EntrySliderOffset + lineheight,
 						},
 						["enabled"] = true,
 						["step"] = 1,
@@ -191,10 +239,10 @@ dialog = {
 				["trimSpeedRollWidget"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 50,
-							["x"] = LeftColumnX + 450,
-							["y"] = 90,
+							["h"] = EntryHeight,
+							["w"] = EntryWidgetWidth,
+							["x"] = LeftColumnX + EntryWidgetOffset,
+							["y"] = OrderTrimSpeed + lineheight,
 						},
 						["enabled"] = true,
 						["text"] = "0",
@@ -217,13 +265,13 @@ dialog = {
 				["trimSpeedRudderLabel"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 260,
+							["h"] = EntryHeight,
+							["w"] = EntryLabelWidth,
 							["x"] = LeftColumnX,
-							["y"] = 130
+							["y"] = OrderTrimSpeed + lineheight*2,
 						},
 						["enabled"] = true,
-						["text"] = "$A4E_TRIMSPEED_RUDDER",
+						["text"] = "$A4E_TRIMSPEED_RUDDER_LABEL",
 						["tooltip"] = "",
 						["visible"] = true,
 						["zindex"] = 0
@@ -238,10 +286,10 @@ dialog = {
 				["trimSpeedRudderSlider"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 300,
-							["x"] = LeftColumnX + 150,
-							["y"] = 130,
+							["h"] = EntryHeight,
+							["w"] = EntrySliderWidth,
+							["x"] = LeftColumnX + LeftColumnIndent,
+							["y"] = OrderTrimSpeed - EntrySliderOffset + lineheight*2,
 						},
 						["enabled"] = true,
 						["step"] = 1,
@@ -261,10 +309,10 @@ dialog = {
 				["trimSpeedRudderWidget"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 50,
-							["x"] = LeftColumnX + 450,
-							["y"] = 130,
+							["h"] = EntryHeight,
+							["w"] = EntryWidgetWidth,
+							["x"] = LeftColumnX + EntryWidgetOffset,
+							["y"] = OrderTrimSpeed + lineheight*2,
 						},
 						["enabled"] = true,
 						["text"] = "0",
@@ -282,10 +330,10 @@ dialog = {
 				["trimSpeedHelpLabel"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 500,
+							["h"] = EntryHeight,
+							["w"] = EntryHelpWidth,
 							["x"] = LeftColumnX,
-							["y"] = 130 + 25,
+							["y"] = OrderTrimSpeed + lineheight*3,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_TRIM_SPEED_SLIDER_HELP",
@@ -298,18 +346,104 @@ dialog = {
 				},
 
 				--------------------------------------------
-				-- Cockpit Shake Slider
+				-- Throttle Rate
+				--------------------------------------------
+				["throttleRateLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = EntryHeight,
+							["w"] = EntryLabelWidth,
+							["x"] = LeftColumnX,
+							["y"] = OrderThrottleRate,
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_THROTTLE_RATE_LABEL",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsCaptionSkin",
+						},
+					},
+					["type"] = "Static",
+				},
+				["throttleRateSlider"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = EntryHeight,
+							["w"] = EntrySliderWidth,
+							["x"] = LeftColumnX + LeftColumnIndent,
+							["y"] = OrderThrottleRate - EntrySliderOffset,
+						},
+						["enabled"] = true,
+						["step"] = 0.1,
+						["range"] = {
+							["max"] = 5,
+							["min"] = 1,
+						},
+						["tabOrder"] = 0,
+						["text"] = "",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = SliderSkin,
+					["type"] = "HorzSlider",
+				},
+				["throttleRateWidget"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = EntryHeight,
+							["w"] = EntryWidgetWidth,
+							["x"] = LeftColumnX + EntryWidgetOffset,
+							["y"] = OrderThrottleRate,
+						},
+						["enabled"] = true,
+						["text"] = "0",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsSliderValueSkin",
+						},
+					},
+					["type"] = "Static",
+				},
+				["throttleRateHelpLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = EntryHeight,
+							["w"] = EntryHelpWidth,
+							["x"] = LeftColumnX,
+							["y"] = OrderThrottleRate + lineheight,
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_THROTTLE_RATE_HELP",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = HelpSkin,
+					["type"] = "Static",
+				},
+
+				--------------------------------------------
+				-- Cockpit Shake
 				--------------------------------------------
 				["cockpitShakeLabel"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 100,
+							["h"] = EntryHeight,
+							["w"] = EntryLabelWidth,
 							["x"] = LeftColumnX,
-							["y"] = 200,
+							["y"] = OrderCockpitShake,
 						},
 						["enabled"] = true,
-						["text"] = "$A4E_COCKPIT_SHAKE_SLIDER_TEXT",
+						["text"] = "$A4E_COCKPIT_SHAKE_SLIDER_LABEL",
 						["tooltip"] = "",
 						["visible"] = true,
 						["zindex"] = 0,
@@ -324,15 +458,15 @@ dialog = {
 				["cockpitShakeSlider"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 300,
-							["x"] = LeftColumnX + 150,
-							["y"] = 200,
+							["h"] = EntryHeight,
+							["w"] = EntrySliderWidth,
+							["x"] = LeftColumnX + LeftColumnIndent,
+							["y"] = OrderCockpitShake - EntrySliderOffset,
 						},
 						["enabled"] = true,
 						["step"] = 1,
 						["range"] = {
-							["max"] = 200,
+							["max"] = 225,
 							["min"] = 0,
 						},
 						["tabOrder"] = 0,
@@ -347,10 +481,10 @@ dialog = {
 				["cockpitShakeWidget"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 50,
-							["x"] = LeftColumnX + 450,
-							["y"] = 200,
+							["h"] = EntryHeight,
+							["w"] = EntryWidgetWidth,
+							["x"] = LeftColumnX + EntryWidgetOffset,
+							["y"] = OrderCockpitShake,
 						},
 						["enabled"] = true,
 						["text"] = "0",
@@ -368,10 +502,10 @@ dialog = {
 				["cockpitShakeHelpLabel"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 500,
+							["h"] = EntryHeight,
+							["w"] = EntryHelpWidth,
 							["x"] = LeftColumnX,
-							["y"] = 200 + 25,
+							["y"] = OrderCockpitShake + lineheight,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_COCKPIT_SHAKE_SLIDER_HELP",
@@ -384,18 +518,18 @@ dialog = {
 				},
 
 				--------------------------------------------
-				-- FFB Required Deflection for CSS
+				-- FFB CSS Mode Deflection
 				--------------------------------------------
 				["cssActivateLabel"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 200,
+							["h"] = EntryHeight,
+							["w"] = EntryLabelWidth,
 							["x"] = LeftColumnX,
-							["y"] = 275,
+							["y"] = OrderFFB,
 						},
 						["enabled"] = true,
-						["text"] = "$A4E_COCKPIT_CSS_TEXT",
+						["text"] = "$A4E_COCKPIT_CSS_LABEL",
 						["tooltip"] = "",
 						["visible"] = true,
 						["zindex"] = 0,
@@ -410,15 +544,15 @@ dialog = {
 				["cssActivateSlider"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 300,
-							["x"] = LeftColumnX + 150,
-							["y"] = 275,
+							["h"] = EntryHeight,
+							["w"] = EntrySliderWidth,
+							["x"] = LeftColumnX + LeftColumnIndent,
+							["y"] = OrderFFB - EntrySliderOffset,
 						},
 						["enabled"] = true,
 						["step"] = 1,
 						["range"] = {
-							["max"] = 200,
+							["max"] = 100,
 							["min"] = 0,
 						},
 						["tabOrder"] = 0,
@@ -433,10 +567,10 @@ dialog = {
 				["cssActivateWidget"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 50,
-							["x"] = LeftColumnX + 450,
-							["y"] = 275,
+							["h"] = EntryHeight,
+							["w"] = EntryWidgetWidth,
+							["x"] = LeftColumnX + EntryWidgetOffset,
+							["y"] = OrderFFB,
 						},
 						["enabled"] = true,
 						["text"] = "0",
@@ -454,10 +588,10 @@ dialog = {
 				["cssActivateHelpLabel"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 500,
+							["h"] = EntryHeight,
+							["w"] = EntryHelpWidth,
 							["x"] = LeftColumnX,
-							["y"] = 275 + 25,
+							["y"] = OrderFFB + lineheight,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_COCKPIT_CSS_HELP",
@@ -470,16 +604,16 @@ dialog = {
 				},
 				
 				--------------------------------------------
-				-- Wheelbrake Assist Option
+				-- Simple Braking (Rudder-Assisted)
 				--------------------------------------------
 
 				["wheelBrakeAssistLabel"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 200,
-							["x"] = LeftColumnX + 25,
-							["y"] = 350,
+							["h"] = EntryHeight,
+							["w"] = EntryLabelWidthLong,
+							["x"] = LeftColumnX + EntryCheckBoxIndent,
+							["y"] = OrderSimpleBraking,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_WHEEL_BRAKE_ASSIST_CHECK_LABEL",
@@ -497,10 +631,10 @@ dialog = {
 				["wheelBrakeAssistCheckbox"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 50,
+							["h"] = EntryHeight,
+							["w"] = EntryWidgetWidth,
 							["x"] = LeftColumnX,
-							["y"] = 350 + 5,
+							["y"] = OrderSimpleBraking + EntryCheckBoxOffset,
 						},
 						["enabled"] = true,
 						["state"] = true,
@@ -516,10 +650,10 @@ dialog = {
 				["wheelBrakeAssistHelp"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 40,
-							["w"] = 800,
+							["h"] = EntryHeight,
+							["w"] = EntryHelpWidth,
 							["x"] = LeftColumnX,
-							["y"] = 350 + 25,
+							["y"] = OrderSimpleBraking + lineheight,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_WHEEL_BRAKE_ASSIST_CHECK_HELP",
@@ -530,13 +664,18 @@ dialog = {
 					["skin"] = HelpSkin,
 					["type"] = "Static",
 				},
+
+				--------------------------------------------
+				-- AN/APG-53A Radar Legacy Mode
+				--------------------------------------------
+
 				["oldRadarLabel"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 200,
-							["x"] = LeftColumnX + 25,
-							["y"] = 425,
+							["h"] = EntryHeight,
+							["w"] = EntryLabelWidthLong,
+							["x"] = LeftColumnX + EntryCheckBoxIndent,
+							["y"] = OrderRadarMode,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_OLD_RADAR_CHECK_LABEL",
@@ -554,10 +693,10 @@ dialog = {
 				["oldRadarCheckbox"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 24,
-							["w"] = 50,
+							["h"] = EntryHeight,
+							["w"] = EntryWidgetWidth,
 							["x"] = LeftColumnX,
-							["y"] = 425 + 5,
+							["y"] = OrderRadarMode + EntryCheckBoxOffset,
 						},
 						["enabled"] = true,
 						["state"] = true,
@@ -573,10 +712,10 @@ dialog = {
 				["oldRadarHelp"] = {
 					["params"] = {
 						["bounds"] = {
-							["h"] = 40,
-							["w"] = 800,
+							["h"] = EntryHeight,
+							["w"] = EntryHelpWidth,
 							["x"] = LeftColumnX,
-							["y"] = 425 + 25,
+							["y"] = OrderRadarMode + lineheight,
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_OLD_RADAR_CHECK_HELP",

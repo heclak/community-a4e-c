@@ -208,11 +208,13 @@ local inst_lights_first_on_time = 0
 local inst_lights_warmup_time = 1.5 -- time it takes for the incandescent light bulbs to warm up
 local inst_lights_max_brightness_multiplier = 0
 local inst_lights_are_cold = true
+local intlight_instruments_moving = 0
 
 local console_lights_first_on_time = 0
 local console_lights_warmup_time = 2 -- time it takes for the incandescent light bulbs to warm up
 local console_lights_max_brightness_multiplier = 0
 local console_lights_are_cold = true
+local intlight_console_moving = 0
 
 local red_floodlights_first_on_time = 0
 local red_floodlights_warmup_time = 2.8 -- time it takes for the incandescent light bulbs to warm up
@@ -223,6 +225,7 @@ local white_floodlights_first_on_time = 0
 local white_floodlights_warmup_time = 2.8 -- time it takes for the incandescent light bulbs to warm up
 local white_floodlights_max_brightness_multiplier = 0
 local white_floodlights_are_cold = true
+local intlight_whiteflood_moving = 0
 
 local AOA_indexer_brightness = 1.0
 -----------------------------------------------------------------------------
@@ -254,12 +257,27 @@ dev:listen_command(device_commands.stby_att_index_button)
 dev:listen_command(device_commands.stby_att_index_knob)
 dev:listen_command(device_commands.master_test)
 dev:listen_command(device_commands.intlight_whiteflood)
+dev:listen_command(device_commands.intlight_whiteflood_AXIS)
+dev:listen_command(device_commands.intlight_whiteflood_axis_slew)
 dev:listen_command(device_commands.intlight_instruments)
+dev:listen_command(device_commands.intlight_instruments_AXIS)
+dev:listen_command(device_commands.intlight_instruments_axis_slew)
 dev:listen_command(device_commands.intlight_console)
+dev:listen_command(device_commands.intlight_console_AXIS)
+dev:listen_command(device_commands.intlight_console_axis_slew)
 dev:listen_command(device_commands.intlight_brightness)
 dev:listen_command(Keys.IntLightWhiteFlood)
+dev:listen_command(Keys.intlight_whiteflood_startup)
+dev:listen_command(Keys.intlight_whiteflood_startdown)
+dev:listen_command(Keys.intlight_whiteflood_stop)
 dev:listen_command(Keys.IntLightInstruments)
+dev:listen_command(Keys.intlight_instruments_startup)
+dev:listen_command(Keys.intlight_instruments_startdown)
+dev:listen_command(Keys.intlight_instruments_stop)
 dev:listen_command(Keys.IntLightConsole)
+dev:listen_command(Keys.intlight_console_startup)
+dev:listen_command(Keys.intlight_console_startdown)
+dev:listen_command(Keys.intlight_console_stop)
 dev:listen_command(Keys.IntLightBrightness)
 --plusnine oxygen system
 dev:listen_command(device_commands.oxygen_switch)
@@ -454,39 +472,41 @@ function SetCommand(command,value)
 
     elseif command == device_commands.intlight_instruments then
         lights_instruments_val = value
-
     elseif command == device_commands.intlight_instruments_CHANGE then
-        local newValue = lights_instruments_val + value
-        if newValue > 1.0 then
-            newValue = 1.0
-        elseif newValue < 0.0 then
-            newValue = 0.0
+        dev:performClickableAction(device_commands.intlight_instruments, clamp(lights_instruments_val + value,0,1), false)
+    elseif command == Keys.intlight_instruments_startup then
+        intlight_instruments_moving = 1/50
+    elseif command == Keys.intlight_instruments_startdown then
+        intlight_instruments_moving = -1/50
+    elseif command == Keys.intlight_instruments_stop then
+        intlight_instruments_moving = 0
+    elseif command == device_commands.intlight_instruments_axis_slew then
+        if value < -0.001 and value > -0.001 then
+            intlight_instruments_moving = 0
+        else
+            intlight_instruments_moving = value/30
         end
-        lights_instruments_val = newValue
-        dev:performClickableAction(device_commands.intlight_instruments, lights_instruments_val, false)  -- pass through to clickable device
-
     elseif command == device_commands.intlight_instruments_AXIS then
-        -- print_message_to_user("Test value: "..value)
-        local normalisedValue = ( ( value + 1 ) / 2 ) * 1.0 -- normalised {-1 to 1} to {0 - 1.0}
-        dev:performClickableAction(device_commands.intlight_instruments, normalisedValue, false)
+        dev:performClickableAction(device_commands.intlight_instruments, (value+1)*0.5, false)
 
     elseif command == device_commands.intlight_console then
         lights_console_val = value
-
     elseif command == device_commands.intlight_console_CHANGE then
-        local newValue = lights_console_val + value
-        if newValue > 1.0 then
-            newValue = 1.0
-        elseif newValue < 0.0 then
-            newValue = 0.0
+        dev:performClickableAction(device_commands.intlight_console, clamp(lights_console_val+value,0,1), false)
+    elseif command == Keys.intlight_console_startup then
+        intlight_console_moving = 1/50
+    elseif command == Keys.intlight_console_startdown then
+        intlight_console_moving = -1/30
+    elseif command == Keys.intlight_console_stop then
+        intlight_console_moving = 0
+    elseif command == device_commands.intlight_console_axis_slew then
+        if value < -0.001 and value > -0.001 then
+            intlight_console_moving = 0
+        else
+            intlight_console_moving = value/30
         end
-        lights_console_val = newValue
-        dev:performClickableAction(device_commands.intlight_console, lights_console_val, false)  -- pass through to clickable device
-
     elseif command == device_commands.intlight_console_AXIS then
-        -- print_message_to_user("Test value: "..value)
-        local normalisedValue = ( ( value + 1 ) / 2 ) * 1.0 -- normalised {-1 to 1} to {0 - 1.0}
-        dev:performClickableAction(device_commands.intlight_console, normalisedValue, false)
+        dev:performClickableAction(device_commands.intlight_console, (value+1)*0.5, false)
         
     elseif command == device_commands.intlight_brightness then
         local x = value
@@ -497,9 +517,6 @@ function SetCommand(command,value)
         elseif x == -1 then
             lights_floodred_val = FLOODRED_MED
         end
-    elseif command == device_commands.intlight_whiteflood then
-        lights_floodwhite_val = value
-        -- print_message_to_user("flood value: "..value)
 
     elseif command == Keys.IntLightBrightness then
         if lights_floodred_val == FLOODRED_BRIGHT then
@@ -509,20 +526,25 @@ function SetCommand(command,value)
         else
             dev:performClickableAction(device_commands.intlight_brightness, 1, false)
         end
-        
-    elseif command == device_commands.intlight_whiteflood_CHANGE then
-        local newValue = lights_floodwhite_val + value
-        if newValue > 1.0 then
-            newValue = 1.0
-        elseif newValue < 0.0 then
-            newValue = 0.0
-        end
-        lights_floodwhite_val = newValue
-        dev:performClickableAction(device_commands.intlight_whiteflood, lights_floodwhite_val, false)  -- pass through to clickable device
 
+    elseif command == device_commands.intlight_whiteflood then
+        lights_floodwhite_val = value
+    elseif command == device_commands.intlight_whiteflood_CHANGE then
+        dev:performClickableAction(device_commands.intlight_whiteflood, clamp(lights_floodwhite_val+value,0,1), false)
+    elseif command == Keys.intlight_whiteflood_startup then
+        intlight_whiteflood_moving = 1/50
+    elseif command == Keys.intlight_whiteflood_startdown then
+        intlight_whiteflood_moving = -1/50
+    elseif command == Keys.intlight_whiteflood_stop then
+        intlight_whiteflood_moving = 0
+    elseif command == device_commands.intlight_whiteflood_axis_slew then
+        if value < 0.001 and value > -0.001 then
+            intlight_whiteflood_moving = 0
+        else
+            intlight_whiteflood_moving = value/30
+        end
     elseif command == device_commands.intlight_whiteflood_AXIS then
-        local normalisedValue = ( ( value + 1 ) / 2 ) * 1.0 -- normalised {-1 to 1} to {0 - 1.0}
-        dev:performClickableAction(device_commands.intlight_whiteflood, normalisedValue, false)
+        dev:performClickableAction(device_commands.intlight_whiteflood, (value+1)*0.5, false)
 
     elseif command == Keys.AccelReset then
         dev:performClickableAction(device_commands.accel_reset, 1, false)
@@ -1323,6 +1345,18 @@ function update()
             refuelingOccurred = false
         end
     end
+
+    -- slew and continuous knob updates
+    if intlight_whiteflood_moving ~= 0 then
+        dev:performClickableAction(device_commands.intlight_whiteflood, clamp(lights_floodwhite_val+intlight_whiteflood_moving,0,1), false)
+    end
+    if intlight_instruments_moving ~= 0 then
+        dev:performClickableAction(device_commands.intlight_instruments, clamp(lights_instruments_val+intlight_instruments_moving,0,1), false)
+    end
+    if intlight_console_moving ~= 0 then
+        dev:performClickableAction(device_commands.intlight_console, clamp(lights_console_val+intlight_console_moving,0,1), false)
+    end
+
 end
 
 startup_print("avionics: load end")

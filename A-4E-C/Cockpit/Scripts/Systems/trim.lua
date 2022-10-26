@@ -277,6 +277,7 @@ function update_trim_reset()
             rudder_trim = rudder_trim - trim_rudder_delta
         end
         rudder_trim_handle:set(rudder_trim)
+        dev:performClickableAction(device_commands.rudder_trim, rudder_trim, true)
     end
 end
 
