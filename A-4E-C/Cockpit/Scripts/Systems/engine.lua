@@ -67,7 +67,7 @@ local fuel_dump_switch = 0
 
 local throttle_rate = get_plugin_option_value("A-4E-C","throttleRate","local") * 0.02 -- THROTTLE RATE, 1.0 to 5.0 percent, increments of 0.1, defined in the special menu, to a percentage change to apply
 local throttle_accelerating = 0
-local throttle_acceleration_default = get_plugin_option_value("A-4E-C","throttleAcceleration","local") * 0.0001 -- THROTTLE ACCELERATION, -100 to 100, defined in the special menu, to a percentage multiplier
+local throttle_acceleration_default = get_plugin_option_value("A-4E-C","throttleAcceleration","local") * 0.0002 -- THROTTLE ACCELERATION tuning
 local throttle_accelerating_duration = 0 --additional acceleration from cumulative duration
 local throttle_acceleration_rate = throttle_acceleration_default -- set default and await input
 

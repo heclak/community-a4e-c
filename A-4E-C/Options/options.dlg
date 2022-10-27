@@ -23,8 +23,8 @@ local OrderOptionsTitle 			= lineheight * 1
 local OrderTrimSpeed 				= lineheight * 4
 local OrderThrottleRate 			= lineheight * 9
 local OrderThrottleAcceleration 	= lineheight * 12
-local OrderFFB 						= lineheight * 15
-local OrderCockpitShake 			= lineheight * 18
+local OrderCockpitShake 			= lineheight * 15
+local OrderFFB 						= lineheight * 18
 local OrderSimpleBraking 			= lineheight * 21
 local OrderRadarMode				= lineheight * 24
 
