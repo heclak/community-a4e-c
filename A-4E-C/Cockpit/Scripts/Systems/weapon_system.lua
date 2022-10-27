@@ -3,6 +3,7 @@ dofile(LockOn_Options.common_script_path.."devices_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/stores_config.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
+dofile(LockOn_Options.script_path.."APR-25_RWR/rwr_apr-25_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.script_path.."sound_params.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
@@ -619,6 +620,9 @@ function check_guns()
 end
 
 function update()
+
+    WeaponSystem:set_ECM_status(rwr_api:get_ecm())
+    --print_message_to_user(tostring(WeaponSystem:get_ECM_status()))
 
 	--WeaponSystem:set_target_range(1000.0)
 	--print_message_to_user("Az: "..gun_az:get().." El: "..gun_el:get())

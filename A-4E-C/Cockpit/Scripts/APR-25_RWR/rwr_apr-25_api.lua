@@ -62,8 +62,22 @@ rwr_api = {
         [SOLID] = {gap = nil, length = nil},
         [DASHED] = {gap = 0.04, length = 0.08},
         [DOTTED] = {gap = 0.04, length = 0.04 },
-    }
+    },
+
+    ecm_param = get_param_handle("RWR_ECM_ON"),
 }
+
+function rwr_api:set_ecm(value)
+    if value then
+        self.ecm_param:set(1.0)
+    else
+        self.ecm_param:set(0.0)
+    end
+end
+
+function rwr_api:get_ecm()
+    return self.ecm_param:get() > 0.5
+end
 
 function rwr_api:get(i, item)
     

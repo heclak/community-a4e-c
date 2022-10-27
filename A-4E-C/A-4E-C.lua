@@ -725,7 +725,7 @@ A_4E_C =  {
         RWR = "Abstract RWR"
     },
     Countermeasures = {
-        ECM = "AN/ALQ-165"
+        ECM = "AN/ALQ-126"
     },
 
     HumanRadio = {

@@ -781,6 +781,8 @@ end
 
 function update_ALQ()
 
+	rwr_api:set_ecm(false)
+
 	if get_elec_aft_mon_ac_ok() == true then
 
 		alq_warm_up()
@@ -894,8 +896,10 @@ function update_ALQ()
 			-- turn on REC and RPT light if radar lock detected
 				if apr25_lights[LIGHT_REC] then
 					Light.ECM_RPT:set(1)
+					rwr_api:set_ecm(true)
 				else
 					Light.ECM_RPT:set(0)
+					rwr_api:set_ecm(false)
 				end
 
 				Light.ECM_STBY:set(0)
