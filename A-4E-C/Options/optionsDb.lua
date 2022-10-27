@@ -25,8 +25,8 @@ return {
 	trimSpeedRoll			= DbOption.new():setValue(100):slider(Range(1,100)),
 	trimSpeedRudder			= DbOption.new():setValue(100):slider(Range(1,100)),
 
-	throttleRate			= DbOption.new():setValue(2.5):slider(Range(1.00,5.00)),
-	throttleAcceleration 	= DbOption.new():setValue(20):slider(Range(1.00,100.00)),
+	throttleRate			= DbOption.new():setValue(1.0):slider(Range(1.00,5.00)),
+	throttleAcceleration 	= DbOption.new():setValue(50):slider(Range(1.00,100.00)),
 
 	--[[catapultLaunchMode		= DbOption.new():setValue(0):combo({DbOption.Item(_('MIL Power')):Value(0),
 																DbOption.Item(_('Manual')):Value(1),
