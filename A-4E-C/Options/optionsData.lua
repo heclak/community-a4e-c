@@ -12,10 +12,9 @@ cdata =
 
 	A4E_THROTTLE_RATE_LABEL	        		= _('Throttle Increment'),
 	A4E_THROTTLE_RATE_HELP	        		= _('Percentage change applied by "Throttle Position - Increment/Decrement" - Default: 1.0%'),
-	A4E_THROTTLE_RATE_HELP2	        		= _('Also determines initial accelleration for Custom Throttle Rate (see below)'),
 
 	A4E_THROTTLE_ACCELERATION_LABEL	    	= _('Custom Throttle Rate'),
-	A4E_THROTTLE_ACCELERATION_HELP	       	= _('Accelleration rate for "Throttle Position Continuous - Increase/Decrease (Custom)" - Default: 50%'),
+	A4E_THROTTLE_ACCELERATION_HELP	       	= _('Determines the accelleration rate for "Custom Throttle Rate" inputs - Default: 50%'),
 
 --	A4E_CATLAUNCHMODE_LABEL           		= _('Catapult Launch Mode'),
 --	A4E_CATLAUNCHMODE_HELP            		= _('Launch the catapult when throttle at MIL POWER.'),

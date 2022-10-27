@@ -580,8 +580,8 @@ function update()
     update_fuel_control_mode()
 
     if throttle_accelerating ~= 0 then
-        --throttle is accelerating, increase and record the acceleration rate, starting from 25% of the throttle step setting
-        throttle_accelerating_duration = clamp(throttle_accelerating_duration + throttle_acceleration_rate, throttle_rate * 0.25, 1)
+        --throttle is accelerating, increase and record the acceleration rate, starting from 1% of the throttle step setting
+        throttle_accelerating_duration = clamp(throttle_accelerating_duration + throttle_acceleration_rate, 0.01, 1)
         --increase or decrease throttle at acceleration direction and rate
         dispatch_action(nil, iCommandPlaneThrustCommon, -2.0 * throttle + 1.0 - throttle_accelerating * throttle_accelerating_duration)
         --print_message_to_user("Throttle: " .. throttle .. " | Delta (abs): " .. throttle_accelerating_duration)

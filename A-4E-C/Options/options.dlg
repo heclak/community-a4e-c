@@ -22,11 +22,11 @@ local lineheight = 23
 local OrderOptionsTitle 			= lineheight * 1
 local OrderTrimSpeed 				= lineheight * 4
 local OrderThrottleRate 			= lineheight * 9
-local OrderThrottleAcceleration 	= lineheight * 12
-local OrderCockpitShake 			= lineheight * 15
-local OrderFFB 						= lineheight * 18
-local OrderSimpleBraking 			= lineheight * 21
-local OrderRadarMode				= lineheight * 24
+local OrderThrottleAcceleration 	= lineheight * 11
+local OrderCockpitShake 			= lineheight * 14
+local OrderFFB 						= lineheight * 17
+local OrderSimpleBraking 			= lineheight * 20
+local OrderRadarMode				= lineheight * 23
 
 -- Styles
 
@@ -424,23 +424,6 @@ dialog = {
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_THROTTLE_RATE_HELP",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = HelpSkin,
-					["type"] = "Static",
-				},
-				["throttleRateHelpLabel2"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntryHelpWidth,
-							["x"] = LeftColumnX,
-							["y"] = OrderThrottleRate + lineheight*2,
-						},
-						["enabled"] = true,
-						["text"] = "$A4E_THROTTLE_RATE_HELP2",
 						["tooltip"] = "",
 						["visible"] = true,
 						["zindex"] = 0,
