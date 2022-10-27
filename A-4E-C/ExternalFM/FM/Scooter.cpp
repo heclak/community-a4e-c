@@ -276,6 +276,8 @@ void cleanup()
 
 	s_window = NULL;
 	s_splines.clear();
+
+	releaseAllEmulatedKeys();
 }
 
 void checkCorruption(const char* str)
