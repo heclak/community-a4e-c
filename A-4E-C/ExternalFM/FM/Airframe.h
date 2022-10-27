@@ -388,14 +388,45 @@ public:
 
 	static constexpr double slip_threshold = 0.5;
 	static constexpr double compression_threshold = 0.1;
-	inline bool IsSkiddingLeft() const
-	{ 
-		return m_skiddable_surface && ( GetSlipageLeft() > slip_threshold ) && ( m_left_compression > compression_threshold );
+	static constexpr double min_ground_speed = 0.5;
+	bool IsSkiddingLeft() const
+	{
+		if ( ! m_skiddable_surface )
+			return false;
+
+		// Not fast enough ground speed
+		if ( m_left_wheel_ground_speed < min_ground_speed )
+			return false;
+
+		// Not slipping enough
+		if ( GetSlipageLeft() <= slip_threshold )
+			return false;
+
+		// Not enough struct compression
+		if ( m_left_compression <= compression_threshold )
+			return false;
+
+		return true;
 	}
 
 	inline bool IsSkiddingRight() const
 	{
-		return m_skiddable_surface && ( GetSlipageRight() > slip_threshold ) && ( m_right_compression > compression_threshold );
+		if ( ! m_skiddable_surface )
+			return false;
+
+		// Not fast enough ground speed
+		if ( m_right_wheel_ground_speed < min_ground_speed )
+			return false;
+
+		// Not slipping enough
+		if ( GetSlipageRight() <= slip_threshold )
+			return false;
+
+		// Not enough struct compression
+		if ( m_right_compression <= compression_threshold )
+			return false;
+
+		return true;
 	}
 
 	void SetSkiddableSurface( bool value ) { m_skiddable_surface = value; }

@@ -631,10 +631,13 @@ void ed_fm_set_surface
 	case Scooter::Radar::TerrainType::AIRFIELD:
 	case Scooter::Radar::TerrainType::ROAD:
 	case Scooter::Radar::TerrainType::RAILWAY:
+	case Scooter::Radar::TerrainType::SEA: // for carrier
+	case Scooter::Radar::TerrainType::LAKE:
 		skiddable_surface = true;
 		break;
 	}
 	s_airframe->SetSkiddableSurface( skiddable_surface );
+	//printf( "Type: %d\n", surface_type );
 	s_state->setSurface( s_state->getWorldPosition().y - h_obj, Vec3( normal_x, normal_y, normal_z ) );
 }
 
