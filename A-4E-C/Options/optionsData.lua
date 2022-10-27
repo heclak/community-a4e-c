@@ -40,4 +40,14 @@ cdata =
 	A4E_OLD_RADAR_CHECK_TOOLTIP 			= _('AN/APG-53A Radar Legacy Mode Enabled'),
 	A4E_OLD_RADAR_CHECK_HELP 				= _('Enables low-definition ground radar (performance mode)'),
 
+	A4E_CUSTOM_FCS_PITCH_PRESSURE_LABEL		= _('Custom Pitch Deflection'),
+	A4E_CUSTOM_FCS_PITCH_RELEASE_LABEL		= _('Custom Pitch Recentering'),
+	A4E_CUSTOM_FCS_ROLL_PRESSURE_LABEL		= _('Custom Roll Deflection'),
+	A4E_CUSTOM_FCS_ROLL_RELEASE_LABEL		= _('Custom Roll Recentering'),
+	A4E_CUSTOM_FCS_RUDDER_PRESSURE_LABEL	= _('Custom Rudder Deflection'),
+	A4E_CUSTOM_FCS_RUDDER_RELEASE_LABEL		= _('Custom Rudder Recentering'),
+	A4E_CUSTOM_FCS_HELP1					= _('Flight Control sensetivity for Aircraft Pitch, Roll, and Rudder button inputs.'),
+	A4E_CUSTOM_FCS_HELP2					= _('Set Recentering to 0 for a non-centering input.'),
+	A4E_CUSTOM_FCS_HELP3					= _('- Defaults:   - Pitch: D.50, R.0   - Roll: D.50, R.100   - Rudder: D.50, R.100'),
+
 }

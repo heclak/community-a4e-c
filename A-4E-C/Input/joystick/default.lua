@@ -669,8 +669,8 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- Accessibility / Gamepads
     ---------------------------------------------
-    {down = Keys.modifier_left_down, up = Keys.modifier_left_up,                                name = _('UI Override - Left Shoulder (LCtrl + Mouse 1)'), category = {_('Accessibility')}},
-    {down = Keys.modifier_right_down, up = Keys.modifier_right_up,                              name = _('UI Override - Right Shoulder (LShift + Mouse 1)'), category = {_('Accessibility')}},
+    {down = Keys.modifier_left_down, up = Keys.modifier_left_up,                                name = _('UI Override - Left Shoulder (LShift + Mouse 2/Right Click)'), category = {_('Accessibility')}},
+    {down = Keys.modifier_right_down, up = Keys.modifier_right_up,                              name = _('UI Override - Right Shoulder (LShift + Mouse 1/Left Click)'), category = {_('Accessibility')}},
 
     ---------------------------------------------
     -- Special for Joysticks and Warthog Throttle
@@ -690,8 +690,8 @@ join(res.axisCommands,{
     {combos = defaultDeviceAssignmentFor("roll"), action = iCommandPlaneRoll,           name = _('Roll'),                           category = {_('Flight Control')}},
     {combos = defaultDeviceAssignmentFor("pitch"), action = iCommandPlanePitch,         name = _('Pitch'),                          category = {_('Flight Control')}},
 	{combos = defaultDeviceAssignmentFor("rudder"), action = iCommandPlaneRudder,		name = _('Rudder'),                         category = {_('Flight Control')}},
-    {action = device_commands.rudder_axis_left,                                         name = _('Rudder - Left'),                  category = {_('Flight Control'), _('Accessibility')}},
-    {action = device_commands.rudder_axis_right,                                        name = _('Rudder - Right'),                 category = {_('Flight Control'), _('Accessibility')}},
+    {action = device_commands.rudder_axis_left, cockpit_device_id = devices.TRIM,       name = _('Rudder - Left'),                  category = {_('Flight Control'), _('Accessibility')}},
+    {action = device_commands.rudder_axis_right, cockpit_device_id = devices.TRIM,      name = _('Rudder - Right'),                 category = {_('Flight Control'), _('Accessibility')}},
 
     {combos = defaultDeviceAssignmentFor("thrust"), action = iCommandPlaneThrustCommon, name = _('Throttle'),                       category = {_('Flight Control')}},
     {action = device_commands.throttle_axis_slew, cockpit_device_id = devices.ENGINE,   name = _('Throttle - Slew'),                category = {_('Flight Control'), _('Accessibility')}},

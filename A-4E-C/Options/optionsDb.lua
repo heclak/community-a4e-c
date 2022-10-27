@@ -22,6 +22,13 @@ local tblCPLocalList = oms.getTblCPLocalList(modulelocation)
 
 return {
 
+	customPitchPressure		= DbOption.new():setValue(50):slider(Range(1,100)),
+	customPitchRelease		= DbOption.new():setValue(0):slider(Range(0,100)),
+	customRollPressure		= DbOption.new():setValue(50):slider(Range(1,100)),
+	customRollRelease		= DbOption.new():setValue(100):slider(Range(0,100)),
+	customRudderPressure	= DbOption.new():setValue(50):slider(Range(1,100)),
+	customRudderRelease		= DbOption.new():setValue(100):slider(Range(0,100)),
+
 	trimSpeedPitch			= DbOption.new():setValue(100):slider(Range(1,100)),
 	trimSpeedRoll			= DbOption.new():setValue(100):slider(Range(1,100)),
 	trimSpeedRudder			= DbOption.new():setValue(100):slider(Range(1,100)),

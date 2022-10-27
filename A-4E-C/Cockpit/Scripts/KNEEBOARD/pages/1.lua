@@ -19,6 +19,7 @@ For example, page "23" is "23.lua".
   12 Radio & TACAN
   13 ILS Data
   14 Mission Loadout
+  15 Weapons & Loadouts
 
 2 Radar
   21 AN/APN-141 Radar Altimiter & LAWS
@@ -35,7 +36,6 @@ For example, page "23" is "23.lua".
   34 Rockets
   35 Missiles
   36 Countermeasures & ECM
-  37 Weapons & Loadouts
 
 4 Flight
   41 Autopilot

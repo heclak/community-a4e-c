@@ -585,9 +585,7 @@ function update()
         --increase or decrease throttle at acceleration direction and rate
         dispatch_action(nil, iCommandPlaneThrustCommon, -2.0 * throttle + 1.0 - throttle_accelerating * throttle_accelerating_duration)
         --print_message_to_user("Throttle: " .. throttle .. " | Delta (abs): " .. throttle_accelerating_duration)
-    end
-
-    if throttle_slew ~= 0 then
+    elseif throttle_slew ~= 0 then
         --increase or decrease throttle using direction and rate
         local throttle_slew_rate = throttle_slew * 0.125
         dispatch_action(nil, iCommandPlaneThrustCommon, -2.0 * throttle + 1.0 - throttle_slew_rate)
