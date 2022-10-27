@@ -390,13 +390,15 @@ public:
 	static constexpr double compression_threshold = 0.1;
 	inline bool IsSkiddingLeft() const
 	{ 
-		return ( GetSlipageLeft() > slip_threshold ) && ( m_left_compression > compression_threshold );
+		return m_skiddable_surface && ( GetSlipageLeft() > slip_threshold ) && ( m_left_compression > compression_threshold );
 	}
 
 	inline bool IsSkiddingRight() const
 	{
-		return ( GetSlipageRight() > slip_threshold ) && ( m_right_compression > compression_threshold );
+		return m_skiddable_surface && ( GetSlipageRight() > slip_threshold ) && ( m_right_compression > compression_threshold );
 	}
+
+	void SetSkiddableSurface( bool value ) { m_skiddable_surface = value; }
 
 	inline void breakWing()
 	{
@@ -453,6 +455,8 @@ private:
 
 	double m_left_compression = 0.0;
 	double m_right_compression = 0.0;
+
+	bool m_skiddable_surface = true;
 
 	//Tank m_selected = Tank::INTERNAL;
 

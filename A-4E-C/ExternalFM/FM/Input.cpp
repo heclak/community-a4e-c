@@ -18,8 +18,8 @@ Scooter::Input::Input():
 	m_rollAxis( 0.015, -1.0, 1.0, 0.0, 1.0 ),
 	m_yawAxis(0.015, -1.0, 1.0, 0.0, 1.0),
 	m_throttleAxis(0.005, -1.0, 1.0, 1.0, 0.0),
-	m_leftBrakeAxis(0.04, 0.0, 1.0, 0.0, 0.0),
-	m_rightBrakeAxis(0.04, 0.0, 1.0, 0.0, 0.0),
+	m_leftBrakeAxis(0.02, 0.0, 1.0, 0.0, 0.0),
+	m_rightBrakeAxis(0.02, 0.0, 1.0, 0.0, 0.0),
 	m_mouseX(0.04, -1.0, 1.0, 0.0, 0.0),
 	m_mouseY(0.04, -1.0, 1.0, 0.0, 0.0)
 

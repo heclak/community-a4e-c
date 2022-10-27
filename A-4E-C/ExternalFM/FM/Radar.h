@@ -39,8 +39,6 @@ public:
 	inline void setDisable( bool disabled );
 	inline double getRange();
 
-private:
-
 	enum TerrainType
 	{
 		LAND = 0,
@@ -55,6 +53,10 @@ private:
 		FARMLAND = 22,
 		AIRFIELD = 23,
 	};
+
+private:
+
+	
 
 	enum State
 	{

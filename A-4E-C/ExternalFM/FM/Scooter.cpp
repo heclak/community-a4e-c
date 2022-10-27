@@ -624,6 +624,17 @@ void ed_fm_set_surface
 	double		normal_z//components of normal vector to surface
 )
 {
+	bool skiddable_surface = false;
+
+	switch ( surface_type )
+	{
+	case Scooter::Radar::TerrainType::AIRFIELD:
+	case Scooter::Radar::TerrainType::ROAD:
+	case Scooter::Radar::TerrainType::RAILWAY:
+		skiddable_surface = true;
+		break;
+	}
+	s_airframe->SetSkiddableSurface( skiddable_surface );
 	s_state->setSurface( s_state->getWorldPosition().y - h_obj, Vec3( normal_x, normal_y, normal_z ) );
 }
 
