@@ -75,6 +75,8 @@ join(res.keyCommands,{
     {down = Keys.throttle_dec,                                              name = _('Throttle Position - Decrement'),                  category = {_('Throttle Panel'), _('Flight Control')}},
     {pressed = iCommandThrottleIncrease, up = iCommandThrottleStop,         name = _('Throttle Position Continuous - Increase'),        category = {_('Throttle Panel'), _('Flight Control')}},
     {pressed = iCommandThrottleDecrease, up = iCommandThrottleStop,         name = _('Throttle Position Continuous - Decrease'),        category = {_('Throttle Panel'), _('Flight Control')}},
+    {down = Keys.throttle_acc, value_down = 1, up = Keys.throttle_acc, value_up = 0, name = _('Throttle Position - Accelerating Increase'), category = {_('Throttle Panel'), _('Flight Control')}},
+    {down = Keys.throttle_acc, value_down = -1, up = Keys.throttle_acc, value_up = 0, name = _('Throttle Position - Accelerating Decrease'), category = {_('Throttle Panel'), _('Flight Control')}},
 
     {down = device_commands.throttle_click_ITER, value_down = 1, cockpit_device_id = devices.ENGINE,    name = _('Throttle Position Lock - Step Up (OFF/IGN/IDLE)'),                category = {_('Throttle Panel'), _('Engine Control Panel')}},
     {down = device_commands.throttle_click_ITER, value_down = -1, cockpit_device_id = devices.ENGINE,   name = _('Throttle Position Lock - Step Down (OFF/IGN/IDLE)'),              category = {_('Throttle Panel'), _('Engine Control Panel')}},
@@ -682,14 +684,15 @@ join(res.keyCommands,{
 -- joystick axes 
 join(res.axisCommands,{
 
-    {combos = defaultDeviceAssignmentFor("roll"), action = iCommandPlaneRoll,           name = _('Roll'),              category = {_('Flight Control')}},
-    {combos = defaultDeviceAssignmentFor("pitch"), action = iCommandPlanePitch,         name = _('Pitch'),             category = {_('Flight Control')}},
-	{combos = defaultDeviceAssignmentFor("rudder"), action = iCommandPlaneRudder,		name = _('Rudder'),            category = {_('Flight Control')}},
-	{combos = defaultDeviceAssignmentFor("thrust"), action = iCommandPlaneThrustCommon, name = _('Throttle'),          category = {_('Flight Control')}},
-    {action = device_commands.wheelbrake_AXIS,                                          name = _('Wheel Brake'),       category = {_('Systems')}},
-    {action = device_commands.left_wheelbrake_AXIS,                                     name = _('Wheel Brake Left'),  category = {_('Systems')}},
-    {action = device_commands.right_wheelbrake_AXIS,                                    name = _('Wheel Brake Right'), category = {_('Systems')}},
-    --{action = iCommandWheelBrake,		                                                name = _('Wheel Brake')},
+    {combos = defaultDeviceAssignmentFor("roll"), action = iCommandPlaneRoll,           name = _('Roll'),                               category = {_('Flight Control')}},
+    {combos = defaultDeviceAssignmentFor("pitch"), action = iCommandPlanePitch,         name = _('Pitch'),                              category = {_('Flight Control')}},
+	{combos = defaultDeviceAssignmentFor("rudder"), action = iCommandPlaneRudder,		name = _('Rudder'),                             category = {_('Flight Control')}},
+	{combos = defaultDeviceAssignmentFor("thrust"), action = iCommandPlaneThrustCommon, name = _('Throttle'),                           category = {_('Flight Control')}},
+    {action = device_commands.wheelbrake_AXIS,                                          name = _('Wheel Brake'),                        category = {_('Systems')}},
+    {action = device_commands.wheelbrake_AXIS_differential,                             name = _('Wheel Brake - Differential'),         category = {_('Systems')}},
+    {action = device_commands.left_wheelbrake_AXIS,                                     name = _('Wheel Brake Left'),                   category = {_('Systems')}},
+    {action = device_commands.right_wheelbrake_AXIS,                                    name = _('Wheel Brake Right'),                  category = {_('Systems')}},
+    --iCommandWheelBrake is no longer used for ground handling
 
     {combos = {{key = 'TRACKIR_PITCH'}}, action = iHeadTrackerPitchNormed,              name = _('Head Tracker : Pitch')},
     {combos = {{key = 'TRACKIR_YAW'}}, action = iHeadTrackerYawNormed,                  name = _('Head Tracker : Yaw')},

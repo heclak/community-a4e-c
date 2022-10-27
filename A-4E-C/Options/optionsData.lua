@@ -10,8 +10,12 @@ cdata =
 	A4E_TRIMSPEED_RUDDER_LABEL         		= _('Trim Speed: Rudder (Yaw)'),
 	A4E_TRIM_SPEED_SLIDER_HELP        		= _('Each individuated trim speeds is also applied to the Trim Reset (Hold) input. (Default: 100%)'),
 
-	A4E_THROTTLE_RATE_LABEL	        		= _('Throttle Increment'),
-	A4E_THROTTLE_RATE_HELP	        		= _('Amount of change applied by Throttle Position - Increment/Decrement inputs (Default: 2.5%)'),
+	A4E_THROTTLE_RATE_LABEL	        		= _('Throttle Rate'),
+	A4E_THROTTLE_ACCELERATION_LABEL	    = _('Throttle Acceleration'),
+	A4E_THROTTLE_RATE_HELP	        		= _('Throttle difference applied by Throttle Position - Increment/Decrement inputs (Default: 2.5%)'),
+	A4E_THROTTLE_RATE_HELP2	        		= _('This speed also affects initial accelleration for Accelerating Increase/Decrease inputs.'),
+
+	A4E_THROTTLE_ACCELERATION_HELP	       	= _('Acceleration rate for Throttle Position - Accelerating Increase/Decrease inputs (Default: 50%)'),
 
 --	A4E_CATLAUNCHMODE_LABEL           		= _('Catapult Launch Mode'),
 --	A4E_CATLAUNCHMODE_HELP            		= _('Launch the catapult when throttle at MIL POWER.'),

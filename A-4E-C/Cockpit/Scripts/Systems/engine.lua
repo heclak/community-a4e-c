@@ -65,7 +65,11 @@ local fuel_transfer_bypass_valve = 0
 local drop_tank_press_switch = 0
 local fuel_dump_switch = 0
 
-local throttle_rate = get_plugin_option_value("A-4E-C","throttleRate","local")/50
+local throttle_rate = get_plugin_option_value("A-4E-C","throttleRate","local") * 0.02 -- THROTTLE RATE, 1.0 to 5.0 percent, increments of 0.1, defined in the special menu, to a percentage change to apply
+local throttle_accelerating = 0
+local throttle_acceleration_default = get_plugin_option_value("A-4E-C","throttleAcceleration","local") * 0.0001 -- THROTTLE ACCELERATION, -100 to 100, defined in the special menu, to a percentage multiplier
+local throttle_accelerating_duration = 0 --additional acceleration from cumulative duration
+local throttle_acceleration_rate = throttle_acceleration_default -- set default and await input
 
 ------------------------------------------------
 ----------------  CONSTANTS  -------------------
@@ -91,6 +95,9 @@ Engine:listen_command(Keys.throttle_position_run)
 
 Engine:listen_command(Keys.throttle_inc)
 Engine:listen_command(Keys.throttle_dec)
+
+Engine:listen_command(Keys.throttle_acc)
+
 
 function post_initialize()
 
@@ -178,9 +185,15 @@ function SetCommand(command,value)
         ----print_message_to_user("throt"..string.format("%.2f",throt))
         --dispatch_action(nil, iCommandPlaneThrustCommon, throt)
     elseif command==Keys.throttle_inc then
-        dispatch_action(nil, iCommandPlaneThrustCommon, -2.0*throttle + 1.0 - throttle_rate)
+        dispatch_action(nil, iCommandPlaneThrustCommon, -2.0 * throttle + 1.0 - throttle_rate) -- normalise this transform for a percentage application to the -1 to 1 throttle axis
     elseif command==Keys.throttle_dec then
-        dispatch_action(nil, iCommandPlaneThrustCommon, -2.0*throttle + 1.0 + throttle_rate)
+        dispatch_action(nil, iCommandPlaneThrustCommon, -2.0 * throttle + 1.0 + throttle_rate) -- normalise this transform for a percentage application to the -1 to 1 throttle axis
+    elseif command==Keys.throttle_acc then
+        throttle_accelerating = value
+        if value == 0 then
+            throttle_acceleration_rate = throttle_acceleration_default -- reset the rate to the default
+            throttle_accelerating_duration = 0 -- reset the accelleration duration to 0
+        end
     elseif command==device_commands.throttle_click then
         -- validate that throttle is not in adjust range
         if sensor_data.getThrottleLeftPosition() > 0.3 then 
@@ -564,14 +577,19 @@ function update()
     update_egt()
     update_fuel_control_mode()
 
+    if throttle_accelerating ~= 0 then
+        --throttle is accelerating, increase and record the acceleration rate, starting from 25% of the throttle step setting
+        throttle_accelerating_duration = clamp(throttle_accelerating_duration + throttle_acceleration_rate, throttle_rate * 0.25, 1)
+        --increase or decrease throttle at acceleration direction and rate
+        dispatch_action(nil, iCommandPlaneThrustCommon, -2.0 * throttle + 1.0 - throttle_accelerating * throttle_accelerating_duration)
+        print_message_to_user("Throttle: " .. throttle .. " | Delta (abs): " .. throttle_accelerating_duration)
+    end
+
     once_per_sec = once_per_sec - 1
     if once_per_sec <= 0 then
         accumulate_temp()
-
         once_per_sec = 1/update_rate
     end
-
-
 
 	if (engine_state==ENGINE_STARTING) and rpm > 50 then
         Engine:performClickableAction(device_commands.push_starter_switch,0,false) -- pop up start button
@@ -636,8 +654,7 @@ function update()
         local throttle_clickable_ref = get_clickable_element_reference("PNT_80")
         throttle_clickable_ref:hide(throttle>0.01)
     end
-	
-	
+
     local throttle_pos = throttle_position_wma:get_WMA(throttle)
     if prev_throttle_pos ~= throttle_pos then
         if throttle <= 0.01 then

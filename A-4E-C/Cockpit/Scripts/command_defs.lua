@@ -440,7 +440,9 @@ Keys =
     intlight_console_stop         = __custom_counter(),
 
     BombArmSwitch                 = __custom_counter(),
-    
+
+    throttle_acc                  = __custom_counter(),
+
 }
 
 start_command   = 3000
@@ -703,5 +705,8 @@ device_commands =
     radar_gain_axis_slew            = __counter(),
     radar_reticle_axis_abs          = __counter(),
     radar_reticle_axis_slew         = __counter(),
+
+    --new wheelbrake axis option
+    wheelbrake_AXIS_differential    = __counter(),
 
 }
