@@ -440,8 +440,8 @@ Keys =
     intlight_console_stop         = __custom_counter(),
 
     BombArmSwitch                 = __custom_counter(),
-
     throttle_acc                  = __custom_counter(),
+    CmBankSelectToggle            = __custom_counter(),
 
 }
 
@@ -706,7 +706,10 @@ device_commands =
     radar_reticle_axis_abs          = __counter(),
     radar_reticle_axis_slew         = __counter(),
 
-    --additional
+    --additional accessibility axes
     combined_wheel_brake_axis       = __counter(),
+    rudder_axis_left                = __counter(),
+    rudder_axis_right               = __counter(),
+    throttle_axis_slew              = __counter(),
 
 }

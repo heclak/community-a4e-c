@@ -75,8 +75,8 @@ join(res.keyCommands,{
     {combos = {{key = 'PageDown'}}, down = Keys.throttle_dec,                                           name = _('Throttle Position - Decrement'),                  category = {_('Throttle Panel'), _('Flight Control')}},
     {combos = {{key = 'Num+'}}, pressed = iCommandThrottleIncrease, up = iCommandThrottleStop,          name = _('Throttle Position Continuous - Increase'),        category = {_('Throttle Panel'), _('Flight Control')}},
     {combos = {{key = 'Num-'}}, pressed = iCommandThrottleDecrease, up = iCommandThrottleStop,          name = _('Throttle Position Continuous - Decrease'),        category = {_('Throttle Panel'), _('Flight Control')}},
-    {combos = {{key = 'PageUp', reformers = {'RCtrl'}}}, down = Keys.throttle_acc, value_down = 1, up = Keys.throttle_acc, value_up = 0, name = _('Throttle Position Continuous - Increase (Custom)'), category = {_('Throttle Panel'), _('Flight Control')}},
-    {combos = {{key = 'PageDown', reformers = {'RCtrl'}}}, down = Keys.throttle_acc, value_down = -1, up = Keys.throttle_acc, value_up = 0, name = _('Throttle Position Continuous - Decrease (Custom)'), category = {_('Throttle Panel'), _('Flight Control')}},
+    {combos = {{key = 'PageUp', reformers = {'RCtrl'}}}, down = Keys.throttle_acc, value_down = 1, up = Keys.throttle_acc, value_up = 0, name = _('Throttle Position Continuous - Increase (Custom)'), category = {_('Throttle Panel'), _('Flight Control'), _('Accessibility')}},
+    {combos = {{key = 'PageDown', reformers = {'RCtrl'}}}, down = Keys.throttle_acc, value_down = -1, up = Keys.throttle_acc, value_up = 0, name = _('Throttle Position Continuous - Decrease (Custom)'), category = {_('Throttle Panel'), _('Flight Control'), _('Accessibility')}},
 
     {combos = {{key = 'Home', reformers = {'RCtrl'}}},down = device_commands.throttle_click_ITER, value_down = 1, cockpit_device_id = devices.ENGINE, name = _('Throttle Position Lock - Step Up (OFF/IGN/IDLE)'),                category = {_('Throttle Panel'), _('Engine Control Panel')}},
     {combos = {{key = 'End', reformers = {'RCtrl'}}},down = device_commands.throttle_click_ITER, value_down = -1, cockpit_device_id = devices.ENGINE, name = _('Throttle Position Lock - Step Down (OFF/IGN/IDLE)'),              category = {_('Throttle Panel'), _('Engine Control Panel')}},
@@ -115,6 +115,7 @@ join(res.keyCommands,{
     -- AN/ALE-29A Chaff Control Panel -----------
     ---------------------------------------------
     {down = Keys.CmBankSelectRotate,                                                                                                            name = _('Chaff Dispenser Select - Cycle'),         category = {_('AN/ALE-29A Chaff Dispensing System')}},
+    {down = Keys.CmBankSelectToggle,                                                                                                            name = _('Chaff Dispenser Select - Toggle 1/2'),    category = {_('AN/ALE-29A Chaff Dispensing System')}},
     {down = Keys.CmBankSelect, value_down = -1,                                                                                                 name = _('Chaff Dispenser Select - 1'),             category = {_('AN/ALE-29A Chaff Dispensing System')}},
     {down = Keys.CmBankSelect, value_down = 1,                                                                                                  name = _('Chaff Dispenser Select - 2'),             category = {_('AN/ALE-29A Chaff Dispensing System')}},
     {down = Keys.CmBankSelect, value_down = 0,                                                                                                  name = _('Chaff Dispenser Select - Both'),          category = {_('AN/ALE-29A Chaff Dispensing System')}},
