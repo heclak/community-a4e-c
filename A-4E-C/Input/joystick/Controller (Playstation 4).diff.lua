@@ -37,21 +37,6 @@ local diff = {
 			["name"] = "Roll",
 		},
 		["a2003cdnil"] = {
-			["added"] = {
-				[1] = {
-					["filter"] = {
-						["curvature"] = {
-							[1] = 0,
-						},
-						["deadzone"] = 0,
-						["invert"] = true,
-						["saturationX"] = 1,
-						["saturationY"] = 1,
-						["slider"] = false,
-					},
-					["key"] = "JOY_Z",
-				},
-			},
 			["name"] = "Rudder",
 			["removed"] = {
 				[1] = {
@@ -67,27 +52,6 @@ local diff = {
 				},
 			},
 		},
-		["a2012cdnil"] = {
-			["added"] = {
-				[1] = {
-					["filter"] = {
-						["curvature"] = {
-							[1] = -0.2,
-						},
-						["deadzone"] = 0,
-						["invert"] = false,
-						["saturationX"] = 1,
-						["saturationY"] = 1,
-						["slider"] = true,
-					},
-					["key"] = "JOY_Z",
-					["reformers"] = {
-						[1] = "LShift",
-					},
-				},
-			},
-			["name"] = "Zoom View",
-		},
 		["a2049cdnil"] = {
 			["added"] = {
 				[1] = {
@@ -101,7 +65,7 @@ local diff = {
 						["saturationY"] = 1,
 						["slider"] = false,
 					},
-					["key"] = "JOY_RX",
+					["key"] = "JOY_Z",
 					["reformers"] = {
 						[1] = "LCtrl",
 						[2] = "LShift",
@@ -123,7 +87,7 @@ local diff = {
 						["saturationY"] = 1,
 						["slider"] = false,
 					},
-					["key"] = "JOY_RY",
+					["key"] = "JOY_RZ",
 					["reformers"] = {
 						[1] = "LCtrl",
 						[2] = "LShift",
@@ -131,6 +95,50 @@ local diff = {
 				},
 			},
 			["name"] = "Absolute Vertical Shift Camera View",
+		},
+		["a3163cdnil"] = {
+			["added"] = {
+				[1] = {
+					["filter"] = {
+						["curvature"] = {
+							[1] = 0,
+						},
+						["deadzone"] = 0,
+						["invert"] = true,
+						["saturationX"] = 1,
+						["saturationY"] = 1,
+						["slider"] = false,
+					},
+					["key"] = "JOY_RX",
+					["reformers"] = {
+						[1] = "LCtrl",
+						[2] = "LShift",
+					},
+				},
+			},
+			["name"] = "Wheel Brake Left",
+		},
+		["a3164cdnil"] = {
+			["added"] = {
+				[1] = {
+					["filter"] = {
+						["curvature"] = {
+							[1] = 0,
+						},
+						["deadzone"] = 0,
+						["invert"] = true,
+						["saturationX"] = 1,
+						["saturationY"] = 1,
+						["slider"] = false,
+					},
+					["key"] = "JOY_RY",
+					["reformers"] = {
+						[1] = "LCtrl",
+						[2] = "LShift",
+					},
+				},
+			},
+			["name"] = "Wheel Brake Right",
 		},
 		["a3178cdnil"] = {
 			["added"] = {
@@ -145,10 +153,10 @@ local diff = {
 						["saturationY"] = 1,
 						["slider"] = false,
 					},
-					["key"] = "JOY_RX",
+					["key"] = "JOY_Z",
 				},
 			},
-			["name"] = "Mouse X Relative",
+			["name"] = "UI Override - Mouse X Relative",
 		},
 		["a3179cdnil"] = {
 			["added"] = {
@@ -163,32 +171,26 @@ local diff = {
 						["saturationY"] = 1,
 						["slider"] = false,
 					},
+					["key"] = "JOY_RZ",
+				},
+			},
+			["name"] = "UI Override - Mouse Y Relative",
+		},
+		["a3205cd26"] = {
+			["added"] = {
+				[1] = {
+					["key"] = "JOY_RX",
+				},
+			},
+			["name"] = "Rudder - Left",
+		},
+		["a3206cd26"] = {
+			["added"] = {
+				[1] = {
 					["key"] = "JOY_RY",
 				},
 			},
-			["name"] = "Mouse Y Relative",
-		},
-		["a3204cdnil"] = {
-			["added"] = {
-				[1] = {
-					["filter"] = {
-						["curvature"] = {
-							[1] = 0,
-						},
-						["deadzone"] = 0,
-						["invert"] = true,
-						["saturationX"] = 1,
-						["saturationY"] = 1,
-						["slider"] = false,
-					},
-					["key"] = "JOY_Z",
-					["reformers"] = {
-						[1] = "LCtrl",
-						[2] = "LShift",
-					},
-				},
-			},
-			["name"] = "Wheel Brake - Differential",
+			["name"] = "Rudder - Right",
 		},
 	},
 	["keyDiffs"] = {
@@ -207,7 +209,7 @@ local diff = {
 		["d10007pnilu10008cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN1",
+					["key"] = "JOY_BTN2",
 					["reformers"] = {
 						[1] = "LCtrl",
 						[2] = "LShift",
@@ -230,7 +232,7 @@ local diff = {
 		["d10012pnilu10010cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN3",
+					["key"] = "JOY_BTN1",
 					["reformers"] = {
 						[1] = "LCtrl",
 					},
@@ -241,7 +243,7 @@ local diff = {
 		["d10016pnilu10017cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN8",
+					["key"] = "JOY_BTN10",
 				},
 			},
 			["name"] = "Gun-Rocket Trigger",
@@ -254,7 +256,7 @@ local diff = {
 		["d10018pnilu10019cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN7",
+					["key"] = "JOY_BTN9",
 				},
 			},
 			["name"] = "Bomb Release Button",
@@ -267,7 +269,7 @@ local diff = {
 		["d10020pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN7",
+					["key"] = "JOY_BTN9",
 					["reformers"] = {
 						[1] = "LShift",
 					},
@@ -278,7 +280,7 @@ local diff = {
 		["d10021pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN8",
+					["key"] = "JOY_BTN10",
 					["reformers"] = {
 						[1] = "LShift",
 					},
@@ -289,7 +291,7 @@ local diff = {
 		["d10027pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN1",
+					["key"] = "JOY_BTN2",
 					["reformers"] = {
 						[1] = "LShift",
 					},
@@ -300,7 +302,7 @@ local diff = {
 		["d10028pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN2",
+					["key"] = "JOY_BTN3",
 					["reformers"] = {
 						[1] = "LShift",
 					},
@@ -322,7 +324,7 @@ local diff = {
 		["d10101pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN9",
+					["key"] = "JOY_BTN11",
 					["reformers"] = {
 						[1] = "LCtrl",
 					},
@@ -357,7 +359,7 @@ local diff = {
 		["d10125pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN8",
+					["key"] = "JOY_BTN10",
 					["reformers"] = {
 						[1] = "LCtrl",
 					},
@@ -368,7 +370,7 @@ local diff = {
 		["d10126pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN7",
+					["key"] = "JOY_BTN9",
 					["reformers"] = {
 						[1] = "LCtrl",
 					},
@@ -390,7 +392,7 @@ local diff = {
 		["d10139pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN3",
+					["key"] = "JOY_BTN1",
 				},
 			},
 			["name"] = "JATO Firing Button (ALE-29A Burst)",
@@ -447,18 +449,18 @@ local diff = {
 			},
 			["name"] = "AWRS Mode Selector Switch - CW",
 		},
-		["d10232pnilunilcdnilvdnilvpnilvunil"] = {
+		["d10234pnilu10236cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN3",
+					["key"] = "JOY_BTN1",
 					["reformers"] = {
 						[1] = "LShift",
 					},
 				},
 			},
-			["name"] = "Radar Antenna Tilt - Rotary CW",
+			["name"] = "Radar Antenna Tilt - Continuous CW",
 		},
-		["d10233pnilunilcdnilvdnilvpnilvunil"] = {
+		["d10235pnilu10236cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
 					["key"] = "JOY_BTN4",
@@ -467,7 +469,7 @@ local diff = {
 					},
 				},
 			},
-			["name"] = "Radar Antenna Tilt - Rotary CCW",
+			["name"] = "Radar Antenna Tilt - Continuous CCW",
 		},
 		["d10281pnilu10281cdnilvd1vpnilvu0"] = {
 			["added"] = {
@@ -493,7 +495,7 @@ local diff = {
 					},
 				},
 			},
-			["name"] = "LCtrl/Mouse Left",
+			["name"] = "UI Override - Left Shoulder (LShift + Mouse 2/Right Click)",
 		},
 		["d10286pnilu10287cdnilvdnilvpnilvunil"] = {
 			["added"] = {
@@ -507,7 +509,7 @@ local diff = {
 					},
 				},
 			},
-			["name"] = "LShift/Mouse Right",
+			["name"] = "UI Override - Right Shoulder (LShift + Mouse 1/Left Click)",
 		},
 		["d10288pnilu10290cdnilvdnilvpnilvunil"] = {
 			["added"] = {
@@ -546,23 +548,23 @@ local diff = {
 		["d10312pnilu10312cdnilvd-1vpnilvu0"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN1",
+					["key"] = "JOY_BTN2",
 				},
 			},
-			["name"] = "Throttle Position - Accelerating Decrease",
+			["name"] = "Throttle Position Continuous - Decrease (Custom Throttle Rate)",
 		},
 		["d10312pnilu10312cdnilvd1vpnilvu0"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN2",
+					["key"] = "JOY_BTN3",
 				},
 			},
-			["name"] = "Throttle Position - Accelerating Increase",
+			["name"] = "Throttle Position Continuous - Increase (Custom Throttle Rate)",
 		},
 		["d120pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN7",
+					["key"] = "JOY_BTN9",
 					["reformers"] = {
 						[1] = "LCtrl",
 						[2] = "LShift",
@@ -574,7 +576,7 @@ local diff = {
 		["d147pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN1",
+					["key"] = "JOY_BTN2",
 					["reformers"] = {
 						[1] = "LCtrl",
 					},
@@ -585,7 +587,7 @@ local diff = {
 		["d148pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN2",
+					["key"] = "JOY_BTN3",
 					["reformers"] = {
 						[1] = "LCtrl",
 					},
@@ -596,7 +598,7 @@ local diff = {
 		["d238pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN8",
+					["key"] = "JOY_BTN10",
 					["reformers"] = {
 						[1] = "LCtrl",
 						[2] = "LShift",
@@ -608,7 +610,7 @@ local diff = {
 		["d363pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN10",
+					["key"] = "JOY_BTN12",
 					["reformers"] = {
 						[1] = "LCtrl",
 					},
@@ -619,7 +621,7 @@ local diff = {
 		["d68pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN9",
+					["key"] = "JOY_BTN11",
 					["reformers"] = {
 						[1] = "LCtrl",
 						[2] = "LShift",
@@ -631,7 +633,7 @@ local diff = {
 		["d71pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN10",
+					["key"] = "JOY_BTN12",
 					["reformers"] = {
 						[1] = "LCtrl",
 						[2] = "LShift",
@@ -643,7 +645,7 @@ local diff = {
 		["d840pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN2",
+					["key"] = "JOY_BTN3",
 					["reformers"] = {
 						[1] = "LCtrl",
 						[2] = "LShift",
@@ -655,7 +657,7 @@ local diff = {
 		["d841pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN3",
+					["key"] = "JOY_BTN1",
 					["reformers"] = {
 						[1] = "LCtrl",
 						[2] = "LShift",
@@ -759,6 +761,28 @@ local diff = {
 					["key"] = "JOY_BTN_POV1_D",
 				},
 			},
+		},
+		["dnilp39u289cdnilvdnilvpnilvunil"] = {
+			["added"] = {
+				[1] = {
+					["key"] = "JOY_BTN8",
+					["reformers"] = {
+						[1] = "LShift",
+					},
+				},
+			},
+			["name"] = "Zoom in slow",
+		},
+		["dnilp40u290cdnilvdnilvpnilvunil"] = {
+			["added"] = {
+				[1] = {
+					["key"] = "JOY_BTN7",
+					["reformers"] = {
+						[1] = "LShift",
+					},
+				},
+			},
+			["name"] = "Zoom out slow",
 		},
 	},
 }

@@ -97,7 +97,7 @@ local iCommandPlaneTrimCancel = 97
 local iCommandPlaneTrimRoll = 2020
 --local iCommandPlanePitch = 2001
 --local iCommandPlaneRoll	= 2002
---local iCommandPlaneRudder = 2003
+local iCommandPlaneRudder = 2003
 
 function SetCommand(command,value)
     -- "primary" control is the clickable device, key commands trigger the clickable actions...
