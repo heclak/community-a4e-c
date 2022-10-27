@@ -62,6 +62,10 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Operational-era USN and USMC liveries now have a customized, well-worn LAU-10 launcher.
 - **Weapons and Loadouts:**
 - **Quality of Life:**
+  - Throttle input accessibility options:
+    - A new pair of inputs for Throttle Position - Accelerating Increase/Decrease is available. The keyboard defaults for these inputs are RCTRL+PageUp and RCTRL+PageDown, respectively.
+    - A Throttle Rate slider in the special menu is available to adjust throttle rate for Throttle Increment/Decrement inputs from 1 to 5%, and it also defines the baseline acceleration rate for the new Accelerating Increase/Decrease inputs.
+    - A companion Throttle Acceleration slider in the special meanu provides customizable additional acceleration based on the duration the throttle has been in motion.
   - Input options previously available only on keyboards or joystick devices can now be bound to mouse buttons.
   - Single inputs for the Canopy Lever. You can close the canopy with LSHIFT+C, and open it LSHIFT+LCTRL+C. *(thanks Tanuki44)*
   - Single and else inputs for Throttle Position Lock.
@@ -82,7 +86,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
     - EWRs and Ships: Unique sound sets are produced in response to ground and ship EWRs. A new sound is also produced in response to ship tracking radars.
     - SAMs: New sounds are produced in response to the P19 "Flat Face" and S-200 ST-68U "Tin Shield" and SA-2 S-75 "Fan Song" sarch and tracking radars. Some Fan Song units will sound different, simulating the sound of different radar bands used in the field. New sounds are also produced in response to the SA-3 S-125 "Low Blow", SA-5 S-200 "Square Pair", and SA-6 Kub "Straight Flush" units. The number of different sounds a each radar produces varies by unit, so pilots will need to learn what their ears are telling them about what type SAM is targeting them, and how much launch warning that SAM provides from its PRF audio.
     - SPAAA Vehicles: New sounds are produced in response to the Gepard, Vulcan M163, and ZSU-23-4 Shilka "Gun Dish" radars.
-  - Tire skidding for the left and right tries is audible.
+  - Sounds are produced if the left or right wheels are skidding. Use this feedback to help you learn to taxi (as a sound you don't generally want to hear), and to avoid damaging the wheels or locking up the brakes by keeping them depressed for too long.
   - Seat adjustment hydraulic motor.
 
 #### Fixed
@@ -94,7 +98,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 - **Weapons and Loadouts:**
   - CBU-2B/A weight is calculated correctly. Weapon release and spread cause fewer collision-based self-destructs when the weapon is released.
 - **Quality of Life:**
-  - Throttle Increment and Throttle Decrement inputs function properly. A new slider in the special menu is available to adjust throttle rate for these inputs from 1 to 5%.
+  - Throttle Increment and Throttle Decrement inputs function properly.
   - The trim reset input now properly adjusts the position of the Rudder Trim Switch.
   - Kneeboard Manual:
     - Waypoints on the navigation page enumerate 11 waypoints, and can't overrun the instructions on the page.

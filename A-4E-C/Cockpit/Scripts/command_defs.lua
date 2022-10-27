@@ -440,7 +440,9 @@ Keys =
     intlight_console_stop         = __custom_counter(),
 
     BombArmSwitch                 = __custom_counter(),
-    
+
+    throttle_acc                  = __custom_counter(),
+
 }
 
 start_command   = 3000

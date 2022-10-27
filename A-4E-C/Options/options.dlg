@@ -18,14 +18,15 @@ local EntryCheckBoxIndent = 25
 local EntrySliderOffset = 2
 
 -- start lines
-local lineheight = 25
-local OrderOptionsTitle 	= lineheight * 1
-local OrderTrimSpeed 		= lineheight * 4
-local OrderThrottleRate 	= lineheight * 9
-local OrderFFB 				= lineheight * 12 
-local OrderCockpitShake 	= lineheight * 15
-local OrderSimpleBraking 	= lineheight * 18
-local OrderRadarMode		= lineheight * 21
+local lineheight = 23
+local OrderOptionsTitle 			= lineheight * 1
+local OrderTrimSpeed 				= lineheight * 4
+local OrderThrottleRate 			= lineheight * 9
+local OrderThrottleAcceleration 	= lineheight * 12
+local OrderFFB 						= lineheight * 15
+local OrderCockpitShake 			= lineheight * 18
+local OrderSimpleBraking 			= lineheight * 21
+local OrderRadarMode				= lineheight * 24
 
 -- Styles
 
@@ -380,8 +381,8 @@ dialog = {
 						["enabled"] = true,
 						["step"] = 0.1,
 						["range"] = {
-							["max"] = 5,
-							["min"] = 1,
+							["max"] = 5.0,
+							["min"] = 1.0,
 						},
 						["tabOrder"] = 0,
 						["text"] = "",
@@ -423,6 +424,109 @@ dialog = {
 						},
 						["enabled"] = true,
 						["text"] = "$A4E_THROTTLE_RATE_HELP",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = HelpSkin,
+					["type"] = "Static",
+				},
+				["throttleRateHelpLabel2"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = EntryHeight,
+							["w"] = EntryHelpWidth,
+							["x"] = LeftColumnX,
+							["y"] = OrderThrottleRate + lineheight*2,
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_THROTTLE_RATE_HELP2",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = HelpSkin,
+					["type"] = "Static",
+				},
+
+				--------------------------------------------
+				-- Throttle Acceleration
+				--------------------------------------------
+				["throttleAccelerationLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = EntryHeight,
+							["w"] = EntryLabelWidth,
+							["x"] = LeftColumnX,
+							["y"] = OrderThrottleAcceleration,
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_THROTTLE_ACCELERATION_LABEL",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsCaptionSkin",
+						},
+					},
+					["type"] = "Static",
+				},
+				["throttleAccelerationSlider"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = EntryHeight,
+							["w"] = EntrySliderWidth,
+							["x"] = LeftColumnX + LeftColumnIndent,
+							["y"] = OrderThrottleAcceleration - EntrySliderOffset,
+						},
+						["enabled"] = true,
+						["step"] = 1,
+						["range"] = {
+							["max"] = 100,
+							["min"] = 1,
+						},
+						["tabOrder"] = 0,
+						["text"] = "",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = SliderSkin,
+					["type"] = "HorzSlider",
+				},
+				["throttleAccelerationWidget"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = EntryHeight,
+							["w"] = EntryWidgetWidth,
+							["x"] = LeftColumnX + EntryWidgetOffset,
+							["y"] = OrderThrottleAcceleration,
+						},
+						["enabled"] = true,
+						["text"] = "0",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsSliderValueSkin",
+						},
+					},
+					["type"] = "Static",
+				},
+				["throttleAccelerationHelpLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = EntryHeight,
+							["w"] = EntryHelpWidth,
+							["x"] = LeftColumnX,
+							["y"] = OrderThrottleAcceleration + lineheight,
+						},
+						["enabled"] = true,
+						["text"] = "$A4E_THROTTLE_ACCELERATION_HELP",
 						["tooltip"] = "",
 						["visible"] = true,
 						["zindex"] = 0,
