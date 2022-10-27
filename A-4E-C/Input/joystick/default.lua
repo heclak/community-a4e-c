@@ -689,6 +689,7 @@ join(res.axisCommands,{
     {action = device_commands.wheelbrake_AXIS,                                          name = _('Wheel Brake'),       category = {_('Systems')}},
     {action = device_commands.left_wheelbrake_AXIS,                                     name = _('Wheel Brake Left'),  category = {_('Systems')}},
     {action = device_commands.right_wheelbrake_AXIS,                                    name = _('Wheel Brake Right'), category = {_('Systems')}},
+    {action = device_commands.combined_wheel_brake_axis,                                name = _('Combined Wheel Brake Axis'), category = {_('Systems')}},
     --{action = iCommandWheelBrake,		                                                name = _('Wheel Brake')},
 
     {combos = {{key = 'TRACKIR_PITCH'}}, action = iHeadTrackerPitchNormed,              name = _('Head Tracker : Pitch')},

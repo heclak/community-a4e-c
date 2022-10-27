@@ -135,27 +135,27 @@ bool Scooter::Radar::handleInput( int command, float value )
 	case DEVICE_COMMANDS_RADAR_DETAIL:
 		detail( value );
 		return true;
-	//case DEVICE_COMMANDS_RADAR_DETAIL_AXIS:
-	//	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_DETAIL, angleAxisToCommand(value));
-	//	return true;
+	case DEVICE_COMMANDS_RADAR_DETAIL_AXIS_ABS:
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_DETAIL, angleAxisToCommand(value));
+		return true;
 	case DEVICE_COMMANDS_RADAR_GAIN:
 		gain( value );
 		return true;
-	//case DEVICE_COMMANDS_RADAR_GAIN_AXIS:
-	//	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_GAIN, angleAxisToCommand(value));
-	//	return true;
+	case DEVICE_COMMANDS_RADAR_GAIN_AXIS_ABS:
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_GAIN, angleAxisToCommand(value));
+		return true;
 	case DEVICE_COMMANDS_RADAR_BRILLIANCE:
 		m_brilliance = value;
 		return true;
-	//case DEVICE_COMMANDS_RADAR_BRILLIANCE_AXIS:
-	//	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_BRILLIANCE, angleAxisToCommand(value));
-	//	return true;
+	case DEVICE_COMMANDS_RADAR_BRILLIANCE_AXIS_ABS:
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_BRILLIANCE, angleAxisToCommand(value));
+		return true;
 	case DEVICE_COMMANDS_RADAR_STORAGE:
 		storage( value );
 		return true;
-	//case DEVICE_COMMANDS_RADAR_STORAGE_AXIS:
-	//	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_STORAGE, angleAxisToCommand(value));
-	//	return true;
+	case DEVICE_COMMANDS_RADAR_STORAGE_AXIS_ABS:
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_STORAGE, angleAxisToCommand(value));
+		return true;
 	case DEVICE_COMMANDS_RADAR_PLANPROFILE:
 		//This should perhaps be a state change.
 		m_planSwitch = ! (bool)value;
@@ -166,9 +166,9 @@ bool Scooter::Radar::handleInput( int command, float value )
 	case DEVICE_COMMANDS_RADAR_RETICLE:
 		m_reticleKnob = value;
 		return true;
-	//case DEVICE_COMMANDS_RADAR_RETICLE_AXIS:
-	//	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_RETICLE, angleAxisToCommand(value));
-	//	return true;
+	case DEVICE_COMMANDS_RADAR_RETICLE_AXIS_ABS:
+		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_RETICLE, angleAxisToCommand(value));
+		return true;
 	case DEVICE_COMMANDS_RADAR_ANGLE_AXIS:
 		m_radarAngleAxis = value;
 		return true;
@@ -266,13 +266,13 @@ bool Scooter::Radar::handleInput( int command, float value )
 		setKnob( DEVICE_COMMANDS_RADAR_STORAGE, m_storageKnob - c_knobStep );
 		return true;
 	case KEYS_RADAR_STOR_CONT_UP:
-		m_storageMoving = 1;
+		m_storageMoving = 1.0f;
 		return true;
 	case KEYS_RADAR_STOR_CONT_DOWN:
-		m_storageMoving = -1;
+		m_storageMoving = -1.0f;
 		return true;
 	case KEYS_RADAR_STOR_CONT_STOP:
-		m_storageMoving = 0;
+		m_storageMoving = 0.0f;
 		return true;
 	case KEYS_RADAR_GAIN_STEP_INC:
 		setKnob( DEVICE_COMMANDS_RADAR_GAIN, m_gainKnob + c_knobStep );
@@ -281,13 +281,13 @@ bool Scooter::Radar::handleInput( int command, float value )
 		setKnob( DEVICE_COMMANDS_RADAR_GAIN, m_gainKnob - c_knobStep );
 		return true;
 	case KEYS_RADAR_GAIN_CONT_UP:
-		m_gainMoving = 1;
+		m_gainMoving = 1.0f;
 		return true;
 	case KEYS_RADAR_GAIN_CONT_DOWN:
-		m_gainMoving = -1;
+		m_gainMoving = -1.0f;
 		return true;
 	case KEYS_RADAR_GAIN_CONT_STOP:
-		m_gainMoving = 0;
+		m_gainMoving = 0.0f;
 		return true;
 	case KEYS_RADAR_DET_STEP_INC:
 		setKnob( DEVICE_COMMANDS_RADAR_DETAIL, m_detailKnob + c_knobStep );
@@ -296,13 +296,13 @@ bool Scooter::Radar::handleInput( int command, float value )
 		setKnob( DEVICE_COMMANDS_RADAR_DETAIL, m_detailKnob - c_knobStep );
 		return true;
 	case KEYS_RADAR_DET_CONT_UP:
-		m_detailMoving = 1;
+		m_detailMoving = 1.0f;
 		return true;
 	case KEYS_RADAR_DET_CONT_DOWN:
-		m_detailMoving = -1;
+		m_detailMoving = -1.0f;
 		return true;
 	case KEYS_RADAR_DET_CONT_STOP:
-		m_detailMoving = 0;
+		m_detailMoving = 0.0f;
 		return true;
 	case KEYS_RADAR_RET_STEP_INC:
 		setKnob( DEVICE_COMMANDS_RADAR_RETICLE, m_reticleKnob + c_knobStep );
@@ -311,13 +311,28 @@ bool Scooter::Radar::handleInput( int command, float value )
 		setKnob( DEVICE_COMMANDS_RADAR_RETICLE, m_reticleKnob - c_knobStep );
 		return true;
 	case KEYS_RADAR_RET_CONT_UP:
-		m_reticleMoving = 1;
+		m_reticleMoving = 1.0f;
 		return true;
 	case KEYS_RADAR_RET_CONT_DOWN:
-		m_reticleMoving = -1;
+		m_reticleMoving = -1.0f;
 		return true;
 	case KEYS_RADAR_RET_CONT_STOP:
-		m_reticleMoving = 0;
+		m_reticleMoving = 0.0f;
+		return true;
+	case DEVICE_COMMANDS_RADAR_STORAGE_AXIS_SLEW:
+		m_storageMoving = value;
+		return true;
+	case DEVICE_COMMANDS_RADAR_BRILLIANCE_AXIS_SLEW:
+		m_brillianceMoving = value;
+		return true;
+	case DEVICE_COMMANDS_RADAR_GAIN_AXIS_SLEW:
+		m_gainMoving = value;
+		return true;
+	case DEVICE_COMMANDS_RADAR_DETAIL_AXIS_SLEW:
+		m_detailMoving = value;
+		return true;
+	case DEVICE_COMMANDS_RADAR_RETICLE_AXIS_SLEW:
+		m_reticleMoving = value;
 		return true;
 	}
 

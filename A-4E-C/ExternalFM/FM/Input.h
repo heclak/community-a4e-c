@@ -222,7 +222,7 @@ public:
 	}
 	inline void brakeLeft(double value)
 	{
-		return m_leftBrakeAxis.updateAxis(normalise(-value));
+		m_leftBrakeAxis.updateAxis(normalise(-value));
 	}
 	inline const double& brakeRight() const
 	{
@@ -234,8 +234,19 @@ public:
 	}
 	inline void brakeRight(double value)
 	{
-		return m_rightBrakeAxis.updateAxis(normalise(-value));
+		m_rightBrakeAxis.updateAxis(normalise(-value));
 	}
+
+	inline void brakeLeftDirect( double value )
+	{
+		m_leftBrakeAxis.updateAxis( value );
+	}
+
+	inline void brakeRightDirect( double value )
+	{
+		m_rightBrakeAxis.updateAxis( value );
+	}
+
 	inline double getFFBPitchFactor()
 	{
 		return m_FFBPitchFactor;

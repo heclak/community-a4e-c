@@ -157,11 +157,11 @@ private:
 	int m_volumeMoving = 0;
 
 
-	int m_brillianceMoving = 0;
-	int m_storageMoving = 0;
-	int m_gainMoving = 0;
-	int m_detailMoving = 0;
-	int m_reticleMoving = 0;
+	float m_brillianceMoving = 0.0f;
+	float m_storageMoving = 0.0f;
+	float m_gainMoving = 0.0f;
+	float m_detailMoving = 0.0f;
+	float m_reticleMoving = 0.0f;
 
 	double m_radarAngleAxis = 0.0;
 

@@ -704,4 +704,7 @@ device_commands =
     radar_reticle_axis_abs          = __counter(),
     radar_reticle_axis_slew         = __counter(),
 
+    --additional
+    combined_wheel_brake_axis       = __counter(),
+
 }

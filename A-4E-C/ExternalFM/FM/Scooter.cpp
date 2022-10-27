@@ -661,6 +661,10 @@ void ed_fm_set_command
 	case DEVICE_COMMANDS_RIGHT_WHEELBRAKE_AXIS:
 		s_input->brakeRight( value );
 		break;
+	case DEVICE_COMMANDS_COMBINED_WHEEL_BRAKE_AXIS:
+		s_input->brakeRightDirect( std::max( value, 0.0f ) );
+		s_input->brakeLeftDirect( std::max( -value, 0.0f ) );
+		break;
 	case Scooter::Control::RUDDER_LEFT_START:
 		s_input->yawAxis().keyDecrease();
 		break;
