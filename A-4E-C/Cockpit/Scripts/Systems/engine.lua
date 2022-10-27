@@ -582,7 +582,7 @@ function update()
         throttle_accelerating_duration = clamp(throttle_accelerating_duration + throttle_acceleration_rate, throttle_rate * 0.25, 1)
         --increase or decrease throttle at acceleration direction and rate
         dispatch_action(nil, iCommandPlaneThrustCommon, -2.0 * throttle + 1.0 - throttle_accelerating * throttle_accelerating_duration)
-        print_message_to_user("Throttle: " .. throttle .. " | Delta (abs): " .. throttle_accelerating_duration)
+        --print_message_to_user("Throttle: " .. throttle .. " | Delta (abs): " .. throttle_accelerating_duration)
     end
 
     once_per_sec = once_per_sec - 1
