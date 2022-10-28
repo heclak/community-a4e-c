@@ -7,7 +7,7 @@ local diff = {
 						["curvature"] = {
 							[1] = 0,
 						},
-						["deadzone"] = 0.05,
+						["deadzone"] = 0.07,
 						["invert"] = false,
 						["saturationX"] = 1,
 						["saturationY"] = 1,
@@ -25,7 +25,7 @@ local diff = {
 						["curvature"] = {
 							[1] = 0,
 						},
-						["deadzone"] = 0.05,
+						["deadzone"] = 0.07,
 						["invert"] = false,
 						["saturationX"] = 1,
 						["saturationY"] = 1,
@@ -37,6 +37,21 @@ local diff = {
 			["name"] = "Roll",
 		},
 		["a2003cdnil"] = {
+			["added"] = {
+				[1] = {
+					["filter"] = {
+						["curvature"] = {
+							[1] = 0,
+						},
+						["deadzone"] = 0,
+						["invert"] = true,
+						["saturationX"] = 1,
+						["saturationY"] = 1,
+						["slider"] = false,
+					},
+					["key"] = "JOY_Z",
+				},
+			},
 			["name"] = "Rudder",
 			["removed"] = {
 				[1] = {
@@ -59,13 +74,13 @@ local diff = {
 						["curvature"] = {
 							[1] = 0,
 						},
-						["deadzone"] = 0.05,
+						["deadzone"] = 0.1,
 						["invert"] = true,
 						["saturationX"] = 1,
 						["saturationY"] = 1,
 						["slider"] = false,
 					},
-					["key"] = "JOY_Z",
+					["key"] = "JOY_RX",
 					["reformers"] = {
 						[1] = "LCtrl",
 						[2] = "LShift",
@@ -81,50 +96,7 @@ local diff = {
 						["curvature"] = {
 							[1] = 0,
 						},
-						["deadzone"] = 0.05,
-						["invert"] = true,
-						["saturationX"] = 1,
-						["saturationY"] = 1,
-						["slider"] = false,
-					},
-					["key"] = "JOY_RZ",
-					["reformers"] = {
-						[1] = "LCtrl",
-						[2] = "LShift",
-					},
-				},
-			},
-			["name"] = "Absolute Vertical Shift Camera View",
-		},
-		["a3162cdnil"] = {
-			["added"] = {
-				[1] = {
-					["filter"] = {
-						["curvature"] = {
-							[1] = 0,
-						},
-						["deadzone"] = 0,
-						["invert"] = true,
-						["saturationX"] = 1,
-						["saturationY"] = 1,
-						["slider"] = false,
-					},
-					["key"] = "JOY_RX",
-					["reformers"] = {
-						[1] = "LCtrl",
-					},
-				},
-			},
-			["name"] = "Wheel Brake Left",
-		},
-		["a3163cdnil"] = {
-			["added"] = {
-				[1] = {
-					["filter"] = {
-						["curvature"] = {
-							[1] = 0,
-						},
-						["deadzone"] = 0,
+						["deadzone"] = 0.1,
 						["invert"] = true,
 						["saturationX"] = 1,
 						["saturationY"] = 1,
@@ -133,35 +105,18 @@ local diff = {
 					["key"] = "JOY_RY",
 					["reformers"] = {
 						[1] = "LCtrl",
+						[2] = "LShift",
 					},
 				},
 			},
-			["name"] = "Wheel Brake Right",
-		},
-		["a3177cdnil"] = {
-			["added"] = {
-				[1] = {
-					["filter"] = {
-						["curvature"] = {
-							[1] = 0.2,
-						},
-						["deadzone"] = 0.1,
-						["invert"] = false,
-						["saturationX"] = 1,
-						["saturationY"] = 1,
-						["slider"] = false,
-					},
-					["key"] = "JOY_Z",
-				},
-			},
-			["name"] = "Mouse X Relative",
+			["name"] = "Absolute Vertical Shift Camera View",
 		},
 		["a3178cdnil"] = {
 			["added"] = {
 				[1] = {
 					["filter"] = {
 						["curvature"] = {
-							[1] = 0.2,
+							[1] = 0,
 						},
 						["deadzone"] = 0.1,
 						["invert"] = false,
@@ -169,10 +124,67 @@ local diff = {
 						["saturationY"] = 1,
 						["slider"] = false,
 					},
-					["key"] = "JOY_RZ",
+					["key"] = "JOY_RX",
 				},
 			},
-			["name"] = "Mouse Y Relative",
+			["name"] = "UI Override - Mouse Cursor X",
+		},
+		["a3179cdnil"] = {
+			["added"] = {
+				[1] = {
+					["filter"] = {
+						["curvature"] = {
+							[1] = 0,
+						},
+						["deadzone"] = 0.1,
+						["invert"] = false,
+						["saturationX"] = 1,
+						["saturationY"] = 1,
+						["slider"] = false,
+					},
+					["key"] = "JOY_RY",
+				},
+			},
+			["name"] = "UI Override - Mouse Cursor Y",
+		},
+		["a3204cdnil"] = {
+			["added"] = {
+				[1] = {
+					["filter"] = {
+						["curvature"] = {
+							[1] = 0,
+						},
+						["deadzone"] = 0,
+						["invert"] = true,
+						["saturationX"] = 1,
+						["saturationY"] = 1,
+						["slider"] = false,
+					},
+					["key"] = "JOY_Z",
+					["reformers"] = {
+						[1] = "LCtrl",
+						[2] = "LShift",
+					},
+				},
+			},
+			["name"] = "Wheel Brake Differential (Single-Axis)",
+		},
+		["a3210cd45"] = {
+			["added"] = {
+				[1] = {
+					["key"] = "JOY_Z",
+					["reformers"] = {
+						[1] = "LCtrl",
+					},
+				},
+				[2] = {
+					["key"] = "JOY_Z",
+					["reformers"] = {
+						[1] = "LShift",
+					},
+				},
+			},
+			["name"] = "Zoom View - Slew",
 		},
 	},
 	["keyDiffs"] = {
@@ -191,7 +203,7 @@ local diff = {
 		["d10007pnilu10008cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN2",
+					["key"] = "JOY_BTN1",
 					["reformers"] = {
 						[1] = "LCtrl",
 						[2] = "LShift",
@@ -214,7 +226,7 @@ local diff = {
 		["d10012pnilu10010cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN1",
+					["key"] = "JOY_BTN3",
 					["reformers"] = {
 						[1] = "LCtrl",
 					},
@@ -225,7 +237,7 @@ local diff = {
 		["d10016pnilu10017cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN10",
+					["key"] = "JOY_BTN8",
 				},
 			},
 			["name"] = "Gun-Rocket Trigger",
@@ -238,7 +250,7 @@ local diff = {
 		["d10018pnilu10019cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN9",
+					["key"] = "JOY_BTN7",
 				},
 			},
 			["name"] = "Bomb Release Button",
@@ -251,7 +263,7 @@ local diff = {
 		["d10020pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN9",
+					["key"] = "JOY_BTN7",
 					["reformers"] = {
 						[1] = "LShift",
 					},
@@ -262,7 +274,7 @@ local diff = {
 		["d10021pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN10",
+					["key"] = "JOY_BTN8",
 					["reformers"] = {
 						[1] = "LShift",
 					},
@@ -273,7 +285,7 @@ local diff = {
 		["d10027pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN2",
+					["key"] = "JOY_BTN1",
 					["reformers"] = {
 						[1] = "LShift",
 					},
@@ -284,7 +296,7 @@ local diff = {
 		["d10028pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN3",
+					["key"] = "JOY_BTN2",
 					["reformers"] = {
 						[1] = "LShift",
 					},
@@ -306,7 +318,7 @@ local diff = {
 		["d10101pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN11",
+					["key"] = "JOY_BTN9",
 					["reformers"] = {
 						[1] = "LCtrl",
 					},
@@ -320,6 +332,7 @@ local diff = {
 					["key"] = "JOY_BTN_POV1_L",
 					["reformers"] = {
 						[1] = "LCtrl",
+						[2] = "LShift",
 					},
 				},
 			},
@@ -331,6 +344,7 @@ local diff = {
 					["key"] = "JOY_BTN_POV1_R",
 					["reformers"] = {
 						[1] = "LCtrl",
+						[2] = "LShift",
 					},
 				},
 			},
@@ -339,7 +353,7 @@ local diff = {
 		["d10125pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN10",
+					["key"] = "JOY_BTN8",
 					["reformers"] = {
 						[1] = "LCtrl",
 					},
@@ -350,7 +364,7 @@ local diff = {
 		["d10126pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN9",
+					["key"] = "JOY_BTN7",
 					["reformers"] = {
 						[1] = "LCtrl",
 					},
@@ -372,7 +386,7 @@ local diff = {
 		["d10139pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN1",
+					["key"] = "JOY_BTN3",
 				},
 			},
 			["name"] = "JATO Firing Button (ALE-29A Burst)",
@@ -432,7 +446,7 @@ local diff = {
 		["d10232pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN1",
+					["key"] = "JOY_BTN3",
 					["reformers"] = {
 						[1] = "LShift",
 					},
@@ -468,133 +482,40 @@ local diff = {
 				[1] = {
 					["key"] = "JOY_BTN6",
 				},
-				[2] = {
-					["key"] = "JOY_BTN6",
-					["reformers"] = {
-						[1] = "LShift",
-					},
-				},
 			},
-			["name"] = "LCtrl/Mouse Left",
+			["name"] = "UI Override - Right Shoulder (LCtrl + Mouse 1/Left Click)",
 		},
 		["d10286pnilu10287cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
 					["key"] = "JOY_BTN5",
 				},
-				[2] = {
-					["key"] = "JOY_BTN5",
-					["reformers"] = {
-						[1] = "LCtrl",
-					},
-				},
 			},
-			["name"] = "LShift/Mouse Right",
+			["name"] = "UI Override - Left Shoulder (LShift + Mouse 2/Right Click)",
 		},
-		["d120pnilunilcdnilvdnilvpnilvunil"] = {
-			["added"] = {
-				[1] = {
-					["key"] = "JOY_BTN9",
-					["reformers"] = {
-						[1] = "LCtrl",
-						[2] = "LShift",
-					},
-				},
-			},
-			["name"] = "Catapult Hook-Up",
-		},
-		["d147pnilunilcdnilvdnilvpnilvunil"] = {
-			["added"] = {
-				[1] = {
-					["key"] = "JOY_BTN2",
-					["reformers"] = {
-						[1] = "LCtrl",
-					},
-				},
-			},
-			["name"] = "Speedbrake Switch - OPEN",
-		},
-		["d148pnilunilcdnilvdnilvpnilvunil"] = {
-			["added"] = {
-				[1] = {
-					["key"] = "JOY_BTN3",
-					["reformers"] = {
-						[1] = "LCtrl",
-					},
-				},
-			},
-			["name"] = "Speedbrake Switch - CLOSE",
-		},
-		["d149pnilunilcdnilvdnilvpnilvunil"] = {
+		["d10288pnilu10290cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
 					["key"] = "JOY_BTN_POV1_R",
 					["reformers"] = {
-						[1] = "JOY_BTN14",
-					},
-				},
-			},
-			["name"] = "F6 Released weapon view",
-		},
-		["d15pnilunilcdnilvdnilvpnilvunil"] = {
-			["added"] = {
-				[1] = {
-					["key"] = "JOY_BTN_POV1_D",
-					["reformers"] = {
-						[1] = "JOY_BTN14",
-					},
-				},
-			},
-			["name"] = "F10 Theater map view",
-		},
-		["d238pnilunilcdnilvdnilvpnilvunil"] = {
-			["added"] = {
-				[1] = {
-					["key"] = "JOY_BTN10",
-					["reformers"] = {
 						[1] = "LCtrl",
-						[2] = "LShift",
 					},
 				},
 			},
-			["name"] = "Pilot Salute",
+			["name"] = "AFCS Heading Select Pull-to-Set Knob - Continuous Increase",
 		},
-		["d3157pnilunilcd20vd-1vpnilvunil"] = {
+		["d10289pnilu10290cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
 					["key"] = "JOY_BTN_POV1_L",
 					["reformers"] = {
 						[1] = "LCtrl",
-						[2] = "LShift",
 					},
 				},
 			},
-			["name"] = "Throttle Position Lock - Step Down (OFF/IGN/IDLE)",
+			["name"] = "AFCS Heading Select Pull-to-Set Knob - Continuous Decrease",
 		},
-		["d3157pnilunilcd20vd1vpnilvunil"] = {
-			["added"] = {
-				[1] = {
-					["key"] = "JOY_BTN_POV1_R",
-					["reformers"] = {
-						[1] = "LCtrl",
-						[2] = "LShift",
-					},
-				},
-			},
-			["name"] = "Throttle Position Lock - Step Up (OFF/IGN/IDLE)",
-		},
-		["d363pnilunilcdnilvdnilvpnilvunil"] = {
-			["added"] = {
-				[1] = {
-					["key"] = "JOY_BTN12",
-					["reformers"] = {
-						[1] = "LCtrl",
-					},
-				},
-			},
-			["name"] = "Clickable Mouse Cockpit Mode - ON/OFF",
-		},
-		["d438pnilunilcdnilvdnilvpnilvunil"] = {
+		["d10291pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
 					["key"] = "JOY_BTN4",
@@ -606,10 +527,83 @@ local diff = {
 			},
 			["name"] = "NVG Night Vision Goggle - Toggle",
 		},
+		["d10312pnilu10312cdnilvd-1vpnilvu0"] = {
+			["added"] = {
+				[1] = {
+					["key"] = "JOY_BTN1",
+				},
+			},
+			["name"] = "Throttle Position Continuous - Decrease (Custom Throttle Rate)",
+		},
+		["d10312pnilu10312cdnilvd1vpnilvu0"] = {
+			["added"] = {
+				[1] = {
+					["key"] = "JOY_BTN2",
+				},
+			},
+			["name"] = "Throttle Position Continuous - Increase (Custom Throttle Rate)",
+		},
+		["d120pnilunilcdnilvdnilvpnilvunil"] = {
+			["added"] = {
+				[1] = {
+					["key"] = "JOY_BTN7",
+					["reformers"] = {
+						[1] = "LCtrl",
+						[2] = "LShift",
+					},
+				},
+			},
+			["name"] = "Catapult Hook-Up",
+		},
+		["d147pnilunilcdnilvdnilvpnilvunil"] = {
+			["added"] = {
+				[1] = {
+					["key"] = "JOY_BTN1",
+					["reformers"] = {
+						[1] = "LCtrl",
+					},
+				},
+			},
+			["name"] = "Speedbrake Switch - OPEN",
+		},
+		["d148pnilunilcdnilvdnilvpnilvunil"] = {
+			["added"] = {
+				[1] = {
+					["key"] = "JOY_BTN2",
+					["reformers"] = {
+						[1] = "LCtrl",
+					},
+				},
+			},
+			["name"] = "Speedbrake Switch - CLOSE",
+		},
+		["d238pnilunilcdnilvdnilvpnilvunil"] = {
+			["added"] = {
+				[1] = {
+					["key"] = "JOY_BTN8",
+					["reformers"] = {
+						[1] = "LCtrl",
+						[2] = "LShift",
+					},
+				},
+			},
+			["name"] = "Pilot Salute",
+		},
+		["d363pnilunilcdnilvdnilvpnilvunil"] = {
+			["added"] = {
+				[1] = {
+					["key"] = "JOY_BTN10",
+					["reformers"] = {
+						[1] = "LCtrl",
+					},
+				},
+			},
+			["name"] = "Clickable Mouse Cockpit Mode - ON/OFF",
+		},
 		["d68pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN11",
+					["key"] = "JOY_BTN9",
 					["reformers"] = {
 						[1] = "LCtrl",
 						[2] = "LShift",
@@ -621,30 +615,19 @@ local diff = {
 		["d71pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN12",
+					["key"] = "JOY_BTN10",
 					["reformers"] = {
 						[1] = "LCtrl",
 						[2] = "LShift",
 					},
 				},
 			},
-			["name"] = "Canopy Lever - CLOSE/OPEN",
-		},
-		["d7pnilunilcdnilvdnilvpnilvunil"] = {
-			["added"] = {
-				[1] = {
-					["key"] = "JOY_BTN_POV1_U",
-					["reformers"] = {
-						[1] = "JOY_BTN14",
-					},
-				},
-			},
-			["name"] = "F1 Cockpit view",
+			["name"] = "Canopy Lever - OPEN/CLOSE",
 		},
 		["d840pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN3",
+					["key"] = "JOY_BTN2",
 					["reformers"] = {
 						[1] = "LCtrl",
 						[2] = "LShift",
@@ -656,7 +639,7 @@ local diff = {
 		["d841pnilunilcdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN1",
+					["key"] = "JOY_BTN3",
 					["reformers"] = {
 						[1] = "LCtrl",
 						[2] = "LShift",
@@ -664,17 +647,6 @@ local diff = {
 				},
 			},
 			["name"] = "NVG Night Vision Goggle Gain - Decrease",
-		},
-		["d8pnilunilcdnilvdnilvpnilvunil"] = {
-			["added"] = {
-				[1] = {
-					["key"] = "JOY_BTN_POV1_L",
-					["reformers"] = {
-						[1] = "JOY_BTN14",
-					},
-				},
-			},
-			["name"] = "F2 Aircraft view",
 		},
 		["dnilp10113u10119cdnilvdnilvpnilvunil"] = {
 			["added"] = {
@@ -707,22 +679,6 @@ local diff = {
 				},
 			},
 			["name"] = "Trim Switch - RIGHT WING DOWN",
-		},
-		["dnilp1032u1034cdnilvdnilvpnilvunil"] = {
-			["added"] = {
-				[1] = {
-					["key"] = "JOY_BTN3",
-				},
-			},
-			["name"] = "Throttle Position Continuous - Increase",
-		},
-		["dnilp1033u1034cdnilvdnilvpnilvunil"] = {
-			["added"] = {
-				[1] = {
-					["key"] = "JOY_BTN2",
-				},
-			},
-			["name"] = "Throttle Position Continuous - Decrease",
 		},
 		["dnilp210u214cdnilvdnilvpnilvunil"] = {
 			["name"] = "View Up Right slow",

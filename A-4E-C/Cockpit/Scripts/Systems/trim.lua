@@ -19,7 +19,7 @@ local trim_pitch_update = update_time_step / full_trim_pitch_time
 -- some scaling adjustments, input values are in the -1 to 1 range, pass scaled version of these to DCS
 local pitch_trim_scale = 0.4 -- thumbsuck value of 0.4, maybe needs to be tweaked
 local roll_trim_scale = 0.06  -- thumbsuck value of 0.06, maybe needs to be tweaked
-local rudder_trim_scale = 0.27  -- gives approx 7degrees max deflection, as per NATOPS
+local rudder_trim_scale = 0.27  -- gives approx 7 degrees max deflection, as per NATOPS
 
 local sensor_data = get_base_data()
 
@@ -57,6 +57,9 @@ dev:listen_command(Keys.ShowControls)
 
 dev:listen_command(device_commands.rudder_trim)
 
+dev:listen_command(device_commands.rudder_axis_left)
+dev:listen_command(device_commands.rudder_axis_right)
+
 dev:listen_command(iCommandPlane_ShowControls)
 
 local iCommandPlane_ShowControls = 851
@@ -87,11 +90,14 @@ local trimming_rudder_leftright = 0 -- 1=right,0=neutral,-1=left
 
 local trim_cancellation = 0
 
-local iCommandPlaneTrimPitchAbs=2022
-local iCommandPlaneTrimRollAbs=2023
-local iCommandPlaneTrimRudderAbs=2024
-local iCommandPlaneTrimCancel=97
-local iCommandPlaneTrimRoll	= 2020
+local iCommandPlaneTrimPitchAbs = 2022
+local iCommandPlaneTrimRollAbs = 2023
+local iCommandPlaneTrimRudderAbs = 2024
+local iCommandPlaneTrimCancel = 97
+local iCommandPlaneTrimRoll = 2020
+--local iCommandPlanePitch = 2001
+--local iCommandPlaneRoll	= 2002
+local iCommandPlaneRudder = 2003
 
 function SetCommand(command,value)
     -- "primary" control is the clickable device, key commands trigger the clickable actions...
@@ -128,6 +134,13 @@ function SetCommand(command,value)
         end
     elseif command == Keys.TrimCancel then
         trim_cancellation = 1
+
+    -- rudder axis split (accessibility)
+    elseif command == device_commands.rudder_axis_left then
+        dispatch_action(nil, iCommandPlaneRudder, value * -0.5 - 0.5)
+    elseif command == device_commands.rudder_axis_right then
+        dispatch_action(nil, iCommandPlaneRudder, value * 0.5 + 0.5)
+
     elseif command == Keys.ShowControls then
         SHOW_CONTROLS:set(1-SHOW_CONTROLS:get())
     end

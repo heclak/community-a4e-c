@@ -65,7 +65,7 @@ join(res.keyCommands,{
     {combos = {{key = 'JOY_BTN1'}}, down = Keys.PlaneFireOn, up = Keys.PlaneFireOff,    name = _('Gun-Rocket Trigger'),                category = {_('Control Stick'), _('Weapons')}},
     {combos = {{key = 'JOY_BTN2'}}, down = Keys.PickleOn, up = Keys.PickleOff,          name = _('Bomb Release Button'),               category = {_('Control Stick'), _('Weapons')}},
     {down = Keys.AFCSOverride,                                                          name = _('Autopilot Override (AFCS Emergency Disconnect)'),              category = {_('Control Stick'), _('AFCS Control Panel')}},
-    {down = Keys.ToggleStick,                                                           name = _('Control Stick - HIDE/SHOW'),         category = {_('Control Stick'), _('View'), _('View Cockpit')}},
+    {down = Keys.ToggleStick,                                                           name = _('Control Stick - HIDE/SHOW'),         category = {_('Control Stick'), _('View Cockpit')}},
     -- {down = Keys.nws_engage, up = Keys.nws_disengage,                                   name = _('Nose Wheel Steering - ON else OFF'), category = {_('Control Stick'), _('Systems')}},
 
     ---------------------------------------------
@@ -75,8 +75,8 @@ join(res.keyCommands,{
     {down = Keys.throttle_dec,                                              name = _('Throttle Position - Decrement'),                  category = {_('Throttle Panel'), _('Flight Control')}},
     {pressed = iCommandThrottleIncrease, up = iCommandThrottleStop,         name = _('Throttle Position Continuous - Increase'),        category = {_('Throttle Panel'), _('Flight Control')}},
     {pressed = iCommandThrottleDecrease, up = iCommandThrottleStop,         name = _('Throttle Position Continuous - Decrease'),        category = {_('Throttle Panel'), _('Flight Control')}},
-    {down = Keys.throttle_acc, value_down = 1, up = Keys.throttle_acc, value_up = 0, name = _('Throttle Position Continuous - Increase (Custom)'), category = {_('Throttle Panel'), _('Flight Control')}},
-    {down = Keys.throttle_acc, value_down = -1, up = Keys.throttle_acc, value_up = 0, name = _('Throttle Position Continuous - Decrease (Custom)'), category = {_('Throttle Panel'), _('Flight Control')}},
+    {down = Keys.throttle_acc, value_down = 1, up = Keys.throttle_acc, value_up = 0, name = _('Throttle Position Continuous - Increase (Custom Throttle Rate)'), category = {_('Throttle Panel'), _('Flight Control'), _('Accessibility')}},
+    {down = Keys.throttle_acc, value_down = -1, up = Keys.throttle_acc, value_up = 0, name = _('Throttle Position Continuous - Decrease (Custom Throttle Rate)'), category = {_('Throttle Panel'), _('Flight Control'), _('Accessibility')}},
 
     {down = device_commands.throttle_click_ITER, value_down = 1, cockpit_device_id = devices.ENGINE,    name = _('Throttle Position Lock - Step Up (OFF/IGN/IDLE)'),                category = {_('Throttle Panel'), _('Engine Control Panel')}},
     {down = device_commands.throttle_click_ITER, value_down = -1, cockpit_device_id = devices.ENGINE,   name = _('Throttle Position Lock - Step Down (OFF/IGN/IDLE)'),              category = {_('Throttle Panel'), _('Engine Control Panel')}},
@@ -115,6 +115,7 @@ join(res.keyCommands,{
     -- AN/ALE-29A Chaff Control Panel -----------
     ---------------------------------------------
     {down = Keys.CmBankSelectRotate,                                                                                                            name = _('Chaff Dispenser Select - Cycle'),         category = {_('AN/ALE-29A Chaff Dispensing System')}},
+    {down = Keys.CmBankSelectToggle,                                                                                                            name = _('Chaff Dispenser Select - Toggle 1/2'),    category = {_('AN/ALE-29A Chaff Dispensing System')}},
     {down = Keys.CmBankSelect, value_down = -1,                                                                                                 name = _('Chaff Dispenser Select - 1'),             category = {_('AN/ALE-29A Chaff Dispensing System')}},
     {down = Keys.CmBankSelect, value_down = 1,                                                                                                  name = _('Chaff Dispenser Select - 2'),             category = {_('AN/ALE-29A Chaff Dispensing System')}},
     {down = Keys.CmBankSelect, value_down = 0,                                                                                                  name = _('Chaff Dispenser Select - Both'),          category = {_('AN/ALE-29A Chaff Dispensing System')}},
@@ -665,9 +666,11 @@ join(res.keyCommands,{
     {down = Keys.UHFVolumeStartUp, up = Keys.UHFVolumeStop,                                     name = _('Radio Volume - Continuous Increase'),     category = {_('AN/ARC-51A UHF Radio')}},
     {down = Keys.UHFVolumeStartDown, up = Keys.UHFVolumeStop,                                   name = _('Radio Volume - Continuous Decrease'),     category = {_('AN/ARC-51A UHF Radio')}},
 
-
-    {down = Keys.modifier_left_down, up = Keys.modifier_left_up,                                name = _('LCtrl/Mouse Left'),     category = {_('UI Override')}},
-    {down = Keys.modifier_right_down, up = Keys.modifier_right_up,                                name = _('LShift/Mouse Right'),     category = {_('UI Override')}},
+    ---------------------------------------------
+    -- Accessibility / Gamepads
+    ---------------------------------------------
+    {down = Keys.modifier_left_down, up = Keys.modifier_left_up,                                name = _('UI Override - Right Shoulder (LCtrl + Mouse 1/Left Click)'), category = {_('Accessibility')}},
+    {down = Keys.modifier_right_down, up = Keys.modifier_right_up,                              name = _('UI Override - Left Shoulder (LShift + Mouse 2/Right Click)'), category = {_('Accessibility')}},
 
     ---------------------------------------------
     -- Special for Joysticks and Warthog Throttle
@@ -684,23 +687,33 @@ join(res.keyCommands,{
 -- joystick axes 
 join(res.axisCommands,{
 
-    {combos = defaultDeviceAssignmentFor("roll"), action = iCommandPlaneRoll,           name = _('Roll'),              category = {_('Flight Control')}},
-    {combos = defaultDeviceAssignmentFor("pitch"), action = iCommandPlanePitch,         name = _('Pitch'),             category = {_('Flight Control')}},
-	{combos = defaultDeviceAssignmentFor("rudder"), action = iCommandPlaneRudder,		name = _('Rudder'),            category = {_('Flight Control')}},
-	{combos = defaultDeviceAssignmentFor("thrust"), action = iCommandPlaneThrustCommon, name = _('Throttle'),          category = {_('Flight Control')}},
-    {action = device_commands.wheelbrake_AXIS,                                          name = _('Wheel Brake'),       category = {_('Systems')}},
-    {action = device_commands.left_wheelbrake_AXIS,                                     name = _('Wheel Brake Left'),  category = {_('Systems')}},
-    {action = device_commands.right_wheelbrake_AXIS,                                    name = _('Wheel Brake Right'), category = {_('Systems')}},
-    {action = device_commands.combined_wheel_brake_axis,                                name = _('Wheel Brake - Differential'), category = {_('Systems')}},
-    --{action = iCommandWheelBrake,		                                                name = _('Wheel Brake')},
+    {combos = defaultDeviceAssignmentFor("roll"), action = iCommandPlaneRoll,           name = _('Roll'),                           category = {_('Flight Control')}},
+    {combos = defaultDeviceAssignmentFor("pitch"), action = iCommandPlanePitch,         name = _('Pitch'),                          category = {_('Flight Control')}},
+	{combos = defaultDeviceAssignmentFor("rudder"), action = iCommandPlaneRudder,		name = _('Rudder'),                         category = {_('Flight Control')}},
+    {action = device_commands.rudder_axis_left, cockpit_device_id = devices.TRIM,       name = _('Rudder - Left (Dual-Axis)'),      category = {_('Flight Control'), _('Accessibility')}},
+    {action = device_commands.rudder_axis_right, cockpit_device_id = devices.TRIM,      name = _('Rudder - Right (Dual-Axis)'),     category = {_('Flight Control'), _('Accessibility')}},
 
-    {combos = {{key = 'TRACKIR_PITCH'}}, action = iHeadTrackerPitchNormed,              name = _('Head Tracker : Pitch')},
-    {combos = {{key = 'TRACKIR_YAW'}}, action = iHeadTrackerYawNormed,                  name = _('Head Tracker : Yaw')},
-    {combos = {{key = 'TRACKIR_ROLL'}}, action = iHeadTrackerRollNormed,                name = _('Head Tracker : Roll')},
+    {combos = defaultDeviceAssignmentFor("thrust"), action = iCommandPlaneThrustCommon, name = _('Throttle'),                       category = {_('Flight Control')}},
+    {action = device_commands.throttle_axis_slew, cockpit_device_id = devices.ENGINE,   name = _('Throttle - Slew'),                category = {_('Flight Control'), _('Accessibility')}},
+
+    {action = device_commands.wheelbrake_AXIS,                                          name = _('Wheel Brake'),                    category = {_('Systems')}},
+    {action = device_commands.left_wheelbrake_AXIS,                                     name = _('Wheel Brake Left'),               category = {_('Systems')}},
+    {action = device_commands.right_wheelbrake_AXIS,                                    name = _('Wheel Brake Right'),              category = {_('Systems')}},
+    {action = device_commands.combined_wheel_brake_axis,                    name = _('Wheel Brake Differential (Single-Axis)'),     category = {_('Systems'), _('Accessibility')}},
+
+    {action = device_commands.zoom_axis_in, cockpit_device_id = devices.SEAT,       name = _('Zoom View In (Dual Axis)'),           category = {_('View'), _('View Cockpit'), _('Accessibility')}},
+    {action = device_commands.zoom_axis_out, cockpit_device_id = devices.SEAT,      name = _('Zoom View Out (Dual Axis)'),          category = {_('View'), _('View Cockpit'), _('Accessibility')}},
+    {action = device_commands.zoom_axis_slew, cockpit_device_id = devices.SEAT,     name = _('Zoom View - Slew'),                   category = {_('View'), _('View Cockpit'), _('Accessibility')}},
+    {action = device_commands.zoom_axis_slew_in, cockpit_device_id = devices.SEAT,  name = _('Zoom View In - Slew (Dual-Axis)'),    category = {_('View'), _('View Cockpit'), _('Accessibility')}},
+    {action = device_commands.zoom_axis_slew_out, cockpit_device_id = devices.SEAT, name = _('Zoom View Out - Slew (Dual-Axis)'),   category = {_('View'), _('View Cockpit'), _('Accessibility')}},
+
+    {combos = {{key = 'TRACKIR_PITCH'}}, action = iHeadTrackerPitchNormed,              name = _('Head Tracker : Pitch'),            category = {_('View'), _('View Cockpit'), _('Accessibility')}},
+    {combos = {{key = 'TRACKIR_YAW'}}, action = iHeadTrackerYawNormed,                  name = _('Head Tracker : Yaw'),              category = {_('View'), _('View Cockpit'), _('Accessibility')}},
+    {combos = {{key = 'TRACKIR_ROLL'}}, action = iHeadTrackerRollNormed,                name = _('Head Tracker : Roll'),             category = {_('View'), _('View Cockpit'), _('Accessibility')}},
     
-    {combos = {{key = 'TRACKIR_X'}}, action = iHeadTrackerPosZNormed,                   name = _('Head Tracker : Right/Left')},
-    {combos = {{key = 'TRACKIR_Y'}}, action = iHeadTrackerPosYNormed,                   name = _('Head Tracker : Up/Down')},
-    {combos = {{key = 'TRACKIR_Z'}}, action = iHeadTrackerPosXNormed,                   name = _('Head Tracker : Forward/Backward')},
+    {combos = {{key = 'TRACKIR_X'}}, action = iHeadTrackerPosZNormed,                   name = _('Head Tracker : Right/Left'),       category = {_('View'), _('View Cockpit'), _('Accessibility')}},
+    {combos = {{key = 'TRACKIR_Y'}}, action = iHeadTrackerPosYNormed,                   name = _('Head Tracker : Up/Down'),          category = {_('View'), _('View Cockpit'), _('Accessibility')}},
+    {combos = {{key = 'TRACKIR_Z'}}, action = iHeadTrackerPosXNormed,                   name = _('Head Tracker : Forward/Backward'), category = {_('View'), _('View Cockpit'), _('Accessibility')}},
     
     ---------------------------------------------
     -- ECM Control Panel / AN/APR-23 Radar Homing and Warning System
@@ -753,8 +766,8 @@ join(res.axisCommands,{
     {action = device_commands.gunsight_elevation_axis_abs, cockpit_device_id = devices.GUNSIGHT,        name = _('Gunsight Elevation Control - Absolute'),      category = {_('Instrument Panel'), _('Gunsight Panel')}},
 
     --UI Override
-    {action = device_commands.mouse_x,                                                                  name = _('Mouse X Relative'),                           category = {_('UI Override')}},
-    {action = device_commands.mouse_y,                                                                  name = _('Mouse Y Relative'),                           category = {_('UI Override')}},
+    {action = device_commands.mouse_x,                                                                  name = _('UI Override - Mouse Cursor X'),               category = {_('UI Override'), _('Accessibility')}},
+    {action = device_commands.mouse_y,                                                                  name = _('UI Override - Mouse Cursor Y'),               category = {_('UI Override'), _('Accessibility')}},
 
     
 })

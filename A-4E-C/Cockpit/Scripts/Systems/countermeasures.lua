@@ -90,6 +90,7 @@ CMS:listen_command(iCommandPlaneDropFlareOnce)
 CMS:listen_command(iCommandPlaneDropChaffOnce)
 CMS:listen_command(Keys.JATOFiringButton)
 CMS:listen_command(Keys.CmBankSelectRotate)
+CMS:listen_command(Keys.CmBankSelectToggle)
 CMS:listen_command(Keys.CmBankSelect)
 CMS:listen_command(Keys.CmAutoButton)
 CMS:listen_command(Keys.CmBank1AdjUp)
@@ -424,6 +425,14 @@ function SetCommand(command, value)
             CMS:performClickableAction(device_commands.cm_bank, -1, false)
         elseif cm_banksel == "both" then
             CMS:performClickableAction(device_commands.cm_bank, 1, false)
+        end
+    elseif command == Keys.CmBankSelectToggle then
+        if cm_banksel == "bank_1" then
+            CMS:performClickableAction(device_commands.cm_bank, 1, false)
+        elseif cm_banksel == "bank_2" then
+            CMS:performClickableAction(device_commands.cm_bank, -1, false)
+        elseif cm_banksel == "both" then
+            CMS:performClickableAction(device_commands.cm_bank, -1, false)
         end
 
     elseif command == Keys.CmAutoButton then

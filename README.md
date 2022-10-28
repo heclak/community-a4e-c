@@ -62,11 +62,17 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Operational-era USN and USMC liveries now have a customized, well-worn LAU-10 launcher.
 - **Weapons and Loadouts:**
 - **Quality of Life:**
-  - Throttle input accessibility options:
-    - A new pair of inputs for Throttle Position - Accelerating Increase/Decrease is available. The keyboard defaults for these inputs are RCTRL+PageUp and RCTRL+PageDown, respectively.
-    - A Throttle Rate slider in the special menu is available to adjust throttle rate for Throttle Increment/Decrement inputs from 1 to 5%, and it also defines the baseline acceleration rate for the new Accelerating Increase/Decrease inputs.
-    - A companion Throttle Acceleration slider in the special meanu provides customizable additional acceleration based on the duration the throttle has been in motion.
-  - Input options previously available only on keyboards or joystick devices can now be bound to mouse buttons.
+  - Input accessibility options:
+    - Added two UI Override inputs, which allow joysticks, gamepads, and other input devices to utilize mouse functions, or to use as modifiers in input layouts.
+    - Input options previously available only on keyboards or joystick devices can now be bound to mouse button inputs.
+    - Throttle - Slew axis.
+    - Dual-axis rudder inputs (Rudder Left and Rudder Right).
+    - Zoom axis inputs for fine zoom control across devices: Zoom View In, Zoom View Out, Zoom View - Slew, Zoom View In - Slew, and Zoom Out - Slew.
+    - Throttle Increment slider in the special menu is available to adjust throttle rate for Throttle Increment/Decrement inputs.
+    - A Custom Throttle Rate slider in the specail menu allows you to adjust the accelleration rate for the new Custom Throttle Rate inputs. The keyboard defaults for these are RCTRL+PageUp and RCTRL+PageDown, respectively.
+    - A Wheelbrake Differential axis is useful for mapping a single axis to the opposing left and right wheelbrakes.
+    - Trim Speeds in the special menu are now adjustable by individually for elevator (pitch), aileron (roll), and rudder (yaw), with percentage sliders. These settings also affect the Trim Reset (Hold) speed. *(thanks Drofseh)*
+    - A pair of comprehensive gamepad input presets for Xbox and PS4 controllers are included, which utilize many of the above functions. Once you are up and running in the pit, you can enjoy flying the A-4E-C with nothing but a humble gamepad and no additional software needed. *(Thanks, Tuuvas)*
   - Single inputs for the Canopy Lever. You can close the canopy with LSHIFT+C, and open it LSHIFT+LCTRL+C. *(thanks Tanuki44)*
   - Single and else inputs for Throttle Position Lock.
   - Input option for cycling the Bomb Arm Switch between the OFF, NOSE & TAIL and TAIL positions. The keyboard default for this input is 6.
@@ -74,11 +80,13 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Single inputs for AN/ARN-52 TACAN Mode switch.
   - Inputs for APR-27 Test, APR-27 Light buttons.
   - Absolute and slew axis inputs for AN/APR-23 Missile Alert Volume, AWRS Drop Interval Knob, Gunsight Elevation Control, Gunsight Light Control, Instrument Lights Control, Shrike/Sidewinder Volume Knob, TACAN Volume Knob, and White Floodlights Control. Some non-axis inputs associated with these have been renamed. Users with extensive control schemes should adjust their controls to resolve any conflicts. *(thanks gcask)*
+  - Input for Chaff Dispenser Select - Toggle 1/2.
   - Inputs for common communications, including A/A refueling - "Ready for precontact" radio call, and Ask AWACS available tanker. *(thanks gcask)*
   - When the aircraft has power, the Seat Adjustment Switch can be used to move the baseline pilot head position up and down in the cockpit. *(thanks nima3333)*
   - Radar Antenna Tilt Continuous CW and Radar Antenna Tilt Continuous CCW have been assigned a keyboard default (- and =, respectively).
   - Kneeboard Manual:
-    - Added a chart of weapon stations and their associated loadout options (page 3-7) in the kneeboard manual.
+    - A a chart of weapon stations and their associated loadout options (page 3-7) in the kneeboard manual.
+    - An overview of the included Xbox1 and PS4 gamepad layouts are available at the end of the kneeboard manual (pages 6-6 and 6-7). 
 - **Sounds:**
   - AN/APR-23 RHWS (ECM):
     - AAA: New sounds are produced in response to the Fire Can SON-9 fire director radar.
@@ -123,7 +131,6 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Emergency Stores Release Handle default input changed to LCTRL+J. *(think J for jettison!)*
   - Differential wheelbrake inputs default inputs are changed to LCTRL+W (left) and LALT+W (right).
   - The controls indicator's nosewheel caster indicator now displays logarithmically, making it easier to see those early changes in castering and better reflect nosewheel sensetivity to turn rate. *(thanks, Drofseh)*.
-  - Trim speed settings in the special menu are now adjustable by individually for elevator (pitch), aileron (roll), and rudder (yaw), with 1-100% sliders. These settings also apply to the Trim Reset (Hold) input affects the pitch, roll, or rudder. *(thanks Drofseh)*
   - Refactored the special menu for easier editing in the future.
   - Kneeboard Manual:
     - Added additional guidance and notes on AN/APR-23 RHWS (ECM) operation.
@@ -149,15 +156,17 @@ Failure to perform these steps will result in DCS World not recognizing the modu
 
 - If you are upgrading from an older version of the A-4E-C, completely uninstall your old version. If this is a brand new installation, skip this and move on to Step 2.
 
-- First, uninstall the module's files from `%HOMEPATH%\\Saved Games\DCS\Mods\aircraft\A-4E-C`
+- First, uninstall the module's files from `%HOMEPATH%\Saved Games\DCS\Mods\aircraft\A-4E-C`
 
-- Next reset your A-4E-C input bindings by deleting the contents of `%HOMEPATH%\\Saved Games\DCS\Config\Input\A-4E-C`
+- Depending on how old a release you are upgrading from, you may need to reset your A-4E-C input bindings by deleting the contents of `%HOMEPATH%\\Saved Games\DCS\Config\Input\A-4E-C`
 
 ### STEP 2: Installing the module files
 
+- Installation instructions are identical for Standalone and Steam users alike.
+
 - Download [the latest official A-4E-C release package](https://github.com/heclak/community-a4e-c/releases/). Do not download directly from the Github repository.
 
-- Place the `Mods\aircraft\A-4E-C` folder in into your Windows user folder's Saved Games folder for DCS, e.g. `%HOMEPATH%\Saved Games\Saved Games\DCS`
+- Place the `Mods\aircraft\A-4E-C` folder in into your Windows user folder's Saved Games folder for DCS. For most users, this can be accessed by pasting `%HOMEPATH%\Saved Games\Saved Games\DCS` into a windows explorer address bar.
 
 - If you have installed other DCS World mods, you might already have the `Mods` and `aircraft` folders indicated in the file path. If so, merge the new A-4E-C folder into the existing folders.
 
@@ -179,7 +188,7 @@ Your correctly installed files should look something like the following image, s
 
 - If you have installed the module correctly but it still isn't showing up, ensure it's enabled in the DCS Module Manager. Note that the A-4E-C is not alphabetically arranged along with the official modules in this list, and will be enumerated near the end of the list.
 
-- If you are receiving an authorization error at launch, **you have installed the module incorrectly**. Revisit the installation instructions above. Be sure to remove any and all improperly installed files before correctly installing the module.
+- If you are receiving an authorization error at launch, **you have incorrectly installed the module to your game files**. Remove any and all improperly installed files, then revisit the installation instructions above to correctly installing the module.
 
 - If the A-4E-C icon in the DCS main menu shows a default DCS logo, is missing the theme background and music (or you experience crashes when loading a mission), you have incorrectly downloaded the module. [Download the latest official A-4E-C release package](https://github.com/heclak/community-a4e-c/releases/).
 

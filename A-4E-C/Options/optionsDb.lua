@@ -21,20 +21,20 @@ modulelocation = lfs.currentdir().."\\"..relativeloc
 local tblCPLocalList = oms.getTblCPLocalList(modulelocation)
 
 return {
+
+	customPitchPressure		= DbOption.new():setValue(50):slider(Range(1,100)),
+	customPitchRelease		= DbOption.new():setValue(0):slider(Range(0,100)),
+	customRollPressure		= DbOption.new():setValue(50):slider(Range(1,100)),
+	customRollRelease		= DbOption.new():setValue(100):slider(Range(0,100)),
+	customRudderPressure	= DbOption.new():setValue(50):slider(Range(1,100)),
+	customRudderRelease		= DbOption.new():setValue(100):slider(Range(0,100)),
+
 	trimSpeedPitch			= DbOption.new():setValue(100):slider(Range(1,100)),
 	trimSpeedRoll			= DbOption.new():setValue(100):slider(Range(1,100)),
 	trimSpeedRudder			= DbOption.new():setValue(100):slider(Range(1,100)),
 
 	throttleRate			= DbOption.new():setValue(1.0):slider(Range(1.00,5.00)),
 	throttleAcceleration 	= DbOption.new():setValue(50):slider(Range(1.00,100.00)),
-
-	--[[catapultLaunchMode		= DbOption.new():setValue(0):combo({DbOption.Item(_('MIL Power')):Value(0),
-																DbOption.Item(_('Manual')):Value(1),
-																}),]]
-
-	--catapultAlignmentCheck	= DbOption.new():setValue(true):checkbox(),
-
-	--efmEnabled				= DbOption.new():setValue(true):checkbox(),
 
 	cockpitShake 			= DbOption.new():setValue(100):slider(Range(0,200)),
 
@@ -43,4 +43,5 @@ return {
 	wheelBrakeAssist        = DbOption.new():setValue(false):checkbox(),
 
 	oldRadar       			= DbOption.new():setValue(false):checkbox(),
+
 }

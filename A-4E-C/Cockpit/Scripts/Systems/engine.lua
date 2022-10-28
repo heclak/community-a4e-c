@@ -65,6 +65,7 @@ local fuel_transfer_bypass_valve = 0
 local drop_tank_press_switch = 0
 local fuel_dump_switch = 0
 
+local throttle_slew = 0
 local throttle_rate = get_plugin_option_value("A-4E-C","throttleRate","local") * 0.02 -- THROTTLE RATE, 1.0 to 5.0 percent, increments of 0.1, defined in the special menu, to a percentage change to apply
 local throttle_accelerating = 0
 local throttle_acceleration_default = get_plugin_option_value("A-4E-C","throttleAcceleration","local") * 0.0002 -- THROTTLE ACCELERATION tuning
@@ -95,9 +96,8 @@ Engine:listen_command(Keys.throttle_position_run)
 
 Engine:listen_command(Keys.throttle_inc)
 Engine:listen_command(Keys.throttle_dec)
-
 Engine:listen_command(Keys.throttle_acc)
-
+Engine:listen_command(device_commands.throttle_axis_slew)
 
 function post_initialize()
 
@@ -194,6 +194,8 @@ function SetCommand(command,value)
             throttle_acceleration_rate = throttle_acceleration_default -- reset the rate to the default
             throttle_accelerating_duration = 0 -- reset the accelleration duration to 0
         end
+    elseif command==device_commands.throttle_axis_slew then
+        throttle_slew = value
     elseif command==device_commands.throttle_click then
         -- validate that throttle is not in adjust range
         if sensor_data.getThrottleLeftPosition() > 0.3 then 
@@ -578,11 +580,16 @@ function update()
     update_fuel_control_mode()
 
     if throttle_accelerating ~= 0 then
-        --throttle is accelerating, increase and record the acceleration rate, starting from 25% of the throttle step setting
-        throttle_accelerating_duration = clamp(throttle_accelerating_duration + throttle_acceleration_rate, throttle_rate * 0.25, 1)
+        --throttle is accelerating, increase and record the acceleration rate, starting from 1% of the throttle step setting
+        throttle_accelerating_duration = clamp(throttle_accelerating_duration + throttle_acceleration_rate, 0.01, 1)
         --increase or decrease throttle at acceleration direction and rate
         dispatch_action(nil, iCommandPlaneThrustCommon, -2.0 * throttle + 1.0 - throttle_accelerating * throttle_accelerating_duration)
         --print_message_to_user("Throttle: " .. throttle .. " | Delta (abs): " .. throttle_accelerating_duration)
+    elseif throttle_slew ~= 0 then
+        --increase or decrease throttle using direction and rate
+        local throttle_slew_rate = throttle_slew * 0.125
+        dispatch_action(nil, iCommandPlaneThrustCommon, -2.0 * throttle + 1.0 - throttle_slew_rate)
+        --print_message_to_user("Throttle: " .. throttle .. " | Delta (abs): " .. throttle_slew_rate)
     end
 
     once_per_sec = once_per_sec - 1
