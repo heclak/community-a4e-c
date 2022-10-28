@@ -866,7 +866,7 @@ function update()
         check_sidewinder(_master_arm) -- re-check sidewinder stores
         check_shrike(_master_arm)
     end
-
+    
     if check_sidewinder_lock then
         if not sidewinder_locked then
             if ir_missile_lock_param:get() == 1 then
@@ -1019,6 +1019,7 @@ function check_sidewinder(_master_arm)
     end
     if sidewinder then
         WeaponSystem:select_station(selected_station-1)
+        print_message_to_user("Selected Station "..selected_station)
         check_sidewinder_lock = true
         sidewinder_locked = false
         aim9lock:stop()
