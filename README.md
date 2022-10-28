@@ -63,14 +63,16 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 - **Weapons and Loadouts:**
 - **Quality of Life:**
   - Input accessibility options:
-    - Added two UI Override inputs, which allow joysticks, gamepads, or other input devices to utilize mouse functions, or to use as modifiers in input layouts.
+    - Added two UI Override inputs, which allow joysticks, gamepads, and other input devices to utilize mouse functions, or to use as modifiers in input layouts.
     - Input options previously available only on keyboards or joystick devices can now be bound to mouse button inputs.
-    - A Throttle - Slew axis is provided.
+    - Throttle - Slew axis.
+    - Dual-axis rudder inputs (Rudder Left and Rudder Right).
+    - Zoom axis inputs for fine zoom control across devices: Zoom View In, Zoom View Out, Zoom View - Slew, Zoom View In - Slew, and Zoom Out - Slew.
     - Throttle Increment slider in the special menu is available to adjust throttle rate for Throttle Increment/Decrement inputs.
-    - A Custom Throttle Rate slider in the specail menu allows you to adjust the accelleration rate for the new Throttle Position Continuous - Increase/Decrease (Custom) inputs. The keyboard defaults for these are RCTRL+PageUp and RCTRL+PageDown, respectively.
-    - A new wheelbrake axis, Wheelbrake - Differential can be used to map a single axis to the wheelbrakes.
-    - Trim speed settings in the special menu are now adjustable by individually for elevator (pitch), aileron (roll), and rudder (yaw), with 1-100% sliders. These settings also affect the Trim Reset (Hold) speed. *(thanks Drofseh)*
-    - A pair of comprehensive gamepad input presets for Xbox One and PS4 controllers are included, which utilize the above functions. *(Thanks, Tuuvas)*
+    - A Custom Throttle Rate slider in the specail menu allows you to adjust the accelleration rate for the new Custom Throttle Rate inputs. The keyboard defaults for these are RCTRL+PageUp and RCTRL+PageDown, respectively.
+    - A Wheelbrake Differential axis is useful for mapping a single axis to the opposing left and right wheelbrakes.
+    - Trim Speeds in the special menu are now adjustable by individually for elevator (pitch), aileron (roll), and rudder (yaw), with percentage sliders. These settings also affect the Trim Reset (Hold) speed. *(thanks Drofseh)*
+    - A pair of comprehensive gamepad input presets for Xbox and PS4 controllers are included, which utilize many of the above functions. Once you are up and running in the pit, you can enjoy flying the A-4E-C with nothing but a humble gamepad and no additional software needed. *(Thanks, Tuuvas)*
   - Single inputs for the Canopy Lever. You can close the canopy with LSHIFT+C, and open it LSHIFT+LCTRL+C. *(thanks Tanuki44)*
   - Single and else inputs for Throttle Position Lock.
   - Input option for cycling the Bomb Arm Switch between the OFF, NOSE & TAIL and TAIL positions. The keyboard default for this input is 6.

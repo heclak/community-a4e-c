@@ -28,11 +28,19 @@ local iCommandViewPitCameraMoveUp = 484
 local iCommandViewPitCameraMoveDown = 485
 local iCommandViewPitCameraMoveStop = 483
 
+local iCommandPlaneZoomView = 2009
+local iCommandViewZoomAbs = 2012
+
 -----------------------------------------------------------------------------
 -- Misc: seat adjustment
 local seat_input = 0;
 
 dev:listen_command(device_commands.seat_adjustment)
+dev:listen_command(device_commands.zoom_axis_in)
+dev:listen_command(device_commands.zoom_axis_out)
+dev:listen_command(device_commands.zoom_axis_slew)
+dev:listen_command(device_commands.zoom_axis_slew_in)
+dev:listen_command(device_commands.zoom_axis_slew_out)
 
 function post_initialize()
 
@@ -45,6 +53,16 @@ function SetCommand(command,value)
     -- print_message_to_user("Test value: "..value)
     if command == device_commands.seat_adjustment then
         seat_input = value
+    elseif command == device_commands.zoom_axis_in then
+        dispatch_action(nil, iCommandViewZoomAbs, value * -0.125 - 0.125)
+    elseif command == device_commands.zoom_axis_out then
+        dispatch_action(nil, iCommandViewZoomAbs, value * 0.125 + 0.125)
+    elseif command == device_commands.zoom_axis_slew then
+        zoom_view_moving = (value) * 0.01
+    elseif command == device_commands.zoom_axis_slew_in then
+        zoom_view_moving = (value * -0.5 - 0.5) * 0.005
+    elseif command == device_commands.zoom_axis_slew_out then
+        zoom_view_moving = (value * 0.5 + 0.5) * 0.005
     end
 end
 
@@ -68,6 +86,12 @@ end
 
 function update()
     update_seat_adjustment()
+
+    if zoom_view_moving ~= 0 then
+        dispatch_action(nil, iCommandPlaneZoomView, zoom_view_moving)
+        print_message_to_user(zoom_view_moving)
+    end
+
 end
 
 startup_print("seat: load end")

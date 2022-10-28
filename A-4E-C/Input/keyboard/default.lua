@@ -65,7 +65,7 @@ join(res.keyCommands,{
     {combos = {{key = 'Space'}}, down = Keys.PlaneFireOn, up = Keys.PlaneFireOff,                    name = _('Gun-Rocket Trigger'),                category = {_('Control Stick'), _('Weapons')}},
     {combos = {{key = 'Space', reformers = {'LAlt'}}}, down = Keys.PickleOn, up = Keys.PickleOff,    name = _('Bomb Release Button'),               category = {_('Control Stick'), _('Weapons')}},
     {combos = {{key = 'A', reformers = {'LCtrl'}}}, down = Keys.AFCSOverride,                        name = _('Autopilot Override (AFCS Emergency Disconnect)'),              category = {_('Control Stick'), _('AFCS Control Panel')}},
-    {combos = {{key = 'Back'}}, down = Keys.ToggleStick,                                             name = _('Control Stick - HIDE/SHOW'),         category = {_('Control Stick'), _('View'), _('View Cockpit')}},
+    {combos = {{key = 'Back'}}, down = Keys.ToggleStick,                                             name = _('Control Stick - HIDE/SHOW'),         category = {_('Control Stick'), _('View Cockpit')}},
     -- {down = Keys.nws_engage, up = Keys.nws_disengage,                                                name = _('Nose Wheel Steering - ON else OFF'), category = {_('Control Stick'), _('Systems')}},
 
     ---------------------------------------------

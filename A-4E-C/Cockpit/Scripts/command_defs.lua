@@ -711,5 +711,10 @@ device_commands =
     rudder_axis_left                = __counter(),
     rudder_axis_right               = __counter(),
     throttle_axis_slew              = __counter(),
+    zoom_axis_in                    = __counter(),
+    zoom_axis_out                   = __counter(),
+    zoom_axis_slew                  = __counter(),
+    zoom_axis_slew_in               = __counter(),
+    zoom_axis_slew_out              = __counter(),
 
 }

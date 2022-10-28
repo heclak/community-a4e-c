@@ -72,7 +72,7 @@ keyCommands = {
     {down = Keys.PlaneFireOn, up = Keys.PlaneFireOff,                                   name = _('Gun-Rocket Trigger'),                category = {_('Control Stick'), _('Weapons')}},
     {down = Keys.PickleOn, up = Keys.PickleOff,                                         name = _('Bomb Release Button'),               category = {_('Control Stick'), _('Weapons')}},
     {down = Keys.AFCSOverride,                                                          name = _('Autopilot Override (AFCS Emergency Disconnect)'),              category = {_('Control Stick'), _('AFCS Control Panel')}},
-    {down = Keys.ToggleStick,                                                           name = _('Control Stick - HIDE/SHOW'),         category = {_('Control Stick'), _('View'), _('View Cockpit')}},
+    {down = Keys.ToggleStick,                                                           name = _('Control Stick - HIDE/SHOW'),         category = {_('Control Stick'), _('View Cockpit')}},
     -- {down = Keys.nws_engage, up = Keys.nws_disengage,                                   name = _('Nose Wheel Steering - ON else OFF'), category = {_('Control Stick'), _('Systems')}},
 
     ---------------------------------------------

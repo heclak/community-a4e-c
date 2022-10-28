@@ -182,7 +182,7 @@ local diff = {
 					["key"] = "JOY_RX",
 				},
 			},
-			["name"] = "Rudder - Left",
+			["name"] = "Rudder Left",
 		},
 		["a3206cd26"] = {
 			["added"] = {
@@ -190,7 +190,7 @@ local diff = {
 					["key"] = "JOY_RY",
 				},
 			},
-			["name"] = "Rudder - Right",
+			["name"] = "Rudder Right",
 		},
 	},
 	["keyDiffs"] = {

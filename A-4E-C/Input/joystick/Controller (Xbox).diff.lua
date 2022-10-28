@@ -188,7 +188,7 @@ local diff = {
 					},
 				},
 			},
-			["name"] = "Wheel Brake - Differential",
+			["name"] = "Wheel Brake Differential",
 		},
 	},
 	["keyDiffs"] = {
