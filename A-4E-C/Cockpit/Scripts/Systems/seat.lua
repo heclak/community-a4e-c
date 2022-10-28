@@ -89,7 +89,7 @@ function update()
 
     if zoom_view_moving ~= 0 then
         dispatch_action(nil, iCommandPlaneZoomView, zoom_view_moving)
-        print_message_to_user(zoom_view_moving)
+        ---print_message_to_user(zoom_view_moving)
     end
 
 end
