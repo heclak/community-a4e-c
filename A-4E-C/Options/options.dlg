@@ -832,471 +832,471 @@ dialog = {
 					["type"] = "Static",
 				},
 
-				--------------------------------------------
-				-- COLUMN 2 - CUSTOM FLIGHT CONTROL SURFACES
-				--------------------------------------------
-				-- Pitch Pressure Option
-				--------------------------------------------
-				["customPitchPressureLabel"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntryLabelWidthLongColumn2,
-							["x"] = RightColumnX,
-							["y"] = OrderCustomFCS,
-						},
-						["enabled"] = true,
-						["text"] = "$A4E_CUSTOM_FCS_PITCH_PRESSURE_LABEL",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = {
-						["params"] = {
-							["name"] = "staticOptionsCaptionSkin"
-						}
-					},
-					["type"] = "Static"
-				},
-				["customPitchPressureSlider"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntrySliderWidthColumn2,
-							["x"] = RightColumnX + RightColumnIndent,
-							["y"] = OrderCustomFCS - EntrySliderOffset,
-						},
-						["enabled"] = true,
-						["step"] = 1,
-						["range"] = {
-							["max"] = 100,
-							["min"] = 1,
-						},
-						["tabOrder"] = 0,
-						["text"] = "",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 1,
-					},
-					["skin"] = SliderSkin,
-					["type"] = "HorzSlider",
-				},
-				["customPitchPressureWidget"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntryWidgetWidthColumn2,
-							["x"] = RightColumnX + EntryWidgetOffsetColumn2,
-							["y"] = OrderCustomFCS,
-						},
-						["enabled"] = true,
-						["text"] = "0",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = {
-						["params"] = {
-							["name"] = "staticOptionsSliderValueSkin",
-						},
-					},
-					["type"] = "Static",
-				},
-				--------------------------------------------
-				-- Pitch Release Option
-				--------------------------------------------
-				["customPitchReleaseLabel"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntryLabelWidthLongColumn2,
-							["x"] = RightColumnX,
-							["y"] = OrderCustomFCS + lineheight,
-						},
-						["enabled"] = true,
-						["text"] = "$A4E_CUSTOM_FCS_PITCH_RELEASE_LABEL",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = {
-						["params"] = {
-							["name"] = "staticOptionsCaptionSkin"
-						}
-					},
-					["type"] = "Static"
-				},
-				["customPitchReleaseSlider"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntrySliderWidthColumn2,
-							["x"] = RightColumnX + RightColumnIndent,
-							["y"] = OrderCustomFCS - EntrySliderOffset + lineheight,
-						},
-						["enabled"] = true,
-						["step"] = 1,
-						["range"] = {
-							["max"] = 100,
-							["min"] = 0,
-						},
-						["tabOrder"] = 0,
-						["text"] = "",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 1,
-					},
-					["skin"] = SliderSkin,
-					["type"] = "HorzSlider",
-				},
-				["customPitchReleaseWidget"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntryWidgetWidthColumn2,
-							["x"] = RightColumnX + EntryWidgetOffsetColumn2,
-							["y"] = OrderCustomFCS + lineheight,
-						},
-						["enabled"] = true,
-						["text"] = "0",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = {
-						["params"] = {
-							["name"] = "staticOptionsSliderValueSkin",
-						},
-					},
-					["type"] = "Static",
-				},
-				--------------------------------------------
-				-- Roll Pressure Option
-				--------------------------------------------
-				["customRollPressureLabel"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntryLabelWidthLongColumn2,
-							["x"] = RightColumnX,
-							["y"] = OrderCustomFCS + lineheight*2,
-						},
-						["enabled"] = true,
-						["text"] = "$A4E_CUSTOM_FCS_ROLL_PRESSURE_LABEL",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 1
-					},
-					["skin"] = {
-						["params"] = {
-							["name"] = "staticOptionsCaptionSkin"
-						}
-					},
-					["type"] = "Static"
-				},
-				["customRollPressureSlider"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntrySliderWidthColumn2,
-							["x"] = RightColumnX + RightColumnIndent,
-							["y"] = OrderCustomFCS - EntrySliderOffset + lineheight*2,
-						},
-						["enabled"] = true,
-						["step"] = 1,
-						["range"] = {
-							["max"] = 100,
-							["min"] = 1,
-						},
-						["tabOrder"] = 0,
-						["text"] = "",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 1,
-					},
-					["skin"] = SliderSkin,
-					["type"] = "HorzSlider",
-				},
-				["customRollPressureWidget"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntryWidgetWidthColumn2,
-							["x"] = RightColumnX + EntryWidgetOffsetColumn2,
-							["y"] = OrderCustomFCS + lineheight*2,
-						},
-						["enabled"] = true,
-						["text"] = "0",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = {
-						["params"] = {
-							["name"] = "staticOptionsSliderValueSkin",
-						},
-					},
-					["type"] = "Static",
-				},
-				--------------------------------------------
-				-- Roll Release Option
-				--------------------------------------------
-				["customRollReleaseLabel"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntryLabelWidthLongColumn2,
-							["x"] = RightColumnX,
-							["y"] = OrderCustomFCS + lineheight*3,
-						},
-						["enabled"] = true,
-						["text"] = "$A4E_CUSTOM_FCS_ROLL_RELEASE_LABEL",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 1
-					},
-					["skin"] = {
-						["params"] = {
-							["name"] = "staticOptionsCaptionSkin"
-						}
-					},
-					["type"] = "Static"
-				},
-				["customRollReleaseSlider"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntrySliderWidthColumn2,
-							["x"] = RightColumnX + RightColumnIndent,
-							["y"] = OrderCustomFCS - EntrySliderOffset + lineheight*3,
-						},
-						["enabled"] = true,
-						["step"] = 1,
-						["range"] = {
-							["max"] = 100,
-							["min"] = 0,
-						},
-						["tabOrder"] = 0,
-						["text"] = "",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 1,
-					},
-					["skin"] = SliderSkin,
-					["type"] = "HorzSlider",
-				},
-				["customRollReleaseWidget"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntryWidgetWidthColumn2,
-							["x"] = RightColumnX + EntryWidgetOffsetColumn2,
-							["y"] = OrderCustomFCS + lineheight*3,
-						},
-						["enabled"] = true,
-						["text"] = "0",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = {
-						["params"] = {
-							["name"] = "staticOptionsSliderValueSkin",
-						},
-					},
-					["type"] = "Static",
-				},
-				--------------------------------------------
-				-- Rudder Pressure Option
-				--------------------------------------------
-				["customRudderPressureLabel"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntryLabelWidthLongColumn2,
-							["x"] = RightColumnX,
-							["y"] = OrderCustomFCS + lineheight*4,
-						},
-						["enabled"] = true,
-						["text"] = "$A4E_CUSTOM_FCS_RUDDER_PRESSURE_LABEL",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0
-					},
-					["skin"] = {
-						["params"] = {
-							["name"] = "staticOptionsCaptionSkin"
-						}
-					},
-					["type"] = "Static"
-				},
-				["customRudderPressureSlider"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntrySliderWidthColumn2,
-							["x"] = RightColumnX + RightColumnIndent,
-							["y"] = OrderCustomFCS - EntrySliderOffset + lineheight*4,
-						},
-						["enabled"] = true,
-						["step"] = 1,
-						["range"] = {
-							["max"] = 100,
-							["min"] = 1,
-						},
-						["tabOrder"] = 0,
-						["text"] = "",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 1,
-					},
-					["skin"] = SliderSkin,
-					["type"] = "HorzSlider",
-				},
-				["customRudderPressureWidget"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntryWidgetWidthColumn2,
-							["x"] = RightColumnX + EntryWidgetOffsetColumn2,
-							["y"] = OrderCustomFCS + lineheight*4,
-						},
-						["enabled"] = true,
-						["text"] = "0",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = {
-						["params"] = {
-							["name"] = "staticOptionsSliderValueSkin",
-						},
-					},
-					["type"] = "Static",
-				},
-				--------------------------------------------
-				-- Rudder Release Option
-				--------------------------------------------
-				["customRudderReleaseLabel"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntryLabelWidthLongColumn2,
-							["x"] = RightColumnX,
-							["y"] = OrderCustomFCS + lineheight*5,
-						},
-						["enabled"] = true,
-						["text"] = "$A4E_CUSTOM_FCS_RUDDER_RELEASE_LABEL",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0
-					},
-					["skin"] = {
-						["params"] = {
-							["name"] = "staticOptionsCaptionSkin"
-						}
-					},
-					["type"] = "Static"
-				},
-				["customRudderReleaseSlider"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntrySliderWidthColumn2,
-							["x"] = RightColumnX + RightColumnIndent,
-							["y"] = OrderCustomFCS - EntrySliderOffset + lineheight*5,
-						},
-						["enabled"] = true,
-						["step"] = 1,
-						["range"] = {
-							["max"] = 100,
-							["min"] = 0,
-						},
-						["tabOrder"] = 0,
-						["text"] = "",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 1,
-					},
-					["skin"] = SliderSkin,
-					["type"] = "HorzSlider",
-				},
-				["customRudderReleaseWidget"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntryWidgetWidthColumn2,
-							["x"] = RightColumnX + EntryWidgetOffsetColumn2,
-							["y"] = OrderCustomFCS + lineheight*5,
-						},
-						["enabled"] = true,
-						["text"] = "0",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = {
-						["params"] = {
-							["name"] = "staticOptionsSliderValueSkin",
-						},
-					},
-					["type"] = "Static",
-				},
-				--------------------------------------------
-				-- Custom FCS Help
-				--------------------------------------------
-				["customFCSHelp1"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntryHelpWidth,
-							["x"] = RightColumnX,
-							["y"] = OrderCustomFCS + lineheight*6,
-						},
-						["enabled"] = true,
-						["text"] = "$A4E_CUSTOM_FCS_HELP1",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = HelpSkin,
-					["type"] = "Static",
-				},
-				["customFCSHelp2"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntryHelpWidth,
-							["x"] = RightColumnX,
-							["y"] = OrderCustomFCS + lineheight*7,
-						},
-						["enabled"] = true,
-						["text"] = "$A4E_CUSTOM_FCS_HELP2",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = HelpSkin,
-					["type"] = "Static",
-				},
-				["customFCSHelp3"] = {
-					["params"] = {
-						["bounds"] = {
-							["h"] = EntryHeight,
-							["w"] = EntryHelpWidth,
-							["x"] = RightColumnX,
-							["y"] = OrderCustomFCS + lineheight*8,
-						},
-						["enabled"] = true,
-						["text"] = "$A4E_CUSTOM_FCS_HELP3",
-						["tooltip"] = "",
-						["visible"] = true,
-						["zindex"] = 0,
-					},
-					["skin"] = HelpSkin,
-					["type"] = "Static",
-				},
-				--------------------------------------------
+--				--------------------------------------------
+--				-- COLUMN 2 - CUSTOM FLIGHT CONTROL SURFACES
+--				--------------------------------------------
+--				-- Pitch Pressure Option
+--				--------------------------------------------
+--				["customPitchPressureLabel"] = {
+--					["params"] = {
+--						["bounds"] = {
+--							["h"] = EntryHeight,
+--							["w"] = EntryLabelWidthLongColumn2,
+--							["x"] = RightColumnX,
+--							["y"] = OrderCustomFCS,
+--						},
+--						["enabled"] = true,
+--						["text"] = "$A4E_CUSTOM_FCS_PITCH_PRESSURE_LABEL",
+--						["tooltip"] = "",
+--						["visible"] = true,
+--						["zindex"] = 0,
+--					},
+--					["skin"] = {
+--						["params"] = {
+--							["name"] = "staticOptionsCaptionSkin"
+--						}
+--					},
+--					["type"] = "Static"
+--				},
+--				["customPitchPressureSlider"] = {
+--					["params"] = {
+--						["bounds"] = {
+--							["h"] = EntryHeight,
+--							["w"] = EntrySliderWidthColumn2,
+--							["x"] = RightColumnX + RightColumnIndent,
+--							["y"] = OrderCustomFCS - EntrySliderOffset,
+--						},
+--						["enabled"] = true,
+--						["step"] = 1,
+--						["range"] = {
+--							["max"] = 100,
+--							["min"] = 1,
+--						},
+--						["tabOrder"] = 0,
+--						["text"] = "",
+--						["tooltip"] = "",
+--						["visible"] = true,
+--						["zindex"] = 1,
+--					},
+--					["skin"] = SliderSkin,
+--					["type"] = "HorzSlider",
+--				},
+--				["customPitchPressureWidget"] = {
+--					["params"] = {
+--						["bounds"] = {
+--							["h"] = EntryHeight,
+--							["w"] = EntryWidgetWidthColumn2,
+--							["x"] = RightColumnX + EntryWidgetOffsetColumn2,
+--							["y"] = OrderCustomFCS,
+--						},
+--						["enabled"] = true,
+--						["text"] = "0",
+--						["tooltip"] = "",
+--						["visible"] = true,
+--						["zindex"] = 0,
+--					},
+--					["skin"] = {
+--						["params"] = {
+--							["name"] = "staticOptionsSliderValueSkin",
+--						},
+--					},
+--					["type"] = "Static",
+--				},
+--				--------------------------------------------
+--				-- Pitch Release Option
+--				--------------------------------------------
+--				["customPitchReleaseLabel"] = {
+--					["params"] = {
+--						["bounds"] = {
+--							["h"] = EntryHeight,
+--							["w"] = EntryLabelWidthLongColumn2,
+--							["x"] = RightColumnX,
+--							["y"] = OrderCustomFCS + lineheight,
+--						},
+--						["enabled"] = true,
+--						["text"] = "$A4E_CUSTOM_FCS_PITCH_RELEASE_LABEL",
+--						["tooltip"] = "",
+--						["visible"] = true,
+--						["zindex"] = 0,
+--					},
+--					["skin"] = {
+--						["params"] = {
+--							["name"] = "staticOptionsCaptionSkin"
+--						}
+--					},
+--					["type"] = "Static"
+--				},
+--				["customPitchReleaseSlider"] = {
+--					["params"] = {
+--						["bounds"] = {
+--							["h"] = EntryHeight,
+--							["w"] = EntrySliderWidthColumn2,
+--							["x"] = RightColumnX + RightColumnIndent,
+--							["y"] = OrderCustomFCS - EntrySliderOffset + lineheight,
+--						},
+--						["enabled"] = true,
+--						["step"] = 1,
+--						["range"] = {
+--							["max"] = 100,
+--							["min"] = 0,
+--						},
+--						["tabOrder"] = 0,
+--						["text"] = "",
+--						["tooltip"] = "",
+--						["visible"] = true,
+--						["zindex"] = 1,
+--					},
+--					["skin"] = SliderSkin,
+--					["type"] = "HorzSlider",
+--				},
+--				["customPitchReleaseWidget"] = {
+--					["params"] = {
+--						["bounds"] = {
+--							["h"] = EntryHeight,
+--							["w"] = EntryWidgetWidthColumn2,
+--							["x"] = RightColumnX + EntryWidgetOffsetColumn2,
+--							["y"] = OrderCustomFCS + lineheight,
+--						},
+--						["enabled"] = true,
+--						["text"] = "0",
+--						["tooltip"] = "",
+--						["visible"] = true,
+--						["zindex"] = 0,
+--					},
+--					["skin"] = {
+--						["params"] = {
+--							["name"] = "staticOptionsSliderValueSkin",
+--						},
+--					},
+--					["type"] = "Static",
+--				},
+--				--------------------------------------------
+--				-- Roll Pressure Option
+--				--------------------------------------------
+--				["customRollPressureLabel"] = {
+--					["params"] = {
+--						["bounds"] = {
+--							["h"] = EntryHeight,
+--							["w"] = EntryLabelWidthLongColumn2,
+--							["x"] = RightColumnX,
+--							["y"] = OrderCustomFCS + lineheight*2,
+--						},
+--						["enabled"] = true,
+--						["text"] = "$A4E_CUSTOM_FCS_ROLL_PRESSURE_LABEL",
+--						["tooltip"] = "",
+--						["visible"] = true,
+--						["zindex"] = 1
+--					},
+--					["skin"] = {
+--						["params"] = {
+--							["name"] = "staticOptionsCaptionSkin"
+--						}
+--					},
+--					["type"] = "Static"
+--				},
+--				["customRollPressureSlider"] = {
+--					["params"] = {
+--						["bounds"] = {
+--							["h"] = EntryHeight,
+--							["w"] = EntrySliderWidthColumn2,
+--							["x"] = RightColumnX + RightColumnIndent,
+--							["y"] = OrderCustomFCS - EntrySliderOffset + lineheight*2,
+--						},
+--						["enabled"] = true,
+--						["step"] = 1,
+--						["range"] = {
+--							["max"] = 100,
+--							["min"] = 1,
+--						},
+--						["tabOrder"] = 0,
+--						["text"] = "",
+--						["tooltip"] = "",
+--						["visible"] = true,
+--						["zindex"] = 1,
+--					},
+--					["skin"] = SliderSkin,
+--					["type"] = "HorzSlider",
+--				},
+--				["customRollPressureWidget"] = {
+--					["params"] = {
+--						["bounds"] = {
+--							["h"] = EntryHeight,
+--							["w"] = EntryWidgetWidthColumn2,
+--							["x"] = RightColumnX + EntryWidgetOffsetColumn2,
+--							["y"] = OrderCustomFCS + lineheight*2,
+--						},
+--						["enabled"] = true,
+--						["text"] = "0",
+--						["tooltip"] = "",
+--						["visible"] = true,
+--						["zindex"] = 0,
+--					},
+--					["skin"] = {
+--						["params"] = {
+--							["name"] = "staticOptionsSliderValueSkin",
+--						},
+--					},
+--					["type"] = "Static",
+--				},
+--				--------------------------------------------
+--				-- Roll Release Option
+--				--------------------------------------------
+--				["customRollReleaseLabel"] = {
+--					["params"] = {
+--						["bounds"] = {
+--							["h"] = EntryHeight,
+--							["w"] = EntryLabelWidthLongColumn2,
+--							["x"] = RightColumnX,
+--							["y"] = OrderCustomFCS + lineheight*3,
+--						},
+--						["enabled"] = true,
+--						["text"] = "$A4E_CUSTOM_FCS_ROLL_RELEASE_LABEL",
+--						["tooltip"] = "",
+--						["visible"] = true,
+--						["zindex"] = 1
+--					},
+--					["skin"] = {
+--						["params"] = {
+--							["name"] = "staticOptionsCaptionSkin"
+--						}
+--					},
+--					["type"] = "Static"
+--				},
+--				["customRollReleaseSlider"] = {
+--					["params"] = {
+--						["bounds"] = {
+--							["h"] = EntryHeight,
+--							["w"] = EntrySliderWidthColumn2,
+--							["x"] = RightColumnX + RightColumnIndent,
+--							["y"] = OrderCustomFCS - EntrySliderOffset + lineheight*3,
+--						},
+--						["enabled"] = true,
+--						["step"] = 1,
+--						["range"] = {
+--							["max"] = 100,
+--							["min"] = 0,
+--						},
+--						["tabOrder"] = 0,
+--						["text"] = "",
+--						["tooltip"] = "",
+--						["visible"] = true,
+--						["zindex"] = 1,
+--					},
+--					["skin"] = SliderSkin,
+--					["type"] = "HorzSlider",
+--				},
+--				["customRollReleaseWidget"] = {
+--					["params"] = {
+--						["bounds"] = {
+--							["h"] = EntryHeight,
+--							["w"] = EntryWidgetWidthColumn2,
+--							["x"] = RightColumnX + EntryWidgetOffsetColumn2,
+--							["y"] = OrderCustomFCS + lineheight*3,
+--						},
+--						["enabled"] = true,
+--						["text"] = "0",
+--						["tooltip"] = "",
+--						["visible"] = true,
+--						["zindex"] = 0,
+--					},
+--					["skin"] = {
+--						["params"] = {
+--							["name"] = "staticOptionsSliderValueSkin",
+--						},
+--					},
+--					["type"] = "Static",
+--				},
+--				--------------------------------------------
+--				-- Rudder Pressure Option
+--				--------------------------------------------
+--				["customRudderPressureLabel"] = {
+--					["params"] = {
+--						["bounds"] = {
+--							["h"] = EntryHeight,
+--							["w"] = EntryLabelWidthLongColumn2,
+--							["x"] = RightColumnX,
+--							["y"] = OrderCustomFCS + lineheight*4,
+--						},
+--						["enabled"] = true,
+--						["text"] = "$A4E_CUSTOM_FCS_RUDDER_PRESSURE_LABEL",
+--						["tooltip"] = "",
+--						["visible"] = true,
+--						["zindex"] = 0
+--					},
+--					["skin"] = {
+--						["params"] = {
+--							["name"] = "staticOptionsCaptionSkin"
+--						}
+--					},
+--					["type"] = "Static"
+--				},
+--				["customRudderPressureSlider"] = {
+--					["params"] = {
+--						["bounds"] = {
+--							["h"] = EntryHeight,
+--							["w"] = EntrySliderWidthColumn2,
+--							["x"] = RightColumnX + RightColumnIndent,
+--							["y"] = OrderCustomFCS - EntrySliderOffset + lineheight*4,
+--						},
+--						["enabled"] = true,
+--						["step"] = 1,
+--						["range"] = {
+--							["max"] = 100,
+--							["min"] = 1,
+--						},
+--						["tabOrder"] = 0,
+--						["text"] = "",
+--						["tooltip"] = "",
+--						["visible"] = true,
+--						["zindex"] = 1,
+--					},
+--					["skin"] = SliderSkin,
+--					["type"] = "HorzSlider",
+--				},
+--				["customRudderPressureWidget"] = {
+--					["params"] = {
+--						["bounds"] = {
+--							["h"] = EntryHeight,
+--							["w"] = EntryWidgetWidthColumn2,
+--							["x"] = RightColumnX + EntryWidgetOffsetColumn2,
+--							["y"] = OrderCustomFCS + lineheight*4,
+--						},
+--						["enabled"] = true,
+--						["text"] = "0",
+--						["tooltip"] = "",
+--						["visible"] = true,
+--						["zindex"] = 0,
+--					},
+--					["skin"] = {
+--						["params"] = {
+--							["name"] = "staticOptionsSliderValueSkin",
+--						},
+--					},
+--					["type"] = "Static",
+--				},
+--				--------------------------------------------
+--				-- Rudder Release Option
+--				--------------------------------------------
+--				["customRudderReleaseLabel"] = {
+--					["params"] = {
+--						["bounds"] = {
+--							["h"] = EntryHeight,
+--							["w"] = EntryLabelWidthLongColumn2,
+--							["x"] = RightColumnX,
+--							["y"] = OrderCustomFCS + lineheight*5,
+--						},
+--						["enabled"] = true,
+--						["text"] = "$A4E_CUSTOM_FCS_RUDDER_RELEASE_LABEL",
+--						["tooltip"] = "",
+--						["visible"] = true,
+--						["zindex"] = 0
+--					},
+--					["skin"] = {
+--						["params"] = {
+--							["name"] = "staticOptionsCaptionSkin"
+--						}
+--					},
+--					["type"] = "Static"
+--				},
+--				["customRudderReleaseSlider"] = {
+--					["params"] = {
+--						["bounds"] = {
+--							["h"] = EntryHeight,
+--							["w"] = EntrySliderWidthColumn2,
+--							["x"] = RightColumnX + RightColumnIndent,
+--							["y"] = OrderCustomFCS - EntrySliderOffset + lineheight*5,
+--						},
+--						["enabled"] = true,
+--						["step"] = 1,
+--						["range"] = {
+--							["max"] = 100,
+--							["min"] = 0,
+--						},
+--						["tabOrder"] = 0,
+--						["text"] = "",
+--						["tooltip"] = "",
+--						["visible"] = true,
+--						["zindex"] = 1,
+--					},
+--					["skin"] = SliderSkin,
+--					["type"] = "HorzSlider",
+--				},
+--				["customRudderReleaseWidget"] = {
+--					["params"] = {
+--						["bounds"] = {
+--							["h"] = EntryHeight,
+--							["w"] = EntryWidgetWidthColumn2,
+--							["x"] = RightColumnX + EntryWidgetOffsetColumn2,
+--							["y"] = OrderCustomFCS + lineheight*5,
+--						},
+--						["enabled"] = true,
+--						["text"] = "0",
+--						["tooltip"] = "",
+--						["visible"] = true,
+--						["zindex"] = 0,
+--					},
+--					["skin"] = {
+--						["params"] = {
+--							["name"] = "staticOptionsSliderValueSkin",
+--						},
+--					},
+--					["type"] = "Static",
+--				},
+--				--------------------------------------------
+--				-- Custom FCS Help
+--				--------------------------------------------
+--				["customFCSHelp1"] = {
+--					["params"] = {
+--						["bounds"] = {
+--							["h"] = EntryHeight,
+--							["w"] = EntryHelpWidth,
+--							["x"] = RightColumnX,
+--							["y"] = OrderCustomFCS + lineheight*6,
+--						},
+--						["enabled"] = true,
+--						["text"] = "$A4E_CUSTOM_FCS_HELP1",
+--						["tooltip"] = "",
+--						["visible"] = true,
+--						["zindex"] = 0,
+--					},
+--					["skin"] = HelpSkin,
+--					["type"] = "Static",
+--				},
+--				["customFCSHelp2"] = {
+--					["params"] = {
+--						["bounds"] = {
+--							["h"] = EntryHeight,
+--							["w"] = EntryHelpWidth,
+--							["x"] = RightColumnX,
+--							["y"] = OrderCustomFCS + lineheight*7,
+--						},
+--						["enabled"] = true,
+--						["text"] = "$A4E_CUSTOM_FCS_HELP2",
+--						["tooltip"] = "",
+--						["visible"] = true,
+--						["zindex"] = 0,
+--					},
+--					["skin"] = HelpSkin,
+--					["type"] = "Static",
+--				},
+--				["customFCSHelp3"] = {
+--					["params"] = {
+--						["bounds"] = {
+--							["h"] = EntryHeight,
+--							["w"] = EntryHelpWidth,
+--							["x"] = RightColumnX,
+--							["y"] = OrderCustomFCS + lineheight*8,
+--						},
+--						["enabled"] = true,
+--						["text"] = "$A4E_CUSTOM_FCS_HELP3",
+--						["tooltip"] = "",
+--						["visible"] = true,
+--						["zindex"] = 0,
+--					},
+--					["skin"] = HelpSkin,
+--					["type"] = "Static",
+--				},
+--				--------------------------------------------
 			},
 			
 
