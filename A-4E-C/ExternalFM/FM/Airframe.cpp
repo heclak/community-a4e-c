@@ -149,7 +149,7 @@ void Scooter::Airframe::airframeUpdate(double dt)
 	m_right_wheel_arg_prev = m_right_wheel_arg;
 
 	
-	printf( "L/R: %d, %d, %lf, %lf\n", IsSkiddingLeft(), IsSkiddingRight(), m_left_wheel_ground_speed, m_right_wheel_ground_speed );
+	//printf( "L/R: %d, %d, %lf, %lf\n", IsSkiddingLeft(), IsSkiddingRight(), m_left_wheel_ground_speed, m_right_wheel_ground_speed );
 
 
 	//printf("LEFT: %lf, CENTRE: %lf, RIGHT: %lf, INTERNAL: %lf\n", m_fuel[Tank::LEFT_EXT], m_fuel[Tank::CENTRE_EXT], m_fuel[Tank::RIGHT_EXT], m_fuel[Tank::INTERNAL]);
