@@ -60,9 +60,9 @@ function SetCommand(command,value)
     elseif command == device_commands.zoom_axis_slew then
         zoom_view_moving = (value) * 0.01
     elseif command == device_commands.zoom_axis_slew_in then
-        zoom_view_moving = (value * -0.5 - 0.5) * 0.005
+        zoom_view_moving = (value * +0.5 + 0.5) * 0.005
     elseif command == device_commands.zoom_axis_slew_out then
-        zoom_view_moving = (value * 0.5 + 0.5) * 0.005
+        zoom_view_moving = (value * -0.5 - 0.5) * 0.005
     end
 end
 
