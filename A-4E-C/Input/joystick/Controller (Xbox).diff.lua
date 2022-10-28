@@ -480,18 +480,18 @@ local diff = {
 		["d10284pnilu10285cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN5",
-				},
-			},
-			["name"] = "UI Override - Left Shoulder (LShift + Mouse 2/Right Click)",
-		},
-		["d10286pnilu10287cdnilvdnilvpnilvunil"] = {
-			["added"] = {
-				[1] = {
 					["key"] = "JOY_BTN6",
 				},
 			},
 			["name"] = "UI Override - Right Shoulder (LCtrl + Mouse 1/Left Click)",
+		},
+		["d10286pnilu10287cdnilvdnilvpnilvunil"] = {
+			["added"] = {
+				[1] = {
+					["key"] = "JOY_BTN5",
+				},
+			},
+			["name"] = "UI Override - Left Shoulder (LShift + Mouse 2/Right Click)",
 		},
 		["d10288pnilu10290cdnilvdnilvpnilvunil"] = {
 			["added"] = {

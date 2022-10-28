@@ -357,7 +357,7 @@ local diff = {
 		["d10121pnilunilcdnilvd0vpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN_POV1_L",
+					["key"] = "JOY_BTN_POV1_R",
 					["reformers"] = {
 						[1] = "LCtrl",
 						[2] = "LShift",
@@ -369,7 +369,7 @@ local diff = {
 		["d10121pnilunilcdnilvd1vpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN_POV1_R",
+					["key"] = "JOY_BTN_POV1_L",
 					["reformers"] = {
 						[1] = "LCtrl",
 						[2] = "LShift",
@@ -508,18 +508,18 @@ local diff = {
 		["d10284pnilu10285cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN5",
-				},
-			},
-			["name"] = "UI Override - Left Shoulder (LShift + Mouse 2/Right Click)",
-		},
-		["d10286pnilu10287cdnilvdnilvpnilvunil"] = {
-			["added"] = {
-				[1] = {
 					["key"] = "JOY_BTN6",
 				},
 			},
 			["name"] = "UI Override - Right Shoulder (LCtrl + Mouse 1/Left Click)",
+		},
+		["d10286pnilu10287cdnilvdnilvpnilvunil"] = {
+			["added"] = {
+				[1] = {
+					["key"] = "JOY_BTN5",
+				},
+			},
+			["name"] = "UI Override - Left Shoulder (LShift + Mouse 2/Right Click)",
 		},
 		["d10288pnilu10290cdnilvdnilvpnilvunil"] = {
 			["added"] = {

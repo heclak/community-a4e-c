@@ -669,8 +669,8 @@ join(res.keyCommands,{
     ---------------------------------------------
     -- Accessibility / Gamepads
     ---------------------------------------------
-    {down = Keys.modifier_left_down, up = Keys.modifier_left_up,                                name = _('UI Override - Left Shoulder (LShift + Mouse 2/Right Click)'), category = {_('Accessibility')}},
-    {down = Keys.modifier_right_down, up = Keys.modifier_right_up,                              name = _('UI Override - Right Shoulder (LCtrl + Mouse 1/Left Click)'), category = {_('Accessibility')}},
+    {down = Keys.modifier_left_down, up = Keys.modifier_left_up,                                name = _('UI Override - Right Shoulder (LCtrl + Mouse 1/Left Click)'), category = {_('Accessibility')}},
+    {down = Keys.modifier_right_down, up = Keys.modifier_right_up,                              name = _('UI Override - Left Shoulder (LShift + Mouse 2/Right Click)'), category = {_('Accessibility')}},
 
     ---------------------------------------------
     -- Special for Joysticks and Warthog Throttle
@@ -766,8 +766,8 @@ join(res.axisCommands,{
     {action = device_commands.gunsight_elevation_axis_abs, cockpit_device_id = devices.GUNSIGHT,        name = _('Gunsight Elevation Control - Absolute'),      category = {_('Instrument Panel'), _('Gunsight Panel')}},
 
     --UI Override
-    {action = device_commands.mouse_x,                                                                  name = _('UI Override - Mouse Cursor X'),                           category = {_('UI Override')}},
-    {action = device_commands.mouse_y,                                                                  name = _('UI Override - Mouse Cursor Y'),                           category = {_('UI Override')}},
+    {action = device_commands.mouse_x,                                                                  name = _('UI Override - Mouse Cursor X'),               category = {_('UI Override'), _('Accessibility')}},
+    {action = device_commands.mouse_y,                                                                  name = _('UI Override - Mouse Cursor Y'),               category = {_('UI Override'), _('Accessibility')}},
 
     
 })
