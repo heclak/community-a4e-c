@@ -11,7 +11,7 @@ dofile(LockOn_Options.script_path.."sound_params.lua")
 dofile(LockOn_Options.script_path.."Systems/mission.lua")
 dofile(LockOn_Options.script_path.."Systems/mission_utils.lua")
 
-local update_time_step = 0.05
+local update_time_step = 0.02 -- was 0.5
 make_default_activity(update_time_step)--update will be called 20 times per second
 
 startup_print("seat: load")
