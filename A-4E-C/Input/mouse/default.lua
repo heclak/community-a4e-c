@@ -54,13 +54,6 @@ keyCommands = {
     {down = iCommandPlaneLeftRudderStart, up = iCommandPlaneLeftRudderStop,             name = _('Aircraft Rudder - LEFT'),          category = {_('Control Stick'), _('Flight Control')}},
     {down = iCommandPlaneRightRudderStart, up = iCommandPlaneRightRudderStop,           name = _('Aircraft Rudder - RIGHT'),         category = {_('Control Stick'), _('Flight Control')}},
 
-    {down = Keys.CustomFCSPitch, value_down = -1, up = Keys.CustomFCSPitch, value_up = 0, name = _('Aircraft Pitch (Custom) - DOWN'),  category = {_('Control Stick'), _('Flight Control'), _('Accessibility')}},
-    {down = Keys.CustomFCSPitch, value_down = 1, up = Keys.CustomFCSPitch, value_up = 0, name = _('Aircraft Pitch (Custom) - UP'),    category = {_('Control Stick'), _('Flight Control'), _('Accessibility')}},
-    {down = Keys.CustomFCSRoll, value_down = -1, up = Keys.CustomFCSRoll,  value_up = 0, name = _('Aircraft Roll (Custom) - LEFT'),   category = {_('Control Stick'), _('Flight Control'), _('Accessibility')}},
-    {down = Keys.CustomFCSRoll, value_down = 1, up = Keys.CustomFCSRoll,  value_up = 0, name = _('Aircraft Roll (Custom) - RIGHT'),  category = {_('Control Stick'), _('Flight Control'), _('Accessibility')}},
-    {down = Keys.CustomFCSRudder, value_down = -1, up = Keys.CustomFCSRudder,  value_up = 0, name = _('Aircraft Rudder (Custom) - LEFT'), category = {_('Control Stick'), _('Flight Control'), _('Accessibility')}},
-    {down = Keys.CustomFCSRudder, value_down = 1, up = Keys.CustomFCSRudder,  value_up = 0, name = _('Aircraft Rudder (Custom) - RIGHT'), category = {_('Control Stick'), _('Flight Control'), _('Accessibility')}},
-
     ---------------------------------------------
     -- Stick ------------------------------------
     ---------------------------------------------
