@@ -197,7 +197,7 @@ local diff = {
 				[1] = {
 					["key"] = "JOY_RY",
 					["reformers"] = {
-						[1] = "LCtrl",
+						[1] = "LShift",
 					},
 				},
 			},
@@ -208,7 +208,7 @@ local diff = {
 				[1] = {
 					["key"] = "JOY_RX",
 					["reformers"] = {
-						[1] = "LCtrl",
+						[1] = "LShift",
 					},
 				},
 			},
