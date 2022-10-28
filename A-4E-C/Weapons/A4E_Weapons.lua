@@ -435,62 +435,6 @@ declare_loadout({	--AGM 45 SHRIKE
 })
 --]]
 
----------ROCKETS--------------
-declare_loadout({	--TER LAU-61
-				category=	CAT_ROCKETS,
-				CLSID	=	"{TER,LAU-61*3}",
-				Picture	=	"LAU61.png",
-				wsTypeOfWeapon	=	{wsType_Weapon, wsType_NURS, wsType_Rocket,	145},
-				displayName	=	_("3*LAU-61"),
-				--attribute	=	{4,	7,	32,	9},
-				attribute	=	{wsType_Weapon,	wsType_NURS, wsType_Container,	9},
-				Cx_pil	=	0.002,
-				Count	=	57,
-				Weight	=	98,
-				Elements	=
-				{
-					[1]	=
-					{
-						Position	=	{0,	0,	0},
-						ShapeName	=	"BRU-42_LS",
-						IsAdapter 	= 	true,
-					},
-					[2]	=
-					{
-						DrawArgs	=
-						{
-							[1]	=	{1,	1},
-							[2]	=	{2,	1},
-						}, -- end of DrawArgs
-						Position	=	{0,	-0.35,	0},
-						ShapeName	=	"LAU-61",
-					},
-					[3]	=
-					{
-						DrawArgs	=
-						{
-							[1]	=	{1,	1},
-							[2]	=	{2,	1},
-						}, -- end of DrawArgs
-						Position	=	{0,	-0.13,	0.1253},
-						ShapeName	=	"LAU-61",
-						Rotation	= 	{-45,0,0},
-					},
-					[4]	=
-					{
-						DrawArgs	=
-						{
-							[1]	=	{1,	1},
-							[2]	=	{2,	1},
-						}, -- end of DrawArgs
-						Position	=	{0,	-0.13,	-0.125},
-						ShapeName	=	"LAU-61",
-						Rotation	= 	{45,0,0},
-					},
-				}, -- end of Elements
-})
-
-
 ---------HIPEG----------------
 
 --[[
@@ -734,7 +678,7 @@ NAPALM_MOD0 =
 	name = "NAPALM_MOD0",
 	cluster_scheme = "cluster",
 	type_name = "cluster",
-	wsTypeOfWeapon	= {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, 1000},
+	wsTypeOfWeapon	= {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, WSTYPE_PLACEHOLDER},
 }
 
 declare_weapon(NAPALM_MOD0)
@@ -780,7 +724,7 @@ NAPALM_MOD1 =
 	name = "NAPALM_MOD1",
 	cluster_scheme = "cluster",
 	type_name = "cluster",
-	wsTypeOfWeapon	= {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, 1001},
+	wsTypeOfWeapon	= {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, WSTYPE_PLACEHOLDER},
 }
 
 declare_weapon(NAPALM_MOD1)
