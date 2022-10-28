@@ -67,27 +67,6 @@ local diff = {
 				},
 			},
 		},
-		["a2012cdnil"] = {
-			["added"] = {
-				[1] = {
-					["filter"] = {
-						["curvature"] = {
-							[1] = -0.2,
-						},
-						["deadzone"] = 0,
-						["invert"] = false,
-						["saturationX"] = 1,
-						["saturationY"] = 1,
-						["slider"] = true,
-					},
-					["key"] = "JOY_Z",
-					["reformers"] = {
-						[1] = "LShift",
-					},
-				},
-			},
-			["name"] = "Zoom View",
-		},
 		["a2049cdnil"] = {
 			["added"] = {
 				[1] = {
@@ -148,7 +127,7 @@ local diff = {
 					["key"] = "JOY_RX",
 				},
 			},
-			["name"] = "UI Override - Mouse X Relative",
+			["name"] = "UI Override - Mouse Cursor X",
 		},
 		["a3179cdnil"] = {
 			["added"] = {
@@ -166,7 +145,7 @@ local diff = {
 					["key"] = "JOY_RY",
 				},
 			},
-			["name"] = "UI Override - Mouse Y Relative",
+			["name"] = "UI Override - Mouse Cursor Y",
 		},
 		["a3204cdnil"] = {
 			["added"] = {
@@ -188,7 +167,24 @@ local diff = {
 					},
 				},
 			},
-			["name"] = "Wheel Brake Differential",
+			["name"] = "Wheel Brake Differential (Single-Axis)",
+		},
+		["a3210cd45"] = {
+			["added"] = {
+				[1] = {
+					["key"] = "JOY_Z",
+					["reformers"] = {
+						[1] = "LCtrl",
+					},
+				},
+				[2] = {
+					["key"] = "JOY_Z",
+					["reformers"] = {
+						[1] = "LShift",
+					},
+				},
+			},
+			["name"] = "Zoom View - Slew",
 		},
 	},
 	["keyDiffs"] = {
@@ -484,12 +480,6 @@ local diff = {
 		["d10284pnilu10285cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN6",
-					["reformers"] = {
-						[1] = "LShift",
-					},
-				},
-				[2] = {
 					["key"] = "JOY_BTN5",
 				},
 			},
@@ -498,16 +488,10 @@ local diff = {
 		["d10286pnilu10287cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN5",
-					["reformers"] = {
-						[1] = "LCtrl",
-					},
-				},
-				[2] = {
 					["key"] = "JOY_BTN6",
 				},
 			},
-			["name"] = "UI Override - Right Shoulder (LShift + Mouse 1/Left Click)",
+			["name"] = "UI Override - Right Shoulder (LCtrl + Mouse 1/Left Click)",
 		},
 		["d10288pnilu10290cdnilvdnilvpnilvunil"] = {
 			["added"] = {

@@ -690,8 +690,8 @@ join(res.axisCommands,{
     {combos = defaultDeviceAssignmentFor("roll"), action = iCommandPlaneRoll,           name = _('Roll'),                           category = {_('Flight Control')}},
     {combos = defaultDeviceAssignmentFor("pitch"), action = iCommandPlanePitch,         name = _('Pitch'),                          category = {_('Flight Control')}},
 	{combos = defaultDeviceAssignmentFor("rudder"), action = iCommandPlaneRudder,		name = _('Rudder'),                         category = {_('Flight Control')}},
-    {action = device_commands.rudder_axis_left, cockpit_device_id = devices.TRIM,       name = _('Rudder Left'),                    category = {_('Flight Control'), _('Accessibility')}},
-    {action = device_commands.rudder_axis_right, cockpit_device_id = devices.TRIM,      name = _('Rudder Right'),                   category = {_('Flight Control'), _('Accessibility')}},
+    {action = device_commands.rudder_axis_left, cockpit_device_id = devices.TRIM,       name = _('Rudder - Left (Dual-Axis)'),      category = {_('Flight Control'), _('Accessibility')}},
+    {action = device_commands.rudder_axis_right, cockpit_device_id = devices.TRIM,      name = _('Rudder - Right (Dual-Axis)'),     category = {_('Flight Control'), _('Accessibility')}},
 
     {combos = defaultDeviceAssignmentFor("thrust"), action = iCommandPlaneThrustCommon, name = _('Throttle'),                       category = {_('Flight Control')}},
     {action = device_commands.throttle_axis_slew, cockpit_device_id = devices.ENGINE,   name = _('Throttle - Slew'),                category = {_('Flight Control'), _('Accessibility')}},
@@ -699,13 +699,13 @@ join(res.axisCommands,{
     {action = device_commands.wheelbrake_AXIS,                                          name = _('Wheel Brake'),                    category = {_('Systems')}},
     {action = device_commands.left_wheelbrake_AXIS,                                     name = _('Wheel Brake Left'),               category = {_('Systems')}},
     {action = device_commands.right_wheelbrake_AXIS,                                    name = _('Wheel Brake Right'),              category = {_('Systems')}},
-    {action = device_commands.combined_wheel_brake_axis,                                name = _('Wheel Brake Differential'),       category = {_('Systems'), _('Accessibility')}},
+    {action = device_commands.combined_wheel_brake_axis,                    name = _('Wheel Brake Differential (Single-Axis)'),     category = {_('Systems'), _('Accessibility')}},
 
-    {action = device_commands.zoom_axis_in, cockpit_device_id = devices.SEAT,           name = _('Zoom View In'),                   category = {_('View'), _('View Cockpit'), _('Accessibility')}},
-    {action = device_commands.zoom_axis_out, cockpit_device_id = devices.SEAT,          name = _('Zoom View Out'),                  category = {_('View'), _('View Cockpit'), _('Accessibility')}},
-    {action = device_commands.zoom_axis_slew, cockpit_device_id = devices.SEAT,         name = _('Zoom View - Slew'),               category = {_('View'), _('View Cockpit'), _('Accessibility')}},
-    {action = device_commands.zoom_axis_slew_in, cockpit_device_id = devices.SEAT,      name = _('Zoom View In - Slew'),            category = {_('View'), _('View Cockpit'), _('Accessibility')}},
-    {action = device_commands.zoom_axis_slew_out, cockpit_device_id = devices.SEAT,     name = _('Zoom View Out - Slew'),           category = {_('View'), _('View Cockpit'), _('Accessibility')}},
+    {action = device_commands.zoom_axis_in, cockpit_device_id = devices.SEAT,       name = _('Zoom View In (Dual Axis)'),           category = {_('View'), _('View Cockpit'), _('Accessibility')}},
+    {action = device_commands.zoom_axis_out, cockpit_device_id = devices.SEAT,      name = _('Zoom View Out (Dual Axis)'),          category = {_('View'), _('View Cockpit'), _('Accessibility')}},
+    {action = device_commands.zoom_axis_slew, cockpit_device_id = devices.SEAT,     name = _('Zoom View - Slew'),                   category = {_('View'), _('View Cockpit'), _('Accessibility')}},
+    {action = device_commands.zoom_axis_slew_in, cockpit_device_id = devices.SEAT,  name = _('Zoom View In - Slew (Dual-Axis)'),    category = {_('View'), _('View Cockpit'), _('Accessibility')}},
+    {action = device_commands.zoom_axis_slew_out, cockpit_device_id = devices.SEAT, name = _('Zoom View Out - Slew (Dual-Axis)'),   category = {_('View'), _('View Cockpit'), _('Accessibility')}},
 
     {combos = {{key = 'TRACKIR_PITCH'}}, action = iHeadTrackerPitchNormed,              name = _('Head Tracker : Pitch'),            category = {_('View'), _('View Cockpit'), _('Accessibility')}},
     {combos = {{key = 'TRACKIR_YAW'}}, action = iHeadTrackerYawNormed,                  name = _('Head Tracker : Yaw'),              category = {_('View'), _('View Cockpit'), _('Accessibility')}},
@@ -766,8 +766,8 @@ join(res.axisCommands,{
     {action = device_commands.gunsight_elevation_axis_abs, cockpit_device_id = devices.GUNSIGHT,        name = _('Gunsight Elevation Control - Absolute'),      category = {_('Instrument Panel'), _('Gunsight Panel')}},
 
     --UI Override
-    {action = device_commands.mouse_x,                                                                  name = _('UI Override - Mouse X Relative'),                           category = {_('UI Override')}},
-    {action = device_commands.mouse_y,                                                                  name = _('UI Override - Mouse Y Relative'),                           category = {_('UI Override')}},
+    {action = device_commands.mouse_x,                                                                  name = _('UI Override - Mouse Cursor X'),                           category = {_('UI Override')}},
+    {action = device_commands.mouse_y,                                                                  name = _('UI Override - Mouse Cursor Y'),                           category = {_('UI Override')}},
 
     
 })

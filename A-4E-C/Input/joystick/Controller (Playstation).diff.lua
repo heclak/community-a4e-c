@@ -156,7 +156,7 @@ local diff = {
 					["key"] = "JOY_Z",
 				},
 			},
-			["name"] = "UI Override - Mouse X Relative",
+			["name"] = "UI Override - Mouse Cursor X",
 		},
 		["a3179cdnil"] = {
 			["added"] = {
@@ -174,7 +174,7 @@ local diff = {
 					["key"] = "JOY_RZ",
 				},
 			},
-			["name"] = "UI Override - Mouse Y Relative",
+			["name"] = "UI Override - Mouse Cursor Y",
 		},
 		["a3205cd26"] = {
 			["added"] = {
@@ -182,7 +182,7 @@ local diff = {
 					["key"] = "JOY_RX",
 				},
 			},
-			["name"] = "Rudder Left",
+			["name"] = "Rudder - Left (Dual-Axis)",
 		},
 		["a3206cd26"] = {
 			["added"] = {
@@ -190,7 +190,29 @@ local diff = {
 					["key"] = "JOY_RY",
 				},
 			},
-			["name"] = "Rudder Right",
+			["name"] = "Rudder - Right (Dual-Axis)",
+		},
+		["a3211cd45"] = {
+			["added"] = {
+				[1] = {
+					["key"] = "JOY_RY",
+					["reformers"] = {
+						[1] = "LCtrl",
+					},
+				},
+			},
+			["name"] = "Zoom View In - Slew (Dual-Axis)",
+		},
+		["a3212cd45"] = {
+			["added"] = {
+				[1] = {
+					["key"] = "JOY_RX",
+					["reformers"] = {
+						[1] = "LCtrl",
+					},
+				},
+			},
+			["name"] = "Zoom View Out - Slew (Dual-Axis)",
 		},
 	},
 	["keyDiffs"] = {
@@ -486,13 +508,7 @@ local diff = {
 		["d10284pnilu10285cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN6",
-				},
-				[2] = {
-					["key"] = "JOY_BTN6",
-					["reformers"] = {
-						[1] = "LShift",
-					},
+					["key"] = "JOY_BTN5",
 				},
 			},
 			["name"] = "UI Override - Left Shoulder (LShift + Mouse 2/Right Click)",
@@ -500,16 +516,10 @@ local diff = {
 		["d10286pnilu10287cdnilvdnilvpnilvunil"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_BTN5",
-				},
-				[2] = {
-					["key"] = "JOY_BTN5",
-					["reformers"] = {
-						[1] = "LCtrl",
-					},
+					["key"] = "JOY_BTN6",
 				},
 			},
-			["name"] = "UI Override - Right Shoulder (LShift + Mouse 1/Left Click)",
+			["name"] = "UI Override - Right Shoulder (LCtrl + Mouse 1/Left Click)",
 		},
 		["d10288pnilu10290cdnilvdnilvpnilvunil"] = {
 			["added"] = {
