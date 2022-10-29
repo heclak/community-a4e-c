@@ -120,6 +120,10 @@ dev:listen_command(device_commands.apc_hotstdcold)
 dev:listen_command(Keys.APCEngageStbyOff)
 dev:listen_command(Keys.APCHotStdCold)
 
+--Throttle Commands
+dev:listen_command(Keys.throttle_inc)
+dev:listen_command(Keys.throttle_dec)
+
 -- AFCS States
 AFCS_STATE_OFF = 0
 AFCS_STATE_WARMUP = 1
@@ -417,6 +421,12 @@ function APCHotStdCold(value)
     dev:performClickableAction(device_commands.apc_hotstdcold, value, false)
 end
 
+function apc_disengage(value)
+    if apc_state == APC_STATE_ENGAGE then
+        dev:performClickableAction(device_commands.apc_engagestbyoff, 0.0, false)
+    end
+end 
+
 --Table of functions for each possible input as a key.
 --This must be defined below any functions that are included such that the correct function ptr is not nil.
 local command_table = {
@@ -458,6 +468,8 @@ local command_table = {
     [device_commands.apc_hotstdcold] = apc_hotstdcold,
     [Keys.APCEngageStbyOff] = APCEngageStbyOff,
     [Keys.APCHotStdCold] = APCHotStdCold,
+    [Keys.throttle_dec] = apc_disengage,
+    [Keys.throttle_inc] = apc_disengage,
 }
 
 

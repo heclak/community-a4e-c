@@ -81,6 +81,7 @@ void Scooter::Radar::zeroInit()
 	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_DETAIL, 1.0 );
 	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_STORAGE, 0.94 );
 	ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_ANGLE, 0.4 );
+
 }
 
 void Scooter::Radar::coldInit()
@@ -158,7 +159,7 @@ bool Scooter::Radar::handleInput( int command, float value )
 		return true;
 	case DEVICE_COMMANDS_RADAR_PLANPROFILE:
 		//This should perhaps be a state change.
-		m_planSwitch = ! (bool)value;
+		m_planSwitch = (bool)value;
 		return true;
 	case DEVICE_COMMANDS_RADAR_VOLUME:
 		m_obstacleVolume = value;
@@ -201,6 +202,7 @@ bool Scooter::Radar::handleInput( int command, float value )
 		ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_MODE, (float)MODE_AG / 10.0f );
 		return true;
 	case KEYS_RADARTCPLANPROFILE:
+		printf( "value: %lf, current: %d\n", value, m_planSwitch );
 		if ( value == -1.0 )
 			ed_cockpit_dispatch_action_to_device( DEVICES_RADAR, DEVICE_COMMANDS_RADAR_PLANPROFILE, !m_planSwitch );
 		else
@@ -360,6 +362,9 @@ void Scooter::Radar::update( double dt )
 	{
 		return;
 	}
+
+	if ( ! m_self_test_ran )
+		RadarHackSelfTest();
 
 	moveKnob( DEVICE_COMMANDS_RADAR_VOLUME,			m_obstacleVolume,	dt * c_knobSpeed, m_volumeMoving );
 	moveKnob( DEVICE_COMMANDS_RADAR_ANGLE,			m_angleKnob,		dt * c_knobSpeed, m_radarTilting );
@@ -956,6 +961,24 @@ void Scooter::Radar::clearScan()
 	{
 		m_scope.setBlobOpacity( i, 0.0 );
 	}
+}
+
+// Check there aren't any crashes introduced by an update.
+void Scooter::Radar::RadarHackSelfTest()
+{
+	printf( " ========== Begin Radar Self Test ==========\n" );
+
+	Vec3 out;
+	const Vec3& pos = m_aircraftState.getWorldPosition();
+	bool intersects = getIntersection( out, pos, Vec3( 0.0, -1.0, 0.0 ), 100'000.0 );
+	printf( "[getIntersection] %d, (%lf,%lf,%lf)\n", intersects, out.x, out.y, out.z );
+
+	Vec3 normal = getNormal( pos.x, pos.z );
+	printf( "[getNormal] %lf,%lf,%lf\n", normal.x, normal.y, normal.z );
+	printf( "[getType] %u\n", (unsigned int)getType( pos.x, pos.z ) );
+
+	printf( " ========== End Radar Self Test ==========\n" );
+	m_self_test_ran = true;
 }
 
 
