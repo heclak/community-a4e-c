@@ -86,9 +86,11 @@ private:
 	inline void warmup( double rate );
 	inline void transitionState( State from, State to );
 
+	// Hack functions
 	inline unsigned char getType( double x, double z );
 	inline bool getIntersection( Vec3& out, const Vec3& pos, const Vec3& dir, double maxRange = 0.0 );
 	inline Vec3 getNormal(double x, double z);
+
 	inline double calculateWarningAngle( double range );
 	inline void updateObstacleData();
 	inline void resetObstacleData();
@@ -138,6 +140,8 @@ private:
 	void resetLineDraw();
 	void resetDraw();
 
+	void RadarHackSelfTest();
+	bool m_self_test_ran = false;
 
 	RadarScope m_scope;
 	AircraftState& m_aircraftState;
@@ -203,7 +207,7 @@ private:
 	double m_gain = 1.0;
 	double m_brilliance = 1.0;
 	double m_storage = 1.0;
-	bool m_planSwitch = true;
+	bool m_planSwitch = false; // actually plan/profile true when in profile
 
 	double m_storageKnob = 0.0;
 	double m_gainKnob = 0.0;
@@ -478,7 +482,7 @@ Radar::State Radar::getState()
 	case MODE_SRCH:
 		return STATE_SRCH;
 	case MODE_TC:
-		if ( m_planSwitch )
+		if ( ! m_planSwitch )
 			return STATE_TC_PLAN;
 		else
 			return STATE_TC_PROFILE;
