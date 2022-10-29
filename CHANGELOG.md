@@ -6,11 +6,11 @@ Please list the changes you've made in this file. We should try to follow the gu
 
 ### Added
 - Systems:
-  - AN/APR-23 RHWS (ECM)
-    - With the AN/APR-23 Function Selector Switch set to REC and the APR-25 Switch in the ON position, a baseline system hum and response audio from a wide variety of radar-equipped units is produced at a volume determined by the the (inner) AN/APR-23 PRF Volume knob.
-    - When the APR-27 Switch is in the ON position, detected missile launches from SA-2 S-75 "Fan Song" will produce an oscillating alert tone at a volume determined by the (outer) AN/APR-23 Missile Alert Volume knob.
-    - The system's bit test is available to perform. With the AN/APR-23 Function Selector Switch set to REC, press the APR-27 Test button to initiate the bit test.
-    - With the system in AN/APR-23 Function Selector Switch set to RPT, ECM will attempt to jam incoming radar signals. The green RPT light will enable when the system transmits.
+  - AN/APR-25 RHWS (ECM)
+    - With the AN/APR-25 Function Selector Switch set to REC and the APR-25 Switch in the ON position, a baseline system hum and response audio from a wide variety of radar-equipped units is produced at a volume determined by the the (inner) AN/APR-25 PRF Volume knob.
+    - When the APR-27 Switch is in the ON position, detected missile launches from SA-2 S-75 "Fan Song" will produce an oscillating alert tone at a volume determined by the (outer) AN/APR-25 Missile Alert Volume knob.
+    - The system's bit test is available to perform. With the AN/APR-25 Function Selector Switch set to REC, press the APR-27 Test button to initiate the bit test.
+    - With the system in AN/APR-25 Function Selector Switch set to RPT, ECM will attempt to jam incoming radar signals. The green RPT light will enable when the system transmits.
 - Liveries:
   - Community A-4E V: Blue Team, 2022 (Fictional)
   - Community A-4E V: Red Team, 2022 (Fictional)
@@ -37,7 +37,7 @@ Please list the changes you've made in this file. We should try to follow the gu
   - Absolute and slew axis inputs for AN/APR-53A Radar Indicator Brilliance, Detail, Gain, Reticle, and Storage knobs.
   - Radar Antenna Tilt Continuous CW and Radar Antenna Tilt Continuous CCW have been assigned a keyboard default (- and =, respectively).
   - Inputs for APR-27 Test, APR-27 Light buttons.
-  - Absolute and slew axis inputs for AN/APR-23 Missile Alert Volume, AWRS Drop Interval Knob, Gunsight Elevation Control, Gunsight Light Control, Instrument Lights Control, Shrike/Sidewinder Volume Knob, TACAN Volume Knob, and White Floodlights Control. Some non-axis inputs associated with these have been renamed. Users with extensive control schemes should adjust their controls to resolve any conflicts. *(thanks gcask)*
+  - Absolute and slew axis inputs for AN/APR-25 Missile Alert Volume, AWRS Drop Interval Knob, Gunsight Elevation Control, Gunsight Light Control, Instrument Lights Control, Shrike/Sidewinder Volume Knob, TACAN Volume Knob, and White Floodlights Control. Some non-axis inputs associated with these have been renamed. Users with extensive control schemes should adjust their controls to resolve any conflicts. *(thanks gcask)*
   - Input for Chaff Dispenser Select - Toggle 1/2.
   - Inputs for common communications, including A/A refueling - "Ready for precontact" radio call, and Ask AWACS available tanker. *(thanks gcask)*
   - When the aircraft has power, the Seat Adjustment Switch can be used to move the baseline pilot head position up and down in the cockpit. *(thanks nima3333)*
@@ -45,7 +45,7 @@ Please list the changes you've made in this file. We should try to follow the gu
     - A a chart of weapon stations and their associated loadout options (page 3-7) in the kneeboard manual.
     - An overview of the included Xbox1 and PS4 gamepad layouts are available at the end of the kneeboard manual (pages 6-6 and 6-7). 
 - Sounds:
-  - AN/APR-23 RHWS (ECM):
+  - AN/APR-25 RHWS (ECM):
     - AAA: New sounds are produced in response to the Fire Can SON-9 fire director radar.
     - Aircraft: New sounds are produced in response to aircraft search and tracking radars.
     - EWRs and Ships: Unique sound sets are produced in response to ground and ship EWRs. A new sound is also produced in response to ship tracking radars.
@@ -89,9 +89,9 @@ Please list the changes you've made in this file. We should try to follow the gu
   - The controls indicator's nosewheel caster indicator now displays logarithmically, making it easier to see those early changes in castering and better reflect nosewheel sensetivity to turn rate. *(thanks, Drofseh)*.
   - Refactored the special menu for easier editing in the future.
   - Kneeboard Manual:
-    - Added additional guidance and notes on AN/APR-23 RHWS (ECM) operation.
+    - Added additional guidance and notes on AN/APR-25 RHWS (ECM) operation.
 - Sounds:
-  - Improved input response and dynamic range of AN/APR-23 PRF Volume, AN/APR-23 Missile Alert Volume, Shrike/Sidewinder Volume, and TACAN Volume knobs.
+  - Improved input response and dynamic range of AN/APR-25 PRF Volume, AN/APR-25 Missile Alert Volume, Shrike/Sidewinder Volume, and TACAN Volume knobs.
   - Reduced the relative volume of the AN/APR-25 operational "hum".
 
 ## Version 2.0.1 - 5 Mar 2022
@@ -508,7 +508,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 - 3D/External Model
   - New anti-collision light model and effect
 - reworked ECM control systems
-  - upgraded AN/APR-23 to AN/APR-25
+  - upgraded AN/APR-25 to AN/APR-25
   - added separate APR-27 simulation
   - added ALQ-51A
   - added ALQ-51A BIT Test

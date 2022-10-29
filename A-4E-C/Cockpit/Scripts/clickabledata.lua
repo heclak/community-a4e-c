@@ -339,7 +339,7 @@ elements["PNT_510"] = default_button("APR-27 Light", devices.RWR, device_command
 elements["PNT_506"] = default_axis_limited( "PRF Volume", devices.RWR, device_commands.ecm_msl_alert_axis_inner, 506, 0.0, 0.3, false, false, {-0.9,0.9} )
 elements["PNT_505"] = default_axis_limited( "Missile Alert Volume", devices.RWR, device_commands.ecm_msl_alert_axis_outer, 505, 0.0, 0.3, false, false, {-0.9,0.9} )
 
-elements["PNT_502"] = multiposition_switch_limited("AN/APR-23 Function Selector Switch", devices.RWR, device_commands.ecm_selector_knob,502,4,0.33,false,0.0,KNOBCLICK_MID_FWD, 5)
+elements["PNT_502"] = multiposition_switch_limited("AN/APR-25 Function Selector Switch", devices.RWR, device_commands.ecm_selector_knob,502,4,0.33,false,0.0,KNOBCLICK_MID_FWD, 5)
 
 -- AIR CONDITIONING PANEL
 elements["PNT_1251"] = default_2_position_tumb("Cabin Pressure Switch", devices.ELECTRIC_SYSTEM, device_commands.cabin_pressure , 224, TOGGLECLICK_LEFT_MID)
