@@ -104,10 +104,13 @@ local diff = {
 							[1] = 0,
 						},
 						["deadzone"] = 0,
+						["hardwareDetent"] = false,
+						["hardwareDetentAB"] = 0,
+						["hardwareDetentMax"] = 0,
 						["invert"] = true,
 						["saturationX"] = 1,
 						["saturationY"] = 1,
-						["slider"] = false,
+						["slider"] = true,
 					},
 					["key"] = "JOY_RX",
 					["reformers"] = {
@@ -126,10 +129,13 @@ local diff = {
 							[1] = 0,
 						},
 						["deadzone"] = 0,
+						["hardwareDetent"] = false,
+						["hardwareDetentAB"] = 0,
+						["hardwareDetentMax"] = 0,
 						["invert"] = true,
 						["saturationX"] = 1,
 						["saturationY"] = 1,
-						["slider"] = false,
+						["slider"] = true,
 					},
 					["key"] = "JOY_RY",
 					["reformers"] = {
@@ -148,6 +154,9 @@ local diff = {
 							[1] = 0,
 						},
 						["deadzone"] = 0.1,
+						["hardwareDetent"] = false,
+						["hardwareDetentAB"] = 0,
+						["hardwareDetentMax"] = 0,
 						["invert"] = false,
 						["saturationX"] = 1,
 						["saturationY"] = 1,
@@ -166,6 +175,9 @@ local diff = {
 							[1] = 0,
 						},
 						["deadzone"] = 0.1,
+						["hardwareDetent"] = false,
+						["hardwareDetentAB"] = 0,
+						["hardwareDetentMax"] = 0,
 						["invert"] = false,
 						["saturationX"] = 1,
 						["saturationY"] = 1,
@@ -179,6 +191,19 @@ local diff = {
 		["a3205cd26"] = {
 			["added"] = {
 				[1] = {
+					["filter"] = {
+						["curvature"] = {
+							[1] = 0,
+						},
+						["deadzone"] = 0,
+						["hardwareDetent"] = false,
+						["hardwareDetentAB"] = 0,
+						["hardwareDetentMax"] = 0,
+						["invert"] = false,
+						["saturationX"] = 1,
+						["saturationY"] = 1,
+						["slider"] = true,
+					},
 					["key"] = "JOY_RX",
 				},
 			},
@@ -187,6 +212,19 @@ local diff = {
 		["a3206cd26"] = {
 			["added"] = {
 				[1] = {
+					["filter"] = {
+						["curvature"] = {
+							[1] = 0,
+						},
+						["deadzone"] = 0,
+						["hardwareDetent"] = false,
+						["hardwareDetentAB"] = 0,
+						["hardwareDetentMax"] = 0,
+						["invert"] = false,
+						["saturationX"] = 1,
+						["saturationY"] = 1,
+						["slider"] = true,
+					},
 					["key"] = "JOY_RY",
 				},
 			},
@@ -195,6 +233,19 @@ local diff = {
 		["a3211cd45"] = {
 			["added"] = {
 				[1] = {
+					["filter"] = {
+						["curvature"] = {
+							[1] = 0,
+						},
+						["deadzone"] = 0,
+						["hardwareDetent"] = false,
+						["hardwareDetentAB"] = 0,
+						["hardwareDetentMax"] = 0,
+						["invert"] = false,
+						["saturationX"] = 1,
+						["saturationY"] = 1,
+						["slider"] = true,
+					},
 					["key"] = "JOY_RY",
 					["reformers"] = {
 						[1] = "LShift",
@@ -206,6 +257,19 @@ local diff = {
 		["a3212cd45"] = {
 			["added"] = {
 				[1] = {
+					["filter"] = {
+						["curvature"] = {
+							[1] = 0,
+						},
+						["deadzone"] = 0,
+						["hardwareDetent"] = false,
+						["hardwareDetentAB"] = 0,
+						["hardwareDetentMax"] = 0,
+						["invert"] = false,
+						["saturationX"] = 1,
+						["saturationY"] = 1,
+						["slider"] = true,
+					},
 					["key"] = "JOY_RX",
 					["reformers"] = {
 						[1] = "LShift",
@@ -510,6 +574,12 @@ local diff = {
 				[1] = {
 					["key"] = "JOY_BTN6",
 				},
+				[2] = {
+					["key"] = "JOY_BTN6",
+					["reformers"] = {
+						[1] = "LShift",
+					},
+				},
 			},
 			["name"] = "UI Override - Right Shoulder (LCtrl + Mouse 1/Left Click)",
 		},
@@ -517,6 +587,12 @@ local diff = {
 			["added"] = {
 				[1] = {
 					["key"] = "JOY_BTN5",
+				},
+				[2] = {
+					["key"] = "JOY_BTN5",
+					["reformers"] = {
+						[1] = "LCtrl",
+					},
 				},
 			},
 			["name"] = "UI Override - Left Shoulder (LShift + Mouse 2/Right Click)",

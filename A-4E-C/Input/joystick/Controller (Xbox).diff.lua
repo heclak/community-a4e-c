@@ -8,6 +8,9 @@ local diff = {
 							[1] = 0,
 						},
 						["deadzone"] = 0.07,
+						["hardwareDetent"] = false,
+						["hardwareDetentAB"] = 0,
+						["hardwareDetentMax"] = 0,
 						["invert"] = false,
 						["saturationX"] = 1,
 						["saturationY"] = 1,
@@ -26,6 +29,9 @@ local diff = {
 							[1] = 0,
 						},
 						["deadzone"] = 0.07,
+						["hardwareDetent"] = false,
+						["hardwareDetentAB"] = 0,
+						["hardwareDetentMax"] = 0,
 						["invert"] = false,
 						["saturationX"] = 1,
 						["saturationY"] = 1,
@@ -119,6 +125,9 @@ local diff = {
 							[1] = 0,
 						},
 						["deadzone"] = 0.1,
+						["hardwareDetent"] = false,
+						["hardwareDetentAB"] = 0,
+						["hardwareDetentMax"] = 0,
 						["invert"] = false,
 						["saturationX"] = 1,
 						["saturationY"] = 1,
@@ -172,12 +181,19 @@ local diff = {
 		["a3210cd45"] = {
 			["added"] = {
 				[1] = {
-					["key"] = "JOY_Z",
-					["reformers"] = {
-						[1] = "LCtrl",
+					["filter"] = {
+						["curvature"] = {
+							[1] = 0,
+						},
+						["deadzone"] = 0.2,
+						["hardwareDetent"] = false,
+						["hardwareDetentAB"] = 0,
+						["hardwareDetentMax"] = 0,
+						["invert"] = true,
+						["saturationX"] = 1,
+						["saturationY"] = 0.5,
+						["slider"] = false,
 					},
-				},
-				[2] = {
 					["key"] = "JOY_Z",
 					["reformers"] = {
 						[1] = "LShift",

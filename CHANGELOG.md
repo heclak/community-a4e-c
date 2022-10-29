@@ -2,43 +2,97 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
-## Version 2.1.0 - DD MM 2022
+## Version 2.1.0 - 28 Oct 2022
 
 ### Added
-- Flight Model:
-- Features:
 - Systems:
-  - Specific System Name
-- Missions:
+  - AN/APR-23 RHWS (ECM)
+    - With the AN/APR-23 Function Selector Switch set to REC and the APR-25 Switch in the ON position, a baseline system hum and response audio from a wide variety of radar-equipped units is produced at a volume determined by the the (inner) AN/APR-23 PRF Volume knob.
+    - When the APR-27 Switch is in the ON position, detected missile launches from SA-2 S-75 "Fan Song" will produce an oscillating alert tone at a volume determined by the (outer) AN/APR-23 Missile Alert Volume knob.
+    - The system's bit test is available to perform. With the AN/APR-23 Function Selector Switch set to REC, press the APR-27 Test button to initiate the bit test.
+    - With the system in AN/APR-23 Function Selector Switch set to RPT, ECM will attempt to jam incoming radar signals. The green RPT light will enable when the system transmits.
 - Liveries:
-- Weapons and Loadouts:
+  - Community A-4E V: Blue Team, 2022 (Fictional)
+  - Community A-4E V: Red Team, 2022 (Fictional)
+  - USN VX-5 Vampires, 1986 (Fictional)
+  - USMC Naval Weapons Evaluation Facility, 1974
+  - Operational-era USN and USMC liveries now have a customized, well-worn LAU-10 launcher.
 - Quality of Life:
-  - Inputs, controls indicator, kneeboard, etc.
+  - Input accessibility options:
+    - Added two UI Override inputs, which allow joysticks, gamepads, and other input devices to utilize mouse functions, or to use as modifiers in input layouts.
+    - Input options previously available only on keyboards or joystick devices can now be bound to mouse button inputs.
+    - Throttle - Slew axis.
+    - Dual-axis rudder inputs (Rudder Left and Rudder Right).
+    - Zoom axis inputs for fine zoom control across devices: Zoom View In, Zoom View Out, Zoom View - Slew, Zoom View In - Slew, and Zoom Out - Slew.
+    - Throttle Increment slider in the special menu is available to adjust throttle rate for Throttle Increment/Decrement inputs.
+    - A Custom Throttle Rate slider in the specail menu allows you to adjust the accelleration rate for the new Custom Throttle Rate inputs. The keyboard defaults for these are RCTRL+PageUp and RCTRL+PageDown, respectively.
+    - A Wheelbrake Differential axis is useful for mapping a single axis to the opposing left and right wheelbrakes.
+    - Trim Speeds in the special menu are now adjustable by individually for elevator (pitch), aileron (roll), and rudder (yaw), with percentage sliders. These settings also affect the Trim Reset (Hold) speed. *(thanks Drofseh)*
+    - A pair of comprehensive gamepad input presets for Xbox and PS4 controllers are included, which utilize many of the above functions. Once you are up and running in the pit, you can enjoy flying the A-4E-C with nothing but a humble gamepad and no additional software needed. *(Thanks, Tuuvas)*
+  - Single inputs for the Canopy Lever. You can close the canopy with LSHIFT+C, and open it LSHIFT+LCTRL+C. *(thanks Tanuki44)*
+  - Single and else inputs for Throttle Position Lock.
+  - Input option for cycling the Bomb Arm Switch between the OFF, NOSE & TAIL and TAIL positions. The keyboard default for this input is 6.
+  - Single inputs for the AWRS Quantity Selector Switch, AWRS Drop Interval Knob, and AWRS Mode Selector Switch.
+  - Single inputs for AN/ARN-52 TACAN Mode switch.
+  - Absolute and slew axis inputs for AN/APR-53A Radar Indicator Brilliance, Detail, Gain, Reticle, and Storage knobs.
+  - Radar Antenna Tilt Continuous CW and Radar Antenna Tilt Continuous CCW have been assigned a keyboard default (- and =, respectively).
+  - Inputs for APR-27 Test, APR-27 Light buttons.
+  - Absolute and slew axis inputs for AN/APR-23 Missile Alert Volume, AWRS Drop Interval Knob, Gunsight Elevation Control, Gunsight Light Control, Instrument Lights Control, Shrike/Sidewinder Volume Knob, TACAN Volume Knob, and White Floodlights Control. Some non-axis inputs associated with these have been renamed. Users with extensive control schemes should adjust their controls to resolve any conflicts. *(thanks gcask)*
+  - Input for Chaff Dispenser Select - Toggle 1/2.
+  - Inputs for common communications, including A/A refueling - "Ready for precontact" radio call, and Ask AWACS available tanker. *(thanks gcask)*
+  - When the aircraft has power, the Seat Adjustment Switch can be used to move the baseline pilot head position up and down in the cockpit. *(thanks nima3333)*
+  - Kneeboard Manual:
+    - A a chart of weapon stations and their associated loadout options (page 3-7) in the kneeboard manual.
+    - An overview of the included Xbox1 and PS4 gamepad layouts are available at the end of the kneeboard manual (pages 6-6 and 6-7). 
 - Sounds:
+  - AN/APR-23 RHWS (ECM):
+    - AAA: New sounds are produced in response to the Fire Can SON-9 fire director radar.
+    - Aircraft: New sounds are produced in response to aircraft search and tracking radars.
+    - EWRs and Ships: Unique sound sets are produced in response to ground and ship EWRs. A new sound is also produced in response to ship tracking radars.
+    - SAMs: New sounds are produced in response to the P19 "Flat Face" and S-200 ST-68U "Tin Shield" and SA-2 S-75 "Fan Song" sarch and tracking radars. Some Fan Song units will sound different, simulating the sound of different radar bands used in the field. New sounds are also produced in response to the SA-3 S-125 "Low Blow", SA-5 S-200 "Square Pair", and SA-6 Kub "Straight Flush" units. The number of different sounds a each radar produces varies by unit, so pilots will need to learn what their ears are telling them about what type SAM is targeting them, and how much launch warning that SAM provides from its PRF audio.
+    - SPAAA Vehicles: New sounds are produced in response to the Gepard, Vulcan M163, and ZSU-23-4 Shilka "Gun Dish" radars.
+  - Sounds are produced if the left or right wheels are skidding. Use this feedback to help you learn to taxi (as a sound you don't generally want to hear), and to avoid damaging the wheels or locking up the brakes by keeping them depressed for too long.
+  - Seat adjustment hydraulic motor.
 
 ### Fixed
-- Flight Model:
-- Features:
 - Systems:
-  - Specific System Name
-- Missions:
+  - Setting the AN/ARN-52 TACAN mode to REC no longer crashes the client. Addressing this issue means that A-4E-C 2.0.1 is not compatible with DCS versions after 2.7.18.30765, and A-4E-C 2.1.0 and later is not be compatible with DCS versions before 2.8.0.32066.
+  - AN/APG-53A Radar Terrain Clearance - PROFILE/PLAN switch input binding functions properly.
+  - Input from non-axis throttle inputs now cause the APC system to disengage properly.
 - Liveries:
+  - Community A-4E III: Forever Free livery displays two digits on the flaps, matching the nose and tail.
 - Weapons and Loadouts:
+  - CBU-2B/A pod weights are calculated correctly. Weapon release and spread cause fewer collision-based self-destructs when the weapon is released.
 - Quality of Life:
-  - Inputs, controls indicator, kneeboard, etc.
-- Sounds:
+  - Throttle Increment and Throttle Decrement inputs function properly.
+  - The trim reset input now properly adjusts the position of the Rudder Trim Switch.
+  - Kneeboard Manual:
+    - Waypoints on the navigation page enumerate 11 waypoints, and can't overrun the instructions on the page.
+    - Placing a 300 gallon tank on the center pylon enumerates properly on the kneeboard loadout page.
+    - Corrected erroneously listed procedures for ground radar.
+    - Corrected erroneous procedures for air refueling.
+  - VR hand positions: Users are encouraged to enable *Use Hand Controllers*, *Hand controllers use Cockpit Stick*, and *Hand Controllers use Cockpit Throttle*, and *Hand Interaction Only When Palm Grip is Obtained*. Be aware that it is easy to accidently power down the engine if you touch it with your virtual index finger while holding the grip button. Always approach the throttle with your finger above it.
 
 ### Changed
-- Flight Model:
-- Features:
-- Systems:
-  - Specific System Name
 - Missions:
+  - Changed a few liveries in the included mission sets to better reflect available livery sets.
 - Liveries:
+  - Unmarked and Community liveries are now available to a wider selection of countries.
+  - Updated USN VC-1 Challengers.
+  - Updated a few knob textures.
 - Weapons and Loadouts:
+  - In multiplayer, the serve, and any connected clients must all use this version of the module (or later) in order to prevent weapon conflicts arising from custom weapons.
 - Quality of Life:
-  - Inputs, controls indicator, kneeboard, etc.
+  - Default inputs for Throttle Position Lock are set to RCTRL+HOME (Step Up) and RCTRL+END (Step Down).
+  - Emergency Stores Release Handle default input changed to LCTRL+J. *(think J for jettison!)*
+  - Differential wheelbrake inputs default inputs are changed to LCTRL+W (left) and LALT+W (right).
+  - The controls indicator's nosewheel caster indicator now displays logarithmically, making it easier to see those early changes in castering and better reflect nosewheel sensetivity to turn rate. *(thanks, Drofseh)*.
+  - Refactored the special menu for easier editing in the future.
+  - Kneeboard Manual:
+    - Added additional guidance and notes on AN/APR-23 RHWS (ECM) operation.
 - Sounds:
+  - Improved input response and dynamic range of AN/APR-23 PRF Volume, AN/APR-23 Missile Alert Volume, Shrike/Sidewinder Volume, and TACAN Volume knobs.
+  - Reduced the relative volume of the AN/APR-25 operational "hum".
 
 ## Version 2.0.1 - 5 Mar 2022
 
