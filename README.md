@@ -47,20 +47,18 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 ### Version 2.1.0 Changelog: Featured Items
 
 #### Added
-- **Flight Model:**
 - **Systems:**
   - AN/APR-23 RHWS (ECM)
     - With the AN/APR-23 Function Selector Switch set to REC and the APR-25 Switch in the ON position, a baseline system hum and response audio from a wide variety of radar-equipped units is produced at a volume determined by the the (inner) AN/APR-23 PRF Volume knob.
     - When the APR-27 Switch is in the ON position, detected missile launches from SA-2 S-75 "Fan Song" will produce an oscillating alert tone at a volume determined by the (outer) AN/APR-23 Missile Alert Volume knob.
     - The system's bit test is available to perform. With the AN/APR-23 Function Selector Switch set to REC, press the APR-27 Test button to initiate the bit test.
-- **Missions:**
+    - With the system in AN/APR-23 Function Selector Switch set to RPT, ECM will attempt to jam incoming radar signals. The green RPT light will enable when the system transmits.
 - **Liveries:**
   - Community A-4E V: Blue Team, 2022 (Fictional)
   - Community A-4E V: Red Team, 2022 (Fictional)
   - USN VX-5 Vampires, 1986 (Fictional)
   - USMC Naval Weapons Evaluation Facility, 1974
   - Operational-era USN and USMC liveries now have a customized, well-worn LAU-10 launcher.
-- **Weapons and Loadouts:**
 - **Quality of Life:**
   - Input accessibility options:
     - Added two UI Override inputs, which allow joysticks, gamepads, and other input devices to utilize mouse functions, or to use as modifiers in input layouts.
@@ -78,12 +76,13 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Input option for cycling the Bomb Arm Switch between the OFF, NOSE & TAIL and TAIL positions. The keyboard default for this input is 6.
   - Single inputs for the AWRS Quantity Selector Switch, AWRS Drop Interval Knob, and AWRS Mode Selector Switch.
   - Single inputs for AN/ARN-52 TACAN Mode switch.
+  - Absolute and slew axis inputs for AN/APR-53A Radar Indicator Brilliance, Detail, Gain, Reticle, and Storage knobs.
+  - Radar Antenna Tilt Continuous CW and Radar Antenna Tilt Continuous CCW have been assigned a keyboard default (- and =, respectively).
   - Inputs for APR-27 Test, APR-27 Light buttons.
   - Absolute and slew axis inputs for AN/APR-23 Missile Alert Volume, AWRS Drop Interval Knob, Gunsight Elevation Control, Gunsight Light Control, Instrument Lights Control, Shrike/Sidewinder Volume Knob, TACAN Volume Knob, and White Floodlights Control. Some non-axis inputs associated with these have been renamed. Users with extensive control schemes should adjust their controls to resolve any conflicts. *(thanks gcask)*
   - Input for Chaff Dispenser Select - Toggle 1/2.
   - Inputs for common communications, including A/A refueling - "Ready for precontact" radio call, and Ask AWACS available tanker. *(thanks gcask)*
   - When the aircraft has power, the Seat Adjustment Switch can be used to move the baseline pilot head position up and down in the cockpit. *(thanks nima3333)*
-  - Radar Antenna Tilt Continuous CW and Radar Antenna Tilt Continuous CCW have been assigned a keyboard default (- and =, respectively).
   - Kneeboard Manual:
     - A a chart of weapon stations and their associated loadout options (page 3-7) in the kneeboard manual.
     - An overview of the included Xbox1 and PS4 gamepad layouts are available at the end of the kneeboard manual (pages 6-6 and 6-7). 
@@ -98,13 +97,14 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Seat adjustment hydraulic motor.
 
 #### Fixed
-- **Flight Model:**
 - **Systems:**
-- **Missions:**
+  - Setting the AN/ARN-52 TACAN mode to REC no longer crashes the client. Addressing this issue means that A-4E-C 2.0.1 is not compatible with DCS versions after 2.7.18.30765, and A-4E-C 2.1.0 and later is not be compatible with DCS versions before 2.8.0.32066.
+  - AN/APG-53A Radar Terrain Clearance - PROFILE/PLAN switch input binding functions properly.
+  - Input from non-axis throttle inputs now cause the APC system to disengage properly.
 - **Liveries:**
   - Community A-4E III: Forever Free livery displays two digits on the flaps, matching the nose and tail.
 - **Weapons and Loadouts:**
-  - CBU-2B/A weight is calculated correctly. Weapon release and spread cause fewer collision-based self-destructs when the weapon is released.
+  - CBU-2B/A pod weights are calculated correctly. Weapon release and spread cause fewer collision-based self-destructs when the weapon is released.
 - **Quality of Life:**
   - Throttle Increment and Throttle Decrement inputs function properly.
   - The trim reset input now properly adjusts the position of the Rudder Trim Switch.
@@ -114,18 +114,16 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
     - Corrected erroneously listed procedures for ground radar.
     - Corrected erroneous procedures for air refueling.
   - VR hand positions: Users are encouraged to enable *Use Hand Controllers*, *Hand controllers use Cockpit Stick*, and *Hand Controllers use Cockpit Throttle*, and *Hand Interaction Only When Palm Grip is Obtained*. Be aware that it is easy to accidently power down the engine if you touch it with your virtual index finger while holding the grip button. Always approach the throttle with your finger above it.
-- **Sounds:**
 
 #### Changed
-- **Flight Model:**
-- **Systems:**
 - **Missions:**
   - Changed a few liveries in the included mission sets to better reflect available livery sets.
 - **Liveries:**
-  - Unmarked and Community A-4E liveries are now available to a wider selection of countries.
+  - Unmarked and Community liveries are now available to a wider selection of countries.
   - Updated USN VC-1 Challengers.
   - Updated a few knob textures.
 - **Weapons and Loadouts:**
+  - In multiplayer, the serve, and any connected clients must all use this version of the module (or later) in order to prevent weapon conflicts arising from custom weapons.
 - **Quality of Life:**
   - Default inputs for Throttle Position Lock are set to RCTRL+HOME (Step Up) and RCTRL+END (Step Down).
   - Emergency Stores Release Handle default input changed to LCTRL+J. *(think J for jettison!)*
@@ -136,7 +134,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
     - Added additional guidance and notes on AN/APR-23 RHWS (ECM) operation.
 - **Sounds:**
   - Improved input response and dynamic range of AN/APR-23 PRF Volume, AN/APR-23 Missile Alert Volume, Shrike/Sidewinder Volume, and TACAN Volume knobs.
-  - Reduced the relative volume of the APR-25 operational "hum".
+  - Reduced the relative volume of the AN/APR-25 operational "hum".
 
 [See full changelog](https://github.com/heclak/community-a4e-c/blob/master/CHANGELOG.md)
 
@@ -145,6 +143,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 - Incompatible with AH-6J Little Bird, CH-47 Chinook, and CH-53E Super Stallion mods (DCS bug).
 - Pilot occasionally blacks out when throttling up to hook up to catapult on SuperCarrier.
 - Dispensing high volumes of bomblets (40+) from SUU-7/CBU-1/CBU-2 can cause performance dips or crashes to desktop.
+- Mouse cursor capture using the UI override inputs occasionally fails to initialize. Reloading or restarting the mission usually fixes this.
 
 [See full issue list](https://github.com/heclak/community-a4e-c/issues/)
 
@@ -196,7 +195,7 @@ Your correctly installed files should look something like the following image, s
 
 - If you can't find the A-4E-C in the Mission Editor, ensure the historical mode filter is disabled by toggling the clock icon at the bottom of the screen, as shown in the following screenshot:
 
-![Image of the Mission Editor pointing out the location of the Historical Filter](https://cdn.discordapp.com/attachments/518814186739073024/759230033960763422/unknown.png)
+![Image of the Mission Editor pointing out the location of the Historical Filter](https://cdn.discordapp.com/attachments/518815335013679104/1035712748715249714/unknown.png)
 
 ### In-Cockpit Troubleshooting
 
@@ -206,7 +205,7 @@ Your correctly installed files should look something like the following image, s
 
 - If you find can't move the throttle, must first adjust the throttle step position. In order to do this, the throttle axis input must be at ZERO. Even if you are a keyboard user, the keyboard controls are adjusting a virtual throttle axis that must be returned to zero before the throttle step position can be adjusted. Use the controls indicator to move the red "ghost" throttle to zero before adjusting the throttle step position.
 
-- Ground steering is accomplished by differential braking. There is no nosewheel steering. The nosewheel caster position is visible on the controls indicator. If you don't have rudder pedals, or are struggling with your keybinds, try the Simple Braking (Rudder Assisted) option in the DCS Special Menu for the A-4E-C.
+- Ground steering is accomplished by differential braking. There is no nosewheel steering. The nosewheel caster position is visible on the controls indicator. If you don't have rudder pedals, or are struggling with your keybinds, try the Simple Braking (Rudder Assisted) option in the DCS Special Menu for the A-4E-C, or try assigning a modifier to your rudder axis to utilize the Wheelbrake Differential (Single-Axis) input.
 
 ### Multiplayer Troubleshooting
 
@@ -253,7 +252,7 @@ Once you have completed the edit, save the `mission` file, and re-create a new `
 - Once inside the cockpit, open the kneeboard by pressing `RSHIFT+K`
 - Read the PDF manual in `%HOMEPATH%\\Saved Games\DCS\Mods\aircraft\A-4E-C\Docs` or [read the kneeboard manual online](https://drive.google.com/drive/folders/1_DPA00CWoRfIsqgh7HYabvpFrOdtBxPi)
 
-The [Community A-4E-C Discord server](https://discord.gg/tQZbkTQ) contains a video hall of fame for high-quality, up-to-date tutorials for all major systems by some of the Community's finest members.
+The [Community A-4E-C Discord server](https://discord.gg/tQZbkTQ) contains a video "hall of fame" featuring high-quality, up-to-date tutorials for all major systems by some of the Community's finest members. Users have also provided manuals in French and Spanish on the discord.
 
 ### Q: Is there a paint kit I can use to create my own A-4E-C liveries?
 
@@ -275,7 +274,7 @@ The AGM-12C Bullpup is a possibility with more work, but no promises just yet! O
 
 ### Q: Why doesn't the A-4E-C have a nosewheel steering button?
 
-There is insufficient evidence to suggest that the A-4E had NWS. According to our research, the revisions and reworks relating to the NWS were applied only to -F models. If you find evidence that -E models did in fact have NWS, please share it!
+There is insufficient evidence to suggest that the A-4E had NWS. According to our research, the revisions and reworks relating to the NWS were applied only to -F models. Leaning to use differential braking takes a little time and effort, but it's a worthwhile skill to develop!
 
 ### Q: Are there any plans to simulate other variants or later models of the A-4?
 

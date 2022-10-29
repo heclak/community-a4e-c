@@ -510,6 +510,12 @@ local diff = {
 				[1] = {
 					["key"] = "JOY_BTN6",
 				},
+				[2] = {
+					["key"] = "JOY_BTN6",
+					["reformers"] = {
+						[1] = "LShift",
+					},
+				},
 			},
 			["name"] = "UI Override - Right Shoulder (LCtrl + Mouse 1/Left Click)",
 		},
@@ -517,6 +523,12 @@ local diff = {
 			["added"] = {
 				[1] = {
 					["key"] = "JOY_BTN5",
+				},
+				[2] = {
+					["key"] = "JOY_BTN5",
+					["reformers"] = {
+						[1] = "LCtrl",
+					},
 				},
 			},
 			["name"] = "UI Override - Left Shoulder (LShift + Mouse 2/Right Click)",
