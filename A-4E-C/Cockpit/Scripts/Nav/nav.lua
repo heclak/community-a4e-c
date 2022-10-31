@@ -467,9 +467,7 @@ function post_initialize()
     --local s = recursively_traverse(tacan_to_object_id)
     --print_message_to_user(s)
 
-	miz_carriers = decode_mission()
 	tacan_channel_param:set(0)
-	--print_message_to_user(#miz_carriers)
     startup_print("nav: postinit end")
 end
 
@@ -2180,62 +2178,6 @@ function update_object_beacon(cur_beacon)
 
     return true
 end
-
-function update_carrier_tcn()
-
---local cvn_x = carrier_posx_param:get()
---local cvn_z = carrier_posz_param:get()
-
---print_message_to_user(#miz_carriers)
-	for i = 1,#miz_carriers do
-	--	print_message_to_user(i)
-		if miz_carriers[i].tacan ~= -1 then
---		print_message_to_user("updatecarriertcn - "..miz_carriers[i].tacan)
-			local cvn_tcn_id = nil
-			--print_message_to_user(#beacon_data)
-			for ib = 1,#beacon_data do
---	print_message_to_user(beacon_data[ib].callsign)			
-				if beacon_data[ib].callsign == (miz_carriers[i].tacan .."x") then
-					beacon_data[ib].channel 	= miz_carriers[i].tacan
-					beacon_data[ib].position.x 	= miz_carriers[i].act_x
-					beacon_data[ib].position.z 	= miz_carriers[i].act_z
-					--beacon_data[ib].position.x , beacon_data[ib].position.z = get_actual_carrier_pos(i)
-					beacon_data[ib].position.y 	= 21
-					beacon_data[ib].ntype		= NAV_TYPE_TCN
-					beacon_data[ib].frequency    = miz_carriers[i].tacan
-					cvn_tcn_id = ib
-							
-				end	
-			end	
-			
-			if not cvn_tcn_id then
-				beacon_data[#beacon_data+1] = {
-												callsign 		= miz_carriers[i].tacan .."x",
-												channel 		= miz_carriers[i].tacan ,
-												position		= {
-																	x = miz_carriers[i].x,
-																	z = miz_carriers[i].z,
-																	y =21},
-												ntype			= NAV_TYPE_TCN,
-												frequency    	= miz_carriers[i].tacan,
-												
-												}
-				--print_message_to_user(dir(beacon_data[#beacon_data]))
-			end						
-	
-	
-		end
-	end
-
-	--	if cvn_x ~=	0 then
-	--	end
-	
-	
-	
-	
-	
-
-end	
 
 
 function get_base_sensor_data()
