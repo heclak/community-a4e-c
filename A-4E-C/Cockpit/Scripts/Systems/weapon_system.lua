@@ -1019,7 +1019,6 @@ function check_sidewinder(_master_arm)
     end
     if sidewinder then
         WeaponSystem:select_station(selected_station-1)
-        print_message_to_user("Selected Station "..selected_station)
         check_sidewinder_lock = true
         sidewinder_locked = false
         aim9lock:stop()
