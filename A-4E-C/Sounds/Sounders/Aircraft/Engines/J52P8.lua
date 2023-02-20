@@ -1,4 +1,4 @@
-dofile("Tools.lua")
+dofile("A4Tools.lua")
 dofile("Curve.lua")
 
 offsets = {
@@ -16,9 +16,9 @@ SOUND_TURBINE_POWER = 2 --No idea
 SOUND_THRUST = 3 -- I assume this is in Newtons
 SOUND_TRUE_AIRSPEED = 4 --Airspeed I think is in m/s
 
-engine = {number = 0}
+J52P8 = {number = 0}
 
-function engine:new()
+function J52P8:new()
 	o = {}
 	setmetatable(o, self)
 	self.__index = self
@@ -26,7 +26,7 @@ function engine:new()
 	return o
 end
 
-function engine:init(number_, host)
+function J52P8:init(number_, host)
 
 	--[[
 	Format:
@@ -229,7 +229,7 @@ function engine:init(number_, host)
 	self:createSounds(number_, host)
 end
 
-function engine:createSounds(number_, host)
+function J52P8:createSounds(number_, host)
 	self.number = number_
 
 	for i,v in pairs(self.sounds) do
@@ -237,14 +237,14 @@ function engine:createSounds(number_, host)
 	end
 end
 
-function engine:initCptNames()
+function J52P8:initCptNames()
 	self.engine_l_name  = "Aircrafts/A-4E-C/a4e-debugtest05"
 	self.engine_r_name  = "Aircrafts/A-4E-C/a4e-debugtest05"
 	self.heAmb_l_name   = "Aircrafts/A-4E-C/a4e-debugtest05"
 	self.heAmb_r_name   = "Aircrafts/A-4E-C/a4e-debugtest05"
 end
 
-function engine:createSoundsCpt(hostCpt)
+function J52P8:createSoundsCpt(hostCpt)
 	if self.number == 1 then
 		if self.engine_l_name ~= nil then
 			self.sndCpt = ED_AudioAPI.createSource(hostCpt, self.engine_l_name)
@@ -272,7 +272,7 @@ function engine:createSoundsCpt(hostCpt)
 	end
 end
 
-function engine:destroySoundsCpt()
+function J52P8:destroySoundsCpt()
 	if self.sndCpt ~= nil then
 		ED_AudioAPI.destroySource(self.sndCpt)
 		self.sndCpt = nil
@@ -289,23 +289,23 @@ function engine:destroySoundsCpt()
 	end
 end
 
-function engine:DBGstop()
+function J52P8:DBGstop()
 	stopSRC = function(src)
 		if src ~= nil then
 			if ED_AudioAPI.isSourcePlaying(src) then
-				dbgPrint("src: " .. src)
+				a4_tools.dbgPrint("src: " .. src)
 				ED_AudioAPI.stopSource(src)
 			end
 		end
 	end
 end
 
-function engine:controlSound(snd, pitch, gain, offsetKey)
+function J52P8:controlSound(snd, pitch, gain, offsetKey)
 	if gain < 0.01 then
 		ED_AudioAPI.stopSource(snd)
 	elseif gain >= 0.01 then
-		dbgPrint("pitch: " .. pitch)
-		dbgPrint("gain: " .. gain)
+		a4_tools.dbgPrint("pitch: " .. pitch)
+		a4_tools.dbgPrint("gain: " .. gain)
 	
 		ED_AudioAPI.setSourcePitch(snd, pitch)
 		ED_AudioAPI.setSourceGain(snd, gain)
@@ -323,7 +323,7 @@ function engine:controlSound(snd, pitch, gain, offsetKey)
 	end
 end
 
-function engine:update(coreRPM, fanRPM, turbPower, thrust, flame, vTrue)
+function J52P8:update(coreRPM, fanRPM, turbPower, thrust, flame, vTrue)
 
 	sound_param = {
 		--[SOUND_CORE_RPM] = coreRPM,

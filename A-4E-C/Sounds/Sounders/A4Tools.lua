@@ -1,17 +1,18 @@
+a4_tools = {}
 
-function updateHost(host, params)
+function a4_tools.updateHost(host, params)
 	ED_AudioAPI.setHostPosition(host, params.posx, params.posy, params.posz)
 	ED_AudioAPI.setHostOrientation(host, params.orienta, params.orientb, params.orientc, params.orientd)
 	ED_AudioAPI.setHostVelocity(host, params.velx, params.vely, params.velz)
 	ED_AudioAPI.setHostTimestamp(host, params.timestamp)
 end
 
-function dbgPrint(whatToPrint)
+function a4_tools.dbgPrint(whatToPrint)
 	do return end
 	print(whatToPrint)
 end
 
-function updLoopedSrcWithGain(snd, val)
+function a4_tools.updLoopedSrcWithGain(snd, val)
 	if snd ~= nil then
 		if val < 0.0001 then
 			ED_AudioAPI.stopSource(snd)
@@ -22,13 +23,13 @@ function updLoopedSrcWithGain(snd, val)
 	end
 end
 
-function updNotLoopedSrcWithGain(snd, val)
+function a4_tools.updNotLoopedSrcWithGain(snd, val)
 	if snd ~= nil then
 		ED_AudioAPI.setSourceGain(snd, val)
 	end
 end
 
-function switchSound(oldSnd, newSnd)
+function a4_tools.switchSound(oldSnd, newSnd)
 	if ED_AudioAPI.isSourcePlaying(oldSnd) then
 		ED_AudioAPI.stopSource(oldSnd)
 	end
@@ -36,7 +37,7 @@ function switchSound(oldSnd, newSnd)
 	return newSnd
 end
 
-function ControlSound(snd, pitch, gain, loop)
+function a4_tools.ControlSound(snd, pitch, gain, loop)
 	if snd == nil then
 		return 0
 	end
