@@ -1749,9 +1749,9 @@ local rack_data = {
 }
 
 local rocket_data = {
-    ["LAU-3 Hydra M151 HE"]   = { name = "Hydra M151 HE",  mass = 100 + 19 * (23.6 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_HE151}",                            shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
-    ["LAU-3 Hydra Mk5 HEAT"]   = { name = "Hydra M151 HE",  mass = 100 + 19 * (23.7 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{LAU3_HE5}",                              shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
-    ["LAU-3 Hydra M156 WP"]   = { name = "Hydra M156 WP",  mass = 100 + 19 * (23.3 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_WP156}",                            shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    ["LAU-3 Hydra M151 HE"]    = { name = "Hydra M151 HE",  mass = 100 + 19 * (23.6 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_HE151}",                           shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    ["LAU-3 Hydra Mk5 HEAT"]   = { name = "Hydra M151 HE",  mass = 100 + 19 * (23.7 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_HE5}",                             shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    ["LAU-3 Hydra M156 WP"]    = { name = "Hydra M156 WP",  mass = 100 + 19 * (23.3 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_WP156}",                           shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
 
     ["LAU-68 Hydra M151 HE"]   = { name = "Hydra M151 HE",  mass = 41.73 + 7 * (23.6 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
     ["LAU-68 Hydra Mk5 HEAT"]  = { name = "Hydra Mk5 HEAT", mass = 41.73 + 7 * (23.7 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{174C6E6D-0C3D-42ff-BCB3-0853CB371F5C}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
