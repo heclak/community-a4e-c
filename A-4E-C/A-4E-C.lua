@@ -285,6 +285,7 @@ local function get_centerline_weapons( side )
         { CLSID = "{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}",   connector = rocketConnector, arg_value = 0.2 }, -- LAU 68 Hydra M151 HE
         { CLSID = "{174C6E6D-0C3D-42ff-BCB3-0853CB371F5C}",   connector = rocketConnector, arg_value = 0.2 }, -- LAU 68 Hydra Mk5 HEAT
         { CLSID = "{4F977A2A-CD25-44df-90EF-164BFA2AE72F}",   connector = rocketConnector, arg_value = 0.2 }, -- LAU 68 Hydra M156 WP
+        { CLSID = "{647C5F26-BDD1-41e6-A371-8DE1E4CC0E94}",   connector = rocketConnector, arg_value = 0.2 }, -- LAU 68 Hydra M257 PI
         { CLSID = "{LAU-68 Hydra M156 WP_TER_2_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra M156 WP
         { CLSID = "{LAU-68 Hydra M151 HE_TER_2_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra M151 HE
         { CLSID = "{LAU-68 Hydra Mk5 HEAT_TER_2_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Mk5 HEAT
