@@ -2,6 +2,13 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
+## Version 2.1.1 - 27 Apr 2023
+
+### Fixed
+- Sounder interfering with ground units sounds.
+- Nav Systems breaking in some missions
+- Debug line being printed to the screen during sidewinder launch.
+
 ## Version 2.1.0 - 28 Oct 2022
 
 ### Added
