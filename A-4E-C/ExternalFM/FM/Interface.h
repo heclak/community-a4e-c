@@ -42,9 +42,20 @@ namespace Scooter
 class Interface
 {
 public:
+	Interface( cockpit_param_api api ):
+	    m_api(api)
+	{
+		Init();
+	}
+
 	Interface()
 	{
-		m_api					= ed_get_cockpit_param_api();
+		m_api = ed_get_cockpit_param_api();
+		Init();
+	}
+
+	void Init()
+	{
 		m_RPM					= m_api.pfn_ed_cockpit_get_parameter_handle("RPM");
 
 		m_noseGear				= m_api.pfn_ed_cockpit_get_parameter_handle("FM_GEAR_NOSE");

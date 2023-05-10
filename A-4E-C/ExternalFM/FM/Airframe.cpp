@@ -148,6 +148,30 @@ void Scooter::Airframe::airframeUpdate(double dt)
 	m_left_wheel_arg_prev = m_left_wheel_arg;
 	m_right_wheel_arg_prev = m_right_wheel_arg;
 
+	//const Vec3 gravity_force = m_state.getGlobalDownVectorInBody() * m_nose_wheel_mass * 9.81;
+	const Vec3 nose_wheel_vector = m_nose_wheel_force_position - m_pivot_position;
+	const Vec3 torque = cross( nose_wheel_vector, m_nose_wheel_force );
+	const double damping_torque = m_nose_wheel_angular_velocity * m_nose_wheel_damping;
+
+	const double torque_sign = copysign( 1.0, torque.y );
+	
+
+	static constexpr double max_breakout_speed = 0.1; //m/s
+	const double w = clamp( m_nose_wheel_ground_speed / max_breakout_speed, 0.0, 1.0 );
+	const double breakout_torque = lerpWeight( m_break_out_torque, 0.0, w );
+	//printf( "Breakout Torque: %lf\n", breakout_torque );
+	/*if ( abs(m_nose_wheel_angular_velocity) < 0.01 )
+	{
+		breakout_torque = m_break_out_torque  ;
+	}*/
+
+	const double torque_after_breakout = torque_sign * std::max( abs(torque.y) - breakout_torque, 0.0 );
+	const double torque_total = torque_after_breakout - damping_torque;
+	m_nose_wheel_angular_velocity += torque_total * dt;
+	m_nose_wheel_angle += m_nose_wheel_angular_velocity * dt;
+	//printf( "torque=%lf,torque_damping=%lf,w=%lf,theta=%lf\n", torque_after_breakout, damping_torque, m_nose_wheel_angular_velocity, m_nose_wheel_angle );
+	//printf( "%lf,%lf,%lf\n", m_nose_wheel_force_position.x, m_nose_wheel_force_position.y, m_nose_wheel_force_position.z );
+
 	
 	//printf( "L/R: %d, %d, %lf, %lf\n", IsSkiddingLeft(), IsSkiddingRight(), m_left_wheel_ground_speed, m_right_wheel_ground_speed );
 

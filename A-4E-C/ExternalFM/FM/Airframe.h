@@ -374,9 +374,11 @@ public:
 	inline double getElevatorZeroForceDeflection() const;
 	inline bool getSlatsLocked() const;
 
+
 	inline void SetLeftWheelArg( float value ) { m_left_wheel_arg = value; }
 	inline void SetRightWheelArg( float value ) { m_right_wheel_arg = value; }
 
+	void SetNoseWheelGroundSpeed( double value ) { m_nose_wheel_ground_speed = value; }
 	inline void SetLeftWheelGroundSpeed( float value ) { m_left_wheel_ground_speed = value; }
 	inline void SetRightWheelGroundSpeed( float value ) { m_right_wheel_ground_speed = value; }
 
@@ -441,6 +443,20 @@ public:
 		setDamageDelta( Airframe::Damage::AILERON_L, 1.0 );
 	}
 
+	double GetNoseWheelAngle() const {return m_nose_wheel_angle;}
+	void SetNoseWheelForce( double x, double y, double z )
+    {
+	    m_nose_wheel_force.x = x;
+		m_nose_wheel_force.y = y;
+		m_nose_wheel_force.z = z;
+    }
+
+	void SetNoseWheelForcePosition( double x, double y, double z )
+	{
+		m_nose_wheel_force_position.x = x;
+		m_nose_wheel_force_position.y = y;
+		m_nose_wheel_force_position.z = z;
+	}
 private:
 
 	//Airframe Constants
@@ -488,6 +504,17 @@ private:
 	double m_right_compression = 0.0;
 
 	bool m_skiddable_surface = true;
+
+	double m_nose_wheel_ground_speed = 0.0;
+	static constexpr double m_nose_wheel_mass = 10.0;
+	Vec3 m_nose_wheel_force = { 0.0, 0.0, 0.0 };
+	Vec3 m_nose_wheel_force_position = { 0.0, 0.0, 0.0 };
+	Vec3 m_pivot_position = { 2.696969, -2.271201, 0.0 };
+	double m_nose_wheel_angular_velocity = 0.0;
+	double m_nose_wheel_angle = 0.0;
+	static constexpr double m_nose_wheel_moment_of_intertia = 0.0;
+	static constexpr double m_nose_wheel_damping = 150.0;
+	static constexpr double m_break_out_torque = 200.0;
 
 	//Tank m_selected = Tank::INTERNAL;
 

@@ -1014,15 +1014,9 @@ double ed_fm_get_param(unsigned index)
 	case ED_FM_SUSPENSION_2_RELATIVE_BRAKE_MOMENT:
 		return s_interface->getChocks() ? 1.0 : pow(s_input->brakeRight(), 3.0);
 	case ED_FM_SUSPENSION_0_WHEEL_SELF_ATTITUDE:
-		if constexpr ( s_NWSEnabled )
-			return s_interface->getNWS() ? 0.0 : 1.0;
-		else
-			return 1.0; //want castoring when NWS feature is disabled
+		return 0.0;
 	case ED_FM_SUSPENSION_0_WHEEL_YAW:
-		if ( s_NWSEnabled )
-			return s_interface->getNWS() ? -s_input->yaw() * 0.5 : 0.0; //rotation to 45 degrees, half 90 (range of the wheel)
-		else
-			return 0.0;
+		return s_airframe->GetNoseWheelAngle();
 	case ED_FM_STICK_FORCE_CENTRAL_PITCH:  // i.e. trimmered position where force feeled by pilot is zero
 		s_input->setFFBEnabled(true);
 		return s_airframe->getElevatorZeroForceDeflection();
@@ -1212,6 +1206,11 @@ void ed_fm_suspension_feedback(int idx, const ed_fm_suspension_info* info)
 
 	if ( idx == 0 )
 	{
+		s_airframe->SetNoseWheelGroundSpeed( info->wheel_speed_X );
+		s_airframe->SetNoseWheelForce( info->acting_force[0], info->acting_force[1], info->acting_force[2] );
+		s_airframe->SetNoseWheelForcePosition( info->acting_force_point[0], info->acting_force_point[1], info->acting_force_point[2] );
+
+		//printf( "Force={%lf,%lf,%lf},Position={%lf,%lf,%lf}\n", info->acting_force[0], info->acting_force[1], info->acting_force[2], info->acting_force_point[0], info->acting_force_point[1], info->acting_force_point[2] );
 		s_airframe->setNoseCompression( info->struct_compression );
 	}
 

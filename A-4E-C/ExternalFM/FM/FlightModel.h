@@ -25,6 +25,7 @@
 #include "Timer.h"
 #include "AircraftState.h"
 #include "MovingAverage.h"
+#include "LERX.h"
 //=========================================================================//
 
 struct Force

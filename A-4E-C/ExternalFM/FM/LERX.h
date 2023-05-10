@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "../include/FM/wHumanCustomPhysicsAPI.h"
+#include <include/FM/wHumanCustomPhysicsAPI.h>
 class LERX
 {
 public:

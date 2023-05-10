@@ -23,7 +23,6 @@
 #include "Interface.h"
 #include "Airframe.h"
 #include "AircraftState.h"
-#include "LERX.h"
 #undef max
 //=========================================================================//
 
