@@ -2,6 +2,20 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
+## Version 2.1.2 - ?? ??? 2023
+
+### Added
+- Delivery information for Shrike and Sidewinder provided in Kneeboard Manual, page 3-5.
+- Else keybinds for the Chaff Dispenser Select added for 3-position switch support.
+
+### Changed
+- The addition of NWS (Nosewheel Simulation) should improve and make for an easier time correcting turns on the ground and reducing "stuck wheel" syndrome after a grevous taxi error. Pro-tip: If you drift it just right, you see them gold sparks.
+
+### Fixed
+- Black lines along center line of fuel tanks have been removed.
+- Loadout display inaccuracies in Kneeboard Manual, page 1-5 are corrected.
+- The AN/APG-53A Radar OBST tone and AN/APR-25 RHWR audio properly route to DCS World's "Helmet" sound channel.
+
 ## Version 2.1.1 - 27 Apr 2023
 
 ### Fixed
