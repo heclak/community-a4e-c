@@ -157,7 +157,7 @@ void FuelSystem2::update( double dt )
 	}
 	
 
-	if ( m_boostPump )
+	if ( m_boostPump && m_boost_pump_damage->GetIntegrity() > 0.0 )
 	{
 		m_engine.setMaxDeliverableFuelFlowFraction( 1.0 ); //we can deliver as much fuel as we so please.
 
@@ -204,10 +204,11 @@ void FuelSystem2::update( double dt )
 	m_engine.setHasFuel( m_hasFuel );
 
 	//Divide by two so that at 70% RPM it has 100% transfer rate.
-	double wingTransferRate = m_mechPumpPressure ? rateFactor * c_fuelTransferRateWingToFuse : 0.0;
+	double wingTransferRate = m_mechPumpPressure && m_wing_pump_damage->GetIntegrity() > 0.0 ? rateFactor * c_fuelTransferRateWingToFuse : 0.0;
 
 	//Emergency Fuel Transfer
-	if ( m_wingTankPressure )
+	// Only can transfer if there aren't holes
+	if ( m_wingTankPressure && m_wing_tank_damage->GetIntegrity() > 0.5 )
 		wingTransferRate += c_fuelTransferRateWingToFuseEmergency * rateFactor;
 
 	if ( ! enginePower )
@@ -224,6 +225,17 @@ void FuelSystem2::update( double dt )
 
 	if ( m_dumpingFuel )
 		addFuelToTank( TANK_WING, -c_fuelDumpRate * dt, 15.0 );
+
+
+	if ( m_centre_tank_damage->GetIntegrity() < 1.0 )
+	{	
+		addFuelToTank( TANK_FUSELAGE, -m_centre_tank_damage->GetDamage() * leak_rate * dt, 15.0 );
+	}
+
+	if ( m_wing_tank_damage->GetIntegrity() < 1.0 )
+	{
+		addFuelToTank( TANK_WING, -m_wing_tank_damage->GetDamage() * leak_rate * dt, 15.0 );
+	}
 
 
 	int tankToTransfer = m_wingTankBypass ? TANK_FUSELAGE : TANK_WING;

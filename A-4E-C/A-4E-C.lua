@@ -796,19 +796,31 @@ A_4E_C =  {
     WorldID =  WSTYPE_PLACEHOLDER, -- A_4E,
 
     Failures = {
-        { id = 'asc',         label = _('ASC'),         enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
-        { id = 'autopilot', label = _('AUTOPILOT'), enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
-        { id = 'hydro',      label = _('HYDRO'),     enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
-        { id = 'l_engine',  label = _('L-ENGINE'),     enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
-        { id = 'r_engine',  label = _('R-ENGINE'),     enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
-        { id = 'radar',      label = _('RADAR'),     enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
-        { id = 'eos',          label = _('EOS'),         enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
-        { id = 'helmet',      label = _('HELMET'),     enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
-        --{ id = 'mlws',      label = _('MLWS'),         enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
-        { id = 'rws',          label = _('RWS'),         enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
-        { id = 'ecm',       label = _('ECM'),         enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
-        { id = 'hud',          label = _('HUD'),         enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
-        { id = 'mfd',          label = _('MFD'),         enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
+        -- ACTUAL FAILURES
+        { id = 'Left Gear Jam',          label = _('Left Gear Jam'), enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
+        { id = 'Right Gear Jam',          label = _('Right Gear Jam'), enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
+        { id = 'Nose Gear Jam',          label = _('Nose Gear Jam'), enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
+        
+        { id = 'Left Gear Actuator Failure',          label = _('Left Gear Actuator Failure'), enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
+        { id = 'Right Gear Actuator Failure',          label = _('Right Gear Actuator Failure'), enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
+        { id = 'Nose Gear Actuator Failure',          label = _('Nose Gear Actuator Failure'), enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
+        
+        { id = 'Pitot Tube',          label = _('Pitot Tube Failure'), enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
+        { id = 'Static Port',          label = _('Static Port Failure'), enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
+      
+        { id = 'Radar Receiver',          label = _('Radar Receiver Failure'), enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
+        
+        { id = 'Boost Pump',          label = _('Boost Pump Failure'), enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
+        { id = 'Wing Pump',          label = _('Wing Tank Pump Failure'), enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
+        
+        { id = 'Elevator Actuator',          label = _('Elevator Actuator Failure'), enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
+        { id = 'Aileron Left Actuator',          label = _('Left Aileron Actuator Failure'), enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
+        { id = 'Aileron Right Actuator',          label = _('Right Aileron Actuator Failure'), enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
+        { id = 'Rudder Actuator',          label = _('Rudder Actuator Failure'), enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
+        
+        { id = 'Wing Tank',          label = _('Wing Tank Leak'), enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
+        { id = 'Centre Tank',          label = _('Fuselage Tank Leak'), enable = false, hh = 0, mm = 0, mmint = 1, prob = 100 },
+        
     },
     -- Aircraft Additional Properties
     AddPropAircraft = {

@@ -34,6 +34,7 @@
 #include "Asteroids.h"
 #include "MouseControl.h"
 #include "ModifierEmitter.h"
+#include "Damage.h"
 
 //============================= Statics ===================================//
 static Scooter::AircraftState* s_state = NULL;
@@ -212,6 +213,8 @@ void init(const char* config)
 
 	s_state = new Scooter::AircraftState;
 	s_interface = new Scooter::Interface;
+
+	Scooter::DamageProcessor::Create( *s_interface );
 	s_input = new Scooter::Input;
 	s_engine = new Scooter::Engine2( *s_state );
 	s_airframe = new Scooter::Airframe( *s_state, *s_input, *s_engine );
@@ -258,6 +261,8 @@ void cleanup()
 	delete s_asteroids;
 	delete s_mouseControl;
 	delete s_logger;
+
+	Scooter::DamageProcessor::Destroy();
 
 	s_luaVM = NULL;
 	s_state = NULL;
@@ -329,8 +334,8 @@ void ed_fm_add_local_moment(double & x,double &y,double &z)
 
 void ed_fm_simulate(double dt)
 {
-	if ( ! g_safeToRun )
-		return;
+	//if ( ! g_safeToRun )
+		//return;
 
 	Logger::time( dt );
 
@@ -438,7 +443,8 @@ void ed_fm_simulate(double dt)
 
 	s_interface->setThrottlePosition(s_input->throttleNorm());
 	s_interface->setStickPitch(s_airframe->getElevator());
-	s_interface->setStickRoll(s_airframe->getAileron());
+
+	s_interface->setStickRoll( s_input->roll() + s_input->rollTrim() );
 	s_interface->setRudderPedals(s_input->yawAxis().getValue());
 	s_interface->setLeftBrakePedal( s_input->brakeLeft() );
 	s_interface->setRightBrakePedal( s_input->brakeRight() );
@@ -613,6 +619,9 @@ void ed_fm_set_current_state_body_axis
 
 void ed_fm_on_damage( int element, double element_integrity_factor )
 {
+	//printf( "On Damage: %d -> %lf\n", element, element_integrity_factor );
+
+	Scooter::DamageProcessor::GetDamageProcessor().OnDamage( element, element_integrity_factor );
 	s_airframe->setIntegrityElement((Scooter::Airframe::Damage)element, (float)element_integrity_factor);
 }
 
@@ -752,6 +761,16 @@ void ed_fm_set_command
 		//Weight on wheels plus lower than 50 kts.
 		if ( s_airframe->getNoseCompression() > 0.01 && magnitude(s_state->getLocalSpeed()) < 25.0 )
 			s_airframe->toggleSlatsLocked();
+
+		//s_airframe->setDamageDelta( Scooter::Airframe::Damage::WING_L_IN, 0.25 );
+		//s_airframe->breakWing();
+
+		//ed_fm_on_damage( (int)Scooter::Airframe::Damage::FUSELAGE_BOTTOM, 0.5 );
+		//ed_fm_on_damage( (int)Scooter::Airframe::Damage::NOSE_CENTER, 0.8 );
+		//ed_fm_on_damage( (int)Scooter::Airframe::Damage::NOSE_LEFT_SIDE, 0.8 );
+		Scooter::DamageProcessor::GetDamageProcessor().SetFailure( "Engine", 0.8 );
+		//ed_fm_on_damage( (int)Scooter::Airframe::Damage::FUSELAGE_BOTTOM, 0.4 );
+		
 		break;
 	case KEYS_PLANEFIREON:
 		s_asteroids->fire( true );
@@ -917,8 +936,8 @@ void ed_fm_set_draw_args (EdDrawArgument * drawargs,size_t size)
 		drawargs[616].f = drawargs[5].f;
 	}
 
-	drawargs[LEFT_AILERON].f = -s_airframe->getAileron();
-	drawargs[RIGHT_AILERON].f = s_airframe->getAileron();
+	drawargs[LEFT_AILERON].f = s_airframe->getAileronLeft();
+	drawargs[RIGHT_AILERON].f = s_airframe->getAileronRight();
 
 	drawargs[LEFT_ELEVATOR].f = s_airframe->getElevator();
 	drawargs[RIGHT_ELEVATOR].f = s_airframe->getElevator();
@@ -1039,7 +1058,7 @@ double ed_fm_get_param(unsigned index)
 
 bool ed_fm_pop_simulation_event(ed_fm_simulation_event& out)
 {
-	static int counter = 1;
+	static int counter = 0;
 
 	if (s_airframe->catapultState() == Scooter::Airframe::ON_CAT_NOT_READY && !s_airframe->catapultStateSent())
 	{
@@ -1076,11 +1095,23 @@ bool ed_fm_pop_simulation_event(ed_fm_simulation_event& out)
 			out.event_type = ED_FM_EVENT_STRUCTURE_DAMAGE;
 			out.event_params[0] = (float)damage;
 			out.event_params[1] = integrity;
-
+			printf( "Damage Stack {%f|%f}\n", (float)damage, integrity );
 			return true;
 		}
 	}
 
+	/*if ( counter == 0 )
+	{
+		strcpy_s( out.event_message, 512, "JET_ENGINE_STARTUP_BLAST" );
+		out.event_type = ED_FM_EVENT_EFFECT;
+		out.event_params[0] = -1;
+		out.event_params[1] = 1.0f;
+		counter++;
+		printf( "Leak\n" );
+		return true;
+	}*/
+
+	counter = 0;
 	return false;
 }
 
@@ -1108,6 +1139,8 @@ bool ed_fm_push_simulation_event(const ed_fm_simulation_event& in)
 			}
 		}
 	}
+
+	printf( "Event In: %d\n", in.event_type );
 	return true;
 }
 
@@ -1151,6 +1184,18 @@ void ed_fm_hot_start_in_air()
 void ed_fm_repair()
 {
 	s_airframe->resetDamage();
+	Scooter::DamageProcessor::GetDamageProcessor().Repair();
+}
+
+bool ed_fm_need_to_be_repaired()
+{
+	return Scooter::DamageProcessor::GetDamageProcessor().NeedRepair();
+}
+
+void ed_fm_on_planned_failure( const char* failure )
+{
+	printf( "Planned Failure: %s", failure );
+	Scooter::DamageProcessor::GetDamageProcessor().SetFailure( failure );
 }
 
 bool ed_fm_add_local_force_component( double & x,double &y,double &z,double & pos_x,double & pos_y,double & pos_z )

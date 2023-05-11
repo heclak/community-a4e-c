@@ -12,6 +12,7 @@
 //
 //================================ Includes ===============================//
 #include "BaseComponent.h"
+#include "Damage.h"
 //=========================================================================//
 
 namespace Scooter
@@ -20,15 +21,14 @@ namespace Scooter
 class Actuator : public BaseComponent
 {
 public:
-	Actuator();
-	Actuator(double speed);
+	Actuator( std::shared_ptr<DamageObject> damage );
+	Actuator( std::shared_ptr<DamageObject> damage, double speed);
 	~Actuator();
 
 	virtual void Actuator::zeroInit();
 	virtual void Actuator::coldInit();
 	virtual void Actuator::hotInit();
 	virtual void Actuator::airborneInit();
-
 
 	double inputUpdate(double targetPosition, double dt);
 	void physicsUpdate(double dt);
@@ -39,6 +39,7 @@ private:
 	double m_actuatorSpeed;
 	double m_actuatorPos;
 	double m_actuatorTargetPos;
+	std::shared_ptr<DamageObject> m_damage = nullptr;
 };
 
 }

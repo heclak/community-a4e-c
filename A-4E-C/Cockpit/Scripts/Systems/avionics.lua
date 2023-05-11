@@ -700,7 +700,7 @@ function update_ias_mach()
     -- 2) figure out where on the mach disc is pointed at by our current mach
     -- 3) rotate the mach disc by the right amount, to match
 
-    local mach = sensor_data.getMachNumber()
+    local mach = efm_data_bus.fm_getMeasuredMach()
     local disc = 0
     
     if mach <= 0.5 then

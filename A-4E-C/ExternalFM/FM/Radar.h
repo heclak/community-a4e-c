@@ -9,6 +9,7 @@
 #include "BaseComponent.h"
 #include "cockpit_base_api.h"
 #include "Ship.h"
+#include "Damage.h"
 
 constexpr static double c_obstructionPeriod = 2.0;
 
@@ -214,6 +215,13 @@ private:
 	double m_angleKnob = 0.0;
 	double m_detailKnob = 0.0;
 	double m_reticleKnob = 0.0;
+
+	std::shared_ptr<DamageObject> receiver_damage = DamageProcessor::MakeDamageObjectMultiple( "Radar Receiver", 
+		{ DamageCell::NOSE_CENTER,
+			DamageCell::NOSE_BOTTOM,
+			DamageCell::NOSE_RIGHT_SIDE,
+			DamageCell::NOSE_LEFT_SIDE
+		} );
 
 	inline void storage( double value )
 	{

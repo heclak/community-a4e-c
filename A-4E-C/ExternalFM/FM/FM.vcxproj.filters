@@ -69,6 +69,12 @@
     <ClCompile Include="Logger.cpp">
       <Filter>A4-Skyhawk</Filter>
     </ClCompile>
+    <ClCompile Include="Hydraulics.cpp">
+      <Filter>A4-Skyhawk\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Damage.cpp">
+      <Filter>A4-Skyhawk</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ED_FM_Utility.h" />
@@ -211,6 +217,15 @@
     </ClInclude>
     <ClInclude Include="AirframeConstants.h">
       <Filter>A4-Skyhawk</Filter>
+    </ClInclude>
+    <ClInclude Include="Hydraulics.h">
+      <Filter>A4-Skyhawk\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Damage.h">
+      <Filter>A4-Skyhawk</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageCells.h">
+      <Filter>A4-Skyhawk\Airframe</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -107,6 +107,60 @@ private:
 
 	double m_fuelInLines = c_fuelInLines;
 
+	static constexpr double leak_rate = 10.0;
+	std::function<void(DamageObject&,double)> on_damage_wing = []( DamageObject& object, double integrity )
+	{
+		const double amount_over = DamageProcessor::GetDamageProcessor().Random() - integrity;
+		if ( amount_over > 0.0 )
+		{
+			object.SetIntegrity( object.GetIntegrity() - amount_over );
+			LOG_DAMAGE( "New Leak in: %s, delta=%lf, rate=%lf\n", object.GetName().c_str(), amount_over, object.GetDamage() * leak_rate );
+		}
+	};
+
+	std::function<void( DamageObject&, double )> on_damage_fuselage = []( DamageObject& object, double integrity )
+	{
+		if ( integrity < object.GetIntegrity() && DamageProcessor::GetDamageProcessor().Random() < 0.1 )
+		{
+			object.SetIntegrity( integrity );
+			LOG_DAMAGE( "New Leak in: %s, rate=%lf\n", object.GetName().c_str(), object.GetDamage() * leak_rate );
+		}
+	};
+
+	std::shared_ptr<DamageObject> m_centre_tank_damage = DamageProcessor::MakeDamageObjectMultiple( "Centre Tank", {
+		DamageCell::FUSELAGE_LEFT_SIDE,
+	    DamageCell::FUSELAGE_RIGHT_SIDE,
+		DamageCell::FUSELAGE_BOTTOM
+	}, on_damage_fuselage );
+
+	
+	std::shared_ptr<DamageObject> m_wing_tank_damage = DamageProcessor::MakeDamageObjectMultiple( "Wing Tank", {
+		DamageCell::FUSELAGE_BOTTOM,
+		DamageCell::WING_L_IN,
+		DamageCell::WING_R_IN,
+		DamageCell::WING_L_CENTER,
+		DamageCell::WING_R_CENTER,
+		}, on_damage_wing );
+
+	std::shared_ptr<DamageObject> m_boost_pump_damage = DamageProcessor::MakeDamageObjectMultiple( "Boost Pump", {
+	    DamageCell::FUSELAGE_LEFT_SIDE,
+		DamageCell::FUSELAGE_RIGHT_SIDE,
+		DamageCell::FUSELAGE_BOTTOM
+	}, []( DamageObject& object, double integrity ) {
+			if ( integrity < 0.9 && DamageProcessor::GetDamageProcessor().Random() <= 0.3 )
+			{
+				object.SetIntegrity( 0.0 );
+			}
+	} );
+
+	std::shared_ptr<DamageObject> m_wing_pump_damage = DamageProcessor::MakeDamageObject( "Wing Pump", DamageCell::FUSELAGE_BOTTOM, 
+		[]( DamageObject& object, double integrity ) {
+	    if ( integrity < 0.9 && DamageProcessor::GetDamageProcessor().Random() <= 0.4 )
+	    {
+			object.SetIntegrity( 0.0 );
+	    }
+	} );
+
 	Tank m_selectedTank = TANK_FUSELAGE;
 
 	Scooter::Engine2& m_engine;

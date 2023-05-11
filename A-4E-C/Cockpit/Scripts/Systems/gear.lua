@@ -60,7 +60,7 @@ local GEAR_NOSE_STATE = 1.0 -- 0 = retracted, 1.0 = extended -- "current" nose g
 local GEAR_LEFT_STATE =	1.0 -- 0 = retracted, 1.0 = extended -- "current" main left gear position
 local GEAR_RIGHT_STATE = 1.0 -- 0 = retracted, 1.0 = extended -- "current" main right gear position
 local GEAR_TARGET =     1.0 -- 0 = retracted, 1.0 = extended -- "future" gear position
-
+local GEAR_TARGET_TIMER = 0.0
 
 
 local GEAR_ERR   = 0
@@ -124,6 +124,7 @@ function SetCommand(command,value)
         if value ~= GEAR_TARGET then
             if get_hyd_utility_ok() then
                 GEAR_TARGET = value
+                GEAR_TARGET_TIMER = LeftSideLead
                 dispatch_action(nil,iCommandPlaneGear)
             end
         end
@@ -132,11 +133,11 @@ function SetCommand(command,value)
             emergency_gear_countdown = 0.25 -- seconds until T-handle bungees back
             if GEAR_ERR==0 then -- necessary to differentiate from gear error?
                 if gear_handle_pos == 1 then  -- gear handle down
-                    if not get_hyd_utility_ok() then
+                    --if not get_hyd_utility_ok() then
                         -- print_message_to_user("Emergency gear release")
-                        GEAR_ERR = 1 -- necessary to differentiate from gear error?
-                        GEAR_TARGET = 1
-                    end
+                    GEAR_ERR = 1 -- necessary to differentiate from gear error?
+                    GEAR_TARGET = 1
+                    --end
                 end
             end
         end
@@ -314,6 +315,7 @@ function update_gear()
     sound_params.snd_inst_c_gear_end_in:set(0.0)
     sound_params.snd_inst_c_gear_end_out:set(0.0)
 
+
     if GEAR_NOSE_STATE == GEAR_TARGET then
         if GEAR_TARGET == 1.0 then
             sound_params.snd_inst_c_gear_end_out:set(1.0)
@@ -353,11 +355,23 @@ function update_gear()
 
     local gear_in_transit = false
 
+    if GEAR_TARGET_TIMER >= 0.0 then
+        GEAR_TARGET_TIMER = GEAR_TARGET_TIMER - update_time_step
+    end
+
     if get_hyd_utility_ok() or GEAR_ERR == 1 then
+
+        -- NOSE
+        local n_gear_jam_integrity = efm_data_bus:get_integrity("Nose Gear Jam")
+        local n_gear_actuator_integrity = efm_data_bus:get_integrity("Nose Gear Actuator")
+        local normal_nose_gear_extend_speed = gear_nose_extend_increment * n_gear_jam_integrity * n_gear_actuator_integrity
+        local normal_nose_gear_retract_speed = gear_nose_retract_increment * n_gear_jam_integrity * n_gear_actuator_integrity
+        local emer_nose_gear_speed = 2*gear_nose_extend_increment * n_gear_jam_integrity
+
         -- make primary nosegear adjustments if needed
         if GEAR_TARGET ~= GEAR_NOSE_STATE then
 
-            if math.abs(GEAR_NOSE_STATE - GEAR_TARGET) < gear_main_increment then
+            if math.abs(GEAR_NOSE_STATE - GEAR_TARGET) < normal_nose_gear_extend_speed then
                 GEAR_NOSE_STATE = GEAR_TARGET
             end
 
@@ -367,10 +381,10 @@ function update_gear()
                     sound_params.snd_inst_c_gear_pod_open:set(1.0)
                 end
 
-                GEAR_NOSE_STATE = GEAR_NOSE_STATE + gear_nose_extend_increment
-                gear_in_transit = true
+                GEAR_NOSE_STATE = GEAR_NOSE_STATE + normal_nose_gear_extend_speed
+                gear_in_transit = gear_in_transit or n_gear_actuator_integrity > 0.0
                 if GEAR_ERR == 1 then -- extend more quickly (drop by gravity and ram air pressure)
-                    GEAR_NOSE_STATE = GEAR_NOSE_STATE + 2*gear_nose_extend_increment
+                    GEAR_NOSE_STATE = GEAR_NOSE_STATE + emer_nose_gear_speed
                 end
             elseif GEAR_NOSE_STATE > GEAR_TARGET then
 
@@ -379,20 +393,32 @@ function update_gear()
                 end
 
                 if GEAR_ERR == 0 and allowRetract then
-                    GEAR_NOSE_STATE = GEAR_NOSE_STATE - gear_nose_retract_increment
-                    gear_in_transit = true
+                    GEAR_NOSE_STATE = GEAR_NOSE_STATE - normal_nose_gear_retract_speed
+                    gear_in_transit = gear_in_transit or n_gear_actuator_integrity > 0.0
                 end
             end
         end
 
+        -- LEFT and Right
+        local l_gear_jam_integrity = efm_data_bus:get_integrity("Left Gear Jam")
+        local r_gear_jam_integrity = efm_data_bus:get_integrity("Right Gear Jam")
+        local l_gear_actuator_integrity = efm_data_bus:get_integrity("Left Gear Actuator")
+        local r_gear_actuator_integrity = efm_data_bus:get_integrity("Right Gear Actuator")
+
+        local normal_left_gear_speed = gear_main_increment * l_gear_jam_integrity * l_gear_actuator_integrity
+        local emer_left_gear_speed = 2*gear_main_increment * l_gear_jam_integrity
+
+        local normal_right_gear_speed = gear_main_increment * r_gear_jam_integrity * r_gear_actuator_integrity
+        local emer_right_gear_speed = 2*gear_main_increment * r_gear_jam_integrity
+
         -- make primary main gear adjustments if needed
         if GEAR_TARGET ~= GEAR_LEFT_STATE or GEAR_TARGET ~= GEAR_RIGHT_STATE then
 
-            if math.abs(GEAR_LEFT_STATE - GEAR_TARGET) < gear_main_increment then
+            if math.abs(GEAR_LEFT_STATE - GEAR_TARGET) < normal_left_gear_speed then
                 GEAR_LEFT_STATE = GEAR_TARGET
             end
 
-            if math.abs(GEAR_RIGHT_STATE - GEAR_TARGET) < gear_main_increment then
+            if math.abs(GEAR_RIGHT_STATE - GEAR_TARGET) < normal_right_gear_speed then
                 GEAR_RIGHT_STATE = GEAR_TARGET
             end
 
@@ -405,10 +431,10 @@ function update_gear()
                 end
 
                 -- extending
-                GEAR_LEFT_STATE = GEAR_LEFT_STATE + gear_main_increment
-                gear_in_transit = true
+                GEAR_LEFT_STATE = GEAR_LEFT_STATE + normal_left_gear_speed
+                gear_in_transit = gear_in_transit or l_gear_actuator_integrity > 0.0
                 if GEAR_ERR == 1 then -- extend more quickly (drop by gravity and ram air pressure)
-                    GEAR_LEFT_STATE = GEAR_LEFT_STATE + 2*gear_main_increment
+                    GEAR_LEFT_STATE = GEAR_LEFT_STATE + emer_left_gear_speed
                 end
             elseif GEAR_LEFT_STATE > GEAR_TARGET then
 
@@ -417,8 +443,8 @@ function update_gear()
                 end
 
                 if GEAR_ERR == 0 and allowRetract then
-                    GEAR_LEFT_STATE = GEAR_LEFT_STATE - gear_main_increment
-                    gear_in_transit = true
+                    GEAR_LEFT_STATE = GEAR_LEFT_STATE - normal_left_gear_speed
+                    gear_in_transit = gear_in_transit or l_gear_actuator_integrity > 0.0
                 end
             end
 
@@ -429,11 +455,11 @@ function update_gear()
                     sound_params.snd_inst_r_gear_pod_open:set(1.0)
                 end
 
-                if GEAR_LEFT_STATE > LeftSideLead then
-                    GEAR_RIGHT_STATE = GEAR_RIGHT_STATE + gear_main_increment
-                    gear_in_transit = true
+                if GEAR_TARGET_TIMER <= 0.0 then
+                    GEAR_RIGHT_STATE = GEAR_RIGHT_STATE + normal_right_gear_speed
+                    gear_in_transit = gear_in_transit or r_gear_actuator_integrity > 0.0
                     if GEAR_ERR == 1 then -- extend more quickly (drop by gravity and ram air pressure)
-                        GEAR_RIGHT_STATE = GEAR_RIGHT_STATE + 2*gear_main_increment
+                        GEAR_RIGHT_STATE = GEAR_RIGHT_STATE + emer_right_gear_speed
                     end
                 end
             elseif GEAR_RIGHT_STATE > GEAR_TARGET then
@@ -442,17 +468,17 @@ function update_gear()
                     sound_params.snd_inst_r_gear_pod_close:set(1.0)
                 end
 
-                if GEAR_LEFT_STATE < (1-LeftSideLead) then
+                if GEAR_TARGET_TIMER <= 0.0 then
                     if GEAR_ERR == 0 and allowRetract then
-                        GEAR_RIGHT_STATE = GEAR_RIGHT_STATE - gear_main_increment
-                        gear_in_transit = true
+                        GEAR_RIGHT_STATE = GEAR_RIGHT_STATE - normal_right_gear_speed
+                        gear_in_transit = gear_in_transit or l_gear_actuator_integrity > 0.0
                     end
                 end
             end
         end
     end
 
-    if gear_in_transit then
+    if gear_in_transit and GEAR_ERR == 0 then
         sound_params.snd_cont_gear_mov:set(1.0)
         sound_params.snd_inst_gear_stop:set(0.0)
     end

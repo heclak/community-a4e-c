@@ -182,12 +182,15 @@
     <ClInclude Include="cockpit_base_api.h" />
     <ClInclude Include="Commands.h" />
     <ClInclude Include="CP741.h" />
+    <ClInclude Include="Damage.h" />
+    <ClInclude Include="DamageCells.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="Devices.h" />
     <ClInclude Include="Engine2.h" />
     <ClInclude Include="FuelSystem2.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Hashes.h" />
+    <ClInclude Include="Hydraulics.h" />
     <ClInclude Include="ILS.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Interface.h" />
@@ -225,6 +228,7 @@
     <ClCompile Include="Avionics.cpp" />
     <ClCompile Include="Axis.cpp" />
     <ClCompile Include="CP741.cpp" />
+    <ClCompile Include="Damage.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsManaged>
@@ -241,6 +245,7 @@
     </ClCompile>
     <ClCompile Include="Engine2.cpp" />
     <ClCompile Include="FuelSystem2.cpp" />
+    <ClCompile Include="Hydraulics.cpp" />
     <ClCompile Include="ILS.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Logger.cpp" />

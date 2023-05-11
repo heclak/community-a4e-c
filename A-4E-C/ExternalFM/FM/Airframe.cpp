@@ -18,8 +18,7 @@
 Scooter::Airframe::Airframe(AircraftState& state, Input& controls, Engine2& engine) :
 	m_state(state),
 	m_controls(controls),
-	m_engine(engine),
-	m_actuatorElev(5.0)
+	m_engine(engine)
 {
 	m_integrityElement = new float[(int)Damage::COUNT];
 	zeroInit();
@@ -190,8 +189,8 @@ void Scooter::Airframe::airframeUpdate(double dt)
 	
 	m_stabilizer = setStabilizer(dt);
 	m_elevator = setElevator(dt);
-	m_aileronLeft = setAileron(dt);
-	m_aileronRight = -m_aileronLeft;
+	m_aileronLeft = setAileronLeft(dt);
+	m_aileronRight = setAileronRight(dt);
 	m_rudder = setRudder(dt);
 
 

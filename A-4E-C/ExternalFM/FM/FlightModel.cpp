@@ -568,10 +568,10 @@ void Scooter::FlightModel::checkForOverstress( double dt )
 	{
 		m_airframe.setDamageDelta( Airframe::Damage::WING_L_IN, random() );
 		m_airframe.setDamageDelta( Airframe::Damage::WING_L_CENTER, 1.0 );
-		m_airframe.setDamageDelta( Airframe::Damage::WING_L_PART_CENTER, 1.0 );
-		m_airframe.setDamageDelta( Airframe::Damage::FLAP_L, 1.0 );
-		m_airframe.setDamageDelta( Airframe::Damage::WING_L_OUT, 1.0 );
-		m_airframe.setDamageDelta( Airframe::Damage::AILERON_L, 1.0 );
+		//m_airframe.setDamageDelta( Airframe::Damage::WING_L_PART_CENTER, 1.0 );
+		//m_airframe.setDamageDelta( Airframe::Damage::FLAP_L, 1.0 );
+		//m_airframe.setDamageDelta( Airframe::Damage::WING_L_OUT, 1.0 );
+		//m_airframe.setDamageDelta( Airframe::Damage::AILERON_L, 1.0 );
 		//printf( "CRACK: Left Wing\n" );
 	}
 		
@@ -580,10 +580,10 @@ void Scooter::FlightModel::checkForOverstress( double dt )
 	{
 		m_airframe.setDamageDelta( Airframe::Damage::WING_R_IN, random() );
 		m_airframe.setDamageDelta( Airframe::Damage::WING_R_CENTER, 1.0 );
-		m_airframe.setDamageDelta( Airframe::Damage::WING_R_PART_CENTER, 1.0 );
-		m_airframe.setDamageDelta( Airframe::Damage::FLAP_R, 1.0 );
-		m_airframe.setDamageDelta( Airframe::Damage::WING_R_OUT, 1.0 );
-		m_airframe.setDamageDelta( Airframe::Damage::AILERON_R, 1.0 );
+		//m_airframe.setDamageDelta( Airframe::Damage::WING_R_PART_CENTER, 1.0 );
+		//m_airframe.setDamageDelta( Airframe::Damage::FLAP_R, 1.0 );
+		//m_airframe.setDamageDelta( Airframe::Damage::WING_R_OUT, 1.0 );
+		//m_airframe.setDamageDelta( Airframe::Damage::AILERON_R, 1.0 );
 		//printf( "CRACK: Right Wing\n" );
 	}
 }

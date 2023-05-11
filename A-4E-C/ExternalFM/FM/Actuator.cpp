@@ -18,12 +18,12 @@
 namespace Scooter
 { // start namespace
 
-Actuator::Actuator() : m_actuatorSpeed{ 10.0 }, m_actuatorPos{ 0.0 }, m_actuatorTargetPos{ 0.0 }, m_actuatorFactor{ 1.0 }
+Actuator::Actuator( std::shared_ptr<DamageObject> damage ) : m_damage(damage), m_actuatorSpeed{ 10.0 }, m_actuatorPos{ 0.0 }, m_actuatorTargetPos{ 0.0 }, m_actuatorFactor{ 1.0 }
 {
 
 }
 
-Actuator::Actuator(double speed) : m_actuatorSpeed{ speed }, m_actuatorPos{ 0.0 }, m_actuatorTargetPos{ 0.0 }, m_actuatorFactor{ 1.0 }
+Actuator::Actuator( std::shared_ptr<DamageObject> damage, double speed) : m_damage( damage ), m_actuatorSpeed{ speed }, m_actuatorPos{ 0.0 }, m_actuatorTargetPos{ 0.0 }, m_actuatorFactor{ 1.0 }
 {
 
 }
@@ -90,6 +90,7 @@ void Actuator::physicsUpdate(double dt)
 		}
 	}
 
+	actuatorSpeed *= m_damage->GetIntegrity();
 
 	if (abs(speedToTarget) <= actuatorSpeed)
 	{

@@ -256,6 +256,8 @@ extern "C"
 	ED_FM_API void ed_fm_suspension_feedback(int idx, const ed_fm_suspension_info* info);
 
 	ED_FM_API void ed_fm_repair ();
+	ED_FM_API bool ed_fm_need_to_be_repaired();
+	ED_FM_API void ed_fm_on_planned_failure( const char* );
 
 	ED_FM_API void ed_fm_set_plugin_data_install_path ( const char* path );
 	ED_FM_API void ed_fm_release ();

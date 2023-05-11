@@ -209,11 +209,11 @@ double Scooter::AeroControlElement::controlInput()
 	case AILERON:
 		if (m_cp.z > 0)
 		{
-			return -m_airframe.getAileron() * toRad(14);
+			return -m_airframe.getAileronRight() * toRad(14);
 		}
 		else
 		{
-			return m_airframe.getAileron() * toRad(14);
+			return -m_airframe.getAileronLeft() * toRad(14);
 		}
 	default:
 		printf("ERROR: invalid control surface\n");

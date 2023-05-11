@@ -23,6 +23,8 @@
 #include "AircraftState.h"
 #include <algorithm>
 #include "SmoothVary.h"
+#include "Damage.h"
+#include "DamageCells.h"
 //=========================================================================//
 
 #undef max
@@ -82,6 +84,15 @@ public:
 
 	void updateEngine( double dt );
 private:
+
+	std::shared_ptr<DamageObject> m_damage_engine = DamageProcessor::MakeDamageObjectMultiple( "Engine", {
+		DamageCell::FUSELAGE_BOTTOM,
+		DamageCell::FUSELAGE_LEFT_SIDE,
+		DamageCell::FUSELAGE_RIGHT_SIDE
+	} );
+
+	std::shared_ptr<DamageObject> m_inlet_damage = DamageProcessor::MakeDamageObject( "Engine Inlet", DamageCell::ENGINE );
+
 	AircraftState& m_aircraftState;
 	ZeroTable thrustToFFOverSqrtTemp;
 	ZeroTable fuelToHPOmega;
@@ -235,7 +246,8 @@ double Engine2::hpOmegaToLPOmega( double x )
 void Engine2::updateShaftsDynamic( double dt )
 {
 	double effectiveAirspeed = m_airspeed > 30.0 ? m_airspeed : 0.0;
-	double torque = (double)m_bleedAir * c_startTorque + m_integrity * m_fuelFlow * c_combustionTorque + effectiveAirspeed * c_airspeedTorque - (m_hpOmega + m_lpOmega) * c_engineDrag;
+	const double drag = 1.0 - m_compressorDamageVary.update( dt );
+	double torque = (double)m_bleedAir * c_startTorque + m_inlet_damage->GetIntegrity() * m_fuelFlow * c_combustionTorque + effectiveAirspeed * c_airspeedTorque - (m_hpOmega + m_lpOmega) * c_engineDrag;
 
 	m_hpOmega += dt * torque / c_hpInertia;
 	m_hpOmega = std::max( m_hpOmega, 0.0 );

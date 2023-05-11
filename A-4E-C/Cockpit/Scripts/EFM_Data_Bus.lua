@@ -87,6 +87,7 @@ local fm_acceleration_y = get_param_handle("FM_ACCELERATION_Y")
 local fm_acceleration_z = get_param_handle("FM_ACCELERATION_Z")
 
 local fm_cas = get_param_handle("FM_CAS")
+local fm_mach = get_param_handle("ADC_MACH")
 
 local fm_radar_disabled = get_param_handle("FM_RADAR_DISABLED")
 local fm_wheel_brake_assist = get_param_handle("FM_WHEEL_BRAKE_ASSIST")
@@ -353,11 +354,21 @@ function fm_getCalibratedAirSpeed()
     return fm_cas:get()
 end
 
+function fm_getMeasuredMach()
+    return fm_mach:get()
+end
+
 fm_setCockpitShake(2.0 * optionsData_cockpitShake/100.0)
 fm_setWheelBrakeAssist(optionsData_wheelBrakeAssist)
 
 function get_efm_data_bus()
-    local efm_data_bus = {}
+    local efm_data_bus = {
+        param_handles = {}
+    }
+
+    efm_data_bus.__index = efm_data_bus
+    setmetatable(efm_data_bus, efm_data_bus)
+
     --fm_cockpitShake:set(optionsData_cockpitShake/100.0)
     efm_data_bus.fm_setNoseGear = fm_setNoseGear
     efm_data_bus.fm_setLeftGear = fm_setLeftGear
@@ -414,7 +425,39 @@ function get_efm_data_bus()
     efm_data_bus.fm_tacanValid = fm_tacanValid
     efm_data_bus.fm_getICLSHeading = fm_getICLSHeading
     efm_data_bus.fm_getWorldAcceleration = fm_getWorldAcceleration
+    efm_data_bus.fm_getMeasuredMach = fm_getMeasuredMach
     
+
+    
+
+    efm_data_bus.get_param = function(self, name)
+        if self.param_handles[name] then
+            return self.param_handles[name]:get()
+        else
+            self.param_handles[name] = get_param_handle(name)
+            return self.param_handles[name]:get()
+        end
+    end
+
+    efm_data_bus.set_param = function(self, name, value)
+        if self.param_handles[name] then
+            return self.param_handles[name]:set(value)
+        else
+            self.param_handles[name] = get_param_handle(name)
+            return self.param_handles[name]:set(value)
+        end
+    end
+
+    efm_data_bus.get_integrity = function(self, name)
+        name = "DamageObject<"..name..">"
+        if self.param_handles[name] then
+            return self.param_handles[name]:get()
+        else
+            self.param_handles[name] = get_param_handle(name)
+            return self.param_handles[name]:get()
+        end
+    end
+
 
     return efm_data_bus
    

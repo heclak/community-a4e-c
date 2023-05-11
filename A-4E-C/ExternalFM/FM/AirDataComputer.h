@@ -1,6 +1,7 @@
 #pragma once
 #include "Interface.h"
 #include "AircraftState.h"
+#include "Damage.h"
 
 namespace Scooter
 {
@@ -30,6 +31,18 @@ private:
 	double m_tasZ = 0.0;
 
 	double m_baroAlt = 0.0;
+
+	std::function<void(DamageObject&, double)> on_damage = []( DamageObject& object, double integrity ) {
+		if ( DamageProcessor::GetDamageProcessor().Random() > integrity )
+		{
+			printf( "%s failed\n", object.GetName().c_str() );
+			object.SetIntegrity( 0.0 );
+		}
+	};
+
+	std::shared_ptr<DamageObject> m_pitot_damage = DamageProcessor::MakeDamageObject( "Pitot Tube", DamageCell::NOSE_LEFT_SIDE, on_damage );
+	std::shared_ptr<DamageObject> m_static_damage = DamageProcessor::MakeDamageObject( "Static Port", DamageCell::NOSE_LEFT_SIDE, on_damage );
+
 };
 
 } //end namespace Scooter

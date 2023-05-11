@@ -297,7 +297,8 @@ public:
 	
 	//inline void setDumpingFuel( bool dumping );
 
-	inline double setAileron( double dt );
+	inline double setAileronLeft( double dt );
+	inline double setAileronRight( double dt );
 	inline double setElevator( double dt );
 	inline double setRudder( double dt );
 	inline double setStabilizer( double dt );
@@ -317,7 +318,8 @@ public:
 	inline double getCatMoment() const;
 	inline double getCatForce() const;
 	inline double getMass() const;
-	inline double getAileron() const;
+	inline double getAileronLeft() const;
+	inline double getAileronRight() const;
 	inline double getElevator() const;
 	inline double getRudder() const;
 	inline double getStabilizer() const;
@@ -482,9 +484,51 @@ private:
 
 	double m_noseWheelAngle = 0.0;
 
-	Actuator m_actuatorElev;
-	Actuator m_actuatorAil;
-	Actuator m_actuatorRud;
+	std::function<void( DamageObject&, double )> on_actuator_damage = []( DamageObject& object, double integrity )
+	{
+		if ( integrity < 1.0 )
+		{
+			if ( DamageProcessor::GetDamageProcessor().Random() < 0.1 )
+			{
+				object.SetIntegrity( 0.0 );
+			}
+			else
+			{
+				object.SetIntegrity( integrity );
+			}
+		}
+	};
+
+	Actuator m_actuatorElev{ DamageProcessor::MakeDamageObjectMultiple( "Elevator Actuator", {DamageCell::ELEVATOR_L, DamageCell::ELEVATOR_R, DamageCell::STABILIZATOR_L, DamageCell::STABILIZATOR_R}, on_actuator_damage ) };
+	Actuator m_actuatorAilLeft{ DamageProcessor::MakeDamageObject( "Aileron Left Actuator", DamageCell::AILERON_L, on_actuator_damage ) };
+	Actuator m_actuatorAilRight{ DamageProcessor::MakeDamageObject( "Aileron Right Actuator", DamageCell::AILERON_R, on_actuator_damage ) };
+	Actuator m_actuatorRud{ DamageProcessor::MakeDamageObject( "Rudder Actuator", DamageCell::RUDDER, on_actuator_damage ) };
+
+
+	std::function<void( DamageObject&, double )> on_gear_jam_damage = []( DamageObject& object, double integrity )
+	{
+		if ( integrity < 0.9 && DamageProcessor::GetDamageProcessor().Random() >= 0.5 )
+		{
+			LOG_DAMAGE( "%s\n", object.GetName().c_str() );
+			object.SetIntegrity( 0.0 );
+		}
+	};
+
+	std::function<void( DamageObject&, double )> on_gear_actuator_damage = []( DamageObject& object, double integrity )
+	{
+		if ( integrity < 1.0 && DamageProcessor::GetDamageProcessor().Random() <= 0.25 )
+		{
+			object.SetIntegrity( 0.0 );
+		}
+	};
+
+	std::shared_ptr<DamageObject> m_gear_jam_left = DamageProcessor::MakeDamageObject( "Left Gear Jam", DamageCell::WING_L_IN, on_gear_jam_damage );
+	std::shared_ptr<DamageObject> m_gear_jam_right = DamageProcessor::MakeDamageObject( "Right Gear Jam", DamageCell::WING_R_IN, on_gear_jam_damage );
+	std::shared_ptr<DamageObject> m_gear_jam_nose = DamageProcessor::MakeDamageObject( "Nose Gear Jam", DamageCell::CABIN_BOTTOM, on_gear_jam_damage );
+
+	std::shared_ptr<DamageObject> m_gear_actuator_left = DamageProcessor::MakeDamageObject( "Left Gear Actuator", DamageCell::WING_L_IN, on_gear_actuator_damage );
+	std::shared_ptr<DamageObject> m_gear_actuator_right = DamageProcessor::MakeDamageObject( "Right Gear Actuator", DamageCell::WING_R_IN, on_gear_actuator_damage );
+	std::shared_ptr<DamageObject> m_gear_actuator_nose = DamageProcessor::MakeDamageObject( "Nose Gear Actuator", DamageCell::CABIN_BOTTOM, on_gear_actuator_damage );
 
 	double m_elevatorZeroForceDeflection = 0.0;
 
@@ -549,10 +593,16 @@ private:
 };
 
 
-double Airframe::setAileron(double dt)
+double Airframe::setAileronLeft(double dt)
 {
 	double input = m_controls.roll() + m_controls.rollTrim();
-	return m_actuatorAil.inputUpdate(input, dt);
+	return m_actuatorAilLeft.inputUpdate(-input, dt);
+}
+
+double Airframe::setAileronRight( double dt )
+{
+	double input = m_controls.roll() + m_controls.rollTrim();
+	return m_actuatorAilRight.inputUpdate( input, dt );
 }
 
 double Airframe::setElevator(double dt)
@@ -704,9 +754,13 @@ double Airframe::getSlatRPosition() const
 	return m_slatRPosition;
 }
 
-double Airframe::getAileron() const
+double Airframe::getAileronLeft() const
 {
 	return m_aileronLeft;
+}
+double Airframe::getAileronRight() const
+{
+	return m_aileronRight;
 }
 
 double Airframe::getElevator() const
@@ -855,7 +909,7 @@ bool Airframe::processDamageStack( Damage& element, float& damage )
 	m_integrityElement[(int)delta.m_element] = clamp( m_integrityElement[(int)delta.m_element], 0.0, 1.0 );
 	
 	element = delta.m_element;
-	damage = m_integrityElement[(int)delta.m_element];
+	damage = delta.m_delta;//m_integrityElement[(int)delta.m_element];
 
 	return true;
 }

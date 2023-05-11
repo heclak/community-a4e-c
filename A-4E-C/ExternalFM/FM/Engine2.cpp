@@ -148,6 +148,8 @@ void Scooter::Engine2::updateEngine( double dt )
 		//Update towards desired fuel flow with response time.
 		//m_fuelFlow = m_throttle;
 
+		
+
 		double desired = clamp( desiredFuelFlow, 0.0, c_fuelFlowMax );
 
 		if ( getRPMNorm() < 0.52 )
@@ -157,6 +159,10 @@ void Scooter::Engine2::updateEngine( double dt )
 
 
 		m_fuelFlow += (desired - m_fuelFlow) * dt / c_fuelFlowInertia;
+
+		m_compressorDamageVary.setScale( 0.05 * pow( m_damage_engine->GetDamage(), 0.25 ) );
+		const double drag = 1.0 - m_compressorDamageVary.update( dt );
+		m_fuelFlow *= drag;
 
 		//If we have a boost pump failure we cannot maintain the flow.
 		m_fuelFlow = clamp( m_fuelFlow, 0.0, m_maxDeliverableFuelFlow );
@@ -181,21 +187,21 @@ void Scooter::Engine2::updateEngine( double dt )
 		//updateShaftsDynamic( dt );
 	}
 
+	
+
 	if ( getRPMNorm() > 0.52 && m_ignitors && m_hasFuel )
 	{
 		//Fuel Flow -> Shaft Speed
-		double damage = (1.0 - m_integrity);
-		m_compressorDamageVary.setScale( damage );
-		double drag = m_compressorDamageVary.update( dt );
+		
 		//printf( "Integrity: %lf, Damage: %lf\n", m_integrity, drag );
 
-		double expectedOmega = fuelToHPOmega( m_fuelFlow );
+		double expectedOmega = fuelToHPOmega( m_fuelFlow ) * m_inlet_damage->GetIntegrity();
 		m_compressorAOA = expectedOmega - m_hpOmega;
 		//printf( "Compressor AOA: %lf\n", m_compressorAOA );
 
 		m_compressorStalled = m_compressorAOA > c_compressorStallAOA;
 
-		updateShafts( pow(m_integrity, 0.25) * (1.0 - drag) * expectedOmega, 1.0, dt );
+		updateShafts( expectedOmega, 1.0, dt );
 	}
 	else
 	{

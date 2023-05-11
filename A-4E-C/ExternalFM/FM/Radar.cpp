@@ -437,6 +437,11 @@ void Scooter::Radar::update( double dt )
 	}
 
 	warmup( warmupAmount );
+
+	if ( receiver_damage->GetDamage() > 0.1 )
+	{
+		m_warmup = 0.0;
+	}
 	
 
 	updateObstacleLight(dt);

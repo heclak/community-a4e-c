@@ -168,6 +168,7 @@ public:
 		m_ADC_CAS = m_api.pfn_ed_cockpit_get_parameter_handle( "FM_CAS" );
 		m_ADC_ALT = m_api.pfn_ed_cockpit_get_parameter_handle( "ADC_ALT" );
 		m_ADC_altSetting = m_api.pfn_ed_cockpit_get_parameter_handle( "ADC_ALT_SETTING" );
+		m_ADC_MACH = m_api.pfn_ed_cockpit_get_parameter_handle( "ADC_MACH" );
 
 		m_chocks = m_api.pfn_ed_cockpit_get_parameter_handle( "WHEEL_CHOCKS_STATE" );
 
@@ -344,6 +345,11 @@ public:
 	inline void ADC_setAlt( double value )
 	{
 		setParamNumber( m_ADC_ALT, value );
+	}
+
+	inline void ADC_setMeasuredMach( double value )
+	{
+		setParamNumber( m_ADC_MACH, value );
 	}
 
 	inline void setWorldAcceleration( const Vec3& a )
@@ -820,6 +826,7 @@ private:
 	void* m_ADC_TASZ = NULL;
 	void* m_ADC_ALT = NULL;
 	void* m_ADC_altSetting = NULL;
+	void* m_ADC_MACH = NULL;
 
 	void* m_chocks = NULL;
 

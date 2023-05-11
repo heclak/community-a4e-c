@@ -26,10 +26,11 @@ extern bool g_disableRadio;
 
 extern int isSafeContext();
 
-//#define DEBUG_CONSOLE
+#define DEBUG_CONSOLE
 
 //Uncomment this to enable logging make sure this is commited with this commented out!!!!!!
 #define LOGGING
+
 
 #ifdef LOGGING
 #define LOG(s, ...) if ( g_log ) fprintf(g_log, s, __VA_ARGS__);
@@ -38,5 +39,13 @@ extern int isSafeContext();
 #endif
 
 #define LOG_BREAK() LOG("===================\n")
+
+#define DAMAGE_LOGGING
+#ifdef DAMAGE_LOGGING
+#define LOG_DAMAGE(s,...) LOG(s, __VA_ARGS__)
+#else
+#define LOG_DAMAGE(s,...)
+#endif
+
 
 #endif

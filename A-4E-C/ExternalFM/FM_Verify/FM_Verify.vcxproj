@@ -140,7 +140,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\FM\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>AircraftState.obj;Maths.obj;AeroElement.obj;Engine2.obj;FuelSystem2.obj;FlightModel.obj;Timer.obj;Logger.obj;Input.obj;Axis.obj;Airframe.obj;Actuator.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>AircraftState.obj;Maths.obj;AeroElement.obj;Engine2.obj;FuelSystem2.obj;FlightModel.obj;Timer.obj;Logger.obj;Input.obj;Axis.obj;Airframe.obj;Actuator.obj;Damage.obj;dllmain.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
