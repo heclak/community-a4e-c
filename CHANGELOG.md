@@ -6,6 +6,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 
 ### Added
 - Delivery information for Shrike and Sidewinder provided in Kneeboard Manual, page 3-5.
+- Else keybinds for the Chaff Dispenser Select added for 3-position switch support.
 
 ### Changed
 - The addition of NWS (Nosewheel Simulation) should improve and make for an easier time correcting turns on the ground and reducing "stuck wheel" syndrome after a grevous taxi error. Pro-tip: If you drift it just right, you see them gold sparks.
