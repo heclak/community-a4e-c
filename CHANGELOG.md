@@ -2,6 +2,16 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
+## Version 2.1.2 - ?? ??? 2023
+
+### Changed
+- NWS (Nosewheel Simulation)
+
+### Fixed
+- Removed black lines along center line of fuel tanks.
+- Fixed loadout display inaccuracies in Kneeboard Manual, page 1-5.
+- Included delivery information for Shrike and Sidewinder in Kneeboard Manual, page 3-5.
+
 ## Version 2.1.1 - 27 Apr 2023
 
 ### Fixed
