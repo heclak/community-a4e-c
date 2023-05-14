@@ -1,10 +1,10 @@
-![Community A-4E-C for DCS World, v2.1.0](https://cdn.discordapp.com/attachments/518815335013679104/1036033807352090725/unknown.png)
+![Community A-4E-C for DCS World, v2.1.2](https://cdn.discordapp.com/attachments/518815335013679104/1036033807352090725/unknown.png)
 
 ## About the A-4E-C Project
 
 The A-4 was a cold war workhorse which proved to be a capable, reliable light attack aircraft to dozens of nations around the world. From the jungles of southeast Asia, to the desert of Sinai, to the coasts of South America, the scooter was a common sight above battlefields around the world for decades.
 
-### A-4E-C Version 2.1.0 Community Update
+### A-4E-C Version 2.1.2 Community Update
 
 Hello, A-4E-C pilots! We hope you are well. We'd like to highlight a few important items about this update, and salute the newest group of contributors to the A-4E-C project, whose names appear in the changelog below:
 - This update, A-4E-C 2.1.0, and all subsequent updates will not be compatible with DCS versions before 2.8.0.32066. Our last update, A-4E-C 2.0.1, is not compatible with DCS versions after 2.7.18.30765. The most common effects of these incompatibilities are client-side crashes. Always ensure servers, clients, and DCS versions employed are the most compatible options available!
@@ -276,7 +276,7 @@ The [Community A-4E-C Discord server](https://discord.gg/tQZbkTQ) contains a vid
 
 ### Q: Will guided weapons like AGM-12 Bullpup or AGM-62 Walleye be added?
 
-The AGM-12C Bullpup is a possibility with more work, but no promises just yet! Our A-4E-C cockpit model lacks the TV monitor used for the Walleye display.
+Probably not, no.
 
 ### Q: Why doesn't the A-4E-C have a nosewheel steering button?
 
