@@ -1033,9 +1033,9 @@ double ed_fm_get_param(unsigned index)
 	case ED_FM_SUSPENSION_2_RELATIVE_BRAKE_MOMENT:
 		return s_interface->getChocks() ? 1.0 : pow(s_input->brakeRight(), 3.0);
 	case ED_FM_SUSPENSION_0_WHEEL_SELF_ATTITUDE:
-		return 0.0;
+		return ! s_airframe->GetNoseWheelFix();
 	case ED_FM_SUSPENSION_0_WHEEL_YAW:
-		return s_airframe->GetNoseWheelAngle();
+		return s_airframe->GetNoseWheelFix() ? s_airframe->GetNoseWheelAngle() : 0.0;
 	case ED_FM_STICK_FORCE_CENTRAL_PITCH:  // i.e. trimmered position where force feeled by pilot is zero
 		s_input->setFFBEnabled(true);
 		return s_airframe->getElevatorZeroForceDeflection();

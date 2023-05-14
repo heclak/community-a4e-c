@@ -168,6 +168,12 @@ void Scooter::Airframe::airframeUpdate(double dt)
 	const double torque_total = torque_after_breakout - damping_torque;
 	m_nose_wheel_angular_velocity += torque_total * dt;
 	m_nose_wheel_angle += m_nose_wheel_angular_velocity * dt;
+	
+	m_nose_wheel_fix = m_catapultState == OFF_CAT && m_nose_wheel_ground_speed < 25.0;
+	if ( ! m_nose_wheel_fix )
+	{
+		m_nose_wheel_angle = 0.0;
+	}
 	//printf( "torque=%lf,torque_damping=%lf,w=%lf,theta=%lf\n", torque_after_breakout, damping_torque, m_nose_wheel_angular_velocity, m_nose_wheel_angle );
 	//printf( "%lf,%lf,%lf\n", m_nose_wheel_force_position.x, m_nose_wheel_force_position.y, m_nose_wheel_force_position.z );
 

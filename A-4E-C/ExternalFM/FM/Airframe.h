@@ -390,6 +390,8 @@ public:
 	inline double GetSlipageLeft() const { return m_left_wheel_ground_speed - m_left_wheel_speed; }
 	inline double GetSlipageRight() const { return m_right_wheel_ground_speed - m_right_wheel_speed; }
 
+	bool GetNoseWheelFix() const { return m_nose_wheel_fix; }
+
 	static constexpr double slip_threshold = 0.5;
 	static constexpr double compression_threshold = 0.1;
 	static constexpr double min_ground_speed = 0.5;
@@ -559,6 +561,7 @@ private:
 	static constexpr double m_nose_wheel_moment_of_intertia = 0.0;
 	static constexpr double m_nose_wheel_damping = 150.0;
 	static constexpr double m_break_out_torque = 200.0;
+	bool m_nose_wheel_fix = true;
 
 	//Tank m_selected = Tank::INTERNAL;
 
@@ -591,7 +594,6 @@ private:
 	AircraftState& m_state;
 	std::vector<DamageDelta> m_damageStack;
 };
-
 
 double Airframe::setAileronLeft(double dt)
 {
