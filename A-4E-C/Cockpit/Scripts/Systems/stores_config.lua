@@ -85,6 +85,7 @@ loadout_names = {
 
     --MISSILES--
     ["{AGM_45A}"]                               = "MISSILE - AGM-45A SHRIKE ARM",
+    ["{3E6B632D-65EB-44D2-9501-1C2D04515404}"]  = "MISSILE - AGM-45B SHRIKE ARM",
 
     --BOMBS--
     ["{AN_M30A1}"]                              = "BOMB - AN-M30A1 - 100 LB. GP HE 57 LB. TNT",
