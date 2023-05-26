@@ -1750,7 +1750,7 @@ local rack_data = {
 
 local rocket_data = {
     ["LAU-3 Hydra M151 HE"]    = { name = "Hydra M151 HE",  mass = 100 + 19 * (23.6 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_HE151}",                           shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
-    ["LAU-3 Hydra Mk5 HEAT"]   = { name = "Hydra M151 HE",  mass = 100 + 19 * (23.7 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_HE5}",                             shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    ["LAU-3 Hydra Mk5 HEAT"]   = { name = "Hydra Mk5 HEAT", mass = 100 + 19 * (23.7 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_HE5}",                             shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
     ["LAU-3 Hydra M156 WP"]    = { name = "Hydra M156 WP",  mass = 100 + 19 * (23.3 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_WP156}",                           shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
 
     ["LAU-68 Hydra M151 HE"]   = { name = "Hydra M151 HE",  mass = 41.73 + 7 * (23.6 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
@@ -1761,9 +1761,11 @@ local rocket_data = {
     ["LAU-3 FFAR WP156"]       = { name = "FFAR M156 WP",   mass = 100 + 19 * (24.7 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_WP156}",                      shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
     ["LAU-3 FFAR Mk1 HE"]      = { name = "FFAR Mk1 HE",    mass = 100 + 19 * (21.5 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_MK1HE}",                      shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
     ["LAU-3 FFAR Mk5 HEAT"]    = { name = "FFAR Mk5 HEAT",  mass = 100 + 19 * (21.6 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_MK5HEAT}",                    shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+
     ["LAU-68 FFAR WP156"]      = { name = "FFAR M156 WP",   mass = 41.73 + 7 * (24.7 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{LAU68_FFAR_WP156}",                     shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
     ["LAU-68 FFAR Mk1 HE"]     = { name = "FFAR Mk1 HE",    mass = 41.73 + 7 * (21.5 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{LAU68_FFAR_MK1HE}",                     shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
     ["LAU-68 FFAR Mk5 HEAT"]   = { name = "FFAR Mk5 HEAT",  mass = 41.73 + 7 * (21.6 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{LAU68_FFAR_MK5HEAT}",                   shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
+
     ["LAU-10 ZUNI"]            = { name = "ZUNI MK 71",     mass = 440,                               wstype = {4,7,33,37},  payload_CLSID = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}", shapename = "LAU-10", pic = 'LAU10.png', count = 4,  cx = 0.001708984375},
 }
 
