@@ -93,6 +93,7 @@ local function get_outboard_weapons( side )
 
         --MISSILES--
         { CLSID = "{AGM_45A}", connector = shrikeConnector, arg_value = 0.1 }, -- AGM-45 SHRIKE
+        { CLSID = "{3E6B632D-65EB-44D2-9501-1C2D04515404}", connector = shrikeConnector, arg_value = 0.1 }, -- AGM-45B SHRIKE
 
         --BOMBS--
         { CLSID = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}" },   -- Mk-20 Rockeye cluster bomb
@@ -170,7 +171,8 @@ local function get_inboard_weapons( side )
         { CLSID = "{LAU-68 FFAR Mk5 HEAT_TER_2_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR Mk5 HEAT
 
         --MISSILES--
-        { CLSID = "{AGM_45A}", connector = shrikeConnector, arg_value = 0.1 }, -- AGM-45 SHRIKE
+        { CLSID = "{AGM_45A}", connector = shrikeConnector, arg_value = 0.1 }, -- AGM-45A SHRIKE
+        { CLSID = "{3E6B632D-65EB-44D2-9501-1C2D04515404}", connector = shrikeConnector, arg_value = 0.1 }, -- AGM-45B SHRIKE
 
         --BOMBS--
         { CLSID = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}" }, -- Mk-20 Rockeye cluster bomb
