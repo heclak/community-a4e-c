@@ -83,6 +83,42 @@ loadout_names = {
     ["{LAU-68 FFAR Mk5 HEAT_TER_2_R}"]          = "ROCKETS - LAU-68 * 2 - FFAR MK5 HEAT - TER",
     ["{LAU-68 FFAR Mk5 HEAT_TER_3_C}"]          = "ROCKETS - LAU-68 * 3 - FFAR MK5 HEAT - TER",
 
+    ["{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}"]  = "ROCKETS - LAU-61 - Hydra M151 HE",
+    ["{LAU-61 Hydra M151_TER_3_C}"]             = "ROCKETS - LAU-61 * 2 - Hydra M151 HE - TER",
+    ["{LAU-61 Hydra M151_TER_2_C}"]             = "ROCKETS - LAU-61 * 2 - Hydra M151 HE - TER",
+    ["{LAU-61 Hydra M151_TER_2_L}"]             = "ROCKETS - LAU-61 * 2 - Hydra M151 HE - TER",
+    ["{LAU-61 Hydra M151_TER_2_R}"]             = "ROCKETS - LAU-61 * 3 - Hydra M151 HE - TER",
+
+    ["{3DFB7321-AB0E-11d7-9897-000476191836}"]  = "ROCKETS - LAU-61 - Hydra M156 WP",
+    ["{LAU-61 Hydra M156 WP_TER_2_C}"]          = "ROCKETS - LAU-61 * 2 - Hydra M156 WP - TER",
+    ["{LAU-61 Hydra M156 WP_TER_2_L}"]          = "ROCKETS - LAU-61 * 2 - Hydra M156 WP - TER",
+    ["{LAU-61 Hydra M156 WP_TER_2_R}"]          = "ROCKETS - LAU-61 * 2 - Hydra M156 WP - TER",
+    ["{LAU-61 Hydra M156 WP_TER_3_C}"]          = "ROCKETS - LAU-61 * 3 - Hydra M156 WP - TER",
+
+    ["{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}"]  = "ROCKETS - LAU-68 - Hydra M151 HE",
+    ["{LAU-68 Hydra M151 HE_TER_3_C}"]          = "ROCKETS - LAU-68 * 2 - Hydra M151 HE - TER",
+    ["{LAU-68 Hydra M151 HE_TER_2_C}"]          = "ROCKETS - LAU-68 * 2 - Hydra M151 HE - TER",
+    ["{LAU-68 Hydra M151 HE_TER_2_L}"]          = "ROCKETS - LAU-68 * 2 - Hydra M151 HE - TER",
+    ["{LAU-68 Hydra M151 HE_TER_2_R}"]          = "ROCKETS - LAU-68 * 3 - Hydra M151 HE - TER",
+
+    ["{174C6E6D-0C3D-42ff-BCB3-0853CB371F5C}"]  = "ROCKETS - LAU-68 - Hydra Mk5 HEAT - TER",
+    ["{LAU-68 Hydra Mk5 HEAT_TER_3_C}"]         = "ROCKETS - LAU-68 * 2 - Hydra Mk5 HEAT - TER",
+    ["{LAU-68 Hydra Mk5 HEAT_TER_2_C}"]         = "ROCKETS - LAU-68 * 2 - Hydra Mk5 HEAT - TER",
+    ["{LAU-68 Hydra Mk5 HEAT_TER_2_L}"]         = "ROCKETS - LAU-68 * 2 - Hydra Mk5 HEAT - TER",
+    ["{LAU-68 Hydra Mk5 HEAT_TER_2_R}"]         = "ROCKETS - LAU-68 * 3 - Hydra Mk5 HEAT - TER",
+
+    ["{4F977A2A-CD25-44df-90EF-164BFA2AE72F}"]  = "ROCKETS - LAU-68 - Hydra M156 WP - TER",
+    ["{LAU-68 Hydra M156 WP_TER_3_C}"]          = "ROCKETS - LAU-68 * 2 - Hydra M156 WP - TER",
+    ["{LAU-68 Hydra M156 WP_TER_2_C}"]          = "ROCKETS - LAU-68 * 2 - Hydra M156 WP - TER",
+    ["{LAU-68 Hydra M156 WP_TER_2_L}"]          = "ROCKETS - LAU-68 * 2 - Hydra M156 WP - TER",
+    ["{LAU-68 Hydra M156 WP_TER_2_R}"]          = "ROCKETS - LAU-68 * 3 - Hydra M156 WP - TER",
+
+    ["{647C5F26-BDD1-41e6-A371-8DE1E4CC0E94}"]  = "ROCKETS - LAU-68 - Hydra M257 PI - TER",
+    ["{LAU-68 Hydra M257 PI_TER_3_C}"]          = "ROCKETS - LAU-68 * 2 - Hydra M257 PI - TER",
+    ["{LAU-68 Hydra M257 PI_TER_2_C}"]          = "ROCKETS - LAU-68 * 2 - Hydra M257 PI - TER",
+    ["{LAU-68 Hydra M257 PI_TER_2_L}"]          = "ROCKETS - LAU-68 * 2 - Hydra M257 PI - TER",
+    ["{LAU-68 Hydra M257 PI_TER_2_R}"]          = "ROCKETS - LAU-68 * 3 - Hydra M257 PI - TER",
+
     --MISSILES--
     ["{AGM_45A}"]                               = "MISSILE - AGM-45A SHRIKE ARM",
     ["{3E6B632D-65EB-44D2-9501-1C2D04515404}"]  = "MISSILE - AGM-45B SHRIKE ARM",
