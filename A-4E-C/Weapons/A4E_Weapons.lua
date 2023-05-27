@@ -1730,8 +1730,8 @@ local rocket_data = {
 
     ["LAU-68 Hydra M151 HE"]        = { name = "2.75\" Hydra, UnGd Rkts M151, HE",             mass = 15.9 + 7 * (10.5 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
     ["LAU-68 Hydra WP156"]          = { name = "2.75\" Hydra, UnGd Rkts M156, Wht Phos",       mass = 15.9 + 7 * (11.9 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{4F977A2A-CD25-44df-90EF-164BFA2AE72F}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
+    ["LAU-68 Hydra M257 PI"]        = { name = "2.75\" Hydra, UnGd Rkts M257, Para Illum",     mass = 15.9 + 7 * (11.0 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{647C5F26-BDD1-41e6-A371-8DE1E4CC0E94}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
     ["LAU-68 Hydra M274 PS"]        = { name = "2.75\" Hydra, UnGd Rkts M274, Practice Smk",   mass = 15.9 + 7 * (9.30 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{0877B74B-5A00-4e61-BA8A-A56450BA9E27}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
-    ["LAU-68 Hydra M275 PI"]        = { name = "2.75\" Hydra, UnGd Rkts M257, Para Illum",     mass = 15.9 + 7 * (11.0 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{647C5F26-BDD1-41e6-A371-8DE1E4CC0E94}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
     ["LAU-68 Hydra Mk1 Practice"]   = { name = "2.75\" Hydra, UnGd Rkts Mk1, Practice",        mass = 15.9 + 7 * (13.5 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{FC85D2ED-501A-48ce-9863-49D468DDD5FC}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
     ["LAU-68 Hydra Mk5 HEAT"]       = { name = "2.75\" Hydra, UnGd Rkts Mk5, HEAT",            mass = 15.9 + 7 * (10.8 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{174C6E6D-0C3D-42ff-BCB3-0853CB371F5C}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
     ["LAU-68 Hydra Mk61 Practice"]  = { name = "2.75\" Hydra, UnGd Rkts Mk61, Practice",       mass = 15.9 + 7 * (13.5 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{65396399-9F5C-4ec3-A7D2-5A8F4C1D90C4}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
@@ -2071,15 +2071,15 @@ declare_loadout(bru_42_lau("LAU-68 Hydra WP156", 2, 0))             -- {LAU-68 H
 declare_loadout(bru_42_lau("LAU-68 Hydra WP156", 2, -1))            -- {LAU-68 Hydra WP156 WP_TER_2_L}
 declare_loadout(bru_42_lau("LAU-68 Hydra WP156", 2, 1))             -- {LAU-68 Hydra WP156 WP_TER_2_R}
 
+declare_loadout(bru_42_lau("LAU-68 Hydra M257 PI", 3, 0))           -- {LAU-68 Hydra M257 PI_TER_3_C}
+declare_loadout(bru_42_lau("LAU-68 Hydra M257 PI", 2, 0))           -- {LAU-68 Hydra M257 PI_TER_2_C}
+declare_loadout(bru_42_lau("LAU-68 Hydra M257 PI", 2, -1))          -- {LAU-68 Hydra M257 PI_TER_2_L}
+declare_loadout(bru_42_lau("LAU-68 Hydra M257 PI", 2, 1))           -- {LAU-68 Hydra M257 PI_TER_2_R}
+
 declare_loadout(bru_42_lau("LAU-68 Hydra M274 PS", 3, 0))           -- {LAU-68 Hydra M274 PS_TER_3_C}
 declare_loadout(bru_42_lau("LAU-68 Hydra M274 PS", 2, 0))           -- {LAU-68 Hydra M274 PS_TER_2_C}
 declare_loadout(bru_42_lau("LAU-68 Hydra M274 PS", 2, -1))          -- {LAU-68 Hydra M274 PS_TER_2_L}
 declare_loadout(bru_42_lau("LAU-68 Hydra M274 PS", 2, 1))           -- {LAU-68 Hydra M274 PS_TER_2_R}
-
-declare_loadout(bru_42_lau("LAU-68 Hydra M275 PI", 3, 0))           -- {LAU-68 Hydra M275 PI_TER_3_C}
-declare_loadout(bru_42_lau("LAU-68 Hydra M275 PI", 2, 0))           -- {LAU-68 Hydra M275 PI_TER_2_C}
-declare_loadout(bru_42_lau("LAU-68 Hydra M275 PI", 2, -1))          -- {LAU-68 Hydra M275 PI_TER_2_L}
-declare_loadout(bru_42_lau("LAU-68 Hydra M275 PI", 2, 1))           -- {LAU-68 Hydra M275 PI_TER_2_R}
 
 declare_loadout(bru_42_lau("LAU-68 Hydra Mk1 Practice", 3, 0))      -- {LAU-68 Hydra Mk1 Practice_TER_3_C}
 declare_loadout(bru_42_lau("LAU-68 Hydra Mk1 Practice", 2, 0))      -- {LAU-68 Hydra Mk1 Practice_TER_2_C}

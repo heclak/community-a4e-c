@@ -192,8 +192,8 @@ local function get_inboard_weapons( side )
         { CLSID = "{1F7136CB-8120-4e77-B97B-945FF01FB67C}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra WTU-1/B Practice
         { CLSID = "{LAU-68 Hydra M151 HE_TER_2_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra M151 HE
         { CLSID = "{LAU-68 Hydra WP156_TER_2_"..side.."}",              connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra M156 WP
+        { CLSID = "{LAU-68 Hydra M257 PI_TER_2_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Para Illum
         { CLSID = "{LAU-68 Hydra M274 PS_TER_2_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Practice Smoke
-        { CLSID = "{LAU-68 Hydra M275 PI_TER_2_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Para Illum
         { CLSID = "{LAU-68 Hydra Mk1 Practice_TER_2_"..side.."}",       connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Mk1 Practice
         { CLSID = "{LAU-68 Hydra Mk5 HEAT_TER_2_"..side.."}",           connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Mk5 HEAT
         { CLSID = "{LAU-68 Hydra Mk61 Practice_TER_2_"..side.."}",      connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Mk61 Practice
@@ -258,7 +258,6 @@ local function get_inboard_weapons( side )
 
         -- ILLUMINATION POD --
         { CLSID = "{CAE48299-A294-4bad-8EE6-89EFC5DCDF00}", connector = rocketConnector, arg_value = 0.2},
-
 
 		-- CLEAN --
 		{ CLSID = "<CLEAN>", arg_value = 1 },
@@ -326,16 +325,16 @@ local function get_centerline_weapons( side )
         { CLSID = "{1F7136CB-8120-4e77-B97B-945FF01FB67C}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra WTU-1/B Practice
         { CLSID = "{LAU-68 Hydra M151 HE_TER_2_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra M151 HE
         { CLSID = "{LAU-68 Hydra WP156_TER_2_"..side.."}",              connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra M156 WP
+        { CLSID = "{LAU-68 Hydra M257 PI_TER_2_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Para Illum
         { CLSID = "{LAU-68 Hydra M274 PS_TER_2_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Practice Smoke
-        { CLSID = "{LAU-68 Hydra M275 PI_TER_2_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Para Illum
         { CLSID = "{LAU-68 Hydra Mk1 Practice_TER_2_"..side.."}",       connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Mk1 Practice
         { CLSID = "{LAU-68 Hydra Mk5 HEAT_TER_2_"..side.."}",           connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Mk5 HEAT
         { CLSID = "{LAU-68 Hydra Mk61 Practice_TER_2_"..side.."}",      connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Mk61 Practice
         { CLSID = "{LAU-68 Hydra WTU1B Practice_TER_2_"..side.."}",     connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra WTU-1/B Practice
         { CLSID = "{LAU-68 Hydra M151 HE_TER_3_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra M151 HE
         { CLSID = "{LAU-68 Hydra WP156_TER_3_"..side.."}",              connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra M156 WP
+        { CLSID = "{LAU-68 Hydra M257 PI_TER_3_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra Para Illum
         { CLSID = "{LAU-68 Hydra M274 PS_TER_3_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra Practice Smoke
-        { CLSID = "{LAU-68 Hydra M275 PI_TER_3_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra Para Illum
         { CLSID = "{LAU-68 Hydra Mk1 Practice_TER_3_"..side.."}",       connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra Mk1 Practice
         { CLSID = "{LAU-68 Hydra Mk5 HEAT_TER_3_"..side.."}",           connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra Mk5 HEAT
         { CLSID = "{LAU-68 Hydra Mk61 Practice_TER_3_"..side.."}",      connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra Mk61 Practice
@@ -392,7 +391,6 @@ local function get_centerline_weapons( side )
         { CLSID = "{AN-M88_MER_6_"..side.."}" },                -- AN-M88 x6 216 lb Fragmentation (47 lb Comp B)
         { CLSID = "{BDU-33_MER_6_"..side.."}" },              -- BDU-33 x5
 
-
         -- GUN PODS --
         { CLSID = "{Mk4 HIPEG}", connector = rocketConnector, arg_value = 0.2 },  -- Mk 4 Mod 0 HIPEG gun pod
 
@@ -406,7 +404,6 @@ local function get_centerline_weapons( side )
 
         -- ILLUMINATION POD --
         { CLSID = "{CAE48299-A294-4bad-8EE6-89EFC5DCDF00}", connector = rocketConnector, arg_value = 0.2},
-
 
 		-- CLEAN --
 		{ CLSID = "<CLEAN>", arg_value = 1 },
