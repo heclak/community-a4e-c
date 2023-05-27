@@ -1589,8 +1589,6 @@ declare_weapon(BLU_3B_NEW_GROUP)
 BLU_4B_NEW_GROUP.clsid = make_cluster_group_loadout(BLU_4B_NEW_GROUP)
 BLU_3B_NEW_GROUP.clsid = make_cluster_group_loadout(BLU_3B_NEW_GROUP)
 
-
-
 local bomblet_data =
 {
     --use shapename,        mass,               wstype,                                                drag,
@@ -1661,14 +1659,12 @@ function make_cbu_a4e(dispenser,element,count) -- assemble a cluster dispenser
     return data
 end
 
-
 CBU_1A = make_cbu_a4e("CBU-1/A", "BLU-4B", cbu_tube_number) -- {CBU-1/A}
 CBU_2A = make_cbu_a4e("CBU-2/A", "BLU-3B", cbu_tube_number) -- {CBU-2/A}
 CBU_2BA = make_cbu_a4e("CBU-2B/A", "BLU-3B", cbu_tube_number) -- {CBU-2B/A}
 declare_loadout(CBU_1A)
 declare_loadout(CBU_2A)
 declare_loadout(CBU_2BA)
-
 
 CBU_1A_2 = make_cbu_a4e("CBU-1/A*2", "BLU-4B", cbu_tube_number*2) -- {CBU-1/A} -> doubled variant for workaround
 CBU_2A_2 = make_cbu_a4e("CBU-2/A*2", "BLU-3B", cbu_tube_number*2) -- {CBU-2/A} -> doubled variant for workaround
@@ -1679,7 +1675,6 @@ declare_loadout(CBU_2AB_2)
 
 CBU_DUMMY = make_cbu_a4e("CBU_DUMMY", "BLU-4B", 0) -- dummy dispenser
 declare_loadout(CBU_DUMMY)
-
 
 ----------------------------------------------------
 -- THESE FUNCTIONS MUST LIVE BELOW CUSTOM WEAPONS --
@@ -1715,23 +1710,34 @@ local rack_data = {
 }
 
 local rocket_data = {
-    ["LAU-61 Hydra M151 HE"]   = { name = "Hydra M151 HE",  mass = 100 + 19 * (23.6 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}", shapename = "LAU-61", pic = 'LAU61.png', count = 19, cx = 0.00146484375},
-    ["LAU-61 Hydra M156 WP"]   = { name = "Hydra M156 WP",  mass = 100 + 19 * (23.3 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{3DFB7321-AB0E-11d7-9897-000476191836}", shapename = "LAU-61", pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    ["LAU-3 FFAR WP156"]            = { name = "2.75\" FFAR, UnGd Rkts  M156, Wht Phos",        mass = 59 + 19 * (23.3 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_WP156}",                      shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    ["LAU-3 FFAR Mk1 HE"]           = { name = "2.75\" FFAR, UnGd Rkts  Mk1, HE",               mass = 59 + 19 * (23.0 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_MK1HE}",                      shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    ["LAU-3 FFAR Mk5 HEAT"]         = { name = "2.75\" FFAR, UnGd Rkts  Mk5, HEAT",             mass = 59 + 19 * (21.6 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_MK5HEAT}",                    shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
 
-    ["LAU-68 Hydra M151 HE"]   = { name = "Hydra M151 HE",  mass = 41.73 + 7 * (23.6 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
-    ["LAU-68 Hydra Mk5 HEAT"]  = { name = "Hydra Mk5 HEAT", mass = 41.73 + 7 * (23.7 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{174C6E6D-0C3D-42ff-BCB3-0853CB371F5C}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
-    ["LAU-68 Hydra M156 WP"]   = { name = "Hydra M156 WP",  mass = 41.73 + 7 * (23.3 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{4F977A2A-CD25-44df-90EF-164BFA2AE72F}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
-    ["LAU-68 Hydra M257 PI"]   = { name = "Hydra M257 PI",  mass = 41.73 + 7 * (24.4 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{647C5F26-BDD1-41e6-A371-8DE1E4CC0E94}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
+    ["LAU-68 FFAR WP156"]           = { name = "2.75\" FFAR, UnGd Rkts  M156, Wht Phos",        mass = 15.9 + 7 * (23.3 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{LAU68_FFAR_WP156}",                     shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
+    ["LAU-68 FFAR Mk1 HE"]          = { name = "2.75\" FFAR, UnGd Rkts  Mk1, HE",               mass = 15.9 + 7 * (23.0 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{LAU68_FFAR_MK1HE}",                     shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
+    ["LAU-68 FFAR Mk5 HEAT"]        = { name = "2.75\" FFAR, UnGd Rkts Mk5, HEAT",             mass = 15.9 + 7 * (21.6 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{LAU68_FFAR_MK5HEAT}",                   shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
 
-    ["LAU-3 FFAR WP156"]       = { name = "FFAR M156 WP",   mass = 100 + 19 * (24.7 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_WP156}",                      shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
-    ["LAU-3 FFAR Mk1 HE"]      = { name = "FFAR Mk1 HE",    mass = 100 + 19 * (21.5 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_MK1HE}",                      shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
-    ["LAU-3 FFAR Mk5 HEAT"]    = { name = "FFAR Mk5 HEAT",  mass = 100 + 19 * (21.6 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_MK5HEAT}",                    shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    -- these aren't loading in for some reason, so commenting out for now
+    -- ["LAU3_HE151"]                  = { name = "2.75\" Hydra, UnGd Rkts M151, HE",             mass = 59 + 19 * (11.1 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_WP156}",                      shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    -- ["LAU3_WP156"]                  = { name = "2.75\" Hydra, UnGd Rkts M156, Wht Phos",       mass = 59 + 19 * (11.9 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_WP156}",                      shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    -- ["LAU3_HE5"]                    = { name = "2.75\" Hydra, UnGd Rkts Mk5, HEAT",            mass = 59 + 19 * (10.8 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_WP156}",                      shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    -- ["LAU3_WP1B"]                   = { name = "2.75\" Hydra, UnGd Rkts Mk61, Practice",       mass = 59 + 19 * (13.5 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_WP156}",                      shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    -- ["LAU3_WP61"]                   = { name = "2.75\" Hydra, UnGd Rkts WTU-1/B, Practice",    mass = 59 + 19 * (9.30 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_WP156}",                      shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
 
-    ["LAU-68 FFAR WP156"]      = { name = "FFAR M156 WP",   mass = 41.73 + 7 * (24.7 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{LAU68_FFAR_WP156}",                     shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
-    ["LAU-68 FFAR Mk1 HE"]     = { name = "FFAR Mk1 HE",    mass = 41.73 + 7 * (21.5 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{LAU68_FFAR_MK1HE}",                     shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
-    ["LAU-68 FFAR Mk5 HEAT"]   = { name = "FFAR Mk5 HEAT",  mass = 41.73 + 7 * (21.6 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{LAU68_FFAR_MK5HEAT}",                   shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
+    ["LAU-61 Hydra M151 HE"]        = { name = "2.75\" Hydra, UnGd Rkts M151, HE",             mass = 10 + 19 * (11.1 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}", shapename = "LAU-61", pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    ["LAU-61 Hydra WP156"]          = { name = "2.75\" Hydra, UnGd Rkts M156, Wht Phos",       mass = 10 + 19 * (11.9 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{3DFB7321-AB0E-11d7-9897-000476191836}", shapename = "LAU-61", pic = 'LAU61.png', count = 19, cx = 0.00146484375},
 
-    ["LAU-10 ZUNI"]            = { name = "ZUNI MK 71",     mass = 440,                               wstype = {4,7,33,37},  payload_CLSID = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}", shapename = "LAU-10", pic = 'LAU10.png', count = 4,  cx = 0.001708984375},
+    ["LAU-68 Hydra M151 HE"]        = { name = "2.75\" Hydra, UnGd Rkts M151, HE",             mass = 15.9 + 7 * (10.5 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
+    ["LAU-68 Hydra WP156"]          = { name = "2.75\" Hydra, UnGd Rkts M156, Wht Phos",       mass = 15.9 + 7 * (11.9 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{4F977A2A-CD25-44df-90EF-164BFA2AE72F}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
+    ["LAU-68 Hydra M274 PS"]        = { name = "2.75\" Hydra, UnGd Rkts M274, Practice Smk",   mass = 15.9 + 7 * (9.30 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{0877B74B-5A00-4e61-BA8A-A56450BA9E27}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
+    ["LAU-68 Hydra M275 PI"]        = { name = "2.75\" Hydra, UnGd Rkts M257, Para Illum",     mass = 15.9 + 7 * (11.0 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{647C5F26-BDD1-41e6-A371-8DE1E4CC0E94}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
+    ["LAU-68 Hydra Mk1 Practice"]   = { name = "2.75\" Hydra, UnGd Rkts Mk1, Practice",        mass = 15.9 + 7 * (13.5 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{FC85D2ED-501A-48ce-9863-49D468DDD5FC}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
+    ["LAU-68 Hydra Mk5 HEAT"]       = { name = "2.75\" Hydra, UnGd Rkts Mk5, HEAT",            mass = 15.9 + 7 * (10.8 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{174C6E6D-0C3D-42ff-BCB3-0853CB371F5C}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
+    ["LAU-68 Hydra Mk61 Practice"]  = { name = "2.75\" Hydra, UnGd Rkts Mk61, Practice",       mass = 15.9 + 7 * (13.5 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{65396399-9F5C-4ec3-A7D2-5A8F4C1D90C4}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
+    ["LAU-68 Hydra WTU1B Practice"] = { name = "2.75\" Hydra, UnGd Rkts WTU-1/B, Practice",    mass = 15.9 + 7 * (9.30 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{1F7136CB-8120-4e77-B97B-945FF01FB67C}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
+
+    ["LAU-10 ZUNI"]                 = { name = "127mm ZUNI, UnGd Rkts MK 71, HE/FRAG",        mass = 47.6 + 4 * (125 * POUNDS_TO_KG),  wstype = {4,7,33,37},  payload_CLSID = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}", shapename = "LAU-10", pic = 'LAU10.png', count = 4,  cx = 0.001708984375},
 }
 
 local function bru_42_lau(element, count, side)
@@ -1746,8 +1752,7 @@ local function bru_42_lau(element, count, side)
     data.attribute          = {4,	7,	32,	WSTYPE_PLACEHOLDER}
     data.Picture            = lau_variant.pic
     data.Count              = count * lau_variant.count
-    -- data.displayName        = element.." *"..tostring(count).." (TER)"
-    data.displayName        = lau_variant.shapename.."*"..tostring(count).." - "..lau_variant.count.." "..lau_variant.name 
+    data.displayName        = "BRU-42 with "..tostring(count).." x "..lau_variant.shapename.." - "..lau_variant.count * tostring(count).." x "..lau_variant.name 
     data.wsTypeOfWeapon     = lau_variant.wstype
     data.Weight             = rack_variant.mass + count * lau_variant.mass
     data.Cx_pil             = 0.001887 + lau_variant.cx*(count*.9)     -- TER only counts 0.9 of the drag per mounted store
@@ -1815,7 +1820,7 @@ function bru_41(element,count,side) -- build up to a 6x MER loadout of the speci
         data.PictureBlendColor  = "0xffffffff"
     end
     data.Count              = count
-    data.displayName        = element.." *"..tostring(count).." (MER)"
+    data.displayName        = "BRU-41 with "..tostring(count).." x "..element
     data.wsTypeOfWeapon     = bomb_variant.wstype
     data.Weight             = rack_variant.mass + count * bomb_variant.mass
     data.Cx_pil             = 0.001887 + bomb_variant.cx*(count*.85)            -- 6x MER has 15% less drag per bomb due to in-line mounting. NB: This isn't quite how it works. Since
@@ -1888,7 +1893,7 @@ function bru_42(element,count,side) -- build a TER setup for the specified bombs
         data.PictureBlendColor  = "0xffffffff"
     end
     data.Count              = count
-    data.displayName        = element.." *"..tostring(count).." (TER)"
+    data.displayName        = "BRU-42 with "..tostring(count).." x "..element
     data.wsTypeOfWeapon     = bomb_variant.wstype
     data.Weight             = rack_variant.mass + count * bomb_variant.mass
     data.Cx_pil             = 0.001887 + bomb_variant.cx*(count*.9)     -- TER only counts 0.9 of the drag per mounted store, NB: This isn't quite how it works. Since
@@ -1934,7 +1939,8 @@ function bru_42(element,count,side) -- build a TER setup for the specified bombs
 end
 
 
-local dispenser_data = {
+local dispenser_data =
+{
     --use shapename,         bomblet,          bomblet_count
     ["CBU-1/A"]          = { bomblet = BLU_4B_NEW_GROUP, bomblet_count = 19, tube_size=tube_size_1A },
     ["CBU-2/A"]          = { bomblet = BLU_3B_NEW_GROUP, bomblet_count = 19, tube_size=tube_size_2A },
@@ -1957,7 +1963,7 @@ function make_cbu_a4e_multi(dispenser,count,side) -- assemble a rack of cluster 
     data.attribute          = {wsType_Weapon, wsType_Bomb, wsType_Container, WSTYPE_PLACEHOLDER}
     data.Picture            = "suu-1a.png"
     data.Count              = dispenser_variant.bomblet_count * count
-    data.displayName        = dispenser.." *2"
+    data.displayName        = "BRU-42 with 2 x "..dispenser
     data.wsTypeOfWeapon     = bomb_variant.wsTypeOfWeapon
     data.Weight             = rack_variant.mass + 2 * ((128 * POUNDS_TO_KG) + bomb_variant.mass * dispenser_variant.tube_size * dispenser_variant.bomblet_count)
     data.Cx_pil             = 0.0025
@@ -2013,126 +2019,150 @@ function make_cbu_a4e_multi(dispenser,count,side) -- assemble a rack of cluster 
     return data
 end
 
-declare_loadout(bru_42_lau("LAU-10 ZUNI", 3, 0))            -- {LAU-10 ZUNI_TER_3_C}
-declare_loadout(bru_42_lau("LAU-10 ZUNI", 2, 0))            -- {LAU-10 ZUNI_TER_2_C}
-declare_loadout(bru_42_lau("LAU-10 ZUNI", 2, -1))           -- {LAU-10 ZUNI_TER_2_L}
-declare_loadout(bru_42_lau("LAU-10 ZUNI", 2, 1))            -- {LAU-10 ZUNI_TER_2_R}
+-- ROCKET LOADOUTS
 
-declare_loadout(bru_42_lau("LAU-3 FFAR WP156", 3, 0))       -- {LAU-3 FFAR WP156_TER_3_C}
-declare_loadout(bru_42_lau("LAU-3 FFAR WP156", 2, 0))       -- {LAU-3 FFAR WP156_TER_2_C}
-declare_loadout(bru_42_lau("LAU-3 FFAR WP156", 2, -1))      -- {LAU-3 FFAR WP156_TER_2_L}
-declare_loadout(bru_42_lau("LAU-3 FFAR WP156", 2, 1))       -- {LAU-3 FFAR WP156_TER_2_R}
+declare_loadout(bru_42_lau("LAU-3 FFAR WP156", 3, 0))               -- {LAU-3 FFAR WP156_TER_3_C}
+declare_loadout(bru_42_lau("LAU-3 FFAR WP156", 2, 0))               -- {LAU-3 FFAR WP156_TER_2_C}
+declare_loadout(bru_42_lau("LAU-3 FFAR WP156", 2, -1))              -- {LAU-3 FFAR WP156_TER_2_L}
+declare_loadout(bru_42_lau("LAU-3 FFAR WP156", 2, 1))               -- {LAU-3 FFAR WP156_TER_2_R}
 
-declare_loadout(bru_42_lau("LAU-3 FFAR Mk1 HE", 3, 0))      -- {LAU-3 FFAR Mk1 HE_TER_3_C}
-declare_loadout(bru_42_lau("LAU-3 FFAR Mk1 HE", 2, 0))      -- {LAU-3 FFAR Mk1 HE_TER_2_C}
-declare_loadout(bru_42_lau("LAU-3 FFAR Mk1 HE", 2, -1))     -- {LAU-3 FFAR Mk1 HE_TER_2_L}
-declare_loadout(bru_42_lau("LAU-3 FFAR Mk1 HE", 2, 1))      -- {LAU-3 FFAR Mk1 HE_TER_2_R}
+declare_loadout(bru_42_lau("LAU-3 FFAR Mk1 HE", 3, 0))              -- {LAU-3 FFAR Mk1 HE_TER_3_C}
+declare_loadout(bru_42_lau("LAU-3 FFAR Mk1 HE", 2, 0))              -- {LAU-3 FFAR Mk1 HE_TER_2_C}
+declare_loadout(bru_42_lau("LAU-3 FFAR Mk1 HE", 2, -1))             -- {LAU-3 FFAR Mk1 HE_TER_2_L}
+declare_loadout(bru_42_lau("LAU-3 FFAR Mk1 HE", 2, 1))              -- {LAU-3 FFAR Mk1 HE_TER_2_R}
 
-declare_loadout(bru_42_lau("LAU-3 FFAR Mk5 HEAT", 3, 0))    -- {LAU-3 FFAR Mk5 HEAT_TER_3_C}
-declare_loadout(bru_42_lau("LAU-3 FFAR Mk5 HEAT", 2, 0))    -- {LAU-3 FFAR Mk5 HEAT_TER_2_C}
-declare_loadout(bru_42_lau("LAU-3 FFAR Mk5 HEAT", 2, -1))   -- {LAU-3 FFAR Mk5 HEAT_TER_2_L}
-declare_loadout(bru_42_lau("LAU-3 FFAR Mk5 HEAT", 2, 1))    -- {LAU-3 FFAR Mk5 HEAT_TER_2_R}
+declare_loadout(bru_42_lau("LAU-3 FFAR Mk5 HEAT", 3, 0))            -- {LAU-3 FFAR Mk5 HEAT_TER_3_C}
+declare_loadout(bru_42_lau("LAU-3 FFAR Mk5 HEAT", 2, 0))            -- {LAU-3 FFAR Mk5 HEAT_TER_2_C}
+declare_loadout(bru_42_lau("LAU-3 FFAR Mk5 HEAT", 2, -1))           -- {LAU-3 FFAR Mk5 HEAT_TER_2_L}
+declare_loadout(bru_42_lau("LAU-3 FFAR Mk5 HEAT", 2, 1))            -- {LAU-3 FFAR Mk5 HEAT_TER_2_R}
 
-declare_loadout(bru_42_lau("LAU-61 Hydra M151 HE", 3, 0))   -- {LAU-61 Hydra M151_TER_3_C}
-declare_loadout(bru_42_lau("LAU-61 Hydra M151 HE", 2, 0))   -- {LAU-61 Hydra M151_TER_2_C}
-declare_loadout(bru_42_lau("LAU-61 Hydra M151 HE", 2, -1))  -- {LAU-61 Hydra M151_TER_2_L}
-declare_loadout(bru_42_lau("LAU-61 Hydra M151 HE", 2, 1))   -- {LAU-61 Hydra M151_TER_2_R}
+declare_loadout(bru_42_lau("LAU-68 FFAR WP156", 3, 0))              -- {LAU-68 FFAR WP156_TER_3_C}
+declare_loadout(bru_42_lau("LAU-68 FFAR WP156", 2, 0))              -- {LAU-68 FFAR WP156_TER_2_C}
+declare_loadout(bru_42_lau("LAU-68 FFAR WP156", 2, -1))             -- {LAU-68 FFAR WP156_TER_2_L}
+declare_loadout(bru_42_lau("LAU-68 FFAR WP156", 2, 1))              -- {LAU-68 FFAR WP156_TER_2_R}
 
-declare_loadout(bru_42_lau("LAU-61 Hydra M156 WP", 3, 0))   -- {LAU-61 Hydra M156 WP_TER_3_C}
-declare_loadout(bru_42_lau("LAU-61 Hydra M156 WP", 2, 0))   -- {LAU-61 Hydra M156 WP_TER_2_C}
-declare_loadout(bru_42_lau("LAU-61 Hydra M156 WP", 2, -1))  -- {LAU-61 Hydra M156 WP_TER_2_L}
-declare_loadout(bru_42_lau("LAU-61 Hydra M156 WP", 2, 1))   -- {LAU-61 Hydra M156 WP_TER_2_R}
+declare_loadout(bru_42_lau("LAU-68 FFAR Mk1 HE", 3, 0))             -- {LAU-68 FFAR Mk1 HE_TER_3_C}
+declare_loadout(bru_42_lau("LAU-68 FFAR Mk1 HE", 2, 0))             -- {LAU-68 FFAR Mk1 HE_TER_2_C}
+declare_loadout(bru_42_lau("LAU-68 FFAR Mk1 HE", 2, -1))            -- {LAU-68 FFAR Mk1 HE_TER_2_L}
+declare_loadout(bru_42_lau("LAU-68 FFAR Mk1 HE", 2, 1))             -- {LAU-68 FFAR Mk1 HE_TER_2_R}
 
-declare_loadout(bru_42_lau("LAU-68 FFAR WP156", 3, 0))      -- {LAU-68 FFAR WP156_TER_3_C}
-declare_loadout(bru_42_lau("LAU-68 FFAR WP156", 2, 0))      -- {LAU-68 FFAR WP156_TER_2_C}
-declare_loadout(bru_42_lau("LAU-68 FFAR WP156", 2, -1))     -- {LAU-68 FFAR WP156_TER_2_L}
-declare_loadout(bru_42_lau("LAU-68 FFAR WP156", 2, 1))      -- {LAU-68 FFAR WP156_TER_2_R}
+declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 3, 0))           -- {LAU-68 FFAR Mk5 HEAT_TER_3_C}
+declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 2, 0))           -- {LAU-68 FFAR Mk5 HEAT_TER_2_C}
+declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 2, -1))          -- {LAU-68 FFAR Mk5 HEAT_TER_2_L}
+declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 2, 1))           -- {LAU-68 FFAR Mk5 HEAT_TER_2_R}
 
-declare_loadout(bru_42_lau("LAU-68 FFAR Mk1 HE", 3, 0))     -- {LAU-68 FFAR Mk1 HE_TER_3_C}
-declare_loadout(bru_42_lau("LAU-68 FFAR Mk1 HE", 2, 0))     -- {LAU-68 FFAR Mk1 HE_TER_2_C}
-declare_loadout(bru_42_lau("LAU-68 FFAR Mk1 HE", 2, -1))    -- {LAU-68 FFAR Mk1 HE_TER_2_L}
-declare_loadout(bru_42_lau("LAU-68 FFAR Mk1 HE", 2, 1))     -- {LAU-68 FFAR Mk1 HE_TER_2_R}
+declare_loadout(bru_42_lau("LAU-61 Hydra WP156", 3, 0))             -- {LAU-61 Hydra WP156_TER_3_C}
+declare_loadout(bru_42_lau("LAU-61 Hydra WP156", 2, 0))             -- {LAU-61 Hydra WP156_TER_2_C}
+declare_loadout(bru_42_lau("LAU-61 Hydra WP156", 2, -1))            -- {LAU-61 Hydra WP156_TER_2_L}
+declare_loadout(bru_42_lau("LAU-61 Hydra WP156", 2, 1))             -- {LAU-61 Hydra WP156_TER_2_R}
 
-declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 3, 0))   -- {LAU-68 FFAR Mk5 HEAT_TER_3_C}
-declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 2, 0))   -- {LAU-68 FFAR Mk5 HEAT_TER_2_C}
-declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 2, -1))  -- {LAU-68 FFAR Mk5 HEAT_TER_2_L}
-declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 2, 1))   -- {LAU-68 FFAR Mk5 HEAT_TER_2_R}
+declare_loadout(bru_42_lau("LAU-61 Hydra M151 HE", 3, 0))           -- {LAU-61 Hydra M151 HE_TER_3_C}
+declare_loadout(bru_42_lau("LAU-61 Hydra M151 HE", 2, 0))           -- {LAU-61 Hydra M151 HE_TER_2_C}
+declare_loadout(bru_42_lau("LAU-61 Hydra M151 HE", 2, -1))          -- {LAU-61 Hydra M151 HE_TER_2_L}
+declare_loadout(bru_42_lau("LAU-61 Hydra M151 HE", 2, 1))           -- {LAU-61 Hydra M151 HE_TER_2_R}
 
-declare_loadout(bru_42_lau("LAU-68 Hydra M156 WP", 3, 0))   -- {LAU-68 Hydra M156 WP_TER_3_C}
-declare_loadout(bru_42_lau("LAU-68 Hydra M156 WP", 2, 0))   -- {LAU-68 Hydra M156 WP_TER_2_C}
-declare_loadout(bru_42_lau("LAU-68 Hydra M156 WP", 2, -1))  -- {LAU-68 Hydra M156 WP_TER_2_L}
-declare_loadout(bru_42_lau("LAU-68 Hydra M156 WP", 2, 1))   -- {LAU-68 Hydra M156 WP_TER_2_R}
+declare_loadout(bru_42_lau("LAU-68 Hydra M151 HE", 3, 0))           -- {LAU-68 Hydra M151 HE_TER_3_C}
+declare_loadout(bru_42_lau("LAU-68 Hydra M151 HE", 2, 0))           -- {LAU-68 Hydra M151 HE_TER_2_C}
+declare_loadout(bru_42_lau("LAU-68 Hydra M151 HE", 2, -1))          -- {LAU-68 Hydra M151 HE_TER_2_L}
+declare_loadout(bru_42_lau("LAU-68 Hydra M151 HE", 2, 1))           -- {LAU-68 Hydra M151 HE_TER_2_R}
 
-declare_loadout(bru_42_lau("LAU-68 Hydra M151 HE", 3, 0))   -- {LAU-68 Hydra M151 HE_TER_3_C}
-declare_loadout(bru_42_lau("LAU-68 Hydra M151 HE", 2, 0))   -- {LAU-68 Hydra M151 HE_TER_2_C}
-declare_loadout(bru_42_lau("LAU-68 Hydra M151 HE", 2, -1))  -- {LAU-68 Hydra M151 HE_TER_2_L}
-declare_loadout(bru_42_lau("LAU-68 Hydra M151 HE", 2, 1))   -- {LAU-68 Hydra M151 HE_TER_2_R}
+declare_loadout(bru_42_lau("LAU-68 Hydra WP156", 3, 0))             -- {LAU-68 Hydra WP156 WP_TER_3_C}
+declare_loadout(bru_42_lau("LAU-68 Hydra WP156", 2, 0))             -- {LAU-68 Hydra WP156 WP_TER_2_C}
+declare_loadout(bru_42_lau("LAU-68 Hydra WP156", 2, -1))            -- {LAU-68 Hydra WP156 WP_TER_2_L}
+declare_loadout(bru_42_lau("LAU-68 Hydra WP156", 2, 1))             -- {LAU-68 Hydra WP156 WP_TER_2_R}
 
-declare_loadout(bru_42_lau("LAU-68 Hydra Mk5 HEAT", 3, 0))  -- {LAU-68 Hydra Mk5 HEAT_TER_3_C}
-declare_loadout(bru_42_lau("LAU-68 Hydra Mk5 HEAT", 2, 0))  -- {LAU-68 Hydra Mk5 HEAT_TER_2_C}
-declare_loadout(bru_42_lau("LAU-68 Hydra Mk5 HEAT", 2, -1)) -- {LAU-68 Hydra Mk5 HEAT_TER_2_L}
-declare_loadout(bru_42_lau("LAU-68 Hydra Mk5 HEAT", 2, 1))  -- {LAU-68 Hydra Mk5 HEAT_TER_2_R}
+declare_loadout(bru_42_lau("LAU-68 Hydra M274 PS", 3, 0))           -- {LAU-68 Hydra M274 PS_TER_3_C}
+declare_loadout(bru_42_lau("LAU-68 Hydra M274 PS", 2, 0))           -- {LAU-68 Hydra M274 PS_TER_2_C}
+declare_loadout(bru_42_lau("LAU-68 Hydra M274 PS", 2, -1))          -- {LAU-68 Hydra M274 PS_TER_2_L}
+declare_loadout(bru_42_lau("LAU-68 Hydra M274 PS", 2, 1))           -- {LAU-68 Hydra M274 PS_TER_2_R}
 
-declare_loadout(bru_42_lau("LAU-68 Hydra M257 PI", 3, 0))   -- {LAU-68 Hydra M257 PI_TER_3_C}
-declare_loadout(bru_42_lau("LAU-68 Hydra M257 PI", 2, 0))   -- {LAU-68 Hydra M257 PI_TER_2_C}
-declare_loadout(bru_42_lau("LAU-68 Hydra M257 PI", 2, -1))  -- {LAU-68 Hydra M257 PI_TER_2_L}
-declare_loadout(bru_42_lau("LAU-68 Hydra M257 PI", 2, 1))   -- {LAU-68 Hydra M257 PI_TER_2_R}
+declare_loadout(bru_42_lau("LAU-68 Hydra M275 PI", 3, 0))           -- {LAU-68 Hydra M275 PI_TER_3_C}
+declare_loadout(bru_42_lau("LAU-68 Hydra M275 PI", 2, 0))           -- {LAU-68 Hydra M275 PI_TER_2_C}
+declare_loadout(bru_42_lau("LAU-68 Hydra M275 PI", 2, -1))          -- {LAU-68 Hydra M275 PI_TER_2_L}
+declare_loadout(bru_42_lau("LAU-68 Hydra M275 PI", 2, 1))           -- {LAU-68 Hydra M275 PI_TER_2_R}
 
-declare_loadout(rackme_a4e("AN-M57", 6,  0))               -- {AN-M57_MER_6_C}
-declare_loadout(rackme_a4e("AN-M57", 5, -1))               -- {AN-M57_MER_5_L}
-declare_loadout(rackme_a4e("AN-M57", 5,  1))               -- {AN-M57_MER_5_R}
-declare_loadout(rackme_a4e("AN-M57", 3,  0))               -- {AN-M57_TER_3_C}
-declare_loadout(rackme_a4e("AN-M57", 2, -1))               -- {AN-M57_TER_2_L}
-declare_loadout(rackme_a4e("AN-M57", 2,  1))               -- {AN-M57_TER_2_R}
+declare_loadout(bru_42_lau("LAU-68 Hydra Mk1 Practice", 3, 0))      -- {LAU-68 Hydra Mk1 Practice_TER_3_C}
+declare_loadout(bru_42_lau("LAU-68 Hydra Mk1 Practice", 2, 0))      -- {LAU-68 Hydra Mk1 Practice_TER_2_C}
+declare_loadout(bru_42_lau("LAU-68 Hydra Mk1 Practice", 2, -1))     -- {LAU-68 Hydra Mk1 Practice_TER_2_L}
+declare_loadout(bru_42_lau("LAU-68 Hydra Mk1 Practice", 2, 1))      -- {LAU-68 Hydra Mk1 Practice_TER_2_R}
 
-declare_loadout(rackme_a4e("AN-M81", 6,  0))               -- {AN-M81_MER_6_C}
-declare_loadout(rackme_a4e("AN-M81", 5, -1))               -- {AN-M81_MER_5_L}
-declare_loadout(rackme_a4e("AN-M81", 5,  1))               -- {AN-M81_MER_5_R}
+declare_loadout(bru_42_lau("LAU-68 Hydra Mk5 HEAT", 3, 0))          -- {LAU-68 Hydra Mk5 HEAT_TER_3_C}
+declare_loadout(bru_42_lau("LAU-68 Hydra Mk5 HEAT", 2, 0))          -- {LAU-68 Hydra Mk5 HEAT_TER_2_C}
+declare_loadout(bru_42_lau("LAU-68 Hydra Mk5 HEAT", 2, -1))         -- {LAU-68 Hydra Mk5 HEAT_TER_2_L}
+declare_loadout(bru_42_lau("LAU-68 Hydra Mk5 HEAT", 2, 1))          -- {LAU-68 Hydra Mk5 HEAT_TER_2_R}
 
-declare_loadout(rackme_a4e("AN-M88", 6,  0))               -- {AN-M88_MER_6_C}
-declare_loadout(rackme_a4e("AN-M88", 5, -1))               -- {AN-M88_MER_5_L}
-declare_loadout(rackme_a4e("AN-M88", 5,  1))               -- {AN-M88_MER_5_R}
+declare_loadout(bru_42_lau("LAU-68 Hydra Mk61 Practice", 3, 0))     -- {LAU-68 Hydra Mk61 Practice_TER_3_C}
+declare_loadout(bru_42_lau("LAU-68 Hydra Mk61 Practice", 2, 0))     -- {LAU-68 Hydra Mk61 Practice_TER_2_C}
+declare_loadout(bru_42_lau("LAU-68 Hydra Mk61 Practice", 2, -1))    -- {LAU-68 Hydra Mk61 Practice_TER_2_L}
+declare_loadout(bru_42_lau("LAU-68 Hydra Mk61 Practice", 2, 1))     -- {LAU-68 Hydra Mk61 Practice_TER_2_R}
 
-declare_loadout(rackme_a4e("Mk-81", 6, 0))                 -- {Mk-81_MER_6_C}
-declare_loadout(rackme_a4e("Mk-81", 5,-1))                 -- {Mk-81_MER_5_L}
-declare_loadout(rackme_a4e("Mk-81", 5, 1))                 -- {Mk-81_MER_5_R}
+declare_loadout(bru_42_lau("LAU-68 Hydra WTU1B Practice", 3, 0))    -- {LAU-68 Hydra WTU1B Practice_TER_3_C}
+declare_loadout(bru_42_lau("LAU-68 Hydra WTU1B Practice", 2, 0))    -- {LAU-68 Hydra WTU1B Practice_TER_2_C}
+declare_loadout(bru_42_lau("LAU-68 Hydra WTU1B Practice", 2, -1))   -- {LAU-68 Hydra WTU1B Practice_TER_2_L}
+declare_loadout(bru_42_lau("LAU-68 Hydra WTU1B Practice", 2, 1))    -- {LAU-68 Hydra WTU1B Practice_TER_2_R}
 
-declare_loadout(rackme_a4e("Mk-81SE", 6, 0))               -- {Mk-81SE_MER_6_C}
-declare_loadout(rackme_a4e("Mk-81SE", 5,-1))               -- {Mk-81SE_MER_5_L}
-declare_loadout(rackme_a4e("Mk-81SE", 5, 1))               -- {Mk-81SE_MER_5_R}
+declare_loadout(bru_42_lau("LAU-10 ZUNI", 3, 0))                    -- {LAU-10 ZUNI_TER_3_C}
+declare_loadout(bru_42_lau("LAU-10 ZUNI", 2, 0))                    -- {LAU-10 ZUNI_TER_2_C}
+declare_loadout(bru_42_lau("LAU-10 ZUNI", 2, -1))                   -- {LAU-10 ZUNI_TER_2_L}
+declare_loadout(bru_42_lau("LAU-10 ZUNI", 2, 1))                    -- {LAU-10 ZUNI_TER_2_R}
 
-declare_loadout(rackme_a4e("Mk-82", 6, 0))                 -- {Mk-82_MER_6_C}
-declare_loadout(rackme_a4e("Mk-82", 4, 0))                 -- {Mk-82_MER_4_C}
-declare_loadout(rackme_a4e("Mk-82", 3, 0))                 -- {Mk-82_TER_3_C}
-declare_loadout(rackme_a4e("Mk-82", 2,-1))                 -- {Mk-82_TER_2_L}
-declare_loadout(rackme_a4e("Mk-82", 2, 1))                 -- {Mk-82_TER_2_R}
+-- BOMB LOADOUTS
 
-declare_loadout(rackme_a4e("Mk-82 Snakeye", 6, 0))         -- {Mk-82 Snakeye_MER_6_C}
-declare_loadout(rackme_a4e("Mk-82 Snakeye", 4, 0))         -- {Mk-82 Snakeye_MER_4_C}
-declare_loadout(rackme_a4e("Mk-82 Snakeye", 3, 0))         -- {Mk-82 Snakeye_TER_3_C}
-declare_loadout(rackme_a4e("Mk-82 Snakeye", 2,-1))         -- {Mk-82 Snakeye_TER_2_L}
-declare_loadout(rackme_a4e("Mk-82 Snakeye", 2, 1))         -- {Mk-82 Snakeye_TER_2_R}
+declare_loadout(rackme_a4e("AN-M57", 6,  0))                -- {AN-M57_MER_6_C}
+declare_loadout(rackme_a4e("AN-M57", 5, -1))                -- {AN-M57_MER_5_L}
+declare_loadout(rackme_a4e("AN-M57", 5,  1))                -- {AN-M57_MER_5_R}
+declare_loadout(rackme_a4e("AN-M57", 3,  0))                -- {AN-M57_TER_3_C}
+declare_loadout(rackme_a4e("AN-M57", 2, -1))                -- {AN-M57_TER_2_L}
+declare_loadout(rackme_a4e("AN-M57", 2,  1))                -- {AN-M57_TER_2_R}
 
-declare_loadout(rackme_a4e("BDU-33", 5, -1))
-declare_loadout(rackme_a4e("BDU-33", 5, 1))
-declare_loadout(rackme_a4e("BDU-33", 6, 0))
+declare_loadout(rackme_a4e("AN-M81", 6,  0))                -- {AN-M81_MER_6_C}
+declare_loadout(rackme_a4e("AN-M81", 5, -1))                -- {AN-M81_MER_5_L}
+declare_loadout(rackme_a4e("AN-M81", 5,  1))                -- {AN-M81_MER_5_R}
 
-declare_loadout(rackme_a4e("Mk-83", 3, 0))                 -- {Mk-83_TER_3_C}
-declare_loadout(rackme_a4e("Mk-83", 2, 0))                 -- {Mk-83_TER_2_C}
+declare_loadout(rackme_a4e("AN-M88", 6,  0))                -- {AN-M88_MER_6_C}
+declare_loadout(rackme_a4e("AN-M88", 5, -1))                -- {AN-M88_MER_5_L}
+declare_loadout(rackme_a4e("AN-M88", 5,  1))                -- {AN-M88_MER_5_R}
 
-declare_loadout(rackme_a4e("Mk-77 mod 1", 4, 0))           -- {Mk-77 mod 1_MER_4_C}
-declare_loadout(rackme_a4e("Mk-77 mod 1", 2,-1))           -- {Mk-77 mod 1_TER_2_L}
-declare_loadout(rackme_a4e("Mk-77 mod 1", 2, 1))           -- {Mk-77 mod 1_TER_2_R}
-declare_loadout(rackme_a4e("Mk-77 mod 1", 2, 0))           -- {Mk-77 mod 1_TER_2_C}
+declare_loadout(rackme_a4e("Mk-81", 6, 0))                  -- {Mk-81_MER_6_C}
+declare_loadout(rackme_a4e("Mk-81", 5,-1))                  -- {Mk-81_MER_5_L}
+declare_loadout(rackme_a4e("Mk-81", 5, 1))                  -- {Mk-81_MER_5_R}
 
-declare_loadout(rackme_a4e("Mk-20", 3, 0))                 -- {Mk-20_TER_3_C}
-declare_loadout(rackme_a4e("Mk-20", 2,-1))                 -- {Mk-20_TER_2_L}
-declare_loadout(rackme_a4e("Mk-20", 2, 1))                 -- {Mk-20_TER_2_R}
-declare_loadout(rackme_a4e("Mk-20", 2, 0))                 -- {Mk-20_TER_2_C}
+declare_loadout(rackme_a4e("Mk-81SE", 6, 0))                -- {Mk-81SE_MER_6_C}
+declare_loadout(rackme_a4e("Mk-81SE", 5,-1))                -- {Mk-81SE_MER_5_L}
+declare_loadout(rackme_a4e("Mk-81SE", 5, 1))                -- {Mk-81SE_MER_5_R}
 
-declare_loadout(make_cbu_a4e_multi("CBU-1/A",  2, -1))     -- {CBU-1/A_TER_2_L}
-declare_loadout(make_cbu_a4e_multi("CBU-1/A",  2,  1))     -- {CBU-1/A_TER_2_R}
-declare_loadout(make_cbu_a4e_multi("CBU-2/A",  2, -1))     -- {CBU-2/A_TER_2_L}
-declare_loadout(make_cbu_a4e_multi("CBU-2/A",  2,  1))     -- {CBU-2/A_TER_2_R}
-declare_loadout(make_cbu_a4e_multi("CBU-2B/A", 2, -1))     -- {CBU-2B/A_TER_2_L}
-declare_loadout(make_cbu_a4e_multi("CBU-2B/A", 2,  1))     -- {CBU-2B/A_TER_2_R}
+declare_loadout(rackme_a4e("Mk-82", 6, 0))                  -- {Mk-82_MER_6_C}
+declare_loadout(rackme_a4e("Mk-82", 4, 0))                  -- {Mk-82_MER_4_C}
+declare_loadout(rackme_a4e("Mk-82", 3, 0))                  -- {Mk-82_TER_3_C}
+declare_loadout(rackme_a4e("Mk-82", 2,-1))                  -- {Mk-82_TER_2_L}
+declare_loadout(rackme_a4e("Mk-82", 2, 1))                  -- {Mk-82_TER_2_R}
+
+declare_loadout(rackme_a4e("Mk-82 Snakeye", 6, 0))          -- {Mk-82 Snakeye_MER_6_C}
+declare_loadout(rackme_a4e("Mk-82 Snakeye", 4, 0))          -- {Mk-82 Snakeye_MER_4_C}
+declare_loadout(rackme_a4e("Mk-82 Snakeye", 3, 0))          -- {Mk-82 Snakeye_TER_3_C}
+declare_loadout(rackme_a4e("Mk-82 Snakeye", 2,-1))          -- {Mk-82 Snakeye_TER_2_L}
+declare_loadout(rackme_a4e("Mk-82 Snakeye", 2, 1))          -- {Mk-82 Snakeye_TER_2_R}
+
+declare_loadout(rackme_a4e("BDU-33", 5, -1))                -- {BDU-33_MER_5_L}
+declare_loadout(rackme_a4e("BDU-33", 5, 1))                 -- {BDU-33_MER_5_R}
+declare_loadout(rackme_a4e("BDU-33", 6, 0))                 -- {BDU-33_MER_6_C}
+
+declare_loadout(rackme_a4e("Mk-83", 3, 0))                  -- {Mk-83_TER_3_C}
+declare_loadout(rackme_a4e("Mk-83", 2, 0))                  -- {Mk-83_TER_2_C}
+
+declare_loadout(rackme_a4e("Mk-77 mod 1", 4, 0))            -- {Mk-77 mod 1_MER_4_C}
+declare_loadout(rackme_a4e("Mk-77 mod 1", 2,-1))            -- {Mk-77 mod 1_TER_2_L}
+declare_loadout(rackme_a4e("Mk-77 mod 1", 2, 1))            -- {Mk-77 mod 1_TER_2_R}
+declare_loadout(rackme_a4e("Mk-77 mod 1", 2, 0))            -- {Mk-77 mod 1_TER_2_C}
+
+declare_loadout(rackme_a4e("Mk-20", 3, 0))                  -- {Mk-20_TER_3_C}
+declare_loadout(rackme_a4e("Mk-20", 2,-1))                  -- {Mk-20_TER_2_L}
+declare_loadout(rackme_a4e("Mk-20", 2, 1))                  -- {Mk-20_TER_2_R}
+declare_loadout(rackme_a4e("Mk-20", 2, 0))                  -- {Mk-20_TER_2_C}
+
+declare_loadout(make_cbu_a4e_multi("CBU-1/A",  2, -1))      -- {CBU-1/A_TER_2_L}
+declare_loadout(make_cbu_a4e_multi("CBU-1/A",  2,  1))      -- {CBU-1/A_TER_2_R}
+declare_loadout(make_cbu_a4e_multi("CBU-2/A",  2, -1))      -- {CBU-2/A_TER_2_L}
+declare_loadout(make_cbu_a4e_multi("CBU-2/A",  2,  1))      -- {CBU-2/A_TER_2_R}
+declare_loadout(make_cbu_a4e_multi("CBU-2B/A", 2, -1))      -- {CBU-2B/A_TER_2_L}
+declare_loadout(make_cbu_a4e_multi("CBU-2B/A", 2,  1))      -- {CBU-2B/A_TER_2_R}

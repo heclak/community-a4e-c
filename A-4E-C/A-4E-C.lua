@@ -75,32 +75,36 @@ local function get_outboard_weapons( side )
     local tbl = {
 	
 		--AIR AIR--
-        { CLSID = "{GAR-8}",                                connector = rocketConnector, arg_value = 0.2 },  -- AIM-9B, aligned to -3deg armament datum
-        { CLSID = "{AIM-9P-ON-ADAPTER}",                    connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P
-        { CLSID = "{AIM-9P5-ON-ADAPTER}",                   connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P5
+        { CLSID = "{GAR-8}",                                    connector = rocketConnector, arg_value = 0.2 },  -- AIM-9B, aligned to -3deg armament datum
+        { CLSID = "{AIM-9P-ON-ADAPTER}",                        connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P
+        { CLSID = "{AIM-9P5-ON-ADAPTER}",                       connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P5
 	
         --ROCKETS--
-        { CLSID = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}", connector = rocketConnector, arg_value = 0.2 }, -- LAU-10 Zuni
+        { CLSID = "{3DFB7321-AB0E-11d7-9897-000476191836}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-61 Hydra WP156
+        { CLSID = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-61 Hydra M151 HE
 
-        { CLSID = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}", connector = rocketConnector, arg_value = 0.2 }, -- LAU-61 Hydra M151 HE
-        { CLSID = "{3DFB7321-AB0E-11d7-9897-000476191836}", connector = rocketConnector, arg_value = 0.2 }, -- LAU-61 Hydra M156 WP
+        { CLSID = "{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra M151 HE
+        { CLSID = "{4F977A2A-CD25-44df-90EF-164BFA2AE72F}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra M156 WP
+        { CLSID = "{174C6E6D-0C3D-42ff-BCB3-0853CB371F5C}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra Mk5 HEAT
+        { CLSID = "{647C5F26-BDD1-41e6-A371-8DE1E4CC0E94}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra PI
+        { CLSID = "{0877B74B-5A00-4e61-BA8A-A56450BA9E27}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra Practice Smoke
+        { CLSID = "{FC85D2ED-501A-48ce-9863-49D468DDD5FC}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra Mk1 Practice
+        { CLSID = "{65396399-9F5C-4ec3-A7D2-5A8F4C1D90C4}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra Mk61 Practice
+        { CLSID = "{1F7136CB-8120-4e77-B97B-945FF01FB67C}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra WTU-1/B Practice
 
-        { CLSID = "{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}", connector = rocketConnector, arg_value = 0.2 }, -- LAU 68 Hydra M151 HE
-        { CLSID = "{174C6E6D-0C3D-42ff-BCB3-0853CB371F5C}", connector = rocketConnector, arg_value = 0.2 }, -- LAU 68 Hydra Mk5 HEAT
-        { CLSID = "{4F977A2A-CD25-44df-90EF-164BFA2AE72F}", connector = rocketConnector, arg_value = 0.2 }, -- LAU 68 Hydra M156 WP
-        { CLSID = "{647C5F26-BDD1-41e6-A371-8DE1E4CC0E94}", connector = rocketConnector, arg_value = 0.2 }, -- LAU 68 Hydra M257 PI
+        { CLSID = "{LAU3_FFAR_WP156}",                          connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR WP156
+        { CLSID = "{LAU3_FFAR_MK1HE}",                          connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR Mk1 HE
+        { CLSID = "{LAU3_FFAR_MK5HEAT}",                        connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR Mk5 HEAT
 
-        { CLSID = "{LAU3_FFAR_WP156}",                      connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR WP156
-        { CLSID = "{LAU3_FFAR_MK1HE}",                      connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR Mk1 HE
-        { CLSID = "{LAU3_FFAR_MK5HEAT}",                    connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR Mk5 HEAT
+        { CLSID = "{LAU68_FFAR_WP156}",                         connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR WP156
+        { CLSID = "{LAU68_FFAR_MK1HE}",                         connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk1 HE
+        { CLSID = "{LAU68_FFAR_MK5HEAT}",                       connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk5 HEAT
 
-        { CLSID = "{LAU68_FFAR_WP156}",                     connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR WP156
-        { CLSID = "{LAU68_FFAR_MK1HE}",                     connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk1 HE
-        { CLSID = "{LAU68_FFAR_MK5HEAT}",                   connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk5 HEAT
+        { CLSID = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-10 Zuni
 
         --MISSILES--
-        { CLSID = "{AGM_45A}", connector = shrikeConnector, arg_value = 0.1 }, -- AGM-45 SHRIKE
-        { CLSID = "{3E6B632D-65EB-44D2-9501-1C2D04515404}", connector = shrikeConnector, arg_value = 0.1 }, -- AGM-45B SHRIKE
+        { CLSID = "{AGM_45A}",                                  connector = shrikeConnector, arg_value = 0.1 }, -- AGM-45 SHRIKE
+        { CLSID = "{3E6B632D-65EB-44D2-9501-1C2D04515404}",     connector = shrikeConnector, arg_value = 0.1 }, -- AGM-45B SHRIKE
 
         --BOMBS--
         { CLSID = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}" },   -- Mk-20 Rockeye cluster bomb
@@ -114,9 +118,6 @@ local function get_outboard_weapons( side )
         { CLSID = "{AN-M64}" },                                 -- AN-M64 500 lb GP HE (274 lb Comp B)
         { CLSID = "{AN-M81}" },                                 -- AN-M81 260 lb Fragmentation (34.1 lb Comp B)
         { CLSID = "{AN-M88}" },                                 -- AN-M88 216 lb Fragmentation (47 lb Comp B)
-
-        --SPECIAL--
-        -- { CLSID = "{647C5F26-BDD1-41e6-A371-8DE1E4CC0E94}"}, -- temporarily add M257 parachute flares until we can add: Mk-5 mod 7, Mk-6 mod 5, Mk-24 mod 2A, SUU-40/44 -- moved to ROCKETS
 
 		-- SMOKE PODS --
 		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E741}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Red
@@ -134,6 +135,8 @@ local function get_outboard_weapons( side )
 	}
     return tbl
 end
+
+
 
 local function get_inboard_weapons( side )
     local rocketConnector = ""
@@ -155,45 +158,53 @@ local function get_inboard_weapons( side )
         { CLSID = "{DFT-150gal_EMPTY}" },
 
         --AIR AIR--
-        { CLSID = "{GAR-8}",                                  connector = rocketConnector, arg_value = 0.2 },  -- AIM-9B, aligned to -3deg armament datum
-        { CLSID = "{AIM-9P-ON-ADAPTER}",                      connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P
-        { CLSID = "{AIM-9P5-ON-ADAPTER}",                     connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P5
+        { CLSID = "{GAR-8}",                                            connector = rocketConnector, arg_value = 0.2 },  -- AIM-9B, aligned to -3deg armament datum
+        { CLSID = "{AIM-9P-ON-ADAPTER}",                                connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P
+        { CLSID = "{AIM-9P5-ON-ADAPTER}",                               connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P5
 
         --ROCKETS--
-        { CLSID = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}",   connector = rocketConnector, arg_value = 0.2 }, -- LAU-10 Zuni
-        { CLSID = "{LAU-10 ZUNI_TER_2_"..side.."}",           connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-10 Zuni
+        { CLSID = "{LAU3_FFAR_WP156}",                                  connector = rocketConnector, arg_value = 0.2 }, -- FFAR M156 WP
+        { CLSID = "{LAU3_FFAR_MK1HE}",                                  connector = rocketConnector, arg_value = 0.2 }, -- FFAR Mk1 HE
+        { CLSID = "{LAU3_FFAR_MK5HEAT}",                                connector = rocketConnector, arg_value = 0.2 }, -- FFAR Mk5 HEAT
+        { CLSID = "{LAU-3 FFAR WP156_TER_2_"..side.."}",                connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR M156 WP
+        { CLSID = "{LAU-3 FFAR Mk1 HE_TER_2_"..side.."}",               connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR Mk1 HE
+        { CLSID = "{LAU-3 FFAR Mk5 HEAT_TER_2_"..side.."}",             connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR Mk5 HEAT
 
-        { CLSID = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}",   connector = rocketConnector, arg_value = 0.2 }, -- LAU-61 Hydra M151 HE
-        { CLSID = "{3DFB7321-AB0E-11d7-9897-000476191836}",   connector = rocketConnector, arg_value = 0.2 }, -- LAU-61 Hydra M156 WP
-        { CLSID = "{LAU-61 Hydra M156 WP_TER_2_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-61 Hydra M156 WP
-        { CLSID = "{LAU-61 Hydra M151 HE_TER_2_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-61 Hydra M151 HE
+        { CLSID = "{LAU68_FFAR_WP156}",                                 connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR M156 WP
+        { CLSID = "{LAU68_FFAR_MK1HE}",                                 connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk1 HE
+        { CLSID = "{LAU68_FFAR_MK5HEAT}",                               connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk5 HEAT
+        { CLSID = "{LAU-68 FFAR WP156_TER_2_"..side.."}",               connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR M156 WP
+        { CLSID = "{LAU-68 FFAR Mk1 HE_TER_2_"..side.."}",              connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR Mk1 HE
+        { CLSID = "{LAU-68 FFAR Mk5 HEAT_TER_2_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR Mk5 HEAT
 
-        { CLSID = "{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}",   connector = rocketConnector, arg_value = 0.2 }, -- LAU 68 Hydra M151 HE
-        { CLSID = "{174C6E6D-0C3D-42ff-BCB3-0853CB371F5C}",   connector = rocketConnector, arg_value = 0.2 }, -- LAU 68 Hydra Mk5 HEAT
-        { CLSID = "{4F977A2A-CD25-44df-90EF-164BFA2AE72F}",   connector = rocketConnector, arg_value = 0.2 }, -- LAU 68 Hydra M156 WP
-        { CLSID = "{647C5F26-BDD1-41e6-A371-8DE1E4CC0E94}",   connector = rocketConnector, arg_value = 0.2 }, -- LAU 68 Hydra M257 PI
-        { CLSID = "{LAU-68 Hydra M156 WP_TER_2_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra M156 WP
-        { CLSID = "{LAU-68 Hydra M151 HE_TER_2_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra M151 HE
-        { CLSID = "{LAU-68 Hydra Mk5 HEAT_TER_2_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Mk5 HEAT
-        { CLSID = "{LAU-68 Hydra M257 PI_TER_2_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra M257 PI
+        { CLSID = "{3DFB7321-AB0E-11d7-9897-000476191836}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-61 Hydra M156 WP
+        { CLSID = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-61 Hydra M151 HE
+        { CLSID = "{LAU-61 Hydra WP156_TER_2_"..side.."}",              connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-61 Hydra M156 WP
+        { CLSID = "{LAU-61 Hydra M151 HE_TER_2_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-61 Hydra M151 HE
 
-        { CLSID = "{LAU3_FFAR_WP156}",                        connector = rocketConnector, arg_value = 0.2 },
-        { CLSID = "{LAU3_FFAR_MK1HE}",                        connector = rocketConnector, arg_value = 0.2 },
-        { CLSID = "{LAU3_FFAR_MK5HEAT}",                      connector = rocketConnector, arg_value = 0.2 },
-        { CLSID = "{LAU-3 FFAR WP156_TER_2_"..side.."}",      connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR WP156
-        { CLSID = "{LAU-3 FFAR Mk1 HE_TER_2_"..side.."}",     connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR Mk1 HE
-        { CLSID = "{LAU-3 FFAR Mk5 HEAT_TER_2_"..side.."}",   connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR Mk5 HEAT
+        { CLSID = "{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra M151 HE
+        { CLSID = "{4F977A2A-CD25-44df-90EF-164BFA2AE72F}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra M156 WP
+        { CLSID = "{174C6E6D-0C3D-42ff-BCB3-0853CB371F5C}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra Mk5 HEAT
+        { CLSID = "{647C5F26-BDD1-41e6-A371-8DE1E4CC0E94}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra PI
+        { CLSID = "{0877B74B-5A00-4e61-BA8A-A56450BA9E27}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra Practice Smoke
+        { CLSID = "{FC85D2ED-501A-48ce-9863-49D468DDD5FC}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra Mk1 Practice
+        { CLSID = "{65396399-9F5C-4ec3-A7D2-5A8F4C1D90C4}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra Mk61 Practice
+        { CLSID = "{1F7136CB-8120-4e77-B97B-945FF01FB67C}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra WTU-1/B Practice
+        { CLSID = "{LAU-68 Hydra M151 HE_TER_2_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra M151 HE
+        { CLSID = "{LAU-68 Hydra WP156_TER_2_"..side.."}",              connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra M156 WP
+        { CLSID = "{LAU-68 Hydra M274 PS_TER_2_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Practice Smoke
+        { CLSID = "{LAU-68 Hydra M275 PI_TER_2_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Para Illum
+        { CLSID = "{LAU-68 Hydra Mk1 Practice_TER_2_"..side.."}",       connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Mk1 Practice
+        { CLSID = "{LAU-68 Hydra Mk5 HEAT_TER_2_"..side.."}",           connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Mk5 HEAT
+        { CLSID = "{LAU-68 Hydra Mk61 Practice_TER_2_"..side.."}",      connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Mk61 Practice
+        { CLSID = "{LAU-68 Hydra WTU1B Practice_TER_2_"..side.."}",     connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra WTU-1/B Practice
 
-        { CLSID = "{LAU68_FFAR_WP156}",                       connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR WP156
-        { CLSID = "{LAU68_FFAR_MK1HE}",                       connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk1 HE
-        { CLSID = "{LAU68_FFAR_MK5HEAT}",                     connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk5 HEAT
-        { CLSID = "{LAU-68 FFAR WP156_TER_2_"..side.."}",     connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR WP156
-        { CLSID = "{LAU-68 FFAR Mk1 HE_TER_2_"..side.."}",    connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR Mk1 HE
-        { CLSID = "{LAU-68 FFAR Mk5 HEAT_TER_2_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR Mk5 HEAT
+        { CLSID = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-10 Zuni
+        { CLSID = "{LAU-10 ZUNI_TER_2_"..side.."}",                     connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-10 Zuni
 
         --MISSILES--
         { CLSID = "{AGM_45A}", connector = shrikeConnector, arg_value = 0.1 }, -- AGM-45A SHRIKE
-        { CLSID = "{3E6B632D-65EB-44D2-9501-1C2D04515404}", connector = shrikeConnector, arg_value = 0.1 }, -- AGM-45B SHRIKE
+        { CLSID = "{3E6B632D-65EB-44D2-9501-1C2D04515404}",             connector = shrikeConnector, arg_value = 0.1 }, -- AGM-45B SHRIKE
 
         --BOMBS--
         { CLSID = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}" }, -- Mk-20 Rockeye cluster bomb
@@ -270,52 +281,77 @@ local function get_centerline_weapons( side )
         -- { CLSID = "{D-704_BUDDY_POD}" },
 
         --ROCKETS--
-        { CLSID = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}",   connector = rocketConnector, arg_value = 0.2 }, -- LAU-10 Zuni
-        { CLSID = "{LAU-10 ZUNI_TER_2_"..side.."}",           connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-10 Zuni
-        { CLSID = "{LAU-10 ZUNI_TER_3_"..side.."}",           connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-10 Zuni
+        { CLSID = "{LAU3_FFAR_WP156}",                                  connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR M156 WP
+        { CLSID = "{LAU3_FFAR_MK1HE}",                                  connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR Mk1 HE
+        { CLSID = "{LAU3_FFAR_MK5HEAT}",                                connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR Mk5 HEAT
+        { CLSID = "{LAU-3 FFAR WP156_TER_2_"..side.."}",                connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR M156 WP
+        { CLSID = "{LAU-3 FFAR Mk1 HE_TER_2_"..side.."}",               connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR Mk1 HE
+        { CLSID = "{LAU-3 FFAR Mk5 HEAT_TER_2_"..side.."}",             connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR Mk5 HEAT
+        { CLSID = "{LAU-3 FFAR WP156_TER_3_"..side.."}",                connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-3 FFAR M156 WP
+        { CLSID = "{LAU-3 FFAR Mk1 HE_TER_3_"..side.."}",               connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-3 FFAR Mk1 HE
+        { CLSID = "{LAU-3 FFAR Mk5 HEAT_TER_3_"..side.."}",             connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-3 FFAR Mk5 HEAT
 
-        { CLSID = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}",   connector = rocketConnector, arg_value = 0.2 }, -- LAU-61 Hydra M151 HE
-        { CLSID = "{3DFB7321-AB0E-11d7-9897-000476191836}",   connector = rocketConnector, arg_value = 0.2 }, -- LAU-61 Hydra M156 WP
-        { CLSID = "{LAU-61 Hydra M156 WP_TER_2_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-61 Hydra M156 WP
-        { CLSID = "{LAU-61 Hydra M151 HE_TER_2_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-61 Hydra M151 HE
-        { CLSID = "{LAU-61 Hydra M156 WP_TER_3_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-61 Hydra M156 WP
-        { CLSID = "{LAU-61 Hydra M151 HE_TER_3_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-61 Hydra M151 HE
+        { CLSID = "{LAU68_FFAR_WP156}",                                 connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR M156 WP
+        { CLSID = "{LAU68_FFAR_MK1HE}",                                 connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk1 HE
+        { CLSID = "{LAU68_FFAR_MK5HEAT}",                               connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk5 HEAT
+        { CLSID = "{LAU-68 FFAR WP156_TER_2_"..side.."}",               connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR M156 WP
+        { CLSID = "{LAU-68 FFAR Mk1 HE_TER_2_"..side.."}",              connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR Mk1 HE
+        { CLSID = "{LAU-68 FFAR Mk5 HEAT_TER_2_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR Mk5 HEAT
+        { CLSID = "{LAU-68 FFAR WP156_TER_3_"..side.."}",               connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 FFAR M156 WP
+        { CLSID = "{LAU-68 FFAR Mk1 HE_TER_3_"..side.."}",              connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 FFAR Mk1 HE
+        { CLSID = "{LAU-68 FFAR Mk5 HEAT_TER_3_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 FFAR Mk5 HEAT
 
-        -- { CLSID = "{3*LAU-61}",                               connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-61 Hydra M151 HE??
-        -- { CLSID = "{A76344EB-32D2-4532-8FA2-0C1BDC00747E}",   connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-61 Hydra M151 HE??
+        -- these aren't loading in for some reason, so commenting out for now
+        -- { CLSID = "{LAU3_HE151}",                                       connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 Hydra M151 HE
+        -- { CLSID = "{LAU3_WP156}",                                       connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 Hydra M156 WP
+        -- { CLSID = "{LAU3_HE5}",                                         connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 Hydra Mk5 HEAT
+        -- { CLSID = "{LAU3_WP61}",                                        connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 Hydra Mk61 Practice
+        -- { CLSID = "{LAU3_WP1B}",                                        connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 Hydra WTU-1/B Practice
 
-        { CLSID = "{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}",   connector = rocketConnector, arg_value = 0.2 }, -- LAU 68 Hydra M151 HE
-        { CLSID = "{174C6E6D-0C3D-42ff-BCB3-0853CB371F5C}",   connector = rocketConnector, arg_value = 0.2 }, -- LAU 68 Hydra Mk5 HEAT
-        { CLSID = "{4F977A2A-CD25-44df-90EF-164BFA2AE72F}",   connector = rocketConnector, arg_value = 0.2 }, -- LAU 68 Hydra M156 WP
-        { CLSID = "{647C5F26-BDD1-41e6-A371-8DE1E4CC0E94}",   connector = rocketConnector, arg_value = 0.2 }, -- LAU 68 Hydra M257 PI
-        { CLSID = "{LAU-68 Hydra M156 WP_TER_2_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra M156 WP
-        { CLSID = "{LAU-68 Hydra M151 HE_TER_2_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra M151 HE
-        { CLSID = "{LAU-68 Hydra Mk5 HEAT_TER_2_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Mk5 HEAT
-        { CLSID = "{LAU-68 Hydra M257 PI_TER_2_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra M257 PI
-        { CLSID = "{LAU-68 Hydra M156 WP_TER_3_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU 68 Hydra M156 Wht Phos
-        { CLSID = "{LAU-68 Hydra M151 HE_TER_3_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU 68 Hydra M151 HE
-        { CLSID = "{LAU-68 Hydra Mk5 HEAT_TER_3_"..side.."}", connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU 68 Hydra MK5 HEAT
-        { CLSID = "{LAU-68 Hydra M257 PI_TER_3_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU 68 Hydra M257 PI
+        { CLSID = "{3DFB7321-AB0E-11d7-9897-000476191836}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-61 Hydra M156 WP
+        { CLSID = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-61 Hydra M151 HE
+        { CLSID = "{LAU-61 Hydra WP156_TER_2_"..side.."}",              connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-61 Hydra M156 WP
+        { CLSID = "{LAU-61 Hydra M151 HE_TER_2_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-61 Hydra M151 HE
+        { CLSID = "{LAU-61 Hydra WP156_TER_3_"..side.."}",              connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-61 Hydra M156 WP
+        { CLSID = "{LAU-61 Hydra M151 HE_TER_3_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-61 Hydra M151 HE
+        -- { CLSID = "{A76344EB-32D2-4532-8FA2-0C1BDC00747E}",             connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-61 Hydra M151 HE (DCS native)
 
-        { CLSID = "{LAU3_FFAR_WP156}",                        connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR WP156
-        { CLSID = "{LAU3_FFAR_MK1HE}",                        connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR Mk1 HE
-        { CLSID = "{LAU3_FFAR_MK5HEAT}",                      connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR Mk5 HEAT
-        { CLSID = "{LAU-3 FFAR WP156_TER_2_"..side.."}",      connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR WP156
-        { CLSID = "{LAU-3 FFAR Mk1 HE_TER_2_"..side.."}",     connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR Mk1 HE
-        { CLSID = "{LAU-3 FFAR Mk5 HEAT_TER_2_"..side.."}",   connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR Mk5 HEAT
-        { CLSID = "{LAU-3 FFAR WP156_TER_3_"..side.."}",      connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-3 FFAR WP156
-        { CLSID = "{LAU-3 FFAR Mk1 HE_TER_3_"..side.."}",     connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-3 FFAR Mk1 HE
-        { CLSID = "{LAU-3 FFAR Mk5 HEAT_TER_3_"..side.."}",   connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-3 FFAR Mk5 HEAT
-
-        { CLSID = "{LAU68_FFAR_WP156}",                       connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR WP156
-        { CLSID = "{LAU68_FFAR_MK1HE}",                       connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk1 HE
-        { CLSID = "{LAU68_FFAR_MK5HEAT}",                     connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk5 HEAT
-        { CLSID = "{LAU-68 FFAR WP156_TER_2_"..side.."}",     connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR WP156
-        { CLSID = "{LAU-68 FFAR Mk1 HE_TER_2_"..side.."}",    connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR Mk1 HE
-        { CLSID = "{LAU-68 FFAR Mk5 HEAT_TER_2_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR Mk5 HEAT
-        { CLSID = "{LAU-68 FFAR WP156_TER_3_"..side.."}",     connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 FFAR WP156
-        { CLSID = "{LAU-68 FFAR Mk1 HE_TER_3_"..side.."}",    connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 FFAR Mk1 HE
-        { CLSID = "{LAU-68 FFAR Mk5 HEAT_TER_3_"..side.."}",  connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 FFAR Mk5 HEAT
+        { CLSID = "{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra M151 HE
+        { CLSID = "{4F977A2A-CD25-44df-90EF-164BFA2AE72F}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra M156 WP
+        { CLSID = "{647C5F26-BDD1-41e6-A371-8DE1E4CC0E94}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra Para Illum
+        { CLSID = "{0877B74B-5A00-4e61-BA8A-A56450BA9E27}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra Practice Smk
+        { CLSID = "{FC85D2ED-501A-48ce-9863-49D468DDD5FC}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra Mk1 Practice
+        { CLSID = "{174C6E6D-0C3D-42ff-BCB3-0853CB371F5C}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra Mk5 HEAT
+        { CLSID = "{65396399-9F5C-4ec3-A7D2-5A8F4C1D90C4}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra Mk61 Practice
+        { CLSID = "{1F7136CB-8120-4e77-B97B-945FF01FB67C}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra WTU-1/B Practice
+        { CLSID = "{LAU-68 Hydra M151 HE_TER_2_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra M151 HE
+        { CLSID = "{LAU-68 Hydra WP156_TER_2_"..side.."}",              connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra M156 WP
+        { CLSID = "{LAU-68 Hydra M274 PS_TER_2_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Practice Smoke
+        { CLSID = "{LAU-68 Hydra M275 PI_TER_2_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Para Illum
+        { CLSID = "{LAU-68 Hydra Mk1 Practice_TER_2_"..side.."}",       connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Mk1 Practice
+        { CLSID = "{LAU-68 Hydra Mk5 HEAT_TER_2_"..side.."}",           connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Mk5 HEAT
+        { CLSID = "{LAU-68 Hydra Mk61 Practice_TER_2_"..side.."}",      connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Mk61 Practice
+        { CLSID = "{LAU-68 Hydra WTU1B Practice_TER_2_"..side.."}",     connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra WTU-1/B Practice
+        { CLSID = "{LAU-68 Hydra M151 HE_TER_3_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra M151 HE
+        { CLSID = "{LAU-68 Hydra WP156_TER_3_"..side.."}",              connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra M156 WP
+        { CLSID = "{LAU-68 Hydra M274 PS_TER_3_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra Practice Smoke
+        { CLSID = "{LAU-68 Hydra M275 PI_TER_3_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra Para Illum
+        { CLSID = "{LAU-68 Hydra Mk1 Practice_TER_3_"..side.."}",       connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra Mk1 Practice
+        { CLSID = "{LAU-68 Hydra Mk5 HEAT_TER_3_"..side.."}",           connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra Mk5 HEAT
+        { CLSID = "{LAU-68 Hydra Mk61 Practice_TER_3_"..side.."}",      connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra Mk61 Practice
+        { CLSID = "{LAU-68 Hydra WTU1B Practice_TER_3_"..side.."}",     connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra WTU-1/B Practice
+        -- { CLSID = "{64329ED9-B14C-4c0b-A923-A3C911DA1527}",             connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra M151 HE (DCS native)
+        -- { CLSID = "{C2593383-3CA8-4b18-B73D-0E750BCA1C85}",             connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra M156 WP (DCS native)
+        -- { CLSID = "{9BC82B3D-FE70-4910-B2B7-3E54EFE73262}",             connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra Mk5 HEAT (DCS native)
+        -- { CLSID = "{E6966004-A525-4f47-AF94-BCFEDF8FDBDA}",             connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra PI (DCS native)
+        -- { CLSID = "{4C044B08-886B-46c8-9B1F-AB05B3ED9C1D}",             connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra Practice Smoke (DCS native)
+        -- { CLSID = "{443364AE-D557-488e-9499-45EDB3BA6730}",             connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra Mk1 Practice (DCS native)
+        -- { CLSID = "{C0FA251E-B645-4ce5-926B-F4BC20822F8B}",             connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra Mk61 Practice (DCS native)
+        -- { CLSID = "{A1853B38-2160-4ffe-B7E9-9BF81E6C3D77}",             connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra WTU-1/B Practice (DCS native)
+       
+        { CLSID = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-10 Zuni
+        { CLSID = "{LAU-10 ZUNI_TER_2_"..side.."}",                     connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-10 Zuni
+        { CLSID = "{LAU-10 ZUNI_TER_3_"..side.."}",                     connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-10 Zuni
 
         --BOMBS--
         { CLSID = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}" },   -- Mk-20 Rockeye cluster bomb

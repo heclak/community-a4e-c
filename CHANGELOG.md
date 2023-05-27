@@ -7,9 +7,13 @@ Please list the changes you've made in this file. We should try to follow the gu
 ### Added
 - Delivery information for Shrike and Sidewinder provided in Kneeboard Manual, page 3-5.
 - Else keybinds for the Chaff Dispenser Select added for 3-position switch support.
+- Added the AGM-45B Shrike to the loadout options.
+- Added 2.75" Hydra rocket loadouts for LAU-68 launchers, including white phosphorous, HE, HEAT, Para Illum, Practice Smoke, as well as Mk1, Mk61, and WRU-1/B practice munitions to the loadout options. LAU-61 launchers with HE and white phosphorous warheads are also available. Outboard stations support 1 launcher, inboard stations up to 3, and up to 3 can be added on centerline station.
 
 ### Changed
-- The addition of NWS (Nosewheel Simulation) should improve and make for an easier time correcting turns on the ground and reducing "stuck wheel" syndrome after a grevous taxi error. Pro-tip: If you drift it just right, you see them gold sparks.
+- A new NWS (Nosewheel Simulation) should make correcting turns on the ground, eliminating the "stuck wheel" phenomenon after a grievous taxi error. Amaze your friends with your drifting skill!
+- Recalculated the weight of multiple rocket payloads.
+- The listed names of items mounted to multiple ejector racks like the BRU-41 and BRU-42 match DCS World's naming conventions.
 
 ### Fixed
 - Black lines along center line of fuel tanks have been removed.
