@@ -1,299 +1,296 @@
 -- Weapons definitions here
-
 dofile("Scripts/Database/Weapons/warheads.lua")
-
-
 print("WEAPON TEST")
--- Support Functions:
 
+-- Support Functions:
 local GALLON_TO_KG = 3.785 * 0.8
 local INCHES_TO_M = 0.0254
 local POUNDS_TO_KG = 0.453592
 
 ---------FUEL TANKS-----------
-declare_loadout(	--400 gal tank
-	{
-		category		= CAT_FUEL_TANKS,
-		CLSID			= "{DFT-400gal}",
-		attribute		=  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
-		Picture			= "fuel400.png",
-		displayName		= _("Fuel Tank 400 gallons"),
-		Weight_Empty	= 240*POUNDS_TO_KG,                         -- "bobtail" configuration
-		Weight			= 240*POUNDS_TO_KG + 400*GALLON_TO_KG,
-		Cx_pil			= 0.0020,
-		shape_table_data =
-		{
-			{
-				name 	= "DFT_400_GAL_A4E",
-				file	= "DFT_400gal_a4e";
-				life	= 1;
-				fire	= { 0, 1};
-				username	= "DFT_400_GAL_A4E";
-				index	= WSTYPE_PLACEHOLDER;
-			},
-		},
-		Elements	=
-		{
-			{
-				ShapeName	= "DFT_400_GAL_A4E",
-			},
-		},
-	}
+declare_loadout(    --400 gal tank
+    {
+        category        = CAT_FUEL_TANKS,
+        CLSID            = "{DFT-400gal}",
+        attribute        =  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
+        Picture            = "fuel400.png",
+        displayName        = _("Fuel Tank 400 gallons"),
+        Weight_Empty    = 240*POUNDS_TO_KG,                         -- "bobtail" configuration
+        Weight            = 240*POUNDS_TO_KG + 400*GALLON_TO_KG,
+        Cx_pil            = 0.0020,
+        shape_table_data =
+        {
+            {
+                name     = "DFT_400_GAL_A4E",
+                file    = "DFT_400gal_a4e";
+                life    = 1;
+                fire    = { 0, 1};
+                username    = "DFT_400_GAL_A4E";
+                index    = WSTYPE_PLACEHOLDER;
+            },
+        },
+        Elements    =
+        {
+            {
+                ShapeName    = "DFT_400_GAL_A4E",
+            },
+        },
+    }
 )
 
-declare_loadout(	--300 gal tank
-	{
-		category		= CAT_FUEL_TANKS,
-		CLSID			= "{DFT-300gal}",
-		attribute		=  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
-		Picture			= "fuel300.png",
-		displayName		= _("Fuel Tank 300 gallons"),
-		Weight_Empty	= 183*POUNDS_TO_KG,                       -- 2 fin configuration
-		Weight			= 183*POUNDS_TO_KG + 300*GALLON_TO_KG,
-		Cx_pil			= 0.0015,
-		shape_table_data =
-		{
-			{
-				name 	= "DFT_300_GAL_A4E",
-				file	= "DFT_300gal_a4e_C";
-				life	= 1;
-				fire	= { 0, 1};
-				username	= "DFT_300_GAL_A4E";
-				index	= WSTYPE_PLACEHOLDER;
-			},
-		},
-		Elements	=
-		{
-			{
-				ShapeName	= "DFT_300_GAL_A4E",
-			},
-		},
-	}
+declare_loadout(    --300 gal tank
+    {
+        category        = CAT_FUEL_TANKS,
+        CLSID            = "{DFT-300gal}",
+        attribute        =  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
+        Picture            = "fuel300.png",
+        displayName        = _("Fuel Tank 300 gallons"),
+        Weight_Empty    = 183*POUNDS_TO_KG,                       -- 2 fin configuration
+        Weight            = 183*POUNDS_TO_KG + 300*GALLON_TO_KG,
+        Cx_pil            = 0.0015,
+        shape_table_data =
+        {
+            {
+                name     = "DFT_300_GAL_A4E",
+                file    = "DFT_300gal_a4e_C";
+                life    = 1;
+                fire    = { 0, 1};
+                username    = "DFT_300_GAL_A4E";
+                index    = WSTYPE_PLACEHOLDER;
+            },
+        },
+        Elements    =
+        {
+            {
+                ShapeName    = "DFT_300_GAL_A4E",
+            },
+        },
+    }
 )
 
-declare_loadout(	--300 gal tank LEFT RIGHT
-	{
-		category		= CAT_FUEL_TANKS,
-		CLSID			= "{DFT-300gal_LR}",
-		attribute		=  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
-		Picture			= "fuel300.png",
-		displayName		= _("Fuel Tank 300 gallons"),
-		Weight_Empty	= 199*POUNDS_TO_KG,                       -- 2 fin configuration
-		Weight			= 199*POUNDS_TO_KG + 300*GALLON_TO_KG,
-		Cx_pil			= 0.0014,
-		shape_table_data =
-		{
-			{
-				name 	= "DFT_300_GAL_A4E_LR",
-				file	= "DFT_300gal_a4e_LR";
-				life	= 1;
-				fire	= { 0, 1};
-				username	= "DFT_300_GAL_A4E_LR";
-				index	= WSTYPE_PLACEHOLDER;
-			},
-		},
-		Elements	=
-		{
-			{
-				ShapeName	= "DFT_300_GAL_A4E_LR",
-			},
-		},
-	}
+declare_loadout(    --300 gal tank LEFT RIGHT
+    {
+        category        = CAT_FUEL_TANKS,
+        CLSID            = "{DFT-300gal_LR}",
+        attribute        =  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
+        Picture            = "fuel300.png",
+        displayName        = _("Fuel Tank 300 gallons"),
+        Weight_Empty    = 199*POUNDS_TO_KG,                       -- 2 fin configuration
+        Weight            = 199*POUNDS_TO_KG + 300*GALLON_TO_KG,
+        Cx_pil            = 0.0014,
+        shape_table_data =
+        {
+            {
+                name     = "DFT_300_GAL_A4E_LR",
+                file    = "DFT_300gal_a4e_LR";
+                life    = 1;
+                fire    = { 0, 1};
+                username    = "DFT_300_GAL_A4E_LR";
+                index    = WSTYPE_PLACEHOLDER;
+            },
+        },
+        Elements    =
+        {
+            {
+                ShapeName    = "DFT_300_GAL_A4E_LR",
+            },
+        },
+    }
 )
 
-declare_loadout(	--150 gal tank
-	{
-		category		= CAT_FUEL_TANKS,
-		CLSID			= "{DFT-150gal}",
-		attribute		=  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
-		Picture			= "fuel150.png",
-		displayName		= _("Fuel Tank 150 gallons"),
-		Weight_Empty	= 136*POUNDS_TO_KG,
-		Weight			= 136*POUNDS_TO_KG + 150*GALLON_TO_KG,
-		Cx_pil			= 0.0010,
-		shape_table_data =
-		{
-			{
-				name 	= "DFT_150_GAL_A4E",
-				file	= "DFT_150gal_a4e";
-				life	= 1;
-				fire	= { 0, 1};
-				username	= "DFT_150_GAL_A4E";
-				index	= WSTYPE_PLACEHOLDER;
-			},
-		},
-		Elements	=
-		{
-			{
-				ShapeName	= "DFT_150_GAL_A4E",
-			},
-		},
-	}
+declare_loadout(    --150 gal tank
+    {
+        category        = CAT_FUEL_TANKS,
+        CLSID            = "{DFT-150gal}",
+        attribute        =  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
+        Picture            = "fuel150.png",
+        displayName        = _("Fuel Tank 150 gallons"),
+        Weight_Empty    = 136*POUNDS_TO_KG,
+        Weight            = 136*POUNDS_TO_KG + 150*GALLON_TO_KG,
+        Cx_pil            = 0.0010,
+        shape_table_data =
+        {
+            {
+                name     = "DFT_150_GAL_A4E",
+                file    = "DFT_150gal_a4e";
+                life    = 1;
+                fire    = { 0, 1};
+                username    = "DFT_150_GAL_A4E";
+                index    = WSTYPE_PLACEHOLDER;
+            },
+        },
+        Elements    =
+        {
+            {
+                ShapeName    = "DFT_150_GAL_A4E",
+            },
+        },
+    }
 )
 
 ---------EMPTY FUEL TANKS-----------
-declare_loadout(	--400 gal tank
-	{
-		category		= CAT_FUEL_TANKS,
-		CLSID			= "{DFT-400gal_EMPTY}",
-		attribute		=  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
-		Picture			= "fuel400.png",
-		displayName		= _("Fuel Tank 400 gallons (EMPTY)"),
-		Weight_Empty	= 240*POUNDS_TO_KG,                         -- "bobtail" configuration
-		Weight			= 240*POUNDS_TO_KG + 400*GALLON_TO_KG,
-		Cx_pil			= 0.0020,
-		shape_table_data =
-		{
-			{
-				name 	= "DFT_400_GAL_A4E_EMPTY",
-				file	= "DFT_400gal_a4e";
-				life	= 1;
-				fire	= { 0, 1};
-				username	= "DFT_400_GAL_A4E_EMPTY";
-				index	= WSTYPE_PLACEHOLDER;
-			},
-		},
-		Elements	=
-		{
-			{
-				ShapeName	= "DFT_400_GAL_A4E",
-			},
-		},
-	}
+declare_loadout(    --400 gal tank
+    {
+        category        = CAT_FUEL_TANKS,
+        CLSID            = "{DFT-400gal_EMPTY}",
+        attribute        =  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
+        Picture            = "fuel400.png",
+        displayName        = _("Fuel Tank 400 gallons (EMPTY)"),
+        Weight_Empty    = 240*POUNDS_TO_KG,                         -- "bobtail" configuration
+        Weight            = 240*POUNDS_TO_KG + 400*GALLON_TO_KG,
+        Cx_pil            = 0.0020,
+        shape_table_data =
+        {
+            {
+                name     = "DFT_400_GAL_A4E_EMPTY",
+                file    = "DFT_400gal_a4e";
+                life    = 1;
+                fire    = { 0, 1};
+                username    = "DFT_400_GAL_A4E_EMPTY";
+                index    = WSTYPE_PLACEHOLDER;
+            },
+        },
+        Elements    =
+        {
+            {
+                ShapeName    = "DFT_400_GAL_A4E",
+            },
+        },
+    }
 )
 
-declare_loadout(	--300 gal tank
-	{
-		category		= CAT_FUEL_TANKS,
-		CLSID			= "{DFT-300gal_EMPTY}",
-		attribute		=  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
-		Picture			= "fuel300.png",
-		displayName		= _("Fuel Tank 300 gallons (EMPTY)"),
-		Weight_Empty	= 183*POUNDS_TO_KG,                       -- 2 fin configuration
-		Weight			= 183*POUNDS_TO_KG + 300*GALLON_TO_KG,
-		Cx_pil			= 0.0015,
-		shape_table_data =
-		{
-			{
-				name 	= "DFT_300_GAL_A4E_EMPTY",
-				file	= "DFT_300gal_a4e_C";
-				life	= 1;
-				fire	= { 0, 1};
-				username	= "DFT_300_GAL_A4E_EMPTY";
-				index	= WSTYPE_PLACEHOLDER;
-			},
-		},
-		Elements	=
-		{
-			{
-				ShapeName	= "DFT_300_GAL_A4E",
-			},
-		},
-	}
+declare_loadout(    --300 gal tank
+    {
+        category        = CAT_FUEL_TANKS,
+        CLSID            = "{DFT-300gal_EMPTY}",
+        attribute        =  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
+        Picture            = "fuel300.png",
+        displayName        = _("Fuel Tank 300 gallons (EMPTY)"),
+        Weight_Empty    = 183*POUNDS_TO_KG,                       -- 2 fin configuration
+        Weight            = 183*POUNDS_TO_KG + 300*GALLON_TO_KG,
+        Cx_pil            = 0.0015,
+        shape_table_data =
+        {
+            {
+                name     = "DFT_300_GAL_A4E_EMPTY",
+                file    = "DFT_300gal_a4e_C";
+                life    = 1;
+                fire    = { 0, 1};
+                username    = "DFT_300_GAL_A4E_EMPTY";
+                index    = WSTYPE_PLACEHOLDER;
+            },
+        },
+        Elements    =
+        {
+            {
+                ShapeName    = "DFT_300_GAL_A4E",
+            },
+        },
+    }
 )
 
-declare_loadout(	--300 gal tank LEFT RIGHT
-	{
-		category		= CAT_FUEL_TANKS,
-		CLSID			= "{DFT-300gal_LR_EMPTY}",
-		attribute		=  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
-		Picture			= "fuel300.png",
-		displayName		= _("Fuel Tank 300 gallons (EMPTY)"),
-		Weight_Empty	= 199*POUNDS_TO_KG,                       -- 2 fin configuration
-		Weight			= 199*POUNDS_TO_KG + 300*GALLON_TO_KG,
-		Cx_pil			= 0.0014,
-		shape_table_data =
-		{
-			{
-				name 	= "DFT_300_GAL_A4E_LR_EMPTY",
-				file	= "DFT_300gal_a4e_LR";
-				life	= 1;
-				fire	= { 0, 1};
-				username	= "DFT_300_GAL_A4E_LR_EMPTY";
-				index	= WSTYPE_PLACEHOLDER;
-			},
-		},
-		Elements	=
-		{
-			{
-				ShapeName	= "DFT_300_GAL_A4E_LR",
-			},
-		},
-	}
+declare_loadout(    --300 gal tank LEFT RIGHT
+    {
+        category        = CAT_FUEL_TANKS,
+        CLSID            = "{DFT-300gal_LR_EMPTY}",
+        attribute        =  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
+        Picture            = "fuel300.png",
+        displayName        = _("Fuel Tank 300 gallons (EMPTY)"),
+        Weight_Empty    = 199*POUNDS_TO_KG,                       -- 2 fin configuration
+        Weight            = 199*POUNDS_TO_KG + 300*GALLON_TO_KG,
+        Cx_pil            = 0.0014,
+        shape_table_data =
+        {
+            {
+                name     = "DFT_300_GAL_A4E_LR_EMPTY",
+                file    = "DFT_300gal_a4e_LR";
+                life    = 1;
+                fire    = { 0, 1};
+                username    = "DFT_300_GAL_A4E_LR_EMPTY";
+                index    = WSTYPE_PLACEHOLDER;
+            },
+        },
+        Elements    =
+        {
+            {
+                ShapeName    = "DFT_300_GAL_A4E_LR",
+            },
+        },
+    }
 )
 
-declare_loadout(	--150 gal tank
-	{
-		category		= CAT_FUEL_TANKS,
-		CLSID			= "{DFT-150gal_EMPTY}",
-		attribute		=  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
-		Picture			= "fuel150.png",
-		displayName		= _("Fuel Tank 150 gallons (EMPTY)"),
-		Weight_Empty	= 136*POUNDS_TO_KG,
-		Weight			= 136*POUNDS_TO_KG + 150*GALLON_TO_KG,
-		Cx_pil			= 0.0010,
-		shape_table_data =
-		{
-			{
-				name 	= "DFT_150_GAL_A4E_EMPTY",
-				file	= "DFT_150gal_a4e";
-				life	= 1;
-				fire	= { 0, 1};
-				username	= "DFT_150_GAL_A4E_EMPTY";
-				index	= WSTYPE_PLACEHOLDER;
-			},
-		},
-		Elements	=
-		{
-			{
-				ShapeName	= "DFT_150_GAL_A4E",
-			},
-		},
-	}
+declare_loadout(    --150 gal tank
+    {
+        category        = CAT_FUEL_TANKS,
+        CLSID            = "{DFT-150gal_EMPTY}",
+        attribute        =  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
+        Picture            = "fuel150.png",
+        displayName        = _("Fuel Tank 150 gallons (EMPTY)"),
+        Weight_Empty    = 136*POUNDS_TO_KG,
+        Weight            = 136*POUNDS_TO_KG + 150*GALLON_TO_KG,
+        Cx_pil            = 0.0010,
+        shape_table_data =
+        {
+            {
+                name     = "DFT_150_GAL_A4E_EMPTY",
+                file    = "DFT_150gal_a4e";
+                life    = 1;
+                fire    = { 0, 1};
+                username    = "DFT_150_GAL_A4E_EMPTY";
+                index    = WSTYPE_PLACEHOLDER;
+            },
+        },
+        Elements    =
+        {
+            {
+                ShapeName    = "DFT_150_GAL_A4E",
+            },
+        },
+    }
 )
 
-
--- declare_loadout(	--D-704 BUDDY POD
--- 	{
--- 		category		= CAT_FUEL_TANKS,
--- 		CLSID			= "{D-704_BUDDY_POD}",
--- 		attribute		=  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
--- 		Picture			= "d-704.png",
--- 		displayName		= _("D-704 Refueling Pod"),
--- 		Weight_Empty	= 719*POUNDS_TO_KG,
--- 		Weight			= 719*POUNDS_TO_KG + 300*GALLON_TO_KG,
--- 		Cx_pil			= 0.0030,
--- 		shape_table_data =
--- 		{
--- 			{
--- 				name 	= "D-704_POD_A4E",
--- 				file	= "D-704_pod_A4E";
--- 				life	= 1;
--- 				fire	= { 0, 1};
--- 				username	= "D-704_POD_A4E";
--- 				index	= WSTYPE_PLACEHOLDER;
--- 			},
--- 		},
--- 		Elements	=
--- 		{
--- 			{
--- 				ShapeName	= "D-704_POD_A4E",
--- 			},
--- 		},
--- 	}
--- )
-
+--[[
+declare_loadout(    --D-704 BUDDY POD
+    {
+        category = CAT_FUEL_TANKS,
+        CLSID = "{D-704_BUDDY_POD}",
+        attribute =  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
+        Picture = "d-704.png",
+        displayName = _("D-704 Refueling Pod"),
+        Weight_Empty = 719*POUNDS_TO_KG,
+        Weight = 719*POUNDS_TO_KG + 300*GALLON_TO_KG,
+        Cx_pil = 0.0030,
+        shape_table_data =
+        {
+            {
+                name = "D-704_POD_A4E",
+                file = "D-704_pod_A4E";
+                life = 1;
+                fire = { 0, 1};
+                username = "D-704_POD_A4E";
+                index = WSTYPE_PLACEHOLDER;
+            },
+        },
+        Elements =
+        {
+            {
+                ShapeName = "D-704_POD_A4E",
+            },
+        },
+    }
+)
+]]
 
 ---------AIR AIR--------------
 --[[
 local AIM9B_WPN =   {
-		category		= CAT_AIR_TO_AIR,
-		name			= "AIM-9B", --[Checked]
-		user_name		= _("AIM-9B"),
-		wsTypeOfWeapon 	= {wsType_Weapon,wsType_Missile,wsType_AA_Missile,WSTYPE_PLACEHOLDER},
+        category        = CAT_AIR_TO_AIR,
+        name            = "AIM-9B", --[Checked]
+        user_name        = _("AIM-9B"),
+        wsTypeOfWeapon     = {wsType_Weapon,wsType_Missile,wsType_AA_Missile,WSTYPE_PLACEHOLDER},
         Escort = 0,
         Head_Type = 1,
-		sigma = {3, 3, 3},
+        sigma = {3, 3, 3},
         M = 74.3991, -- http://www.alternatewars.com/SAC/AIM-9B_Sidewinder_1A_SMC_-_January_1972.pdf [CHECKED]
         H_max = 18000.0, --Max operational height in (?)
         H_min = -1,
@@ -318,120 +315,115 @@ local AIM9B_WPN =   {
         Fi_search = 0.09,
         OmViz_max = 0.2, --limit speed of sight line
         --warhead = warheads["AIM_9"],
-		warhead = simple_aa_warhead(10.0),
-        exhaust 		=  { 1, 1, 1, 1 },
+        warhead = simple_aa_warhead(10.0),
+        exhaust         =  { 1, 1, 1, 1 },
         X_back = -1.455,
         Y_back = -0.062,
         Z_back = 0,
         Reflection = 0.0182,
         KillDistance = 7.0,
+        --seeker sensivity params
+        SeekerSensivityDistance = 20000, -- The range of target with IR value = 1. In meters. In forward hemisphere.
+        SeekerCooled            = true, -- True is cooled seeker and false is not cooled seeker.
+        shape_table_data =
+        {
+            {
+                name     = "AIM9B-SHAPE",
+                file     = "aim-9b",     --fichier .EDM  Bazar/World/Shapes
+                life     = 1,
+                fire     = { 0, 1},
+                username = "AIM-9B",     --label
+                index = WSTYPE_PLACEHOLDER,
+            },
+        },
+        ModelData = {   58 ,  -- model params count
+                        0.35 ,   -- characteristic square (характеристическая площадь)
 
-		--seeker sensivity params
-		SeekerSensivityDistance = 20000, -- The range of target with IR value = 1. In meters. In forward hemisphere.
-		SeekerCooled			= true, -- True is cooled seeker and false is not cooled seeker.
+                        -- параметры зависимости Сx
+                        0.04 , -- Cx_k0 планка Сx0 на дозвуке ( M << 1)
+                        0.08 , -- Cx_k1 высота пика волнового кризиса
+                        0.02 , -- Cx_k2 крутизна фронта на подходе к волновому кризису
+                        0.05, -- Cx_k3 планка Cx0 на сверхзвуке ( M >> 1)
+                        1.2 , -- Cx_k4 крутизна спада за волновым кризисом
+                        1.2 , -- коэффициент отвала поляры (пропорционально sqrt (M^2-1))
 
-		shape_table_data =
-		{
-			{
-				name	 = "AIM9B-SHAPE",
-				file	 = "aim-9b", 	--fichier .EDM  Bazar/World/Shapes
-				life	 = 1,
-				fire	 = { 0, 1},
-				username = "AIM-9B", 	--label
-				index = WSTYPE_PLACEHOLDER,
-			},
-		},
+                        -- параметры зависимости Cy
+                        0.5 , -- Cy_k0 планка Сy0 на дозвуке ( M << 1)
+                        0.4     , -- Cy_k1 планка Cy0 на сверхзвуке ( M >> 1)
+                        1.2  , -- Cy_k2 крутизна спада(фронта) за волновым кризисом
 
-		ModelData = {   58 ,  -- model params count
-						0.35 ,   -- characteristic square (характеристическая площадь)
+                        0.29 , -- 7 Alfa_max  максимальный балансировачный угол, радианы
+                        0.0, --угловая скорость создаваймая моментом газовых рулей
+                    -- Engine data. Time, fuel flow, thrust.
+                    --    t_statr        t_b        t_accel        t_march        t_inertial        t_break        t_end            -- Stage
+                        -1.0,        -1.0,    2.2,         0.0,        0.0,            0.0,        1.0e9,         -- time of stage, sec
+                         0.0,        0.0,    8.453,        0.0,        0.0,            0.0,        0.0,           -- fuel flow rate in second, kg/sec(секундный расход массы топлива кг/сек)
+                         0.0,        0.0,    17800.0,    0.0,        0.0,            0.0,        0.0,           -- thrust, newtons
 
-						-- параметры зависимости Сx
-						0.04 , -- Cx_k0 планка Сx0 на дозвуке ( M << 1)
-						0.08 , -- Cx_k1 высота пика волнового кризиса
-						0.02 , -- Cx_k2 крутизна фронта на подходе к волновому кризису
-						0.05, -- Cx_k3 планка Cx0 на сверхзвуке ( M >> 1)
-						1.2 , -- Cx_k4 крутизна спада за волновым кризисом
-						1.2 , -- коэффициент отвала поляры (пропорционально sqrt (M^2-1))
-
-						-- параметры зависимости Cy
-						0.5 , -- Cy_k0 планка Сy0 на дозвуке ( M << 1)
-						0.4	 , -- Cy_k1 планка Cy0 на сверхзвуке ( M >> 1)
-						1.2  , -- Cy_k2 крутизна спада(фронта) за волновым кризисом
-
-						0.29 , -- 7 Alfa_max  максимальный балансировачный угол, радианы
-						0.0, --угловая скорость создаваймая моментом газовых рулей
-
-					-- Engine data. Time, fuel flow, thrust.
-					--	t_statr		t_b		t_accel		t_march		t_inertial		t_break		t_end			-- Stage
-						-1.0,		-1.0,	2.2, 		0.0,		0.0,			0.0,		1.0e9,         -- time of stage, sec
-						 0.0,		0.0,	8.453,		0.0,		0.0,			0.0,		0.0,           -- fuel flow rate in second, kg/sec(секундный расход массы топлива кг/сек)
-						 0.0,		0.0,	17800.0,	0.0,	    0.0,			0.0,		0.0,           -- thrust, newtons
-
-						 25.0, -- таймер самоликвидации, сек
-						 18.0, -- время работы энергосистемы, сек
-						 0, -- абсолютная высота самоликвидации, м
-						 2.0, -- время задержки включения управления (маневр отлета, безопасности), сек
-						 1.0e9, -- дальность до цели в момент пуска, при превышении которой ракета выполняется маневр "горка", м
-						 1.0e9, -- дальность до цели, при которой маневр "горка" завершается и ракета переходит на чистую пропорциональную навигацию (должен быть больше или равен предыдущему параметру), м
-						 0.0,  -- синус угла возвышения траектории набора горки
-						 30.0, -- продольное ускорения взведения взрывателя
-						 0.0, -- модуль скорости сообщаймый катапультным устройством, вышибным зарядом и тд
-						 1.19, -- характристика системы САУ-РАКЕТА,  коэф фильтра второго порядка K0
-						 1.0, -- характристика системы САУ-РАКЕТА,  коэф фильтра второго порядка K1
-						 2.0, -- характристика системы САУ-РАКЕТА,  полоса пропускания контура управления
-						 0.0,
-						 0.0,
-						 0.0,
-						 0.0,
-						 0.0,
-						 -- DLZ. Данные для рассчета дальностей пуска (индикация на прицеле)
-						 9000.0, -- дальность ракурс   180(навстречу) град,  Н=10000м, V=900км/ч, м
-						 4000.0, -- дальность ракурс 0(в догон) град,  Н=10000м, V=900км/ч, м
-						 4000.0, -- дальность ракурс 	180(навстречу) град, Н=1000м, V=900км/ч, м
-						 0.2, -- Уменьшение разрешенной дальности пуска при отклонении вектора скорости носителя от линии визирования цели.
-						 1.0, -- Вертикальная плоскость. Наклон кривой разрешенной дальности пуска в нижнюю полусферу. Уменьшение дальности при стрельбе вниз.
-						 1.4, -- Вертикальная плоскость. Наклон кривой разрешенной дальности пуска в верхнюю полусферу. Увеличение дальности при стрельбе вверх.
-						-3.0, -- Вертикальная плоскость. Угол перегиба кривой разрешенной дальности, верхняя - нижняя полусфера.
-						0.5, -- Изменение коэффициентов наклона кривой в верхнюю и нижнюю полусферы от высоты носителя.
-					},
+                         25.0, -- таймер самоликвидации, сек
+                         18.0, -- время работы энергосистемы, сек
+                         0, -- абсолютная высота самоликвидации, м
+                         2.0, -- время задержки включения управления (маневр отлета, безопасности), сек
+                         1.0e9, -- дальность до цели в момент пуска, при превышении которой ракета выполняется маневр "горка", м
+                         1.0e9, -- дальность до цели, при которой маневр "горка" завершается и ракета переходит на чистую пропорциональную навигацию (должен быть больше или равен предыдущему параметру), м
+                         0.0,  -- синус угла возвышения траектории набора горки
+                         30.0, -- продольное ускорения взведения взрывателя
+                         0.0, -- модуль скорости сообщаймый катапультным устройством, вышибным зарядом и тд
+                         1.19, -- характристика системы САУ-РАКЕТА,  коэф фильтра второго порядка K0
+                         1.0, -- характристика системы САУ-РАКЕТА,  коэф фильтра второго порядка K1
+                         2.0, -- характристика системы САУ-РАКЕТА,  полоса пропускания контура управления
+                         0.0,
+                         0.0,
+                         0.0,
+                         0.0,
+                         0.0,
+                         -- DLZ. Данные для рассчета дальностей пуска (индикация на прицеле)
+                         9000.0, -- дальность ракурс   180(навстречу) град,  Н=10000м, V=900км/ч, м
+                         4000.0, -- дальность ракурс 0(в догон) град,  Н=10000м, V=900км/ч, м
+                         4000.0, -- дальность ракурс     180(навстречу) град, Н=1000м, V=900км/ч, м
+                         0.2, -- Уменьшение разрешенной дальности пуска при отклонении вектора скорости носителя от линии визирования цели.
+                         1.0, -- Вертикальная плоскость. Наклон кривой разрешенной дальности пуска в нижнюю полусферу. Уменьшение дальности при стрельбе вниз.
+                         1.4, -- Вертикальная плоскость. Наклон кривой разрешенной дальности пуска в верхнюю полусферу. Увеличение дальности при стрельбе вверх.
+                        -3.0, -- Вертикальная плоскость. Угол перегиба кривой разрешенной дальности, верхняя - нижняя полусфера.
+                        0.5, -- Изменение коэффициентов наклона кривой в верхнюю и нижнюю полусферы от высоты носителя.
+                    },
 }
 declare_weapon(AIM9B_WPN)
 
-
 ---------AIR TO AIR-------------
-declare_loadout({	--AIM-9B
-	category		=	CAT_AIR_TO_AIR,
-	CLSID			= 	"{AIM-9B}",
-	Picture			=	"aim9p.png",
-	wsTypeOfWeapon	=	AIM9B_WPN.wsTypeOfWeapon,
-	displayName		=	_("AIM-9B"),
-	attribute		=	{4,	4,	32,	WSTYPE_PLACEHOLDER},
-	Cx_pil			=	0.001959765625,
-	Count			=	1,
-	Weight			=	100,
-	Elements	=
-	{
-		{	ShapeName	=	"AIM9B-SHAPE" ,	Position	=	{0,-0.124918,0}}, --name of the shape_table_data
-	}, -- end of Elements
+declare_loadout({    --AIM-9B
+    category        =    CAT_AIR_TO_AIR,
+    CLSID            =     "{AIM-9B}",
+    Picture            =    "aim9p.png",
+    wsTypeOfWeapon    =    AIM9B_WPN.wsTypeOfWeapon,
+    displayName        =    _("AIM-9B"),
+    attribute        =    {4,    4,    32,    WSTYPE_PLACEHOLDER},
+    Cx_pil            =    0.001959765625,
+    Count            =    1,
+    Weight            =    100,
+    Elements    =
+    {
+        {    ShapeName    =    "AIM9B-SHAPE" ,    Position    =    {0,-0.124918,0}}, --name of the shape_table_data
+    }, -- end of Elements
 })
 --]]
 
 ---------MISSILES-------------
 --[[
-declare_loadout({	--AGM 45 SHRIKE
-	category	=	CAT_MISSILES,
-	CLSID	=	"{AGM45_SHRIKE}",
-	Picture	=	"agm45.png",
-	wsTypeOfWeapon	=	{wsType_Weapon,wsType_Missile,wsType_AS_Missile, 60},
-	displayName	=	_("AGM-45B"),
-	attribute	=	{4,	4,	8,	60},
-	Cx_pil	=	0.0007,
-	Count	=	1,
-	Weight	=	39.5 + 181, --AERO-5 + AGM 45
-	Elements	=
-	{
-		{	ShapeName	=	"AGM-45" , Position	=	{0,	-0.22,	0} }, --{0,	-0.22,	0}
-	}, -- end of Elements
+declare_loadout({    --AGM 45 SHRIKE
+    category    =    CAT_MISSILES,
+    CLSID    =    "{AGM45_SHRIKE}",
+    Picture    =    "agm45.png",
+    wsTypeOfWeapon    =    {wsType_Weapon,wsType_Missile,wsType_AS_Missile, 60},
+    displayName    =    _("AGM-45B"),
+    attribute    =    {4,    4,    8,    60},
+    Cx_pil    =    0.0007,
+    Count    =    1,
+    Weight    =    39.5 + 181, --AERO-5 + AGM 45
+    Elements    =
+    {
+        {    ShapeName    =    "AGM-45" , Position    =    {0,    -0.22,    0} }, --{0,    -0.22,    0}
+    }, -- end of Elements
 })
 --]]
 
@@ -565,8 +557,7 @@ Limitations
     }
     declare_weapon(mk108mod0)
 
-
-    -- Mk 11 mod 5 gun used in Mk 4 mod 0 gun pod
+-- Mk 11 mod 5 gun used in Mk 4 mod 0 gun pod
 function Mk11mod0(tbl)
     tbl.category = CAT_GUN_MOUNT
     tbl.name      = "Mk11mod0"
@@ -635,31 +626,29 @@ mk4hipeg = {
 declare_loadout(mk4hipeg)
 
 ---------BOMBS----------------
-
-
 NAPALM_MOD0 =
 {
-	category = CAT_CLUSTER_DESC,
-	char_time = 0,
-	scheme = {
-		cluster = {
+    category = CAT_CLUSTER_DESC,
+    char_time = 0,
+    scheme = {
+        cluster = {
             mass            = 340,
             caliber         = 0.2730000,
             cx_coeff        = {1.000000, 0.320000, 0.710000, 0.150000, 1.280000},
-			cx_factor   	= 1,
+            cx_factor       = 1,
             L               = 1.05,
             I               = 33.282267,
             Ma              = -0.1,--2.746331,
             Mw              = 0.1,--2.146083,
             wind_sigma      = 200.000000,
-			count = 68,
-			effect_count = 68,
-			impulse_sigma = 2000,
-			model_name = "A4E_VOID",
-			moment_sigma = 1.0,
-			--spawn_args_change		= {{1,6,1}, {2,6,0}, {3,6,1},{4,6,0}}
-		},
-		warhead = {
+            count = 68,
+            effect_count = 68,
+            impulse_sigma = 2000,
+            model_name = "A4E_VOID",
+            moment_sigma = 1.0,
+            --spawn_args_change        = {{1,6,1}, {2,6,0}, {3,6,1},{4,6,0}}
+        },
+        warhead = {
             caliber = 69.85,
             concrete_factors = { 1, 1, 0.1 },
             concrete_obj_factor = 0,
@@ -671,41 +660,41 @@ NAPALM_MOD0 =
             other_factors = { 1, 1, 1 },
             piercing_mass = 0.58967
         }
-	},
-	display_name = "NAPALM_MOD0",
-	mass = 0,
-	model = "",
-	name = "NAPALM_MOD0",
-	cluster_scheme = "cluster",
-	type_name = "cluster",
-	wsTypeOfWeapon	= {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, WSTYPE_PLACEHOLDER},
+    },
+    display_name = "NAPALM_MOD0",
+    mass = 0,
+    model = "",
+    name = "NAPALM_MOD0",
+    cluster_scheme = "cluster",
+    type_name = "cluster",
+    wsTypeOfWeapon    = {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, WSTYPE_PLACEHOLDER},
 }
 
 declare_weapon(NAPALM_MOD0)
 
 NAPALM_MOD1 =
 {
-	category = CAT_CLUSTER_DESC,
-	char_time = 0,
-	scheme = {
-		cluster = {
+    category = CAT_CLUSTER_DESC,
+    char_time = 0,
+    scheme = {
+        cluster = {
             mass            = 340,
             caliber         = 0.2730000,
             cx_coeff        = {1.000000, 0.320000, 0.710000, 0.150000, 1.280000},
-			cx_factor   	= 1,
+            cx_factor       = 1,
             L               = 1.05,
             I               = 33.282267,
             Ma              = -0.1,--2.746331,
             Mw              = 0.1,--2.146083,
             wind_sigma      = 200.000000,
-			count = 46,
-			effect_count = 46,
-			impulse_sigma = 2000,
-			model_name = "A4E_VOID",
-			moment_sigma = 1.0,
-			--spawn_args_change		= {{1,6,1}, {2,6,0}, {3,6,1},{4,6,0}}
-		},
-		warhead = {
+            count = 46,
+            effect_count = 46,
+            impulse_sigma = 2000,
+            model_name = "A4E_VOID",
+            moment_sigma = 1.0,
+            --spawn_args_change        = {{1,6,1}, {2,6,0}, {3,6,1},{4,6,0}}
+        },
+        warhead = {
             caliber = 69.85,
             concrete_factors = { 1, 1, 0.1 },
             concrete_obj_factor = 0,
@@ -717,174 +706,163 @@ NAPALM_MOD1 =
             other_factors = { 1, 1, 1 },
             piercing_mass = 0.58967
         }
-	},
-	display_name = "NAPALM_MOD1",
-	mass = 0,
-	model = "",
-	name = "NAPALM_MOD1",
-	cluster_scheme = "cluster",
-	type_name = "cluster",
-	wsTypeOfWeapon	= {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, WSTYPE_PLACEHOLDER},
+    },
+    display_name = "NAPALM_MOD1",
+    mass = 0,
+    model = "",
+    name = "NAPALM_MOD1",
+    cluster_scheme = "cluster",
+    type_name = "cluster",
+    wsTypeOfWeapon    = {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, WSTYPE_PLACEHOLDER},
 }
-
 declare_weapon(NAPALM_MOD1)
-
 
 --test = {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, WSTYPE_PLACEHOLDER}
 
 mk77mod0 =
 {
-	category  		= CAT_BOMBS,
-	name      		= "MK77mod0-WPN",
-	model     		= "A4E_Mk77mod0",
-	user_name 		= _("Mk-77 mod 0"),
-	wsTypeOfWeapon  = {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, WSTYPE_PLACEHOLDER},
-	--scheme    		= "bomb-parashute",
-	--class_name		= "wAmmunitionBallute",
-    scheme    		= "bomb-cassette-2",
-	class_name		= "wAmmunition",
-	type      		= 0,
-	mass      		= 340,
-	hMin      		= 10,
-	hMax      		= 12000.0,
-	Cx        		= 0.0030,
-	VyHold    		= -100.0,
-	Ag        		= -1.23,
-
+    category          = CAT_BOMBS,
+    name              = "MK77mod0-WPN",
+    model             = "A4E_Mk77mod0",
+    user_name         = _("Mk-77 mod 0"),
+    wsTypeOfWeapon  = {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, WSTYPE_PLACEHOLDER},
+    --scheme            = "bomb-parashute",
+    --class_name        = "wAmmunitionBallute",
+    scheme            = "bomb-cassette-2",
+    class_name        = "wAmmunition",
+    type              = 0,
+    mass              = 340,
+    hMin              = 10,
+    hMax              = 12000.0,
+    Cx                = 0.0030,
+    VyHold            = -100.0,
+    Ag                = -1.23,
     puff = {
         show_puff = false,
     },
-
-	fm = {
+    fm = {
             mass            = 340,
             caliber         = 0.2730000,
             cx_coeff        = {1.000000, 0.320000, 0.710000, 0.150000, 1.280000},
-			cx_factor   	= 3,
+            cx_factor       = 3,
             L               = 1.05,
             I               = 33.282267,
             Ma              = -0.1,--2.746331,
             Mw              = 0.01,--2.146083,
             wind_time       = 1000.000000,
             wind_sigma      = 80.000000,
-	},
-	control =
+    },
+    control =
     {
         check_obj_delay = 0.0,
-        default_delay		= 0.0,
-		default_open_height = 33,
+        default_delay        = 0.0,
+        default_open_height = 33,
     },
-	warhead 		 = simple_warhead(300),-- 300 kg of explosive, based on 110 US gallons
-
-
+    warhead          = simple_warhead(300),-- 300 kg of explosive, based on 110 US gallons
     launcher = 
     {
         blocks  = {"cluster"},
         cluster = NAPALM_MOD0.descriptor
     },
-
-
-	shape_table_data =
-	{
-		{
-			file     = "A4E_Mk77mod0",
-			index    = WSTYPE_PLACEHOLDER,
-		},
-	},
-	targeting_data =
-	{
-		v0 = 200,
-		data =
-		{
-			{1.000000, 21.147949, 0.002807},
-			{10.000000, 28.262668, -0.017193},
-			{20.000000, 29.687629, -0.016767},
-			{30.000000, 30.394407, -0.015892},
-			{40.000000, 30.826322, -0.015080},
-			{50.000000, 31.133114, -0.014428},
-			{60.000000, 31.361560, -0.013889},
-			{70.000000, 31.543970, -0.013440},
-			{80.000000, 31.690640, -0.013045},
-			{90.000000, 31.814418, -0.012713},
-			{100.000000, 31.920050, -0.012425},
-			{200.000000, 32.511629, -0.010723},
-			{300.000000, 32.789778, -0.009863},
-			{400.000000, 32.963413, -0.009307},
-			{500.000000, 33.086372, -0.008907},
-			{600.000000, 33.179450, -0.008596},
-			{700.000000, 33.253103, -0.008346},
-			{800.000000, 33.312920, -0.008139},
-			{900.000000, 33.362577, -0.007968},
-			{1000.000000, 33.404350, -0.007824},
-			{1100.000000, 33.439925, -0.007702},
-			{1200.000000, 33.470498, -0.007599},
-			{1300.000000, 33.496988, -0.007513},
-			{1400.000000, 33.520106, -0.007440},
-			{1500.000000, 33.540403, -0.007378},
-			{1600.000000, 33.558365, -0.007327},
-			{1700.000000, 33.574326, -0.007285},
-			{1800.000000, 33.588629, -0.007251},
-			{1900.000000, 33.601489, -0.007224},
-			{2000.000000, 33.613137, -0.007202},
-			{3000.000000, 33.690673, -0.007191},
-			{4000.000000, 33.737805, -0.007357},
-			{5000.000000, 33.773738, -0.007590},
-			{6000.000000, 33.802367, -0.007864},
-			{7000.000000, 33.824277, -0.008170},
-			{8000.000000, 33.839206, -0.008505},
-			{9000.000000, 33.846586, -0.008868},
-			{10000.000000, 33.845625, -0.009258},
-		}
-	},
+    shape_table_data =
+    {
+        {
+            file     = "A4E_Mk77mod0",
+            index    = WSTYPE_PLACEHOLDER,
+        },
+    },
+    targeting_data =
+    {
+        v0 = 200,
+        data =
+        {
+            {1.000000, 21.147949, 0.002807},
+            {10.000000, 28.262668, -0.017193},
+            {20.000000, 29.687629, -0.016767},
+            {30.000000, 30.394407, -0.015892},
+            {40.000000, 30.826322, -0.015080},
+            {50.000000, 31.133114, -0.014428},
+            {60.000000, 31.361560, -0.013889},
+            {70.000000, 31.543970, -0.013440},
+            {80.000000, 31.690640, -0.013045},
+            {90.000000, 31.814418, -0.012713},
+            {100.000000, 31.920050, -0.012425},
+            {200.000000, 32.511629, -0.010723},
+            {300.000000, 32.789778, -0.009863},
+            {400.000000, 32.963413, -0.009307},
+            {500.000000, 33.086372, -0.008907},
+            {600.000000, 33.179450, -0.008596},
+            {700.000000, 33.253103, -0.008346},
+            {800.000000, 33.312920, -0.008139},
+            {900.000000, 33.362577, -0.007968},
+            {1000.000000, 33.404350, -0.007824},
+            {1100.000000, 33.439925, -0.007702},
+            {1200.000000, 33.470498, -0.007599},
+            {1300.000000, 33.496988, -0.007513},
+            {1400.000000, 33.520106, -0.007440},
+            {1500.000000, 33.540403, -0.007378},
+            {1600.000000, 33.558365, -0.007327},
+            {1700.000000, 33.574326, -0.007285},
+            {1800.000000, 33.588629, -0.007251},
+            {1900.000000, 33.601489, -0.007224},
+            {2000.000000, 33.613137, -0.007202},
+            {3000.000000, 33.690673, -0.007191},
+            {4000.000000, 33.737805, -0.007357},
+            {5000.000000, 33.773738, -0.007590},
+            {6000.000000, 33.802367, -0.007864},
+            {7000.000000, 33.824277, -0.008170},
+            {8000.000000, 33.839206, -0.008505},
+            {9000.000000, 33.846586, -0.008868},
+            {10000.000000, 33.845625, -0.009258},
+        }
+    },
 }
 
 declare_weapon(mk77mod0)
 
 declare_loadout({
-	category 		= CAT_BOMBS,
-	CLSID	 		= "{mk77mod0}",
-	attribute		= mk77mod0.wsTypeOfWeapon,
-	Count 			= 1,
-	Cx_pil			= mk77mod0.Cx,
-	Picture			= "mk77mod0.png",
-	displayName		= mk77mod0.user_name,
-	Weight			= mk77mod0.mass,
-	Elements  		=
-	{
-		{
-		Position	=	{0,	0,	0},
-		ShapeName = mk77mod0.model
-		}
-	},
+    category         = CAT_BOMBS,
+    CLSID             = "{mk77mod0}",
+    attribute        = mk77mod0.wsTypeOfWeapon,
+    Count             = 1,
+    Cx_pil            = mk77mod0.Cx,
+    Picture            = "mk77mod0.png",
+    displayName        = mk77mod0.user_name,
+    Weight            = mk77mod0.mass,
+    Elements          =
+    {
+        {
+        Position    =    {0,    0,    0},
+        ShapeName = mk77mod0.model
+        }
+    },
 })
-
-
 
 mk77mod1 =
 {
-    category  		= CAT_BOMBS,
-    name      		= "MK77mod1-WPN",
-    model     		= "A4E_Mk77mod1",
-    user_name 		= _("Mk-77 mod 1"),
+    category          = CAT_BOMBS,
+    name              = "MK77mod1-WPN",
+    model             = "A4E_Mk77mod1",
+    user_name         = _("Mk-77 mod 1"),
     wsTypeOfWeapon  = {wsType_Weapon, wsType_Bomb, wsType_Bomb_Fire, WSTYPE_PLACEHOLDER},
-    scheme    		= "bomb-cassette-2",
-	class_name		= "wAmmunition",
-    type      		= 0,
-    mass      		= 230,
-    hMin      		= 10,
-    hMax      		= 12000.0,
-    Cx        		= 0.0030,
-    VyHold    		= -100.0,
-    Ag        		= -1.23,
+    scheme            = "bomb-cassette-2",
+    class_name        = "wAmmunition",
+    type              = 0,
+    mass              = 230,
+    hMin              = 10,
+    hMax              = 12000.0,
+    Cx                = 0.0030,
+    VyHold            = -100.0,
+    Ag                = -1.23,
 
     puff = {
         show_puff = false,
     },
-
     fm = {
             mass            = 230,
             caliber         = 0.2730000,
             cx_coeff        = {1.000000, 0.320000, 0.710000, 0.150000, 1.280000},
-            cx_factor   	= 3,
+            cx_factor       = 3,
             L               = 1.05,
             I               = 33.282267,
             Ma              = -0.1,--2.746331,
@@ -892,22 +870,18 @@ mk77mod1 =
             wind_time       = 1000.000000,
             wind_sigma      = 80.000000,
     },
-
     control =
     {
         check_obj_delay = 0.0,
-        default_delay		= 0.0,
-		default_open_height = 33,
+        default_delay        = 0.0,
+        default_open_height = 33,
     },
-
-    warhead 		 = simple_warhead(220),-- 220 kg of fuel
-
+    warhead          = simple_warhead(220),-- 220 kg of fuel
     launcher = 
     {
         blocks  = {"cluster"},
         cluster = NAPALM_MOD1.descriptor
     },
-
     shape_table_data =
     {
         {
@@ -963,25 +937,23 @@ mk77mod1 =
 }
 declare_weapon(mk77mod1)
 
-
 declare_loadout({
-	category 		= CAT_BOMBS,
-	CLSID	 		= "{mk77mod1}",
-	attribute		= mk77mod1.wsTypeOfWeapon,
-	Count 			= 1,
-	Cx_pil			= mk77mod1.Cx,
-	Picture			= "mk77mod1.png",
-	displayName		= mk77mod1.user_name,
-	Weight			= mk77mod1.mass,
-	Elements  		=
-	{
-		{
-		Position	=	{0,	0,	0},
-		ShapeName = mk77mod1.model
-		}
-	},
+    category         = CAT_BOMBS,
+    CLSID             = "{mk77mod1}",
+    attribute        = mk77mod1.wsTypeOfWeapon,
+    Count             = 1,
+    Cx_pil            = mk77mod1.Cx,
+    Picture            = "mk77mod1.png",
+    displayName        = mk77mod1.user_name,
+    Weight            = mk77mod1.mass,
+    Elements          =
+    {
+        {
+        Position    =    {0,    0,    0},
+        ShapeName = mk77mod1.model
+        }
+    },
 })
-
 
 -- Mk-81 Snakeye   -- 250lb retarded GP HE bomb
 -- 250# total weight, 96# of tritonal
@@ -1034,23 +1006,22 @@ MK_81SE = {
 declare_weapon(MK_81SE)
 
 declare_loadout({
-	category 		= CAT_BOMBS,
-	CLSID	 		= "{MK-81SE}",
-	attribute		= MK_81SE.wsTypeOfWeapon,
-	Count 			= 1,
-	Cx_pil			= MK_81SE.Cx,
-	Picture			= "mk81se.png",
-	displayName		= MK_81SE.user_name,
-	Weight			= MK_81SE.mass,
-	Elements  		=
-	{
-		{
-		Position	=	{0,	0,	0},
-		ShapeName = MK_81SE.model
-		}
-	},
+    category        = CAT_BOMBS,
+    CLSID           = "{MK-81SE}",
+    attribute       = MK_81SE.wsTypeOfWeapon,
+    Count           = 1,
+    Cx_pil          = MK_81SE.Cx,
+    Picture         = "mk81se.png",
+    displayName     = MK_81SE.user_name,
+    Weight          = MK_81SE.mass,
+    Elements        =
+    {
+        {
+        Position    = {0, 0, 0},
+        ShapeName   = MK_81SE.model
+        }
+    },
 })
-
 
 -- AN-M66A2     -- 2000lb GP HE bomb, WW2 era
 -- 2140.0# total weight, 1142# Comp. B filler
@@ -1105,8 +1076,8 @@ AN_M66A2 = {
         char_time   = 20.60, -- characteristic time for sights
     },
 }
-
 declare_weapon(AN_M66A2)
+
 declare_loadout({
     category        = CAT_BOMBS,
     CLSID           = "{AN-M66A2}",
@@ -1125,7 +1096,6 @@ declare_loadout({
     },
 })
 -- end of AN-M66A2
-
 
 -- AN-M81     -- 260lb HE fragmentation bomb, WW2 era
 -- 260.0# total weight, 34.1# Comp. B filler
@@ -1201,7 +1171,6 @@ declare_loadout({
     },
 })
 -- end of AN-M81
-
 
 -- AN-M88     -- 216lb HE fragmentation bomb, WW2 era
 -- 216.2# total weight, 46.69# Comp. B filler
@@ -1342,14 +1311,10 @@ BLU_3B_OLD = {
         char_time   = 20.60, -- characteristic time for sights
     },
 }
-
 declare_weapon(BLU_3B_OLD)
 
 -- CBU-2/A:  360x BLU-3/B submunitions in a SUU-7A launcher
 -- CBU-2B/A: 409x BLU-3/B submunitions in a SUU-7A launcher
-
-
-
 -- BLU-4/B   -- 1.2lb anti-personnel cluster munition used in CBU-1/A
 -- ~0.8lb warhead with 0.18lb RDX explosive
 BLU_4B_OLD = {
@@ -1408,11 +1373,9 @@ BLU_4B_OLD = {
         char_time   = 20.60, -- characteristic time for sights
     },
 }
-
 declare_weapon(BLU_4B_OLD)
 
 -- CBU-1/A: 509x BLU-4/B submunitions in a SUU-7A launcher
-
 function make_cluster_group(bomblets)
     local name = bomblets.name.."_GROUP"
     local model_name = bomblets.scheme.cluster.model_name
@@ -1420,84 +1383,72 @@ function make_cluster_group(bomblets)
     local mass = bomblets.scheme.cluster.mass
     local fm = bomblets.scheme.cluster
     local descriptor = bomblets.descriptor
-
-
     local group = {
-        category		= CAT_BOMBS,
-        wsTypeOfWeapon	= {wsType_Weapon, wsType_Bomb, wsType_Bomb_Cluster, WSTYPE_PLACEHOLDER},
-        VyHold			= -100.0,
-        Ag				= -1.23,
-        type			= 5,
-        mass			= mass,
-        hMin			= 30,
-        hMax			= 1000.0,
-        Cx				= 0.0,--0.000413,
-
-        name			= name,
-        model			= model_name,
-        user_name		= display_name,
-        scheme			= "bomb-cassette",
-        class_name		= "wAmmunition",
-
+        category        = CAT_BOMBS,
+        wsTypeOfWeapon    = {wsType_Weapon, wsType_Bomb, wsType_Bomb_Cluster, WSTYPE_PLACEHOLDER},
+        VyHold            = -100.0,
+        Ag                = -1.23,
+        type            = 5,
+        mass            = mass,
+        hMin            = 30,
+        hMax            = 1000.0,
+        Cx                = 0.0,--0.000413,
+        name            = name,
+        model            = model_name,
+        user_name        = display_name,
+        scheme            = "bomb-cassette",
+        class_name        = "wAmmunition",
         fm = fm,
-
         control = {
             open_delay = 0,
         },
-
         launcher = {
-            blocks	= {"cluster"},
-            cluster	= descriptor,
+            blocks    = {"cluster"},
+            cluster    = descriptor,
         },
-
         targeting_data = {
             v0 = 200,
             char_time = 26,
             bomblet_char_time = 26,
         },
-
         puff = {
             show_puff = 0
         },
-
         shape_table_data = {{
-            name		= model_name,
-            file		= model_name,
-            username	= display_name,
-            index		= WSTYPE_PLACEHOLDER,
+            name        = model_name,
+            file        = model_name,
+            username    = display_name,
+            index        = WSTYPE_PLACEHOLDER,
         }}
     }
-
     return group
 end
 
 function make_cluster_group_loadout(group)
     local loadout = {   
-        category			= CAT_BOMBS,
-        CLSID				= "{"..group.name.."}",
-        displayName			= group.user_name,
-        wsTypeOfWeapon		= group.wsTypeOfWeapon,
-        attribute			= {4,	5,	32,	WSTYPE_PLACEHOLDER},
-        Cx_pil				= 0,
-        Weight				= group.fm.mass,
-        Count				= 1,
-        kind_of_shipping	= 2,
-        Elements			= {
+        category            = CAT_BOMBS,
+        CLSID                = "{"..group.name.."}",
+        displayName            = group.user_name,
+        wsTypeOfWeapon        = group.wsTypeOfWeapon,
+        attribute            = {4,    5,    32,    WSTYPE_PLACEHOLDER},
+        Cx_pil                = 0,
+        Weight                = group.fm.mass,
+        Count                = 1,
+        kind_of_shipping    = 2,
+        Elements            = {
             { ShapeName = group.model }, --, IsAdapter = true
             --{ ShapeName = group.model, connector_name = "AttachPoint" },
         },
-	}
-
+    }
     declare_loadout(loadout)
-
     return loadout.CLSID
 end
 
 BLU_3B_NEW = {
-	category = CAT_CLUSTER_DESC,
-	char_time = 0,
-	scheme = {
-		cluster = {
+    category = CAT_CLUSTER_DESC,
+    char_time = 0,
+    scheme = {
+        cluster = {
             mass        = 1.75 * POUNDS_TO_KG,    -- Empty weight with warhead, W/O fuel, kg
             caliber     = 0.07,  -- Calibre, meters (7cm / 2.75")
             cx_coeff    = {1.000000*blu_drag_factor, 0.290000*blu_drag_factor, 0.710000*blu_drag_factor, 0.140000*blu_drag_factor, 1.280000*blu_drag_factor},  -- Cx
@@ -1506,14 +1457,14 @@ BLU_3B_NEW = {
             Ma          = 1.5,  -- dependence moment coefficient of  by  AoA angular acceleration  T / I   (??? can't solve for torque w/o knowing rotation)
             Mw          = 1.0, --  rad/s  - 57.3°/s - dependence moment coefficient by angular velocity (|V|*sin(?))/|r| -  Mw  =  Ma * t   (???)
             wind_sigma  = 80, -- dispersion coefficient  mk81=80, mk82=80, mk83=150, mk84=220 ... heavier = harder to push with wind?
-			count = tube_size_2A,
-			effect_count = tube_size_2A,
-			impulse_sigma = 2,
-			model_name = "A4E_BLU-3B",
-			moment_sigma = 0.0001,
-			--spawn_args_change		= {{1,6,1}, {2,6,0}, {3,6,1},{4,6,0}}
-		},
-		warhead         = {
+            count = tube_size_2A,
+            effect_count = tube_size_2A,
+            impulse_sigma = 2,
+            model_name = "A4E_BLU-3B",
+            moment_sigma = 0.0001,
+            --spawn_args_change        = {{1,6,1}, {2,6,0}, {3,6,1},{4,6,0}}
+        },
+        warhead         = {
             mass        = 1.3 * POUNDS_TO_KG; -- estimated
             expl_mass   = 0.35 * POUNDS_TO_KG;
             other_factors = {1.0, 1.0, 1.0};
@@ -1525,37 +1476,37 @@ BLU_3B_NEW = {
             piercing_mass = 0.95 * POUNDS_TO_KG;
             caliber     = 0.07;   -- 7 cm
         },
-	},
-	display_name = "BLU-3B",
-	mass = 0,
-	model = "",
-	name = "BLU_3B",
-	cluster_scheme = "cluster",
-	type_name = "cluster",
-	wsTypeOfWeapon	= {wsType_Weapon, wsType_Bomb, wsType_Bomb_Cluster, WSTYPE_PLACEHOLDER},
+    },
+    display_name = "BLU-3B",
+    mass = 0,
+    model = "",
+    name = "BLU_3B",
+    cluster_scheme = "cluster",
+    type_name = "cluster",
+    wsTypeOfWeapon    = {wsType_Weapon, wsType_Bomb, wsType_Bomb_Cluster, WSTYPE_PLACEHOLDER},
 }
 
 BLU_4B_NEW = {
-	category = CAT_CLUSTER_DESC,
-	char_time = 0,
-	scheme = {
-		cluster = {
-			mass        = 1.2 * POUNDS_TO_KG,    -- Empty weight with warhead, W/O fuel, kg
-			caliber     = 0.07,  -- Calibre, meters (7cm / 2.75")
-			cx_coeff    = {1.000000*blu_drag_factor, 0.290000*blu_drag_factor, 0.710000*blu_drag_factor, 0.140000*blu_drag_factor, 1.280000*blu_drag_factor},  -- Cx
-			L           = 0.125,   -- Length, meters (125mm / 4.92")
-			I           = 0.003,   -- kgm2 - moment of inertia - I = 1/12 ML2
-			Ma          = 1.5,  -- dependence moment coefficient of  by  AoA angular acceleration  T / I   (??? can't solve for torque w/o knowing rotation)
-			Mw          = 1.0, --  rad/s  - 57.3°/s - dependence moment coefficient by angular velocity (|V|*sin(?))/|r| -  Mw  =  Ma * t   (???)
-			wind_sigma  = 80, -- dispersion coefficient  mk81=80, mk82=80, mk83=150, mk84=220 ... heavier = harder to push with wind?
-			count = tube_size_1A,
-			effect_count = tube_size_1A,
-			impulse_sigma = 2,
-			model_name = "A4E_BLU-4B",
-			moment_sigma = 0.0001,
-			--spawn_args_change		= {{1,6,1}, {2,6,0}, {3,6,1},{4,6,0}}
-		},
-		warhead         = {
+    category = CAT_CLUSTER_DESC,
+    char_time = 0,
+    scheme = {
+        cluster = {
+            mass        = 1.2 * POUNDS_TO_KG,    -- Empty weight with warhead, W/O fuel, kg
+            caliber     = 0.07,  -- Calibre, meters (7cm / 2.75")
+            cx_coeff    = {1.000000*blu_drag_factor, 0.290000*blu_drag_factor, 0.710000*blu_drag_factor, 0.140000*blu_drag_factor, 1.280000*blu_drag_factor},  -- Cx
+            L           = 0.125,   -- Length, meters (125mm / 4.92")
+            I           = 0.003,   -- kgm2 - moment of inertia - I = 1/12 ML2
+            Ma          = 1.5,  -- dependence moment coefficient of  by  AoA angular acceleration  T / I   (??? can't solve for torque w/o knowing rotation)
+            Mw          = 1.0, --  rad/s  - 57.3°/s - dependence moment coefficient by angular velocity (|V|*sin(?))/|r| -  Mw  =  Ma * t   (???)
+            wind_sigma  = 80, -- dispersion coefficient  mk81=80, mk82=80, mk83=150, mk84=220 ... heavier = harder to push with wind?
+            count = tube_size_1A,
+            effect_count = tube_size_1A,
+            impulse_sigma = 2,
+            model_name = "A4E_BLU-4B",
+            moment_sigma = 0.0001,
+            --spawn_args_change        = {{1,6,1}, {2,6,0}, {3,6,1},{4,6,0}}
+        },
+        warhead         = {
         mass        = 1.3 * POUNDS_TO_KG; -- estimated
         expl_mass   = 0.35 * POUNDS_TO_KG;
         other_factors = {1.0, 1.0, 1.0};
@@ -1566,15 +1517,15 @@ BLU_4B_NEW = {
         cumulative_thickness = 1.0;
         piercing_mass = 0.95 * POUNDS_TO_KG;
         caliber     = 0.07;   -- 7 cm
-		},
-	},
-	display_name = "BLU-4B",
-	mass = 0,
-	model = "",
-	name = "BLU_4B",
-	cluster_scheme = "cluster",
-	type_name = "cluster",
-	wsTypeOfWeapon	= {wsType_Weapon, wsType_Bomb, wsType_Bomb_Cluster, WSTYPE_PLACEHOLDER},
+        },
+    },
+    display_name = "BLU-4B",
+    mass = 0,
+    model = "",
+    name = "BLU_4B",
+    cluster_scheme = "cluster",
+    type_name = "cluster",
+    wsTypeOfWeapon    = {wsType_Weapon, wsType_Bomb, wsType_Bomb_Cluster, WSTYPE_PLACEHOLDER},
 }
 
 declare_weapon(BLU_4B_NEW)
@@ -1598,9 +1549,7 @@ local bomblet_data =
 
 function make_cbu_a4e(dispenser,element,count) -- assemble a cluster dispenser
     local bomblet = bomblet_data[element] or bomblet_data["BLU-3B"]
-
     local data = {}
-
     data.category           = CAT_PODS
     data.CLSID              = "{"..dispenser.."}"
     data.attribute          = {wsType_Weapon, wsType_Bomb, wsType_Container, WSTYPE_PLACEHOLDER}
@@ -1613,12 +1562,11 @@ function make_cbu_a4e(dispenser,element,count) -- assemble a cluster dispenser
     data.Elements           =
     {
         {
-            Position	=	{0,	0,	0},
-            ShapeName	=	"A4E_SUU-7",
+            Position    =    {0,    0,    0},
+            ShapeName    =    "A4E_SUU-7",
             IsAdapter   =   true,
         },
     }
-
     local pos_bomblets = {
         { -0.9, -0.2, 0},
         { -0.9, -0.12, 0},
@@ -1644,18 +1592,15 @@ function make_cbu_a4e(dispenser,element,count) -- assemble a cluster dispenser
         { -0.9, -0.20, -0.12},
         { -0.9, -0.28, -0.12},
     }
-
-
     for i = 0,(count-1) do
         data.Elements[#data.Elements + 1] = {
-            DrawArgs	=	{{1,1},{2,1}},
-            Position	=	pos_bomblets[(i%19)+1],
-            ShapeName	=	bomblet.model,
-            Rotation	=   {0,0,0},
+            DrawArgs    =    {{1,1},{2,1}},
+            Position    =    pos_bomblets[(i%19)+1],
+            ShapeName    =    bomblet.model,
+            Rotation    =   {0,0,0},
             payload_CLSID = bomblet.clsid,
         }
     end
-
     return data
 end
 
@@ -1710,24 +1655,20 @@ local rack_data = {
 }
 
 local rocket_data = {
-    ["LAU-3 FFAR WP156"]            = { name = "2.75\" FFAR, UnGd Rkts  M156, Wht Phos",        mass = 59 + 19 * (23.3 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_WP156}",                      shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
-    ["LAU-3 FFAR Mk1 HE"]           = { name = "2.75\" FFAR, UnGd Rkts  Mk1, HE",               mass = 59 + 19 * (23.0 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_MK1HE}",                      shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
-    ["LAU-3 FFAR Mk5 HEAT"]         = { name = "2.75\" FFAR, UnGd Rkts  Mk5, HEAT",             mass = 59 + 19 * (21.6 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_MK5HEAT}",                    shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
-
-    ["LAU-68 FFAR WP156"]           = { name = "2.75\" FFAR, UnGd Rkts  M156, Wht Phos",        mass = 15.9 + 7 * (23.3 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{LAU68_FFAR_WP156}",                     shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
-    ["LAU-68 FFAR Mk1 HE"]          = { name = "2.75\" FFAR, UnGd Rkts  Mk1, HE",               mass = 15.9 + 7 * (23.0 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{LAU68_FFAR_MK1HE}",                     shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
-    ["LAU-68 FFAR Mk5 HEAT"]        = { name = "2.75\" FFAR, UnGd Rkts Mk5, HEAT",             mass = 15.9 + 7 * (21.6 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{LAU68_FFAR_MK5HEAT}",                   shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
-
+    ["LAU-3 FFAR WP156"]            = { name = "2.75\" FFAR, UnGd Rkts  M156, Wht Phos",        mass = 59 + 19 * (23.3 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_WP156}",                    shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    ["LAU-3 FFAR Mk1 HE"]           = { name = "2.75\" FFAR, UnGd Rkts  Mk1, HE",               mass = 59 + 19 * (23.0 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_MK1HE}",                    shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    ["LAU-3 FFAR Mk5 HEAT"]         = { name = "2.75\" FFAR, UnGd Rkts  Mk5, HEAT",             mass = 59 + 19 * (21.6 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_FFAR_MK5HEAT}",                  shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    ["LAU-68 FFAR WP156"]           = { name = "2.75\" FFAR, UnGd Rkts  M156, Wht Phos",        mass = 15.9 + 7 * (23.3 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{LAU68_FFAR_WP156}",                   shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
+    ["LAU-68 FFAR Mk1 HE"]          = { name = "2.75\" FFAR, UnGd Rkts  Mk1, HE",               mass = 15.9 + 7 * (23.0 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{LAU68_FFAR_MK1HE}",                   shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
+    ["LAU-68 FFAR Mk5 HEAT"]        = { name = "2.75\" FFAR, UnGd Rkts Mk5, HEAT",             mass = 15.9 + 7 * (21.6 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{LAU68_FFAR_MK5HEAT}",                  shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
     -- these aren't loading in for some reason, so commenting out for now
-    -- ["LAU3_HE151"]                  = { name = "2.75\" Hydra, UnGd Rkts M151, HE",             mass = 59 + 19 * (11.1 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_HE151}",                      shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
-    -- ["LAU3_WP156"]                  = { name = "2.75\" Hydra, UnGd Rkts M156, Wht Phos",       mass = 59 + 19 * (11.9 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_WP156}",                      shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
-    -- ["LAU3_HE5"]                    = { name = "2.75\" Hydra, UnGd Rkts Mk5, HEAT",            mass = 59 + 19 * (10.8 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_HE5}",                      shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
-    -- ["LAU3_WP1B"]                   = { name = "2.75\" Hydra, UnGd Rkts Mk61, Practice",       mass = 59 + 19 * (13.5 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_WP1B}",                      shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
-    -- ["LAU3_WP61"]                   = { name = "2.75\" Hydra, UnGd Rkts WTU-1/B, Practice",    mass = 59 + 19 * (9.30 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_WP61}",                      shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
-
+    -- ["LAU3_HE151"]                  = { name = "2.75\" Hydra, UnGd Rkts M151, HE",             mass = 59 + 19 * (11.1 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_HE151}",                          shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    -- ["LAU3_WP156"]                  = { name = "2.75\" Hydra, UnGd Rkts M156, Wht Phos",       mass = 59 + 19 * (11.9 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_WP156}",                          shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    -- ["LAU3_HE5"]                    = { name = "2.75\" Hydra, UnGd Rkts Mk5, HEAT",            mass = 59 + 19 * (10.8 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_HE5}",                            shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    -- ["LAU3_WP1B"]                   = { name = "2.75\" Hydra, UnGd Rkts Mk61, Practice",       mass = 59 + 19 * (13.5 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_WP1B}",                           shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
+    -- ["LAU3_WP61"]                   = { name = "2.75\" Hydra, UnGd Rkts WTU-1/B, Practice",    mass = 59 + 19 * (9.30 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{LAU3_WP61}",                           shapename = "LAU-3",  pic = 'LAU61.png', count = 19, cx = 0.00146484375},
     ["LAU-61 Hydra M151 HE"]        = { name = "2.75\" Hydra, UnGd Rkts M151, HE",             mass = 10 + 19 * (11.1 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}", shapename = "LAU-61", pic = 'LAU61.png', count = 19, cx = 0.00146484375},
     ["LAU-61 Hydra WP156"]          = { name = "2.75\" Hydra, UnGd Rkts M156, Wht Phos",       mass = 10 + 19 * (11.9 * POUNDS_TO_KG),  wstype = {4,7,33,147}, payload_CLSID = "{3DFB7321-AB0E-11d7-9897-000476191836}", shapename = "LAU-61", pic = 'LAU61.png', count = 19, cx = 0.00146484375},
-
     ["LAU-68 Hydra M151 HE"]        = { name = "2.75\" Hydra, UnGd Rkts M151, HE",             mass = 15.9 + 7 * (10.5 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
     ["LAU-68 Hydra WP156"]          = { name = "2.75\" Hydra, UnGd Rkts M156, Wht Phos",       mass = 15.9 + 7 * (11.9 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{4F977A2A-CD25-44df-90EF-164BFA2AE72F}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
     ["LAU-68 Hydra M257 PI"]        = { name = "2.75\" Hydra, UnGd Rkts M257, Para Illum",     mass = 15.9 + 7 * (11.0 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{647C5F26-BDD1-41e6-A371-8DE1E4CC0E94}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
@@ -1736,7 +1677,6 @@ local rocket_data = {
     ["LAU-68 Hydra Mk5 HEAT"]       = { name = "2.75\" Hydra, UnGd Rkts Mk5, HEAT",            mass = 15.9 + 7 * (10.8 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{174C6E6D-0C3D-42ff-BCB3-0853CB371F5C}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
     ["LAU-68 Hydra Mk61 Practice"]  = { name = "2.75\" Hydra, UnGd Rkts Mk61, Practice",       mass = 15.9 + 7 * (13.5 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{65396399-9F5C-4ec3-A7D2-5A8F4C1D90C4}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
     ["LAU-68 Hydra WTU1B Practice"] = { name = "2.75\" Hydra, UnGd Rkts WTU-1/B, Practice",    mass = 15.9 + 7 * (9.30 * POUNDS_TO_KG), wstype = {4,7,33,147}, payload_CLSID = "{1F7136CB-8120-4e77-B97B-945FF01FB67C}", shapename = "LAU-68", pic = 'LAU68.png', count = 7,  cx = 0.00146484375},
-
     ["LAU-10 ZUNI"]                 = { name = "127mm ZUNI, UnGd Rkts MK 71, HE/FRAG",        mass = 47.6 + 4 * (125 * POUNDS_TO_KG),  wstype = {4,7,33,37},  payload_CLSID = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}", shapename = "LAU-10", pic = 'LAU10.png', count = 4,  cx = 0.001708984375},
 }
 
@@ -1749,7 +1689,7 @@ local function bru_42_lau(element, count, side)
     data.category           = CAT_ROCKETS
     data.CLSID              = "{"..element.."_TER_"..tostring(count).."_"..sidestr[2+side].."}"
     -- data.attribute          = rack_variant.wstype
-    data.attribute          = {4,	7,	32,	WSTYPE_PLACEHOLDER}
+    data.attribute          = {4,    7,    32,    WSTYPE_PLACEHOLDER}
     data.Picture            = lau_variant.pic
     data.Count              = count * lau_variant.count
     data.displayName        = "BRU-42 with "..tostring(count).." x "..lau_variant.shapename.." - "..lau_variant.count * tostring(count).." x "..lau_variant.name 
@@ -1759,24 +1699,20 @@ local function bru_42_lau(element, count, side)
     data.Elements           =
     {
         {
-            Position	=	{0,	0,	0},
-            ShapeName	=	rack_variant.shapename,
-            IsAdapter 	= 	true,
+            Position    =    {0,    0,    0},
+            ShapeName    =    rack_variant.shapename,
+            IsAdapter     =     true,
         },
     }
-
     local connectors   = {"Point03", "Point02", "Point01"}
     local rightorder2  = {2,1,3}
     local centerorder2 = {3,1,2}
     local leftorder2   = {1,2,3}
-
     -- for center, mount up to 3 ... if 2, do left and right
     -- for left, mount up to 2 skipping front right
     -- for right, mount up to 2 skipping front left
-    
     local offset = 3-count
     local order = leftorder2 -- default, includes 3 bombs
-
     if count == 2 then
         if side == 0 then
             order = centerorder2
@@ -1784,7 +1720,6 @@ local function bru_42_lau(element, count, side)
             order = rightorder2
         end
     end
-
     for i = 1,count do
         local j = order[i+offset]
         data.Elements[#data.Elements + 1] = {
@@ -1794,7 +1729,6 @@ local function bru_42_lau(element, count, side)
                                                 ShapeName      = lau_variant.shapename,
                                             }
     end
-
     return data
 end
 
@@ -1811,7 +1745,6 @@ function bru_41(element,count,side) -- build up to a 6x MER loadout of the speci
     local rack_variant = rack_data["BRU_41"]
     local sidestr      = {"L","C","R"}
     local data         = {}
-
     data.category           = CAT_BOMBS
     data.CLSID              = "{"..element.."_MER_"..tostring(count).."_"..sidestr[2+side].."}"
     data.attribute          = rack_variant.wstype
@@ -1827,64 +1760,53 @@ function bru_41(element,count,side) -- build up to a 6x MER loadout of the speci
     data.Elements           =                                                   -- DCS will subtract the cx from the pylon on release. This means if the total is less than cx * count
     {                                                                           -- you will actually have negative drag for this pylon.
         {
-            Position	=	{0,	0,	0},
-            ShapeName	=	rack_variant.shapename,
+            Position    =    {0,    0,    0},
+            ShapeName    =    rack_variant.shapename,
             IsAdapter   =   true,
         },
     }
-
     local fwd_offs  = 1.091
     local back_offs = 1.177
-
     local positions =  {{  bomb_variant.ofs + fwd_offs,  -0.112,  0.13 }, -- front right
                         {  bomb_variant.ofs - back_offs, -0.112,  0.13 }, -- back right
                         {  bomb_variant.ofs + fwd_offs,  -0.112, -0.13 }, -- front left
                         {  bomb_variant.ofs - back_offs, -0.112, -0.13 }, -- back left
                         {  bomb_variant.ofs + fwd_offs,  -0.309,  0    }, -- front center
                         {  bomb_variant.ofs - back_offs, -0.309,  0    }} -- back center
-
     local rotations =  {{ -45, 0, 0}, -- right side
                         { -45, 0, 0},
                         {  45, 0, 0}, -- left side
                         {  45, 0, 0},
                         {  0,  0, 0}, -- center
                         {  0,  0, 0}}
-
     local rightorder5  = {3,4,1,2,5,6}
     local centerorder4 = {5,6,1,2,3,4}
     local normalorder  = {1,2,3,4,5,6}
-
     -- for center, mount up to 6 ... if 4, do left and right
     -- for left, mount up to 5 skipping front right
     -- for right, mount up to 5 skipping front left
-
     local offset = 6-count
     local order = normalorder
-
     if count == 4 and side == 0 then
         order = centerorder4
     elseif (count == 5 or count == 4) and side == 1 then
         order = rightorder5
     end
-
     for i = 1,count do
         local j = order[i+offset]
-        data.Elements[#data.Elements + 1] = {DrawArgs	=	{{1,1},{2,1}},
-                                            Position	=	positions[j],
-                                            ShapeName	=	element,
-                                            Rotation	=   rotations[j]}
+        data.Elements[#data.Elements + 1] = {DrawArgs    =    {{1,1},{2,1}},
+                                            Position    =    positions[j],
+                                            ShapeName    =    element,
+                                            Rotation    =   rotations[j]}
     end
-
     return data
 end
-
 
 function bru_42(element,count,side) -- build a TER setup for the specified bombs
     local bomb_variant = bomb_data[element] or bomb_data["Mk-82"]
     local rack_variant = rack_data["BRU_42"]
     local sidestr      = {"L","C","R"}
     local data         = {}
-
     data.category           = CAT_BOMBS
     data.CLSID              = "{"..element.."_TER_"..tostring(count).."_"..sidestr[2+side].."}"
     data.attribute          = rack_variant.wstype
@@ -1900,24 +1822,20 @@ function bru_42(element,count,side) -- build a TER setup for the specified bombs
     data.Elements           =                                           -- DCS will subtract the cx from the pylon on release. This means if the total is less than cx * count
     {                                                                   -- you will actually have negative drag for this pylon.
         {
-            Position	=	{0,	0,	0},
-            ShapeName	=	rack_variant.shapename,
+            Position    =    {0,    0,    0},
+            ShapeName    =    rack_variant.shapename,
             IsAdapter   =   true,
         },
     }
-
     local connectors   = {"Point03", "Point02", "Point01"}
     local rightorder2  = {2,1,3}
     local centerorder2 = {3,1,2}
     local leftorder2   = {1,2,3}
-
     -- for center, mount up to 3 ... if 2, do left and right
     -- for left, mount up to 2 skipping front right
     -- for right, mount up to 2 skipping front left
-
     local offset = 3 - count
     local order = leftorder2 -- default, includes 3 bombs
-
     if count == 2 then
         if side == 0 then
             order = centerorder2
@@ -1925,7 +1843,6 @@ function bru_42(element,count,side) -- build a TER setup for the specified bombs
             order = rightorder2
         end
     end
-
     for i = 1,count do
         local j = order[i+offset]
         data.Elements[#data.Elements + 1] = {
@@ -1934,10 +1851,8 @@ function bru_42(element,count,side) -- build a TER setup for the specified bombs
                                                 ShapeName      = element,
                                             }
     end
-
     return data
 end
-
 
 local dispenser_data =
 {
@@ -1957,7 +1872,6 @@ function make_cbu_a4e_multi(dispenser,count,side) -- assemble a rack of cluster 
     local rack_variant      = rack_data["BRU_42"]
     local sidestr           = {"L","C","R"}
     local data              = {}
-
     data.category           = CAT_PODS
     data.CLSID              = "{"..dispenser.."_TER_"..tostring(count).."_"..sidestr[2+side].."}"
     data.attribute          = {wsType_Weapon, wsType_Bomb, wsType_Container, WSTYPE_PLACEHOLDER}
@@ -1970,24 +1884,20 @@ function make_cbu_a4e_multi(dispenser,count,side) -- assemble a rack of cluster 
     data.Elements           =
     {
         {   -- first place the rack
-            Position	=	{0,	0,	0},
-            ShapeName	=	rack_variant.shapename,
+            Position    =    {0,    0,    0},
+            ShapeName    =    rack_variant.shapename,
             IsAdapter   =   true,
         },
     }
-
     local connectors   = {"Point03", "Point02", "Point01"}
     local rightorder2  = {2,1,3}
     local centerorder2 = {3,1,2}
     local leftorder2   = {1,2,3}
-
     -- for center, mount up to 3 ... if 2, do left and right
     -- for left, mount up to 2 skipping front right
     -- for right, mount up to 2 skipping front left
-
     local offset = 3-count
     local order = leftorder2 -- default, includes 3 bombs
-
     if count == 2 then
         if side == 0 then
             order = centerorder2
@@ -1995,7 +1905,6 @@ function make_cbu_a4e_multi(dispenser,count,side) -- assemble a rack of cluster 
             order = rightorder2
         end
     end
-
     -- now mount the dispensers
     for i = 1,count do
         local j = order[i+offset]
@@ -2006,7 +1915,6 @@ function make_cbu_a4e_multi(dispenser,count,side) -- assemble a rack of cluster 
         else
             dispenser_clsid = "{CBU_DUMMY}"
         end
-
         data.Elements[#data.Elements + 1] = {
             DrawArgs       = {{1,1},{2,1}},
             connector_name = connectors[j],
@@ -2015,151 +1923,121 @@ function make_cbu_a4e_multi(dispenser,count,side) -- assemble a rack of cluster 
             IsAdapter      = true
         } 
     end
-
     return data
 end
 
 -- ROCKET LOADOUTS
-
 declare_loadout(bru_42_lau("LAU-3 FFAR WP156", 3, 0))               -- {LAU-3 FFAR WP156_TER_3_C}
 declare_loadout(bru_42_lau("LAU-3 FFAR WP156", 2, 0))               -- {LAU-3 FFAR WP156_TER_2_C}
 declare_loadout(bru_42_lau("LAU-3 FFAR WP156", 2, -1))              -- {LAU-3 FFAR WP156_TER_2_L}
 declare_loadout(bru_42_lau("LAU-3 FFAR WP156", 2, 1))               -- {LAU-3 FFAR WP156_TER_2_R}
-
 declare_loadout(bru_42_lau("LAU-3 FFAR Mk1 HE", 3, 0))              -- {LAU-3 FFAR Mk1 HE_TER_3_C}
 declare_loadout(bru_42_lau("LAU-3 FFAR Mk1 HE", 2, 0))              -- {LAU-3 FFAR Mk1 HE_TER_2_C}
 declare_loadout(bru_42_lau("LAU-3 FFAR Mk1 HE", 2, -1))             -- {LAU-3 FFAR Mk1 HE_TER_2_L}
 declare_loadout(bru_42_lau("LAU-3 FFAR Mk1 HE", 2, 1))              -- {LAU-3 FFAR Mk1 HE_TER_2_R}
-
 declare_loadout(bru_42_lau("LAU-3 FFAR Mk5 HEAT", 3, 0))            -- {LAU-3 FFAR Mk5 HEAT_TER_3_C}
 declare_loadout(bru_42_lau("LAU-3 FFAR Mk5 HEAT", 2, 0))            -- {LAU-3 FFAR Mk5 HEAT_TER_2_C}
 declare_loadout(bru_42_lau("LAU-3 FFAR Mk5 HEAT", 2, -1))           -- {LAU-3 FFAR Mk5 HEAT_TER_2_L}
 declare_loadout(bru_42_lau("LAU-3 FFAR Mk5 HEAT", 2, 1))            -- {LAU-3 FFAR Mk5 HEAT_TER_2_R}
-
 declare_loadout(bru_42_lau("LAU-68 FFAR WP156", 3, 0))              -- {LAU-68 FFAR WP156_TER_3_C}
 declare_loadout(bru_42_lau("LAU-68 FFAR WP156", 2, 0))              -- {LAU-68 FFAR WP156_TER_2_C}
 declare_loadout(bru_42_lau("LAU-68 FFAR WP156", 2, -1))             -- {LAU-68 FFAR WP156_TER_2_L}
 declare_loadout(bru_42_lau("LAU-68 FFAR WP156", 2, 1))              -- {LAU-68 FFAR WP156_TER_2_R}
-
 declare_loadout(bru_42_lau("LAU-68 FFAR Mk1 HE", 3, 0))             -- {LAU-68 FFAR Mk1 HE_TER_3_C}
 declare_loadout(bru_42_lau("LAU-68 FFAR Mk1 HE", 2, 0))             -- {LAU-68 FFAR Mk1 HE_TER_2_C}
 declare_loadout(bru_42_lau("LAU-68 FFAR Mk1 HE", 2, -1))            -- {LAU-68 FFAR Mk1 HE_TER_2_L}
 declare_loadout(bru_42_lau("LAU-68 FFAR Mk1 HE", 2, 1))             -- {LAU-68 FFAR Mk1 HE_TER_2_R}
-
 declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 3, 0))           -- {LAU-68 FFAR Mk5 HEAT_TER_3_C}
 declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 2, 0))           -- {LAU-68 FFAR Mk5 HEAT_TER_2_C}
 declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 2, -1))          -- {LAU-68 FFAR Mk5 HEAT_TER_2_L}
 declare_loadout(bru_42_lau("LAU-68 FFAR Mk5 HEAT", 2, 1))           -- {LAU-68 FFAR Mk5 HEAT_TER_2_R}
-
 declare_loadout(bru_42_lau("LAU-61 Hydra WP156", 3, 0))             -- {LAU-61 Hydra WP156_TER_3_C}
 declare_loadout(bru_42_lau("LAU-61 Hydra WP156", 2, 0))             -- {LAU-61 Hydra WP156_TER_2_C}
 declare_loadout(bru_42_lau("LAU-61 Hydra WP156", 2, -1))            -- {LAU-61 Hydra WP156_TER_2_L}
 declare_loadout(bru_42_lau("LAU-61 Hydra WP156", 2, 1))             -- {LAU-61 Hydra WP156_TER_2_R}
-
 declare_loadout(bru_42_lau("LAU-61 Hydra M151 HE", 3, 0))           -- {LAU-61 Hydra M151 HE_TER_3_C}
 declare_loadout(bru_42_lau("LAU-61 Hydra M151 HE", 2, 0))           -- {LAU-61 Hydra M151 HE_TER_2_C}
 declare_loadout(bru_42_lau("LAU-61 Hydra M151 HE", 2, -1))          -- {LAU-61 Hydra M151 HE_TER_2_L}
 declare_loadout(bru_42_lau("LAU-61 Hydra M151 HE", 2, 1))           -- {LAU-61 Hydra M151 HE_TER_2_R}
-
 declare_loadout(bru_42_lau("LAU-68 Hydra M151 HE", 3, 0))           -- {LAU-68 Hydra M151 HE_TER_3_C}
 declare_loadout(bru_42_lau("LAU-68 Hydra M151 HE", 2, 0))           -- {LAU-68 Hydra M151 HE_TER_2_C}
 declare_loadout(bru_42_lau("LAU-68 Hydra M151 HE", 2, -1))          -- {LAU-68 Hydra M151 HE_TER_2_L}
 declare_loadout(bru_42_lau("LAU-68 Hydra M151 HE", 2, 1))           -- {LAU-68 Hydra M151 HE_TER_2_R}
-
 declare_loadout(bru_42_lau("LAU-68 Hydra WP156", 3, 0))             -- {LAU-68 Hydra WP156 WP_TER_3_C}
 declare_loadout(bru_42_lau("LAU-68 Hydra WP156", 2, 0))             -- {LAU-68 Hydra WP156 WP_TER_2_C}
 declare_loadout(bru_42_lau("LAU-68 Hydra WP156", 2, -1))            -- {LAU-68 Hydra WP156 WP_TER_2_L}
 declare_loadout(bru_42_lau("LAU-68 Hydra WP156", 2, 1))             -- {LAU-68 Hydra WP156 WP_TER_2_R}
-
 declare_loadout(bru_42_lau("LAU-68 Hydra M257 PI", 3, 0))           -- {LAU-68 Hydra M257 PI_TER_3_C}
 declare_loadout(bru_42_lau("LAU-68 Hydra M257 PI", 2, 0))           -- {LAU-68 Hydra M257 PI_TER_2_C}
 declare_loadout(bru_42_lau("LAU-68 Hydra M257 PI", 2, -1))          -- {LAU-68 Hydra M257 PI_TER_2_L}
 declare_loadout(bru_42_lau("LAU-68 Hydra M257 PI", 2, 1))           -- {LAU-68 Hydra M257 PI_TER_2_R}
-
 declare_loadout(bru_42_lau("LAU-68 Hydra M274 PS", 3, 0))           -- {LAU-68 Hydra M274 PS_TER_3_C}
 declare_loadout(bru_42_lau("LAU-68 Hydra M274 PS", 2, 0))           -- {LAU-68 Hydra M274 PS_TER_2_C}
 declare_loadout(bru_42_lau("LAU-68 Hydra M274 PS", 2, -1))          -- {LAU-68 Hydra M274 PS_TER_2_L}
 declare_loadout(bru_42_lau("LAU-68 Hydra M274 PS", 2, 1))           -- {LAU-68 Hydra M274 PS_TER_2_R}
-
 declare_loadout(bru_42_lau("LAU-68 Hydra Mk1 Practice", 3, 0))      -- {LAU-68 Hydra Mk1 Practice_TER_3_C}
 declare_loadout(bru_42_lau("LAU-68 Hydra Mk1 Practice", 2, 0))      -- {LAU-68 Hydra Mk1 Practice_TER_2_C}
 declare_loadout(bru_42_lau("LAU-68 Hydra Mk1 Practice", 2, -1))     -- {LAU-68 Hydra Mk1 Practice_TER_2_L}
 declare_loadout(bru_42_lau("LAU-68 Hydra Mk1 Practice", 2, 1))      -- {LAU-68 Hydra Mk1 Practice_TER_2_R}
-
 declare_loadout(bru_42_lau("LAU-68 Hydra Mk5 HEAT", 3, 0))          -- {LAU-68 Hydra Mk5 HEAT_TER_3_C}
 declare_loadout(bru_42_lau("LAU-68 Hydra Mk5 HEAT", 2, 0))          -- {LAU-68 Hydra Mk5 HEAT_TER_2_C}
 declare_loadout(bru_42_lau("LAU-68 Hydra Mk5 HEAT", 2, -1))         -- {LAU-68 Hydra Mk5 HEAT_TER_2_L}
 declare_loadout(bru_42_lau("LAU-68 Hydra Mk5 HEAT", 2, 1))          -- {LAU-68 Hydra Mk5 HEAT_TER_2_R}
-
 declare_loadout(bru_42_lau("LAU-68 Hydra Mk61 Practice", 3, 0))     -- {LAU-68 Hydra Mk61 Practice_TER_3_C}
 declare_loadout(bru_42_lau("LAU-68 Hydra Mk61 Practice", 2, 0))     -- {LAU-68 Hydra Mk61 Practice_TER_2_C}
 declare_loadout(bru_42_lau("LAU-68 Hydra Mk61 Practice", 2, -1))    -- {LAU-68 Hydra Mk61 Practice_TER_2_L}
 declare_loadout(bru_42_lau("LAU-68 Hydra Mk61 Practice", 2, 1))     -- {LAU-68 Hydra Mk61 Practice_TER_2_R}
-
 declare_loadout(bru_42_lau("LAU-68 Hydra WTU1B Practice", 3, 0))    -- {LAU-68 Hydra WTU1B Practice_TER_3_C}
 declare_loadout(bru_42_lau("LAU-68 Hydra WTU1B Practice", 2, 0))    -- {LAU-68 Hydra WTU1B Practice_TER_2_C}
 declare_loadout(bru_42_lau("LAU-68 Hydra WTU1B Practice", 2, -1))   -- {LAU-68 Hydra WTU1B Practice_TER_2_L}
 declare_loadout(bru_42_lau("LAU-68 Hydra WTU1B Practice", 2, 1))    -- {LAU-68 Hydra WTU1B Practice_TER_2_R}
-
 declare_loadout(bru_42_lau("LAU-10 ZUNI", 3, 0))                    -- {LAU-10 ZUNI_TER_3_C}
 declare_loadout(bru_42_lau("LAU-10 ZUNI", 2, 0))                    -- {LAU-10 ZUNI_TER_2_C}
 declare_loadout(bru_42_lau("LAU-10 ZUNI", 2, -1))                   -- {LAU-10 ZUNI_TER_2_L}
 declare_loadout(bru_42_lau("LAU-10 ZUNI", 2, 1))                    -- {LAU-10 ZUNI_TER_2_R}
 
 -- BOMB LOADOUTS
-
 declare_loadout(rackme_a4e("AN-M57", 6,  0))                -- {AN-M57_MER_6_C}
 declare_loadout(rackme_a4e("AN-M57", 5, -1))                -- {AN-M57_MER_5_L}
 declare_loadout(rackme_a4e("AN-M57", 5,  1))                -- {AN-M57_MER_5_R}
 declare_loadout(rackme_a4e("AN-M57", 3,  0))                -- {AN-M57_TER_3_C}
 declare_loadout(rackme_a4e("AN-M57", 2, -1))                -- {AN-M57_TER_2_L}
 declare_loadout(rackme_a4e("AN-M57", 2,  1))                -- {AN-M57_TER_2_R}
-
 declare_loadout(rackme_a4e("AN-M81", 6,  0))                -- {AN-M81_MER_6_C}
 declare_loadout(rackme_a4e("AN-M81", 5, -1))                -- {AN-M81_MER_5_L}
 declare_loadout(rackme_a4e("AN-M81", 5,  1))                -- {AN-M81_MER_5_R}
-
 declare_loadout(rackme_a4e("AN-M88", 6,  0))                -- {AN-M88_MER_6_C}
 declare_loadout(rackme_a4e("AN-M88", 5, -1))                -- {AN-M88_MER_5_L}
 declare_loadout(rackme_a4e("AN-M88", 5,  1))                -- {AN-M88_MER_5_R}
-
 declare_loadout(rackme_a4e("Mk-81", 6, 0))                  -- {Mk-81_MER_6_C}
 declare_loadout(rackme_a4e("Mk-81", 5,-1))                  -- {Mk-81_MER_5_L}
 declare_loadout(rackme_a4e("Mk-81", 5, 1))                  -- {Mk-81_MER_5_R}
-
 declare_loadout(rackme_a4e("Mk-81SE", 6, 0))                -- {Mk-81SE_MER_6_C}
 declare_loadout(rackme_a4e("Mk-81SE", 5,-1))                -- {Mk-81SE_MER_5_L}
 declare_loadout(rackme_a4e("Mk-81SE", 5, 1))                -- {Mk-81SE_MER_5_R}
-
 declare_loadout(rackme_a4e("Mk-82", 6, 0))                  -- {Mk-82_MER_6_C}
 declare_loadout(rackme_a4e("Mk-82", 4, 0))                  -- {Mk-82_MER_4_C}
 declare_loadout(rackme_a4e("Mk-82", 3, 0))                  -- {Mk-82_TER_3_C}
 declare_loadout(rackme_a4e("Mk-82", 2,-1))                  -- {Mk-82_TER_2_L}
 declare_loadout(rackme_a4e("Mk-82", 2, 1))                  -- {Mk-82_TER_2_R}
-
 declare_loadout(rackme_a4e("Mk-82 Snakeye", 6, 0))          -- {Mk-82 Snakeye_MER_6_C}
 declare_loadout(rackme_a4e("Mk-82 Snakeye", 4, 0))          -- {Mk-82 Snakeye_MER_4_C}
 declare_loadout(rackme_a4e("Mk-82 Snakeye", 3, 0))          -- {Mk-82 Snakeye_TER_3_C}
 declare_loadout(rackme_a4e("Mk-82 Snakeye", 2,-1))          -- {Mk-82 Snakeye_TER_2_L}
 declare_loadout(rackme_a4e("Mk-82 Snakeye", 2, 1))          -- {Mk-82 Snakeye_TER_2_R}
-
 declare_loadout(rackme_a4e("BDU-33", 5, -1))                -- {BDU-33_MER_5_L}
 declare_loadout(rackme_a4e("BDU-33", 5, 1))                 -- {BDU-33_MER_5_R}
 declare_loadout(rackme_a4e("BDU-33", 6, 0))                 -- {BDU-33_MER_6_C}
-
 declare_loadout(rackme_a4e("Mk-83", 3, 0))                  -- {Mk-83_TER_3_C}
 declare_loadout(rackme_a4e("Mk-83", 2, 0))                  -- {Mk-83_TER_2_C}
-
 declare_loadout(rackme_a4e("Mk-77 mod 1", 4, 0))            -- {Mk-77 mod 1_MER_4_C}
 declare_loadout(rackme_a4e("Mk-77 mod 1", 2,-1))            -- {Mk-77 mod 1_TER_2_L}
 declare_loadout(rackme_a4e("Mk-77 mod 1", 2, 1))            -- {Mk-77 mod 1_TER_2_R}
 declare_loadout(rackme_a4e("Mk-77 mod 1", 2, 0))            -- {Mk-77 mod 1_TER_2_C}
-
 declare_loadout(rackme_a4e("Mk-20", 3, 0))                  -- {Mk-20_TER_3_C}
 declare_loadout(rackme_a4e("Mk-20", 2,-1))                  -- {Mk-20_TER_2_L}
 declare_loadout(rackme_a4e("Mk-20", 2, 1))                  -- {Mk-20_TER_2_R}
 declare_loadout(rackme_a4e("Mk-20", 2, 0))                  -- {Mk-20_TER_2_C}
-
 declare_loadout(make_cbu_a4e_multi("CBU-1/A",  2, -1))      -- {CBU-1/A_TER_2_L}
 declare_loadout(make_cbu_a4e_multi("CBU-1/A",  2,  1))      -- {CBU-1/A_TER_2_R}
 declare_loadout(make_cbu_a4e_multi("CBU-2/A",  2, -1))      -- {CBU-2/A_TER_2_L}

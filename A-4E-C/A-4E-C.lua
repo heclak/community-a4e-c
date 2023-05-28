@@ -73,16 +73,13 @@ local function get_outboard_weapons( side )
     end
 
     local tbl = {
-	
-		--AIR AIR--
+        -- AIR AIR --
         { CLSID = "{GAR-8}",                                    connector = rocketConnector, arg_value = 0.2 },  -- AIM-9B, aligned to -3deg armament datum
         { CLSID = "{AIM-9P-ON-ADAPTER}",                        connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P
         { CLSID = "{AIM-9P5-ON-ADAPTER}",                       connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P5
-	
-        --ROCKETS--
+        -- ROCKETS --
         { CLSID = "{3DFB7321-AB0E-11d7-9897-000476191836}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-61 Hydra WP156
         { CLSID = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-61 Hydra M151 HE
-
         { CLSID = "{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra M151 HE
         { CLSID = "{4F977A2A-CD25-44df-90EF-164BFA2AE72F}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra M156 WP
         { CLSID = "{174C6E6D-0C3D-42ff-BCB3-0853CB371F5C}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra Mk5 HEAT
@@ -91,22 +88,17 @@ local function get_outboard_weapons( side )
         { CLSID = "{FC85D2ED-501A-48ce-9863-49D468DDD5FC}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra Mk1 Practice
         { CLSID = "{65396399-9F5C-4ec3-A7D2-5A8F4C1D90C4}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra Mk61 Practice
         { CLSID = "{1F7136CB-8120-4e77-B97B-945FF01FB67C}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra WTU-1/B Practice
-
         { CLSID = "{LAU3_FFAR_WP156}",                          connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR WP156
         { CLSID = "{LAU3_FFAR_MK1HE}",                          connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR Mk1 HE
         { CLSID = "{LAU3_FFAR_MK5HEAT}",                        connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR Mk5 HEAT
-
         { CLSID = "{LAU68_FFAR_WP156}",                         connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR WP156
         { CLSID = "{LAU68_FFAR_MK1HE}",                         connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk1 HE
         { CLSID = "{LAU68_FFAR_MK5HEAT}",                       connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk5 HEAT
-
         { CLSID = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-10 Zuni
-
-        --MISSILES--
+        -- MISSILES --
         { CLSID = "{AGM_45A}",                                  connector = shrikeConnector, arg_value = 0.1 }, -- AGM-45 SHRIKE
         { CLSID = "{3E6B632D-65EB-44D2-9501-1C2D04515404}",     connector = shrikeConnector, arg_value = 0.1 }, -- AGM-45B SHRIKE
-
-        --BOMBS--
+        -- BOMBS --
         { CLSID = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}" },   -- Mk-20 Rockeye cluster bomb
         { CLSID = "{90321C8E-7ED1-47D4-A160-E074D5ABD902}" },   -- MK-81
         { CLSID = "{MK-81SE}" },                                -- Mk-81 Snakeye
@@ -118,25 +110,20 @@ local function get_outboard_weapons( side )
         { CLSID = "{AN-M64}" },                                 -- AN-M64 500 lb GP HE (274 lb Comp B)
         { CLSID = "{AN-M81}" },                                 -- AN-M81 260 lb Fragmentation (34.1 lb Comp B)
         { CLSID = "{AN-M88}" },                                 -- AN-M88 216 lb Fragmentation (47 lb Comp B)
-
-		-- SMOKE PODS --
-		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E741}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Red
-		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E742}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Green
-		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E743}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Blue
-		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E744}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod White
-		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E745}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Yellow
-		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E746}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Orange
-
+        -- SMOKE PODS --
+        { CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E741}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Red
+        { CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E742}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Green
+        { CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E743}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Blue
+        { CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E744}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod White
+        { CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E745}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Yellow
+        { CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E746}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Orange
         -- ILLUMINATION POD --
-        { CLSID = "{CAE48299-A294-4bad-8EE6-89EFC5DCDF00}", connector = rocketConnector, arg_value = 0.2},
-
-		-- CLEAN --
-		{ CLSID = "<CLEAN>", arg_value = 1 },
-	}
+        { CLSID = "{CAE48299-A294-4bad-8EE6-89EFC5DCDF00}", connector = rocketConnector, arg_value = 0.2},  -- SUU-25
+        -- CLEAN --
+        { CLSID = "<CLEAN>", arg_value = 1 }, -- Remove pylon
+    }
     return tbl
 end
-
-
 
 local function get_inboard_weapons( side )
     local rocketConnector = ""
@@ -150,38 +137,33 @@ local function get_inboard_weapons( side )
     end
 
     local tbl = {
-        --FUEL TANKS--
+        -- FUEL TANKS --
         { CLSID = "{DFT-300gal_LR}" },
         { CLSID = "{DFT-300gal_LR_EMPTY}" },
         -- { CLSID = "{DFT-300gal_LR}",attach_point_position = { -0.10, -0.008, 0.0}},  --another (proper?) posibility to fix 300 gal tank position/angle ?
         { CLSID = "{DFT-150gal}" },
         { CLSID = "{DFT-150gal_EMPTY}" },
-
-        --AIR AIR--
+        -- AIR AIR --
         { CLSID = "{GAR-8}",                                            connector = rocketConnector, arg_value = 0.2 },  -- AIM-9B, aligned to -3deg armament datum
         { CLSID = "{AIM-9P-ON-ADAPTER}",                                connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P
         { CLSID = "{AIM-9P5-ON-ADAPTER}",                               connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P5
-
-        --ROCKETS--
+        -- ROCKETS --
         { CLSID = "{LAU3_FFAR_WP156}",                                  connector = rocketConnector, arg_value = 0.2 }, -- FFAR M156 WP
         { CLSID = "{LAU3_FFAR_MK1HE}",                                  connector = rocketConnector, arg_value = 0.2 }, -- FFAR Mk1 HE
         { CLSID = "{LAU3_FFAR_MK5HEAT}",                                connector = rocketConnector, arg_value = 0.2 }, -- FFAR Mk5 HEAT
         { CLSID = "{LAU-3 FFAR WP156_TER_2_"..side.."}",                connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR M156 WP
         { CLSID = "{LAU-3 FFAR Mk1 HE_TER_2_"..side.."}",               connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR Mk1 HE
         { CLSID = "{LAU-3 FFAR Mk5 HEAT_TER_2_"..side.."}",             connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-3 FFAR Mk5 HEAT
-
         { CLSID = "{LAU68_FFAR_WP156}",                                 connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR M156 WP
         { CLSID = "{LAU68_FFAR_MK1HE}",                                 connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk1 HE
         { CLSID = "{LAU68_FFAR_MK5HEAT}",                               connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk5 HEAT
         { CLSID = "{LAU-68 FFAR WP156_TER_2_"..side.."}",               connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR M156 WP
         { CLSID = "{LAU-68 FFAR Mk1 HE_TER_2_"..side.."}",              connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR Mk1 HE
         { CLSID = "{LAU-68 FFAR Mk5 HEAT_TER_2_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 FFAR Mk5 HEAT
-
         { CLSID = "{3DFB7321-AB0E-11d7-9897-000476191836}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-61 Hydra M156 WP
         { CLSID = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-61 Hydra M151 HE
         { CLSID = "{LAU-61 Hydra WP156_TER_2_"..side.."}",              connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-61 Hydra M156 WP
         { CLSID = "{LAU-61 Hydra M151 HE_TER_2_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-61 Hydra M151 HE
-
         { CLSID = "{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra M151 HE
         { CLSID = "{4F977A2A-CD25-44df-90EF-164BFA2AE72F}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra M156 WP
         { CLSID = "{174C6E6D-0C3D-42ff-BCB3-0853CB371F5C}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra Mk5 HEAT
@@ -198,15 +180,12 @@ local function get_inboard_weapons( side )
         { CLSID = "{LAU-68 Hydra Mk5 HEAT_TER_2_"..side.."}",           connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Mk5 HEAT
         { CLSID = "{LAU-68 Hydra Mk61 Practice_TER_2_"..side.."}",      connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra Mk61 Practice
         { CLSID = "{LAU-68 Hydra WTU1B Practice_TER_2_"..side.."}",     connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-68 Hydra WTU-1/B Practice
-
         { CLSID = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-10 Zuni
         { CLSID = "{LAU-10 ZUNI_TER_2_"..side.."}",                     connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-10 Zuni
-
-        --MISSILES--
+        -- MISSILES --
         { CLSID = "{AGM_45A}", connector = shrikeConnector, arg_value = 0.1 }, -- AGM-45A SHRIKE
         { CLSID = "{3E6B632D-65EB-44D2-9501-1C2D04515404}",             connector = shrikeConnector, arg_value = 0.1 }, -- AGM-45B SHRIKE
-
-        --BOMBS--
+        -- BOMBS --
         { CLSID = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}" }, -- Mk-20 Rockeye cluster bomb
         { CLSID = "{90321C8E-7ED1-47D4-A160-E074D5ABD902}" }, -- MK-81
         { CLSID = "{MK-81SE}" },                              -- Mk-81 Snakeye
@@ -223,17 +202,14 @@ local function get_inboard_weapons( side )
         { CLSID = "{AN_M65}" },                               -- AN-M65A1 1000 lb GP HE (595 lb Comp B)
         { CLSID = "{AN-M81}" },                               -- AN-M81 260 lb Fragmentation (34.1 lb Comp B)
         { CLSID = "{AN-M88}" },                               -- AN-M88 216 lb Fragmentation (47 lb Comp B)
-
-                                                              --CLUSTER MUNITIONS                                                           --
+        -- CLUSTER MUNITIONS --
         { CLSID = "{CBU-1/A}" },                              -- CBU-1/A Cluster Dispenser (509x BLU-4/B anti-personnel cluster bomblets)
         { CLSID = "{CBU-2/A}" },                              -- CBU-2/A Cluster Dispenser (360x BLU-3/B cluster bomblets)
         { CLSID = "{CBU-2B/A}" },                             -- CBU-2B/A Cluster Dispenser (409x BLU-3/B cluster bomblets)
-
         { CLSID = "{CBU-1/A_TER_2_"..side.."}" },             -- CBU-1/A Cluster Dispenser x2 (509x BLU-4/B anti-personnel cluster bomblets)
         { CLSID = "{CBU-2/A_TER_2_"..side.."}" },             -- CBU-2/A Cluster Dispenser x2 (360x BLU-3/B cluster bomblets)
         { CLSID = "{CBU-2B/A_TER_2_"..side.."}" },            -- CBU-2B/A Cluster Dispenser x2 (409x BLU-3/B cluster bomblets)
-
-                                                              -- BOMB RACKS                                                                 --
+        -- BOMB RACKS --
         { CLSID = "{Mk-20_TER_2_"..side.."}" },               -- Mk-20 Rockeye cluster bomb x2
         { CLSID = "{Mk-81_MER_5_"..side.."}" },               -- MER Mk-81 x5
         { CLSID = "{Mk-81SE_MER_5_"..side.."}" },             -- MER Mk-81 Snakeye x5
@@ -244,23 +220,19 @@ local function get_inboard_weapons( side )
         { CLSID = "{AN-M81_MER_5_"..side.."}" },              -- AN-M81 x5 260 lb Fragmentation (34.1 lb Comp B)
         { CLSID = "{AN-M88_MER_5_"..side.."}" },              -- AN-M88 x5 216 lb Fragmentation (47 lb Comp B)
         { CLSID = "{BDU-33_MER_5_"..side.."}" },              -- BDU-33 x5
-
         -- GUN PODS --
-        {CLSID = "{Mk4 HIPEG}", connector = rocketConnector, arg_value = 0.2 },  -- Mk 4 Mod 0 HIPEG gun pod
-
-		-- SMOKE PODS --
-		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E741}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Red
-		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E742}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Green
-		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E743}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Blue
-		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E744}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod White
-		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E745}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Yellow
-		{CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E746}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Orange
-
+        { CLSID = "{Mk4 HIPEG}", connector = rocketConnector, arg_value = 0.2 },  -- Mk 4 Mod 0 HIPEG gun pod
+        -- SMOKE PODS --
+        { CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E741}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Red
+        { CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E742}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Green
+        { CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E743}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Blue
+        { CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E744}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod White
+        { CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E745}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Yellow
+        { CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E746}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Orange
         -- ILLUMINATION POD --
         { CLSID = "{CAE48299-A294-4bad-8EE6-89EFC5DCDF00}", connector = rocketConnector, arg_value = 0.2},
-
-		-- CLEAN --
-		{ CLSID = "<CLEAN>", arg_value = 1 },
+        -- CLEAN --
+        { CLSID = "<CLEAN>", arg_value = 1 },
     }
     return tbl
 end
@@ -269,17 +241,15 @@ local function get_centerline_weapons( side )
     local rocketConnector = "Pylon3RKT"
 
     local tbl = {
-        --FUEL TANKS--
+        -- FUEL TANKS --
         { CLSID = "{DFT-400gal}" },
         { CLSID = "{DFT-300gal}" },
         { CLSID = "{DFT-150gal}" },
-
         { CLSID = "{DFT-400gal_EMPTY}" },
         { CLSID = "{DFT-300gal_EMPTY}" },
         { CLSID = "{DFT-150gal_EMPTY}" },
         -- { CLSID = "{D-704_BUDDY_POD}" },
-
-        --ROCKETS--
+        -- ROCKETS --
         { CLSID = "{LAU3_FFAR_WP156}",                                  connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR M156 WP
         { CLSID = "{LAU3_FFAR_MK1HE}",                                  connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR Mk1 HE
         { CLSID = "{LAU3_FFAR_MK5HEAT}",                                connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 FFAR Mk5 HEAT
@@ -289,7 +259,6 @@ local function get_centerline_weapons( side )
         { CLSID = "{LAU-3 FFAR WP156_TER_3_"..side.."}",                connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-3 FFAR M156 WP
         { CLSID = "{LAU-3 FFAR Mk1 HE_TER_3_"..side.."}",               connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-3 FFAR Mk1 HE
         { CLSID = "{LAU-3 FFAR Mk5 HEAT_TER_3_"..side.."}",             connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-3 FFAR Mk5 HEAT
-
         { CLSID = "{LAU68_FFAR_WP156}",                                 connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR M156 WP
         { CLSID = "{LAU68_FFAR_MK1HE}",                                 connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk1 HE
         { CLSID = "{LAU68_FFAR_MK5HEAT}",                               connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 FFAR Mk5 HEAT
@@ -299,14 +268,12 @@ local function get_centerline_weapons( side )
         { CLSID = "{LAU-68 FFAR WP156_TER_3_"..side.."}",               connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 FFAR M156 WP
         { CLSID = "{LAU-68 FFAR Mk1 HE_TER_3_"..side.."}",              connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 FFAR Mk1 HE
         { CLSID = "{LAU-68 FFAR Mk5 HEAT_TER_3_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 FFAR Mk5 HEAT
-
-        -- these aren't loading in for some reason, so commenting out for now
+        -- LAU-3 Hydras aren't loading in for some reason, research needed as to why
         -- { CLSID = "{LAU3_HE151}",                                       connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 Hydra M151 HE
         -- { CLSID = "{LAU3_WP156}",                                       connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 Hydra M156 WP
         -- { CLSID = "{LAU3_HE5}",                                         connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 Hydra Mk5 HEAT
         -- { CLSID = "{LAU3_WP61}",                                        connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 Hydra Mk61 Practice
         -- { CLSID = "{LAU3_WP1B}",                                        connector = rocketConnector, arg_value = 0.2 }, -- LAU-3 Hydra WTU-1/B Practice
-
         { CLSID = "{3DFB7321-AB0E-11d7-9897-000476191836}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-61 Hydra M156 WP
         { CLSID = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-61 Hydra M151 HE
         { CLSID = "{LAU-61 Hydra WP156_TER_2_"..side.."}",              connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-61 Hydra M156 WP
@@ -314,7 +281,6 @@ local function get_centerline_weapons( side )
         { CLSID = "{LAU-61 Hydra WP156_TER_3_"..side.."}",              connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-61 Hydra M156 WP
         { CLSID = "{LAU-61 Hydra M151 HE_TER_3_"..side.."}",            connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-61 Hydra M151 HE
         -- { CLSID = "{A76344EB-32D2-4532-8FA2-0C1BDC00747E}",             connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-61 Hydra M151 HE (DCS native)
-
         { CLSID = "{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra M151 HE
         { CLSID = "{4F977A2A-CD25-44df-90EF-164BFA2AE72F}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra M156 WP
         { CLSID = "{647C5F26-BDD1-41e6-A371-8DE1E4CC0E94}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-68 Hydra Para Illum
@@ -347,12 +313,10 @@ local function get_centerline_weapons( side )
         -- { CLSID = "{443364AE-D557-488e-9499-45EDB3BA6730}",             connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra Mk1 Practice (DCS native)
         -- { CLSID = "{C0FA251E-B645-4ce5-926B-F4BC20822F8B}",             connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra Mk61 Practice (DCS native)
         -- { CLSID = "{A1853B38-2160-4ffe-B7E9-9BF81E6C3D77}",             connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-68 Hydra WTU-1/B Practice (DCS native)
-       
         { CLSID = "{F3EFE0AB-E91A-42D8-9CA2-B63C91ED570A}",             connector = rocketConnector, arg_value = 0.2 }, -- LAU-10 Zuni
         { CLSID = "{LAU-10 ZUNI_TER_2_"..side.."}",                     connector = rocketConnector, arg_value = 0.2 }, -- Dual LAU-10 Zuni
         { CLSID = "{LAU-10 ZUNI_TER_3_"..side.."}",                     connector = rocketConnector, arg_value = 0.2 }, -- Triple LAU-10 Zuni
-
-        --BOMBS--
+        -- BOMBS --
         { CLSID = "{ADD3FAE1-EBF6-4EF9-8EFC-B36B5DDF1E6B}" },   -- Mk-20 Rockeye cluster bomb
         { CLSID = "{90321C8E-7ED1-47D4-A160-E074D5ABD902}" },   -- MK-81
         { CLSID = "{MK-81SE}" },                                -- Mk-81 Snakeye
@@ -370,8 +334,7 @@ local function get_centerline_weapons( side )
         { CLSID = "{AN-M66A2}" },                               -- AN-M66A2 2000 lb GP HE (1142 lb Comp B)
         { CLSID = "{AN-M81}" },                                 -- AN-M81 260 lb Fragmentation (34.1 lb Comp B)
         { CLSID = "{AN-M88}" },                                 -- AN-M88 216 lb Fragmentation (47 lb Comp B)
-
-        --BOMB RACKS--
+        -- BOMB RACKS --
         { CLSID = "{Mk-20_TER_3_"..side.."}" },                 -- Mk-20 Rockeye cluster bomb x3
         { CLSID = "{Mk-20_TER_2_"..side.."}" },                 -- Mk-20 Rockeye cluster bomb x2
         { CLSID = "{Mk-81_MER_6_"..side.."}" },
@@ -390,41 +353,29 @@ local function get_centerline_weapons( side )
         { CLSID = "{AN-M81_MER_6_"..side.."}" },                -- AN-M81 x6 260 lb Fragmentation (34.1 lb Comp B)
         { CLSID = "{AN-M88_MER_6_"..side.."}" },                -- AN-M88 x6 216 lb Fragmentation (47 lb Comp B)
         { CLSID = "{BDU-33_MER_6_"..side.."}" },              -- BDU-33 x5
-
         -- GUN PODS --
         { CLSID = "{Mk4 HIPEG}", connector = rocketConnector, arg_value = 0.2 },  -- Mk 4 Mod 0 HIPEG gun pod
-
-		-- SMOKE PODS --
-		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E741}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Red
-		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E742}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Green
-		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E743}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Blue
-		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E744}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod White
-		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E745}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Yellow
-		{ CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E746}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Orange
-
+        -- SMOKE PODS --
+        { CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E741}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Red
+        { CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E742}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Green
+        { CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E743}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Blue
+        { CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E744}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod White
+        { CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E745}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Yellow
+        { CLSID = "{A4BCC903-06C8-47bb-9937-A30FEDB4E746}", connector = rocketConnector, arg_value = 0.2 }, -- Smoke Pod Orange
         -- ILLUMINATION POD --
         { CLSID = "{CAE48299-A294-4bad-8EE6-89EFC5DCDF00}", connector = rocketConnector, arg_value = 0.2},
-
-		-- CLEAN --
-		{ CLSID = "<CLEAN>", arg_value = 1 },
+        -- CLEAN --
+        { CLSID = "<CLEAN>", arg_value = 1 },
     }
     return tbl
 end
 
-
-
-
-
-
-
 A_4E_C =  {
-
     Name                 =   'A-4E-C',
     DisplayName            = _('A-4E-C'),
     ViewSettings        = ViewSettings,
-
     -- enable A-4 for all countries.  It is CHEAP and easy to maintain
-	Countries = {
+    Countries = {
         "Abkhazia",
         "Algeria",
         "Argentina",
@@ -506,11 +457,9 @@ A_4E_C =  {
 
     HumanCockpit         = false,
     HumanCockpitPath    = current_mod_path..'/Cockpit/',
-
     Picture             = "A-4E-C.png",
     Rate                 = 40, -- RewardPoint in Multiplayer
     Shape                 = "A-4E",
-
     shape_table_data     =
     {
         {
@@ -522,7 +471,7 @@ A_4E_C =  {
             username = 'A-4E-C';
             index    =  WSTYPE_PLACEHOLDER;
             classname   = "lLandPlane";
-			positioning = "BYNORMAL";
+            positioning = "BYNORMAL";
         },
         -- no need for this as we are using a built in destroyed model
         -- {
@@ -530,7 +479,6 @@ A_4E_C =  {
         --     file  = "Alphajet-destr";
         --     fire  = {240, 2};  -- 240  2
         -- },
-
     },
     -------------------------
     -- add model draw args for network transmitting to this draw_args table (32 limit)
@@ -565,10 +513,9 @@ A_4E_C =  {
         500, -- model air brake
         501, -- RAT
         499, -- wheel chocks
-		 117, -- stabilizer
-
+         117, -- stabilizer
     },
-	-------------------------
+    -------------------------
     mapclasskey = "P0091000025",
     attribute   = {wsType_Air, wsType_Airplane, wsType_Fighter, WSTYPE_PLACEHOLDER, "Multirole fighters", "Refuelable" },
     Categories  = {"{78EFB7A2-FD52-4b57-A6A6-3BF0E1D6555F}", "Interceptor",},
@@ -630,13 +577,13 @@ A_4E_C =  {
     tanker_type                 =  2,                     -- Tanker type if the plane is tanker
     air_refuel_receptacle_pos   =  {6.966, -0.366, 0.486},
 
-    launch_bar_connected_arg_value	= 0.87,
+    launch_bar_connected_arg_value = 0.87,
 
-	-----------------------------------------------------------------------
-	----------------- SUSPENSION CODE BEGINS
-	-----------------------------------------------------------------------
+    -----------------------------------------------------------------------
+    ----------------- SUSPENSION CODE BEGINS
+    -----------------------------------------------------------------------
     tand_gear_max = math.rad(180.0), --turns out we actually need this for the animation to line up
-	--[[
+    --[[
     nose_gear_pos                            = {2.72, -2.78, 0}, -- {2.72, -2.37, 0},    --      2.72,       -2.28,    0
     main_gear_pos                            = {-0.79, -2.86, 1.18}, -- {-0.79, -2.42, 1.18},    --  0.79,   -2.35,    1.18
     tand_gear_max                            = 0.554,   -- // tangent on maximum yaw angle of front wheel
@@ -652,11 +599,10 @@ A_4E_C =  {
     nose_gear_wheel_diameter                 = 0.441,   -- 0.441, --*
     main_gear_wheel_diameter                 = 0.609,   -- 0.609, --*
     brakeshute_name                          = 0,       -- Landing - brake chute visual shape after separation
-	]]--
-
-	-----------------------------------------------------------------------
-	----------------- SUSPENSION CODE ENDS
-	-----------------------------------------------------------------------
+    ]]--
+    -----------------------------------------------------------------------
+    ----------------- SUSPENSION CODE ENDS
+    -----------------------------------------------------------------------
 
     engines_count    = 1,
     engines_nozzles =
@@ -677,7 +623,6 @@ A_4E_C =  {
         }, -- end of [1]
     }, -- end of engines_nozzles
 
-    
     sounderName         = "Aircraft/Planes/A-4E-C",
 
     crew_size    = 1,
@@ -689,15 +634,15 @@ A_4E_C =  {
             drop_canopy_name    =    "A-4E_canopy", --23,
             pos =         {3.077,    -0.03,    0}, --changes the position of the cockpit view {3.077,    0.574,    0}
             canopy_pos = {3.077,    0.674,    0},
-			-- canopy_pos = {2.677,2.677,0},
-			--ejection_play_arg = 149,
-			--can_be_playable 	= true,
-			--ejection_through_canopy = true,
-			--ejection_added_speed = {-5,15,0},
-			--ejection_order 		 = 2,
-			--role 				 = "pilot",
-			--role_display_name    = _("Pilot"),
-			g_suit 			   =  5.0 -- I'm assuming there are different levels of suits which black you out at different G's. We should try and experiment with different ones.
+            -- canopy_pos = {2.677,2.677,0},
+            --ejection_play_arg = 149,
+            --can_be_playable     = true,
+            --ejection_through_canopy = true,
+            --ejection_added_speed = {-5,15,0},
+            --ejection_order          = 2,
+            --role                  = "pilot",
+            --role_display_name    = _("Pilot"),
+            g_suit                =  5.0 -- I'm assuming there are different levels of suits which black you out at different G's. We should try and experiment with different ones.
         }, -- end of [1]
     }, -- end of crew_members
 
@@ -711,24 +656,24 @@ A_4E_C =  {
         -- animations need to be defined with a dummy arg even if they are not applicable.
         -- both launchbar and foldable wings are required.
         LaunchBar = { 
-			{Transition = {"Retract", "Extend"}, Sequence = {{C = {{"ChangeDriveTo", "HydraulicGravityAssisted"}, {"VelType", 3}, {"Arg", 85, "to", 0.881, "in", 4.4}}}}},
-			{Transition = {"Retract", "Stage"},  Sequence = {{C = {{"ChangeDriveTo", "HydraulicGravityAssisted"}, {"VelType", 3}, {"Arg", 85, "to", 0.815, "in", 4.4}}}}},
-			{Transition = {"Any", "Retract"},  Sequence = {{C = {{"ChangeDriveTo", "Hydraulic"}, {"VelType", 2}, {"Arg", 85, "to", 0.000, "in", 4.5}}}}},
-			{Transition = {"Extend", "Stage"},   Sequence = {
-					{C = {{"ChangeDriveTo", "Mechanical"}, {"Sleep", "for", 0.000}}},
-					{C = {{"Arg", 85, "from", 0.881, "to", 0.766, "in", 0.600}}},
-					{C = {{"Arg", 85, "from", 0.766, "to", 0.753, "in", 0.200}}},
-					{C = {{"Sleep", "for", 0.15}}},
-					{C = {{"Arg", 85, "from", 0.753, "to", 0.784, "in", 0.1, "sign", 2}}},
-					{C = {{"Arg", 85, "from", 0.784, "to", 0.881, "in", 1.0}}},
-				},
-			},
-			{Transition = {"Stage", "Pull"},  Sequence = {
-					{C = {{"ChangeDriveTo", "Mechanical"}, {"VelType", 2}, {"Arg", 85,"from", 0.881, "to", launch_bar_connected_arg_value_, "in", 0.27}}},
-					}
-			},
-			{Transition = {"Stage", "Extend"},   Sequence = {{C = {{"ChangeDriveTo", "HydraulicGravityAssisted"}, {"VelType", 3}, {"Arg", 85, "from", 0.815, "to", 0.881, "in", 0.2}}}}},
-		},
+            {Transition = {"Retract", "Extend"}, Sequence = {{C = {{"ChangeDriveTo", "HydraulicGravityAssisted"}, {"VelType", 3}, {"Arg", 85, "to", 0.881, "in", 4.4}}}}},
+            {Transition = {"Retract", "Stage"},  Sequence = {{C = {{"ChangeDriveTo", "HydraulicGravityAssisted"}, {"VelType", 3}, {"Arg", 85, "to", 0.815, "in", 4.4}}}}},
+            {Transition = {"Any", "Retract"},  Sequence = {{C = {{"ChangeDriveTo", "Hydraulic"}, {"VelType", 2}, {"Arg", 85, "to", 0.000, "in", 4.5}}}}},
+            {Transition = {"Extend", "Stage"},   Sequence = {
+                    {C = {{"ChangeDriveTo", "Mechanical"}, {"Sleep", "for", 0.000}}},
+                    {C = {{"Arg", 85, "from", 0.881, "to", 0.766, "in", 0.600}}},
+                    {C = {{"Arg", 85, "from", 0.766, "to", 0.753, "in", 0.200}}},
+                    {C = {{"Sleep", "for", 0.15}}},
+                    {C = {{"Arg", 85, "from", 0.753, "to", 0.784, "in", 0.1, "sign", 2}}},
+                    {C = {{"Arg", 85, "from", 0.784, "to", 0.881, "in", 1.0}}},
+                },
+            },
+            {Transition = {"Stage", "Pull"},  Sequence = {
+                    {C = {{"ChangeDriveTo", "Mechanical"}, {"VelType", 2}, {"Arg", 85,"from", 0.881, "to", launch_bar_connected_arg_value_, "in", 0.27}}},
+                    }
+            },
+            {Transition = {"Stage", "Extend"},   Sequence = {{C = {{"ChangeDriveTo", "HydraulicGravityAssisted"}, {"VelType", 3}, {"Arg", 85, "from", 0.815, "to", 0.881, "in", 0.2}}}}},
+        },
         FoldableWings = {
             {Transition = {"Retract", "Extend"}, Sequence = {{C = {{"Arg", 85, "to", 0.0, "in", 5.0}}}}, Flags = {"Reversible"}},
             {Transition = {"Extend", "Retract"}, Sequence = {{C = {{"Arg", 85, "to", 1.0, "in", 5.0}}}}, Flags = {"Reversible", "StepsBackwards"}},
@@ -737,21 +682,20 @@ A_4E_C =  {
 ---------------------------------------------------------------------------------------------------------------------------------------------
     fires_pos =
     {
-        [1] =     {-0.232,    1.262,    0}, 	-- Fuselage
-        [2] =     {-0.2,    -0.5,    0.84}, 		-- wing (inner?) right, WING_R_IN
-        [3] =     {-0.75,    -0.5,    -0.8}, 		-- wing (inner?) left, WING_L_IN
+        [1] =     {-0.232,    1.262,    0},     -- Fuselage
+        [2] =     {-0.2,    -0.5,    0.84},     -- wing (inner?) right, WING_R_IN
+        [3] =     {-0.75,    -0.5,    -0.8},    -- wing (inner?) left, WING_L_IN
         [4] =     {-0.32,    0.265,    1.774},  -- Wing center Right? {-0.82,    0.265,    2.774},
         [5] =     {-0.32,    0.265,    -1.774}, -- Wing center Left?  {-0.82,    0.265,    -2.774},
-        [6] =     {-1.0,    -0.5,    4.0},  -- Wing outer Right? {-0.82,    0.255,    4.274}, probably WING_R_OUT
-        [7] =     {-1.0,    -0.5,    -4.0}, -- Wing outer Left?  {-0.82,    0.255,    -4.274}, probably WING_L_OUT
+        [6] =     {-1.0,    -0.5,    4.0},      -- Wing outer Right? {-0.82,    0.255,    4.274}, probably WING_R_OUT
+        [7] =     {-1.0,    -0.5,    -4.0},     -- Wing outer Left?  {-0.82,    0.255,    -4.274}, probably WING_L_OUT
         [8] =     {-5.6,    0.185,    0},       -- High Altitude Contrails
-        [9] =     {-5.5,    0.2,    0},    		-- left engine
+        [9] =     {-5.5,    0.2,    0},         -- left engine
         [10] =     {-7.728,    0.039,    0.5},  -- Right Engine? {0.304,    -0.748,    0.442},
         [11] =     {-7.728,    0.039,    -0.5}, -- ?
     }, -- end of fires_pos
 ---------------------------------------------------------------------------------------------------------------------------------------------
-
-    -- --- Countermeasures---
+    -- countermeasures
     -- SingleChargeTotal         = 0,
     -- CMDS_Incrementation     = 1,
     -- ChaffDefault             = 0,
@@ -761,9 +705,7 @@ A_4E_C =  {
     -- CMDS_Edit                 = false,
     -- chaff_flare_dispenser     = {
     -- }, -- end of chaff_flare_dispenser
-
-
-    -- --- Countermeasures---
+    -- countermeasures
     -- SingleChargeTotal       = 128,
     -- CMDS_Incrementation     = 12,
     -- ChaffDefault            = 64,
@@ -772,14 +714,14 @@ A_4E_C =  {
     -- FlareChargeSize         = 1,
     -- CMDS_Edit               = true,
 
-	passivCounterm = {
-		CMDS_Edit = true,
-		SingleChargeTotal = 60,
-		chaff = {default = 30, increment = 30, chargeSz = 1},
-		flare = {default = 30, increment = 30, chargeSz = 1},
-	},
+    passivCounterm = {
+        CMDS_Edit = true,
+        SingleChargeTotal = 60,
+        chaff = {default = 30, increment = 30, chargeSz = 1},
+        flare = {default = 30, increment = 30, chargeSz = 1},
+    },
 
-    chaff_flare_dispenser 	= {
+    chaff_flare_dispenser     = {
         -- althought the index here starts from 1. When calling drop_flares or drop_chaff, the index begins from 0
         -- { dir =  {Z, Y, X}, pos =  {Z, Y, X}, }  -- Z=back/fwd,Y=down/up(+),X=left/right
         -- { dir =  {-1, -0.1, -0.1}, pos =  {-2.867, -0.6, -0.216}, }, -- Flares L
@@ -790,7 +732,7 @@ A_4E_C =  {
         -- [2] = { dir =  {0, -1, 0}, pos =  {-3.9, -0.8, -0.3}, }, -- Aft Dispenser
     },
 
---sensors
+    --sensors
     detection_range_max        = 250,
     radar_can_see_ground    =    true,
     CanopyGeometry = {
@@ -822,26 +764,26 @@ A_4E_C =  {
                 {min = 225.0, max = 399.9}
             },
             channels = {  -- matches L-39C except for channel 8, which was changed to a Georgian airport and #20 which is NTTR only (for now).  This radio goes 1-20 not 0-19.
-                [1] = { name = _("Channel 1"),		default = 264.0, modulation = _("AM"), connect = true}, -- mineralnye-vody (URMM) : 264.0
-                [2] = { name = _("Channel 2"),		default = 265.0, modulation = _("AM")},	-- nalchik (URMN) : 265.0
-                [3] = { name = _("Channel 3"),		default = 256.0, modulation = _("AM")},	-- sochi-adler (URSS) : 256.0
-                [4] = { name = _("Channel 4"),		default = 254.0, modulation = _("AM")},	-- maykop-khanskaya (URKH), nellis (KLSV) : 254.0
-                [5] = { name = _("Channel 5"),		default = 250.0, modulation = _("AM")},	-- anapa (URKA) : 250.0
-                [6] = { name = _("Channel 6"),		default = 270.0, modulation = _("AM")},	-- beslan (URMO) : 270.0
-                [7] = { name = _("Channel 7"),		default = 257.0, modulation = _("AM")},	-- krasnodar-pashkovsky (URKK) : 257.0
-                [8] = { name = _("Channel 8"),		default = 258.0, modulation = _("AM")},	-- sukhumi-babushara (UGSS) : 255.0
-                [9] = { name = _("Channel 9"),		default = 262.0, modulation = _("AM")},	-- kobuleti (UG5X) : 262.0
-                [10] = { name = _("Channel 10"),	default = 259.0, modulation = _("AM")},	-- gudauta (UG23) : 259.0
-                [11] = { name = _("Channel 11"),	default = 268.0, modulation = _("AM")},	-- tbilisi-soganlug (UG24) : 268.0
-                [12] = { name = _("Channel 12"),	default = 269.0, modulation = _("AM")},	-- tbilisi-vaziani (UG27) : 269.0
-                [13] = { name = _("Channel 13"),	default = 260.0, modulation = _("AM")},	-- batumi (UGSB) : 260.0
-                [14] = { name = _("Channel 14"),	default = 263.0, modulation = _("AM")},	-- kutaisi-kopitnari (UGKO) : 263.0
-                [15] = { name = _("Channel 15"),	default = 261.0, modulation = _("AM")},	-- senaki-kolkhi (UGKS) :  261.0
-                [16] = { name = _("Channel 16"),	default = 267.0, modulation = _("AM")},	-- tbilisi-lochini (UGTB) : 267.0
-                [17] = { name = _("Channel 17"),	default = 251.0, modulation = _("AM")},	-- krasnodar-center (URKI), creech (KINS) : 251.0
-                [18] = { name = _("Channel 18"),	default = 253.0, modulation = _("AM")},	-- krymsk (URKW), mccarran (KLAS) : 253.0
-                [19] = { name = _("Channel 19"),	default = 266.0, modulation = _("AM")},	-- mozdok (XRMF) : 266.0
-                [20] = { name = _("Channel 20"),	default = 252.0, modulation = _("AM")}, -- N/A, groom lake/homey (KXTA) : 252.0
+                [1] = { name = _("Channel 1"),      default = 264.0, modulation = _("AM"), connect = true}, -- mineralnye-vody (URMM) : 264.0
+                [2] = { name = _("Channel 2"),      default = 265.0, modulation = _("AM")},                 -- nalchik (URMN) : 265.0
+                [3] = { name = _("Channel 3"),      default = 256.0, modulation = _("AM")},                 -- sochi-adler (URSS) : 256.0
+                [4] = { name = _("Channel 4"),      default = 254.0, modulation = _("AM")},                 -- maykop-khanskaya (URKH), nellis (KLSV) : 254.0
+                [5] = { name = _("Channel 5"),      default = 250.0, modulation = _("AM")},                 -- anapa (URKA) : 250.0
+                [6] = { name = _("Channel 6"),      default = 270.0, modulation = _("AM")},                 -- beslan (URMO) : 270.0
+                [7] = { name = _("Channel 7"),      default = 257.0, modulation = _("AM")},                 -- krasnodar-pashkovsky (URKK) : 257.0
+                [8] = { name = _("Channel 8"),      default = 258.0, modulation = _("AM")},                 -- sukhumi-babushara (UGSS) : 255.0
+                [9] = { name = _("Channel 9"),      default = 262.0, modulation = _("AM")},                 -- kobuleti (UG5X) : 262.0
+                [10] = { name = _("Channel 10"),    default = 259.0, modulation = _("AM")},                 -- gudauta (UG23) : 259.0
+                [11] = { name = _("Channel 11"),    default = 268.0, modulation = _("AM")},                 -- tbilisi-soganlug (UG24) : 268.0
+                [12] = { name = _("Channel 12"),    default = 269.0, modulation = _("AM")},                 -- tbilisi-vaziani (UG27) : 269.0
+                [13] = { name = _("Channel 13"),    default = 260.0, modulation = _("AM")},                 -- batumi (UGSB) : 260.0
+                [14] = { name = _("Channel 14"),    default = 263.0, modulation = _("AM")},                 -- kutaisi-kopitnari (UGKO) : 263.0
+                [15] = { name = _("Channel 15"),    default = 261.0, modulation = _("AM")},                 -- senaki-kolkhi (UGKS) :  261.0
+                [16] = { name = _("Channel 16"),    default = 267.0, modulation = _("AM")},                 -- tbilisi-lochini (UGTB) : 267.0
+                [17] = { name = _("Channel 17"),    default = 251.0, modulation = _("AM")},                 -- krasnodar-center (URKI), creech (KINS) : 251.0
+                [18] = { name = _("Channel 18"),    default = 253.0, modulation = _("AM")},                 -- krymsk (URKW), mccarran (KLAS) : 253.0
+                [19] = { name = _("Channel 19"),    default = 266.0, modulation = _("AM")},                 -- mozdok (XRMF) : 266.0
+                [20] = { name = _("Channel 20"),    default = 252.0, modulation = _("AM")},                 -- N/A, groom lake/homey (KXTA) : 252.0
             }
         },
     },
@@ -862,7 +804,6 @@ A_4E_C =  {
     -- Picture = "A-4E.png",
     -- Rate = "40",
     -- Shape = "A-4E",
-
 
     TakeOffRWCategories =
     {
@@ -904,27 +845,27 @@ A_4E_C =  {
     -- Aircraft Additional Properties
     AddPropAircraft = {
         {
-			id = "HideECMPanel",
-			control = "checkbox",
-			label = _("Remove ECM control panel"),
-			defValue = false,
-			weightWhenOn = -80
-		},
+            id = "HideECMPanel",
+            control = "checkbox",
+            label = _("Remove ECM control panel"),
+            defValue = false,
+            weightWhenOn = -80
+        },
         {
-			id = "Auto_Catapult_Power",
-			control = "checkbox",
-			label = _("Automatic Catapult Power Mode (for modded aircraft carriers)"),
-			defValue = false,
-			weightWhenOn = -80
-		},
+            id = "Auto_Catapult_Power",
+            control = "checkbox",
+            label = _("Automatic Catapult Power Mode (for modded aircraft carriers)"),
+            defValue = false,
+            weightWhenOn = -80
+        },
         {
-			id = "Night_Vision",
-			control = "checkbox",
-			label = _("Enable Nightvision"),
-			defValue = false,
-			weightWhenOn = -80
-		},
-        { id = "CBU2ATPP",			control = 'comboList', label = _('CBU-2/A Tubes Per Pulse'),
+            id = "Night_Vision",
+            control = "checkbox",
+            label = _("Enable Nightvision"),
+            defValue = false,
+            weightWhenOn = -80
+        },
+        { id = "CBU2ATPP", control = 'comboList', label = _('CBU-2/A Tubes Per Pulse'),
             values = {
                 {id =  0, dispName = _("1 tube")},
                 {id =  1, dispName = _("2 tubes")},
@@ -937,7 +878,7 @@ A_4E_C =  {
             wCtrl     = 150,
             playerOnly = true
         },
-        { id = "CBU2BATPP",			control = 'comboList', label = _('CBU-2B/A Tubes Per Pulse'),
+        { id = "CBU2BATPP", control = 'comboList', label = _('CBU-2B/A Tubes Per Pulse'),
             values = {
                 {id =  0, dispName = _("2 tubes")},
                 {id =  1, dispName = _("4 tubes")},
@@ -947,7 +888,7 @@ A_4E_C =  {
             wCtrl     = 150,
             playerOnly = true
         },
-        { id = "CMS_BURSTS",			control = 'comboList', label = _('CMS BURSTS'),
+        { id = "CMS_BURSTS", control = 'comboList', label = _('CMS BURSTS'),
             values = {
                 {id =  1, dispName = _("1")},
                 {id =  2, dispName = _("2")},
@@ -1088,14 +1029,14 @@ A_4E_C =  {
             table_data = {
             --       M       Cx0       Cya      B        B4          Omxmax   Aldop      Cymax
 
-                    {0.0,    0.012,    0.10,    0.04,    0.03,        0.5,    	14,        1.0,    },
+                    {0.0,    0.012,    0.10,    0.04,    0.03,         0.50,    14,        1.0,    },
                     {0.4,    0.0145,   0.10,    0.04,    0.03,        10.56,    14,        1.4,    },
                     {0.5,    0.015,    0.09,    0.04,    0.03,        11.56,    14,        1.5,    },
                     {0.6,    0.015,    0.08,    0.04,    0.03,        12.56,    14,        1.6,    },
                     {0.7,    0.015,    0.07,    0.04,    0.03,        11.56,    14,        1.5,    },
                     {0.8,    0.015,    0.06,    0.04,    0.03,        10.56,    14,        1.4,    }, -- Cx0
-                    {0.85,   0.015,    0.06,    0.04,    0.03,        9.56,     14,        1.4,    }, -- 0.030
-                    {0.9,    0.045,    0.05,    0.04,    0.03,        9.56,     14,        1.4,    }, -- 0.060
+                    {0.85,   0.015,    0.06,    0.04,    0.03,         9.56,    14,        1.4,    }, -- 0.030
+                    {0.9,    0.045,    0.05,    0.04,    0.03,         9.56,    14,        1.4,    }, -- 0.060
             }--]]
 
             -- slat extension is automatic below 200 KCAS, linear to 100 KCAS
@@ -1107,7 +1048,7 @@ A_4E_C =  {
             -- attempt #1 from naca report
             table_data = {
             --       M       Cx0        Cya      B      B4          Omxmax      Aldop   Cymax
-                    {0.00,   0.0320,    0.066,   0.04,  0.03,        0.5,    	14.50,      1.11,    },
+                    {0.00,   0.0320,    0.066,   0.04,  0.03,        0.50,      14.50,      1.11,    },
                     {0.15,   0.0320,    0.066,   0.04,  0.03,       10.56,      14.50,      1.11,    },   -- 20 degree slat extension at sea level
                     {0.225,  0.0240,    0.064,   0.04,  0.03,       10.56,      12.50,      0.89,    },   -- 10 degree slat extension at sea level
                     {0.30,   0.0160,    0.060,   0.04,  0.03,       10.56,      10.50,      0.77,    },   -- 0 degree slat extension at sea level
@@ -1123,8 +1064,6 @@ A_4E_C =  {
                     {1.1,    0.0200,    0.065,   0.04,  0.03,        9.56,       6.80,      0.74,    },
                 }
             --]]
-
-
             -- now correcting for parasitic drag (drag index) -- roughly 1.5x at the top end to model a drag index of ~40 when empty
             -- removed 10 degree slat line, was causing SFM interpolation bug
             -- Cya max M0.15 of 0.95 results in approach noflap=137-140, fullflap=120-123   targets:  143/126 @ 14,000#
@@ -1148,7 +1087,7 @@ A_4E_C =  {
             --[[
             table_data = {
             --       M       Cx0        Cya      B      B4          Omxmax      Aldop       Cymax
-                    {0.00,   0.0220,    0.087,   0.149,  0.00,         0.5,    	13.15,      1.11,    },
+                    {0.00,   0.0220,    0.087,   0.149,  0.00,         0.5,      13.15,      1.11,    },
                     {0.15,   0.0220,    0.087,   0.149,  0.00,         1.0,      13.15,      1.11,    },   -- 20 degree slat extension at sea level
                     {0.30,   0.0160,    0.061,   0.149,  0.00,         4.5,      11.50,      0.77,    },   -- 0 degree slat extension at sea level
                     {0.40,   0.0160,    0.060,   0.149,  0.00,         6.5,      10.30,      0.75,    },
@@ -1166,7 +1105,7 @@ A_4E_C =  {
 
             table_data = {
             --       M       Cx0        Cya      B      B4          Omxmax      Aldop       Cymax
-                    {0.00,   0.0220,    0.087,   0.149,  0.00,         0.5,    	22.91,      1.40, },
+                    {0.00,   0.0220,    0.087,   0.149,  0.00,         0.5,     22.91,      1.40, },
                     {0.15,   0.0220,    0.087,   0.149,  0.00,         1.0,     22.91,      1.40, },   -- 20 degree slat extension at sea level
                     {0.30,   0.0160,    0.061,   0.149,  0.00,         4.5,     22.91,      1.30, },   -- 0 degree slat extension at sea level
                     {0.40,   0.0160,    0.060,   0.149,  0.00,         6.5,     22.91,      1.22, },
@@ -1185,7 +1124,6 @@ A_4E_C =  {
                     {1.1,    0.0370,    0.065,   0.460,  0.00,         7.6,     10.10,      0.76, },
                 }
 
-
             -- M - Mach number
             -- Cx0 - Coefficient, drag, profile, of the airplane
             -- Cya - Normal force coefficient of the wing and body of the aircraft in the normal direction to that of flight. Inversely proportional to the available G-loading at any Mach value. (lower the Cya value, higher G available) per 1 degree AOA
@@ -1197,12 +1135,12 @@ A_4E_C =  {
         }, -- end of aerodynamics
         engine =
         {
-            Nmg    =    55.0,    -- RPM at idle
-            MinRUD    =    0,    -- Min state of the throttle
-            MaxRUD    =    1,    -- Max state of the throttle
-            MaksRUD    =    0.999,    -- Military power state of the throttle
-            ForsRUD    =    0.99999,    -- Afterburner state of the throttle
-            typeng    =    0,
+            Nmg     = 55.0,    -- RPM at idle
+            MinRUD  = 0,    -- Min state of the throttle
+            MaxRUD  = 1,    -- Max state of the throttle
+            MaksRUD = 0.999,    -- Military power state of the throttle
+            ForsRUD = 0.99999,    -- Afterburner state of the throttle
+            typeng  = 0,
             --[[
                 E_TURBOJET = 0
                 E_TURBOJET_AB = 1
@@ -1211,15 +1149,15 @@ A_4E_C =  {
                 E_TURBOFAN    = 4
                 E_TURBOSHAFT = 5
             --]]
-            hMaxEng    =    15,    -- Max altitude for safe engine operation in km
-            dcx_eng    =    0.0114,    -- Engine drag coeficient
+            hMaxEng = 15,    -- Max altitude for safe engine operation in km
+            dcx_eng = 0.0114,    -- Engine drag coeficient
             -- Affects drag of engine when shutdown
             -- cemax/cefor affect sponginess of elevator/inertia at slow speed
             -- affects available g load apparently
-            cemax    =    0.037,    -- not used for fuel calulation , only for AI routines to check flight time ( fuel calculation algorithm is built in )
-            cefor    =    0.037,    -- not used for fuel calulation , only for AI routines to check flight time ( fuel calculation algorithm is built in )
-            dpdh_m    =    6000,    --  altitude coefficient for max thrust
-            dpdh_f    =    14000.0,    --  altitude coefficient for AB thrust
+            cemax   = 0.037,    -- not used for fuel calulation , only for AI routines to check flight time ( fuel calculation algorithm is built in )
+            cefor   = 0.037,    -- not used for fuel calulation , only for AI routines to check flight time ( fuel calculation algorithm is built in )
+            dpdh_m  = 6000,    --  altitude coefficient for max thrust
+            dpdh_f  = 14000.0,    --  altitude coefficient for AB thrust
 
             table_data =
             {
@@ -1230,160 +1168,156 @@ A_4E_C =  {
             -- M - Mach number
             -- Pmax - Engine thrust at military power - kilo Newton
             -- Pfor - Engine thrust at AFB
-			extended = -- added new abilities for engine performance setup. thrust data now can be specified as 2d table by Mach number and altitude. thrust specific fuel consumption tuning added as well
-			{
+            extended = -- added new abilities for engine performance setup. thrust data now can be specified as 2d table by Mach number and altitude. thrust specific fuel consumption tuning added as well
+            {
                 -- matching TSFC to mil thrust consumption at altitude at mach per NATOPS navy trials
-				TSFC_max =  -- thrust specific fuel consumption by altitude and Mach number for RPM  100%, 2d table
-				{
-					M 		 = {0, 0.5, 0.8, 0.9, 1.0},
-					H		 = {0, 3048, 6096, 9144, 12192},
-					TSFC	 = {-- M 0      0.5     0.8       0.9     1.0
-								{   0.86,  0.92,  1.012,    1.012,  1.003},--H = 0       -- SL
-								{   0.86,  0.99,  1.025,    1.025,  1.016},--H = 3048    -- 10000'
-								{   0.86,  0.96,  1.008,    1.008,  0.999},--H = 6096    -- 20000'
-								{   0.86,  0.95,  0.984,    0.984,  0.974},--H = 9144    -- 30000'
-                                {   0.86,  0.94,  0.976,    0.976,  0.967},--H = 12192   -- 40000'
-					}
-				},
+                TSFC_max =  -- thrust specific fuel consumption by altitude and Mach number for RPM  100%, 2d table
+                {
+                    M          = {0, 0.5, 0.8, 0.9, 1.0},
+                    H         = {0, 3048, 6096, 9144, 12192},
+                    TSFC     = {-- M 0      0.5     0.8       0.9     1.0
+                                {   0.86,  0.92,  1.012,    1.012,  1.003}, --H = 0       -- SL
+                                {   0.86,  0.99,  1.025,    1.025,  1.016}, --H = 3048    -- 10000'
+                                {   0.86,  0.96,  1.008,    1.008,  0.999}, --H = 6096    -- 20000'
+                                {   0.86,  0.95,  0.984,    0.984,  0.974}, --H = 9144    -- 30000'
+                                {   0.86,  0.94,  0.976,    0.976,  0.967}, --H = 12192   -- 40000'
+                    }
+                },
 
-				 TSFC_afterburner =  -- afterburning thrust specific fuel consumption by altitude and Mach number RPM  100%, 2d table
-				 {
-					 M 		 = {0,0.3,0.5,0.7,1.0},
-					 H		 = {0,1000,3000,10000},
-					 TSFC	 = {-- M 0  0.3 0.5  0.7  1.0
-								 {   1,   1,  1,   1,   1},--H = 0
-								 {   1,   1,  1,   1,   1},--H = 1000
-								 {   1,   1,  1,   1,   1},--H = 3000
-								 {   1,   1,  1,   1,   1},--H = 10000
-					 }
-				 },
+                 TSFC_afterburner =  -- afterburning thrust specific fuel consumption by altitude and Mach number RPM  100%, 2d table
+                 {
+                     M          = {0,0.3,0.5,0.7,1.0},
+                     H         = {0,1000,3000,10000},
+                     TSFC     = {-- M 0  0.3 0.5  0.7  1.0
+                                 {   1,   1,  1,   1,   1}, --H = 0
+                                 {   1,   1,  1,   1,   1}, --H = 1000
+                                 {   1,   1,  1,   1,   1}, --H = 3000
+                                 {   1,   1,  1,   1,   1}, --H = 10000
+                     }
+                 },
 
                 -- per ADA057325:
                 -- SFC = 0.836 (0% bleed) to 1.415 (15.44% bleed) at low throttle
                 -- SFC = 0.777 (0% bleed) to 0.964 (16.84% bleed) at MIL throttle
                 -- modeling as 5% bleed, so low power loses 22% efficiency:
-				TSFC_throttle_responce =  -- correction to TSFC for different engine RPM, 1d table
-				{
-					RPM = {0, 50, 55, 75, 100},
-					K   = {1, 1.05, 1.22, 1.05, 1.00},   -- Static SL TSFC now part of table above
+                TSFC_throttle_responce =  -- correction to TSFC for different engine RPM, 1d table
+                {
+                    RPM = {0, 50, 55, 75, 100},
+                    K   = {1, 1.05, 1.22, 1.05, 1.00},   -- Static SL TSFC now part of table above
                     --K   = {1, 1, 1, 1, 1},
-				},
-
+                },
 
                 --[[
                 thrust_max = -- thrust interpolation table by altitude and mach number, 2d table
-				 {
-					 M 		 = {0,.1,0.3,0.5,0.7,0.8,0.9,1.1},
-					 H		 = {0,250,4572,7620,10668,13716,16764,19812},
-					 thrust	 = {-- M   0         0.1       0.3       0.5       0.7      0.8     0.9       1.1
-								 {   61370,  59460,  57023, 36653,  36996,  37112,  36813,  34073 },--H = 0 (sea level)
-								 {   41370,  39460,  37023, 36653,  36996,  37112,  36813,  34073 },--H = 250 (sea level)
-								 {   27254,  25799,  24203, 24599,  26227,  27254,  28353,  29785 },--H = 4572 (15kft)
-								 {   20818,  19203,  17548, 17473,  18638,  19608,  20684,  22873 },--H = 7620 (25kft)
-								 {   10876,  11076,  11556, 12193,  13024,  13674,  14434,  16098 },--H = 10668 (35kft)
-								 {   6025,   6379,   6837,  7433,   8194,   8603,   9101,   10075 },--H = 13716 (45kft)
-								 {   3336,   3554,   3990,  4484,   5000,   5307,   5596,   6232  },--H = 16764 (55kft)
-								 {   1904,   2042,   2433,  2798,   3212,   3483,   3639,   4097  },--H = 19812 (65kft)
-
-					 },
-				 },]]--
-
+                 {
+                     M          = {0,.1,0.3,0.5,0.7,0.8,0.9,1.1},
+                     H         = {0,250,4572,7620,10668,13716,16764,19812},
+                     thrust     = {-- M   0         0.1       0.3       0.5       0.7      0.8     0.9       1.1
+                                 {   61370,  59460,  57023, 36653,  36996,  37112,  36813,  34073 },--H = 0 (sea level)
+                                 {   41370,  39460,  37023, 36653,  36996,  37112,  36813,  34073 },--H = 250 (sea level)
+                                 {   27254,  25799,  24203, 24599,  26227,  27254,  28353,  29785 },--H = 4572 (15kft)
+                                 {   20818,  19203,  17548, 17473,  18638,  19608,  20684,  22873 },--H = 7620 (25kft)
+                                 {   10876,  11076,  11556, 12193,  13024,  13674,  14434,  16098 },--H = 10668 (35kft)
+                                 {   6025,   6379,   6837,  7433,   8194,   8603,   9101,   10075 },--H = 13716 (45kft)
+                                 {   3336,   3554,   3990,  4484,   5000,   5307,   5596,   6232  },--H = 16764 (55kft)
+                                 {   1904,   2042,   2433,  2798,   3212,   3483,   3639,   4097  },--H = 19812 (65kft)
+                     },
+                 },]]--
 
                 thrust_max = -- thrust interpolation table by altitude and mach number, 2d table.  Modified for carrier takeoffs at/around 71 foot deck height
                 {
                     M       =   {0, 0.1, 0.225, 0.23, 0.3, 0.5, 0.7, 0.8, 0.9, 1.1},
                     H       =   {0, 19, 20, 23, 24, 250, 4572, 7620, 10668, 13716, 16764, 19812},
                     thrust  =  {-- M    0     0.1    0.225   0.23,   0.3    0.5     0.7     0.8     0.9     1.1
-                                {   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 0 (sea level)
-                                {   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 19 (~62.3 feet)
-								{   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 20 (~66.6 feet)
-							    {   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 23 (~75.5 feet)
-                                {   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 24 (~78.7 feet)
-                                {   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 },--H = 250 (820 feet)
-                                {   27254,  25799,  24765,  24761,  24203,  24599,  26227,  27254,  28353,  29785 },--H = 4572 (15kft)
-                                {   20818,  19203,  18130,  18127,  17548,  17473,  18638,  19608,  20684,  22873 },--H = 7620 (25kft)
-                                {   10876,  11076,  11128,  11130,  11556,  12193,  13024,  13674,  14434,  16098 },--H = 10668 (35kft)
-                                {   6025,   6379,    6676,   6680,  6837,   7433,   8194,   8603,   9101,   10075 },--H = 13716 (45kft)
-                                {   3336,   3554,    3837,   3840,  3990,   4484,   5000,   5307,   5596,   6232  },--H = 16764 (55kft)
-                                {   1904,   2042,    2296,   2300,  2433,   2798,   3212,   3483,   3639,   4097  },--H = 19812 (65kft)
+                                {   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 }, --H = 0 (sea level)
+                                {   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 }, --H = 19 (~62.3 feet)
+                                {   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 }, --H = 20 (~66.6 feet)
+                                {   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 }, --H = 23 (~75.5 feet)
+                                {   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 }, --H = 24 (~78.7 feet)
+                                {   41370,  39460,  38060,  38056,  37023,  36653,  36996,  37112,  36813,  34073 }, --H = 250 (820 feet)
+                                {   27254,  25799,  24765,  24761,  24203,  24599,  26227,  27254,  28353,  29785 }, --H = 4572 (15kft)
+                                {   20818,  19203,  18130,  18127,  17548,  17473,  18638,  19608,  20684,  22873 }, --H = 7620 (25kft)
+                                {   10876,  11076,  11128,  11130,  11556,  12193,  13024,  13674,  14434,  16098 }, --H = 10668 (35kft)
+                                {   6025,   6379,    6676,   6680,  6837,   7433,   8194,   8603,   9101,   10075 }, --H = 13716 (45kft)
+                                {   3336,   3554,    3837,   3840,  3990,   4484,   5000,   5307,   5596,   6232  }, --H = 16764 (55kft)
+                                {   1904,   2042,    2296,   2300,  2433,   2798,   3212,   3483,   3639,   4097  }, --H = 19812 (65kft)
                                },
                 },
 
 
 
-				  thrust_afterburner = -- afterburning thrust interpolation table by altitude and mach number, 2d table
-				 {
-					 M 		 = {0,	0.20,	0.21,	1.0},
-					 H       =   {0, 15, 16, 23, 24, 250, 19812},
-					 thrust	 = { -- M 0  0.3 0.5  0.7  1.0
-								 {   41370,   	41370,  41370,   41370,},  -- H = 0
-								 {   41370,   	41370,  41370,   41370,},  -- H = 15
-								 {   250000,   	250000,  41370,   41370,}, -- H = 16
-								 {   250000,   	250000,  41370,   41370,}, -- H = 23
-								 {   41370,   	38060,  38060,   36813,},  -- H = 24
-								 {   41370,   	38060,  38060,   36813,},  -- H = 250
-								 {   1904,   	2296,  2296,   3639,},     -- H= 19812
-					 }
-				 },
+                  thrust_afterburner = -- afterburning thrust interpolation table by altitude and mach number, 2d table
+                 {
+                     M          = {0,    0.20,    0.21,    1.0},
+                     H       =   {0, 15, 16, 23, 24, 250, 19812},
+                     thrust     = { -- M 0  0.3 0.5  0.7  1.0
+                                 {   41370,       41370,  41370,   41370,},     -- H = 0
+                                 {   41370,       41370,  41370,   41370,},     -- H = 15
+                                 {   250000,       250000,  41370,   41370,},   -- H = 16
+                                 {   250000,       250000,  41370,   41370,},   -- H = 23
+                                 {   41370,       38060,  38060,   36813,},     -- H = 24
+                                 {   41370,       38060,  38060,   36813,},     -- H = 250
+                                 {   1904,       2296,  2296,   3639,},         -- H = 19812
+                     }
+                 },
 
-				--rpm_acceleration_time_factor = -- time factor for engine governor  ie RPM += (desired_RPM - RPM ) * t(RPM) * dt
-				--{
-				--	RPM  = {0, 50, 100},
-				--	t    = {0.3,0.3,0.3}
-				--},
-				--rpm_deceleration_time_factor = -- time factor for engine governor
-				--{
-				--	RPM  = {0, 50, 100},
-				--	t    = {0.3,0.3,0.3}
-				--},
-				rpm_throttle_responce = -- required RPM according to throttle position
-				{
-					throttle = {0   ,0.85  ,1.0},
-					RPM      = {55  ,97.2  ,100},
-				},
-				thrust_rpm_responce = -- thrust = K(RPM) * thrust_max(M,H)
-				{
-					RPM = {0  ,55   ,55.1   ,57.6   ,65.8   ,74.1   ,78.2   ,82.3   ,90.5   ,98.8   ,100},
-					K   = {0  ,0.00 ,0.051  ,0.059  ,0.101  ,0.176  ,0.248  ,0.349  ,0.670  ,0.963  ,1},
-				},
-			},
+                --rpm_acceleration_time_factor = -- time factor for engine governor  ie RPM += (desired_RPM - RPM ) * t(RPM) * dt
+                --{
+                --    RPM  = {0, 50, 100},
+                --    t    = {0.3,0.3,0.3}
+                --},
+                --rpm_deceleration_time_factor = -- time factor for engine governor
+                --{
+                --    RPM  = {0, 50, 100},
+                --    t    = {0.3,0.3,0.3}
+                --},
+                rpm_throttle_responce = -- required RPM according to throttle position
+                {
+                    throttle = {0   ,0.85  ,1.0},
+                    RPM      = {55  ,97.2  ,100},
+                },
+                thrust_rpm_responce = -- thrust = K(RPM) * thrust_max(M,H)
+                {
+                    RPM = {0  ,55   ,55.1   ,57.6   ,65.8   ,74.1   ,78.2   ,82.3   ,90.5   ,98.8   ,100},
+                    K   = {0  ,0.00 ,0.051  ,0.059  ,0.101  ,0.176  ,0.248  ,0.349  ,0.670  ,0.963  ,1},
+                },
+            },
         }, -- end of engine
     },
 ---------------------------------------------------------------------------------------------------------------------------------------------
     --damage , index meaning see in  Scripts\Aircrafts\_Common\Damage.lua
     -- Damage = {
-    --             [0] = {critical_damage = 5, args = {82}},  							-- 0 - nose center
-    --             [3] = {critical_damage = 10, args = {65}}, 							-- 3 - cockpit
-    --             [8] = {critical_damage = 10}, 			  							-- 8 - front gear
-    --             [11] = {critical_damage = 3}, 			  							-- 11 - engine in left
-    --             [12] = {critical_damage = 3}, 			  							-- 12 - engine in right
-    --             [15] = {critical_damage = 10},			   							-- 15 - gear left
-    --             [16] = {critical_damage = 10}, 										-- 16 - gear right
-    --             [17] = {critical_damage = 3}, 										-- 17 - motogondola left (left engine out, left ewu)
-    --             [18] = {critical_damage = 3}, 										-- 18 - motogondola right (right engine out, right ewu)
-    --             [25] = {critical_damage = 5, args = {53}}, 							-- 25 - eleron left
-    --             [26] = {critical_damage = 5, args = {54}}, 							-- 26 - eleron right
-    --             [35] = {critical_damage = 10, args = {67}, deps_cells = {25, 37}},  -- 35 - wing in left
-    --             [36] = {critical_damage = 10, args = {68}, deps_cells = {26, 38}},  -- 36 - wing in right
-    --             [37] = {critical_damage = 4, args = {55}}, 						    -- 37 - flap in left
-    --             [38] = {critical_damage = 4, args = {56}}, 						    -- 38 - flap in right
-    --             [43] = {critical_damage = 4, args = {61}, deps_cells = {53}}, 		-- 43 - fin bottom left
-    --             [44] = {critical_damage = 4, args = {62}, deps_cells = {54}}, 		-- 44 - fin bottom right
-    --             [47] = {critical_damage = 5, args = {63}, deps_cells = {51}}, 		-- 47 - stabilizer in left
-    --             [48] = {critical_damage = 5, args = {64}, deps_cells = {52}}, 		-- 48 - stabilizer in right
-    --             [51] = {critical_damage = 2, args = {59}}, 							-- 51 - elevator in left
-    --             [52] = {critical_damage = 2, args = {60}}, 							-- 52 - elevator in right
-    --             [53] = {critical_damage = 2, args = {57}}, 							-- 53 - rudder left
-    --             [54] = {critical_damage = 2, args = {58}}, 							-- 54 - rudder right
-    --             [55] = {critical_damage = 5, args = {81}}, 							-- 55 - tail
-    --             [83]    = {critical_damage = 3, args = {134}}, 						-- nose wheel
-    --             [84]    = {critical_damage = 3, args = {136}}, 						-- left wheel
-    --             [85]    = {critical_damage = 3, args = {135}}, 						-- right wheel
+    --             [0] = {critical_damage = 5, args = {82}},                            -- 0 - nose center
+    --             [3] = {critical_damage = 10, args = {65}},                           -- 3 - cockpit
+    --             [8] = {critical_damage = 10},                                        -- 8 - front gear
+    --             [11] = {critical_damage = 3},                                        -- 11 - engine in left
+    --             [12] = {critical_damage = 3},                                        -- 12 - engine in right
+    --             [15] = {critical_damage = 10},                                       -- 15 - gear left
+    --             [16] = {critical_damage = 10},                                       -- 16 - gear right
+    --             [17] = {critical_damage = 3},                                        -- 17 - motogondola left (left engine out, left ewu)
+    --             [18] = {critical_damage = 3},                                        -- 18 - motogondola right (right engine out, right ewu)
+    --             [25] = {critical_damage = 5, args = {53}},                           -- 25 - eleron left
+    --             [26] = {critical_damage = 5, args = {54}},                           -- 26 - eleron right
+    --             [35] = {critical_damage = 10, args = {67}, deps_cells = {25, 37}},   -- 35 - wing in left
+    --             [36] = {critical_damage = 10, args = {68}, deps_cells = {26, 38}},   -- 36 - wing in right
+    --             [37] = {critical_damage = 4, args = {55}},                           -- 37 - flap in left
+    --             [38] = {critical_damage = 4, args = {56}},                           -- 38 - flap in right
+    --             [43] = {critical_damage = 4, args = {61}, deps_cells = {53}},        -- 43 - fin bottom left
+    --             [44] = {critical_damage = 4, args = {62}, deps_cells = {54}},        -- 44 - fin bottom right
+    --             [47] = {critical_damage = 5, args = {63}, deps_cells = {51}},        -- 47 - stabilizer in left
+    --             [48] = {critical_damage = 5, args = {64}, deps_cells = {52}},        -- 48 - stabilizer in right
+    --             [51] = {critical_damage = 2, args = {59}},                           -- 51 - elevator in left
+    --             [52] = {critical_damage = 2, args = {60}},                           -- 52 - elevator in right
+    --             [53] = {critical_damage = 2, args = {57}},                           -- 53 - rudder left
+    --             [54] = {critical_damage = 2, args = {58}},                           -- 54 - rudder right
+    --             [55] = {critical_damage = 5, args = {81}},                           -- 55 - tail
+    --             [83]    = {critical_damage = 3, args = {134}},                       -- nose wheel
+    --             [84]    = {critical_damage = 3, args = {136}},                       -- left wheel
+    --             [85]    = {critical_damage = 3, args = {135}},                       -- right wheel
     -- },
 
-
     Damage = verbose_to_dmg_properties(
-	{
+    {
         ["NOSE_CENTER"]             = {critical_damage = 3}, -- 0
         ["NOSE_LEFT_SIDE"]          = {critical_damage = 3}, -- 1
         ["NOSE_RIGHT_SIDE"]         = {critical_damage = 3}, -- 2
@@ -1440,17 +1374,16 @@ A_4E_C =  {
         ["FIN_L_TOP"]               = {critical_damage = 4}, --53
         ["FIN_L_BOTTOM"]            = {critical_damage = 4, deps_cells = {"RUDDER", "FIN_L_TOP"}, args = {601}}, --53
         -- ["HOOK"]                    = {critical_damage = 2}, -- 98
-
     }),
 
 
 
     DamageParts =
     {
-        -- [1] = "a4_dmg_wing_right", 	-- Right Wing
-        -- [2] = "a4_dmg_wing_left", 	-- Left Wing
-        -- [3] = "a4_dmg_fus_front", 	-- nose
-        -- [4] = "a4_dmg_fus_back", 	-- tail
+        -- [1] = "a4_dmg_wing_right",     -- Right Wing
+        -- [2] = "a4_dmg_wing_left",     -- Left Wing
+        -- [3] = "a4_dmg_fus_front",     -- nose
+        -- [4] = "a4_dmg_fus_back",     -- tail
     },
 ---------------------------------------------------------------------------------------------------------------------------------------------
     lights_data = {
@@ -1467,15 +1400,15 @@ A_4E_C =  {
             -- SPOTS / TAXI & LANDING
             [2] = {
                 typename = "collection",
-                lights = {  {typename  = "argumentlight", argument  = 208},	-- taxi light
+                lights = {  {typename  = "argumentlight", argument  = 208}, -- taxi light
                 },
             },
             -- NAVLIGHTS
             [3] = {
                 typename = "collection",
-                lights = {  {typename  = "argumentlight", argument  = 190},	-- red
-                            {typename  = "argumentlight", argument  = 191},	-- green
-                            {typename  = "argumentlight", argument  = 192},	-- white
+                lights = {  {typename  = "argumentlight", argument  = 190}, -- red
+                            {typename  = "argumentlight", argument  = 191}, -- green
+                            {typename  = "argumentlight", argument  = 192}, -- white
                 },
             },
             -- FORMATION
@@ -1485,7 +1418,7 @@ A_4E_C =  {
             -- REFUEL
             [6] = {
                 typename = "collection",
-                lights = {  {typename  = "argumentlight", argument  = 193},	-- probe light
+                lights = {  {typename  = "argumentlight", argument  = 193}, -- probe light
                 },
             },
             -- ANTI-COLLISION
