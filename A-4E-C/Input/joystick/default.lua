@@ -720,11 +720,14 @@ join(res.axisCommands,{
     ---------------------------------------------
     -- ECM Control Panel / AN/APR-25 Radar Homing and Warning System
     --------------------------------------------- 
-    {action = device_commands.ecm_msl_alert_axis_inner_abs, cockpit_device_id = devices.RWR,            name = _('AN/APR-25 PRF Volume - Absolute'),             category = {_('AN/APR-25 RHWS (ECM)')}}, 
-    {action = device_commands.ecm_msl_alert_axis_inner_slew, cockpit_device_id = devices.RWR,           name = _('AN/APR-25 PRF Volume - Slew'),                 category = {_('AN/APR-25 RHWS (ECM)')}}, 
-    {action = device_commands.ecm_msl_alert_axis_outer_abs, cockpit_device_id = devices.RWR,            name = _('AN/APR-25 Missile Alert Volume - Absolute'),   category = {_('AN/APR-25 RHWS (ECM)')}}, 
-    {action = device_commands.ecm_msl_alert_axis_outer_slew, cockpit_device_id = devices.RWR,           name = _('AN/APR-25 Missile Alert Volume - Slew'),       category = {_('AN/APR-25 RHWS (ECM)')}}, 
-    
+    {action = device_commands.ecm_msl_alert_axis_inner_abs, cockpit_device_id = devices.RWR,            name = _('AN/APR-25 PRF Volume - Absolute'),            category = {_('AN/APR-25 RHWS (ECM)')}}, 
+    {action = device_commands.ecm_msl_alert_axis_inner_slew, cockpit_device_id = devices.RWR,           name = _('AN/APR-25 PRF Volume - Slew'),                category = {_('AN/APR-25 RHWS (ECM)')}}, 
+    {action = device_commands.ecm_msl_alert_axis_outer_abs, cockpit_device_id = devices.RWR,            name = _('AN/APR-25 Missile Alert Volume - Absolute'),  category = {_('AN/APR-25 RHWS (ECM)')}}, 
+    {action = device_commands.ecm_msl_alert_axis_outer_slew, cockpit_device_id = devices.RWR,           name = _('AN/APR-25 Missile Alert Volume - Slew'),      category = {_('AN/APR-25 RHWS (ECM)')}}, 
+
+    -- AN/APN-141 Radar Altimeter    
+    {action = device_commands.radar_altitude_warning_axis_slew, cockpit_device_id = devices.RADARWARN,  name = _('Radar Altitude Warning - Slew'),              category = {_('Instrument Panel'), _('Systems'), _('AN/APN-141 Radar Altimeter')}},
+
     -- Miscellaneous Switches Panel
     {action = device_commands.shrike_sidewinder_volume_abs, cockpit_device_id = devices.WEAPON_SYSTEM,  name = _('Shrike/Sidewinder Volume Knob - Absolute'),   category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},
     {action = device_commands.shrike_sidewinder_volume_slew, cockpit_device_id = devices.WEAPON_SYSTEM, name = _('Shrike/Sidewinder Volume Knob - Slew'),       category = {_('Instrument Panel'), _('Miscellaneous Switches Panel'), _('Weapons')}},

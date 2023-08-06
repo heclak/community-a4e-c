@@ -59,6 +59,9 @@ dev:listen_command(Keys.RadarAltWarningStartDown)
 dev:listen_command(Keys.RadarAltWarningStartUp)
 dev:listen_command(Keys.RadarAltWarningStop)
 
+dev:listen_command(device_commands.radar_altitude_warning_axis_abs)
+dev:listen_command(device_commands.radar_altitude_warning_axis_slew)
+
 function update()
     local valid_radar=true
     local altitude_meters = sensor_data.getRadarAltitude()
@@ -225,6 +228,14 @@ function SetCommand(command,value)
         radar_alt_indexer_moving = -1
     elseif command == Keys.RadarAltWarningStop then
         radar_alt_indexer_moving = 0
+    elseif command == device_commands.radar_altitude_warning_axis_slew then
+        if value < 0.02 and value > -0.02 then
+            radar_alt_indexer_moving = 0
+        elseif value >=0.01 then
+            radar_alt_indexer_moving = 1
+        elseif value <=0.01 then
+            radar_alt_indexer_moving = -1
+        end
     end
 end
 

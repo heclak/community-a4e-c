@@ -717,4 +717,6 @@ device_commands =
     zoom_axis_slew_in               = __counter(),
     zoom_axis_slew_out              = __counter(),
 
+    -- radar altimiter
+    radar_altitude_warning_axis_slew = __counter(),
 }

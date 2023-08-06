@@ -7,6 +7,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 ### Added
 - Delivery information for Shrike and Sidewinder provided in Kneeboard Manual, page 3-5.
 - Else keybinds for the Chaff Dispenser Select added for 3-position switch support.
+- Radar Altitude Warning - Slew axis.
 - Added the AGM-45B Shrike to the loadout options.
 - Added 2.75" Hydra rocket loadouts for LAU-68 launchers, including white phosphorous, HE, HEAT, Para Illum, Practice Smoke, as well as Mk1, Mk61, and WRU-1/B practice munitions to the loadout options. LAU-61 launchers with HE and white phosphorous warheads are also available. Outboard stations support 1 launcher, inboard stations up to 3, and up to 3 can be added on centerline station.
 
