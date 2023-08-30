@@ -68,6 +68,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 - Black lines along center line of fuel tanks have been removed.
 - Loadout display inaccuracies in Kneeboard Manual, page 1-5 are corrected.
 - The AN/APG-53A Radar OBST tone and AN/APR-25 RHWR audio properly route to DCS World's "Helmet" sound channel.
+- Malaysia TUDM livery uses the provided custom fuel tanks.
 
 [See full changelog](https://github.com/heclak/community-a4e-c/blob/master/CHANGELOG.md)
 

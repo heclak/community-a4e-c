@@ -20,6 +20,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 - Black lines along center line of fuel tanks have been removed.
 - Loadout display inaccuracies in Kneeboard Manual, page 1-5 are corrected.
 - The AN/APG-53A Radar OBST tone and AN/APR-25 RHWR audio properly route to DCS World's "Helmet" sound channel.
+- Malaysia TUDM livery uses the provided custom fuel tanks.
 
 ## Version 2.1.1 - 27 Apr 2023
 
