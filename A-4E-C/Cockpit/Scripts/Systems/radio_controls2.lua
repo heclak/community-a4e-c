@@ -59,7 +59,6 @@ ARC51_STATE_OFF = 0
 ARC51_STATE_ON_MANUAL = 1
 ARC51_STATE_ON_PRESET = 2
 ARC51_STATE_ON_GUARD = 3
-ARC51_STATE_ADF = 4
 
 --ARC51 Settings
 --Possible settings
@@ -180,7 +179,7 @@ function fnc_arc51_freq_xxxXX(value)
 end
 
 function fnc_arc51_voip_ptt(value)
-    extended_dev:pushToTalkVOIP(value == 1)
+    extended_dev:pushToTalkVOIP(value == 1, arc51_mode == ARC51_ADF )
 end
 
 
@@ -252,9 +251,7 @@ end
 function arc51_get_current_state()
     if arc51_mode == ARC51_OFF or not get_elec_primary_dc_ok() then
         return ARC51_STATE_OFF
-    elseif arc51_mode == ARC51_ADF then
-        return ARC51_STATE_ADF --do something about adf later.
-    else --must be in TR or TR+G
+    else --must be in TR, TR+G or ADF
         if arc51_xmit_mode == ARC51_PRESET then
             return ARC51_STATE_ON_PRESET
         elseif arc51_xmit_mode == ARC51_MAN then
@@ -283,8 +280,6 @@ function arc51_transition_state()
         uhf_radio_device:set_frequency(arc51_frequency)
     elseif arc51_state == ARC51_STATE_ON_GUARD then
         uhf_radio_device:set_frequency(243E6) --standard guard frequency
-    elseif arc51_state == ARC51_STATE_ADF then
-        uhf_radio_device:set_frequency(0)
     end
 end
 

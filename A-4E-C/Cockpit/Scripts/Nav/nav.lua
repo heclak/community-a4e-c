@@ -1947,13 +1947,25 @@ function update_adf()
 
     adf_antenna_target = radio_dev:getADFBearing()
     if adf_antenna_target then
-        adf_antenna_bearing = adf_antenna_target
+        local d_pos = adf_antenna_target - adf_antenna_bearing
+        local d_pos_abs = math.abs(d_pos)
+        local d_pos_abs_inverse = 2.0 * math.pi - d_pos_abs
+
+        if d_pos_abs < d_pos_abs_inverse then
+            adf_antenna_bearing = adf_antenna_bearing + clamp(d_pos, -step, step)
+        else
+            adf_antenna_bearing = adf_antenna_bearing + clamp(-d_pos, -step, step)
+        end
     else
         adf_antenna_bearing = adf_antenna_bearing - step
-        print_message_to_user(tostring(adf_antenna_bearing))
     end
 
-    adf_antenna_bearing = math.fmod(adf_antenna_bearing, 2.0 * math.pi)
+
+    if adf_antenna_bearing < -math.pi then
+        adf_antenna_bearing = math.pi + math.fmod(adf_antenna_bearing, math.pi)
+    elseif adf_antenna_bearing > math.pi then
+        adf_antenna_bearing = -math.pi + math.fmod(adf_antenna_bearing, math.pi)
+    end
 end
 
 
