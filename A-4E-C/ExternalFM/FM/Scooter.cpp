@@ -334,8 +334,8 @@ void ed_fm_add_local_moment(double & x,double &y,double &z)
 
 void ed_fm_simulate(double dt)
 {
-	//if ( ! g_safeToRun )
-		//return;
+	if ( ! g_safeToRun )
+		return;
 
 	Logger::time( dt );
 
