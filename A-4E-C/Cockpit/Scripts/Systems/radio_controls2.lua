@@ -10,6 +10,7 @@ avionics = require_avionics()
 local dev 	    = GetSelf()
 
 local extended_dev = avionics.ExtendedRadio(devices.ELECTRIC_SYSTEM, devices.INTERCOM, devices.UHF_RADIO)
+local extended_dev_guard = avionics.ExtendedRadio(devices.ELECTRIC_SYSTEM, devices.INTERCOM, devices.UHF_RADIO_GUARD)
 local update_time_step = 0.05 --update will be called 20/second
 make_default_activity(update_time_step)
 
@@ -44,7 +45,9 @@ dev:listen_command(Keys.radio_ptt)
 dev:listen_command(Keys.radio_ptt_voip)
 
 voice_ptt_0_icommand = 1731
+voice_ptt_1_icommand = 1732
 dev:listen_command(voice_ptt_0_icommand)
+dev:listen_command(voice_ptt_1_icommand)
 
 efm_data_bus = get_efm_data_bus()
 
@@ -53,6 +56,8 @@ local arc51_freq_XXxxx_display = get_param_handle("ARC51-FREQ-XXxxx")
 local arc51_freq_xxXxx_display = get_param_handle("ARC51-FREQ-xxXxx")
 local arc51_freq_xxxXX_display = get_param_handle("ARC51-FREQ-xxxXX")
 local arc51_freq_preset_display = get_param_handle("ARC51-FREQ-PRESET")
+
+local adf_on_and_powered = get_param_handle("ADF_ON_AND_POWERED")
 
 --ARC51 States
 ARC51_STATE_OFF = 0
@@ -118,6 +123,9 @@ function post_initialize()
 	arc51_set_knobs_to_frequency(arc51_radio_presets[1])
 
     extended_dev:init()
+    extended_dev_guard:init()
+    extended_dev:setCurrentCommunicator() -- Sets this radio for communication with AI etc.
+
 
 	dev:performClickableAction(device_commands.arc51_volume, 0.7, false)
     local birth = LockOn_Options.init_conditions.birth_place
@@ -151,6 +159,7 @@ function fnc_arc51_volume(value)
     else
         arc51_volume = value
         extended_dev:setVolume(arc51_volume)
+        extended_dev_guard:setVolume(arc51_volume)
     end
 end
 
@@ -182,6 +191,11 @@ function fnc_arc51_voip_ptt(value)
     extended_dev:pushToTalkVOIP(value == 1, arc51_mode == ARC51_ADF )
 end
 
+function fnc_arc51_voip_guard_ptt(value)
+    print_message_to_user("PTT "..tostring(value))
+    extended_dev_guard:pushToTalkVOIP(value == 1, false )
+end
+
 
 local command_table = {
     [device_commands.arc51_mode] = fnc_arc51_mode,
@@ -194,6 +208,7 @@ local command_table = {
     [device_commands.arc51_freq_oooXX] = fnc_arc51_freq_xxxXX,
     [Keys.radio_ptt_voip] = fnc_arc51_voip_ptt,
     [voice_ptt_0_icommand] = fnc_arc51_voip_ptt,
+    [voice_ptt_1_icommand] = fnc_arc51_voip_guard_ptt,
 }
 
 function SetCommand(command,value)
@@ -246,6 +261,11 @@ function SetCommand(command,value)
     elseif command == Keys.radio_ptt then
         extended_dev:pushToTalk()
     end
+end
+
+function SetPower(value)
+    extended_dev:setPower(value)
+    extended_dev_guard:setPower(value and arc51_mode == ARC51_TRG )
 end
 
 function arc51_get_current_state()
@@ -302,9 +322,16 @@ function arc51_update()
     end
 
     if arc51_state == ARC51_STATE_ON_PRESET or arc51_state == ARC51_STATE_ON_MANUAL or arc51_state == ARC51_STATE_ON_GUARD then
-        extended_dev:setPower(true)
+        SetPower(true)
+
+        if arc51_mode == ARC51_ADF then
+            adf_on_and_powered:set( 1 )
+        else
+            adf_on_and_powered:set(0)
+        end
     else
-        extended_dev:setPower(false)
+        adf_on_and_powered:set( 0 )
+        SetPower(false)
     end
 
 end

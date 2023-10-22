@@ -58,3 +58,5 @@ devices["TEMP4"]            = counter()
 devices["TEMP5"]            = counter()
 
 devices["SEAT"] = counter()
+devices["UHF_RADIO_GUARD"] = counter()
+devices["INTERCOM_GUARD"] = counter()

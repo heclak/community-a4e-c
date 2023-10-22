@@ -12,6 +12,8 @@ dofile(LockOn_Options.script_path.."Systems/air_data_computer_api.lua")
 avionics = require_avionics()
 
 local radio_dev = avionics.ExtendedRadio(devices.ELECTRIC_SYSTEM, devices.INTERCOM, devices.UHF_RADIO)
+local adf_on_and_powered = get_param_handle("ADF_ON_AND_POWERED")
+
 
 startup_print("nav: load")
 
@@ -1942,6 +1944,10 @@ end
 
 function update_adf()
     
+    if adf_on_and_powered:get() < 0.5 then
+        return
+    end
+
     local speed = math.rad(60.0)
     local step = speed * update_time_step
 
