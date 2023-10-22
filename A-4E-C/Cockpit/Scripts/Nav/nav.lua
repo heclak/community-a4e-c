@@ -1,4 +1,5 @@
 dofile(LockOn_Options.script_path.."command_defs.lua")
+dofile(LockOn_Options.script_path.."devices.lua")
 dofile(LockOn_Options.script_path.."Systems/electric_system_api.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.script_path.."Systems/mission.lua")
@@ -9,6 +10,8 @@ dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
 dofile(LockOn_Options.script_path.."Systems/air_data_computer_api.lua")
 
 avionics = require_avionics()
+
+local radio_dev = avionics.ExtendedRadio(devices.ELECTRIC_SYSTEM, devices.INTERCOM, devices.UHF_RADIO)
 
 startup_print("nav: load")
 
@@ -220,11 +223,16 @@ local arn52_range = nil
 local arn52_bearing = nil
 local atcn -- "active tacan"
 
+local adf_antenna_bearing = 0.0
+local adf_antenna_target = nil
+
 --marker
 current_marker = nil
 
 
 -- Variables
+
+
 
 -- beacon_data[] entry table holds {ntype, beaconId, positionGeo {latititude, longitude}, name, channel, direction, position {x, y, z}, callsign, frequency}
 local beacon_data = {}
@@ -1932,6 +1940,22 @@ function bdhi_draw_range( r )
     bdhi_dme_xxX:set( (r%10 ) / 10  )
 end
 
+function update_adf()
+    
+    local speed = math.rad(60.0)
+    local step = speed * update_time_step
+
+    adf_antenna_target = radio_dev:getADFBearing()
+    if adf_antenna_target then
+        adf_antenna_bearing = adf_antenna_target
+    else
+        adf_antenna_bearing = adf_antenna_bearing - step
+        print_message_to_user(tostring(adf_antenna_bearing))
+    end
+
+    adf_antenna_bearing = math.fmod(adf_antenna_bearing, 2.0 * math.pi)
+end
+
 
 function update_bdhi()
     local maghead = get_magnetic()
@@ -1955,11 +1979,12 @@ function update_bdhi()
             if arn52_bearing ~= nil then
                 --print_message_to_user("mh= "..maghead.." brg= "..arn52_bearing)
                 bdhi_draw_needle2( (arn52_bearing - maghead) % 360 )
-                bdhi_draw_needle1( 330 )
             else
-                bdhi_draw_needle1( 0 )
                 bdhi_draw_needle2( 0 )
             end
+
+            update_adf()
+            bdhi_draw_needle1( math.deg(adf_antenna_bearing) )
 
             bdhi_draw_range( arn52_range )
         else

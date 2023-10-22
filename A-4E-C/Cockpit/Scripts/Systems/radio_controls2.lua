@@ -290,6 +290,8 @@ end
 
 function arc51_update()
 
+    
+
     arc51_freq_XXxxx_display:set( arc51_freq_XXxxx )
     arc51_freq_xxXxx_display:set( arc51_freq_xxXxx )
     arc51_freq_xxxXX_display:set( arc51_freq_xxxXX )
@@ -306,8 +308,6 @@ function arc51_update()
 
     if arc51_state == ARC51_STATE_ON_PRESET or arc51_state == ARC51_STATE_ON_MANUAL or arc51_state == ARC51_STATE_ON_GUARD then
         extended_dev:setPower(true)
-        --print_message_to_user("Power ON "..tostring(uhf_radio_device:is_on()))
-        
     else
         extended_dev:setPower(false)
     end
