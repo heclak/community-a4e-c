@@ -9,7 +9,7 @@
 #include "Maths.h"
 namespace Scooter
 {
-    class DamageObject : std::enable_shared_from_this<DamageObject>
+    class DamageObject
     {
     public:
         DamageObject( const std::string&& name );

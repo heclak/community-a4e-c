@@ -509,7 +509,7 @@ void ed_fm_set_current_mass_state
 	
 	s_airframe->setMass(mass);
 	Vec3 com = Vec3( center_of_mass_x, center_of_mass_y, center_of_mass_z );
-	//printf( "COM: %lf, %lf, %lf\n", com.x,com.y,com.z );
+	//printf( "M: %lf | COM: %lf,%lf,%lf | MOI: %lf,%lf,%lf\n", mass, com.x,com.y,com.z, moment_of_inertia_x, moment_of_inertia_y, moment_of_inertia_z );
 	s_state->setCOM( com );
 	s_fm->setCOM(com);
 }

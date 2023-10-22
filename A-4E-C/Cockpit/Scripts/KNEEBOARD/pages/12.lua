@@ -1,5 +1,5 @@
 dofile(LockOn_Options.script_path.."Nav/ils_utils.lua")
-
+dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.common_script_path.."KNEEBOARD/indicator/definitions.lua")
 SetScale(FOV)
 
@@ -42,11 +42,7 @@ local CMSUnitsPosX = -0.05
 local CMSHintsPosX = 0.8
 
 
-local arc51_radio_presets
-
-if get_aircraft_mission_data ~= nil then
-    arc51_radio_presets = get_aircraft_mission_data("Radio")[1].channels
-end
+local arc51_radio_presets = GetRadioChannels()
 
 ils_data, marker_data = get_ils_data_in_format()
 --BEACON_TYPE_ILS_LOCALIZER

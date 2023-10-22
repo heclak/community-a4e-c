@@ -43,6 +43,9 @@ dev:listen_command(Keys.UHFVolumeStop)
 dev:listen_command(Keys.radio_ptt)
 dev:listen_command(Keys.radio_ptt_voip)
 
+voice_ptt_0_icommand = 1731
+dev:listen_command(voice_ptt_0_icommand)
+
 efm_data_bus = get_efm_data_bus()
 
 -- arc-51 displayed frequencies
@@ -86,16 +89,30 @@ local arc51_freq_xxxXX = 0
 
 local uhf_radio_device = nil
 
-local arc51_radio_presets
-if get_aircraft_mission_data ~= nil then
-    arc51_radio_presets = get_aircraft_mission_data("Radio")[1].channels
-end
+local arc51_radio_presets = GetRadioChannels()
 
 function sync_switches()
     dev:performClickableAction(device_commands.arc51_mode, arc51_mode / 10.0, false)
     dev:performClickableAction(device_commands.arc51_xmitmode, arc51_xmit_mode / 10.0, false)
 end
 
+function arc51_set_knobs_to_frequency(value)
+	value = value - 220
+	
+	--I absolutely fucking hate floats.
+	--This should be entirely represented by
+	--integers but NOOOO lua doesn't need integers
+	--because everything is just a magical number.
+	--TODO clean my conscience
+	XXxxx = math.floor(value / 10)
+	xxXxx = math.floor(value % 10)
+	xxxXX = round( (value % 1) * 100 )
+	
+	
+	dev:performClickableAction(device_commands.arc51_freq_XXooo, XXxxx / 20, false)
+	dev:performClickableAction(device_commands.arc51_freq_ooXoo, xxXxx / 10, false)
+	dev:performClickableAction(device_commands.arc51_freq_oooXX, xxxXX / 100, false)
+end
 
 function post_initialize()
     uhf_radio_device = GetDevice(devices.UHF_RADIO)
@@ -128,12 +145,13 @@ function fnc_arc51_xmitmode(value)
 end
 
 function fnc_arc51_volume(value)
-    if value < 0.2 then
-        dev:performClickableAction(device_commands.arc51_volume, 0.2, false)
-    elseif value > 0.8 then
-        dev:performClickableAction(device_commands.arc51_volume, 0.8, false)
+    if value < 0.0 then
+        dev:performClickableAction(device_commands.arc51_volume, 0.0, false)
+    elseif value > 1.0 then
+        dev:performClickableAction(device_commands.arc51_volume, 1.0, false)
     else
         arc51_volume = value
+        extended_dev:setVolume(arc51_volume)
     end
 end
 
@@ -161,6 +179,10 @@ function fnc_arc51_freq_xxxXX(value)
     arc51_freq_xxxXX = value
 end
 
+function fnc_arc51_voip_ptt(value)
+    extended_dev:pushToTalkVOIP(value == 1)
+end
+
 
 local command_table = {
     [device_commands.arc51_mode] = fnc_arc51_mode,
@@ -171,6 +193,8 @@ local command_table = {
     [device_commands.arc51_freq_XXooo] = fnc_arc51_freq_XXxxx,
     [device_commands.arc51_freq_ooXoo] = fnc_arc51_freq_xxXxx,
     [device_commands.arc51_freq_oooXX] = fnc_arc51_freq_xxxXX,
+    [Keys.radio_ptt_voip] = fnc_arc51_voip_ptt,
+    [voice_ptt_0_icommand] = fnc_arc51_voip_ptt,
 }
 
 function SetCommand(command,value)
@@ -210,9 +234,9 @@ function SetCommand(command,value)
     elseif command == Keys.UHF50kHzDec and arc51_freq_xxxXX > 0 then
         dev:performClickableAction(device_commands.arc51_freq_oooXX, arc51_freq_xxxXX - 0.05,false)
     -- volume
-    elseif command == Keys.UHFVolumeInc and arc51_volume < 0.8 then
+    elseif command == Keys.UHFVolumeInc and arc51_volume < 1.0 then
         dev:performClickableAction(device_commands.arc51_volume, arc51_volume + 0.02,false)
-    elseif command == Keys.UHFVolumeDec and arc51_volume > 0.2 then
+    elseif command == Keys.UHFVolumeDec and arc51_volume > 0.0 then
         dev:performClickableAction(device_commands.arc51_volume, arc51_volume - 0.02,false)
     elseif command == Keys.UHFVolumeStartUp then
         arc51_volume_moving = 1
@@ -222,8 +246,6 @@ function SetCommand(command,value)
         arc51_volume_moving = 0
     elseif command == Keys.radio_ptt then
         extended_dev:pushToTalk()
-    elseif command == Keys.radio_ptt_voip then
-        extended_dev:pushToTalkVOIP(value == 1)
     end
 end
 
@@ -241,24 +263,6 @@ function arc51_get_current_state()
             return ARC51_STATE_ON_GUARD
         end
     end
-end
-
-function arc51_set_knobs_to_frequency(value)
-	value = value - 220
-	
-	--I absolutely fucking hate floats.
-	--This should be entirely represented by
-	--integers but NOOOO lua doesn't need integers
-	--because everything is just a magical number.
-	--TODO clean my conscience
-	XXxxx = math.floor(value / 10)
-	xxXxx = math.floor(value % 10)
-	xxxXX = round( (value % 1) * 100 )
-	
-	
-	dev:performClickableAction(device_commands.arc51_freq_XXooo, XXxxx / 20, false)
-	dev:performClickableAction(device_commands.arc51_freq_ooXoo, xxXxx / 10, false)
-	dev:performClickableAction(device_commands.arc51_freq_oooXX, xxxXX / 100, false)
 end
 
 function arc51_update_frequency()
@@ -285,6 +289,7 @@ function arc51_transition_state()
 end
 
 function arc51_update()
+
     arc51_freq_XXxxx_display:set( arc51_freq_XXxxx )
     arc51_freq_xxXxx_display:set( arc51_freq_xxXxx )
     arc51_freq_xxxXX_display:set( arc51_freq_xxxXX )
@@ -313,7 +318,7 @@ function update()
     arc51_update()
 
     if arc51_volume_moving ~= 0 then
-        dev:performClickableAction(device_commands.arc51_volume, clamp(arc51_volume + 0.03 * arc51_volume_moving, 0.2, 0.8), false)
+        dev:performClickableAction(device_commands.arc51_volume, clamp(arc51_volume + 0.03 * arc51_volume_moving, 0.0, 1.0), false)
     end
 end
 
