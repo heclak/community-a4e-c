@@ -2,7 +2,7 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
-## Version 2.1.2 - ?? October 2023
+## Version 2.2-beta - 23 Oct 2023
 
 #### Added
 - AN/ARN-25 ADF (Automated Direction Finder) is now modeled. Information on using the equipment is detailed in the Kneeboard Manual on page 1-3.
@@ -14,6 +14,25 @@ Please list the changes you've made in this file. We should try to follow the gu
 - Input bindings:
   - Else option for the Chaff Dispenser Select added (for a 3-position switch).
   - Radar Altitude Warning - Slew axis.
+
+- Improved Damage System
+  Reworked Existing Damage for engine and wing (reduced effect of transient forces to prevent wake breaking wings). Added new failures and damage which are triggered by damage:
+  - Radar Receiver
+  - Gear Jamming
+  - Gear Actuator
+  - Pitot Tube
+  - Static Port
+  - Boost Pump
+  - Wing Pump
+  - Aileron Actuators
+  - Elevator Actuator
+  - Rudder Actuator
+  - Wing Tank Leak
+  - Fuselage Tank Leak
+  - Engine and Inlet
+
+  These can either be triggered by damage or as a failure in mission editor.
+
 
 #### Changed
 - An updated NWS (that's Nosewheel Simulation, mind you) makes correcting turns on the ground much easier, and eliminating the "stuck wheel" feeling due to over-braking in taxi. Amaze your friends with your drifting skill!
@@ -28,7 +47,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 
 #### Fixed
 - The AN/ARC-51 UHF Radio volume knob now adjusts radio and VOIP radio volume.
-- Intermittent TACAN and MCL system failures in multiplayer should be reduced, if not eliminated.
+- Intermittent TACAN and MCL system crashes in multiplayer should be reduced, if not eliminated.
 - The AN/APG-53A Radar OBST tone and AN/APR-25 RHWR audio properly route to the Helmet sound channel.
 - Black lines along center and around the nose cones of fuel tanks have been removed.
 - Malaysia TUDM livery uses the provided custom fuel tanks.
