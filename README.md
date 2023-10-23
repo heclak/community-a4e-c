@@ -52,29 +52,35 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 
 #### Added
 - AN/ARN-25 ADF (Automated Direction Finder) is now modeled. Information on using the equipment is detailed in the Kneeboard Manual on page 1-3.
-- Else keybinds for the Chaff Dispenser Select added for 3-position switch support.
-- Radar Altitude Warning - Slew axis.
-- Added the AIM-9P3 to the loadout options.
-- Added the AGM-45B Shrike to the loadout options.
-- Added 2.75" Hydra rocket loadouts for LAU-3 and LAU-68 launchers, including white phosphorous, HE, HEAT, as well as Mk1, Mk61, and WRU-1/B practice munitions to the loadout options. Outboard stations support 1 launcher, inboard stations up to 2, and up to 3 can be added on centerline station. LAU-68 launchers also allow loadouts with Para Illum and Practice Smoke Hydra rockets.
-- Delivery information for Shrike and Sidewinder provided in the Kneeboard Manual on page 3-5.
+- Weapons:
+  - AIM-9P3 is available in the loadout options for inboard and outboard stations.
+  - AGM-45B Shrike is available the loadout options for inboard and outboard stations.
+  - 2.75" Hydra rockets are available loadout options with LAU-3 (19 rocket) and LAU-68 (7 rocket) launchers, including white phosphorous, HE, HEAT, as well as Mk1, Mk61, and WRU-1/B practice munitions to the loadout options. LAU-68 launchers also allow loadouts with Para Illum and Practice Smoke Hydra rockets. Outboard stations support 1 launcher, inboard stations up to 2, and up to 3 can be added on the centerline station.
+- Cold Start, Taxi, Takeoff, and Free Flight missions for the Sinai map are available in the Instant Action.
+- Input bindings:
+  - Else option for the Chaff Dispenser Select added (for a 3-position switch).
+  - Radar Altitude Warning - Slew axis.
 
 #### Changed
-- An updated NWS (that's Nosewheel Simulation, mind you) should make correcting turns on the ground much easier for struggling pilots, and all but eliminate the "stuck wheel" due to over-braking in taxi. Amaze your friends with your drifting skill!
+- An updated NWS (that's Nosewheel Simulation, mind you) makes correcting turns on the ground much easier, and eliminating the "stuck wheel" feeling due to over-braking in taxi. Amaze your friends with your drifting skill!
+- Standardized naming conventions for loadouts with multiple ejector racks, and provided additional detail for weapon payloads original to the A-4E-C.
 - Recalculated the weight of rocket launcher pod payloads.
-- Standardized naming conventions for loadouts with multiple ejector racks.
-- Updated guidance in the Kneeboard Manual for the operation of the AN/ARC-51 UHF Radio on page 1-2, and AN/ARN-52 TACAN on page 1-3.
-- Updated the Kneeboard Manual presentation of Airfield Radio and ILS data on page 1-4, which can now accomodate up to 30 entries, making it compatible with the entire listing of the Sinai map.
-- Updated guidance in the Kneeboard Manual for the operation of the AN/APR-25 Radar Homing and Warning System is provided in the Kneeboard Manual on page 3-6.
+- Kneeboard Manual:
+  - Updated AN/ARC-51 UHF Radio guidance on page 1-2.
+  - Updated AN/ARN-52 TACAN guidance on page 1-3.
+  - Updated Airfield Radio and ILS data on page 1-4, which can now accomodate up to 30 entries, making it compatible with the contents of the Sinai map.
+  - Updated Shrike and Sidewinder delivery guidance on page 3-5.
+  - Updated AN/APR-25 Radar Homing and Warning System guidance on page 3-6.
 
 #### Fixed
+- The AN/ARC-51 UHF Radio volume knob now adjusts radio and VOIP radio volume.
 - Intermittent TACAN and MCL system failures in multiplayer should be reduced, if not eliminated.
-- Black lines along center line of fuel tanks have been removed.
-- Loadout display inaccuracies in the Kneeboard Manual on page 1-6 are corrected.
 - The AN/APG-53A Radar OBST tone and AN/APR-25 RHWR audio properly route to the Helmet sound channel.
+- Black lines along center and around the nose cones of fuel tanks have been removed.
 - Malaysia TUDM livery uses the provided custom fuel tanks.
-- Station arming switches no longer produce a debug printout when the weapon selector in the BOMBS & GM ARM position.
-- Fixed several small Kneeboard Manual typos, mostly in page reference annotations.
+- Station arming switches no longer produce a debug printout with the weapon selector in the BOMBS & GM ARM position.
+- Loadout option inaccuracies in the Kneeboard Manual on page 1-6 are corrected.
+- Eliminated Kneeboard Manual typos in page reference annotations.
 
 [See full changelog](https://github.com/heclak/community-a4e-c/blob/master/CHANGELOG.md)
 

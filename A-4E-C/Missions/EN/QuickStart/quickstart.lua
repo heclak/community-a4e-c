@@ -146,6 +146,24 @@ planes = {
         file = "Nevada A-4E-C Stormy Weather.miz"
     },
 
+    -- Sinai
+    {
+        name = _("Cold Start"),
+        file = "Sinai A-4E-C Cold Start.miz"
+    },
+    {
+        name = _("Taxi"),
+        file = "Sinai A-4E-C Taxi.miz"
+    },
+    {
+        name = _("Takeoff"),
+        file = "Sinai A-4E-C Takeoff.miz"
+    },
+    {
+        name = _("Free Flight"),
+        file = "Sinai A-4E-C Free Flight.miz"
+    },
+
     -- Syria
     {
         name = _("Cold Start"),
