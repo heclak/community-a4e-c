@@ -643,7 +643,8 @@ keyCommands = {
 	
 	-- AN/ARC-51A UHF Radio
 	{down = Keys.radio_ptt,                                                                     name = _('Radio Microphone Push to Talk (PTT)'),    category = {_('Throttle Panel'), _('Throttle Grip'), _('Communications'), _('AN/ARC-51A UHF Radio')}},
-	{down = Keys.radio_ptt_voip, value_down = 1, up = Keys.radio_ptt_voip, value_up = 0, name = _('Radio Microphone Push to Talk VOIP (PTT)'),    category = {_('Throttle Panel'), _('Throttle Grip'), _('Communications'), _('AN/ARC-51A UHF Radio')}},
+	{down = iCommandVoIPRadioPushToTalkEnableDisableVoice, value_down = 1, up = iCommandVoIPRadioPushToTalkEnableDisableVoice, value_up = 0, name = _('Radio Microphone Push to Talk VOIP (PTT) - Transmit'), category = {_('Throttle Panel'), _('Throttle Grip'), _('Communications'), _('AN/ARC-51A UHF Radio')}},
+	{down = iCommandVoIPRadioPushToTalkEnableDisableVoice_1, value_down = 1, up = iCommandVoIPRadioPushToTalkEnableDisableVoice_1, value_up = 0, name = _('Radio Microphone Push to Talk VOIP (PTT) - Guard'), category = {_('Throttle Panel'), _('Throttle Grip'), _('Communications'), _('AN/ARC-51A UHF Radio')}},
     {down = Keys.UHF10MHzInc,                                                                   name = _('Radio Frequency 10 MHz - Increase'),      category = {_('AN/ARC-51A UHF Radio')}},
     {down = Keys.UHF10MHzDec,                                                                   name = _('Radio Frequency 10 MHz - Decrease'),      category = {_('AN/ARC-51A UHF Radio')}},
     {down = Keys.UHF1MHzInc,                                                                    name = _('Radio Frequency 1 MHz - Increase'),       category = {_('AN/ARC-51A UHF Radio')}},
