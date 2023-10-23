@@ -13,9 +13,10 @@ Please list the changes you've made in this file. We should try to follow the gu
 - Added 2.75" Hydra rocket loadouts for LAU-3 and LAU-68 launchers, including white phosphorous, HE, HEAT, as well as Mk1, Mk61, and WRU-1/B practice munitions to the loadout options. Outboard stations support 1 launcher, inboard stations up to 2, and up to 3 can be added on centerline station. LAU-68 launchers also allow loadouts with Para Illum and Practice Smoke Hydra rockets.
 
 #### Changed
-- A new NWS (Nosewheel Simulation) should make correcting turns on the ground, eliminating the "stuck wheel" phenomenon after a grievous taxi error. Amaze your friends with your drifting skill!
-- Recalculated the weight of multiple rocket launcher pod payloads.
+- An updated NWS (that's Nosewheel Simulation, mind you) should make correcting turns on the ground, eliminating the "stuck wheel" due to over-braking in taxi. Amaze your friends with your drifting skill!
+- Recalculated the weight of rocket launcher pod payloads.
 - Standardized naming conventions for loadouts with multiple ejector racks.
+- Updated guidance in the kneeboard manual for the operation of the AN/APR-25 Radar Homing and Warning System is provided in the Kneeboard manual on page 3-6.
 
 #### Fixed
 - Intermittent TACAN and MCL system failures in multiplayer should be reduced, if not eliminated.
@@ -24,6 +25,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 - The AN/APG-53A Radar OBST tone and AN/APR-25 RHWR audio properly route to the Helmet sound channel.
 - Malaysia TUDM livery uses the provided custom fuel tanks.
 - Station arming switches no longer produce a debug printout when the weapon selector in the BOMBS & GM ARM position.
+- Kneeboard Manual typos in page reference annotations.
 
 ## Version 2.1.1 - 27 Apr 2023
 
