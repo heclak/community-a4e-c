@@ -59,6 +59,36 @@ loadout_names = {
     ["{LAU-3 FFAR Mk5 HEAT_TER_2_R}"]           = "ROCKETS - LAU-3 * 2 - FFAR MK5 HEAT - TER",
     ["{LAU-3 FFAR Mk5 HEAT_TER_3_C}"]           = "ROCKETS - LAU-3 * 3 - FFAR MK5 HEAT - TER",
 
+    ["LAU3_HE151"]                              = "ROCKETS - LAU-3 HYDRA M151 HE",
+    ["{LAU3_HE151_TER_2_C}"]                    = "ROCKETS - 2 * LAU-3 HYDRA M151 HE - TER",
+    ["{LAU3_HE151_TER_2_L}"]                    = "ROCKETS - 2 * LAU-3 HYDRA M151 HE - TER",
+    ["{LAU3_HE151_TER_2_R}"]                    = "ROCKETS - 2 * LAU-3 HYDRA M151 HE - TER",
+    ["{LAU3_HE151_TER_3_C}"]                    = "ROCKETS - 3 * LAU-3 HYDRA M151 HE - TER",
+
+    ["LAU3_WP156"]                              = "ROCKETS - LAU-3 HYDRA M156 WHT PHOS",
+    ["{LAU3_WP156_TER_2_C}"]                    = "ROCKETS - 2 * LAU-3 HYDRA M156 WHT PHOS - TER",
+    ["{LAU3_WP156_TER_2_L}"]                    = "ROCKETS - 2 * LAU-3 HYDRA M156 WHT PHOS - TER",
+    ["{LAU3_WP156_TER_2_R}"]                    = "ROCKETS - 2 * LAU-3 HYDRA M156 WHT PHOS - TER",
+    ["{LAU3_WP156_TER_3_C}"]                    = "ROCKETS - 3 * LAU-3 HYDRA M156 WHT PHOS - TER",
+
+    ["LAU3_HE5"]                                = "ROCKETS - LAU-3 HYDRA MK5 HEAT",
+    ["{LAU3_HE5_TER_2_C}"]                      = "ROCKETS - 2 * LAU-3 HYDRA MK5 HEAT - TER",
+    ["{LAU3_HE5_TER_2_L}"]                      = "ROCKETS - 2 * LAU-3 HYDRA MK5 HEAT - TER",
+    ["{LAU3_HE5_TER_2_R}"]                      = "ROCKETS - 2 * LAU-3 HYDRA MK5 HEAT - TER",
+    ["{LAU3_HE5_TER_3_C}"]                      = "ROCKETS - 2 * LAU-3 HYDRA MK5 HEAT - TER",
+
+    ["LAU3_WP1B"]                                = "ROCKETS - LAU-3 HYDRA WTU-1/B PRACTICE",
+    ["{LAU3_WP1B_TER_2_C}"]                      = "ROCKETS - 2 * LAU-3 HYDRA WTU-1/B PRACTICE - TER",
+    ["{LAU3_WP1B_TER_2_L}"]                      = "ROCKETS - 2 * LAU-3 HYDRA WTU-1/B PRACTICE - TER",
+    ["{LAU3_WP1B_TER_2_R}"]                      = "ROCKETS - 2 * LAU-3 HYDRA WTU-1/B PRACTICE - TER",
+    ["{LAU3_WP1B_TER_3_C}"]                      = "ROCKETS - 2 * LAU-3 HYDRA WTU-1/B PRACTICE - TER",
+
+    ["LAU3_WP61"]                                = "ROCKETS - LAU-3 HYDRA MK61 PRACTICE",
+    ["{LAU3_WP61_TER_2_C}"]                      = "ROCKETS - 2 * LAU-3 HYDRA MK61 PRACTICE - TER",
+    ["{LAU3_WP61_TER_2_L}"]                      = "ROCKETS - 2 * LAU-3 HYDRA MK61 PRACTICE - TER",
+    ["{LAU3_WP61_TER_2_R}"]                      = "ROCKETS - 2 * LAU-3 HYDRA MK61 PRACTICE - TER",
+    ["{LAU3_WP61_TER_3_C}"]                      = "ROCKETS - 3 * LAU-3 HYDRA MK61 PRACTICE - TER",
+
     ["{LAU68_FFAR_WP156}"]                      = "ROCKETS - LAU-68 - FFAR M156 WHT PHOS",
     ["{LAU-68 FFAR WP156_TER_2_C}"]             = "ROCKETS - LAU-68 * 2 - FFAR M156 WHT PHOS - TER",
     ["{LAU-68 FFAR WP156_TER_2_L}"]             = "ROCKETS - LAU-68 * 2 - FFAR M156 WHT PHOS - TER",
@@ -77,6 +107,8 @@ loadout_names = {
     ["{LAU-68 FFAR Mk5 HEAT_TER_2_R}"]          = "ROCKETS - LAU-68 * 2 - FFAR MK5 HEAT - TER",
     ["{LAU-68 FFAR Mk5 HEAT_TER_3_C}"]          = "ROCKETS - LAU-68 * 3 - FFAR MK5 HEAT - TER",
 
+    --removed in favor of LAU-3 Hydra
+    --[[
     ["{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}"]  = "ROCKETS - LAU-61 HYDRA M151 HE",
     ["{3DFB7321-AB0E-11d7-9897-000476191836}"]  = "ROCKETS - LAU-61 HYDRA M156 WHT PHOS",
     ["{LAU-61 Hydra M151 HE_TER_2_C}"]           = "ROCKETS - 2 * LAU-61 HYDRA M151 HE",
@@ -87,6 +119,7 @@ loadout_names = {
     ["{LAU-61 Hydra WP156_TER_2_R}"]             = "ROCKETS - 2 * LAU-61 HYDRA M156 WHT PHOS",
     ["{LAU-61 Hydra M151 HE_TER_3_C}"]           = "ROCKETS - 3 * LAU-61 HYDRA M151 HE",
     ["{LAU-61 Hydra WP156_TER_3_C}"]             = "ROCKETS - 3 * LAU-61 HYDRA M156 WHT PHOS",
+    ]]
 
     ["{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}"]  = "ROCKETS - LAU-68 HYDRA M151 HE",
     ["{4F977A2A-CD25-44df-90EF-164BFA2AE72F}"]  = "ROCKETS - LAU-68 HYDRA M156 WHT PHOS",

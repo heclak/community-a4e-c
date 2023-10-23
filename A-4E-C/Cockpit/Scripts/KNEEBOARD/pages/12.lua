@@ -22,11 +22,11 @@ FontSizeY1	= FontSizeX1
 
 predefined_font_title	= {FontSizeY1 * 0.85,	FontSizeX1 * 0.85,	-0.0009,	0.0}
 predefined_font_header	= {FontSizeY1 * 0.75,	FontSizeX1 * 0.75,	-0.0009,	0.0}
-predefined_font_item	= {FontSizeY1 * 0.675,	FontSizeX1 * 0.675,	-0.0009,	0.0}
+predefined_font_item	= {FontSizeY1 * 0.75,	FontSizeX1 * 0.75,	-0.0009,	0.0}
 
 -- lines
 local FirstLineY	= 1.3
-local LineSizeY		= 0.09375
+local LineSizeY		= 0.1075
 
 local function getLineY(line)
 	return FirstLineY - LineSizeY * (line)
