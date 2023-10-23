@@ -3,6 +3,7 @@ dofile(LockOn_Options.script_path.."devices.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.script_path.."EFM_Data_Bus.lua")
+dofile(LockOn_Options.common_script_path.."elements_defs.lua")
 
 
 avionics = require_avionics()
@@ -146,6 +147,10 @@ function post_initialize()
     sync_switches()
 end
 
+function GetVolume(value)
+    return math.pow(value, 3.0)
+end
+
 function fnc_arc51_volume(value)
     if value < 0.0 then
         dev:performClickableAction(device_commands.arc51_volume, 0.0, false)
@@ -153,8 +158,10 @@ function fnc_arc51_volume(value)
         dev:performClickableAction(device_commands.arc51_volume, 1.0, false)
     else
         arc51_volume = value
-        extended_dev:setVolume(arc51_volume * arc51_voip_factor)
-        extended_dev_guard:setVolume(arc51_volume * arc51_voip_factor)
+
+        local actual_volume = GetVolume(arc51_volume * arc51_voip_factor)
+        extended_dev:setVolume(actual_volume)
+        extended_dev_guard:setVolume(actual_volume)
     end
 end
 
@@ -318,7 +325,8 @@ function SetADFGarble(value)
 
     if value then
         sound_adf_garble:set(1)
-        sound_adf_garble_volume:set(arc51_volume)
+        local actual_volume = GetVolume(arc51_volume)
+        sound_adf_garble_volume:set(actual_volume)
     else
         sound_adf_garble:set(0)
         sound_adf_garble_volume:set(0)
