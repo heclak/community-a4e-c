@@ -307,6 +307,9 @@ function post_initialize()
 
         --APG-53A RADAR
         Sound_Player(sndhost_headphones, "Aircrafts/A-4E-C/obsttone", "D_GLARE_OBST", SOUND_CONTINUOUS, nil, nil, nil, nil, "APG53_OBST_VOLUME"),
+        
+        --Radio Sounds
+        Sound_Player(sndhost_headphones, "Aircrafts/A-4E-C/obsttone", "SND_CONT_ADF_GARBLE", SOUND_CONTINUOUS, nil, nil, nil, nil, "SND_CONT_ADF_GARBLE_VOLUME"),
 
         --APR-25 RWR SOUNDS
         -- system sounds

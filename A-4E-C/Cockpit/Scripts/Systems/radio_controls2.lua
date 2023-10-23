@@ -58,6 +58,8 @@ local arc51_freq_xxxXX_display = get_param_handle("ARC51-FREQ-xxxXX")
 local arc51_freq_preset_display = get_param_handle("ARC51-FREQ-PRESET")
 
 local adf_on_and_powered = get_param_handle("ADF_ON_AND_POWERED")
+local sound_adf_garble = get_param_handle("SND_CONT_ADF_GARBLE")
+local sound_adf_garble_volume = get_param_handle("SND_CONT_ADF_GARBLE_VOLUME")
 
 --ARC51 States
 ARC51_STATE_OFF = 0
@@ -302,6 +304,17 @@ function arc51_transition_state()
     end
 end
 
+function SetADFGarble(value)
+
+    if value then
+        sound_adf_garble:set(1)
+        sound_adf_garble_volume:set(arc51_volume)
+    else
+        sound_adf_garble:set(0)
+        sound_adf_garble_volume:set(0)
+    end
+end
+
 function arc51_update()
 
     
@@ -325,12 +338,15 @@ function arc51_update()
 
         if arc51_mode == ARC51_ADF then
             adf_on_and_powered:set( 1 )
+            SetADFGarble(extended_dev:getADFBearing() ~= nil)
         else
             adf_on_and_powered:set(0)
+            SetADFGarble(false)
         end
     else
         adf_on_and_powered:set( 0 )
         SetPower(false)
+        SetADFGarble(false)
     end
 
 end
@@ -341,6 +357,7 @@ function update()
     if arc51_volume_moving ~= 0 then
         dev:performClickableAction(device_commands.arc51_volume, clamp(arc51_volume + 0.03 * arc51_volume_moving, 0.0, 1.0), false)
     end
+
 end
 
 need_to_be_closed = false -- close lua state after initialization
