@@ -5,18 +5,21 @@ Please list the changes you've made in this file. We should try to follow the gu
 ## Version 2.1.2 - ?? October 2023
 
 #### Added
-- Delivery information for Shrike and Sidewinder provided in the Kneeboard Manual on page 3-5.
+- AN/ARN-25 ADF (Automated Direction Finder) is now modeled. Information on using the equipment is detailed in the Kneeboard Manual on page 1-3.
 - Else keybinds for the Chaff Dispenser Select added for 3-position switch support.
 - Radar Altitude Warning - Slew axis.
 - Added the AIM-9P3 to the loadout options.
 - Added the AGM-45B Shrike to the loadout options.
 - Added 2.75" Hydra rocket loadouts for LAU-3 and LAU-68 launchers, including white phosphorous, HE, HEAT, as well as Mk1, Mk61, and WRU-1/B practice munitions to the loadout options. Outboard stations support 1 launcher, inboard stations up to 2, and up to 3 can be added on centerline station. LAU-68 launchers also allow loadouts with Para Illum and Practice Smoke Hydra rockets.
+- Delivery information for Shrike and Sidewinder provided in the Kneeboard Manual on page 3-5.
 
 #### Changed
-- An updated NWS (that's Nosewheel Simulation, mind you) should make correcting turns on the ground, eliminating the "stuck wheel" due to over-braking in taxi. Amaze your friends with your drifting skill!
+- An updated NWS (that's Nosewheel Simulation, mind you) should make correcting turns on the ground much easier for struggling pilots, and all but eliminate the "stuck wheel" due to over-braking in taxi. Amaze your friends with your drifting skill!
 - Recalculated the weight of rocket launcher pod payloads.
 - Standardized naming conventions for loadouts with multiple ejector racks.
-- Updated guidance in the kneeboard manual for the operation of the AN/APR-25 Radar Homing and Warning System is provided in the Kneeboard manual on page 3-6.
+- Updated guidance in the Kneeboard Manual for the operation of the AN/ARC-51 UHF Radio on page 1-2, and AN/ARN-52 TACAN on page 1-3.
+- Updated the Kneeboard Manual presentation of Airfield Radio and ILS data on page 1-4, which can now accomodate up to 30 entries, making it compatible with the entire listing of the Sinai map.
+- Updated guidance in the Kneeboard Manual for the operation of the AN/APR-25 Radar Homing and Warning System is provided in the Kneeboard Manual on page 3-6.
 
 #### Fixed
 - Intermittent TACAN and MCL system failures in multiplayer should be reduced, if not eliminated.
@@ -25,7 +28,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 - The AN/APG-53A Radar OBST tone and AN/APR-25 RHWR audio properly route to the Helmet sound channel.
 - Malaysia TUDM livery uses the provided custom fuel tanks.
 - Station arming switches no longer produce a debug printout when the weapon selector in the BOMBS & GM ARM position.
-- Kneeboard Manual typos in page reference annotations.
+- Fixed several small Kneeboard Manual typos, mostly in page reference annotations.
 
 ## Version 2.1.1 - 27 Apr 2023
 

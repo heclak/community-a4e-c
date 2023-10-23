@@ -6,7 +6,7 @@ SetScale(FOV)
 -- ILS DATA
 
 -- add background image for kneeboard
-add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_13.png")
+add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_14.png")
 
 local gettext = require("i_18n")
 _ = gettext.translate
@@ -26,7 +26,7 @@ predefined_font_item	= {FontSizeY1 * 0.675,	FontSizeX1 * 0.675,	-0.0009,	0.0}
 
 -- lines
 local FirstLineY	= 1.3
-local LineSizeY		= 0.0975
+local LineSizeY		= 0.085
 
 local function getLineY(line)
 	return FirstLineY - LineSizeY * (line)
