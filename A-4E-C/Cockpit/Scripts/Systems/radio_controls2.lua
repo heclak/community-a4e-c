@@ -192,7 +192,6 @@ function fnc_arc51_voip_ptt(value)
 end
 
 function fnc_arc51_voip_guard_ptt(value)
-    print_message_to_user("PTT "..tostring(value))
     extended_dev_guard:pushToTalkVOIP(value == 1, false )
 end
 
