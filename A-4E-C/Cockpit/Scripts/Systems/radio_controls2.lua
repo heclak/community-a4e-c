@@ -86,6 +86,7 @@ local arc51_preset = 0
 local arc51_frequency = 256E6
 local arc51_change = false
 local arc51_volume = 0
+local arc51_voip_factor = 1
 local arc51_volume_moving = 0
 local arc51_squelch = 0
 
@@ -145,14 +146,6 @@ function post_initialize()
     sync_switches()
 end
 
-function fnc_arc51_mode(value)
-    arc51_mode = round(value*10)
-end
-
-function fnc_arc51_xmitmode(value)
-    arc51_xmit_mode = round(value + 1)
-end
-
 function fnc_arc51_volume(value)
     if value < 0.0 then
         dev:performClickableAction(device_commands.arc51_volume, 0.0, false)
@@ -160,10 +153,27 @@ function fnc_arc51_volume(value)
         dev:performClickableAction(device_commands.arc51_volume, 1.0, false)
     else
         arc51_volume = value
-        extended_dev:setVolume(arc51_volume)
-        extended_dev_guard:setVolume(arc51_volume)
+        extended_dev:setVolume(arc51_volume * arc51_voip_factor)
+        extended_dev_guard:setVolume(arc51_volume * arc51_voip_factor)
     end
 end
+
+function fnc_arc51_mode(value)
+    arc51_mode = round(value*10)
+
+    if arc51_mode == ARC51_ADF then
+        arc51_voip_factor = 0.5
+    else
+        arc51_voip_factor = 1
+    end
+
+    fnc_arc51_volume(arc51_volume)
+end
+
+function fnc_arc51_xmitmode(value)
+    arc51_xmit_mode = round(value + 1)
+end
+
 
 function fnc_arc51_squelch(value)
     arc51_squelch = value
