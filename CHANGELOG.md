@@ -2,25 +2,28 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
-## Version 2.1.2 - ?? ??? 2023
+## Version 2.1.2 - ?? October 2023
 
-### Added
-- Delivery information for Shrike and Sidewinder provided in Kneeboard Manual, page 3-5.
+#### Added
+- Delivery information for Shrike and Sidewinder provided in the Kneeboard Manual on page 3-5.
 - Else keybinds for the Chaff Dispenser Select added for 3-position switch support.
 - Radar Altitude Warning - Slew axis.
+- Added the AIM-9P3 to the loadout options.
 - Added the AGM-45B Shrike to the loadout options.
-- Added 2.75" Hydra rocket loadouts for LAU-68 launchers, including white phosphorous, HE, HEAT, Para Illum, Practice Smoke, as well as Mk1, Mk61, and WRU-1/B practice munitions to the loadout options. LAU-61 launchers with HE and white phosphorous warheads are also available. Outboard stations support 1 launcher, inboard stations up to 3, and up to 3 can be added on centerline station.
+- Added 2.75" Hydra rocket loadouts for LAU-3 and LAU-68 launchers, including white phosphorous, HE, HEAT, as well as Mk1, Mk61, and WRU-1/B practice munitions to the loadout options. Outboard stations support 1 launcher, inboard stations up to 2, and up to 3 can be added on centerline station. LAU-68 launchers also allow loadouts with Para Illum and Practice Smoke Hydra rockets.
 
-### Changed
+#### Changed
 - A new NWS (Nosewheel Simulation) should make correcting turns on the ground, eliminating the "stuck wheel" phenomenon after a grievous taxi error. Amaze your friends with your drifting skill!
-- Recalculated the weight of multiple rocket payloads.
-- The listed names of items mounted to multiple ejector racks like the BRU-41 and BRU-42 match DCS World's naming conventions.
+- Recalculated the weight of multiple rocket launcher pod payloads.
+- Standardized naming conventions for loadouts with multiple ejector racks.
 
-### Fixed
+#### Fixed
+- Intermittent TACAN and MCL system failures in multiplayer should be reduced, if not eliminated.
 - Black lines along center line of fuel tanks have been removed.
-- Loadout display inaccuracies in Kneeboard Manual, page 1-5 are corrected.
-- The AN/APG-53A Radar OBST tone and AN/APR-25 RHWR audio properly route to DCS World's "Helmet" sound channel.
+- Loadout display inaccuracies in the Kneeboard Manual on page 1-6 are corrected.
+- The AN/APG-53A Radar OBST tone and AN/APR-25 RHWR audio properly route to the Helmet sound channel.
 - Malaysia TUDM livery uses the provided custom fuel tanks.
+- Station arming switches no longer produce a debug printout when the weapon selector in the BOMBS & GM ARM position.
 
 ## Version 2.1.1 - 27 Apr 2023
 

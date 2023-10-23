@@ -6,11 +6,9 @@ The A-4 was a cold war workhorse which proved to be a capable, reliable light at
 
 ### A-4E-C Version 2.1.2 Community Update
 
-Hello, A-4E-C pilots! We hope you are well. We'd like to highlight a few important items about this update, and salute the newest group of contributors to the A-4E-C project, whose names appear in the changelog below:
-- This update, A-4E-C 2.1.0, and all subsequent updates will not be compatible with DCS versions before 2.8.0.32066. Our last update, A-4E-C 2.0.1, is not compatible with DCS versions after 2.7.18.30765. The most common effects of these incompatibilities are client-side crashes. Always ensure servers, clients, and DCS versions employed are the most compatible options available!
-- If you enjoy suppression of enemy air defenses (SEAD) in the A-4E-C, we've provided new functionality and depth to the audio environment of the AN/APR-25 Radar Homing and Warning System. New sounds specific to radar types and individual units in the DCS World theater make getting locked up a whole new ballgame. Additionally, ECM is modeled when the AN/APR-25 function selector is in the RPT position. Additional documentation is provided in the changelog below and in the kneeboard manual.
-- We've added new audio feedback for braking. This feedback is extremely useful for understanding ground handling response: If you hear a tire skidding, you are locking up the nosewheel by over-braking, and you should take this as a cue to release the brake, before tapping the brake toward your desired turn (and add a little throttle if you need to).
-- This update also includes efforts to make piloting more accessible. Dozens of new input bindings for keyboard, mouse, and joystick inputs offer a wealth of opportunities for custom controller builders. Users with extensive input bindings might need to do a bit of housekeeping, but we hope the new additions make up any efforts you have to undertake! If you are interested in adding to the module's accessibility options, please reach out on Discord! https://discord.gg/tQZbkTQ
+Hello, A-4E-C pilots! We hope you are well. This update fixes some bugs and brings the module into compliance with DCS 2.9, currently in OpenBeta. If you play on the main branch, wait to update your A-4E-C installation: this version of the A-4E-C 2.1.2 requires a minimum version of DCS 2.9.0.46801, and older versions of the A-4E-C are incompaible with this version or later. Always ensure servers, clients, and DCS versions are aligned and compatible! 
+Additional information about what's new this update is available in the changelog below. 
+If you are interested in learning more about the module, please reach out on Discord! https://discord.gg/tQZbkTQ
 Thank you for flying the A-4E-C!
 ***DO NOT redistribute this mod without permission!***
 
@@ -53,22 +51,26 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 ### Version 2.1.2 Changelog: Featured Items
 
 #### Added
-- Delivery information for Shrike and Sidewinder provided in Kneeboard Manual, page 3-5.
-- Else keybinds for the Chaff Dispenser Select added for 3-position switch support.
-- Radar Altitude Warning - Slew axis.
-- Added the AGM-45B Shrike to the loadout options.
-- Added 2.75" Hydra rocket loadouts for LAU-68 launchers, including white phosphorous, HE, HEAT, Para Illum, Practice Smoke, as well as Mk1, Mk61, and WRU-1/B practice munitions to the loadout options. LAU-61 launchers with HE and white phosphorous warheads are also available. Outboard stations support 1 launcher, inboard stations up to 3, and up to 3 can be added on centerline station.
+- AN/ARN-25 ADF (Automated Direction Finder) is now modeled. Information on using the equipment is detailed in the Kneeboard Manual on page 1-3.
+- Radio audio (including VOIP radios) can now be adjusted using the AN/ARC-51 UHF Radio volume knob.
+- Delivery information for Shrike and Sidewinder provided in Kneeboard Manual on page 3-5.
+- Else bindings for the Chaff Dispenser Select (for 3-position switches).
+- Binding for Radar Altitude Warning - Slew axis.
+- AGM-45B Shrike loadouts for inboard and outboard stations.
+- Added 2.75" Hydra rocket loadouts for LAU-3 and LAU-68 launchers, including white phosphorous, HE, HEAT, as well as Mk1, Mk61, and WRU-1/B practice munitions to the loadout options. Outboard stations support 1 launcher, inboard stations up to 2, and up to 3 can be added on centerline station. LAU-68 launchers also allow loadouts with Para Illum and Practice Smoke Hydra rockets.
 
 #### Changed
-- A new NWS (Nosewheel Simulation) should make correcting turns on the ground, eliminating the "stuck wheel" phenomenon after a grievous taxi error. Amaze your friends with your drifting skill!
-- Recalculated the weight of multiple rocket payloads.
-- The listed names of items mounted to multiple ejector racks like the BRU-41 and BRU-42 match DCS World's naming conventions.
+- An updated NWS (that's Nosewheel Simulation, mind you) should make correcting turns on the ground, eliminating the "stuck wheel" due to over-braking in taxi. Amaze your friends with your drifting skill!
+- Recalculated the weight of rocket launcher pod payloads.
+- Standardized naming conventions for loadouts with multiple ejector racks.
 
 #### Fixed
+- Intermittent TACAN and MCL system failures in multiplayer should be reduced, if not eliminated.
 - Black lines along center line of fuel tanks have been removed.
-- Loadout display inaccuracies in Kneeboard Manual, page 1-5 are corrected.
-- The AN/APG-53A Radar OBST tone and AN/APR-25 RHWR audio properly route to DCS World's "Helmet" sound channel.
+- Loadout display inaccuracies in the Kneeboard Manual on page 1-6 are corrected.
+- The AN/APG-53A Radar OBST tone and AN/APR-25 RHWR audio properly route to the Helmet sound channel.
 - Malaysia TUDM livery uses the provided custom fuel tanks.
+- Station arming switches no longer produce a debug printout when the weapon selector in the BOMBS & GM ARM position.
 
 [See full changelog](https://github.com/heclak/community-a4e-c/blob/master/CHANGELOG.md)
 

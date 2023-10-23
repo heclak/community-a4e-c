@@ -16,10 +16,11 @@ For example, page "23" is "23.lua".
 
 1 Mission
   11 Navigation
-  12 Radio & TACAN
-  13 ILS Data
-  14 Mission Loadout
-  15 Weapons & Loadouts
+  12 UHF Radio
+  13 ADF, TACAN, & MCL
+  14 Radio & ILS Data
+  15 Mission Loadout
+  16 Weapons & Loadouts
 
 2 Radar
   21 AN/APN-141 Radar Altimiter & LAWS
