@@ -768,7 +768,6 @@ void ed_fm_set_command
 		//ed_fm_on_damage( (int)Scooter::Airframe::Damage::FUSELAGE_BOTTOM, 0.5 );
 		//ed_fm_on_damage( (int)Scooter::Airframe::Damage::NOSE_CENTER, 0.8 );
 		//ed_fm_on_damage( (int)Scooter::Airframe::Damage::NOSE_LEFT_SIDE, 0.8 );
-		Scooter::DamageProcessor::GetDamageProcessor().SetFailure( "Engine", 0.8 );
 		//ed_fm_on_damage( (int)Scooter::Airframe::Damage::FUSELAGE_BOTTOM, 0.4 );
 		
 		break;
