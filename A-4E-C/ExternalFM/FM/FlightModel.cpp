@@ -564,7 +564,7 @@ void Scooter::FlightModel::slats(double& dt)
 
 void Scooter::FlightModel::checkForOverstress( double dt )
 {
-	static constexpr double wing_break_time = 0.5;
+	static constexpr double wing_break_time = 0.2;
 
 	if ( abs(m_lwForce) > c_wingStructuralLimit )
 	{
