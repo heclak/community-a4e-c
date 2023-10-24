@@ -6,7 +6,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 
 #### Added
 - A new NWS (that's Nosewheel Simulation, mind you) makes correcting turns on the ground much easier, and eliminating the "stuck wheel" feeling due to over-braking in taxi. Amaze your friends with your drifting skill!
-- AN/ARC-51 UHF Radio supports DCS VOIP radios. In addition to Radio Microphone Push-to-Talk (PTT) Transmit binding for sending to VOIP radio, a second Radio Microphone Push-to-Talk (PTT) Guard bindings allows the pilot to transmit to the guard frequency when the radio is in TR+G mode. See the Updated AN/ARC-51 UHF Radio guidance on page 1-2 for additional details.
+- AN/ARC-51 UHF Radio supports DCS VOIP radios. In addition to Radio Microphone Push-to-Talk (PTT) Transmit binding for sending to VOIP radio, a second Radio Microphone Push-to-Talk (PTT) Guard bindings allows the pilot to transmit to the guard frequency when the radio is in TR+G mode. These two bindings function identically to the DCS default "cockpit r.1 VoIP PTT" and "cockpit r.2 VoIP PTT" bindings, respectively, and you can use them instead if you wish. See the Updated AN/ARC-51 UHF Radio guidance on page 1-2 for additional details.
 - AN/ARN-25 ADF (Automated Direction Finder) system is now modeled for use with the AN/ARC-51. Information on using the equipment is detailed in the Kneeboard Manual on page 1-3.
 - Weapons:
   - AGM-45B Shrike is available the loadout options for inboard and outboard stations.
