@@ -51,16 +51,12 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 ### Version 2.1.2 Changelog: Featured Items
 
 #### Added
-- AN/ARN-25 ADF (Automated Direction Finder) is now modeled. Information on using the equipment is detailed in the Kneeboard Manual on page 1-3.
+- AN/ARC-51 UHF Radio supports DCS VOIP radios. In addition to Radio Microphone Push-to-Talk (PTT) Transmit binding for sending to VOIP radio, a second Radio Microphone Push-to-Talk (PTT) Guard bindings allows the pilot to transmit to the guard frequency when the radio is in TR+G mode. See the Updated AN/ARC-51 UHF Radio guidance on page 1-2 for additional details.
+- AN/ARN-25 ADF (Automated Direction Finder) system is now modeled. Information on using the equipment is detailed in the Kneeboard Manual on page 1-3.
 - Weapons:
-  - AIM-9P3 is available in the loadout options for inboard and outboard stations.
   - AGM-45B Shrike is available the loadout options for inboard and outboard stations.
   - 2.75" Hydra rockets are available loadout options with LAU-3 (19 rocket) and LAU-68 (7 rocket) launchers, including white phosphorous, HE, HEAT, as well as Mk1, Mk61, and WRU-1/B practice munitions to the loadout options. LAU-68 launchers also allow loadouts with Para Illum and Practice Smoke Hydra rockets. Outboard stations support 1 launcher, inboard stations up to 2, and up to 3 can be added on the centerline station.
-- Cold Start, Taxi, Takeoff, and Free Flight missions for the Sinai map are available in the Instant Action.
-- Input bindings:
-  - Else option for the Chaff Dispenser Select added (for a 3-position switch).
-  - Radar Altitude Warning - Slew axis.
-- System failures triggered by damage, or as a failure in mission editor:
+- Enhanced damage modeling: In addition to Reduced effect of transient forces to prevent wake breaking wings, the following system failures can be triggered by damage, or selected as a failure in mission editor:
   - Radar Receiver
   - Gear Jamming
   - Gear Actuator
@@ -74,14 +70,16 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Wing Tank Leak
   - Fuselage Tank Leak
   - Engine and Inlet
+- Cold Start, Taxi, Takeoff, and Free Flight missions for the Sinai map are available in the Instant Action.
+- Input bindings:
+  - Else option for the Chaff Dispenser Select added (for a 3-position switch).
+  - Radar Altitude Warning - Slew axis.
 
 #### Changed
 - An updated NWS (that's Nosewheel Simulation, mind you) makes correcting turns on the ground much easier, and eliminating the "stuck wheel" feeling due to over-braking in taxi. Amaze your friends with your drifting skill!
-- Reduced effect of transient forces to prevent wake breaking wings.
 - Standardized naming conventions for loadouts with multiple ejector racks, and provided additional detail for weapon payloads original to the A-4E-C.
 - Recalculated the weight of rocket launcher pod payloads.
 - Kneeboard Manual:
-  - Updated AN/ARC-51 UHF Radio guidance on page 1-2.
   - Updated AN/ARN-52 TACAN guidance on page 1-3.
   - Updated Airfield Radio and ILS data on page 1-4, which can now accomodate up to 30 entries, making it compatible with the contents of the Sinai map.
   - Updated Shrike and Sidewinder delivery guidance on page 3-5.
