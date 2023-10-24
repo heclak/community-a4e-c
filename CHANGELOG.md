@@ -40,8 +40,8 @@ Please list the changes you've made in this file. We should try to follow the gu
   - Updated AN/APR-25 Radar Homing and Warning System guidance on page 3-6.
 
 #### Fixed
+- **TACAN and MCL system crashes.**
 - The AN/ARC-51 UHF Radio volume knob now adjusts radio and VOIP radio volume.
-- Intermittent TACAN and MCL system crashes in multiplayer should be reduced, if not eliminated.
 - The AN/APG-53A Radar OBST tone and AN/APR-25 RHWR audio properly route to the Helmet sound channel.
 - Black lines along center and around the nose cones of fuel tanks have been removed.
 - Malaysia TUDM livery uses the provided custom fuel tanks.
