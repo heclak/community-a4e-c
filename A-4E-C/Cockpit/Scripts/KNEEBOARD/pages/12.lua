@@ -26,7 +26,7 @@ predefined_font_item	= {FontSizeY1 * 0.75,	FontSizeX1 * 0.75,	-0.0009,	0.0}
 
 -- lines
 local FirstLineY	= 1.3
-local LineSizeY		= 0.1075
+local LineSizeY		= 0.09
 
 local function getLineY(line)
 	return FirstLineY - LineSizeY * (line)

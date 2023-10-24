@@ -60,9 +60,24 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 - Input bindings:
   - Else option for the Chaff Dispenser Select added (for a 3-position switch).
   - Radar Altitude Warning - Slew axis.
+- System failures triggered by damage, or as a failure in mission editor:
+  - Radar Receiver
+  - Gear Jamming
+  - Gear Actuator
+  - Pitot Tube
+  - Static Port
+  - Boost Pump
+  - Wing Pump
+  - Aileron Actuators
+  - Elevator Actuator
+  - Rudder Actuator
+  - Wing Tank Leak
+  - Fuselage Tank Leak
+  - Engine and Inlet
 
 #### Changed
 - An updated NWS (that's Nosewheel Simulation, mind you) makes correcting turns on the ground much easier, and eliminating the "stuck wheel" feeling due to over-braking in taxi. Amaze your friends with your drifting skill!
+- Reduced effect of transient forces to prevent wake breaking wings.
 - Standardized naming conventions for loadouts with multiple ejector racks, and provided additional detail for weapon payloads original to the A-4E-C.
 - Recalculated the weight of rocket launcher pod payloads.
 - Kneeboard Manual:
@@ -74,7 +89,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 
 #### Fixed
 - The AN/ARC-51 UHF Radio volume knob now adjusts radio and VOIP radio volume.
-- Intermittent TACAN and MCL system failures in multiplayer should be reduced, if not eliminated.
+- Intermittent TACAN and MCL system crashes in multiplayer should be reduced, if not eliminated.
 - The AN/APG-53A Radar OBST tone and AN/APR-25 RHWR audio properly route to the Helmet sound channel.
 - Black lines along center and around the nose cones of fuel tanks have been removed.
 - Malaysia TUDM livery uses the provided custom fuel tanks.

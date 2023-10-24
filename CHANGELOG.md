@@ -14,9 +14,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 - Input bindings:
   - Else option for the Chaff Dispenser Select added (for a 3-position switch).
   - Radar Altitude Warning - Slew axis.
-
-- Improved Damage System
-  Reworked Existing Damage for engine and wing (reduced effect of transient forces to prevent wake breaking wings). Added new failures and damage which are triggered by damage:
+- System failures triggered by damage, or as a failure in mission editor:
   - Radar Receiver
   - Gear Jamming
   - Gear Actuator
@@ -31,11 +29,9 @@ Please list the changes you've made in this file. We should try to follow the gu
   - Fuselage Tank Leak
   - Engine and Inlet
 
-  These can either be triggered by damage or as a failure in mission editor.
-
-
 #### Changed
 - An updated NWS (that's Nosewheel Simulation, mind you) makes correcting turns on the ground much easier, and eliminating the "stuck wheel" feeling due to over-braking in taxi. Amaze your friends with your drifting skill!
+- Reduced effect of transient forces to prevent wake breaking wings.
 - Standardized naming conventions for loadouts with multiple ejector racks, and provided additional detail for weapon payloads original to the A-4E-C.
 - Recalculated the weight of rocket launcher pod payloads.
 - Kneeboard Manual:
