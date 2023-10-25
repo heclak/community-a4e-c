@@ -77,6 +77,9 @@ local function get_outboard_weapons( side )
         { CLSID = "{GAR-8}",                                    connector = rocketConnector, arg_value = 0.2 },  -- AIM-9B, aligned to -3deg armament datum
         { CLSID = "{AIM-9P-ON-ADAPTER}",                        connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P
         { CLSID = "{AIM-9P5-ON-ADAPTER}",                       connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P5
+        { CLSID = "{A4E-AIM-9P3-ON-ADAPTER}",                   connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P3
+        { CLSID = "{A4E-ASQ-T50-ON-ADAPTER}",                   connector = rocketConnector, arg_value = 0.2 },  -- ASQ-T50
+        { CLSID = "{AIM-9J-ON-ADAPTER}",                        connector = rocketConnector, arg_value = 0.2 },  -- AIM-9J
         -- ROCKETS --
         --{ CLSID = "{3DFB7321-AB0E-11d7-9897-000476191836}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-61 Hydra WP156
         --{ CLSID = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}",     connector = rocketConnector, arg_value = 0.2 }, -- LAU-61 Hydra M151 HE
@@ -152,6 +155,9 @@ local function get_inboard_weapons( side )
         { CLSID = "{GAR-8}",                                            connector = rocketConnector, arg_value = 0.2 },  -- AIM-9B, aligned to -3deg armament datum
         { CLSID = "{AIM-9P-ON-ADAPTER}",                                connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P
         { CLSID = "{AIM-9P5-ON-ADAPTER}",                               connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P5
+        { CLSID = "{A4E-AIM-9P3-ON-ADAPTER}",                           connector = rocketConnector, arg_value = 0.2 },  -- AIM-9P3
+        { CLSID = "{A4E-ASQ-T50-ON-ADAPTER}",                           connector = rocketConnector, arg_value = 0.2 },  -- ASQ-T50
+        { CLSID = "{AIM-9J-ON-ADAPTER}",                                connector = rocketConnector, arg_value = 0.2 },  -- AIM-9J        
         -- ROCKETS --
         { CLSID = "{LAU3_FFAR_WP156}",                                  connector = rocketConnector, arg_value = 0.2 }, -- FFAR M156 WP
         { CLSID = "{LAU3_FFAR_MK1HE}",                                  connector = rocketConnector, arg_value = 0.2 }, -- FFAR Mk1 HE

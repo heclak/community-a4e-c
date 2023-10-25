@@ -1,5 +1,6 @@
 -- Weapons definitions here
 dofile("Scripts/Database/Weapons/warheads.lua")
+dofile("Scripts/Database/generated_wstypes.lua")
 print("WEAPON TEST")
 
 -- Support Functions:
@@ -1944,6 +1945,44 @@ function make_cbu_a4e_multi(dispenser,count,side) -- assemble a rack of cluster 
     end
     return data
 end
+
+local aim9_variants =
+{
+	["CATM-9M"] 	= {picture = "us_CATM-9.png",   CLSID = "CATM-9M", 								  display_name = _("Captive AIM-9M for ACM")	  	 	,wstype = {wsType_Weapon,wsType_Missile,wsType_AA_TRAIN_Missile,CATM_9},	    category = CAT_AIR_TO_AIR, mass = 85.73 },
+	["ais-pod-t50"] = {picture = "ais-pod-t50.png",                                                   display_name = _("AN/ASQ-T50 TCTS Pod - ACMI Pod")	,wstype = {4,	15,	47	,	 108},	category = CAT_PODS,       mass = 62.6  },
+	["AIM-9P3"]		= {picture = "us_AIM-9P.png",   CLSID = "{AIM-9P3}",							  display_name = _("AIM-9P3 Sidewinder IR AAM")	,wstype = "weapons.missiles.AIM-9P3",	category = CAT_AIR_TO_AIR, mass = 80.7 },
+}
+-- YOINKED from CoreMods, aim9_family.lua
+local AIM9_DRAG  			  = 1.68 / 4096.0 -- 4096 - magic number from long time ago when flanker was 1.5 
+local AIM9_DRAG_WITH_ADAPTER  = 0.00014 -- do not use this
+local lau7_weight = 41
+local lau7_drag = 0.0002
+
+local function aim_9_with_adapter(CLSID,aim_9_variant)
+	local var 	   = aim9_variants[aim_9_variant] or aim9_variants["AIM-9"]
+	local var_mass = var.mass or 85.5
+	declare_loadout({
+		category			= var.category,
+		CLSID 				= CLSID,
+		Picture				= var.picture,
+        PictureBlendColor   = "0xffffffff",
+		displayName			=	"LAU-7 with".." "..var.display_name,
+		wsTypeOfWeapon		=   var.wstype,
+		attribute			=	{4,	4,	32,	111},
+		Cx_pil				=	AIM9_DRAG + lau7_drag,
+		Count				=	1,
+		Weight_Empty		=	lau7_weight,
+		Weight				=	lau7_weight + var_mass,
+		Elements			=	
+		{
+			{	ShapeName	=	"aero-3b"	   	  ,	IsAdapter  	   =   true  }, 
+			{	ShapeName	=	aim_9_variant	  ,	connector_name =  "Point"},
+		}-- end of Elements
+	})
+end
+
+aim_9_with_adapter("{A4E-AIM-9P3-ON-ADAPTER}", "AIM-9P3")
+aim_9_with_adapter("{A4E-ASQ-T50-ON-ADAPTER}", "ais-pod-t50")
 
 -- {<rocket_pod>_TER_3_C}
 -- {<rocket_pod>_TER_2_C}
