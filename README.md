@@ -29,6 +29,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 - AN/APN-153 Doppler Navigation Radar
 - AN/ASN-41 Navigation Computer
 - AN/ARC-51 UHF Radio
+- AN/ARN-25 ADF Automated Direction Finder
 - AN/ARN-52 TACAN
 - AN/ARA-63 MCL (ICLS)
 - AN/APN-141 Radar Altimeter
@@ -52,11 +53,13 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
 
 #### Added
 - A new NWS (that's Nosewheel Simulation, mind you) makes correcting turns on the ground much easier, and eliminating the "stuck wheel" feeling due to over-braking in taxi. Amaze your friends with your drifting skill!
-- AN/ARC-51 UHF Radio supports DCS VOIP radios. In addition to Radio Microphone Push-to-Talk (PTT) Transmit binding for sending to VOIP radio, a second Radio Microphone Push-to-Talk (PTT) Guard bindings allows the pilot to transmit to the guard frequency when the radio is in TR+G mode. These two bindings function identically to the DCS default "cockpit r.1 VoIP PTT" and "cockpit r.2 VoIP PTT" bindings, respectively, and you can use them instead if you wish. See the Updated AN/ARC-51 UHF Radio guidance on page 1-2 for additional details.
-- AN/ARN-25 ADF (Automated Direction Finder) system is now modeled for use with the AN/ARC-51. Information on using the equipment is detailed in the Kneeboard Manual on page 1-3.
+- AN/ARC-51 UHF Radio supports DCS VOIP radios. In addition to Radio Microphone Push-to-Talk (PTT) Transmit binding for sending to VOIP radio, a second Radio Microphone Push-to-Talk (PTT) Guard bindings allows the pilot to transmit to the guard frequency when the radio is in TR+G mode. These two bindings function identically to the DCS default "cockpit r.1 VoIP PTT" and "cockpit r.2 VoIP PTT" bindings, respectively, and you can use them instead if you wish. See the Updated AN/ARC-51 UHF Radio guidance on page 1-2 in the Kneeboard Manual for additional details.
+- AN/ARN-25 Automated Direction Finder (ADF) system is now modeled for use with the AN/ARC-51 UHF Radio. Information on using the equipment is detailed in the Kneeboard Manual on page 1-3.
 - Weapons:
-  - AGM-45B Shrike is available the loadout options for inboard and outboard stations.
+  - AIM-9J and AIM-9P3 are available on inboard and outboard stations.
+  - AGM-45B Shrike is available loadout options on inboard and outboard stations.
   - 2.75" Hydra rockets are available loadout options with LAU-3 (19 rocket) and LAU-68 (7 rocket) launchers, including white phosphorous, HE, HEAT, as well as Mk1, Mk61, and WRU-1/B practice munitions to the loadout options. LAU-68 launchers also allow loadouts with Para Illum and Practice Smoke Hydra rockets. Outboard stations support 1 launcher, inboard stations up to 2, and up to 3 can be added on the centerline station.
+  - AN/ASQ-T50 TCTS ACMI pod is available on inboard and outboard stations.
 - Enhanced damage modeling: In addition to Reduced effect of transient forces to prevent wake breaking wings, and improved engine damage. The following system failures can be triggered by damage, or selected as a failure in mission editor:
   - Radar Receiver
   - Gear Jamming
@@ -84,6 +87,7 @@ SkateZilla, uboats, Dr. Manius, LevelPulse, Cubeboy, Talo, GVad, OpticFlow, pohl
   - Updated Airfield Radio and ILS data on page 1-4, which can now accomodate up to 30 entries, making it compatible with the contents of the Sinai map.
   - Updated Shrike and Sidewinder delivery guidance on page 3-5.
   - Updated AN/APR-25 Radar Homing and Warning System guidance on page 3-6.
+  - Compressed images for smaller file size and faster loading.
 
 #### Fixed
 - **TACAN and MCL system crashes.**

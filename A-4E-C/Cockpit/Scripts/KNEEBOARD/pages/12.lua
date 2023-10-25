@@ -6,7 +6,7 @@ SetScale(FOV)
 -- RADIO PRESETS
 
 -- add background image for kneeboard
-add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_12.png")
+add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_12.dds")
 
 local gettext = require("i_18n")
 _ = gettext.translate
