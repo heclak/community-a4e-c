@@ -1948,7 +1948,7 @@ function update_adf()
         return
     end
 
-    local speed = math.rad(60.0)
+    local speed = math.rad(72.0)
     local step = speed * update_time_step
 
     adf_antenna_target = radio_dev:getADFBearing()
