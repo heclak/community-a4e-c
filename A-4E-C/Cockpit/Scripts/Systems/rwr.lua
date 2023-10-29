@@ -492,7 +492,7 @@ function update_for_contact(general_type, type, signal, power)
 
     local info = emitter_info[type]
 
-	print_message_to_user(type)
+	--print_message_to_user(type)
 
     if info then
         audio_param = get_closest_priority_sound(info.audio, signal)
