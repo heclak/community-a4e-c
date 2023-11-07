@@ -111,16 +111,16 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;DISABLE_IMGUI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)FM;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)FM;$(SolutionDir);$(SolutionDir)ext\imgui;$(SolutionDir)ext\DCS-EFM-ImGui-main\Include;$(SolutionDir)ext\minhook\include;$(SolutionDir)ext\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\FM\x64\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>AircraftState.obj;Maths.obj;AeroElement.obj;Engine2.obj;FuelSystem2.obj;FlightModel.obj;Timer.obj;Logger.obj;Input.obj;Axis.obj;Airframe.obj;Actuator.obj;Damage.obj;dllmain.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\FM\x64\Debug;$(SolutionDir)ext\minhook\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>AircraftState.obj;Maths.obj;AeroElement.obj;Engine2.obj;FuelSystem2.obj;FlightModel.obj;Timer.obj;Logger.obj;Input.obj;Axis.obj;Airframe.obj;Actuator.obj;Damage.obj;dllmain.obj;ImguiDisplay.obj;imgui.obj;imgui_demo.obj;imgui_draw.obj;imgui_tables.obj;imgui_widgets.obj;imgui_impl_dx11.obj;imgui_impl_win32.obj;FmGui.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -129,9 +129,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;DISABLE_IMGUI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)FM;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)FM;$(SolutionDir);$(SolutionDir)ext\imgui;$(SolutionDir)ext\DCS-EFM-ImGui-main\Include;$(SolutionDir)ext\minhook\include;$(SolutionDir)ext\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -139,8 +139,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\FM\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>AircraftState.obj;Maths.obj;AeroElement.obj;Engine2.obj;FuelSystem2.obj;FlightModel.obj;Timer.obj;Logger.obj;Input.obj;Axis.obj;Airframe.obj;Actuator.obj;Damage.obj;dllmain.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\FM\x64\Release;$(SolutionDir)ext\minhook\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>AircraftState.obj;Maths.obj;AeroElement.obj;Engine2.obj;FuelSystem2.obj;FlightModel.obj;Timer.obj;Logger.obj;Input.obj;Axis.obj;Airframe.obj;Actuator.obj;Damage.obj;dllmain.obj;ImguiDisplay.obj;minhook.x64.lib;imgui.obj;imgui_demo.obj;imgui_draw.obj;imgui_tables.obj;imgui_widgets.obj;imgui_impl_dx11.obj;imgui_impl_win32.obj;FmGui.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

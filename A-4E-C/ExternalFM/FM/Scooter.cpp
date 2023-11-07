@@ -35,29 +35,34 @@
 #include "MouseControl.h"
 #include "ModifierEmitter.h"
 #include "Damage.h"
+#include "Scooter.h"
+#include "ImguiDisplay.h"
+#include <imgui.h>
 
 //============================= Statics ===================================//
-static Scooter::AircraftState* s_state = NULL;
-static Scooter::Interface* s_interface = NULL;
-static Scooter::Input* s_input = NULL;
-static Scooter::Engine2* s_engine = NULL;
-static Scooter::Airframe* s_airframe = NULL;
-static Scooter::FlightModel* s_fm = NULL;
-static Scooter::Avionics* s_avionics = NULL;
-static Scooter::FuelSystem2* s_fuelSystem = NULL;
-static LuaVM* s_luaVM = NULL;
-static Scooter::ILS* s_ils = NULL;
-static Asteroids* s_asteroids = NULL;
+static Scooter::AircraftState* s_state = nullptr;
+static Scooter::Interface* s_interface = nullptr;
+static Scooter::Input* s_input = nullptr;
+static Scooter::Engine2* s_engine = nullptr;
+static Scooter::Airframe* s_airframe = nullptr;
+static Scooter::FlightModel* s_fm = nullptr;
+static Scooter::Avionics* s_avionics = nullptr;
+static Scooter::FuelSystem2* s_fuelSystem = nullptr;
+static LuaVM* s_luaVM = nullptr;
+static Scooter::ILS* s_ils = nullptr;
+static Asteroids* s_asteroids = nullptr;
 
 static std::vector<LERX> s_splines;
 
-static Scooter::Radar* s_radar = NULL;
-static MouseControl* s_mouseControl = NULL;
+static Scooter::Radar* s_radar = nullptr;
+static MouseControl* s_mouseControl = nullptr;
 
-static HWND s_window = NULL;
+static ImguiDisplay* s_display = nullptr;
+
+static HWND s_window = nullptr;
 static bool s_focus = false;
 
-static unsigned char* s_testBuffer = NULL;
+static unsigned char* s_testBuffer = nullptr;
 
 static Logger* s_logger;
 
@@ -181,7 +186,7 @@ void checkCompatibility(const char* path)
 		return;
 	
 	int selection = MessageBoxA( 
-		NULL, 
+		nullptr, 
 		"The CH-53E and CH-47 mods are completely incompatible with the A-4E-C due to a DCS bug triggered\
  by the CH-53E and CH-47 configuration. This bug causes memory corruption and undefined behaviour.\
  To use the A-4E-C uninstall the CH-53E and CH-47 mods.", 
@@ -195,6 +200,14 @@ void checkCompatibility(const char* path)
 
 void init(const char* config)
 {
+	ImguiDisplay::Create();
+
+
+	ImguiDisplay::AddImguiItem( "Avionics", "Test", []()
+		{
+			ImGui::Text( "Hello World" );
+	} );
+
 	srand( 741 );
 	s_luaVM = new LuaVM;
 
@@ -226,6 +239,8 @@ void init(const char* config)
 	s_asteroids = new Asteroids( s_interface );
 	s_mouseControl = new MouseControl;
 
+	
+
 
 	s_window = GetActiveWindow();
 	printf( "Have window: %p\n", s_window );
@@ -247,6 +262,8 @@ void init(const char* config)
 
 void cleanup()
 {
+	ImguiDisplay::Destroy();
+
 	delete s_luaVM;
 	delete s_state;
 	delete s_interface;
@@ -262,24 +279,25 @@ void cleanup()
 	delete s_mouseControl;
 	delete s_logger;
 
+
 	Scooter::DamageProcessor::Destroy();
 
-	s_luaVM = NULL;
-	s_state = NULL;
-	s_interface = NULL;
-	s_input = NULL;
-	s_engine = NULL;
-	s_airframe = NULL;
-	s_avionics = NULL;
-	s_fm = NULL;
-	s_ils = NULL;
-	s_fuelSystem = NULL;
-	s_radar = NULL;
-	s_asteroids = NULL;
-	s_mouseControl = NULL;
-	s_logger = NULL;
+	s_luaVM = nullptr;
+	s_state = nullptr;
+	s_interface = nullptr;
+	s_input = nullptr;
+	s_engine = nullptr;
+	s_airframe = nullptr;
+	s_avionics = nullptr;
+	s_fm = nullptr;
+	s_ils = nullptr;
+	s_fuelSystem = nullptr;
+	s_radar = nullptr;
+	s_asteroids = nullptr;
+	s_mouseControl = nullptr;
+	s_logger = nullptr;
 
-	s_window = NULL;
+	s_window = nullptr;
 	s_splines.clear();
 
 	releaseAllEmulatedKeys();
@@ -1066,8 +1084,9 @@ bool ed_fm_pop_simulation_event(ed_fm_simulation_event& out)
 		s_airframe->catapultStateSent() = true;
 		return true;
 	}
-	else if (s_airframe->catapultState() == Scooter::Airframe::ON_CAT_READY)
+	else if (s_airframe->catapultState() == Scooter::Airframe::ON_CAT_READY && !s_airframe->catapultStateSent() )
 	{
+		s_airframe->catapultStateSent() = true;
 		bool autoMode = s_interface->getCatAutoMode();
 		double thrust = 0.0;
 		double speed = 0.0;
@@ -1081,8 +1100,8 @@ bool ed_fm_pop_simulation_event(ed_fm_simulation_event& out)
 		out.event_params[0] = 1;
 		out.event_params[1] = 3.0f;
 		out.event_params[2] = speed;
-		out.event_params[3] = thrust;
-		s_airframe->catapultState() = Scooter::Airframe::ON_CAT_WAITING;
+		out.event_params[3] = 1e6;
+		//s_airframe->catapultState() = Scooter::Airframe::ON_CAT_WAITING;
 		return true;
 	}
 	else
@@ -1329,7 +1348,7 @@ void ed_fm_release ()
 	if ( g_log )
 	{
 		fclose( g_log );
-		g_log = NULL;
+		g_log = nullptr;
 	}
 #endif
 }

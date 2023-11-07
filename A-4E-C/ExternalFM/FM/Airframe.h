@@ -463,6 +463,8 @@ public:
 	}
 private:
 
+	void ImGuiDebugWindow();
+
 	//Airframe Constants
 	const double m_hookExtendTime = 1.5;
 
