@@ -7,7 +7,7 @@ std::unique_ptr<Scooter::DamageProcessor> Scooter::DamageProcessor::m_damage_pro
 Scooter::DamageProcessor::DamageProcessor( Interface& inter ) : m_interface( inter )
 {
     ImguiDisplay::AddImguiItem( "Airframe", "Damage", [this]() {
-        //ImGuiDebugWindow();
+        ImGuiDebugWindow();
     } );
 }
 
