@@ -8,7 +8,7 @@ Please list the changes you've made in this file. We should try to follow the gu
 - AN/APR-25 RHWS audio responses for SA-8, SA-10, SA-11, SA-13, and SA-19 search and tracking radars. Like the SA-3, these units give no audible launch indication.
 
 #### Changed
-- 
+- AN/ARN-25 Automated Direction Finder (ADF) antenna rotation speed increased.
 - Kneeboard Manual:
   - 
 
