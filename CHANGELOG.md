@@ -2,7 +2,20 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
-## Version 2.2-beta - 23 Oct 2023
+## Version 2.2.1 - ?? Nov 2023
+
+#### Added
+- AN/APR-25 RHWS audio responses for SA-8, SA-10, SA-11, SA-13, and SA-19 search and tracking radars. Like the SA-3, these units give no audible launch indication.
+
+#### Changed
+- 
+- Kneeboard Manual:
+  - 
+
+#### Fixed
+- The ECM Panel REC light enables if the AN/APR-25 RHWS is contacted by an SA-3 radar.
+
+## Version 2.2 - 23 Oct 2023
 
 #### Added
 - A new NWS (that's Nosewheel Simulation, mind you) makes correcting turns on the ground much easier, and eliminating the "stuck wheel" feeling due to over-braking in taxi. Amaze your friends with your drifting skill!
