@@ -105,6 +105,15 @@
     <ClCompile Include="BaseComponent.cpp">
       <Filter>A4-Skyhawk</Filter>
     </ClCompile>
+    <ClCompile Include="..\ext\implot\implot.cpp">
+      <Filter>A4-Skyhawk\ext\implot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ext\implot\implot_demo.cpp">
+      <Filter>A4-Skyhawk\ext\implot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ext\implot\implot_items.cpp">
+      <Filter>A4-Skyhawk\ext\implot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ED_FM_Utility.h" />
@@ -306,6 +315,9 @@
     </Filter>
     <Filter Include="A4-Skyhawk\ext\imgui\backend">
       <UniqueIdentifier>{93078454-5026-4be9-bc0a-65a6b0f8f2a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="A4-Skyhawk\ext\implot">
+      <UniqueIdentifier>{62e64102-2539-4850-bbb0-e60543107324}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

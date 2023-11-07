@@ -120,7 +120,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\FM\x64\Debug;$(SolutionDir)ext\minhook\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>AircraftState.obj;Maths.obj;AeroElement.obj;Engine2.obj;FuelSystem2.obj;FlightModel.obj;Timer.obj;Logger.obj;Input.obj;Axis.obj;Airframe.obj;Actuator.obj;Damage.obj;dllmain.obj;ImguiDisplay.obj;imgui.obj;imgui_demo.obj;imgui_draw.obj;imgui_tables.obj;imgui_widgets.obj;imgui_impl_dx11.obj;imgui_impl_win32.obj;FmGui.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>AircraftState.obj;Maths.obj;AeroElement.obj;Engine2.obj;FuelSystem2.obj;FlightModel.obj;Timer.obj;Logger.obj;Input.obj;Axis.obj;Airframe.obj;Actuator.obj;Damage.obj;dllmain.obj;ImguiDisplay.obj;imgui.obj;imgui_demo.obj;imgui_draw.obj;imgui_tables.obj;imgui_widgets.obj;imgui_impl_dx11.obj;imgui_impl_win32.obj;FmGui.obj;implot.obj;implot_demo.obj;implot_items.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -140,7 +140,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\FM\x64\Release;$(SolutionDir)ext\minhook\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>AircraftState.obj;Maths.obj;AeroElement.obj;Engine2.obj;FuelSystem2.obj;FlightModel.obj;Timer.obj;Logger.obj;Input.obj;Axis.obj;Airframe.obj;Actuator.obj;Damage.obj;dllmain.obj;ImguiDisplay.obj;minhook.x64.lib;imgui.obj;imgui_demo.obj;imgui_draw.obj;imgui_tables.obj;imgui_widgets.obj;imgui_impl_dx11.obj;imgui_impl_win32.obj;FmGui.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>AircraftState.obj;Maths.obj;AeroElement.obj;Engine2.obj;FuelSystem2.obj;FlightModel.obj;Timer.obj;Logger.obj;Input.obj;Axis.obj;Airframe.obj;Actuator.obj;Damage.obj;dllmain.obj;ImguiDisplay.obj;minhook.x64.lib;imgui.obj;imgui_demo.obj;imgui_draw.obj;imgui_tables.obj;imgui_widgets.obj;imgui_impl_dx11.obj;imgui_impl_win32.obj;FmGui.obj;implot.obj;implot_demo.obj;implot_items.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

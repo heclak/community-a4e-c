@@ -1,5 +1,6 @@
 #pragma once
 #include <functional>
+#include <map>
 #include <memory>
 #include <string>
 #include <Windows.h>
@@ -57,5 +58,5 @@ private:
     void Input( UINT msg, WPARAM w_param, LPARAM l_param );
 
 
-    std::unordered_map<std::string, Menu> menus;
+    std::map<std::string, Menu> menus;
 };
