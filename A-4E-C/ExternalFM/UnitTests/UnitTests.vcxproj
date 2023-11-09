@@ -94,7 +94,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(SolutionDir);$(SolutionDir)ext\imgui;$(SolutionDir)ext\DCS-EFM-ImGui-main\Include;$(SolutionDir)ext\minhook\include;$(SolutionDir)ext\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(SolutionDir);$(SolutionDir)ext\imgui;$(SolutionDir)ext\DCS-EFM-ImGui-main\Include;$(SolutionDir)ext\minhook\include;$(SolutionDir)ext\imgui\backends;$(SolutionDir)ext\eigen-master\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;DISABLE_IMGUI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
       <PrecompiledHeaderFile>

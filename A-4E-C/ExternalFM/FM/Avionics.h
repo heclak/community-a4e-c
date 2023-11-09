@@ -20,6 +20,7 @@
 #include "CP741.h"
 #include "Interface.h"
 #include "AirDataComputer.h"
+#include "Gyro.h"
 //=========================================================================//
 
 namespace Scooter
@@ -45,6 +46,8 @@ public:
 	inline CP741& getComputer();
 private:
 
+	void ImGuiDebugWindow();
+
 	//constants
 	const double m_timeConstant = 4.5; //was 4.5
 	const double m_baseGain = 2.5;
@@ -58,10 +61,13 @@ private:
 
 	CP741 m_bombingComputer;
 	AirDataComputer m_adc;
+	Gyro m_gyro;
 
 	bool m_damperEnabled = false;
 
 	bool m_oxygen = true;
+
+	float m_gyro_debug_w = 0.0;
 };
 
 bool Avionics::getOxygen()

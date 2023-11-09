@@ -114,6 +114,9 @@
     <ClCompile Include="..\ext\implot\implot_items.cpp">
       <Filter>A4-Skyhawk\ext\implot</Filter>
     </ClCompile>
+    <ClCompile Include="Gyro.cpp">
+      <Filter>A4-Skyhawk\Avionics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ED_FM_Utility.h" />
@@ -268,6 +271,9 @@
     </ClInclude>
     <ClInclude Include="ImguiDisplay.h">
       <Filter>A4-Skyhawk</Filter>
+    </ClInclude>
+    <ClInclude Include="Gyro.h">
+      <Filter>A4-Skyhawk\Avionics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -596,6 +596,7 @@ void ed_fm_set_current_state
 	globalUp.y = 1.0 - (xx + zz);
 	globalUp.z = yz - wx;
 
+	s_state->SetWorldQuaternion( -quaternion_w, -quaternion_x, quaternion_z, quaternion_y );
 	s_state->setCurrentStateWorldAxis( Vec3( px, py, pz ), Vec3( vx, vy, vz ), direction, -globalUp );
 
 
