@@ -44,6 +44,10 @@ public:
 	bool handleInput( int command, float value );
 
 	inline CP741& getComputer();
+
+	void SetAJB3Output( double dt ) const;
+	void SetStandbyADIOutput( double dt ) const;
+	void SetADIOutput( double dt ) const;
 private:
 
 	void ImGuiDebugWindow();
@@ -61,13 +65,39 @@ private:
 
 	CP741 m_bombingComputer;
 	AirDataComputer m_adc;
-	Gyro m_gyro;
+
+	Gyro::Variables m_ajb3_settings = {
+		0.5,
+		0.07,
+		100.0,
+		8000.0_rpm,
+		DamageCell::TAIL_LEFT_SIDE,
+		"AJB-3 Gyro",
+		1.0e-4,
+		0.01,
+		0.0 // Precision instrument
+	};
+	Gyro m_gyro_ajb3;
+
+	Gyro::Variables m_standby_adi_settings = {
+		0.2,
+		0.035,
+		100.0,
+		6000.0_rpm,
+		DamageCell::NOSE_RIGHT_SIDE,
+		"Standby ADI Gyro",
+		1.0e-3,
+		0.001,
+		1.0e-4
+	};
+	Gyro m_standby_adi;
 
 	bool m_damperEnabled = false;
 
 	bool m_oxygen = true;
 
-	float m_gyro_debug_w = 0.0;
+	std::uniform_real_distribution<double> distribution{ 0.0, 1.0 };
+	std::mt19937 generator{ 444 };
 };
 
 bool Avionics::getOxygen()

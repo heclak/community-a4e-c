@@ -48,6 +48,9 @@ void Scooter::AirDataComputer::update(double dt)
 	calculateCAS();
 	calculateBaroAlt();
 
+	m_tas_acceleration = ( m_tas - m_tas_prev ) / dt;
+	m_tas_prev = m_tas;
+
 	m_interface.ADC_setTAS( m_tas );
 	m_interface.ADC_setCAS( m_cas );
 	m_interface.ADC_setAlt( m_baroAlt );

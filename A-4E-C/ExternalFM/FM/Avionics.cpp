@@ -22,6 +22,7 @@
 #include <imgui.h>
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include "Units.h"
 //=========================================================================//
 
 #define STAB_AUG_MAX_AUTHORITY 0.3
@@ -38,7 +39,8 @@ Scooter::Avionics::Avionics
 	m_interface(inter),
 	m_bombingComputer(state),
 	m_adc(inter, state),
-    m_gyro( 1.0, 0.5, 100.0 )
+    m_gyro_ajb3( m_ajb3_settings ),
+    m_standby_adi(m_standby_adi_settings)
 {
 	zeroInit();
 
@@ -61,18 +63,24 @@ void Scooter::Avionics::coldInit()
 {
 	zeroInit();
 	ed_cockpit_dispatch_action_to_device( DEVICES_AVIONICS, DEVICE_COMMANDS_OXYGEN_SWITCH, 0.0 );
+	m_gyro_ajb3.ColdStart();
+	m_standby_adi.ColdStart();
 }
 
 void Scooter::Avionics::hotInit()
 {
 	zeroInit();
 	ed_cockpit_dispatch_action_to_device( DEVICES_AVIONICS, DEVICE_COMMANDS_OXYGEN_SWITCH, 1.0 );
+	m_gyro_ajb3.HotStart();
+	m_standby_adi.HotStart();
 }
 
 void Scooter::Avionics::airborneInit()
 {
 	zeroInit();
 	ed_cockpit_dispatch_action_to_device( DEVICES_AVIONICS, DEVICE_COMMANDS_OXYGEN_SWITCH, 1.0 );
+	m_gyro_ajb3.HotStart();
+	m_standby_adi.HotStart();
 }
 
 bool Scooter::Avionics::handleInput( int command, float value )
@@ -111,97 +119,112 @@ void Scooter::Avionics::updateAvionics(double dt)
 	m_bombingComputer.updateSolution();
 	m_adc.update(dt);
 
-	//m_gyro.Update( dt );
+	
 
 
-	//const Vec3& omega = m_state.getOmega();
-	//Gyro::Vec3 omega_gyro;
-	//omega_gyro.x() = omega.x;
-	//omega_gyro.y() = omega.y;
-	//omega_gyro.z() = omega.z;
-	//const Gyro::Vec3 omega_lab = m_state.GetOrientation() * omega_gyro;
-	//m_gyro.SetGimbalOmega( omega_lab );
+	const double tas_acceleration = m_adc.GetTASAcceleration();
+	const double x_acceleration = tas_acceleration * cos( m_state.getAOA() );
+	const double z_acceleration = tas_acceleration * sin( m_state.getAOA() );
+	Gyro::Vec3 adc_compensation = { x_acceleration, 0.0, z_acceleration };
 
-	//double pitch = 0.0;
-	//double roll = 0.0;
-	//double yaw = 0.0;
-	//m_gyro.GetPitchRoll( m_state.GetOrientation(), yaw, pitch, roll );
+	Gyro::Vec3 local_acceleration;
+	const Vec3& local_acceleration_state = m_state.getLocalAcceleration();
+	local_acceleration.x() = local_acceleration_state.x;
+	local_acceleration.y() = local_acceleration_state.z;
+	local_acceleration.z() = local_acceleration_state.y;
 
-	//pitch /= 90.0;
-	//roll /= 180.0;
+	const Vec3& omega_state = m_state.getOmega();
+	Gyro::Vec3 local_omega;
+	local_omega.x() = omega_state.x;
+	local_omega.y() = omega_state.z;
+	local_omega.z() = omega_state.y;
+
+	m_gyro_ajb3.SetElectricalPower( m_interface.getElecPrimaryAC() );
+	m_gyro_ajb3.Update( dt, m_state.GetOrientation(), local_acceleration - adc_compensation, local_omega );
+
+	m_standby_adi.SetElectricalPower( m_interface.getElecPrimaryAC() );
+	m_standby_adi.Update( dt, m_state.GetOrientation(), local_acceleration, local_omega );
+
+	SetADIOutput( dt );
+
+	
+	//ed_cockpit_set_draw_argument( 385, static_cast<float>( yaw ) );
+
+	//printf("Filter: %lf, Rudder: %lf\n", f, m_flightModel.yawRate());
+}
+
+void Scooter::Avionics::SetAJB3Output( double dt ) const
+{
+	double pitch = 0.0;
+	double roll = 0.0;
+	m_gyro_ajb3.GetPitchRoll( pitch, roll );
+
+	pitch /= 90.0;
+	roll /= 180.0;
+
+	if ( isnan( pitch ) )
+		pitch = 0.0;
+
+	if ( isnan( roll ) )
+		roll = 0.0;
+
+	ed_cockpit_set_draw_argument( 384, static_cast<float>( roll ) );
+	ed_cockpit_set_draw_argument( 383, static_cast<float>( pitch ) );
+
+	const bool operating = m_gyro_ajb3.PercentSpinUp() > 0.9 && m_gyro_ajb3.Operating() && m_gyro_ajb3.FastErect();
+	static constexpr int flag_arg = 664;
+	float current_argument = ed_cockpit_get_draw_argument( flag_arg );
+	const float target = ! operating;
+	current_argument += ( target - current_argument ) * dt / 2.0;
+	ed_cockpit_set_draw_argument( flag_arg, current_argument );
+}
 
 
-	//yaw = fmod( yaw + 180.0, 360.0 );
-	//yaw /= 360.0;
-	//yaw -= 0.5;
-	//yaw *= 2.0;
+void Scooter::Avionics::SetStandbyADIOutput( double dt ) const
+{
+	double pitch = 0.0;
+	double roll = 0.0;
+	m_standby_adi.GetPitchRoll( pitch, roll );
 
-	//if ( isnan( yaw ) )
-	//	yaw = 0.0;
+	pitch /= 90.0;
+	roll /= 180.0;
 
-	//if ( isnan( pitch ) )
-	//	pitch = 0.0;
+	if ( isnan( pitch ) )
+		pitch = 0.0;
 
-	//if ( isnan( roll ) )
-	//	roll = 0.0;
+	if ( isnan( roll ) )
+		roll = 0.0;
 
-	//ed_cockpit_set_draw_argument( 384, static_cast<float>( roll ) );
-	//ed_cockpit_set_draw_argument( 383, static_cast<float>( pitch ) );
-	////ed_cockpit_set_draw_argument( 385, static_cast<float>( yaw ) );
+	ed_cockpit_set_draw_argument( 661, static_cast<float>( roll ) );
+	ed_cockpit_set_draw_argument( 660, static_cast<float>( pitch ) );
 
-	////printf("Filter: %lf, Rudder: %lf\n", f, m_flightModel.yawRate());
+	const bool operating = m_standby_adi.PercentSpinUp() > 0.9 && m_standby_adi.Operating();
+	static constexpr int flag_arg = 664;
+	float current_argument = ed_cockpit_get_draw_argument( flag_arg );
+	const float target = ! operating;
+	current_argument += ( target - current_argument ) * dt / 2.0;
+	ed_cockpit_set_draw_argument( flag_arg, current_argument );
+
+}
+
+void Scooter::Avionics::SetADIOutput( double dt ) const
+{
+	SetAJB3Output(dt);
+	SetStandbyADIOutput(dt);
 }
 
 void Scooter::Avionics::ImGuiDebugWindow()
 {
-	double pitch = 0.0;
-	double roll = 0.0;
-	double yaw = 0.0;
-	m_gyro.GetPitchRoll( m_state.GetOrientation(), yaw, pitch, roll );
-
-	ImGui::Text( "Yaw: %lf", yaw );
-	ImGui::Text( "Pitch: %lf", pitch );
-	ImGui::Text( "Roll: %lf", roll );
-
-	Gyro::Quat to_body = m_gyro.GetToBody();
-	Gyro::Quat from_body = to_body.inverse();
-
-	Gyro::Vec3 up = { 0.0, 0.0, 1.0 };
-	Gyro::Vec3 up_body = to_body * up;
-	Gyro::Vec3 up_lab = from_body * up;
-
-	ImGui::Text( "Body: %.02lf,%.02lf,%.02lf", up_body.x(), up_body.y(), up_body.z() );
-	ImGui::Text( "Lab: %.02lf,%.02lf,%.02lf", up_lab.x(), up_lab.y(), up_lab.z() );
-
-
-	ImGui::SliderFloat( "Velocity", &m_gyro_debug_w, -720.0, 720.0 );
-
-	const double angle = static_cast<double>( m_gyro_debug_w ) * M_PI / 180.0;
-
-	if ( ImGui::Button("Set wx") )
+	if ( ImGui::TreeNode("AJB-3 (Pitch/Roll) Gyro") )
 	{
-		m_gyro.SetBodyOmegaX( angle );
+		m_gyro_ajb3.ImguiDebugWindow();
+		ImGui::TreePop();
 	}
 
-	if ( ImGui::Button( "Set wy" ) )
+	if ( ImGui::TreeNode( "Standby ADI Gyro" ) )
 	{
-		m_gyro.SetBodyOmegaY( angle );
+		m_standby_adi.ImguiDebugWindow();
+		ImGui::TreePop();
 	}
-
-	if ( ImGui::Button( "Set wz" ) )
-	{
-		m_gyro.SetBodyOmegaZ( angle );
-	}
-
-	float temp_friction = m_gyro.gimbal_friction;
-	ImGui::SliderFloat( "Gimbal Friction", &temp_friction, 0.0, 0.5 );
-	m_gyro.gimbal_friction = temp_friction;
-
-
-	ImGui::InputInt( "a0", &m_gyro.m_a0 );
-	ImGui::InputInt( "a1", &m_gyro.m_a1 );
-	ImGui::InputInt( "a2", &m_gyro.m_a2 );
-
-	ImGui::Text( "Gimbal Torque:  %.02lf,%.02lf,%.02lf", m_gyro.GetTorque().x(), m_gyro.GetTorque().y(), m_gyro.GetTorque().z() );
 	
 }

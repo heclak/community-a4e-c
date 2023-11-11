@@ -27,6 +27,11 @@ void Scooter::DamageProcessor::OnDamage( int cell, double integrity )
     }
 }
 
+void Scooter::DamageProcessor::AddCallback( std::function<void()>&& repair_callback )
+{
+    m_damage_callbacks.push_back( std::move( repair_callback ) );
+}
+
 void Scooter::DamageProcessor::RegisterDamageObject( int cell, std::shared_ptr<DamageObject> object )
 {
     const std::weak_ptr weak_object = object;
@@ -46,6 +51,12 @@ void Scooter::DamageProcessor::Repair()
                 obj->Repair();
             }
         }
+    }
+
+    for ( auto& function : m_damage_callbacks )
+    {
+        if ( function )
+            function();
     }
 }
 
@@ -133,6 +144,12 @@ std::shared_ptr<Scooter::DamageObject> Scooter::DamageProcessor::MakeDamageObjec
     return object;
 }
 
+void Scooter::DamageProcessor::AddRepairCallback(std::function<void()>&& repair_callback)
+{
+    DamageProcessor& damage_processor = GetDamageProcessor();
+    damage_processor.AddCallback( std::move( repair_callback ) );
+}
+
 Scooter::DamageObject::DamageObject( const std::string&& name ):
     m_name(name)
 {
@@ -202,23 +219,32 @@ void Scooter::DamageProcessor::ImGuiDebugWindow()
 
     if ( ImGui::TreeNode( "Damage Objects" ) )
     {
-        ImGui::TableSetupColumn( "Name" );
-        ImGui::TableSetupColumn( "Integrity" );
-        ImGui::TableHeadersRow();
-
-        for ( auto& [name, object] : m_objects_by_name )
+        const ImGuiTableFlags flags = ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg;
+        if ( ImGui::BeginTable( "Damage Items", 3, flags ) )
         {
-            ImGui::TableNextRow();
-            if ( auto object_ptr = object.lock(); object_ptr )
-            {
-                ImGui::TableSetColumnIndex( 0 );
-                ImGui::Text( "%s", object_ptr->GetName().c_str() );
-                ImGui::TableSetColumnIndex( 1 );
-                ImGui::Text( "%lf", object_ptr->GetIntegrity() );
-            }
-        }
+            ImGui::TableSetupColumn( "Name" );
+            ImGui::TableSetupColumn( "Integrity" );
+            ImGui::TableSetupColumn( "Repair" );
+            ImGui::TableHeadersRow();
 
-        ImGui::EndTable();
+            for ( auto& [name, object] : m_objects_by_name )
+            {
+                ImGui::TableNextRow();
+                if ( auto object_ptr = object.lock(); object_ptr )
+                {
+                    ImGui::TableSetColumnIndex( 0 );
+                    ImGui::Text( "%s", object_ptr->GetName().c_str() );
+                    ImGui::TableSetColumnIndex( 1 );
+                    ImGui::Text( "%lf", object_ptr->GetIntegrity() );
+                    ImGui::TableSetColumnIndex( 2 );
+                    if ( ImGui::Button("Repair") )
+                    {
+                        object_ptr->Repair();
+                    }
+                }
+            }
+            ImGui::EndTable();
+        }
     }
 }
 

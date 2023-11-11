@@ -12,6 +12,9 @@ public:
 	AirDataComputer(Interface& inter, AircraftState& state);
 	void update(double dt);
 
+	double GetTASAcceleration() { return m_tas_acceleration; }
+
+
 private:
 
 	void calculateTAS();
@@ -23,7 +26,11 @@ private:
 	Interface& m_interface;
 	AircraftState& m_state;
 
+	double m_tas_acceleration = 0.0;
 	double m_tas = 0.0;
+	double m_tas_prev = 0.0;
+
+
 	double m_eas = 0.0;
 	double m_cas = 0.0;
 

@@ -1085,7 +1085,7 @@ bool ed_fm_pop_simulation_event(ed_fm_simulation_event& out)
 		s_airframe->catapultStateSent() = true;
 		return true;
 	}
-	else if (s_airframe->catapultState() == Scooter::Airframe::ON_CAT_READY && !s_airframe->catapultStateSent() )
+	else if (s_airframe->catapultState() == Scooter::Airframe::ON_CAT_READY )
 	{
 		s_airframe->catapultStateSent() = true;
 		bool autoMode = s_interface->getCatAutoMode();
@@ -1101,8 +1101,8 @@ bool ed_fm_pop_simulation_event(ed_fm_simulation_event& out)
 		out.event_params[0] = 1;
 		out.event_params[1] = 3.0f;
 		out.event_params[2] = speed;
-		out.event_params[3] = 1e6;
-		//s_airframe->catapultState() = Scooter::Airframe::ON_CAT_WAITING;
+		out.event_params[3] = thrust;
+		s_airframe->catapultState() = Scooter::Airframe::ON_CAT_WAITING;
 		return true;
 	}
 	else

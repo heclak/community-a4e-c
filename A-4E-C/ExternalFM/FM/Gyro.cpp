@@ -3,41 +3,61 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <cockpit_base_api.h>
+#include <imgui.h>
+#include <Units.h>
 
-Gyro::Gyro(double mass, double radius, double rpm_factor) :
-    m_mass( mass ),
-    m_radius( radius ),
-    m_rpm_factor( rpm_factor )
+using namespace Scooter;
+
+Gyro::Gyro( const Variables& variables ) :
+    m_mass( variables.rotor_mass ),
+    m_radius( variables.radius ),
+    m_rpm_factor( variables.rpm_factor ),
+    m_operating_omega( variables.operating_omega ),
+    m_gimbal_friction(variables.gimbal_friction),
+    m_erection_rate(variables.erection_rate)
 {
+
+    m_motor_damage = DamageProcessor::MakeDamageObject( variables.name + " Motor Damage", variables.damage_location, []( DamageObject& object, double integrity )
+    {
+        if ( integrity < 1.0 && DamageProcessor::GetDamageProcessor().Random() <= 0.25 )
+        {
+            object.SetIntegrity( 0.0 );
+        }
+    } );
+
+    m_seized = DamageProcessor::MakeDamageObject( variables.name + " Motor Seized", variables.damage_location, []( DamageObject& object, double integrity )
+    {
+        if ( integrity < 1.0 && DamageProcessor::GetDamageProcessor().Random() <= 0.25 )
+        {
+            object.SetIntegrity( 0.0 );
+        }
+    } );
+
+    DamageProcessor::AddRepairCallback( [this] { ColdStart(); } );
+
+
+    const double angle = 2.0 * M_PI * DamageProcessor::GetDamageProcessor().Random();
+    m_random_T_direction.x() = cos( angle );
+    m_random_T_direction.y() = sin( angle );
+
+
+
+
+    m_spin_down_time = variables.spin_down_time;
+    m_spin_up_time = variables.spin_up_time;
+
+    
+
+
     CalculateMomentOfInertia();
+    SetBodyOmega( Vec3( 0.0, 0.0, 0.0 ) );
 }
 
-void Gyro::SetGimbalOmega( const Vec3& gimbal_omega )
+void Gyro::ColdStart()
 {
-    const Vec3 omega_aircraft = m_to_body * (gimbal_omega);
-    m_T = -( omega_aircraft + m_w ) * gimbal_friction;
-}
-
-void Gyro::GetPitchRoll( const Quat& world_orientation, double& yaw, double& pitch, double& roll )
-{
-
-    Quat rotation = m_to_body.inverse() * world_orientation.inverse();
-
-
-    const Mat3 rotation_matrix = rotation.inverse().toRotationMatrix();
-    Vec3 angles = rotation_matrix.canonicalEulerAngles( m_a0, m_a1, m_a2 );
-
-    roll = 180.0 * angles.x() / M_PI;
-    pitch = 180.0 * angles.y() / M_PI;
-    yaw = 180.0 * angles.z() / M_PI;
-}
-
-void Gyro::CalculateMomentOfInertia()
-{
-    const double symetric_I = m_mass * m_radius * m_radius;
-
-    Quat ident = Quat::Identity();
-    //Quat ident( 0.01, Vec3( 0.0, 1.0, 0.0 ) );
+    //Quat ident = Quat::Identity();
+    const Eigen::AngleAxis<double> axis( 0.4, Vec3( 0.0, 1.0, 0.0 ) );
+    Quat ident( axis );
 
     m_state.q0 = ident.w();
     m_state.q1 = ident.x();
@@ -51,20 +71,78 @@ void Gyro::CalculateMomentOfInertia()
     m_state.q2d = 0.0;
     m_state.q3d = 0.0;
 
-    m_to_body.w() = m_state.q0;
-    m_to_body.x() = m_state.q1;
-    m_to_body.y() = m_state.q2;
-    m_to_body.z() = m_state.q3;
+    UpdateBodyTransform();
+}
+
+void Gyro::HotStart()
+{
+    ColdStart();
+    Quat ident = Quat::Identity();
+    m_state.q0 = ident.w();
+    m_state.q1 = ident.x();
+    m_state.q2 = ident.y();
+    m_state.q3 = ident.z();
+
+    m_w.z() = m_operating_omega / m_rpm_factor;
+
+    m_motor_on = true;
+    m_electrical_power = true;
+
+    SetBodyOmega( m_w );
+}
+
+double Gyro::GyroError( const Vec3& reference ) const
+{
+    const Vec3 up = { 0.0, 0.0, 1.0 };
+    Vec3 reference_body = m_to_body * reference;
+    const double cosa = reference_body.normalized().dot( up );
+    const double a = acos( cosa );
+    return a;
+}
+
+void Gyro::CalculateErectionTorque( const Quat& world_orientation )
+{
+    m_erection_direction = -(m_world_acceleration + Vec3{ 0.0, 0.0, -9.81 });
+    m_erection_direction.normalize();
+
+    // y = 1, with up_body x up
+    const Vec3 forwards = { 1.0, 0.0, 0.0 };
+    const Vec3 up = m_erection_direction;
+    const Vec3 right = forwards.cross( up );
 
 
+    Vec3 right_body = m_to_body * right;
+    const double percent_spin_up = m_w.z()* m_rpm_factor / m_operating_omega;
+    Vec3 torque = right_body.cross( right );
+
+   
+    if ( GyroError( up ) < 0.01_deg && percent_spin_up > 0.95 )
+        m_fast_erect = false;
+
+    const double erection_rate = m_fast_erect ? m_erection_rate : m_erection_rate * 0.001;
+
+    m_erection_T = ( torque - m_w * 1.2 ) * percent_spin_up * erection_rate;
+    m_erection_T.z() = 0.0;
+}
+
+void Gyro::GetPitchRoll( double& pitch, double& roll ) const
+{
+    Quat rotation =  m_world_orientation  * m_to_body; //m_to_body.inverse() *
+    const Mat3 rotation_matrix = rotation.toRotationMatrix();
+    Vec3 angles = rotation_matrix.canonicalEulerAngles( 0, 1, 2 );
+
+    roll = 180.0 * angles.x() / M_PI;
+    pitch = 180.0 * angles.y() / M_PI;
+}
+
+void Gyro::CalculateMomentOfInertia()
+{
+    const double symetric_I = m_mass * m_radius * m_radius;
     m_I.z() = symetric_I * m_rpm_factor;
 
 
     m_I.x() = symetric_I / 2.0;
     m_I.y() = symetric_I / 2.0;
-
-    SetBodyOmega( Vec3( 0.0, 0.0, 1.0 ) );
-
 }
 
 void Gyro::UpdateVectors()
@@ -73,7 +151,18 @@ void Gyro::UpdateVectors()
     m_L.x() = m_I.x() * m_w.x();
     m_L.y() = m_I.y() * m_w.y();
     m_L.z() = m_I.z() * m_w.z();
+
+    UpdateBodyTransform();
 }
+
+void Gyro::UpdateBodyTransform()
+{
+    m_to_body.w() = m_state.q0;
+    m_to_body.x() = m_state.q1;
+    m_to_body.y() = m_state.q2;
+    m_to_body.z() = m_state.q3;
+}
+
 
 Gyro::Vec3 Gyro::GetOmegaFromState( const State& state )
 {
@@ -97,9 +186,10 @@ Gyro::Vec3 Gyro::GetOmegaFromState( const State& state )
     return result;
 }
 
-
-void Gyro::SetBodyOmega( const Vec3& omega )
+Gyro::Quat Gyro::GetdQFromOmega( const Vec3& omega )
 {
+    Quat result;
+
     const double q0 = m_state.q0;
     const double q1 = m_state.q1;
     const double q2 = m_state.q2;
@@ -109,13 +199,23 @@ void Gyro::SetBodyOmega( const Vec3& omega )
     const double wy = omega.y();
     const double wz = omega.z();
 
-    m_state.q0d = 0.5 * ( -q1 * wx - q2 * wy - q3 * wz );
-    m_state.q1d = 0.5 * ( q0 * wx - q3 * wy + q2 * wz );
-    m_state.q2d = 0.5 * ( q3 * wx + q0 * wy - q1 * wz );
-    m_state.q3d = 0.5 * ( -q2 * wx + q1 * wy + q0 * wz );
+    result.w() = 0.5 * ( -q1 * wx - q2 * wy - q3 * wz );
+    result.x() = 0.5 * ( q0 * wx - q3 * wy + q2 * wz );
+    result.y() = 0.5 * ( q3 * wx + q0 * wy - q1 * wz );
+    result.z() = 0.5 * ( -q2 * wx + q1 * wy + q0 * wz );
+
+    return result;
+}
+
+void Gyro::SetBodyOmega( const Vec3& omega )
+{
+    Quat dQ = GetdQFromOmega( omega );
+    m_state.q0d = dQ.w();
+    m_state.q1d = dQ.x();
+    m_state.q2d = dQ.y();
+    m_state.q3d = dQ.z();
 
     UpdateVectors();
-
 }
 
 void Gyro::NormalizeQ()
@@ -138,8 +238,15 @@ void Gyro::NormalizeQ()
 
 }
 
-void Gyro::Update( double dt )
+void Gyro::Update( double dt, const Quat& world_orientation, const Vec3& local_acceleration, const Vec3& local_omega )
 {
+    m_world_orientation = world_orientation;
+    m_world_acceleration = world_orientation * local_acceleration;
+    m_gimbal_w = world_orientation * local_omega;
+
+    if ( ! m_electrical_power )
+        m_fast_erect = true;
+
 
     static constexpr size_t sub_step_quantity = 1000;
     static constexpr double sub_step_quantity_f = static_cast<double>( sub_step_quantity );
@@ -153,11 +260,6 @@ void Gyro::Update( double dt )
         NormalizeQ();
         UpdateVectors();
 
-        m_to_body.w() = m_state.q0;
-        m_to_body.x() = m_state.q1;
-        m_to_body.y() = m_state.q2;
-        m_to_body.z() = m_state.q3;
-
 
         //Vec3 up{ 0.0, 0.0, 1.0 };
 
@@ -168,6 +270,47 @@ void Gyro::Update( double dt )
 
 void Gyro::ComputeBodyFrameTorque( const State& state )
 {
+    CalculateErectionTorque(Quat{});
+
+    const double adjusted_operating_omega = m_operating_omega / m_rpm_factor;
+
+    // ln(R) / (-t) = coeff
+    // where R is the fraction from operating
+    // and t is the time
+    const double R = 0.5;
+    m_spinning_friction = -log( R ) / m_spin_down_time;
+
+
+
+    const double eta = exp( -m_spin_up_time * m_spinning_friction );
+    m_spin_up_torque = m_spinning_friction * adjusted_operating_omega * ( R * eta - 1.0 ) / ( eta - 1.0 );
+
+
+
+
+    const bool spin_up = PercentSpinUp() < 1.0;
+
+    const double motor_torque_scalar = spin_up ? m_spin_up_torque : m_spinning_friction;
+    const bool motor = m_motor_on && m_electrical_power && m_motor_damage->GetIntegrity() > 0.0;
+    const Vec3 motor_torque = { 0.0, 0.0, motor_torque_scalar * static_cast<double>( motor ) };
+
+
+    
+
+    const Vec3 random_torque = m_random_T_direction * m_random_T * PercentSpinUp();
+
+    Vec3 omega_aircraft = m_to_body * m_gimbal_w;
+    omega_aircraft.z() /= m_rpm_factor;
+
+    const Vec3 relative_omega = omega_aircraft + m_w; // technically we need to convert the omega aircraft.z to 
+    Vec3 friction_torque;
+    friction_torque.x() = relative_omega.x() * m_gimbal_friction;
+    friction_torque.y() = relative_omega.y() * m_gimbal_friction;
+    friction_torque.z() = relative_omega.z() * m_spinning_friction;
+
+    m_T = m_erection_T + motor_torque - friction_torque + random_torque;
+
+
     /*Vec3 down{ 0.0, 0.0, 1.0 };
 
     Vec3 force = m_to_body * down;
@@ -176,6 +319,7 @@ void Gyro::ComputeBodyFrameTorque( const State& state )
     m_T.y() = force.x();
     m_T.z() = 0.0;*/
 }
+
 
 void Gyro::ComputeBodyFrameAcceleration( const State& state )
 {
@@ -248,8 +392,121 @@ void Gyro::Solve( double dt )
     m_state.q2d += dt * rate.q2dd;
     m_state.q3d += dt * rate.q3dd;
 
-    m_state.q0 += dt * rate.q0d;
-    m_state.q1 += dt * rate.q1d;
-    m_state.q2 += dt * rate.q2d;
-    m_state.q3 += dt * rate.q3d;
+    // earth_dQ
+    /*const double earth_drift_rate = 360.0_deg / 24.0_hours;
+
+    Vec3 earth_drift = { earth_drift_rate, 0.0, 0.0 };
+    Quat earth_drift_dQ = GetdQFromOmega( m_to_body * earth_drift );*/
+
+    /*+ earth_drift_dQ.w()
+        + earth_drift_dQ.x()
+        + earth_drift_dQ.y()
+        + earth_drift_dQ.z()*/
+
+    const double integrity = m_seized->GetIntegrity();
+
+    m_state.q0 += dt * ( rate.q0d * integrity );
+    m_state.q1 += dt * ( rate.q1d * integrity );
+    m_state.q2 += dt * ( rate.q2d * integrity );
+    m_state.q3 += dt * ( rate.q3d * integrity );
+}
+
+void Gyro::ImguiDebugWindow()
+{
+    double pitch = 0.0;
+    double roll = 0.0;
+    GetPitchRoll( pitch, roll );
+    ImGui::Text( "Pitch: %lf", pitch );
+    ImGui::Text( "Roll: %lf", roll );
+
+
+    ImGui::Text( "Gyro Error: %lf", GyroError( m_erection_direction ) / 1.0_deg );
+    ImGui::Text( "Gyro Real Error: %lf", GyroError( Vec3{ 0.0, 0.0, 1.0 } ) / 1.0_deg );
+
+    Quat to_body = GetToBody();
+    Quat from_body = to_body.inverse();
+
+    Vec3 up = { 0.0, 0.0, 1.0 };
+    Vec3 up_body = to_body * up;
+    Vec3 up_lab = from_body * up;
+
+    ImGui::Text( "Erection Direction: %.04lf,%.04lf,%.04lf", m_erection_direction.x(), m_erection_direction.y(), m_erection_direction.z() );
+    ImGui::Text( "Up (Gyro) Body: %.04lf,%.04lf,%.04lf", up_body.x(), up_body.y(), up_body.z() );
+    ImGui::Text( "Up Lab: %.04lf,%.04lf,%.04lf", up_lab.x(), up_lab.y(), up_lab.z() );
+
+
+    Quat q = m_world_orientation * GetToBody();
+    Vec3 up_local = q * Vec3{ 0.0, 0.0, 1.0 };
+
+    ImGui::Text( "Up (Aircraft) Body: %.02lf,%.02lf,%.02lf", up_local.x(), up_local.y(), up_local.z() );
+
+
+    ImGui::SliderFloat( "Set Spin Velocity", &m_gyro_debug_w, 0.0, 48000.0 );
+    ImGui::SliderFloat( "Set Gyro Tickle Velocity", &m_gyro_tickle_debug_w, 0.0, 720.0 );
+
+
+    const double tickle_rate = static_cast<double>( m_gyro_tickle_debug_w ) * M_PI / 180.0;
+
+    if ( m_motor_on )
+    {
+        if ( ImGui::Button( "Turn Motor Off" ) )
+        {
+            m_motor_on = false;
+        }
+    }
+    else
+    {
+        if ( ImGui::Button( "Turn Motor On" ) )
+        {
+            m_motor_on = true;
+        }
+    }
+
+    if ( m_fast_erect )
+    {
+        if ( ImGui::Button( "Fast Erect Stop" ) )
+        {
+            m_fast_erect = false;
+        }
+    }
+    else
+    {
+        if ( ImGui::Button( "Fast Erect Start" ) )
+        {
+            m_fast_erect = true;
+        }
+    }
+
+    if ( ImGui::Button( "Set wx" ) )
+    {
+
+        SetBodyOmegaX( tickle_rate );
+    }
+
+    if ( ImGui::Button( "Set wy" ) )
+    {
+        SetBodyOmegaY( tickle_rate );
+    }
+
+    if ( ImGui::Button( "Set wz" ) )
+    {
+        const double angle = static_cast<double>( m_gyro_debug_w ) * M_PI / 180.0;
+        SetBodyOmegaZ( angle );
+    }
+
+    ImGui::Text( "Operating Omega: %lf", m_operating_omega );
+    ImGui::InputDouble( "Gimbal Friction", &m_gimbal_friction, 0.00001, 0.01, "%.8f" );
+    ImGui::InputDouble( "Gimbal Erection Rate", &m_erection_rate, 0.00001, 0.01, "%.8f" );
+    ImGui::InputDouble( "Random Torque", &m_random_T, 0.00001, 0.01, "%.8f" );
+
+
+    ImGui::InputDouble( "Spin Up Time (seconds)", &m_spin_up_time, 1.0, 10.0, "%.0f" );
+    ImGui::InputDouble( "Spin Down Time (seconds)", &m_spin_down_time, 1.0, 10.0, "%.0f" );
+
+    ImGui::Text( "Gimbal Torque:  %.05lf,%.05lf,%.05lf", GetTorque().x(), GetTorque().y(), GetTorque().z() );
+    ImGui::Text( "Erection Torque:  %.05lf,%.05lf,%.05lf",m_erection_T.x(), m_erection_T.y(), m_erection_T.z() );
+    ImGui::Text( "Random Torque Direction:  %.05lf,%.05lf,%.05lf",m_random_T_direction.x(), m_random_T_direction.y(), m_random_T_direction.z() );
+
+    Vec3 gyro_omega = GetRealOmega();
+    ImGui::Text( "Gimbal Omega:  %.05lf,%.05lf,%.0lf", gyro_omega.x(), gyro_omega.y(), gyro_omega.z() );
 }
