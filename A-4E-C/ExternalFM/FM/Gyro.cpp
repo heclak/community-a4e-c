@@ -14,7 +14,9 @@ Gyro::Gyro( const Variables& variables ) :
     m_rpm_factor( variables.rpm_factor ),
     m_operating_omega( variables.operating_omega ),
     m_gimbal_friction(variables.gimbal_friction),
-    m_erection_rate(variables.erection_rate)
+    m_erection_rate(variables.erection_rate),
+    m_damping(variables.damping),
+    m_slow_erection_factor(variables.slow_erection_factor)
 {
 
     m_motor_damage = DamageProcessor::MakeDamageObject( variables.name + " Motor Damage", variables.damage_location, []( DamageObject& object, double integrity )
@@ -108,21 +110,45 @@ void Gyro::CalculateErectionTorque( const Quat& world_orientation )
     // y = 1, with up_body x up
     const Vec3 forwards = { 1.0, 0.0, 0.0 };
     const Vec3 up = m_erection_direction;
+
     const Vec3 right = forwards.cross( up );
+    const Vec3 right_body = m_to_body * right;
 
-
-    Vec3 right_body = m_to_body * right;
-    const double percent_spin_up = m_w.z()* m_rpm_factor / m_operating_omega;
-    Vec3 torque = right_body.cross( right );
+    const double percent_spin_up = PercentSpinUp();
+    const Vec3 torque = right_body.cross( right );
 
    
     if ( GyroError( up ) < 0.01_deg && percent_spin_up > 0.95 )
         m_fast_erect = false;
 
-    const double erection_rate = m_fast_erect ? m_erection_rate : m_erection_rate * 0.001;
 
-    m_erection_T = ( torque - m_w * 1.2 ) * percent_spin_up * erection_rate;
+    double erection_rate = m_erection_rate;
+    double erection_max_torque = m_max_erection_torque;
+
+    if ( ! m_fast_erect )
+    {
+        erection_rate *= m_slow_erection_factor;
+        //erection_max_torque *= slow_erect_factor;
+    }
+
+    //m_erection_T = erection_rate * torque.normalized();// ( GyroError( up ) + 1.0 );
+    //m_erection_T.z() = 0.0;
+
+    //m_erection_T = ( Vec3{ 1.0_deg, 0.0, 0.0 } - m_w ) * m_erection_rate;
+
+
+
+    m_erection_T = torque * erection_rate * percent_spin_up * percent_spin_up / (GyroError( up ) + 1.0);
+
+
+
+    //m_erection_T = torque * erection_rate * 1.0_deg * percent_spin_up;
     m_erection_T.z() = 0.0;
+
+    const double torque_scalar = std::min( m_erection_T.norm(), erection_max_torque );
+    m_erection_T.normalize();
+    m_erection_T *= torque_scalar;
+
 }
 
 void Gyro::GetPitchRoll( double& pitch, double& roll ) const
@@ -308,7 +334,17 @@ void Gyro::ComputeBodyFrameTorque( const State& state )
     friction_torque.y() = relative_omega.y() * m_gimbal_friction;
     friction_torque.z() = relative_omega.z() * m_spinning_friction;
 
-    m_T = m_erection_T + motor_torque - friction_torque + random_torque;
+
+    const Vec3 damping_torque = m_w * m_damping;
+
+
+
+    Vec3 static_friction_torque;
+    static_friction_torque.x() = copysign( m_gimbal_static_friction, relative_omega.x() );
+    static_friction_torque.y() = copysign( m_gimbal_static_friction, relative_omega.y() );
+    static_friction_torque.z() = 0.0;
+
+    m_T = m_erection_T + motor_torque - damping_torque - friction_torque + random_torque - static_friction_torque + m_to_body * m_debug_torque;
 
 
     /*Vec3 down{ 0.0, 0.0, 1.0 };
@@ -496,8 +532,23 @@ void Gyro::ImguiDebugWindow()
 
     ImGui::Text( "Operating Omega: %lf", m_operating_omega );
     ImGui::InputDouble( "Gimbal Friction", &m_gimbal_friction, 0.00001, 0.01, "%.8f" );
+    ImGui::InputDouble( "Gimbal Static Friction", &m_gimbal_static_friction, 0.00001, 0.01, "%.8f" );
     ImGui::InputDouble( "Gimbal Erection Rate", &m_erection_rate, 0.00001, 0.01, "%.8f" );
+    ImGui::InputDouble( "Gimbal Damping", &m_damping, 0.00001, 0.01, "%.8f" );
+    ImGui::InputDouble( "Max Erection Torque", &m_max_erection_torque, 0.00001, 0.01, "%.8f" );
+    ImGui::InputDouble( "Slow Erection Factor", &m_slow_erection_factor, 0.00001, 0.01, "%.8f" );
+    ImGui::InputDouble( "Erection Friction", &m_erection_friction, 0.00001, 0.01, "%.8f" );
     ImGui::InputDouble( "Random Torque", &m_random_T, 0.00001, 0.01, "%.8f" );
+
+
+    if ( ImGui::TreeNode("Debug Torque") )
+    {
+        ImGui::InputDouble( "Debug Torque X", &m_debug_torque.x(), 0.00001, 0.01, "%.8f" );
+        ImGui::InputDouble( "Debug Torque Y", &m_debug_torque.y(), 0.00001, 0.01, "%.8f" );
+        ImGui::InputDouble( "Debug Torque Z", &m_debug_torque.z(), 0.00001, 0.01, "%.8f" );
+        ImGui::TreePop();
+    }
+   
 
 
     ImGui::InputDouble( "Spin Up Time (seconds)", &m_spin_up_time, 1.0, 10.0, "%.0f" );

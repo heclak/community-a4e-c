@@ -17,7 +17,9 @@ public:
         DamageCell damage_location = DamageCell::FUSELAGE_LEFT_SIDE;
         std::string name = "Gyro_1";
         double gimbal_friction = 0.001;
+        double damping = 0.01;
         double erection_rate = 0.001;
+        double slow_erection_factor = 0.01;
         double random_torque = 0.0;
         double spin_down_time = 40.0;
         double spin_up_time = 60.0;
@@ -41,7 +43,7 @@ public:
     bool Operating() const { return m_electrical_power; }
     double PercentSpinUp() const { return m_w.z() * m_rpm_factor / m_operating_omega; }
 
-    void SetElectricalPower( bool value ) { m_electrical_power = value; }
+    void SetElectricalPower( bool value ) { m_electrical_power = true; }
 
     Quat GetToBody() { return m_to_body; }
 
@@ -158,7 +160,8 @@ private:
     bool m_electrical_power = false;
     bool m_motor_on = false;
     double m_gimbal_friction = 1e-4; //x,y torque
-
+    double m_gimbal_static_friction = 0.0; //x,y torque
+    double m_damping = 0.0;
 
     double m_spinning_friction = 0.0;
     double m_spin_down_time = 40.0;//seconds
@@ -166,7 +169,10 @@ private:
     double m_spin_up_torque = 1.0;
 
 
-    double m_erection_rate = 0.01;
+    double m_erection_rate = 1.0;
+    double m_slow_erection_factor = 0.01;
+    double m_erection_friction = 1.0;
+    double m_max_erection_torque = 0.1;
     Vec3 m_erection_direction{ 0.0, 0.0, 1.0 };
     Vec3 m_erection_T{ 0.0, 0.0, 0.0 };
 
@@ -176,5 +182,5 @@ private:
 
     float m_gyro_debug_w = 0.0;
     float m_gyro_tickle_debug_w = 0.0;
-
+    Vec3 m_debug_torque = {0.0, 0.0, 0.0};
 };

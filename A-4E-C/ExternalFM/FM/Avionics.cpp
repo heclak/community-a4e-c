@@ -171,8 +171,8 @@ void Scooter::Avionics::SetAJB3Output( double dt ) const
 	ed_cockpit_set_draw_argument( 384, static_cast<float>( roll ) );
 	ed_cockpit_set_draw_argument( 383, static_cast<float>( pitch ) );
 
-	const bool operating = m_gyro_ajb3.PercentSpinUp() > 0.9 && m_gyro_ajb3.Operating() && m_gyro_ajb3.FastErect();
-	static constexpr int flag_arg = 664;
+	const bool operating = m_gyro_ajb3.PercentSpinUp() > 0.9 && m_gyro_ajb3.Operating() && ! m_gyro_ajb3.FastErect();
+	static constexpr int flag_arg = 387;
 	float current_argument = ed_cockpit_get_draw_argument( flag_arg );
 	const float target = ! operating;
 	current_argument += ( target - current_argument ) * dt / 2.0;
