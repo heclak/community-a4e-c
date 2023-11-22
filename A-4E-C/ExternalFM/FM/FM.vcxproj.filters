@@ -75,6 +75,45 @@
     <ClCompile Include="Damage.cpp">
       <Filter>A4-Skyhawk</Filter>
     </ClCompile>
+    <ClCompile Include="..\ext\imgui\imgui.cpp">
+      <Filter>A4-Skyhawk\ext\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ext\imgui\imgui_demo.cpp">
+      <Filter>A4-Skyhawk\ext\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ext\imgui\imgui_draw.cpp">
+      <Filter>A4-Skyhawk\ext\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ext\imgui\imgui_tables.cpp">
+      <Filter>A4-Skyhawk\ext\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ext\imgui\imgui_widgets.cpp">
+      <Filter>A4-Skyhawk\ext\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ext\DCS-EFM-ImGui-main\Source\FmGui.cpp">
+      <Filter>A4-Skyhawk\ext\fm_imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ext\imgui\backends\imgui_impl_dx11.cpp">
+      <Filter>A4-Skyhawk\ext\imgui\backend</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ext\imgui\backends\imgui_impl_win32.cpp">
+      <Filter>A4-Skyhawk\ext\imgui\backend</Filter>
+    </ClCompile>
+    <ClCompile Include="ImguiDisplay.cpp">
+      <Filter>A4-Skyhawk</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseComponent.cpp">
+      <Filter>A4-Skyhawk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ext\implot\implot.cpp">
+      <Filter>A4-Skyhawk\ext\implot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ext\implot\implot_demo.cpp">
+      <Filter>A4-Skyhawk\ext\implot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ext\implot\implot_items.cpp">
+      <Filter>A4-Skyhawk\ext\implot</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ED_FM_Utility.h" />
@@ -227,6 +266,9 @@
     <ClInclude Include="DamageCells.h">
       <Filter>A4-Skyhawk\Airframe</Filter>
     </ClInclude>
+    <ClInclude Include="ImguiDisplay.h">
+      <Filter>A4-Skyhawk</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -261,6 +303,21 @@
     </Filter>
     <Filter Include="A4-Skyhawk\Systems">
       <UniqueIdentifier>{ab681846-4182-4026-8d15-699a40af0143}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="A4-Skyhawk\ext">
+      <UniqueIdentifier>{29e56b98-8e10-4875-8e53-70bf786b8e96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="A4-Skyhawk\ext\imgui">
+      <UniqueIdentifier>{ef2c0d7a-215b-4497-b13d-d52e69b4184e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="A4-Skyhawk\ext\fm_imgui">
+      <UniqueIdentifier>{d04e4328-d816-4e8e-9e0a-0eff6acffaee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="A4-Skyhawk\ext\imgui\backend">
+      <UniqueIdentifier>{93078454-5026-4be9-bc0a-65a6b0f8f2a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="A4-Skyhawk\ext\implot">
+      <UniqueIdentifier>{62e64102-2539-4850-bbb0-e60543107324}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

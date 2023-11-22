@@ -2,7 +2,7 @@ dofile(LockOn_Options.common_script_path.."KNEEBOARD/indicator/definitions.lua")
 SetScale(FOV)
 
 -- add background image for kneeboard
-add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_01.png")
+add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_01.dds")
 
 --[[
 
@@ -16,10 +16,11 @@ For example, page "23" is "23.lua".
 
 1 Mission
   11 Navigation
-  12 Radio & TACAN
-  13 ILS Data
-  14 Mission Loadout
-  15 Weapons & Loadouts
+  12 UHF Radio
+  13 ADF, TACAN, & MCL
+  14 Radio & ILS Data
+  15 Mission Loadout
+  16 Weapons & Loadouts
 
 2 Radar
   21 AN/APN-141 Radar Altimiter & LAWS

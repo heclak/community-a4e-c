@@ -307,6 +307,9 @@ function post_initialize()
 
         --APG-53A RADAR
         Sound_Player(sndhost_headphones, "Aircrafts/A-4E-C/obsttone", "D_GLARE_OBST", SOUND_CONTINUOUS, nil, nil, nil, nil, "APG53_OBST_VOLUME"),
+        
+        --Radio Sounds
+        Sound_Player(sndhost_headphones, "Aircrafts/A-4E-C/a-4e_arn25_adf_garble", "SND_CONT_ADF_GARBLE", SOUND_CONTINUOUS, nil, nil, nil, nil, "SND_CONT_ADF_GARBLE_VOLUME"),
 
         --APR-25 RWR SOUNDS
         -- system sounds
@@ -331,6 +334,16 @@ function post_initialize()
         Sound_Player(sndhost_headphones, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa5_squarepair_hi", "RWR_SA5_HI", SOUND_ALWAYS),
         Sound_Player(sndhost_headphones, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa6_straightflush_lo", "RWR_SA6_LO", SOUND_ALWAYS),
         Sound_Player(sndhost_headphones, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa6_straightflush_hi", "RWR_SA6_HI", SOUND_ALWAYS),
+        Sound_Player(sndhost_headphones, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa8_tr", "RWR_SA8_TR", SOUND_ALWAYS),
+        Sound_Player(sndhost_headphones, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa10_sr_bb", "RWR_SA10_SR_BB", SOUND_ALWAYS),
+        Sound_Player(sndhost_headphones, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa10_sr_cs", "RWR_SA10_SR_CS", SOUND_ALWAYS),
+        Sound_Player(sndhost_headphones, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa10_sr_ts", "RWR_SA10_SR_TS", SOUND_ALWAYS),
+        Sound_Player(sndhost_headphones, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa10_tr_a", "RWR_SA10_TR_A", SOUND_ALWAYS),
+        Sound_Player(sndhost_headphones, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa10_tr_b", "RWR_SA10_TR_B", SOUND_ALWAYS),
+        Sound_Player(sndhost_headphones, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa11_sr", "RWR_SA11_SR", SOUND_ALWAYS),
+        Sound_Player(sndhost_headphones, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa11_tr", "RWR_SA11_TR", SOUND_ALWAYS),
+        Sound_Player(sndhost_headphones, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa13_tr", "RWR_SA13_TR", SOUND_ALWAYS),
+        Sound_Player(sndhost_headphones, "Aircrafts/A-4E-C/a-4e_apr25_sam_sa19_tr", "RWR_SA19_TR", SOUND_ALWAYS),
         Sound_Player(sndhost_headphones, "Aircrafts/A-4E-C/a-4e_apr25_vehicle_gepard", "RWR_VEHICLE_GEPARD", SOUND_ALWAYS),
         Sound_Player(sndhost_headphones, "Aircrafts/A-4E-C/a-4e_apr25_vehicle_shilka", "RWR_VEHICLE_SHILKA", SOUND_ALWAYS),
         Sound_Player(sndhost_headphones, "Aircrafts/A-4E-C/a-4e_apr25_vehicle_vulcan", "RWR_VEHICLE_VULCAN", SOUND_ALWAYS),

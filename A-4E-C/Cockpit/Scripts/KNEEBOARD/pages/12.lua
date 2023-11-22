@@ -1,12 +1,12 @@
 dofile(LockOn_Options.script_path.."Nav/ils_utils.lua")
-
+dofile(LockOn_Options.script_path.."utils.lua")
 dofile(LockOn_Options.common_script_path.."KNEEBOARD/indicator/definitions.lua")
 SetScale(FOV)
 
 -- RADIO PRESETS
 
 -- add background image for kneeboard
-add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_12.png")
+add_picture(LockOn_Options.script_path.."../KneeboardResources/a4e_cockpit_kneeboard_12.dds")
 
 local gettext = require("i_18n")
 _ = gettext.translate
@@ -22,11 +22,11 @@ FontSizeY1	= FontSizeX1
 
 predefined_font_title	= {FontSizeY1 * 0.85,	FontSizeX1 * 0.85,	-0.0009,	0.0}
 predefined_font_header	= {FontSizeY1 * 0.75,	FontSizeX1 * 0.75,	-0.0009,	0.0}
-predefined_font_item	= {FontSizeY1 * 0.675,	FontSizeX1 * 0.675,	-0.0009,	0.0}
+predefined_font_item	= {FontSizeY1 * 0.75,	FontSizeX1 * 0.75,	-0.0009,	0.0}
 
 -- lines
 local FirstLineY	= 1.3
-local LineSizeY		= 0.09375
+local LineSizeY		= 0.09
 
 local function getLineY(line)
 	return FirstLineY - LineSizeY * (line)
@@ -42,11 +42,7 @@ local CMSUnitsPosX = -0.05
 local CMSHintsPosX = 0.8
 
 
-local arc51_radio_presets
-
-if get_aircraft_mission_data ~= nil then
-    arc51_radio_presets = get_aircraft_mission_data("Radio")[1].channels
-end
+local arc51_radio_presets = GetRadioChannels()
 
 ils_data, marker_data = get_ils_data_in_format()
 --BEACON_TYPE_ILS_LOCALIZER

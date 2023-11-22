@@ -798,3 +798,54 @@ function require_avionics()
     return stubs
   end
 end
+
+function CreateAlternateChannels()
+  channels = {
+    254,
+    265,
+    256,
+    254,
+    250,
+    270,
+    257,
+    258,
+    262,
+    259,
+    268,
+    269,
+    260,
+    263,
+    261,
+    267,
+    253,
+    266,
+    251,
+    251
+  }
+  return channels
+end
+
+
+function GetRadioChannels()
+  if get_aircraft_mission_data == nil then
+    return CreateAlternateChannels()
+  end
+
+  local radio = get_aircraft_mission_data("Radio")
+
+  if radio == nil then
+    return CreateAlternateChannels()
+  end
+
+  local radio_one = radio[1]
+  if radio_one == nil then
+    return CreateAlternateChannels()
+  end
+
+  local channels = radio_one.channels
+  if channels then
+    return channels
+  end
+
+  return CreateAlternateChannels()
+end

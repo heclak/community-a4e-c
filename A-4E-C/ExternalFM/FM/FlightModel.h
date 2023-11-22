@@ -139,6 +139,8 @@ private:
 
 	//390 KN is the structural limit. 1.5 times safety margin.
 	static constexpr double c_wingStructuralLimit = 195000.0 * 1.8;
+	double left_wing_break_time = 0.0;
+	double right_wing_break_time = 0.0;
 
 //
 	double m_q; //0.5*p*V^2 * s * b

@@ -564,27 +564,39 @@ void Scooter::FlightModel::slats(double& dt)
 
 void Scooter::FlightModel::checkForOverstress( double dt )
 {
+	static constexpr double wing_break_time = 0.2;
+
 	if ( abs(m_lwForce) > c_wingStructuralLimit )
 	{
-		m_airframe.setDamageDelta( Airframe::Damage::WING_L_IN, random() );
-		m_airframe.setDamageDelta( Airframe::Damage::WING_L_CENTER, 1.0 );
-		//m_airframe.setDamageDelta( Airframe::Damage::WING_L_PART_CENTER, 1.0 );
-		//m_airframe.setDamageDelta( Airframe::Damage::FLAP_L, 1.0 );
-		//m_airframe.setDamageDelta( Airframe::Damage::WING_L_OUT, 1.0 );
-		//m_airframe.setDamageDelta( Airframe::Damage::AILERON_L, 1.0 );
-		//printf( "CRACK: Left Wing\n" );
+		left_wing_break_time += dt;
+
+		if ( left_wing_break_time > wing_break_time )
+		{
+			left_wing_break_time = 0.0;
+			m_airframe.setDamageDelta( Airframe::Damage::WING_L_IN, random() );
+			m_airframe.setDamageDelta( Airframe::Damage::WING_L_CENTER, 1.0 );
+		}
+	}
+	else
+	{
+		left_wing_break_time = 0.0;
 	}
 		
 
 	if ( abs(m_rwForce) > c_wingStructuralLimit )
 	{
-		m_airframe.setDamageDelta( Airframe::Damage::WING_R_IN, random() );
-		m_airframe.setDamageDelta( Airframe::Damage::WING_R_CENTER, 1.0 );
-		//m_airframe.setDamageDelta( Airframe::Damage::WING_R_PART_CENTER, 1.0 );
-		//m_airframe.setDamageDelta( Airframe::Damage::FLAP_R, 1.0 );
-		//m_airframe.setDamageDelta( Airframe::Damage::WING_R_OUT, 1.0 );
-		//m_airframe.setDamageDelta( Airframe::Damage::AILERON_R, 1.0 );
-		//printf( "CRACK: Right Wing\n" );
+		right_wing_break_time += dt;
+
+		if ( right_wing_break_time > wing_break_time )
+		{
+			right_wing_break_time = 0.0;
+			m_airframe.setDamageDelta( Airframe::Damage::WING_R_IN, random() );
+			m_airframe.setDamageDelta( Airframe::Damage::WING_R_CENTER, 1.0 );
+		}
+	}
+	else
+	{
+		right_wing_break_time = 0.0;
 	}
 }
 

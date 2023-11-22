@@ -9,7 +9,7 @@
 #include "Maths.h"
 namespace Scooter
 {
-    class DamageObject : std::enable_shared_from_this<DamageObject>
+    class DamageObject
     {
     public:
         DamageObject( const std::string&& name );
@@ -45,7 +45,7 @@ namespace Scooter
     {
     public:
 
-        DamageProcessor( Interface& inter ) : m_interface( inter ) {};
+        DamageProcessor( Interface& inter );
 
         static DamageProcessor& GetDamageProcessor()
         {
@@ -77,6 +77,9 @@ namespace Scooter
         void SetFailure( const std::string& failure, double integrity );
 
     private:
+
+        void ImGuiDebugWindow();
+
         std::unordered_map<std::string, std::weak_ptr<DamageObject>> m_objects_by_name;
         std::unordered_map<int, std::vector<std::weak_ptr<DamageObject>>> m_damage_objects;
         Interface& m_interface;

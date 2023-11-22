@@ -14,6 +14,10 @@ local update_time_step = 1 --update will be called once per second
 function post_initialize()
     str_ptr = string.sub(tostring(dev.link),10)
     efm_data_bus.fm_setIntercomPTR(str_ptr)
+
+    dev:set_communicator(devices.UHF_RADIO)
+    dev:set_communicator(devices.UHF_RADIO_GUARD)
+    dev:make_setup_for_communicator()
 end
 
 function SetCommand(command,value)

@@ -2,25 +2,68 @@
 
 Please list the changes you've made in this file. We should try to follow the guidelines listed here. https://keepachangelog.com
 
-## Version 2.1.2 - ?? ??? 2023
+## Version 2.2.1 - ?? Nov 2023
 
-### Added
-- Delivery information for Shrike and Sidewinder provided in Kneeboard Manual, page 3-5.
-- Else keybinds for the Chaff Dispenser Select added for 3-position switch support.
-- Radar Altitude Warning - Slew axis.
-- Added the AGM-45B Shrike to the loadout options.
-- Added 2.75" Hydra rocket loadouts for LAU-68 launchers, including white phosphorous, HE, HEAT, Para Illum, Practice Smoke, as well as Mk1, Mk61, and WRU-1/B practice munitions to the loadout options. LAU-61 launchers with HE and white phosphorous warheads are also available. Outboard stations support 1 launcher, inboard stations up to 3, and up to 3 can be added on centerline station.
+#### Added
+- AN/APR-25 RHWS audio responses for SA-8, SA-10, SA-11, SA-13, and SA-19 search and tracking radars. Like the SA-3, these units give no audible launch indication.
 
-### Changed
-- A new NWS (Nosewheel Simulation) should make correcting turns on the ground, eliminating the "stuck wheel" phenomenon after a grievous taxi error. Amaze your friends with your drifting skill!
-- Recalculated the weight of multiple rocket payloads.
-- The listed names of items mounted to multiple ejector racks like the BRU-41 and BRU-42 match DCS World's naming conventions.
+#### Changed
+- AN/ARN-25 Automated Direction Finder (ADF) antenna rotation speed increased.
+- Kneeboard Manual:
+  - 
 
-### Fixed
-- Black lines along center line of fuel tanks have been removed.
-- Loadout display inaccuracies in Kneeboard Manual, page 1-5 are corrected.
-- The AN/APG-53A Radar OBST tone and AN/APR-25 RHWR audio properly route to DCS World's "Helmet" sound channel.
+#### Fixed
+- The ECM Panel REC light enables if the AN/APR-25 RHWS is contacted by an SA-3 radar.
+
+## Version 2.2 - 23 Oct 2023
+
+#### Added
+- A new NWS (that's Nosewheel Simulation, mind you) makes correcting turns on the ground much easier, and eliminating the "stuck wheel" feeling due to over-braking in taxi. Amaze your friends with your drifting skill!
+- AN/ARC-51 UHF Radio supports DCS VOIP radios. In addition to Radio Microphone Push-to-Talk (PTT) Transmit binding for sending to VOIP radio, a second Radio Microphone Push-to-Talk (PTT) Guard bindings allows the pilot to transmit to the guard frequency when the radio is in TR+G mode. These two bindings function identically to the DCS default "cockpit r.1 VoIP PTT" and "cockpit r.2 VoIP PTT" bindings, respectively, and you can use them instead if you wish. See the Updated AN/ARC-51 UHF Radio guidance on page 1-2 in the Kneeboard Manual for additional details.
+- AN/ARN-25 Automated Direction Finder (ADF) system is now modeled for use with the AN/ARC-51 UHF Radio. Information on using the equipment is detailed in the Kneeboard Manual on page 1-3.
+- Weapons:
+  - AIM-9J and AIM-9P3 are available on inboard and outboard stations.
+  - AGM-45B Shrike is available loadout options on inboard and outboard stations.
+  - 2.75" Hydra rockets are available loadout options with LAU-3 (19 rocket) and LAU-68 (7 rocket) launchers, including white phosphorous, HE, HEAT, as well as Mk1, Mk61, and WRU-1/B practice munitions to the loadout options. LAU-68 launchers also allow loadouts with Para Illum and Practice Smoke Hydra rockets. Outboard stations support 1 launcher, inboard stations up to 2, and up to 3 can be added on the centerline station.
+  - AN/ASQ-T50 TCTS ACMI pod is available on inboard and outboard stations.
+- Enhanced damage modeling: In addition to Reduced effect of transient forces to prevent wake breaking wings, and improved engine damage. The following system failures can be triggered by damage, or selected as a failure in mission editor:
+  - Radar Receiver
+  - Gear Jamming
+  - Gear Actuator
+  - Pitot Tube
+  - Static Port
+  - Boost Pump
+  - Wing Pump
+  - Aileron Actuators
+  - Elevator Actuator
+  - Rudder Actuator
+  - Wing Tank Leak
+  - Fuselage Tank Leak
+  - Engine and Inlet
+- Cold Start, Taxi, Takeoff, and Free Flight missions for the Sinai map are available in the Instant Action.
+- Input bindings:
+  - Else option for the Chaff Dispenser Select added (for a 3-position switch).
+  - Radar Altitude Warning - Slew axis.
+
+#### Changed
+- Standardized naming conventions for loadouts with multiple ejector racks, and provided additional detail for weapon payloads original to the A-4E-C.
+- Recalculated the weight of rocket launcher pod payloads.
+- Kneeboard Manual:
+  - Updated AN/ARN-52 TACAN guidance on page 1-3.
+  - Updated Airfield Radio and ILS data on page 1-4, which can now accomodate up to 30 entries, making it compatible with the contents of the Sinai map.
+  - Updated Shrike and Sidewinder delivery guidance on page 3-5.
+  - Updated AN/APR-25 Radar Homing and Warning System guidance on page 3-6.
+  - Compressed images for smaller file size and faster loading.
+
+#### Fixed
+- **TACAN and MCL system crashes.**
+- The AN/ARC-51 UHF Radio volume knob now adjusts radio and VOIP radio volume.
+- The AN/APG-53A Radar OBST tone and AN/APR-25 RHWR audio properly route to the Helmet sound channel.
+- Black lines along center and around the nose cones of fuel tanks have been removed.
 - Malaysia TUDM livery uses the provided custom fuel tanks.
+- Station arming switches no longer produce a debug printout with the weapon selector in the BOMBS & GM ARM position.
+- Loadout option inaccuracies in the Kneeboard Manual on page 1-6 are corrected.
+- Eliminated Kneeboard Manual typos in page reference annotations.
 
 ## Version 2.1.1 - 27 Apr 2023
 

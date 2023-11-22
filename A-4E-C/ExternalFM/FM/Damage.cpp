@@ -1,6 +1,16 @@
 #include "Damage.h"
+#include <imgui.h>
+#include <ImguiDisplay.h>
 
 std::unique_ptr<Scooter::DamageProcessor> Scooter::DamageProcessor::m_damage_processor = nullptr;
+
+Scooter::DamageProcessor::DamageProcessor( Interface& inter ) : m_interface( inter )
+{
+    ImguiDisplay::AddImguiItem( "Airframe", "Damage", [this]() {
+        ImGuiDebugWindow();
+    } );
+}
+
 
 void Scooter::DamageProcessor::OnDamage( int cell, double integrity )
 {
@@ -149,7 +159,69 @@ void Scooter::DamageObject::Damage( double integrity )
     }
 }
 
- 
+void Scooter::DamageProcessor::ImGuiDebugWindow()
+{
+    if ( ImGui::TreeNode( "Damage Cells" ) )
+    {
+        for ( auto& [cell, objects] : m_damage_objects )
+        {
+            std::string damage_cell = "Damage Cell " + std::to_string( cell );
+
+            if ( ImGui::TreeNode( damage_cell.c_str() ) )
+            {
+                const ImGuiTableFlags flags = ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg;
+                if ( ImGui::BeginTable( "Damage Items", 2, flags ) )
+                {
+
+                    ImGui::TableSetupColumn( "Name" );
+                    ImGui::TableSetupColumn( "Integrity" );
+                    ImGui::TableHeadersRow();
+
+                    for ( auto& object : objects )
+                    {
+                        ImGui::TableNextRow();
+                        if ( auto object_ptr = object.lock(); object_ptr )
+                        {
+                            ImGui::TableSetColumnIndex( 0 );
+                            ImGui::Text( "%s", object_ptr->GetName().c_str() );
+                            ImGui::TableSetColumnIndex( 1 );
+                            ImGui::Text( "%lf", object_ptr->GetIntegrity() );
+                        }
+
+
+                    }
+                    ImGui::EndTable();
+                }
+
+                ImGui::TreePop();
+            }
+        }
+
+        ImGui::TreePop();
+    }
+
+    if ( ImGui::TreeNode( "Damage Objects" ) )
+    {
+        ImGui::TableSetupColumn( "Name" );
+        ImGui::TableSetupColumn( "Integrity" );
+        ImGui::TableHeadersRow();
+
+        for ( auto& [name, object] : m_objects_by_name )
+        {
+            ImGui::TableNextRow();
+            if ( auto object_ptr = object.lock(); object_ptr )
+            {
+                ImGui::TableSetColumnIndex( 0 );
+                ImGui::Text( "%s", object_ptr->GetName().c_str() );
+                ImGui::TableSetColumnIndex( 1 );
+                ImGui::Text( "%lf", object_ptr->GetIntegrity() );
+            }
+        }
+
+        ImGui::EndTable();
+    }
+}
+
 
 
 

@@ -28,6 +28,13 @@ extern int isSafeContext();
 
 //#define DEBUG_CONSOLE
 
+#define DISPLAY_IMGUI
+#ifndef DISPLAY_IMGUI
+#define DISABLE_IMGUI
+#endif
+
+
+
 //Uncomment this to enable logging make sure this is commited with this commented out!!!!!!
 #define LOGGING
 

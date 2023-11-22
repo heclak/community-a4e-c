@@ -1,5 +1,6 @@
 dofile(LockOn_Options.common_script_path.."elements_defs.lua")
 dofile(LockOn_Options.common_script_path.."KNEEBOARD/indicator/definitions.lua")
+dofile(LockOn_Options.script_path.."utils.lua")
 
 local gettext = require("i_18n")
 _ = gettext.translate
@@ -74,10 +75,7 @@ local channel_positions = {
 local txt_chn = {}
 
 -- get radio preset data
-local arc51_radio_presets
-if get_aircraft_mission_data ~= nil then
-    arc51_radio_presets = get_aircraft_mission_data("Radio")[1].channels
-end
+local arc51_radio_presets = GetRadioChannels()
 
 function print_channel(channel)
     

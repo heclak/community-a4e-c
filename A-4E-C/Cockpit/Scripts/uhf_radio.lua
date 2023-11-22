@@ -44,7 +44,9 @@ device_timer_dt = update_time_step
 
 function post_initialize()
   efm_data_bus.fm_setAvionicsAlive(1.0)
-  dev:set_frequency(256E6) -- Sochi
+
+
+  dev:set_frequency(243E6) -- GUARD
   --print_message_to_user(tostring(dev:get_frequency()))
   dev:set_modulation(MODULATION_AM) -- gives DCS.log INFO msg:  COCKPITBASE: avBaseRadio::ext_set_modulation not implemented, used direct set
   --print_message_to_user("Power before "..dev:get_power())
@@ -61,9 +63,7 @@ function post_initialize()
   str_ptr = string.sub(tostring(dev.link),10)
   efm_data_bus.fm_setRadioPTR(str_ptr)
 
-  local intercom = GetDevice(devices.INTERCOM)
-  intercom:set_communicator(devices.UHF_RADIO)
-  intercom:make_setup_for_communicator()
+  
   
   --print_message_to_user(string.sub(dev["link"],10))
 	--print_message_to_user(GetDevice(devices.RADIO))
@@ -127,12 +127,6 @@ end
 
 
 function SetCommand(command,value)
-	print_message_to_user("Is on: "..tostring(dev:is_on()))
-    print_message_to_user("SetCommand in uhf_radio: "..tostring(command).."="..tostring(value))
-    dev:set_frequency(256E6) -- Sochi
-    dev:set_modulation(MODULATION_AM)
-    local intercom = GetDevice(devices.INTERCOM)
-    intercom:set_communicator(devices.UHF_RADIO)
 end
 
 
