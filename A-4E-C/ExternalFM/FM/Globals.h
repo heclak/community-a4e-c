@@ -28,7 +28,7 @@ extern int isSafeContext();
 
 //#define DEBUG_CONSOLE
 
-#define DISPLAY_IMGUI
+//#define DISPLAY_IMGUI
 #ifndef DISPLAY_IMGUI
 #define DISABLE_IMGUI
 #endif

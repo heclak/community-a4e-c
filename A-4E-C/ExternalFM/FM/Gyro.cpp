@@ -136,6 +136,18 @@ void Gyro::CalculateErectionTorque( const Quat& world_orientation )
 
     //m_erection_T = ( Vec3{ 1.0_deg, 0.0, 0.0 } - m_w ) * m_erection_rate;
 
+    // Rate of Gyro Erection should be constant.
+    // This means the error is decreasing linearly.
+    // dot(gyro_up, up)
+    //
+
+    // Vec3 gyro_up = m_to_body.inverse() * Vec3 { 0.0, 0.0, 1.0 };
+    // Vec3 force_direction = m_erection_direction.cross( gyro_up );
+    // Vec3 torque2 = force_direction.cross( gyro_up );
+
+
+    // m_erection_T = (m_to_body * torque2) * erection_rate;//( torque2.normalized() - m_w ) / ( GyroError(up) + 0.01_deg );
+
 
 
     m_erection_T = torque * erection_rate * percent_spin_up * percent_spin_up / (GyroError( up ) + 1.0);

@@ -43,7 +43,7 @@ public:
     bool Operating() const { return m_electrical_power; }
     double PercentSpinUp() const { return m_w.z() * m_rpm_factor / m_operating_omega; }
 
-    void SetElectricalPower( bool value ) { m_electrical_power = true; }
+    void SetElectricalPower( bool value ) { m_electrical_power = value; }
 
     Quat GetToBody() { return m_to_body; }
 
@@ -158,7 +158,7 @@ private:
     bool m_fast_erect = true;
 
     bool m_electrical_power = false;
-    bool m_motor_on = false;
+    bool m_motor_on = true;
     double m_gimbal_friction = 1e-4; //x,y torque
     double m_gimbal_static_friction = 0.0; //x,y torque
     double m_damping = 0.0;

@@ -82,7 +82,7 @@ private:
 		DamageCell::TAIL_LEFT_SIDE,
 		"AJB-3 Gyro",
 		1.0e-4,
-		0.0001,
+		0.001,
 		0.01,
 		0.01,
 		0.0, // Precision instrument
