@@ -108,6 +108,8 @@ private:
 	};
 	Gyro m_standby_adi;
 
+	static constexpr bool advanced_gyro_enabled = false;
+
 	bool m_damperEnabled = false;
 
 	bool m_oxygen = true;

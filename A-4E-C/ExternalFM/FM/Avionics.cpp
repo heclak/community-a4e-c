@@ -119,35 +119,37 @@ void Scooter::Avionics::updateAvionics(double dt)
 	m_bombingComputer.updateSolution();
 	m_adc.update(dt);
 
-	
+	// Turn this shit off for now
+	// Revisit in future, maybe force the erection rate like by physically moving the angular velocity
+	// instead of applying torques.
+	if ( advanced_gyro_enabled )
+	{
+		const double tas_acceleration = m_adc.GetTASAcceleration();
+		const double x_acceleration = tas_acceleration * cos( m_state.getAOA() );
+		const double z_acceleration = tas_acceleration * sin( m_state.getAOA() );
+		Gyro::Vec3 adc_compensation = { x_acceleration, 0.0, z_acceleration };
 
+		Gyro::Vec3 local_acceleration;
+		const Vec3& local_acceleration_state = m_state.getLocalAcceleration();
+		local_acceleration.x() = local_acceleration_state.x;
+		local_acceleration.y() = local_acceleration_state.z;
+		local_acceleration.z() = local_acceleration_state.y;
 
-	const double tas_acceleration = m_adc.GetTASAcceleration();
-	const double x_acceleration = tas_acceleration * cos( m_state.getAOA() );
-	const double z_acceleration = tas_acceleration * sin( m_state.getAOA() );
-	Gyro::Vec3 adc_compensation = { x_acceleration, 0.0, z_acceleration };
+		const Vec3& omega_state = m_state.getOmega();
+		Gyro::Vec3 local_omega;
+		local_omega.x() = omega_state.x;
+		local_omega.y() = omega_state.z;
+		local_omega.z() = omega_state.y;
 
-	Gyro::Vec3 local_acceleration;
-	const Vec3& local_acceleration_state = m_state.getLocalAcceleration();
-	local_acceleration.x() = local_acceleration_state.x;
-	local_acceleration.y() = local_acceleration_state.z;
-	local_acceleration.z() = local_acceleration_state.y;
+		m_gyro_ajb3.SetElectricalPower( m_interface.getElecPrimaryAC() );
+		m_gyro_ajb3.Update( dt, m_state.GetOrientation(), local_acceleration - adc_compensation, local_omega );
 
-	const Vec3& omega_state = m_state.getOmega();
-	Gyro::Vec3 local_omega;
-	local_omega.x() = omega_state.x;
-	local_omega.y() = omega_state.z;
-	local_omega.z() = omega_state.y;
+		m_standby_adi.SetElectricalPower( m_interface.getElecPrimaryAC() );
+		m_standby_adi.Update( dt, m_state.GetOrientation(), local_acceleration, local_omega );
 
-	m_gyro_ajb3.SetElectricalPower( m_interface.getElecPrimaryAC() );
-	m_gyro_ajb3.Update( dt, m_state.GetOrientation(), local_acceleration - adc_compensation, local_omega );
+		SetADIOutput( dt );
+	}
 
-	m_standby_adi.SetElectricalPower( m_interface.getElecPrimaryAC() );
-	m_standby_adi.Update( dt, m_state.GetOrientation(), local_acceleration, local_omega );
-
-	SetADIOutput( dt );
-
-	
 	//ed_cockpit_set_draw_argument( 385, static_cast<float>( yaw ) );
 
 	//printf("Filter: %lf, Rudder: %lf\n", f, m_flightModel.yawRate());

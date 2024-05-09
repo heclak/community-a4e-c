@@ -509,13 +509,13 @@ VerticalVelocity.input			= {-6000*ft_to_meter/60, -4000*ft_to_meter/60, -2000*ft
 VerticalVelocity.output			= {-1.0, -0.80, -0.60, -0.40, -0.20, 0.0, 0.20, 0.40, 0.60, 0.80, 1.0}
 VerticalVelocity.parameter_name = "VVI"
 
-ADIPitch                        = {}-- CreateGauge("parameter")
+ADIPitch                        = CreateGauge("parameter")
 ADIPitch.parameter_name         = "ADI_PITCH"
 ADIPitch.arg_number             = 383
 ADIPitch.input                  = {-180, 180}
 ADIPitch.output                 = {-1, 1}
 
-ADIRoll                         = {}-- CreateGauge("parameter")
+ADIRoll                         = CreateGauge("parameter")
 ADIRoll.parameter_name          = "ADI_ROLL"
 ADIRoll.arg_number              = 384
 ADIRoll.input                   = {-180, 180}
@@ -527,7 +527,7 @@ ADIHeading.arg_number           = 385
 ADIHeading.input                = {0, 360}
 ADIHeading.output               = {-1, 1}
 
-ADIOFF                          = {}--CreateGauge("parameter")
+ADIOFF                          = CreateGauge("parameter")
 ADIOFF.parameter_name           = "ADI_OFF"
 ADIOFF.arg_number               = 387
 ADIOFF.input                    = {0.0, 1.0}
@@ -551,19 +551,19 @@ BackupCompass.arg_number           = 148
 BackupCompass.input                = {0, 360}
 BackupCompass.output               = {-1, 1}
 
-AttGyroStbyPitch                = {} --CreateGauge("parameter")
+AttGyroStbyPitch                = CreateGauge("parameter")
 AttGyroStbyPitch.parameter_name = "ATTGYRO_STBY_PITCH"
 AttGyroStbyPitch.arg_number     = 660
 AttGyroStbyPitch.input          = {-180, 180}
 AttGyroStbyPitch.output         = {-1.0, 1.0}
 
-AttGyroStbyRoll                 = {} -- CreateGauge("parameter")
+AttGyroStbyRoll                 = CreateGauge("parameter")
 AttGyroStbyRoll.parameter_name  = "ATTGYRO_STBY_ROLL"
 AttGyroStbyRoll.arg_number      = 661
 AttGyroStbyRoll.input           = {-180, 180}
 AttGyroStbyRoll.output          = {-1.0, 1.0}
 
-AttGyroStbyOFF                 = {}--CreateGauge("parameter")
+AttGyroStbyOFF                 = CreateGauge("parameter")
 AttGyroStbyOFF.parameter_name  = "ATTGYRO_STBY_OFF"
 AttGyroStbyOFF.arg_number      = 664
 AttGyroStbyOFF.input           = {0.0, 1.0}
