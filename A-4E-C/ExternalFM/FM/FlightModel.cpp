@@ -17,6 +17,8 @@
 #include "Data.h"
 #include "Maths.h"
 #include "Globals.h"
+#include "ImguiDisplay.h"
+#include "imgui.h"
 #include "Units.h"
 #include "Logger.h"
 //=========================================================================//
@@ -175,6 +177,10 @@ Scooter::FlightModel::FlightModel
 		vapourMapC[i] = i + elementSize;
 		vapourMapC[i + m_elementsC.size() / 2] = i + splineSize + elementSize;
 	}
+
+	ImguiDisplay::AddImguiItem( "Airframe", "Damage", [this]() {
+		ImGuiDebugWindow();
+	} );
 }
 
 Scooter::FlightModel::~FlightModel()
@@ -745,4 +751,10 @@ void Scooter::FlightModel::csvData(std::vector<double>& data)
 	
 
 	
+}
+
+void Scooter::FlightModel::ImGuiDebugWindow()
+{
+	ImGui::Text( "Alpha: %lf", m_state.getAOA() / 1.0_deg );
+	ImGui::Text( "Beta: %lf", m_state.getBeta() / 1.0_deg );
 }

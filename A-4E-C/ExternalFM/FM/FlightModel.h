@@ -112,6 +112,8 @@ public:
 
 	inline std::vector<Force>& getForces() { return m_forces; }
 
+	void ImGuiDebugWindow();
+
 private:
 
 	//=====================BIG WARNING=====================//
